@@ -64,7 +64,7 @@ export default function CasesSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="cases" className="relative py-16 md:py-24 bg-uk-teal-soft">
+    <section ref={sectionRef} id="cases" className="relative py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
@@ -136,7 +136,7 @@ export default function CasesSection() {
             </div>
           ))}
 
-          {/* Testimonial card — white card now that the section bg is teal-soft, to keep it visually distinct from the bg */}
+          {/* Testimonial card — same white surface as the other cards; section bg is white, so cards rely on border + hover shadow to differentiate */}
           <div className="case-card rounded-2xl p-6 bg-white border border-uk-line hover:shadow-md transition-all flex flex-col">
             <QuoteIcon className="w-8 h-8 text-uk-teal-dark" />
             <p className="text-uk-navy leading-relaxed mt-3 text-base">

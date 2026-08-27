@@ -186,7 +186,7 @@ export default function Header({
           {/* Desktop nav */}
           {!showBackButton && (
             <nav className="hidden lg:flex items-center gap-10 ml-auto mr-8">
-              {navItems.map((item, idx) => {
+              {navItems.map((item) => {
                 if (item.dropdown === 'products') {
                   return (
                     <div
@@ -308,18 +308,8 @@ export default function Header({
                   )
                 }
 
-                const showSeparator =
-                  idx === navItems.length - 1 && navItems.length > 1
                 return (
                   <Fragment key={item.href}>
-                    {showSeparator && (
-                      <span
-                        className="text-uk-navy/30 mx-3 select-none"
-                        aria-hidden="true"
-                      >
-                        |
-                      </span>
-                    )}
                     <a
                       href={item.href}
                       className={`text-sm font-cw-regular transition-colors duration-300 ${
@@ -330,14 +320,6 @@ export default function Header({
                     >
                       {item.label}
                     </a>
-                    {showSeparator && (
-                      <span
-                        className="text-uk-navy/30 mx-3 select-none"
-                        aria-hidden="true"
-                      >
-                        |
-                      </span>
-                    )}
                   </Fragment>
                 )
               })}
