@@ -391,6 +391,9 @@ html.lenis {
 .light-mode section#products {
   background: linear-gradient(100deg, rgba(19, 182, 232, 0.08) 0%, rgba(110, 222, 100, 0.08) 100%) !important;
 }
+.light-mode section#cases {
+  background: linear-gradient(100deg, rgba(19, 182, 232, 0.08) 0%, rgba(110, 222, 100, 0.08) 100%) !important;
+}
 
 /* Generic rounded-full shadow-lg badges (Hero CTAs, ProductSelector
    " button) keep white text in light mode so the gradient fill stays
