@@ -4,9 +4,9 @@ import ClientOnlyCookieConsent from '@/components/ClientOnlyCookieConsent'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://solavita.uk'), // TODO: replace with the real production domain
-  title: 'Solavita UK – Premium Solar & Battery Storage | From £8,999',
+  title: 'Solavita UK – Premium Solar & Battery Storage',
   description:
-    'Solavita delivers premium solar panels and battery storage for UK homes. From £8,999, fully installed. Two-week installation. MCS-certified. UK-wide support.',
+    'Solavita delivers premium solar panels and battery storage for UK homes. Two-week installation. MCS-certified. UK-wide support.',
   keywords:
     'solar panels UK, solar battery storage, photovoltaic, UK solar, MCS certified, Solavita, SKYWORTH, renewable energy UK, SEG, Smart Export Guarantee',
   robots: { index: true, follow: true },
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Solavita UK – Power Your Home. Shape a Greener UK.',
     description:
-      'Premium solar & storage for UK homes. From £8,999 fully installed. Two-week turnaround.',
+      'Premium solar & storage for UK homes. Two-week turnaround.',
     locale: 'en_GB',
     type: 'website',
   },
