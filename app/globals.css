@@ -500,11 +500,11 @@ html.lenis {
 /* Specific section bg overrides — sections that hardcode `bg-white`
    or use teal/emerald gradient backgrounds need their own dark
    surface so they don't glow against the dark body. */
-.dark section#cases { background-color: #0A1628 !important; }
+.dark section#cases { background-color: var(--bg-primary) !important; }
 .dark section#learn {
   background: linear-gradient(100deg, rgba(20,184,166,0.10) 0%, rgba(16,185,129,0.10) 100%) !important;
 }
-.dark section#design-quote { background-color: #0A1628 !important; }
+.dark section#design-quote { background-color: var(--bg-primary) !important; }
 .dark section#products {
   background: linear-gradient(100deg, rgba(20,184,166,0.10) 0%, rgba(16,185,129,0.10) 100%) !important;
 }
