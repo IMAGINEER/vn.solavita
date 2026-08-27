@@ -1,0 +1,558 @@
+@import "tailwindcss";
+
+/* ── Tailwind v4 dark-mode variant ──
+   The standard v4 syntax registers `dark:` as a class-based variant that
+   activates when any ancestor in the tree has `.dark` on it. We toggle
+   `.dark` on <html> from FloatingButtons + the pre-hydration bootstrap
+   script in app/layout.tsx (alongside the legacy `.light-mode` class so
+   existing `.light-mode X` overrides still fire in light mode). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Tailwind v4 theme tokens (formerly tailwind.config.ts) ── */
+@theme {
+  /* Colors — sv-* brand palette */
+  --color-sv-blue: #00B9EE;
+  --color-sv-green: #2CE250;
+  --color-sv-dark: #0A1628;
+  --color-sv-darker: #060E1A;
+  --color-sv-navy: #0D1B2A;
+  --color-sv-light: #F7F9FC;
+  --color-sv-text: #1A1A2E;
+  --color-sv-gray: #6B7280;
+  --color-sv-gray-light: #9CA3AF;
+  --color-sv-danger: #FF4D4F;
+
+  /* Font families — font-cw-* tokens (Chuangwei, falls back to Inter/system) */
+  --font-cw-bold: 'Chuangwei-Bold', 'Inter', sans-serif;
+  --font-cw-regular: 'Chuangwei-Regular', 'Inter', sans-serif;
+  --font-cw-light: 'Chuangwei-Light', 'Inter', sans-serif;
+
+  /* Background images */
+  --background-image-sv-gradient: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
+  --background-image-sv-gradient-dark: linear-gradient(100deg, #007A9E 0%, #1A8A30 100%);
+
+  /* UK brand — semantic, teal-leaning, complements sv-blue without overlap */
+  --color-uk-teal: #14B8A6;
+  --color-uk-teal-dark: #0F766E;
+  --color-uk-teal-soft: #CCFBF1;
+  --color-uk-emerald: #10B981;
+  --color-uk-navy: #0F172A;
+  --color-uk-slate: #64748B;
+  --color-uk-line: #E2E8F0;
+
+  /* Background images — UK */
+  --background-image-uk-gradient: linear-gradient(135deg, #14B8A6 0%, #10B981 100%);
+
+  /* Animations */
+  --animate-gradient-flow: gradientFlow 3s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-shadow-pulse: shadowPulse 6s ease-in-out infinite;
+
+  @keyframes gradientFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  @keyframes shadowPulse {
+    0%, 100% { width: 70%; opacity: 0.6; }
+    50% { width: 90%; opacity: 0.9; }
+  }
+}
+
+:root {
+  --sv-blue: #00B9EE;
+  --sv-green: #2CE250;
+  --sv-gradient: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
+  /* Dark mode (default) */
+  --bg-primary: #0A1628;
+  --bg-secondary: #0D1E35;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --text-primary: #ffffff;
+  --text-secondary: #B0BEC5;
+  --text-muted: #6B7280;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --header-bg: #0A1628;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+}
+
+.light-mode {
+  --bg-primary: #F7F9FC;
+  --bg-secondary: #EEF2F7;
+  --bg-card: rgba(10, 22, 40, 0.05);
+  --text-primary: #0A1628;
+  --text-secondary: #4A5568;
+  --text-muted: #9CA3AF;
+  --border-color: rgba(10, 22, 40, 0.1);
+  --header-bg: #F7F9FC;
+  --card-bg: rgba(10, 22, 40, 0.03);
+  --card-border: rgba(10, 22, 40, 0.08);
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: 'Chuangwei-Regular', 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00B9EE, #2CE250);
+  border-radius: 4px;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient border utility */
+.border-gradient {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Button gradient animation */
+.btn-gradient {
+  background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
+  background-size: 200% 200%;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 185, 238, 0.3);
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light-mode .glass {
+  background: rgba(10, 22, 40, 0.08);
+  border: 1px solid rgba(10, 22, 40, 0.15);
+}
+
+/* Section reveal animation base */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+/* Counter number styling */
+.counter-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Floating action buttons */
+.floating-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+}
+
+.floating-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 18px;
+}
+
+.floating-btn.dark-btn {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.floating-btn.light-btn {
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  color: #1a1a2e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.floating-btn.back-to-top {
+  background: linear-gradient(100deg, #00B9EE, #2CE250);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 185, 238, 0.4);
+}
+
+.floating-btn:hover {
+  transform: translateY(-4px);
+}
+
+.light-mode .floating-btn.dark-btn {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+}
+
+.light-mode .floating-btn.light-btn {
+  background: linear-gradient(135deg, #4A5568, #2D3748);
+  color: #fff;
+}
+
+.light-mode .floating-btn.back-to-top {
+  background: linear-gradient(135deg, #00B9EE, #2CE250);
+  color: #fff;
+}
+
+/* Light mode component overrides */
+.light-mode [class*="bg-sv-dark"],
+.light-mode [class*="bg-sv-darker"] {
+  background-color: var(--bg-primary) !important;
+}
+
+.light-mode [class*="text-white"]:not(button):not(a):not(.btn-gradient) {
+  color: var(--text-primary) !important;
+}
+
+.light-mode [class*="text-sv-gray"] {
+  color: var(--text-secondary) !important;
+}
+
+.light-mode [class*="border-white"] {
+  border-color: var(--border-color) !important;
+}
+
+.light-mode [class*="bg-white"] {
+  background-color: #ffffff !important;
+}
+
+.light-mode [class*="bg-black"] {
+  background-color: #0A1628 !important;
+}
+
+/* Header light mode */
+.light-mode header,
+.light-mode .header {
+  background-color: rgba(247, 249, 252, 0.95) !important;
+  backdrop-filter: blur(20px);
+}
+
+.light-mode header [class*="text-white"] {
+  color: #0A1628 !important;
+}
+
+.light-mode header [class*="border-white"] {
+  border-color: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* TrustBar light mode */
+.light-mode .trust-bar,
+.light-mode [class*="bg-sv-dark/50"],
+.light-mode [class*="bg-sv-dark\/50"] {
+  background-color: rgba(238, 242, 247, 0.9) !important;
+}
+
+/* Product cards light mode */
+.light-mode [class*="bg-white\/"],
+.light-mode [class*="bg-white/"] {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.light-mode [class*="border-white\/"] {
+  border-color: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* Cards with bg-white/5 */
+.light-mode [class*="bg-white\/5"] {
+  background-color: rgba(10, 22, 40, 0.03) !important;
+  border-color: rgba(10, 22, 40, 0.08) !important;
+}
+
+/* Footer light mode */
+.light-mode footer {
+  background-color: #EEF2F7 !important;
+}
+
+.light-mode footer [class*="text-white"] {
+  color: #0A1628 !important;
+}
+
+.light-mode footer [class*="border-white"] {
+  border-color: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* Input fields in light mode */
+.light-mode input,
+.light-mode textarea,
+.light-mode select {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #0A1628 !important;
+  border-color: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* Input placeholders in light mode — darken so they're readable on the light field */
+.light-mode input::placeholder,
+.light-mode textarea::placeholder,
+.light-mode select::placeholder {
+  color: rgba(10, 22, 40, 0.35) !important;
+}
+
+/* Slider track in light mode */
+.light-mode input[type="range"] {
+  background: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* Badges and tags in light mode */
+.light-mode [class*="bg-white\/30"] {
+  background-color: rgba(10, 22, 40, 0.05) !important;
+}
+
+/* Gradient buttons keep white text in light mode */
+
+.light-mode .text-gradient {
+  background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ProductSelector light mode */
+.light-mode section#products {
+  background: linear-gradient(100deg, rgba(19, 182, 232, 0.08) 0%, rgba(110, 222, 100, 0.08) 100%) !important;
+}
+
+/* Generic rounded-full shadow-lg badges (Hero CTAs, ProductSelector
+   " button) keep white text in light mode so the gradient fill stays
+   legible. */
+.light-mode [class*="rounded-full"][class*="shadow-lg"] {
+  color: #ffffff !important;
+}
+
+/* Override sections in light mode with gradient */
+.light-mode section[class*="py-"] {
+  transition: background-color 0.3s ease;
+}
+
+/* Footer social icons light mode */
+.light-mode footer [class*="border-white/10"] {
+  background: rgba(10, 22, 40, 0.05) !important;
+  border-color: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* Hero image frame light mode */
+.light-mode footer [class*="rounded-lg"][class*="border-white/20"] {
+  background: rgba(10, 22, 40, 0.08) !important;
+  border-color: rgba(10, 22, 40, 0.12) !important;
+}
+
+/* Header CTA button light mode - keep gradient, text stays white */
+.light-mode header .btn-gradient,
+.light-mode [class*="header"] .btn-gradient {
+  background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%) !important;
+  color: #ffffff !important;
+}
+
+.light-mode header .btn-gradient:hover,
+.light-mode [class*="header"] .btn-gradient:hover {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 185, 238, 0.3);
+}
+
+/* Removed hero section:first-of-type styles */
+
+/* Hero image frame light mode */
+.light-mode [class*="rounded-3xl"][class*="bg-sv-navy"] {
+  background-color: hsla(0,0%,100%,.25) !important;
+  border-color: rgba(10, 22, 40, 0.1) !important;
+}
+
+/* Hero banner — banner_uk.webp backdrop needs white-on-dark text in BOTH
+   modes, so override the global light-mode text/border/background flips
+   inside this section. Higher specificity than the corresponding `.light-mode`
+   rules further up the file. */
+.light-mode section.hero-banner [class*="text-white"]:not(button):not(a):not(.btn-gradient) {
+  color: #ffffff !important;
+}
+.light-mode section.hero-banner [class*="border-white"] {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.light-mode section.hero-banner [class*="bg-white\/10"],
+.light-mode section.hero-banner [class*="bg-white\/20"] {
+  background-color: rgb(255 255 255 / 0.1) !important;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   DARK MODE
+   Activated when <html> has `.dark` (set by FloatingButtons toggle +
+   the pre-hydration script in app/layout.tsx). Tailwind v4 picks up
+   the `@custom-variant dark` declaration above so `dark:` utilities
+   also work.
+   The rule below covers sections/cards that hardcode `bg-white`,
+   `text-uk-navy`, `border-uk-line`, etc. — every one of those
+   references needs a dark counterpart to keep the page legible.
+   ──────────────────────────────────────────────────────────────── */
+
+/* Body / scrollbar */
+.dark body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Header bar */
+.dark header,
+.dark .header {
+  background-color: rgba(10, 22, 40, 0.85) !important;
+  backdrop-filter: blur(20px);
+}
+.dark header [class*="text-uk-navy"] { color: #f8fafc !important; }
+.dark header [class*="text-uk-slate"] { color: #cbd5e1 !important; }
+.dark header [class*="border-uk-line"] { border-color: rgba(255,255,255,0.10) !important; }
+
+/* Generic surface flips for cards that hardcode white backgrounds /
+   navy text / uk-line borders. Uses attribute selectors so every
+   section picking up these utility tokens inherits the dark variant
+   without per-section edits. */
+.dark [class*="bg-white"]:not(button):not(.btn-gradient) {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+}
+.dark [class*="text-uk-navy"]:not(button):not(a):not(.btn-gradient):not(.text-gradient) {
+  color: #f1f5f9 !important;
+}
+.dark [class*="text-uk-slate"] {
+  color: #94a3b8 !important;
+}
+.dark [class*="border-uk-line"] {
+  border-color: rgba(148, 163, 184, 0.20) !important;
+}
+
+/* Specific section bg overrides — sections that hardcode `bg-white`
+   or use teal/emerald gradient backgrounds need their own dark
+   surface so they don't glow against the dark body. */
+.dark section#cases { background-color: #0A1628 !important; }
+.dark section#learn {
+  background: linear-gradient(100deg, rgba(20,184,166,0.10) 0%, rgba(16,185,129,0.10) 100%) !important;
+}
+.dark section#design-quote { background-color: #0A1628 !important; }
+.dark section#products {
+  background: linear-gradient(100deg, rgba(20,184,166,0.10) 0%, rgba(16,185,129,0.10) 100%) !important;
+}
+
+/* uk-teal-soft tints → slightly desaturated dark counterpart */
+.dark [class*="bg-uk-teal-soft"] {
+  background-color: rgba(20, 184, 166, 0.10) !important;
+}
+.dark [class*="border-uk-teal\/30"] {
+  border-color: rgba(20, 184, 166, 0.30) !important;
+}
+
+/* Footer */
+.dark footer {
+  background-color: #060E1A !important;
+}
+.dark footer [class*="text-white"] { color: #f1f5f9 !important; }
+.dark footer [class*="text-uk-slate"] { color: #94a3b8 !important; }
+.dark footer [class*="border-white\/10"] {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Form / inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  color: #f1f5f9 !important;
+  border-color: rgba(148, 163, 184, 0.25) !important;
+}
+.dark input::placeholder,
+.dark textarea::placeholder,
+.dark select::placeholder {
+  color: rgba(203, 213, 225, 0.45) !important;
+}
+
+/* Floating buttons in dark mode — toggle icon button + back-to-top */
+.dark .floating-btn.light-btn {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.dark .floating-btn.dark-btn {
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  color: #1a1a2e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Light-mode text-gradient stays the same — it already uses an
+   light→emerald gradient that reads on dark just fine. */
