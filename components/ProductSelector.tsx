@@ -133,19 +133,17 @@ export default function ProductSelector({ onOpenForm }: { onOpenForm?: () => voi
                     product.id === 'storage-core' ? 'w-24' : 'h-24'
                   } object-contain pointer-events-none`}
                   />
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      onOpenForm?.()
-                    }}
-                    className={`mt-3 w-full py-2.5 rounded-lg text-sm font-cw-bold cursor-pointer transition-all duration-300 ${
+                  <a
+                    href="#details"
+                    onClick={(e) => e.stopPropagation()}
+                    className={`mt-3 w-full py-2.5 rounded-lg text-sm font-cw-bold text-center transition-all duration-300 block ${
                       isSelected
                         ? 'btn-gradient text-white'
                         : 'border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-white hover:-translate-y-0.5 hover:shadow-md'
                     }`}
                   >
                     Plan Details →
-                  </button>
+                  </a>
                 </div>
               </div>
             )

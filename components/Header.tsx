@@ -3,7 +3,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { Check, ChevronDown, ChevronLeft } from 'lucide-react'
-import { openFormModal } from '@/lib/form-modal'
 import { ukProducts } from '@/lib/data/uk-products'
 
 export interface HeaderNavItem {
@@ -43,7 +42,7 @@ const DEFAULT_NAV: HeaderNavItem[] = [
 
 const DEFAULT_CTA: HeaderCTA = {
   label: 'Contact Us',
-  onClick: openFormModal,
+  href: '#form',
 }
 
 export default function Header({
