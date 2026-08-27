@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       if (updateError) {
         console.error('Consultation update error:', updateError)
         return NextResponse.json(
-          { success: false, message: 'Ein Fehler ist aufgetreten. Bitte erneut versuchen.' },
+          { success: false, message: 'Something went wrong. Please try again.' },
           { status: 500 }
         )
       }
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
         success: true,
         alreadyRegistered: true,
         message:
-          'Diese E-Mail-Adresse wurde bereits registriert. Ihre Angaben wurden aktualisiert. Falls Sie noch keine Rückmeldung erhalten haben, kontaktieren Sie bitte unseren Kundenservice.',
+          'This email is already registered with us. Your details have been updated. If you have not heard back yet, please contact our team at uk@solavita.com.',
       })
     }
 
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
     if (insertError) {
       console.error('Consultation insert error:', insertError)
       return NextResponse.json(
-        { success: false, message: 'Ein Fehler ist aufgetreten. Bitte erneut versuchen.' },
+        { success: false, message: 'Something went wrong. Please try again.' },
         { status: 500 }
       )
     }
