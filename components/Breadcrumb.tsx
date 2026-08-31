@@ -9,9 +9,28 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[]
+  /**
+   * Colour theme.
+   *   - 'dark' (default): dark navy text on light backgrounds
+   *     (existing Privacy / Terms pages).
+   *   - 'light': white / translucent text for use on dark banner
+   *     heroes (Solutions / Cases / About Us / Support / For Partners).
+   */
+  theme?: 'dark' | 'light'
 }
 
-export default function Breadcrumb({ items }: BreadcrumbProps) {
+export default function Breadcrumb({ items, theme = 'dark' }: BreadcrumbProps) {
+  const isLight = theme === 'light'
+  // Theme-aware palette. `light` uses white at varying opacities so it
+  // reads against the dark banner image + overlay without competing
+  // with the heading.
+  const baseText = isLight ? 'text-white/70' : 'text-[#4A5568]'
+  const hoverText = isLight ? 'hover:text-white' : 'hover:text-[#0A1628]'
+  const lastText = isLight
+    ? 'text-white font-cw-bold'
+    : 'text-[#0A1628] font-cw-bold'
+  const sepText = isLight ? 'text-white/40' : 'text-[#9CA3AF]'
+
   return (
     <nav className="hidden lg:block" aria-label="Breadcrumb">
       <motion.div
@@ -28,18 +47,16 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
               {item.href && !isLast ? (
                 <a
                   href={item.href}
-                  className="text-[#4A5568] hover:text-[#0A1628] transition-colors duration-300"
+                  className={`${baseText} ${hoverText} transition-colors duration-300`}
                 >
                   {item.label}
                 </a>
               ) : (
-                <span className={isLast ? 'text-[#0A1628] font-cw-bold' : 'text-[#4A5568]'}>
+                <span className={isLast ? lastText : baseText}>
                   {item.label}
                 </span>
               )}
-              {!isLast && (
-                <span className="text-[#9CA3AF]">/</span>
-              )}
+              {!isLast && <span className={sepText}>/</span>}
             </div>
           )
         })}

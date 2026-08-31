@@ -27,11 +27,11 @@ gsap.registerPlugin(ScrollTrigger)
  *   │  Disclaimer (full width, small, muted)                    │
  *   └────────────────────────────────────────────────────────────┘
  *
- * Dark teal background (`bg-uk-teal-dark`) in default / dark variant;
- * light teal (`bg-uk-teal-soft`) in `variant="light"` (legal pages),
- * which the existing `.light-mode footer` rule then softens to the
- * project's standard light surface — preserving light/dark mode
- * without inventing a parallel token set.
+ * Footer surface colour is driven by theme rules (`.light-mode footer`,
+ * `.dark footer` in globals.css). No Tailwind bg-* class is applied here —
+ * the surface is `#EEF2F7` in light mode and `#060E1A` in dark mode so
+ * the footer always matches the project's standard page background
+ * palette, regardless of `variant`.
  *
  * Typography reuses existing utilities: headings `text-white`, body
  * links `text-white/70 hover:text-white`, muted `text-white/50`. In
@@ -140,9 +140,7 @@ export default function Footer({
   return (
     <footer
       ref={footerRef}
-      className={`relative ${
-        isLight ? 'bg-uk-teal-soft' : 'bg-uk-teal-dark'
-      }`}
+      className="relative"
     >
       {/* Top divider — fades into the footer on both sides */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -274,6 +272,11 @@ export default function Footer({
           <div className="footer-col">
             <h4 className={headingClass}>Support</h4>
             <ul className="space-y-3 text-white/70 text-sm font-cw-regular">
+              <li>
+                <a href="/contact-us" className={linkClass}>
+                  Contact Us
+                </a>
+              </li>
               <li>
                 <a href="#hems" className={linkClass}>
                   HEMS Apps

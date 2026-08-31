@@ -1,0 +1,95 @@
+/**
+ * Contact Us page data.
+ *
+ * The enquiry subject list drives the dropdown on the form. The channel
+ * list drives the three contact-method cards. All copy placeholder.
+ */
+
+export type ContactSubjectId =
+  | 'general'
+  | 'sales'
+  | 'support'
+  | 'partner'
+  | 'press'
+  | 'other'
+
+export interface ContactSubject {
+  id: ContactSubjectId
+  label: string
+  description?: string
+}
+
+export const contactSubjects: ContactSubject[] = [
+  {
+    id: 'general',
+    label: 'General enquiry',
+    description: 'A general question about Solavita or our products.',
+  },
+  {
+    id: 'sales',
+    label: 'Sales · Get a quote',
+    description: 'You would like a design, quote or pricing information.',
+  },
+  {
+    id: 'support',
+    label: 'Existing customer support',
+    description: 'You already have a Solavita system and need help.',
+  },
+  {
+    id: 'partner',
+    label: 'Partnership · B2B',
+    description: 'You would like to discuss installer / distributor programmes.',
+  },
+  {
+    id: 'press',
+    label: 'Press · Media',
+    description: 'Editorial, media kit or interview requests.',
+  },
+  {
+    id: 'other',
+    label: 'Something else',
+    description: 'Tell us what you have in mind.',
+  },
+]
+
+export interface ContactChannel {
+  label: string
+  value: string
+  href: string
+  description?: string
+  icon: 'mail' | 'phone' | 'map-pin'
+}
+
+export const contactChannels: ContactChannel[] = [
+  {
+    label: 'Email',
+    value: 'uk@solavita.com',
+    href: 'mailto:uk@solavita.com',
+    description: 'Reply within one working day.',
+    icon: 'mail',
+  },
+  {
+    label: 'Phone',
+    value: 'Customer Service',
+    href: '#',
+    description: 'Mon–Fri · 09:00–18:00 · UK hours.',
+    icon: 'phone',
+  },
+  {
+    label: 'Office',
+    value: 'London · United Kingdom',
+    href: '#',
+    description: 'UK HQ · Service & Support.',
+    icon: 'map-pin',
+  },
+]
+
+/** Salutation options — mirrors the existing Consultation form. */
+export const contactSalutations = [
+  { value: '', label: 'Salutation' },
+  { value: 'Mr', label: 'Mr' },
+  { value: 'Mrs', label: 'Mrs' },
+  { value: 'Ms', label: 'Ms' },
+  { value: 'Dr', label: 'Dr' },
+  { value: 'Other', label: 'Other' },
+] as const

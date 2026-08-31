@@ -5,6 +5,19 @@ import { gsap } from 'gsap'
 import { Check, ChevronDown, ChevronLeft } from 'lucide-react'
 import { ukProducts } from '@/lib/data/uk-products'
 
+/**
+ * Map each product in the homepage Products section to the matching
+ * detail section anchor on /solutions so the Solutions dropdown jumps
+ * straight to the relevant detail block instead of back to the home
+ * products grid.
+ */
+const PRODUCT_TO_SOLUTION_ANCHOR: Record<string, string> = {
+  essential: 'residential-solar',
+  'storage-core': 'solar-storage',
+  'smart-home': 'smart-home',
+  'premium-backup': 'energy-integration',
+}
+
 export interface HeaderNavItem {
   label: string
   href: string
@@ -33,16 +46,16 @@ interface HeaderProps {
 }
 
 const DEFAULT_NAV: HeaderNavItem[] = [
-  { label: 'Solutions', href: '#products', dropdown: 'products' },
-  { label: 'Cases', href: '#cases' },
-  { label: 'About Us', href: '#about' },
-  { label: 'Support', href: '#support' },
-  { label: 'For Partner', href: '#partner' },
+  { label: 'Solutions', href: '/solutions', dropdown: 'products' },
+  { label: 'Cases', href: '/cases' },
+  { label: 'About Us', href: '/about-us' },
+  { label: 'Support', href: '/support' },
+  { label: 'For Partners', href: '/for-partners' },
 ]
 
 const DEFAULT_CTA: HeaderCTA = {
   label: 'Contact Us',
-  href: '#form',
+  href: '/contact-us',
 }
 
 export default function Header({
@@ -242,10 +255,13 @@ export default function Header({
                           className="absolute top-[6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-uk-line rotate-45 z-[1]"
                         />
                         <div className="relative bg-white rounded-2xl shadow-[0_20px_40px_-12px_rgba(15,118,110,0.18),0_8px_24px_-4px_rgba(10,22,40,0.06)] ring-1 ring-uk-teal/5 border border-uk-line p-4 flex flex-col gap-3">
-                          {ukProducts.map((p) => (
+                          {ukProducts.map((p) => {
+                            const anchor =
+                              PRODUCT_TO_SOLUTION_ANCHOR[p.id] ?? p.id
+                            return (
                             <a
                               key={p.id}
-                              href="#products"
+                              href={`/solutions#${anchor}`}
                               onClick={() => setSolutionsOpen(false)}
                               className="group relative p-4 rounded-xl border border-uk-line bg-white
                                          hover:border-uk-teal hover:shadow-md hover:-translate-y-0.5
@@ -300,7 +316,8 @@ export default function Header({
                                 </span>
                               </div>
                             </a>
-                          ))}
+                            )
+                          })}
                         </div>
                       </div>
                     </div>

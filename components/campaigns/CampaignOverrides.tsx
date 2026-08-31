@@ -17,8 +17,7 @@ import FloatingButtons from '@/components/FloatingButtons'
 
 import { activeCampaign, isCampaignActive } from '@/lib/campaigns/activeCampaign'
 import CampaignBody from './CampaignBody'
-import FormModal from '@/components/FormModal'
-import { FORM_MODAL_OPEN_EVENT } from '@/lib/form-modal'
+import FormModal, { useFormModalEvent } from '@/components/FormModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -53,11 +52,7 @@ export default function CampaignOverrides() {
 
   // Listen for `openFormModal()` dispatches from anywhere in the tree
   // (Header, HeroSection, etc.) and mirror them into local state.
-  useEffect(() => {
-    const onOpen = () => setFormOpen(true)
-    window.addEventListener(FORM_MODAL_OPEN_EVENT, onOpen)
-    return () => window.removeEventListener(FORM_MODAL_OPEN_EVENT, onOpen)
-  }, [])
+  useFormModalEvent(setFormOpen, () => {})
 
   useEffect(() => {
     const lenis = new Lenis({

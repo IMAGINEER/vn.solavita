@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, ChevronLeft, ChevronRight, Loader2, BadgeCheck } from 'lucide-react';
 import type { FormData } from '@/lib/form-types';
@@ -325,10 +325,71 @@ const MultiCardSelect = ({
 );
 
 // ============ MAIN FORM COMPONENT ============
-const CONSULTATION_API_URL = '/api/consultation'
+const DEFAULT_SUBMIT_URL = '/api/consultation'
 
-const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSuccess, onClose }) => {
+const Form: React.FC<{
+  onClose?: () => void
+  initialData?: Partial<FormData>
+  /**
+   * When true, the form renders only Steps 0/1/2 (region, house/roof
+   * type, household/usage/devices) — Steps 3 (Address) and 4 (Contact
+   * Info) are skipped entirely. The Submit button shows on the last
+   * visible step instead of on Step 4. The StepIndicator is recomputed
+   * so it shows 3 dots, not 5.
+   *
+   * Used by /my-plan "Edit details" — those steps carry PII which we
+   * deliberately don't prefill from the DB. The user can still submit
+   * the form; if they want to update address/contact, they re-enter
+   * those fields from scratch on the homepage later (the homepage form
+   * still has all 5 steps).
+   */
+  hideAddressAndContact?: boolean
+  /**
+   * Override the submit endpoint. Default `/api/consultation` (full
+   * register-or-update with all 5 steps). For /my-plan's Edit-details
+   * modal we use `/api/consultation/update`, which only accepts the
+   * 6 Steps-0/1/2 fields and identifies the row by `plan_token`.
+   */
+  submitEndpoint?: string
+  /**
+   * Build the request body. Default sends the full FormData (all 14
+   * fields) so the existing /api/consultation contract is unchanged.
+   * Override for endpoints that expect a slimmer payload.
+   */
+  submitPayload?: (formData: FormData) => unknown
+  /** Visible label on the final Submit button. Default 'Submit'. */
+  submitButtonLabel?: string
+  /**
+   * Fires after a successful submit, before the inline success screen.
+   * The /my-plan host uses this to `window.location.reload()` so the
+   * page re-fetches the row with the freshly-updated values.
+   */
+  onSubmitSuccess?: () => void
+}> = ({
+  onClose,
+  initialData,
+  hideAddressAndContact = false,
+  submitEndpoint = DEFAULT_SUBMIT_URL,
+  submitPayload,
+  submitButtonLabel = 'Submit',
+  onSubmitSuccess,
+}) => {
+  // When `hideAddressAndContact` is true, the form shows 3 data-entry
+  // steps (region+house, roof, household+usage+devices) plus a final
+  // review step where the user sees a summary of their inputs and
+  // confirms the edit. Submit lives on the review step (index 3), not
+  // on the last data step, so the user always gets one more "Continue"
+  // between the last input and the submission — matching the homepage
+  // form's 5-step rhythm.
+  const VISIBLE_TOTAL_STEPS = hideAddressAndContact ? 4 : TOTAL_STEPS
+  const VISIBLE_LAST_STEP = VISIBLE_TOTAL_STEPS - 1
   const [step, setStep] = useState(0);
+  // Defensive clamp: if the prop flips after mount (it doesn't in
+  // practice — the modal is unmounted between opens), pull step back
+  // into the visible range so we don't render an empty screen.
+  useEffect(() => {
+    setStep((s) => (s > VISIBLE_LAST_STEP ? VISIBLE_LAST_STEP : s))
+  }, [VISIBLE_LAST_STEP])
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -388,22 +449,29 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
   const clearErrors = () => {
     setErrors({});
   };
-  const [formData, setFormData] = useState<FormData>({
-    region: '',
-    houseType: '',
-    roofType: '',
-    householdSize: '',
-    electricityUsage: '',
-    devices: [],
-    street: '',
-    houseNumber: '',
-    postalCode: '',
-    city: '',
-    salutation: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
+  const [formData, setFormData] = useState<FormData>(() => {
+    // Lazy init so initialData is only consumed once on mount. Defaults
+    // mirror FormData; missing fields fall back to the empty default so
+    // a partial prefill (e.g. only region + consumption) still leaves the
+    // other fields blank instead of `undefined`.
+    const defaults: FormData = {
+      region: '',
+      houseType: '',
+      roofType: '',
+      householdSize: '',
+      electricityUsage: '',
+      devices: [],
+      street: '',
+      houseNumber: '',
+      postalCode: '',
+      city: '',
+      salutation: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+    };
+    return initialData ? { ...defaults, ...initialData } : defaults;
   });
 
   const updateField = (field: keyof FormData, value: string | string[]) => {
@@ -420,6 +488,10 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
   };
 
   const canProceed = (): boolean => {
+    // Compressed (hideAddressAndContact) view: 4 visible steps — 0/1/2 are
+    // data entry, 3 is the Review step. The Review step is always
+    // proceed-able; data correctness was validated on the previous steps.
+    if (hideAddressAndContact && step === 3) return true
     switch (step) {
       case 0: return !!formData.region && !!formData.houseType;
       case 1: return !!formData.roofType;
@@ -444,13 +516,13 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
     setSubmitError('');
     setIsSubmitting(true);
 
-    try {
-      const res = await fetch(CONSULTATION_API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+    // Default payload = full FormData (used by the homepage flow's
+    // /api/consultation). When the host supplies a `submitPayload`
+    // builder, we use that instead — currently only /my-plan does this
+    // to send a slim 6-field body to /api/consultation/update.
+    const body = submitPayload
+      ? submitPayload(formData)
+      : {
           salutation: formData.salutation,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -466,16 +538,26 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
           householdSize: formData.householdSize,
           electricityUsage: formData.electricityUsage,
           devices: formData.devices,
-        }),
+        };
+
+    try {
+      const res = await fetch(submitEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
       });
       const data = await res.json();
 
       if (data.success) {
         setIsSubmitted(true);
         if (data.alreadyRegistered) setAlreadyRegistered(true);
-        // Modal context: signal success so the host can close / navigate.
-        // Outside of a modal this is a no-op (handler is undefined).
-        onSuccess?.();
+        // Notify host (e.g. /my-plan page reloads to refetch the row).
+        onSubmitSuccess?.();
+        // Success screen renders inline. The "Close" button on the success
+        // screen calls onClose() (via handleBackToHome), which closes the
+        // modal — matches DE site's "show prompt first, then close" flow.
       } else {
         setSubmitError(data.message || 'Something went wrong. Please try again.');
       }
@@ -527,9 +609,21 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
           <form
             name="solar-lead"
             method="POST"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              // Form-level submit (e.g. Enter key inside an input) is
+              // intercepted: only allow it from the Review step. Other
+              // steps must use the Continue button to advance — the
+              // Review step's Confirm button is its own `type="button"`
+              // handler below, not a form submit.
+              if (step !== VISIBLE_LAST_STEP) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+              }
+              void handleSubmit(e)
+            }}
           >
-            <StepIndicator current={step} total={TOTAL_STEPS} />
+            <StepIndicator current={step} total={VISIBLE_TOTAL_STEPS} />
 
             <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -667,8 +761,72 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
                     </div>
                   )}
 
-                  {/* Step 3: Address */}
-                  {step === 3 && (
+                  {/* Step 3 (compressed view only): Review + Confirm. Renders only
+                       when `hideAddressAndContact` is true, as the 4th visible
+                       step (index 3). Shows a read-only summary of the user's
+                       choices for the 6 editable consultation fields, with a
+                       "Back" link to revise. Submit lives here. */}
+                  {hideAddressAndContact && step === 3 && (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                          Review your changes
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          Confirm the consultation details you want to apply to your plan.
+                        </p>
+                      </div>
+
+                      <dl className="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white">
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Region</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {formData.region || '—'}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Property type</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {formData.houseType || '—'}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Roof type</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {formData.roofType || '—'}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Household</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {formData.householdSize || '—'}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Electricity use</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {formData.electricityUsage || '—'}
+                          </dd>
+                        </div>
+                        <div className="flex items-start justify-between px-4 py-3 gap-4">
+                          <dt className="text-sm text-gray-500 shrink-0">Devices</dt>
+                          <dd className="text-sm font-medium text-gray-800 text-right">
+                            {formData.devices.length
+                              ? formData.devices.join(', ')
+                              : '—'}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      <p className="text-xs text-gray-400 leading-relaxed">
+                        By confirming, your plan will be re-calculated using these
+                        details. Address and contact information are unchanged.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Step 3 (full form): Address — hidden on /my-plan Edit details (PII not surfaced). */}
+                  {!hideAddressAndContact && step === 3 && (
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
@@ -731,8 +889,8 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
                     </div>
                   )}
 
-                  {/* Step 4: Contact Info */}
-                  {step === 4 && (
+                  {/* Step 4: Contact Info — hidden on /my-plan Edit details (PII not surfaced). */}
+                  {!hideAddressAndContact && step === 4 && (
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
@@ -849,7 +1007,7 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
               <div />
             )}
 
-            {step < TOTAL_STEPS - 1 ? (
+            {step < VISIBLE_LAST_STEP ? (
               <button
                 type="button"
                 onClick={goNext}
@@ -865,7 +1023,17 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
               </button>
             ) : (
               <button
-                type="submit"
+                type="button"
+                onClick={(e) => {
+                  // Explicit button-click handler — bound directly to the
+                  // Review step's button only. We avoid `type="submit"`
+                  // because that routes through <form onSubmit>, which
+                  // would also fire on Enter keypress in any input above.
+                  e.preventDefault()
+                  void handleSubmit(
+                    e as unknown as React.FormEvent<HTMLFormElement>,
+                  )
+                }}
                 disabled={!canProceed() || isSubmitting}
                 className={`flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${
                   canProceed() && !isSubmitting
@@ -880,7 +1048,7 @@ const Form: React.FC<{ onSuccess?: () => void; onClose?: () => void }> = ({ onSu
                   </>
                 ) : (
                   <>
-                    Request quote
+                    {submitButtonLabel}
                     <BadgeCheck className="w-5 h-5" strokeWidth={2} />
                   </>
                 )}

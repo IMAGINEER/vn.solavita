@@ -237,12 +237,6 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
             <StarIcon key={i} className="w-4 h-4" />
           ))}
         </div>
-        <div className="text-sm font-semibold text-uk-navy mt-1">
-          4.8/5 from 320+ reviews
-        </div>
-        <div className="text-xs text-uk-slate">
-          Based on Feefo &amp; Trustpilot
-        </div>
       </div>
     </section>
   )

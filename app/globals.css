@@ -99,6 +99,12 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  button,
+  input:where([type="button"], [type="reset"], [type="submit"]) {
+    appearance: button;
+    cursor: pointer;
+  }
 }
 
 html {
@@ -281,10 +287,6 @@ html.lenis {
   background-color: var(--bg-primary) !important;
 }
 
-.light-mode [class*="text-white"]:not(button):not(a):not(.btn-gradient) {
-  color: var(--text-primary) !important;
-}
-
 .light-mode [class*="text-sv-gray"] {
   color: var(--text-secondary) !important;
 }
@@ -306,10 +308,6 @@ html.lenis {
 .light-mode .header {
   background-color: rgba(247, 249, 252, 0.95) !important;
   backdrop-filter: blur(20px);
-}
-
-.light-mode header [class*="text-white"] {
-  color: #0A1628 !important;
 }
 
 .light-mode header [class*="border-white"] {

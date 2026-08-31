@@ -1,10 +1,19 @@
 export function consultationConfirmationEmail(data: {
+  country: 'de' | 'uk' // UK repo only serves 'uk' — see assertion below
   salutation?: string
   firstName?: string
   lastName?: string
   email: string
   phone?: string
 }) {
+  // UK repo only serves the English template. If we ever see 'de' here,
+  // it's a bug — German templates live in the DE repo.
+  if (data.country !== 'uk') {
+    throw new Error(
+      `consultationConfirmationEmail called with country='${data.country}' from UK repo — German templates live in the DE repo.`
+    )
+  }
+
   const salutation = data.salutation || ''
   const name = [salutation, data.firstName, data.lastName].filter(Boolean).join(' ') || 'there'
 

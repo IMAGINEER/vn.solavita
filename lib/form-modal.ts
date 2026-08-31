@@ -13,11 +13,32 @@
  *
  * Lifecycle: a no-op when called on the server (window is undefined) so
  * it's safe to reference from default-exported component configs.
+ *
+ * Prefill: optional `prefill` is forwarded via `CustomEvent.detail` so
+ * callers (e.g. /my-plan "Edit details") can seed the form with existing
+ * Consultation fields before the user opens it.
  */
+
+import type { FormData } from './form-types'
 
 export const FORM_MODAL_OPEN_EVENT = 'solavita:open-form-modal'
 
-export const openFormModal = (): void => {
+export interface FormModalOpenDetail {
+  /** Optional seed values merged into the form's initial state. */
+  initialData?: Partial<FormData>
+}
+
+// Two-call-shape function:
+//   - Called as `onClick={openFormModal}` → no args, returns void (acts as
+//     a MouseEventHandler).
+//   - Called as `openFormModal(prefill)` → returns void; the caller wires
+//     the dispatch through e.g. `onClick={() => openFormModal(prefill)}`.
+export function openFormModal(): void
+export function openFormModal(prefill: Partial<FormData>): void
+export function openFormModal(prefill?: Partial<FormData>): void {
   if (typeof window === 'undefined') return
-  window.dispatchEvent(new CustomEvent(FORM_MODAL_OPEN_EVENT))
+  const detail: FormModalOpenDetail = prefill ? { initialData: prefill } : {}
+  window.dispatchEvent(
+    new CustomEvent(FORM_MODAL_OPEN_EVENT, { detail }),
+  )
 }
