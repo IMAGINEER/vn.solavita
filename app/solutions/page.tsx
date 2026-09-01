@@ -3,23 +3,29 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SolutionsHero from '@/components/solutions/Hero'
-import SolutionCategories from '@/components/solutions/SolutionCategories'
+import ProductSelector from '@/components/ProductSelector'
 import SolutionDetailSection from '@/components/solutions/SolutionDetail'
 import WhySolavita from '@/components/solutions/WhySolavita'
 import CTA from '@/components/solutions/CTA'
-import { solutionDetails } from '@/lib/data/solutions'
+import {
+  PRODUCT_TO_SOLUTION_ANCHOR,
+  solutionDetails,
+} from '@/lib/data/solutions'
 
 /**
  * /solutions — Solutions overview page.
  *
  * Composition (per project brief):
- *   Hero → Categories → Residential Solar → Solar + Storage →
- *   Smart Home / HEMS → Heat Pump / EV / Energy → Why Solavita → CTA
+ *   Hero → Product range (matches homepage #products grid) →
+ *   4 detail blocks → Why Solavita → CTA
  *
- * Reuses existing visual primitives (Card · Section · Container ·
- * Button · Breadcrumb). No new design tokens, no new fonts, no new
- * colour palette.
+ * The second screen reuses the homepage `<ProductSelector>` so the
+ * card layout, image, pricing and Plan Details behaviour stays in
+ * sync with `/`. Each Plan Details link scrolls to the matching
+ * detail section below via the per-product mapping in
+ * `PRODUCT_TO_SOLUTION_ANCHOR`.
  */
+
 export default function SolutionsPage() {
   // Alternate left/right image placement and bg surfaces down the four
   // detail sections so the page reads as one flowing series rather than
@@ -32,7 +38,9 @@ export default function SolutionsPage() {
 
       <SolutionsHero />
 
-      <SolutionCategories />
+      <ProductSelector
+        planDetailsAnchorFor={(id) => `#${PRODUCT_TO_SOLUTION_ANCHOR[id] ?? id}`}
+      />
 
       {solutionDetails.map((d, i) => (
         <SolutionDetailSection

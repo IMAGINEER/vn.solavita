@@ -206,7 +206,7 @@ export default function ProductDetails() {
         <div className="details-header text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
             <span className="w-2 h-2 rounded-full bg-sv-blue animate-pulse" />
-            <span className="text-sm text-sv-gray-light font-cw-regular">Technical Details</span>
+            <span className="text-sm text-sv-gray-light font-cw-regular">Components in detail</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-cw-bold mb-6">
             Components in{' '}

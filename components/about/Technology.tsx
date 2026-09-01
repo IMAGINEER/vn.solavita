@@ -71,7 +71,7 @@ export default function Technology() {
           <div className="tech-copy space-y-6">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Technology · Expertise
+              SKYWORTH engineering
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">

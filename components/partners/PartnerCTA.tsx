@@ -1,21 +1,28 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion, AnimatePresence } from 'motion/react'
+import { Check } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /**
  * Partner enquiry CTA. Visually heavier than the standard CTA block
- * because this is the page's conversion goal — includes a short form
- * sketch (name / company / email) so the page reads as a real B2B
- * enquiry destination, not just "contact us". The form is wired only
- * to a `preventDefault` submit handler for now — the project brief
- * explicitly defers the real backend.
+ * because this is the page's conversion goal — the inline form posts
+ * to /api/partner, which saves the row to `uk_partner_leads` and
+ * fires a confirmation email + a team notification.
+ *
+ * On 2xx the form swaps to an emerald success card mirroring the
+ * ContactForm success UX.
  */
+type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
+
 export default function PartnerCTA() {
   const sectionRef = useRef<HTMLElement>(null)
+  const [status, setStatus] = useState<SubmitStatus>('idle')
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -38,9 +45,56 @@ export default function PartnerCTA() {
     return () => ctx.revert()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Backend wiring deferred per project brief.
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const payload = {
+      fullName: String(data.get('name') || '').trim(),
+      company: String(data.get('company') || '').trim(),
+      email: String(data.get('email') || '').trim(),
+      partnerTrack: String(data.get('track') || '').trim(),
+      message: String(data.get('message') || '').trim(),
+    }
+    if (
+      !payload.fullName ||
+      !payload.company ||
+      !payload.email ||
+      !payload.partnerTrack
+    ) {
+      setSubmitError('Please fill in all required fields.')
+      setStatus('error')
+      return
+    }
+
+    setStatus('submitting')
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/partner', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const json = (await res.json().catch(() => ({}))) as {
+        success?: boolean
+        message?: string
+      }
+      if (!res.ok || !json.success) {
+        setSubmitError(json.message || 'Something went wrong. Please try again.')
+        setStatus('error')
+        return
+      }
+      setStatus('success')
+      form.reset()
+    } catch {
+      setSubmitError('Network error. Please try again.')
+      setStatus('error')
+    }
+  }
+
+  const reset = () => {
+    setStatus('idle')
+    setSubmitError(null)
   }
 
   return (
@@ -59,7 +113,7 @@ export default function PartnerCTA() {
           <div className="text-center mb-8 max-w-2xl mx-auto">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Become a Solavita partner
+              Partner with Solavita
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
               Tell us about{' '}
@@ -72,95 +126,156 @@ export default function PartnerCTA() {
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto"
-          >
-            <label className="block">
-              <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                Full name
-              </span>
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Jane Smith"
-                className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
-              />
-            </label>
-
-            <label className="block">
-              <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                Company
-              </span>
-              <input
-                type="text"
-                name="company"
-                required
-                placeholder="Acme Solar Ltd"
-                className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
-              />
-            </label>
-
-            <label className="block">
-              <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                Work email
-              </span>
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="jane@acme.co.uk"
-                className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
-              />
-            </label>
-
-            <label className="block">
-              <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                Partner track
-              </span>
-              <select
-                name="track"
-                defaultValue="installer"
-                className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy focus:outline-none focus:border-uk-teal"
+          <AnimatePresence mode="wait">
+            {status === 'success' ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="flex flex-col items-center text-center py-6 max-w-2xl mx-auto"
               >
-                <option value="installer">Installer</option>
-                <option value="distributor">Distributor</option>
-                <option value="business">Energy / Business Partner</option>
-              </select>
-            </label>
-
-            <label className="block md:col-span-2">
-              <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                Tell us a bit about your business
-              </span>
-              <textarea
-                name="message"
-                rows={4}
-                placeholder="Region, size, current focus…"
-                className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
-              />
-            </label>
-
-            <div className="md:col-span-2 flex flex-col sm:flex-row gap-4 items-center justify-between pt-2">
-              <p className="text-xs text-uk-slate">
-                Or email us directly:{' '}
-                <a
-                  href="mailto:partners@solavita.com"
-                  className="text-uk-teal-dark hover:text-uk-teal transition-colors"
+                <span className="w-16 h-16 rounded-full bg-uk-emerald/10 flex items-center justify-center text-uk-emerald mb-5">
+                  <Check className="w-8 h-8" strokeWidth={2.5} />
+                </span>
+                <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
+                  Thanks — we&rsquo;ve got your enquiry.
+                </h3>
+                <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
+                  Our partnerships team will get back to you within two
+                  working days. If it&rsquo;s urgent, you can reach us
+                  directly at{' '}
+                  <a
+                    href="mailto:partners@solavita.com"
+                    className="text-uk-teal-dark hover:text-uk-teal transition-colors"
+                  >
+                    partners@solavita.com
+                  </a>
+                  .
+                </p>
+                <button
+                  type="button"
+                  onClick={reset}
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
                 >
-                  partners@solavita.com
-                </a>
-              </p>
-
-              <button
-                type="submit"
-                className="btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white w-full sm:w-auto"
+                  Submit another enquiry →
+                </button>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto"
               >
-                Submit enquiry →
-              </button>
-            </div>
-          </form>
+                <label className="block">
+                  <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                    Full name
+                  </span>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Jane Smith"
+                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                    Company
+                  </span>
+                  <input
+                    type="text"
+                    name="company"
+                    required
+                    placeholder="Acme Solar Ltd"
+                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                    Work email
+                  </span>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="jane@acme.co.uk"
+                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                    Partner track
+                  </span>
+                  <select
+                    name="track"
+                    defaultValue="installer"
+                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy focus:outline-none focus:border-uk-teal"
+                  >
+                    <option value="installer">Installer</option>
+                    <option value="distributor">Distributor</option>
+                    <option value="business">Energy / Business Partner</option>
+                  </select>
+                </label>
+
+                <label className="block md:col-span-2">
+                  <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                    Tell us a bit about your business
+                  </span>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    placeholder="Region, size, current focus…"
+                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                  />
+                </label>
+
+                {submitError && (
+                  <div
+                    role="alert"
+                    className="md:col-span-2 rounded-lg border border-uk-danger/40 bg-uk-danger/10 px-4 py-3 text-sm text-uk-danger"
+                  >
+                    {submitError}
+                  </div>
+                )}
+
+                <div className="md:col-span-2 flex flex-col sm:flex-row gap-4 items-center justify-between pt-2">
+                  <p className="text-xs text-uk-slate">
+                    Or email us directly:{' '}
+                    <a
+                      href="mailto:partners@solavita.com"
+                      className="text-uk-teal-dark hover:text-uk-teal transition-colors"
+                    >
+                      partners@solavita.com
+                    </a>
+                  </p>
+
+                  <button
+                    type="submit"
+                    disabled={status === 'submitting'}
+                    className="btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white w-full sm:w-auto inline-flex items-center justify-center gap-2 disabled:opacity-70"
+                  >
+                    {status === 'submitting' ? (
+                      <>
+                        <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>Submit enquiry →</>
+                    )}
+                  </button>
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

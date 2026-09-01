@@ -8,7 +8,19 @@ import { ukProducts, ukProductFormatPrice, type UkProduct } from '@/lib/data/uk-
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function ProductSelector({ onOpenForm }: { onOpenForm?: () => void } = {}) {
+export default function ProductSelector({
+  onOpenForm,
+  planDetailsAnchorFor,
+}: {
+  onOpenForm?: () => void
+  /**
+   * Per-product anchor target for the "Plan Details →" link. When
+   * provided, the link jumps to the matching detail section on the
+   * current page (used by /solutions). When omitted, defaults to
+   * `#details` — the homepage behaviour.
+   */
+  planDetailsAnchorFor?: (productId: UkProduct['id']) => string
+} = {}) {
   const sectionRef = useRef<HTMLElement>(null)
   const [selectedProduct, setSelectedProduct] = useState<UkProduct['id']>('storage-core')
 
@@ -59,7 +71,7 @@ export default function ProductSelector({ onOpenForm }: { onOpenForm?: () => voi
         <div className="product-title text-center mb-12 md:mb-16 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Our Range
+            Choose your system
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold mb-4 text-uk-navy leading-tight">
             Find Your{' '}
@@ -134,7 +146,7 @@ export default function ProductSelector({ onOpenForm }: { onOpenForm?: () => voi
                   } object-contain pointer-events-none`}
                   />
                   <a
-                    href="#details"
+                    href={planDetailsAnchorFor ? planDetailsAnchorFor(product.id) : '#details'}
                     onClick={(e) => e.stopPropagation()}
                     className={`mt-3 w-full py-2.5 rounded-lg text-sm font-cw-bold text-center transition-all duration-300 block ${
                       isSelected

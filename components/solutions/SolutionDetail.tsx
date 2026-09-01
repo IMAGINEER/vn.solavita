@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Check } from 'lucide-react'
+import { openFormModal } from '@/lib/form-modal'
 import { type SolutionDetail } from '@/lib/data/solutions'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -117,12 +118,13 @@ export default function SolutionDetailSection({
             </ul>
 
             <div className="pt-2">
-              <a
-                href="#design-quote"
-                className="inline-flex items-center gap-2 text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors"
+              <button
+                type="button"
+                onClick={openFormModal}
+                className="inline-flex items-center gap-2 text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors cursor-pointer"
               >
                 Get a design for this solution →
-              </a>
+              </button>
             </div>
           </div>
 

@@ -104,7 +104,7 @@ export default function FreeDesignQuoteSection({
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white">
               <div className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
               <span className="text-xs font-cw-regular text-uk-slate">
-                Free Design · No Obligation
+                Free UK design &amp; quote
               </span>
             </div>
 

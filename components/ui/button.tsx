@@ -1,0 +1,66 @@
+import * as React from 'react'
+import { cn } from '@/lib/utils'
+
+// UK admin Button. Mirrors shadcn's API surface (variants + asChild via
+// radix Slot) but uses Tailwind utilities directly so we don't depend on
+// shadcn's `--color-primary` machinery — UK admin picks up the uk-teal
+// palette that already lives in app/globals.css.
+
+type ButtonVariant =
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'secondary'
+  | 'ghost'
+  | 'link'
+
+type ButtonSize = 'default' | 'sm' | 'lg' | 'icon'
+
+const VARIANT_CLASSES: Record<ButtonVariant, string> = {
+  default:
+    'bg-uk-teal-dark text-white hover:bg-uk-teal-dark/90 shadow-sm',
+  destructive:
+    'bg-red-600 text-white hover:bg-red-700 shadow-sm',
+  outline:
+    'border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm',
+  secondary:
+    'bg-uk-teal-soft text-uk-teal-dark hover:bg-uk-teal-soft/80',
+  ghost:
+    'text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark',
+  link:
+    'text-uk-teal-dark underline-offset-4 hover:underline',
+}
+
+const SIZE_CLASSES: Record<ButtonSize, string> = {
+  default: 'h-9 px-4 text-sm',
+  sm: 'h-8 px-3 text-xs',
+  lg: 'h-10 px-6 text-base',
+  icon: 'h-9 w-9',
+}
+
+const BASE_CLASSES =
+  'inline-flex items-center justify-center gap-2 rounded-md font-cw-bold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-uk-teal/40 disabled:pointer-events-none disabled:opacity-50'
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant
+  size?: ButtonSize
+}
+
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button({ className, variant = 'default', size = 'default', type = 'button', ...props }, ref) {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={cn(
+          BASE_CLASSES,
+          VARIANT_CLASSES[variant],
+          SIZE_CLASSES[size],
+          className,
+        )}
+        {...props}
+      />
+    )
+  },
+)

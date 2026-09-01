@@ -1,33 +1,39 @@
 export interface UkTrustItem {
   label: string
   sublabel: string
-  imagePath: string
+  /** Key into the `TrustIcon` switch in `components/TrustBar.tsx`. */
+  icon:
+    | 'sun'
+    | 'globe'
+    | 'shield-check'
+    | 'trophy'
+    | 'users'
 }
 
 export const ukTrustItems: UkTrustItem[] = [
   {
     label: '10+ Years',
     sublabel: 'Solar Expertise',
-    imagePath: '/static/images/trust-placeholder.webp',
+    icon: 'sun',
   },
   {
     label: 'Global Certifications',
     sublabel: 'TÜV · CE · MCS · RoHS',
-    imagePath: '/static/images/trust-placeholder.webp',
+    icon: 'globe',
   },
   {
     label: 'European Standards',
     sublabel: 'Designed for Europe',
-    imagePath: '/static/images/trust-placeholder.webp',
+    icon: 'shield-check',
   },
   {
     label: 'Media & Awards',
     sublabel: 'Trusted Worldwide',
-    imagePath: '/static/images/trust-placeholder.webp',
+    icon: 'trophy',
   },
   {
     label: 'Our Team',
     sublabel: 'Passionate & Local',
-    imagePath: '/static/images/trust-placeholder.webp',
+    icon: 'users',
   },
 ]

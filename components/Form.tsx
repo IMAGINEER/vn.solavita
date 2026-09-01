@@ -992,7 +992,10 @@ const Form: React.FC<{
             </motion.div>
           </AnimatePresence>
 
-            {/* Navigation Buttons */}
+            {/* Navigation Buttons — hidden after a successful submit so the
+                user can't trigger a duplicate POST. The success screen
+                renders its own Close / Back to homepage button. */}
+            {!isSubmitted && (
           <div className="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
             {step > 0 ? (
               <button
@@ -1055,6 +1058,7 @@ const Form: React.FC<{
               </button>
             )}
           </div>
+            )}
           </form>
         </motion.div>
 

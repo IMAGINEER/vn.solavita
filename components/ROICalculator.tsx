@@ -227,7 +227,7 @@ export default function ROICalculator() {
         <div className="roi-title text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-uk-line mb-6 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            <span className="text-sm text-uk-slate font-cw-regular">ROI Calculator</span>
+            <span className="text-sm text-uk-slate font-cw-regular">Payback in seconds</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-cw-bold mb-6 text-uk-navy">
             Calculate Your <span className="text-gradient">Savings</span>

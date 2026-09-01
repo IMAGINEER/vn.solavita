@@ -15,17 +15,17 @@ export const aboutStats: AboutStat[] = [
   {
     value: '10+',
     unit: 'Years',
-    label: 'Of solar expertise for UK homes',
+    label: 'Of solar expertise for homes',
   },
   {
     value: '5,000+',
-    unit: 'UK homes',
+    unit: 'homes',
     label: 'Powered by Solavita systems',
   },
   {
     value: '70+',
     unit: 'Years',
-    label: 'Of engineering heritage in Europe',
+    label: 'Of engineering heritage',
   },
   {
     value: '£10bn',

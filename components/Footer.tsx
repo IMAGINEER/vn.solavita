@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Phone, Mail } from 'lucide-react'
+import FormModal, { useFormModalEvent } from '@/components/FormModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -81,6 +82,15 @@ export default function Footer({
   const footerRef = useRef<HTMLElement>(null)
   const isLight = variant === 'light'
 
+  // Host the consultation FormModal here so every page that renders Footer
+  // (homepage, /solutions, /cases, /about-us, /support, /for-partners,
+  // /contact-us, etc.) gets the same open-modal event wiring without each
+  // page having to host it locally. The /my-plan page is the exception —
+  // it intentionally doesn't render Footer because its Edit-details modal
+  // uses different props (hideAddressAndContact, custom submit endpoint).
+  const [formOpen, setFormOpen] = useState(false)
+  useFormModalEvent(setFormOpen, () => {})
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const columns = footerRef.current?.querySelectorAll('.footer-col')
@@ -138,6 +148,7 @@ export default function Footer({
   const linkClass = `text-white/70 hover:text-uk-teal-soft text-sm font-cw-regular transition-colors duration-200`
 
   return (
+    <>
     <footer
       ref={footerRef}
       className="relative"
@@ -352,5 +363,12 @@ export default function Footer({
       {/* Bottom gradient accent line — UK teal-to-emerald */}
       <div className="h-1 w-full bg-uk-gradient" />
     </footer>
+
+    {/* Universal consultation FormModal — listens for `openFormModal()`
+        dispatched from Header / HeroSection / inline CTAs across every page
+        that mounts this Footer. Portals to <body> so it sits above the
+        Lenis-wrapped page surface. */}
+    <FormModal open={formOpen} onClose={() => setFormOpen(false)} />
+  </>
   )
 }

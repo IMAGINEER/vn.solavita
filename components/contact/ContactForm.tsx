@@ -17,8 +17,9 @@ import {
  * size · electricity usage · devices) — this is a plain contact
  * destination, not a quote request.
  *
- * Submit is wired to a no-op handler for now (no backend per the
- * brief). On submit the form swaps to a success card inline.
+ * Submit POSTs to /api/contact, which saves the row to
+ * `uk_contact_leads` and fires a confirmation email + a team
+ * notification. On 2xx the form swaps to the success card inline.
  */
 
 type FormStatus = 'idle' | 'submitting' | 'success'
@@ -74,6 +75,7 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>(
     {}
   )
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const setField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setState((s) => ({ ...s, [key]: value }))
@@ -109,30 +111,47 @@ export default function ContactForm() {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!validate()) return
-    // Backend wired later — flip to the success state to demonstrate
-    // the full UI flow without leaking form data.
     setStatus('submitting')
-    window.setTimeout(() => setStatus('success'), 600)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state),
+      })
+      const json = (await res.json().catch(() => ({}))) as {
+        success?: boolean
+        message?: string
+      }
+      if (!res.ok || !json.success) {
+        setSubmitError(
+          json.message || 'Something went wrong. Please try again.'
+        )
+        setStatus('idle')
+        return
+      }
+      setStatus('success')
+    } catch {
+      setSubmitError('Network error. Please try again.')
+      setStatus('idle')
+    }
   }
 
   const reset = () => {
     setState(INITIAL_STATE)
     setErrors({})
+    setSubmitError(null)
     setStatus('idle')
   }
 
   return (
     <section
       id="contact-form"
-      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
+      className="relative py-16 md:py-24 bg-white overflow-hidden"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />
-      </div>
-
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-uk-line bg-white shadow-sm overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-5">
@@ -140,7 +159,7 @@ export default function ContactForm() {
             <div className="lg:col-span-2 p-8 lg:p-10 bg-uk-teal-soft/40 border-b lg:border-b-0 lg:border-r border-uk-line">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-uk-emerald" />
-                Contact form
+                Send us a message
               </span>
               <h2 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy leading-tight">
                 Send us a message.
@@ -450,7 +469,16 @@ export default function ContactForm() {
                     )}
 
                     {/* Submit */}
-                    <div className="pt-2 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+                    <div className="pt-2 flex flex-col gap-3">
+                      {submitError && (
+                        <div
+                          role="alert"
+                          className="rounded-lg border border-uk-danger/40 bg-uk-danger/10 px-4 py-3 text-sm text-uk-danger"
+                        >
+                          {submitError}
+                        </div>
+                      )}
+                      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
                       <p className="text-xs text-uk-slate">
                         We reply within one working day.
                       </p>
@@ -471,6 +499,7 @@ export default function ContactForm() {
                           </>
                         )}
                       </button>
+                      </div>
                     </div>
                   </motion.form>
                 )}

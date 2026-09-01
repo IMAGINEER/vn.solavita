@@ -40,7 +40,7 @@ export default function SupportHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Support centre
+            Help for UK customers
           </span>
         </motion.span>
 

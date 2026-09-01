@@ -27,9 +27,9 @@ export default function ContactUsPage() {
 
       <ContactHero />
 
-      <ContactMethods />
-
       <ContactForm />
+
+      <ContactMethods />
 
       <CTA
         eyebrow="Looking for a quote?"

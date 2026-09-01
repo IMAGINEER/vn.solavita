@@ -7,6 +7,19 @@
  * any new uploads.
  */
 
+/**
+ * Map each product in the homepage Products section to the matching
+ * detail section anchor on /solutions. Shared between:
+ *   - `<Header>` Solutions dropdown (jumps to the right block on /solutions)
+ *   - `<ProductSelector>` "Plan Details →" link on /solutions
+ */
+export const PRODUCT_TO_SOLUTION_ANCHOR: Record<string, string> = {
+  essential: 'residential-solar',
+  'storage-core': 'solar-storage',
+  'smart-home': 'smart-home',
+  'premium-backup': 'energy-integration',
+}
+
 export type SolutionCategoryId =
   | 'residential-solar'
   | 'solar-storage'
@@ -79,8 +92,8 @@ export interface SolutionDetail {
 export const solutionDetails: SolutionDetail[] = [
   {
     id: 'residential-solar',
-    eyebrow: 'Solar PV',
-    title: 'Residential Solar',
+    eyebrow: 'Solar Essential',
+    title: 'Solar Essential',
     intro:
       'A complete roof-mounted solar PV system sized for your home. MCS-certified components, G98/G100 compliant and installed in around two weeks.',
     bullets: [
@@ -89,13 +102,13 @@ export const solutionDetails: SolutionDetail[] = [
       'Roof type matched mounting kit (tile / slate / flat)',
       'Smart Export Guarantee (SEG) ready',
     ],
-    imagePath: '/images/Solar_Essential.webp',
-    imageAlt: 'Residential solar panel system on a UK home',
+    imagePath: '/images/solution_1.webp',
+    imageAlt: 'Solar Essential package — roof-mounted solar PV system',
   },
   {
     id: 'solar-storage',
-    eyebrow: 'Solar + Storage',
-    title: 'Solar + Storage',
+    eyebrow: 'Storage Core',
+    title: 'Storage Core',
     intro:
       'Add a Solavita battery to store your solar energy and use it when the sun is not shining — and protect your home during a power cut.',
     bullets: [
@@ -104,13 +117,13 @@ export const solutionDetails: SolutionDetail[] = [
       'Time-of-use optimisation',
       'App-controlled charge / discharge',
     ],
-    imagePath: '/images/Storage_core.webp',
-    imageAlt: 'Solar panels paired with a Solavita home battery',
+    imagePath: '/images/solution_2.webp',
+    imageAlt: 'Storage Core package — solar panels paired with a Solavita home battery',
   },
   {
     id: 'smart-home',
-    eyebrow: 'Smart Home / HEMS',
-    title: 'Smart Home · HEMS',
+    eyebrow: 'Smart Home',
+    title: 'Smart Home',
     intro:
       'A Home Energy Management System (HEMS) that connects solar, battery and major appliances — and lets you automate everything from a single app.',
     bullets: [
@@ -119,13 +132,13 @@ export const solutionDetails: SolutionDetail[] = [
       'Smart tariffs & peak shaving',
       'Voice & IFTTT integrations',
     ],
-    imagePath: '/images/Premium_backup.webp',
-    imageAlt: 'Smart home energy management system dashboard',
+    imagePath: '/images/solution_3.webp',
+    imageAlt: 'Smart Home package — energy management system dashboard',
   },
   {
     id: 'energy-integration',
-    eyebrow: 'Heat Pump · EV · Energy',
-    title: 'Heat Pump · EV · Energy',
+    eyebrow: 'Premium Backup',
+    title: 'Premium Backup',
     intro:
       'Future-ready whole-home energy. Combine solar, battery, a heat pump and EV charging into a single optimised system — designed and installed by one team.',
     bullets: [
@@ -134,8 +147,8 @@ export const solutionDetails: SolutionDetail[] = [
       'Load balancing & dynamic tariffs',
       'One app, one installer, one warranty',
     ],
-    imagePath: '/images/Smart_home.webp',
-    imageAlt: 'Whole-home energy system with heat pump and EV charging',
+    imagePath: '/images/solution_4.webp',
+    imageAlt: 'Premium Backup package — whole-home energy system with heat pump and EV charging',
   },
 ]
 

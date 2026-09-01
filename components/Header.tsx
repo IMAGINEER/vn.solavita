@@ -4,19 +4,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { Check, ChevronDown, ChevronLeft } from 'lucide-react'
 import { ukProducts } from '@/lib/data/uk-products'
-
-/**
- * Map each product in the homepage Products section to the matching
- * detail section anchor on /solutions so the Solutions dropdown jumps
- * straight to the relevant detail block instead of back to the home
- * products grid.
- */
-const PRODUCT_TO_SOLUTION_ANCHOR: Record<string, string> = {
-  essential: 'residential-solar',
-  'storage-core': 'solar-storage',
-  'smart-home': 'smart-home',
-  'premium-backup': 'energy-integration',
-}
+import { PRODUCT_TO_SOLUTION_ANCHOR } from '@/lib/data/solutions'
 
 export interface HeaderNavItem {
   label: string

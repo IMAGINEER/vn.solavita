@@ -1,0 +1,39 @@
+import { requireAdmin } from '@/lib/auth'
+import { supabase } from '@/lib/supabase'
+import { LeadsTable, type ConsultationLead } from './LeadsTable'
+
+export const dynamic = 'force-dynamic'
+
+export default async function LeadsPage() {
+  await requireAdmin()
+
+  // UK + DE share the same Supabase project. Filter to country='uk' so
+  // DE rows are never shown here. Order: most recently touched first so
+  // re-submitted leads (UPDATE in /api/consultation dedup path) bubble
+  // to the top — same pattern as DE's /admin/leads.
+  const { data: rows } = await supabase
+    .from('consultation_leads')
+    .select(
+      'id, salutation, first_name, last_name, email, phone, ' +
+        'street, house_number, postal_code, city, ' +
+        'region, house_type, roof_type, household_size, electricity_usage, ' +
+        'devices, status, plan_token, country, created_at, updated_at',
+    )
+    .eq('country', 'uk')
+    .order('updated_at', { ascending: false })
+    .order('created_at', { ascending: false })
+
+  const leads = (rows || []) as unknown as ConsultationLead[]
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-cw-bold text-uk-navy">UK Leads</h1>
+        <p className="mt-1 text-sm text-uk-slate">
+          Consultation form submissions from uk.solavita.com. Newest first.
+        </p>
+      </div>
+      <LeadsTable leads={leads} />
+    </div>
+  )
+}

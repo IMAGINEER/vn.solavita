@@ -39,7 +39,7 @@ export default function ContactHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Contact Solavita UK
+            Speak with our UK team
           </span>
         </motion.span>
 

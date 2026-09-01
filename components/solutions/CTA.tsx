@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { openFormModal } from '@/lib/form-modal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -15,7 +16,12 @@ interface CTAProps {
   description: string
   /** Primary button label. */
   primaryLabel?: string
-  /** Anchor target for the primary button (defaults to `#design-quote`). */
+  /**
+   * Optional anchor href for the primary action. When provided, the
+   * primary button renders as an `<a>` that scrolls to the given target
+   * instead of opening the consultation form modal. Most callers want
+   * the modal — leave this undefined to get the default behaviour.
+   */
   primaryHref?: string
   /** Optional secondary link label + href. */
   secondaryLabel?: string
@@ -26,13 +32,18 @@ interface CTAProps {
  * Generic "bottom-of-page" CTA block. The teal soft glow accent + the
  * rounded border reuse the same visual rhythm as
  * FreeDesignQuoteSection, just slimmer.
+ *
+ * The primary button opens the consultation form modal by default (same
+ * behaviour as HeroSection / Header on the homepage). The Footer-hosted
+ * modal listens for the `openFormModal()` event bus, so every page that
+ * uses this CTA inherits the working modal without any extra wiring.
  */
 export default function CTA({
   eyebrow,
   title,
   description,
   primaryLabel = 'Get Free Design & Quote →',
-  primaryHref = '#design-quote',
+  primaryHref,
   secondaryLabel,
   secondaryHref,
 }: CTAProps) {
@@ -61,7 +72,7 @@ export default function CTA({
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 bg-white overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-24 bg-sv-light overflow-hidden">
       {/* Soft accent — matches FreeDesignQuoteSection so all CTAs feel
          like one family. */}
       <div className="absolute inset-0 pointer-events-none">
@@ -84,12 +95,22 @@ export default function CTA({
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <a
-              href={primaryHref}
-              className="btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white"
-            >
-              {primaryLabel}
-            </a>
+            {primaryHref ? (
+              <a
+                href={primaryHref}
+                className="btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white"
+              >
+                {primaryLabel}
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={openFormModal}
+                className="btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white cursor-pointer"
+              >
+                {primaryLabel}
+              </button>
+            )}
 
             {secondaryLabel && secondaryHref && (
               <a

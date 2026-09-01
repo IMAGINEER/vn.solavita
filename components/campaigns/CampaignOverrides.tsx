@@ -16,8 +16,8 @@ import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 
 import { activeCampaign, isCampaignActive } from '@/lib/campaigns/activeCampaign'
+import { openFormModal } from '@/lib/form-modal'
 import CampaignBody from './CampaignBody'
-import FormModal, { useFormModalEvent } from '@/components/FormModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -32,10 +32,11 @@ gsap.registerPlugin(ScrollTrigger)
  *   ArticlesSection → CasesSection → TrustBar → (optional CampaignBody) →
  *   Footer
  *
- * The 5-step consultation form lives in a modal hosted by this component;
- * the "Get Free Design & Quote" button in HeroSection / Header /
- * FreeDesignQuoteSection dispatches a window event that this component
- * listens for.
+ * The 5-step consultation form modal is now hosted by `Footer`, which is
+ * shared by every page on the site. "Get Free Design & Quote" buttons in
+ * HeroSection / FreeDesignQuoteSection / ProductSelector dispatch the
+ * `openFormModal()` event bus, which the Footer-hosted modal listens for.
+ * No per-page modal wiring needed.
  *
  * Components preserved on disk but not currently rendered:
  *   ProductDetails, BrandStory, PainPoints, DeliveryTimeline,
@@ -46,13 +47,7 @@ export default function CampaignOverrides() {
   // Date window evaluated at construction so the first paint matches the active
   // campaign (no flash-of-default before hydration).
   const [active] = useState(() => isCampaignActive())
-  const [formOpen, setFormOpen] = useState(false)
-  const openForm = () => setFormOpen(true)
   const lenisRef = useRef<Lenis | null>(null)
-
-  // Listen for `openFormModal()` dispatches from anywhere in the tree
-  // (Header, HeroSection, etc.) and mirror them into local state.
-  useFormModalEvent(setFormOpen, () => {})
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -81,15 +76,14 @@ export default function CampaignOverrides() {
     <main className="relative">
       <Header />
       <HeroSection override={heroOverride} />
-      <ProductSelector onOpenForm={openForm} />
-      <FreeDesignQuoteSection onOpenForm={openForm} />
+      <ProductSelector onOpenForm={openFormModal} />
+      <FreeDesignQuoteSection onOpenForm={openFormModal} />
       {/* <ArticlesSection /> */} {/* Knowledge Hub — hidden for now */}
       <CasesSection />
       <TrustBar />
       {showCampaignBody ? <CampaignBody /> : null}
       <Footer />
       <FloatingButtons />
-      <FormModal open={formOpen} onClose={() => setFormOpen(false)} />
     </main>
   )
 }

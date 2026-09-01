@@ -90,7 +90,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
       )
   }, [])
 
-  const defaultBadge = 'Designed for the UK · Premium Quality'
+  const defaultBadge = 'Premium solar for UK homes'
   const defaultH1: [string, string, string] = [
     'Power Your Home.',
     'Shape a Greener UK.',

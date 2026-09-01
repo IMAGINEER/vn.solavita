@@ -55,13 +55,17 @@ export default function ContactMethods() {
     <section
       ref={sectionRef}
       id="contact-methods"
-      className="relative py-16 md:py-24 bg-white"
+      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            How to reach us
+            Choose your channel
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Other ways to{' '}

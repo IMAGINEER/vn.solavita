@@ -26,7 +26,7 @@ export default function OfferCard({
 }: OfferCardProps) {
   return (
     <section className="rounded-2xl p-6 bg-uk-teal-soft/40 border border-uk-teal/30 flex flex-col lg:flex-row gap-6 lg:items-end lg:justify-between">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
         <div>
           <div className="text-xs font-cw-regular text-uk-slate uppercase tracking-wider">
             System price
@@ -46,7 +46,7 @@ export default function OfferCard({
             {formatGBP(metrics.offerPriceGbp)}
           </div>
         </div>
-        <div>
+        <div className="sm:col-span-2">
           <div className="text-xs font-cw-regular text-uk-slate uppercase tracking-wider">
             Offer valid until
           </div>

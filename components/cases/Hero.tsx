@@ -37,7 +37,7 @@ export default function CasesHero() {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mt-6"
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-          <span className="text-xs font-cw-regular text-white/90">UK case studies</span>
+          <span className="text-xs font-cw-regular text-white/90">Real UK installations</span>
         </motion.span>
 
         <motion.h1
