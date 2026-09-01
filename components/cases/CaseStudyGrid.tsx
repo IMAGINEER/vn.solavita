@@ -23,7 +23,7 @@ const FILTERS: Filter[] = [
 ]
 
 /**
- * Filterable case study grid. Filter is client-only state — the page
+ * Filterable case study grid. Filter is client-only state - the page
  * itself stays server-renderable for SEO. Filter buttons reuse the
  * `rounded-full` pill style used elsewhere on the site.
  */
@@ -108,7 +108,7 @@ export default function CaseStudyGrid() {
           ))}
         </div>
 
-        {/* Empty state — only triggers if data filters down to nothing. */}
+        {/* Empty state - only triggers if data filters down to nothing. */}
         {visible.length === 0 && (
           <div className="text-center py-16 text-uk-slate">
             No case studies yet for this system type. Check back soon.

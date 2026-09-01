@@ -7,7 +7,7 @@ import FormModal, { useFormModalEvent } from '@/components/FormModal'
 import type { FormData } from '@/lib/form-types'
 
 /**
- * `/my-plan?{identifier}` — reads the `id` query param via React 19 `use()`
+ * `/my-plan?{identifier}` - reads the `id` query param via React 19 `use()`
  * (Next.js 16 hands Client Components a `Promise` for `searchParams`).
  *
  * Two branches:

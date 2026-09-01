@@ -13,12 +13,12 @@ const BadgeIcon = ({ className }: { className?: string }) => (
 )
 
 /**
- * Technology / Expertise — explains the engineering credentials behind
+ * Technology / Expertise - explains the engineering credentials behind
  * Solavita and lists the certifications that matter to UK customers
  * (MCS · G98/G100 · TÜV · ISO).
  *
  * The right-hand image is the existing product render used on the
- * homepage /solutions section — reusing it keeps the asset catalogue
+ * homepage /solutions section - reusing it keeps the asset catalogue
  * small while still giving the section a focal point.
  */
 export default function Technology() {
@@ -81,7 +81,7 @@ export default function Technology() {
 
             <p className="text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
               Every Solavita system is built on Tier-1 components
-              engineered by the SKYWORTH Group — the same supply chain
+              engineered by the SKYWORTH Group - the same supply chain
               that powers 400 million households worldwide with TVs,
               appliances and smart-home systems.
             </p>

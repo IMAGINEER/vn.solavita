@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 /**
  * "Learn, Compare, Decide with Confidence" section.
- * 3 article cards + 1 FAQ card — all 4 share the same visual hierarchy
+ * 3 article cards + 1 FAQ card - all 4 share the same visual hierarchy
  * (visual area · tag · title · arrow). FAQ uses a light-teal variant for
  * emphasis; a separate bottom CTA routes to the full article library.
  * Uses the same card primitive as ProductSelector / CasesSection.
@@ -62,7 +62,7 @@ export default function ArticlesSection() {
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
             Plain-English guides, side-by-side product comparisons, and FAQs
-            written by our UK engineers — so you understand every decision
+            written by our UK engineers - so you understand every decision
             before you sign anything.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function ArticlesSection() {
             </a>
           ))}
 
-          {/* FAQ card — same hierarchy, light-teal variant, icon visual */}
+          {/* FAQ card - same hierarchy, light-teal variant, icon visual */}
           <a
             href="#faq"
             className="article-card group rounded-2xl p-6 bg-uk-teal-soft border border-uk-teal/30 hover:shadow-md transition-all flex flex-col"

@@ -6,7 +6,7 @@ import { partnerNotificationEmail } from '@/lib/emails/partner-notification'
 
 export const dynamic = 'force-dynamic'
 
-// UK team inbox — keep in sync with /components/Footer.tsx + ContactMethods.tsx.
+// UK team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
 const TEAM_EMAIL = 'uk@solavita.com'
 
 const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as const

@@ -1,5 +1,5 @@
 export function consultationConfirmationEmail(data: {
-  country: 'de' | 'uk' // UK repo only serves 'uk' — see assertion below
+  country: 'de' | 'uk' // UK repo only serves 'uk' - see assertion below
   salutation?: string
   firstName?: string
   lastName?: string
@@ -7,10 +7,10 @@ export function consultationConfirmationEmail(data: {
   phone?: string
 }) {
   // UK repo only serves the English template. If we ever see 'de' here,
-  // it's a bug — German templates live in the DE repo.
+  // it's a bug - German templates live in the DE repo.
   if (data.country !== 'uk') {
     throw new Error(
-      `consultationConfirmationEmail called with country='${data.country}' from UK repo — German templates live in the DE repo.`
+      `consultationConfirmationEmail called with country='${data.country}' from UK repo - German templates live in the DE repo.`
     )
   }
 
@@ -18,7 +18,7 @@ export function consultationConfirmationEmail(data: {
   const name = [salutation, data.firstName, data.lastName].filter(Boolean).join(' ') || 'there'
 
   return {
-    subject: 'Your enquiry is with us — Solavita UK',
+    subject: 'Your enquiry is with us - Solavita UK',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -46,7 +46,7 @@ ${data.phone ? `<p style="margin:0; font-size:14px; color:#374151;">Phone: ${dat
 </table>
 
 <p style="font-size:14px; color:#374151; line-height:1.6; margin:0 0 8px 0;">You can reach our team directly:</p>
-<p style="font-size:13px; color:#6b7280; line-height:1.7; margin:0;">uk@solavita.com · Mon–Fri 9–18 GMT</p>
+<p style="font-size:13px; color:#6b7280; line-height:1.7; margin:0;">uk@solavita.com · Mon-Fri 9-18 GMT</p>
 </td></tr>
 
 <!-- Footer -->

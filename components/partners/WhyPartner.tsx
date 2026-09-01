@@ -37,7 +37,7 @@ const iconFor = (i: number) => {
 }
 
 /**
- * "Why Partner with Solavita" — six-reason block in a 3-column grid.
+ * "Why Partner with Solavita" - six-reason block in a 3-column grid.
  * Mirrors the Why Solavita block on /solutions but B2B-flavoured.
  */
 export default function WhyPartner() {

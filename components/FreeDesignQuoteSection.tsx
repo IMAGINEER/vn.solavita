@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger)
  *
  * Left column carries the value proposition + CTA; right column shows a
  * static sample report image so the user can see what kind of professional
- * proposal they'll receive after submitting their details. Purely visual —
+ * proposal they'll receive after submitting their details. Purely visual -
  * no interaction.
  */
 
@@ -92,7 +92,7 @@ export default function FreeDesignQuoteSection({
       id="design-quote"
       className="relative py-16 md:py-24 overflow-hidden bg-white"
     >
-      {/* Soft accent — matches the page's teal direction */}
+      {/* Soft accent - matches the page's teal direction */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />
       </div>

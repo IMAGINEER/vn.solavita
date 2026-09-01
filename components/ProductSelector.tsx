@@ -17,7 +17,7 @@ export default function ProductSelector({
    * Per-product anchor target for the "Plan Details →" link. When
    * provided, the link jumps to the matching detail section on the
    * current page (used by /solutions). When omitted, defaults to
-   * `#details` — the homepage behaviour.
+   * `#details` - the homepage behaviour.
    */
   planDetailsAnchorFor?: (productId: UkProduct['id']) => string
 } = {}) {
@@ -83,7 +83,7 @@ export default function ProductSelector({
           </p>
         </div>
 
-        {/* Product Cards Grid — 4 columns on desktop, 2 on tablet, 1 on mobile */}
+        {/* Product Cards Grid - 4 columns on desktop, 2 on tablet, 1 on mobile */}
         <div className="product-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {ukProducts.map((product) => {
             const isSelected = selectedProduct === product.id
@@ -111,7 +111,7 @@ export default function ProductSelector({
                 {/* Power & Storage */}
                 <div className="flex items-center gap-2 mt-3">
                   <span className="text-uk-teal font-cw-bold text-base">{product.power}</span>
-                  {product.storage !== '—' && (
+                  {product.storage !== '-' && (
                     <>
                       <span className="text-uk-slate">/</span>
                       <span className="text-uk-teal font-cw-bold text-base">{product.storage}</span>
@@ -132,11 +132,11 @@ export default function ProductSelector({
                   ))}
                 </ul>
 
-                {/* Product image — anchored to the bottom-right corner of the card */}
+                {/* Product image - anchored to the bottom-right corner of the card */}
 
-                {/* CTA — pinned to the bottom via mt-auto */}
+                {/* CTA - pinned to the bottom via mt-auto */}
                 <div className="mt-auto pt-4 border-t border-uk-line relative">
-                  {/* Product image — bottom edge sits on the divider line, anchored to the right */}
+                  {/* Product image - bottom edge sits on the divider line, anchored to the right */}
                   <img
                     src={product.imagePath}
                     alt={`${product.name} solar system`}

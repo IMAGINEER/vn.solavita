@@ -8,7 +8,7 @@ import FeaturedCase from '@/components/cases/FeaturedCase'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /cases — Case studies index.
+ * /cases - Case studies index.
  *
  * Composition (per project brief):
  *   Hero → Case Study Grid → Featured Case → CTA

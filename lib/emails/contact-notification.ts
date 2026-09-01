@@ -9,7 +9,7 @@
 const TEAM_EMAIL = 'uk@solavita.com'
 
 function subjectLabel(subject: string): string {
-  // contactSubjects uses lowercase ids ('general', 'sales', …). Capitalise
+  // contactSubjects uses lowercase ids ('general', 'sales', ...). Capitalise
   // first letter for the email subject without inventing copy.
   return subject.charAt(0).toUpperCase() + subject.slice(1)
 }
@@ -30,7 +30,7 @@ export function contactNotificationEmail(data: {
     .join(' ')
 
   return {
-    subject: `[UK Contact] ${subjectLabel(data.subject)} — ${fullName || data.email}`,
+    subject: `[UK Contact] ${subjectLabel(data.subject)} - ${fullName || data.email}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -49,7 +49,7 @@ export function contactNotificationEmail(data: {
 
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; width:120px; vertical-align:top;">Subject</td><td style="padding:8px 0; font-size:14px; color:#0f172a; font-weight:600;">${subjectLabel(data.subject)}</td></tr>
-<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Name</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${fullName || '—'}</td></tr>
+<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Name</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${fullName || '-'}</td></tr>
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Email</td><td style="padding:8px 0; font-size:14px; border-top:1px solid #f1f5f9;"><a href="mailto:${data.email}" style="color:#0f766e;">${data.email}</a></td></tr>
 ${data.phone ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Phone</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.phone}</td></tr>` : ''}
 ${data.postcode || data.city ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Location</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${[data.city, data.postcode].filter(Boolean).join(', ')}</td></tr>` : ''}

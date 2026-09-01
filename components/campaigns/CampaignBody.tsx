@@ -7,7 +7,7 @@ const steps: { n: number; title: string; body: string }[] = [
   {
     n: 1,
     title: 'Send enquiry',
-    body: 'Free design & quote in 15 minutes — completely no obligation.',
+    body: 'Free design & quote in 15 minutes - completely no obligation.',
   },
   {
     n: 2,
@@ -24,7 +24,7 @@ const steps: { n: number; title: string; body: string }[] = [
 const faqItems: { q: string; a: string }[] = [
   {
     q: 'How does the Smart Export Guarantee (SEG) work?',
-    a: 'Once your system is commissioned and registered with your electricity supplier, they pay you for every kWh you export back to the grid. Current SEG rates are set by suppliers and typically range from 4–15p per kWh. We help with the registration paperwork.',
+    a: 'Once your system is commissioned and registered with your electricity supplier, they pay you for every kWh you export back to the grid. Current SEG rates are set by suppliers and typically range from 4-15p per kWh. We help with the registration paperwork.',
   },
   {
     q: 'Do I need planning permission?',
@@ -32,7 +32,7 @@ const faqItems: { q: string; a: string }[] = [
   },
   {
     q: 'What about the 0% VAT on solar?',
-    a: 'From 1 April 2022, the UK government applies 0% VAT on the supply and installation of residential solar panels and battery storage for five years. All our quotes include this benefit — no extra paperwork needed.',
+    a: 'From 1 April 2022, the UK government applies 0% VAT on the supply and installation of residential solar panels and battery storage for five years. All our quotes include this benefit - no extra paperwork needed.',
   },
   {
     q: 'How is my system monitored?',
@@ -45,7 +45,7 @@ export default function CampaignBody() {
 
   return (
     <div className="relative z-10 max-w-3xl mx-auto px-6 mt-16">
-      {/* How it works — the CTA process (second screen = call to action) */}
+      {/* How it works - the CTA process (second screen = call to action) */}
       <div className="mb-12">
         <div className="grid md:grid-cols-3 gap-4">
           {steps.map((s) => (

@@ -16,7 +16,7 @@ interface OfferCardProps {
  * without a page refresh.
  *
  * "Your offer" is visually emphasised (highlighted background + larger
- * value) — that's the figure the customer will actually pay, so it sits
+ * value) - that's the figure the customer will actually pay, so it sits
  * at the centre of attention.
  */
 export default function OfferCard({
@@ -35,7 +35,7 @@ export default function OfferCard({
             {formatGBP(systemPriceGbp)}
           </div>
         </div>
-        {/* "Your offer" — emphasised. Highlighted background + larger
+        {/* "Your offer" - emphasised. Highlighted background + larger
             value + emerald accent so the customer's actual price is the
             focal point of the row. */}
         <div className="rounded-xl bg-white border border-uk-teal/40 px-4 py-3 -my-1 shadow-sm">

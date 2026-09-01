@@ -47,7 +47,7 @@ export default function BrandStory() {
             <span className="text-uk-teal">Global Heritage.</span> Built for the UK.
           </h2>
           <p className="text-lg text-uk-slate font-cw-regular max-w-3xl mx-auto">
-            Solavita is the UK residential solar brand of the SKYWORTH Group — one of the world's largest electronics manufacturers.
+            Solavita is the UK residential solar brand of the SKYWORTH Group - one of the world's largest electronics manufacturers.
             Premium engineering from a £10bn group, designed specifically for British homes, weather and regulations.
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function BrandStory() {
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed mb-4">
               Every Solavita system is engineered for UK conditions: MCS-certified components, G98/G100 grid compliance,
-              and installers trained on British roof types — from slate in Yorkshire to clay tiles in the South East.
+              and installers trained on British roof types - from slate in Yorkshire to clay tiles in the South East.
               Our UK-based service team is on hand for the lifetime of your system.
             </p>
             <div className="rounded-xl overflow-hidden border border-uk-line bg-uk-teal-soft">

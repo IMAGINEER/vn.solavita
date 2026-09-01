@@ -1,6 +1,6 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-// Lazy initialization — Next.js evaluates this module during the build to collect
+// Lazy initialization - Next.js evaluates this module during the build to collect
 // page data, but env vars aren't injected in the build environment. Creating the
 // client at module load would throw and fail the build. We defer creation to first
 // access and cache the singleton.
@@ -21,7 +21,7 @@ function getSupabase(): SupabaseClient {
   return _client
 }
 
-// Proxy preserves the existing `supabase.from(...)` call sites — every property
+// Proxy preserves the existing `supabase.from(...)` call sites - every property
 // access goes through getSupabase(), so the client is created on first use.
 export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
   get(_target, prop) {

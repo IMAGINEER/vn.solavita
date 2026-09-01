@@ -98,7 +98,7 @@ export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
               </TableCell>
               <TableCell className="max-w-[20rem]">
                 <div className="line-clamp-2" title={p.message ?? ''}>
-                  {p.message || '—'}
+                  {p.message || '-'}
                 </div>
               </TableCell>
               <TableCell>

@@ -13,7 +13,7 @@ import {
 } from '@/lib/data/solutions'
 
 /**
- * /solutions — Solutions overview page.
+ * /solutions - Solutions overview page.
  *
  * Composition (per project brief):
  *   Hero → Product range (matches homepage #products grid) →
@@ -62,7 +62,7 @@ export default function SolutionsPage() {
             <span className="text-gradient">Get a free design & quote.</span>
           </>
         }
-        description="Tell us about your home. Our UK engineers will design the right system — solar, battery, HEMS or whole-home — and send you a clear, no-obligation quote."
+        description="Tell us about your home. Our UK engineers will design the right system - solar, battery, HEMS or whole-home - and send you a clear, no-obligation quote."
         secondaryLabel="Talk to our team"
         secondaryHref="mailto:uk@solavita.com"
       />

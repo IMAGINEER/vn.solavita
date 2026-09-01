@@ -29,7 +29,7 @@ gsap.registerPlugin(ScrollTrigger)
  *   └────────────────────────────────────────────────────────────┘
  *
  * Footer surface colour is driven by theme rules (`.light-mode footer`,
- * `.dark footer` in globals.css). No Tailwind bg-* class is applied here —
+ * `.dark footer` in globals.css). No Tailwind bg-* class is applied here -
  * the surface is `#EEF2F7` in light mode and `#060E1A` in dark mode so
  * the footer always matches the project's standard page background
  * palette, regardless of `variant`.
@@ -56,7 +56,7 @@ interface FooterProps {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
-   Stylised Union Jack — same artwork used in Hero trust pills and Header.
+   Stylised Union Jack - same artwork used in Hero trust pills and Header.
    ──────────────────────────────────────────────────────────────────────── */
 const FlagUK = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
   <svg
@@ -85,7 +85,7 @@ export default function Footer({
   // Host the consultation FormModal here so every page that renders Footer
   // (homepage, /solutions, /cases, /about-us, /support, /for-partners,
   // /contact-us, etc.) gets the same open-modal event wiring without each
-  // page having to host it locally. The /my-plan page is the exception —
+  // page having to host it locally. The /my-plan page is the exception -
   // it intentionally doesn't render Footer because its Edit-details modal
   // uses different props (hideAddressAndContact, custom submit endpoint).
   const [formOpen, setFormOpen] = useState(false)
@@ -135,7 +135,7 @@ export default function Footer({
   const products = productLinks ?? defaultProductLinks
   const companies = companyLinks ?? defaultCompanyLinks
 
-  // Legal links — promoted from the bottom bar to a dedicated column.
+  // Legal links - promoted from the bottom bar to a dedicated column.
   const legalLinks: FooterLink[] = [
     { label: 'Terms of Use', href: '/terms', external: false },
     { label: 'Privacy Policy', href: '/privacy', external: false },
@@ -153,7 +153,7 @@ export default function Footer({
       ref={footerRef}
       className="relative"
     >
-      {/* Top divider — fades into the footer on both sides */}
+      {/* Top divider - fades into the footer on both sides */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       {/* ───── Main content: Brand + 6 link columns ───── */}
@@ -166,7 +166,7 @@ export default function Footer({
             </div>
             <p className="text-white/70 text-sm font-cw-regular leading-relaxed mb-6 max-w-xs">
               A SKYWORTH Group company.
-              Clean energy for every UK home — as easy as any household
+              Clean energy for every UK home - as easy as any household
               appliance.
             </p>
             <div className="flex gap-3">
@@ -346,7 +346,7 @@ export default function Footer({
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left">
-              © 2026 Solavita UK Ltd — A SKYWORTH Group company. All rights
+              © 2026 Solavita UK Ltd - A SKYWORTH Group company. All rights
               reserved.
             </p>
             <div
@@ -360,11 +360,11 @@ export default function Footer({
         </div>
       </div>
 
-      {/* Bottom gradient accent line — UK teal-to-emerald */}
+      {/* Bottom gradient accent line - UK teal-to-emerald */}
       <div className="h-1 w-full bg-uk-gradient" />
     </footer>
 
-    {/* Universal consultation FormModal — listens for `openFormModal()`
+    {/* Universal consultation FormModal - listens for `openFormModal()`
         dispatched from Header / HeroSection / inline CTAs across every page
         that mounts this Footer. Portals to <body> so it sits above the
         Lenis-wrapped page surface. */}

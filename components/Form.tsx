@@ -145,15 +145,15 @@ const ACIcon = () => (
 // ============ FORM DATA ============
 
 const REGIONS = [
-  'England – South East',
-  'England – South West',
-  'England – London',
-  'England – East',
-  'England – East Midlands',
-  'England – West Midlands',
-  'England – Yorkshire & the Humber',
-  'England – North West',
-  'England – North East',
+  'England - South East',
+  'England - South West',
+  'England - London',
+  'England - East',
+  'England - East Midlands',
+  'England - West Midlands',
+  'England - Yorkshire & the Humber',
+  'England - North West',
+  'England - North East',
   'Wales',
   'Scotland',
   'Northern Ireland',
@@ -183,8 +183,8 @@ const HOUSEHOLD_SIZES = [
 
 const ELECTRICITY_USAGE = [
   { id: 'low', label: 'Low', description: '< 3,000 kWh/year', emoji: '💡' },
-  { id: 'medium', label: 'Medium', description: '3,000–5,000 kWh/year', emoji: '⚡' },
-  { id: 'high', label: 'High', description: '5,000–8,000 kWh/year', emoji: '🔌' },
+  { id: 'medium', label: 'Medium', description: '3,000-5,000 kWh/year', emoji: '⚡' },
+  { id: 'high', label: 'High', description: '5,000-8,000 kWh/year', emoji: '🔌' },
   { id: 'very-high', label: 'Very high', description: '> 8,000 kWh/year', emoji: '🏭' },
 ];
 
@@ -332,12 +332,12 @@ const Form: React.FC<{
   initialData?: Partial<FormData>
   /**
    * When true, the form renders only Steps 0/1/2 (region, house/roof
-   * type, household/usage/devices) — Steps 3 (Address) and 4 (Contact
+   * type, household/usage/devices) - Steps 3 (Address) and 4 (Contact
    * Info) are skipped entirely. The Submit button shows on the last
    * visible step instead of on Step 4. The StepIndicator is recomputed
    * so it shows 3 dots, not 5.
    *
-   * Used by /my-plan "Edit details" — those steps carry PII which we
+   * Used by /my-plan "Edit details" - those steps carry PII which we
    * deliberately don't prefill from the DB. The user can still submit
    * the form; if they want to update address/contact, they re-enter
    * those fields from scratch on the homepage later (the homepage form
@@ -379,13 +379,13 @@ const Form: React.FC<{
   // review step where the user sees a summary of their inputs and
   // confirms the edit. Submit lives on the review step (index 3), not
   // on the last data step, so the user always gets one more "Continue"
-  // between the last input and the submission — matching the homepage
+  // between the last input and the submission - matching the homepage
   // form's 5-step rhythm.
   const VISIBLE_TOTAL_STEPS = hideAddressAndContact ? 4 : TOTAL_STEPS
   const VISIBLE_LAST_STEP = VISIBLE_TOTAL_STEPS - 1
   const [step, setStep] = useState(0);
   // Defensive clamp: if the prop flips after mount (it doesn't in
-  // practice — the modal is unmounted between opens), pull step back
+  // practice - the modal is unmounted between opens), pull step back
   // into the visible range so we don't render an empty screen.
   useEffect(() => {
     setStep((s) => (s > VISIBLE_LAST_STEP ? VISIBLE_LAST_STEP : s))
@@ -488,7 +488,7 @@ const Form: React.FC<{
   };
 
   const canProceed = (): boolean => {
-    // Compressed (hideAddressAndContact) view: 4 visible steps — 0/1/2 are
+    // Compressed (hideAddressAndContact) view: 4 visible steps - 0/1/2 are
     // data entry, 3 is the Review step. The Review step is always
     // proceed-able; data correctness was validated on the previous steps.
     if (hideAddressAndContact && step === 3) return true
@@ -518,7 +518,7 @@ const Form: React.FC<{
 
     // Default payload = full FormData (used by the homepage flow's
     // /api/consultation). When the host supplies a `submitPayload`
-    // builder, we use that instead — currently only /my-plan does this
+    // builder, we use that instead - currently only /my-plan does this
     // to send a slim 6-field body to /api/consultation/update.
     const body = submitPayload
       ? submitPayload(formData)
@@ -557,7 +557,7 @@ const Form: React.FC<{
         onSubmitSuccess?.();
         // Success screen renders inline. The "Close" button on the success
         // screen calls onClose() (via handleBackToHome), which closes the
-        // modal — matches DE site's "show prompt first, then close" flow.
+        // modal - matches DE site's "show prompt first, then close" flow.
       } else {
         setSubmitError(data.message || 'Something went wrong. Please try again.');
       }
@@ -612,7 +612,7 @@ const Form: React.FC<{
             onSubmit={(e) => {
               // Form-level submit (e.g. Enter key inside an input) is
               // intercepted: only allow it from the Review step. Other
-              // steps must use the Continue button to advance — the
+              // steps must use the Continue button to advance - the
               // Review step's Confirm button is its own `type="button"`
               // handler below, not a form submit.
               if (step !== VISIBLE_LAST_STEP) {
@@ -679,7 +679,7 @@ const Form: React.FC<{
                           onChange={e => { updateField('region', e.target.value); clearErrors(); }}
                           className={`w-full px-4 py-3 border-2 ${errors.region ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all appearance-none bg-white`}
                         >
-                          <option value="">Please select…</option>
+                          <option value="">Please select...</option>
                           {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
                         </select>
                         {errors.region && <p className="text-red-500 text-xs mt-1">{errors.region}</p>}
@@ -781,31 +781,31 @@ const Form: React.FC<{
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Region</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.region || '—'}
+                            {formData.region || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Property type</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.houseType || '—'}
+                            {formData.houseType || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Roof type</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.roofType || '—'}
+                            {formData.roofType || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Household</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.householdSize || '—'}
+                            {formData.householdSize || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Electricity use</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.electricityUsage || '—'}
+                            {formData.electricityUsage || '-'}
                           </dd>
                         </div>
                         <div className="flex items-start justify-between px-4 py-3 gap-4">
@@ -813,7 +813,7 @@ const Form: React.FC<{
                           <dd className="text-sm font-medium text-gray-800 text-right">
                             {formData.devices.length
                               ? formData.devices.join(', ')
-                              : '—'}
+                              : '-'}
                           </dd>
                         </div>
                       </dl>
@@ -825,7 +825,7 @@ const Form: React.FC<{
                     </div>
                   )}
 
-                  {/* Step 3 (full form): Address — hidden on /my-plan Edit details (PII not surfaced). */}
+                  {/* Step 3 (full form): Address - hidden on /my-plan Edit details (PII not surfaced). */}
                   {!hideAddressAndContact && step === 3 && (
                     <div className="space-y-6">
                       <div>
@@ -889,7 +889,7 @@ const Form: React.FC<{
                     </div>
                   )}
 
-                  {/* Step 4: Contact Info — hidden on /my-plan Edit details (PII not surfaced). */}
+                  {/* Step 4: Contact Info - hidden on /my-plan Edit details (PII not surfaced). */}
                   {!hideAddressAndContact && step === 4 && (
                     <div className="space-y-6">
                       <div>
@@ -992,7 +992,7 @@ const Form: React.FC<{
             </motion.div>
           </AnimatePresence>
 
-            {/* Navigation Buttons — hidden after a successful submit so the
+            {/* Navigation Buttons - hidden after a successful submit so the
                 user can't trigger a duplicate POST. The success screen
                 renders its own Close / Back to homepage button. */}
             {!isSubmitted && (
@@ -1028,7 +1028,7 @@ const Form: React.FC<{
               <button
                 type="button"
                 onClick={(e) => {
-                  // Explicit button-click handler — bound directly to the
+                  // Explicit button-click handler - bound directly to the
                   // Review step's button only. We avoid `type="submit"`
                   // because that routes through <form onSubmit>, which
                   // would also fire on Enter keypress in any input above.
@@ -1047,7 +1047,7 @@ const Form: React.FC<{
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending…
+                    Sending...
                   </>
                 ) : (
                   <>

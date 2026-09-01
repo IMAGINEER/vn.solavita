@@ -41,12 +41,12 @@ export const ukCases: UkCase[] = [
 export interface UkTestimonial {
   quote: string
   author: string
-  rating: number // 1–5
+  rating: number // 1-5
 }
 
 export const ukTestimonial: UkTestimonial = {
   quote:
     'From consultation to installation, the whole experience was fantastic. Our bills dropped significantly.',
-  author: '— Sarah M.',
+  author: '- Sarah M.',
   rating: 5,
 }

@@ -26,7 +26,7 @@ export default function ROICalculator() {
   const [selfConsumptionRateInput, setSelfConsumptionRateInput] = useState(60)
   const [hasHeatPump, setHasHeatPump] = useState(false)
   const [hasEV, setHasEV] = useState(false)
-  // UK Smart Export Guarantee (SEG) typical rate — varies by supplier, ~£0.15/kWh
+  // UK Smart Export Guarantee (SEG) typical rate - varies by supplier, ~£0.15/kWh
   const feedInTariff = 0.15
 
   const systemInvestment = 12999
@@ -381,7 +381,7 @@ export default function ROICalculator() {
               <div className="flex justify-between text-sm">
                 <span className="text-uk-slate">Appliances</span>
                 <span className="text-uk-navy font-cw-bold">
-                  {!hasHeatPump && !hasEV ? '—' : ''}
+                  {!hasHeatPump && !hasEV ? '-' : ''}
                   {hasHeatPump ? '🔥 ' : ''}{hasHeatPump && hasEV ? '·' : ''}{hasEV ? '🚗' : ''}
                 </span>
               </div>
@@ -607,7 +607,7 @@ export default function ROICalculator() {
                 Want a calculation based on your actual roof?
               </p>
               <p className="text-sm text-uk-slate mb-5">
-                Our AI builds a fixed-price solar design in 15 minutes — accurate yield forecast and savings based on your real location.
+                Our AI builds a fixed-price solar design in 15 minutes - accurate yield forecast and savings based on your real location.
               </p>
               <button onClick={openFormModal} className="btn-gradient px-8 py-4 rounded-full text-white font-cw-bold text-base shadow-lg shadow-uk-teal/20">
                 Start AI design →

@@ -21,7 +21,7 @@ interface AccordionRowProps {
 }
 
 /**
- * One accordion row — motion-driven height/opacity transition. The
+ * One accordion row - motion-driven height/opacity transition. The
  * button is the full row so the click target is generous; chevron
  * rotates for affordance.
  */
@@ -78,7 +78,7 @@ function AccordionRow({ item, isOpen, onToggle }: AccordionRowProps) {
 
 /**
  * FAQ accordion grouped by support category. All categories are shown
- * by default — the section is the single source of truth for support
+ * by default - the section is the single source of truth for support
  * questions. (Searching / filtering is out of scope for this iteration.)
  */
 export default function FAQ() {
@@ -108,7 +108,7 @@ export default function FAQ() {
   }, [])
 
   // Group items by category, but only render categories that actually
-  // have items (defensive — keeps the section usable if a category is
+  // have items (defensive - keeps the section usable if a category is
   // emptied in the data file).
   const groups = supportCategories
     .map((cat) => ({

@@ -18,14 +18,14 @@ interface PlanUnavailableProps {
 }
 
 /**
- * Fallback screen for `/my-plan` — used in three scenarios:
- *   1. Empty / missing `?id=…` query param (handled by page.tsx).
+ * Fallback screen for `/my-plan` - used in three scenarios:
+ *   1. Empty / missing `?id=...` query param (handled by page.tsx).
  *   2. Token returned 404 from `/api/my-plan/[token]` (no row).
- *   3. Token returned 500 (DB unreachable) — when `onRetry` is provided,
+ *   3. Token returned 500 (DB unreachable) - when `onRetry` is provided,
  *      copy swaps to a recoverable error message with a retry button.
  *
  * Mirrors the page shell of legal pages so the visual hierarchy stays
- * consistent — the only thing missing is the configuration panel below.
+ * consistent - the only thing missing is the configuration panel below.
  */
 export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) {
   const isError = Boolean(onRetry)
@@ -86,13 +86,13 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
           <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy mb-4">
             {isError
               ? 'Please try again'
-              : 'We can’t load this plan'}
+              : "We can't load this plan"}
           </h2>
 
           <p className="text-base text-uk-slate leading-relaxed mb-8">
             {isError
               ? 'If the problem keeps happening, request a new personalised plan below.'
-              : 'Please use the link from your email confirmation, or request a new personalised plan — it only takes a minute.'}
+              : 'Please use the link from your email confirmation, or request a new personalised plan - it only takes a minute.'}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

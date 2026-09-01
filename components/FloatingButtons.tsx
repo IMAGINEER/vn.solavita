@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 import { Moon, Sun, ArrowUp } from 'lucide-react'
 
 /**
- * Floating action buttons — UK homepage.
+ * Floating action buttons - UK homepage.
  *
  * Original-style structure preserved: theme toggle (dark ↔ light), back-to-top.
- * Language switcher removed — UK homepage is English-only and the
+ * Language switcher removed - UK homepage is English-only and the
  * balkonkraftwerk paths it gated against don't exist here.
  *
  * Theme toggle persists to localStorage['theme'] (original key) and toggles
- * `.light-mode` on <body> (original mechanism) — both must stay consistent with
+ * `.light-mode` on <body> (original mechanism) - both must stay consistent with
  * the .light-mode CSS overrides in globals.css.
  */
 export default function FloatingButtons() {
@@ -19,11 +19,11 @@ export default function FloatingButtons() {
 
   // Source of truth lives on <html> (set pre-hydration by the inline
   // bootstrap script in app/layout.tsx). On mount we just mirror whatever
-  // class is currently on <html> so the button icon stays in sync — we
+  // class is currently on <html> so the button icon stays in sync - we
   // never re-add the class here, only toggle.
   //
   // Both `.light-mode` (legacy) and `.dark` (Tailwind v4 standard) classes
-  // are managed together — they're mutually exclusive. Light = `.light-mode`
+  // are managed together - they're mutually exclusive. Light = `.light-mode`
   // on <html>, dark = `.dark` on <html>. The legacy class keeps the existing
   // `.light-mode X` overrides firing; the new class enables `dark:` Tailwind
   // utilities (via the `@custom-variant dark` in globals.css) and the new

@@ -13,22 +13,22 @@ export const ukSupportItems: UkSupportItem[] = [
   {
     icon: 'warranty',
     title: 'Warranty',
-    description: 'Up to 15 Years — Product & Performance',
+    description: 'Up to 15 Years - Product & Performance',
   },
   {
     icon: 'service',
     title: 'Service Request',
-    description: 'Submit a ticket — Get fast help',
+    description: 'Submit a ticket - Get fast help',
   },
   {
     icon: 'knowledge',
     title: 'Knowledge Base',
-    description: 'Guides & manuals — Download center',
+    description: 'Guides & manuals - Download center',
   },
   {
     icon: 'contact',
     title: 'Contact Us',
-    description: 'Call · E-mail or Live Chat — We\'re here!',
+    description: 'Call · E-mail or Live Chat - We\'re here!',
   },
   {
     icon: 'gdpr',

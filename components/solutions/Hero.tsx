@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import Breadcrumb from '@/components/Breadcrumb'
 
 /**
- * Solutions hero — full-bleed image with the same overlay treatment as
+ * Solutions hero - full-bleed image with the same overlay treatment as
  * the homepage hero (banner_uk.webp + left-to-right dark gradient so the
  * copy column stays legible). Lighter copy block; shorter than the home
  * hero so it reads as an inner-page header.
@@ -13,7 +13,7 @@ export default function SolutionsHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-solutions.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -60,7 +60,7 @@ export default function SolutionsHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           From your first solar panel to a fully integrated home energy
-          system — Solavita solutions are designed for British homes and
+          system - Solavita solutions are designed for British homes and
           installed by one team in around two weeks.
         </motion.p>
       </div>

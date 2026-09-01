@@ -1,7 +1,7 @@
 /**
  * About Us page data.
  *
- * All copy placeholder for now — designed to be the single edit point
+ * All copy placeholder for now - designed to be the single edit point
  * when the brand team fills in final wording.
  */
 
@@ -43,7 +43,7 @@ export const aboutApproach: AboutApproach[] = [
   {
     title: 'Designed for the UK',
     description:
-      'Every component, mounting kit and installation method is specified for British roofs, weather and grid requirements — not adapted from elsewhere.',
+      'Every component, mounting kit and installation method is specified for British roofs, weather and grid requirements - not adapted from elsewhere.',
   },
   {
     title: 'Engineered to last',
@@ -58,7 +58,7 @@ export const aboutApproach: AboutApproach[] = [
   {
     title: 'Lifetime UK service',
     description:
-      'Our UK-based service team supports you for the lifetime of your system — monitoring, warranty and any question in between.',
+      'Our UK-based service team supports you for the lifetime of your system - monitoring, warranty and any question in between.',
   },
 ]
 

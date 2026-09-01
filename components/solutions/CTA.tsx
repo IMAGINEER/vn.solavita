@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 interface CTAProps {
   /** Eyebrow label above the title. */
   eyebrow: string
-  /** Main heading — supports `text-gradient` for the highlighted span. */
+  /** Main heading - supports `text-gradient` for the highlighted span. */
   title: React.ReactNode
   /** Body copy below the heading. */
   description: string
@@ -20,7 +20,7 @@ interface CTAProps {
    * Optional anchor href for the primary action. When provided, the
    * primary button renders as an `<a>` that scrolls to the given target
    * instead of opening the consultation form modal. Most callers want
-   * the modal — leave this undefined to get the default behaviour.
+   * the modal - leave this undefined to get the default behaviour.
    */
   primaryHref?: string
   /** Optional secondary link label + href. */
@@ -73,7 +73,7 @@ export default function CTA({
 
   return (
     <section ref={sectionRef} className="relative py-16 md:py-24 bg-sv-light overflow-hidden">
-      {/* Soft accent — matches FreeDesignQuoteSection so all CTAs feel
+      {/* Soft accent - matches FreeDesignQuoteSection so all CTAs feel
          like one family. */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />

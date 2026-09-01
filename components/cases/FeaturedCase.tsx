@@ -21,7 +21,7 @@ const StarIcon = ({ className }: { className?: string }) => (
 )
 
 /**
- * Featured Case panel — sits between the case grid and the page CTA.
+ * Featured Case panel - sits between the case grid and the page CTA.
  * Two-column layout: hero image left, copy + testimonial card right.
  * Uses the same accent gradient + teal/emerald soft surfaces as
  * FreeDesignQuoteSection so the rhythm stays consistent.

@@ -6,7 +6,7 @@ import { contactNotificationEmail } from '@/lib/emails/contact-notification'
 
 export const dynamic = 'force-dynamic'
 
-// UK team inbox — pulled from the public-facing ContactMethods + Footer.
+// UK team inbox - pulled from the public-facing ContactMethods + Footer.
 // If this ever changes, update /components/Footer.tsx + ContactMethods.tsx
 // to keep customer-visible copy in sync.
 const TEAM_EMAIL = 'uk@solavita.com'

@@ -9,7 +9,7 @@ import ContactSupport from '@/components/support/ContactSupport'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /support — User support centre.
+ * /support - User support centre.
  *
  * Composition (per project brief):
  *   Hero / Search → Support Categories → FAQ → Contact Support → CTA

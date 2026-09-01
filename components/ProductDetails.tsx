@@ -29,7 +29,7 @@ const tabContent: Record<string, {
     description: 'Our all-black n-Type modules combine maximum aesthetics with the highest output. Bifacial double-glass technology delivers up to 10% additional yield through rear-side reflection, with industry-leading degradation of just 0.4%/year.',
     specs: [
       { label: 'Series', value: 'QM n-Type (All-Black 48-Cell)' },
-      { label: 'Power range', value: '440–450 Wp' },
+      { label: 'Power range', value: '440-450 Wp' },
       { label: 'Cell type', value: 'n-Type monocrystalline' },
       { label: 'Efficiency', value: 'Up to 22.5%' },
       { label: 'Bifacial gain', value: 'Up to 10% (Bifaciality 80% ±5%)' },
@@ -39,7 +39,7 @@ const tabContent: Record<string, {
       { label: 'Protection class', value: 'IP68' },
     ],
     highlights: [
-      'All-black design — seamless roof integration with no visible cell gaps',
+      'All-black design - seamless roof integration with no visible cell gaps',
       'Double-glass construction for maximum durability and mechanical stability',
       'Excellent low-light behaviour under cloudy skies',
       'Optimised partial-shading tolerance for complex roof geometries',
@@ -57,7 +57,7 @@ const tabContent: Record<string, {
     subtitle: 'Three-Phase · High-Voltage · AI-Protected',
     description: 'The SWH HV-Series hybrid inverter combines PV conversion, battery management and backup power in one unit. AI-assisted AFCI 3.0 arc-fault detection and up to 160% PV oversizing for maximum safety and yield.',
     specs: [
-      { label: 'Model range', value: 'SWH 6000H–015KH-T1-G2' },
+      { label: 'Model range', value: 'SWH 6000H-015KH-T1-G2' },
       { label: 'Available power', value: '6 / 8 / 10 / 12 / 15 kW' },
       { label: 'Max. PV oversizing', value: 'Up to 160%' },
       { label: 'Asymmetric feed-in', value: 'Up to 150%' },
@@ -69,8 +69,8 @@ const tabContent: Record<string, {
       { label: 'Communication', value: 'WiFi / Ethernet / RS485 / CAN' },
     ],
     highlights: [
-      'AFCI 3.0 — AI-assisted active arc-fault detection in real time',
-      'G98 / G100 compliant — fully grid-service ready',
+      'AFCI 3.0 - AI-assisted active arc-fault detection in real time',
+      'G98 / G100 compliant - fully grid-service ready',
       'SG Ready & EEBUS for heat-pump control',
       'Potential-free contacts for intelligent load control',
       'One-click grid-connection configuration & OTA updates',
@@ -84,12 +84,12 @@ const tabContent: Record<string, {
   battery: {
     title: 'LiFePO₄ High-Voltage Storage',
     subtitle: 'Safe · Long-Lasting · Modular Stackable',
-    description: 'Our stackable high-voltage storage system based on lithium iron phosphate offers maximum safety with zero thermal-runaway risk. Millisecond-precise cell balancing prevents capacity loss. Expandable years after initial installation — old and new modules can be freely mixed.',
+    description: 'Our stackable high-voltage storage system based on lithium iron phosphate offers maximum safety with zero thermal-runaway risk. Millisecond-precise cell balancing prevents capacity loss. Expandable years after initial installation - old and new modules can be freely mixed.',
     specs: [
       { label: 'Chemistry', value: 'LiFePO₄ (Lithium iron phosphate)' },
       { label: 'Capacity per module', value: '5.12 kWh' },
-      { label: 'System capacity', value: '5.12–20.48 kWh (modular)' },
-      { label: 'System voltage', value: '102.4–409.6V DC (high voltage)' },
+      { label: 'System capacity', value: '5.12-20.48 kWh (modular)' },
+      { label: 'System voltage', value: '102.4-409.6V DC (high voltage)' },
       { label: 'Cycle life', value: '> 6,000 cycles at 90% DoD' },
       { label: 'Round-trip efficiency', value: '> 96%' },
       { label: 'Expandable', value: 'Yes, modular stacking (old/new mixable)' },
@@ -102,7 +102,7 @@ const tabContent: Record<string, {
       'No thermal runaway possible',
       'Millisecond cell balancing to prevent capacity drift',
       'Modular: 5 kWh blocks freely combinable, also retroactively',
-      'Plug & play — installation time per module under 10 minutes',
+      'Plug & play - installation time per module under 10 minutes',
       'Integrated BMS with 24/7 cloud monitoring & remote diagnostics',
       '15-year product warranty',
     ],
@@ -115,7 +115,7 @@ const tabContent: Record<string, {
   mounting: {
     title: 'Universal Mounting System',
     subtitle: 'Fast · Safe · Roof-Friendly',
-    description: 'Our factory-engineered mounting system is optimised for all common UK roof types. No roof penetration on tile roofs — your roof integrity remains fully preserved.',
+    description: 'Our factory-engineered mounting system is optimised for all common UK roof types. No roof penetration on tile roofs - your roof integrity remains fully preserved.',
     specs: [
       { label: 'Compatible roof types', value: 'Tile / Slate / Trapezoidal metal / Flat' },
       { label: 'Material', value: 'Anodised aluminium + stainless steel A2' },
@@ -125,11 +125,11 @@ const tabContent: Record<string, {
       { label: 'Roof hooks', value: 'Height-adjustable, no tile cutting required' },
     ],
     highlights: [
-      'No roof penetration — tiles are lifted, not drilled',
+      'No roof penetration - tiles are lifted, not drilled',
       'Tested to Eurocode for UK wind and snow load zones',
       'Compatible with all common module frames and frameless modules',
       'Black rails for visual unity with all-black modules',
-      'Pre-assembled components — faster on-roof installation',
+      'Pre-assembled components - faster on-roof installation',
     ],
     images: [
       '/static/images/product-mounting-1.webp',
@@ -213,7 +213,7 @@ export default function ProductDetails() {
             <span className="text-gradient">Detail</span>
           </h2>
           <p className="text-lg text-sv-gray-light font-cw-regular max-w-2xl mx-auto">
-            Every component self-developed and manufactured — no third-party parts, no compatibility issues.
+            Every component self-developed and manufactured - no third-party parts, no compatibility issues.
           </p>
         </div>
 
@@ -252,7 +252,7 @@ export default function ProductDetails() {
                 >
                   <img
                     src={img}
-                    alt={`${content.title} – image ${idx + 1}`}
+                    alt={`${content.title} - image ${idx + 1}`}
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />

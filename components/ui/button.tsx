@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 
 // UK admin Button. Mirrors shadcn's API surface (variants + asChild via
 // radix Slot) but uses Tailwind utilities directly so we don't depend on
-// shadcn's `--color-primary` machinery — UK admin picks up the uk-teal
+// shadcn's `--color-primary` machinery - UK admin picks up the uk-teal
 // palette that already lives in app/globals.css.
 
 type ButtonVariant =

@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import Breadcrumb from '@/components/Breadcrumb'
 
 /**
- * Contact Us hero — same banner image + overlay treatment as the rest
+ * Contact Us hero - same banner image + overlay treatment as the rest
  * of the inner-page heroes. Breadcrumb uses the light theme so it
  * stays legible on the dark backdrop.
  */
@@ -12,7 +12,7 @@ export default function ContactHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-contact.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -59,7 +59,7 @@ export default function ContactHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Sales, support, partnerships or press — pick a topic and we&rsquo;ll
+          Sales, support, partnerships or press - pick a topic and we&rsquo;ll
           get back to you within one working day.
         </motion.p>
       </div>

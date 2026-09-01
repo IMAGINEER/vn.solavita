@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
           )}
 
           <Button type="submit" disabled={busy} className="w-full" size="lg">
-            {busy ? 'Signing in…' : 'Sign in'}
+            {busy ? 'Signing in...' : 'Sign in'}
           </Button>
         </form>
       </div>
@@ -105,7 +105,7 @@ function translate(code: string | undefined): string | null {
     case 'username_and_password_required':
       return 'Please enter both a username and a password.'
     case 'invalid_json':
-      return 'Something went wrong — please try again.'
+      return 'Something went wrong - please try again.'
     default:
       return code ? `Login failed: ${code}` : null
   }

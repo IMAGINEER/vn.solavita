@@ -45,7 +45,7 @@ export default function PlanSummaryAside({
         <div className="flex justify-between items-baseline text-sm">
           <span className="text-uk-slate">Battery capacity</span>
           <b className="font-cw-bold text-uk-navy tabular-nums">
-            {plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '—'}
+            {plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '-'}
           </b>
         </div>
         <div className="flex justify-between items-baseline text-sm">
@@ -84,7 +84,7 @@ export default function PlanSummaryAside({
         <div className="text-xs text-uk-slate">Estimated payback</div>
         <div className="mt-1 text-2xl font-cw-bold text-uk-navy tabular-nums">
           {metrics.paybackYears === Infinity
-            ? '—'
+            ? '-'
             : `${metrics.paybackYears.toFixed(1)} years`}
         </div>
       </div>

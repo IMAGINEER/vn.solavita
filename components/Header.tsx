@@ -192,7 +192,7 @@ export default function Header({
                     <div
                       key={item.href}
                       ref={solutionsWrapperRef}
-                      // No extra padding here — the 150ms close-delay handles
+                      // No extra padding here - the 150ms close-delay handles
                       // the link→panel travel. Adding padding would push the
                       // link text out of vertical alignment with the other
                       // nav items in this `items-center` flex row.
@@ -235,7 +235,7 @@ export default function Header({
                         role="menu"
                         aria-hidden={!solutionsOpen}
                       >
-                        {/* Tail — rotated square pointing up at the trigger;
+                        {/* Tail - rotated square pointing up at the trigger;
                            sits 6px below the outer top with z-1 so it layers
                            over the panel's top border and reads as one piece. */}
                         <span
@@ -263,7 +263,7 @@ export default function Header({
 
                               {/* Horizontal: thumbnail left, text right */}
                               <div className="flex items-center gap-4">
-                                {/* Image — bare, no backdrop */}
+                                {/* Image - bare, no backdrop */}
                                 <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center">
                                   <img
                                     src={p.imagePath}
@@ -282,12 +282,12 @@ export default function Header({
                                   <div className="text-xs text-uk-slate mt-1 truncate">
                                     {p.subtitle}
                                   </div>
-                                  {/* Power & storage — teal accent */}
+                                  {/* Power & storage - teal accent */}
                                   <div className="flex items-center gap-1.5 mt-1.5">
                                     <span className="text-uk-teal font-cw-bold text-xs">
                                       {p.power}
                                     </span>
-                                    {p.storage !== '—' && (
+                                    {p.storage !== '-' && (
                                       <>
                                         <span className="text-uk-slate text-xs">/</span>
                                         <span className="text-uk-teal font-cw-bold text-xs">
@@ -298,7 +298,7 @@ export default function Header({
                                   </div>
                                 </div>
 
-                                {/* Trailing arrow — appears on hover */}
+                                {/* Trailing arrow - appears on hover */}
                                 <span className="flex-shrink-0 text-uk-slate group-hover:text-uk-teal transition-all duration-300 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0">
                                   →
                                 </span>

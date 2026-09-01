@@ -72,7 +72,7 @@ export const contactChannels: ContactChannel[] = [
     label: 'Phone',
     value: 'Customer Service',
     href: '#',
-    description: 'Mon–Fri · 09:00–18:00 · UK hours.',
+    description: 'Mon-Fri · 09:00-18:00 · UK hours.',
     icon: 'phone',
   },
   {
@@ -84,7 +84,7 @@ export const contactChannels: ContactChannel[] = [
   },
 ]
 
-/** Salutation options — mirrors the existing Consultation form. */
+/** Salutation options - mirrors the existing Consultation form. */
 export const contactSalutations = [
   { value: '', label: 'Salutation' },
   { value: 'Mr', label: 'Mr' },

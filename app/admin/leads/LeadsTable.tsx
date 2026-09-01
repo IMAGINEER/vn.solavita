@@ -52,7 +52,7 @@ function formatDateTime(iso: string): string {
   }
 }
 
-// True when a row was UPDATEd after INSERT — i.e. a customer re-submitted
+// True when a row was UPDATEd after INSERT - i.e. a customer re-submitted
 // the consultation form. ISO-8601 strings compare lexicographically the
 // same as chronologically, so `updated_at > created_at` is correct
 // without parsing.
@@ -92,7 +92,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
             const name = [l.salutation, l.first_name, l.last_name]
               .filter(Boolean)
               .join(' ')
-            const devices = l.devices ? l.devices : '—'
+            const devices = l.devices ? l.devices : '-'
             return (
               <TableRow key={l.id}>
                 <TableCell className="whitespace-nowrap">
@@ -105,7 +105,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{name || '—'}</TableCell>
+                <TableCell>{name || '-'}</TableCell>
                 <TableCell>
                   <a
                     href={`mailto:${l.email}`}
@@ -114,12 +114,12 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
                     {l.email}
                   </a>
                 </TableCell>
-                <TableCell>{l.phone || '—'}</TableCell>
-                <TableCell>{l.region || '—'}</TableCell>
-                <TableCell>{l.house_type || '—'}</TableCell>
-                <TableCell>{l.roof_type || '—'}</TableCell>
-                <TableCell>{l.household_size || '—'}</TableCell>
-                <TableCell>{l.electricity_usage || '—'}</TableCell>
+                <TableCell>{l.phone || '-'}</TableCell>
+                <TableCell>{l.region || '-'}</TableCell>
+                <TableCell>{l.house_type || '-'}</TableCell>
+                <TableCell>{l.roof_type || '-'}</TableCell>
+                <TableCell>{l.household_size || '-'}</TableCell>
+                <TableCell>{l.electricity_usage || '-'}</TableCell>
                 <TableCell className="max-w-[12rem] truncate" title={devices}>
                   {devices}
                 </TableCell>

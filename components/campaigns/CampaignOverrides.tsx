@@ -9,7 +9,7 @@ import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import ProductSelector from '@/components/ProductSelector'
 import FreeDesignQuoteSection from '@/components/FreeDesignQuoteSection'
-// import ArticlesSection from '@/components/ArticlesSection' // Knowledge Hub — hidden for now, kept for re-enable
+// import ArticlesSection from '@/components/ArticlesSection' // Knowledge Hub - hidden for now, kept for re-enable
 import CasesSection from '@/components/CasesSection'
 import TrustBar from '@/components/TrustBar'
 import Footer from '@/components/Footer'
@@ -78,7 +78,7 @@ export default function CampaignOverrides() {
       <HeroSection override={heroOverride} />
       <ProductSelector onOpenForm={openFormModal} />
       <FreeDesignQuoteSection onOpenForm={openFormModal} />
-      {/* <ArticlesSection /> */} {/* Knowledge Hub — hidden for now */}
+      {/* <ArticlesSection /> */} {/* Knowledge Hub - hidden for now */}
       <CasesSection />
       <TrustBar />
       {showCampaignBody ? <CampaignBody /> : null}

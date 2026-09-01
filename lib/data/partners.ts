@@ -1,7 +1,7 @@
 /**
  * For Partners page data.
  *
- * B2B partner recruitment page — three partner types, partner benefits,
+ * B2B partner recruitment page - three partner types, partner benefits,
  * and a four-step partnership process. All copy placeholder.
  */
 
@@ -70,7 +70,7 @@ export const partnerBenefits: PartnerBenefit[] = [
   {
     title: 'Group supply-chain scale',
     description:
-      'Backed by SKYWORTH — reliable stock, predictable lead times and competitive pricing.',
+      'Backed by SKYWORTH - reliable stock, predictable lead times and competitive pricing.',
   },
   {
     title: 'UK engineering support',

@@ -1,7 +1,7 @@
 /**
  * Solutions page data.
  *
- * All copy here is placeholder English — easy to swap to final content
+ * All copy here is placeholder English - easy to swap to final content
  * without touching the page structure. Image paths reuse existing assets
  * under /images and /static/images so the page renders end-to-end without
  * any new uploads.
@@ -30,13 +30,13 @@ export interface SolutionCategory {
   id: SolutionCategoryId
   /** Short label shown above the title in the hero pill / section heading. */
   eyebrow: string
-  /** Card title — also becomes the link label. */
+  /** Card title - also becomes the link label. */
   title: string
   /** One-line description used in the grid card. */
   short: string
   /** Optional metric (e.g. "Save up to £1,200/yr"). */
   metric?: string
-  /** Lucide-style icon key — resolved inside SolutionCategories. */
+  /** Lucide-style icon key - resolved inside SolutionCategories. */
   icon: 'sun' | 'battery' | 'home' | 'plug'
 }
 
@@ -103,29 +103,29 @@ export const solutionDetails: SolutionDetail[] = [
       'Smart Export Guarantee (SEG) ready',
     ],
     imagePath: '/images/solution_1.webp',
-    imageAlt: 'Solar Essential package — roof-mounted solar PV system',
+    imageAlt: 'Solar Essential package - roof-mounted solar PV system',
   },
   {
     id: 'solar-storage',
     eyebrow: 'Storage Core',
     title: 'Storage Core',
     intro:
-      'Add a Solavita battery to store your solar energy and use it when the sun is not shining — and protect your home during a power cut.',
+      'Add a Solavita battery to store your solar energy and use it when the sun is not shining - and protect your home during a power cut.',
     bullets: [
-      '5 kWh – 20 kWh battery options',
+      '5 kWh - 20 kWh battery options',
       'Backup power for essential circuits',
       'Time-of-use optimisation',
       'App-controlled charge / discharge',
     ],
     imagePath: '/images/solution_2.webp',
-    imageAlt: 'Storage Core package — solar panels paired with a Solavita home battery',
+    imageAlt: 'Storage Core package - solar panels paired with a Solavita home battery',
   },
   {
     id: 'smart-home',
     eyebrow: 'Smart Home',
     title: 'Smart Home',
     intro:
-      'A Home Energy Management System (HEMS) that connects solar, battery and major appliances — and lets you automate everything from a single app.',
+      'A Home Energy Management System (HEMS) that connects solar, battery and major appliances - and lets you automate everything from a single app.',
     bullets: [
       'Live generation & consumption',
       'Appliance-level scheduling',
@@ -133,14 +133,14 @@ export const solutionDetails: SolutionDetail[] = [
       'Voice & IFTTT integrations',
     ],
     imagePath: '/images/solution_3.webp',
-    imageAlt: 'Smart Home package — energy management system dashboard',
+    imageAlt: 'Smart Home package - energy management system dashboard',
   },
   {
     id: 'energy-integration',
     eyebrow: 'Premium Backup',
     title: 'Premium Backup',
     intro:
-      'Future-ready whole-home energy. Combine solar, battery, a heat pump and EV charging into a single optimised system — designed and installed by one team.',
+      'Future-ready whole-home energy. Combine solar, battery, a heat pump and EV charging into a single optimised system - designed and installed by one team.',
     bullets: [
       'Heat pump readiness planning',
       'EV charger integration (Pod Point / Easee / others)',
@@ -148,7 +148,7 @@ export const solutionDetails: SolutionDetail[] = [
       'One app, one installer, one warranty',
     ],
     imagePath: '/images/solution_4.webp',
-    imageAlt: 'Premium Backup package — whole-home energy system with heat pump and EV charging',
+    imageAlt: 'Premium Backup package - whole-home energy system with heat pump and EV charging',
   },
 ]
 
@@ -161,7 +161,7 @@ export const whySolavita: WhySolavitaPoint[] = [
   {
     title: 'UK-first engineering',
     description:
-      'Every system is sized for British roofs, weather and grid requirements — not adapted from elsewhere.',
+      'Every system is sized for British roofs, weather and grid requirements - not adapted from elsewhere.',
   },
   {
     title: 'Two-week install',
@@ -171,11 +171,11 @@ export const whySolavita: WhySolavitaPoint[] = [
   {
     title: 'Backed by SKYWORTH',
     description:
-      'Solavita is the UK residential solar brand of the SKYWORTH Group — a £10bn global electronics company.',
+      'Solavita is the UK residential solar brand of the SKYWORTH Group - a £10bn global electronics company.',
   },
   {
     title: '15-year warranty',
     description:
-      'Product, performance and workmanship — backed by a UK-based service team for the lifetime of the system.',
+      'Product, performance and workmanship - backed by a UK-based service team for the lifetime of the system.',
   },
 ]

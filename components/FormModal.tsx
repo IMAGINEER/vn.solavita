@@ -17,7 +17,7 @@ interface FormModalProps {
   initialData?: Partial<FormData>
   /**
    * When true, Form skips Steps 3 (Address) and 4 (Contact Info). Used by
-   * the /my-plan Edit-details entry — those steps carry PII which we
+   * the /my-plan Edit-details entry - those steps carry PII which we
    * deliberately don't surface to the client. The user can still edit
    * Steps 0/1/2 (region, house type, roof type, household, usage,
    * devices) and submit; if they want to update address/contact, they
@@ -62,7 +62,7 @@ export default function FormModal({
   onSubmitSuccess,
 }: FormModalProps) {
   const [mounted, setMounted] = useState(false)
-  // Event-driven prefill (via useFormModalEvent) — when the caller doesn't
+  // Event-driven prefill (via useFormModalEvent) - when the caller doesn't
   // pin initialData via props, the event hook writes here.
   const [eventInitialData, setEventInitialData] = useState<
     Partial<FormData> | undefined
@@ -82,7 +82,7 @@ export default function FormModal({
     return () => document.removeEventListener('keydown', onKey)
   }, [open, onClose])
 
-  // Body scroll lock — restore prior overflow on close.
+  // Body scroll lock - restore prior overflow on close.
   useEffect(() => {
     if (!open) return
     const prev = document.body.style.overflow
@@ -109,7 +109,7 @@ export default function FormModal({
       aria-modal="true"
       aria-labelledby="form-modal-title"
     >
-      {/* Backdrop — visual only; clicks on it are intentionally inert so the
+      {/* Backdrop - visual only; clicks on it are intentionally inert so the
          user has to commit to a close (ESC or the X button). */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"

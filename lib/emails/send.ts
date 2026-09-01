@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-// Lazy initialization — Next.js evaluates this module during the build to collect
+// Lazy initialization - Next.js evaluates this module during the build to collect
 // page data, but env vars aren't injected in the build environment. Constructing
 // the Resend client at module load would throw. We defer creation to first use.
 let _client: Resend | null = null
@@ -18,7 +18,7 @@ function getResend(): Resend {
 }
 
 // Single source of truth for sender address per country. Mirrors the DE repo's
-// table — keep both in sync if Resend approved-domain list changes.
+// table - keep both in sync if Resend approved-domain list changes.
 //
 // UK TEMP: `solavita.com` is not yet verified in Resend, so we send from
 // `uk@skyworth-solavita.de` (the verified DE parent domain) to keep the
@@ -37,7 +37,7 @@ export async function sendEmail({
   subject,
   html,
 }: {
-  // Optional with default 'uk' to mirror the DE repo's signature —
+  // Optional with default 'uk' to mirror the DE repo's signature -
   // keeps the two repos' send.ts byte-symmetric so future cross-repo
   // syncs don't break either side. UK site only ever passes 'uk'.
   country?: 'de' | 'uk'

@@ -8,7 +8,7 @@ import { whySolavita, type WhySolavitaPoint } from '@/lib/data/solutions'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* Lucide icons — theme-neutral via currentColor. The wrapping
+/* Lucide icons - theme-neutral via currentColor. The wrapping
    `text-uk-teal-dark` token controls the tint. */
 const iconFor = (i: number) => {
   const common = 'w-6 h-6'
@@ -28,7 +28,7 @@ const iconFor = (i: number) => {
 }
 
 /**
- * "Why Solavita" — four-reason block using the same card primitive as
+ * "Why Solavita" - four-reason block using the same card primitive as
  * the rest of the site (rounded-2xl · uk-line border · teal hover).
  */
 export default function WhySolavita() {

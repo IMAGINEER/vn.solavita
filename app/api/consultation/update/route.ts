@@ -12,7 +12,7 @@
  *   - **Identified by `plan_token`** instead of email dedup. The page
  *     already has the token in the URL.
  *   - **UPDATE only**, never INSERT. If the token is unknown (e.g. user
- *     landed on a stale link), the request returns 404 — no fallback to
+ *     landed on a stale link), the request returns 404 - no fallback to
  *     INSERT because that would create a row without address/contact.
  *   - **No email sent.** A consultation confirmation was already sent
  *     when the lead originally registered; we don't re-send on edit.
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       devices,
     } = body
 
-    // Validate the bearer. UUID-only — same regex the lookup route uses
+    // Validate the bearer. UUID-only - same regex the lookup route uses
     // so error semantics line up (400 invalid_token).
     if (typeof planToken !== 'string' || !UUID_RE.test(planToken)) {
       return NextResponse.json(
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
     }
 
     // Find the row. `.eq('country', 'uk')` keeps a DE token out of this
-    // endpoint even if it's somehow reachable — defence-in-depth since
+    // endpoint even if it's somehow reachable - defence-in-depth since
     // the form is only ever opened from /my-plan on the UK site.
     const { data: existing, error: lookupError } = await supabase
       .from('consultation_leads')
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Whitelist the writable columns explicitly — ignore anything else
+    // Whitelist the writable columns explicitly - ignore anything else
     // the client might sneak in. The full endpoint at /api/consultation
     // owns name/email/phone/address; we don't.
     const updatePayload = {

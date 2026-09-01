@@ -6,11 +6,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const timelineSteps = [
   { day: 'Day 1', title: 'AI Design', desc: 'Drone survey + 3D model of your roof. Shading analysis. Accurate yield forecast in 15 minutes.', icon: '🤖' },
-  { day: 'Day 2–3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', icon: '📝' },
-  { day: 'Day 4–7', title: 'JIT Delivery', desc: 'Dispatched from our 40,000 sq ft UK warehouse. Every component checked and pre-commissioned.', icon: '🚚' },
-  { day: 'Day 8–10', title: 'Installation', desc: 'Two-day install by NICEIC-certified electricians. Tidy site guaranteed.', icon: '🔧' },
+  { day: 'Day 2-3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', icon: '📝' },
+  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our 40,000 sq ft UK warehouse. Every component checked and pre-commissioned.', icon: '🚚' },
+  { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by NICEIC-certified electricians. Tidy site guaranteed.', icon: '🔧' },
   { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, HEMS activation. Your system is now generating.', icon: '📶' },
-  { day: 'Day 12–14', title: 'G98/G99 Notification', desc: 'DNOs receive your commissioning certificate at the click of a button. Secures full Smart Export Guarantee (SEG) eligibility.', icon: '📋' },
+  { day: 'Day 12-14', title: 'G98/G99 Notification', desc: 'DNOs receive your commissioning certificate at the click of a button. Secures full Smart Export Guarantee (SEG) eligibility.', icon: '📋' },
 ]
 
 export default function DeliveryTimeline() {
@@ -52,7 +52,7 @@ export default function DeliveryTimeline() {
             Your solar system in <span className="text-uk-teal">14 days</span>
           </h2>
           <p className="text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto">
-            While other providers take months, we deliver in two weeks — from first call to first kilowatt-hour.
+            While other providers take months, we deliver in two weeks - from first call to first kilowatt-hour.
           </p>
         </div>
 

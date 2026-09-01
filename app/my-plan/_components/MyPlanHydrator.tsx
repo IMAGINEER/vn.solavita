@@ -76,7 +76,7 @@ export default function MyPlanHydrator({ identifier }: MyPlanHydratorProps) {
         prefill: json.prefill,
       })
     } catch (err) {
-      // Network error / fetch threw — surface as recoverable error so the
+      // Network error / fetch threw - surface as recoverable error so the
       // user can retry.
       if (cancelled) return
       console.error('[/my-plan] fetch failed:', err)
@@ -106,7 +106,7 @@ export default function MyPlanHydrator({ identifier }: MyPlanHydratorProps) {
 }
 
 /**
- * Loading shell — same hero + chrome as the ready page so the layout
+ * Loading shell - same hero + chrome as the ready page so the layout
  * doesn't jump when the data arrives. The 4 skeleton cards below the
  * hero mirror the home details strip + 3 product cards in real layout.
  */

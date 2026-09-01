@@ -31,7 +31,7 @@ const iconFor = (i: number) => {
 }
 
 /**
- * Our Approach — four-card block that explains *how* Solavita works,
+ * Our Approach - four-card block that explains *how* Solavita works,
  * not just *what* it sells. Mirrors the Why Solavita block on
  * /solutions but with about-us specific copy.
  */

@@ -4,14 +4,14 @@ import { motion } from 'motion/react'
 import Breadcrumb from '@/components/Breadcrumb'
 
 /**
- * Cases hero — same banner image + overlay as the Solutions / homepage
+ * Cases hero - same banner image + overlay as the Solutions / homepage
  * hero so all top-level pages feel like one product.
  */
 export default function CasesHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-cases.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -56,7 +56,7 @@ export default function CasesHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Verified Solavita installations across the UK — actual kWh
+          Verified Solavita installations across the UK - actual kWh
           generated, actual £ saved, and a real homeowner story behind
           each one.
         </motion.p>

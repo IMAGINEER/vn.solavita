@@ -10,7 +10,7 @@ interface ProductCardProps {
   subtitle: string
   /** Display value, already formatted, e.g. "8.1 kWp". */
   value: string
-  /** "Change plan ›" handler — scrolls to the plan selector. All three
+  /** "Change plan ›" handler - scrolls to the plan selector. All three
    *  components are bound to the same handler because Solar panels /
    *  Battery / Inverter are bundled into the plan and cannot be
    *  adjusted independently. */
@@ -20,9 +20,9 @@ interface ProductCardProps {
 /**
  * Icon set for the three product cards. Picked for visual consistency
  * with the energy-system theme:
- *   - `SolarPanel`     — accurate PV module representation
- *   - `BatteryCharging` — energy-storage feel, better than plain Battery
- *   - `CircuitBoard`   — closest electrical-equipment metaphor for an
+ *   - `SolarPanel`     - accurate PV module representation
+ *   - `BatteryCharging` - energy-storage feel, better than plain Battery
+ *   - `CircuitBoard`   - closest electrical-equipment metaphor for an
  *                        inverter (Cpu was a contender but leans IT)
  *
  * All three share `strokeWidth={1.8}` and a 30px box so the trio reads
@@ -44,7 +44,7 @@ function KindIcon({ kind }: { kind: ProductKind }) {
 
 /**
  * One product card in the "Your system" strip. Renders the current plan's
- * fixed PV / battery / inverter values — these are NOT user-editable in v1,
+ * fixed PV / battery / inverter values - these are NOT user-editable in v1,
  * the plan itself is. The "Change plan ›" button scrolls to the plan
  * selector.
  */

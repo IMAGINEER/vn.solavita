@@ -8,7 +8,7 @@ import { Compass, Sparkles } from 'lucide-react'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Our Mission — two-card block sitting between Who We Are and Our
+ * Our Mission - two-card block sitting between Who We Are and Our
  * Approach. The left card carries the mission statement; the right
  * card carries the vision. Same card primitive as the rest of the site.
  */
@@ -63,7 +63,7 @@ export default function Mission() {
             <h3 className="text-2xl font-cw-bold text-uk-navy">Mission</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
               To make solar, storage and smart home energy as easy to buy
-              and live with as any other household appliance — installed
+              and live with as any other household appliance - installed
               in two weeks, supported for life.
             </p>
           </div>
@@ -75,7 +75,7 @@ export default function Mission() {
             <h3 className="text-2xl font-cw-bold text-uk-navy">Vision</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
               A UK where every home generates, stores and manages its own
-              clean energy — and Solavita is the brand that made it
+              clean energy - and Solavita is the brand that made it
               possible at scale.
             </p>
           </div>

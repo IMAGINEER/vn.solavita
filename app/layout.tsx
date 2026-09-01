@@ -4,7 +4,7 @@ import ClientOnlyCookieConsent from '@/components/ClientOnlyCookieConsent'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://solavita.uk'), // TODO: replace with the real production domain
-  title: 'Solavita UK – Premium Solar & Battery Storage',
+  title: 'Solavita UK - Premium Solar & Battery Storage',
   description:
     'Solavita delivers premium solar panels and battery storage for UK homes. Two-week installation. MCS-certified. UK-wide support.',
   keywords:
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Solavita UK – Power Your Home. Shape a Greener UK.',
+    title: 'Solavita UK - Power Your Home. Shape a Greener UK.',
     description:
       'Premium solar & storage for UK homes. Two-week turnaround.',
     locale: 'en_GB',
@@ -30,7 +30,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/favicon.ico" />
         <link rel="apple-touch-icon" href="/images/favicon.ico" />
-        {/* Pre-hydration theme bootstrap — must run before React paints to
+        {/* Pre-hydration theme bootstrap - must run before React paints to
            prevent flash-of-dark when the user has light-mode saved (or no
            preference, which defaults to light for the UK homepage). The
            source of truth is `document.documentElement` so FloatingButtons

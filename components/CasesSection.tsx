@@ -15,12 +15,12 @@ gsap.registerPlugin(ScrollTrigger)
  *
  * Visual hierarchy per card:
  *   image · postcode/region tag · city (h3) · system label ·
- *   data row (generation · saving) — divider top.
+ *   data row (generation · saving) - divider top.
  *
- * All existing utility tokens only — no new CSS.
+ * All existing utility tokens only - no new CSS.
  */
 
-// Lucide icons — theme-neutral via currentColor. StarIcon keeps a filled
+// Lucide icons - theme-neutral via currentColor. StarIcon keeps a filled
 // silhouette via fill="currentColor" so it matches the prior inline rendering.
 const SunIcon = ({ className }: { className?: string }) => (
   <Sun className={className ?? 'w-4 h-4'} strokeWidth={1.5} />
@@ -76,7 +76,7 @@ export default function CasesSection() {
             <span className="text-gradient">Real Results.</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Verified installations from Leeds, Manchester and Bristol — actual
+            Verified installations from Leeds, Manchester and Bristol - actual
             kWh generated, actual £ saved, and a real customer quote from
             someone living with the system.
           </p>
@@ -88,7 +88,7 @@ export default function CasesSection() {
               key={c.city}
               className="case-card rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col"
             >
-              {/* Image — full-bleed banner at the top of the card, no
+              {/* Image - full-bleed banner at the top of the card, no
                  placeholder frame, no fixed height, no background tint. */}
               <div className="mb-5 -mx-6 -mt-6 overflow-hidden rounded-t-2xl">
                 <img
@@ -104,7 +104,7 @@ export default function CasesSection() {
                 {c.postcode} · {c.region}
               </span>
 
-              {/* City — primary identifier */}
+              {/* City - primary identifier */}
               <h3 className="mt-2 text-xl font-cw-bold text-uk-navy leading-tight">
                 {c.city}
               </h3>
@@ -112,7 +112,7 @@ export default function CasesSection() {
               {/* System label */}
               <p className="text-sm text-uk-slate mt-1">{c.systemLabel}</p>
 
-              {/* Data row — generation & saving with icons */}
+              {/* Data row - generation & saving with icons */}
               <div className="mt-auto pt-4 border-t border-uk-line space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-uk-slate">
@@ -136,7 +136,7 @@ export default function CasesSection() {
             </div>
           ))}
 
-          {/* Testimonial card — same white surface as the other cards; section bg is white, so cards rely on border + hover shadow to differentiate */}
+          {/* Testimonial card - same white surface as the other cards; section bg is white, so cards rely on border + hover shadow to differentiate */}
           <div className="case-card rounded-2xl p-6 bg-white border border-uk-line hover:shadow-md transition-all flex flex-col">
             <QuoteIcon className="w-8 h-8 text-uk-teal-dark" />
             <p className="text-uk-navy leading-relaxed mt-3 text-base">

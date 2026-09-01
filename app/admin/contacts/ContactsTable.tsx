@@ -79,7 +79,7 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
                   {formatDateTime(c.created_at)}
                 </TableCell>
                 <TableCell className="font-cw-bold">
-                  {fullName || '—'}
+                  {fullName || '-'}
                 </TableCell>
                 <TableCell>
                   <a
@@ -89,9 +89,9 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
                     {c.email}
                   </a>
                 </TableCell>
-                <TableCell>{c.phone || '—'}</TableCell>
+                <TableCell>{c.phone || '-'}</TableCell>
                 <TableCell className="whitespace-nowrap">
-                  {location || '—'}
+                  {location || '-'}
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline">{c.subject}</Badge>

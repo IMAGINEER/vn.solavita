@@ -16,7 +16,7 @@ export const ukProducts: UkProduct[] = [
     name: 'Solar Essential',
     subtitle: 'Simple start',
     power: '8 modules',
-    storage: '—',
+    storage: '-',
     priceFrom: 8999,
     features: ['Solar: 8 modules', 'Entry-level home generation'],
     imagePath: '/images/Solar_Essential.webp',

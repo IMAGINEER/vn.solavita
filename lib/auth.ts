@@ -8,13 +8,13 @@ import type { AdminUser, AdminRole } from '@/lib/auth-types'
 export type { AdminUser, AdminRole } from '@/lib/auth-types'
 
 // UK admin session cookie is deliberately separate from DE's
-// `sv_admin_session` — UK uses `uk_admin_session`, scoped to /admin so
+// `sv_admin_session` - UK uses `uk_admin_session`, scoped to /admin so
 // the cookie never leaks to the storefront. Logging in on DE does not
 // authenticate UK, and vice versa. Cross-row isolation is enforced by:
 //   1. Different cookie name (no shared cookie state in the browser).
 //   2. `path: '/admin'` (cookie only sent for /admin/* requests).
 //   3. Different session tables (`admin_sessions` rows live in the
-//      same Supabase project but tokens are UUIDv4 — even if a UK
+//      same Supabase project but tokens are UUIDv4 - even if a UK
 //      cookie were somehow set on the DE domain, the lookup would
 //      miss because DE sessions are written to DE-side rows only).
 const SESSION_COOKIE = 'uk_admin_session'
@@ -78,7 +78,7 @@ export async function getCurrentAdmin(): Promise<AdminUser | null> {
   if (new Date(data.expires_at).getTime() < Date.now()) return null
 
   // Supabase returns admin_users as either an object (single FK) or
-  // an array — guard for the single-row case.
+  // an array - guard for the single-row case.
   const user = Array.isArray(data.admin_users)
     ? data.admin_users[0]
     : (data.admin_users as Record<string, unknown> | null)
@@ -138,7 +138,7 @@ export function makeSessionCookie(token: string): {
     secure: isProd,
     sameSite: 'lax',
     // path: '/admin' so the cookie is only attached to admin requests
-    // — never leaks to the storefront or to other Next apps on the
+    // - never leaks to the storefront or to other Next apps on the
     // same domain (e.g. if a /storefront ever lives at the root).
     path: SESSION_COOKIE_PATH,
     maxAge: Math.floor(SESSION_TTL_MS / 1000),

@@ -41,7 +41,7 @@ interface MyPlanClientProps {
 
 const TOAST_DURATION_MS = 2600
 const CONTACT_TOAST =
-  "Thanks — our team will be in touch within 1 business day to discuss your plan."
+  "Thanks - our team will be in touch within 1 business day to discuss your plan."
 
 /**
  * Orchestrator for `/my-plan` (valid-id branch).
@@ -50,13 +50,13 @@ const CONTACT_TOAST =
  *   - `selectedPlanId` is the single piece of user-controlled state.
  *   - `recommendation`, `plan`, `assumptions`, `metrics`, `systemKw` are
  *     all derived via `useMemo`. Switching plans re-renders only the
- *     affected children — never the whole tree.
+ *     affected children - never the whole tree.
  *
  * The "Choose your plan" card is a 4-plan selector. Solar panels / battery
  * / inverter are NOT independently adjustable: switching plans swaps the
  * whole configuration as a bundle. ROI assumptions are also derived from
  * the active plan and surfaced read-only in "View calculation assumptions"
- * — there is no UI to mutate them.
+ * - there is no UI to mutate them.
  */
 export default function MyPlanClient({
   consultation,
@@ -70,12 +70,12 @@ export default function MyPlanClient({
 
   const [selectedPlanId, setSelectedPlanId] = useState<PlanId>(recommendedPlanId)
 
-  // Single derivation point — every metric comes from this useMemo.
+  // Single derivation point - every metric comes from this useMemo.
   const plan: Plan = useMemo(() => getPlan(selectedPlanId), [selectedPlanId])
   // Assumptions are derived, not state: they always reflect the active
   // plan's defaults. Switching plans replaces the whole bundle, so
   // assumptions follow automatically. No reset path is needed (or
-  // possible) — see CustomiseCard's read-only "View calculation
+  // possible) - see CustomiseCard's read-only "View calculation
   // assumptions" disclosure.
   const assumptions: RoiAssumptions = useMemo(
     () => defaultAssumptions(plan),
@@ -86,7 +86,7 @@ export default function MyPlanClient({
     [plan, consultation, assumptions],
   )
   const systemKw = useMemo(
-    () => plan.panels * 0.45, // 450 W per panel — same constant as in calc.ts
+    () => plan.panels * 0.45, // 450 W per panel - same constant as in calc.ts
     [plan],
   )
 
@@ -128,7 +128,7 @@ export default function MyPlanClient({
     <main className="min-h-screen bg-[#F7F9FC]">
       <Header logoHref="/" />
 
-      {/* Hero band — mirrors the legal-page hero with breadcrumb + animated
+      {/* Hero band - mirrors the legal-page hero with breadcrumb + animated
           underline. Identifier is surfaced as a transparent subtitle so the
           customer sees that the link was consumed. */}
       <section className="pt-24 pb-8 lg:pt-32 lg:pb-12">
@@ -169,7 +169,7 @@ export default function MyPlanClient({
 
       <section className="py-8 lg:py-12 pb-24 lg:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Home details strip — Edit callback opens the form prefilled. */}
+          {/* Home details strip - Edit callback opens the form prefilled. */}
           <HomeDetailsCard
             home={home}
             onEdit={handleEditDetails}
@@ -191,7 +191,7 @@ export default function MyPlanClient({
           {/* Main grid: product cards + customise (left) + sticky summary aside (right). */}
           <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
             <div className="lg:col-span-8 space-y-6">
-              {/* 3 product cards — fixed by current plan, live in the left column. */}
+              {/* 3 product cards - fixed by current plan, live in the left column. */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
                 <ProductCard
                   kind="panel"
@@ -208,7 +208,7 @@ export default function MyPlanClient({
                       ? `${plan.batteryKwh} kWh storage`
                       : 'No battery'
                   }
-                  value={plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '—'}
+                  value={plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '-'}
                   onChange={focusCustomise}
                 />
                 <ProductCard
@@ -254,7 +254,7 @@ export default function MyPlanClient({
 
       <Footer variant="dark" />
 
-      {/* Toast — fixed bottom-right. Uses bg-uk-teal-dark + text-uk-teal-soft
+      {/* Toast - fixed bottom-right. Uses bg-uk-teal-dark + text-uk-teal-soft
           so both light and dark modes render with contrast (the project's
           light-mode override forces text-white to dark navy on most
           elements, which would be invisible on a dark teal bg). */}

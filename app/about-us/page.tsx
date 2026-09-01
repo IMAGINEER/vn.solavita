@@ -11,7 +11,7 @@ import GlobalPresence from '@/components/about/GlobalPresence'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /about-us — Solavita brand & company page.
+ * /about-us - Solavita brand & company page.
  *
  * Composition (per project brief):
  *   Hero → Who We Are → Our Mission → Our Approach / Why Solavita →

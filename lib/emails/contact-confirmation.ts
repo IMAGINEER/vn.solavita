@@ -1,6 +1,6 @@
 /**
  * Confirmation email sent to a /contact-us visitor after their
- * message is saved. UK-only — see assertion below.
+ * message is saved. UK-only - see assertion below.
  *
  * Visual style mirrors consultation-confirmation.ts (gradient header
  * card, info box, footer block) so customer-facing emails share a
@@ -12,11 +12,11 @@ export function contactConfirmationEmail(data: {
   subject: string
 }) {
   // UK repo only serves the English template. If we ever see 'de' here,
-  // it's a bug — German templates live in the DE repo.
+  // it's a bug - German templates live in the DE repo.
   const name = data.firstName?.trim() || 'there'
 
   return {
-    subject: 'Thanks for getting in touch — Solavita UK',
+    subject: 'Thanks for getting in touch - Solavita UK',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -38,7 +38,7 @@ export function contactConfirmationEmail(data: {
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
 <tr><td style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
 <p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Need to reach us directly?</p>
-<p style="margin:0; font-size:14px; color:#374151;">uk@solavita.com · Mon–Fri 9–18 GMT</p>
+<p style="margin:0; font-size:14px; color:#374151;">uk@solavita.com · Mon-Fri 9-18 GMT</p>
 </td></tr>
 </table>
 

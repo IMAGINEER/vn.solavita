@@ -24,7 +24,7 @@ export function partnerConfirmationEmail(data: {
   const track = trackLabel(data.partnerTrack)
 
   return {
-    subject: 'We received your partnership enquiry — Solavita UK',
+    subject: 'We received your partnership enquiry - Solavita UK',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -41,13 +41,13 @@ export function partnerConfirmationEmail(data: {
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Hi ${name},</p>
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 16px 0;">Thanks for your interest in the Solavita UK <strong>${track}</strong> programme.</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Our partnerships team will be in touch within <strong>two working days</strong> to discuss next steps — including which programme tier fits your business best.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Our partnerships team will be in touch within <strong>two working days</strong> to discuss next steps - including which programme tier fits your business best.</p>
 
 <!-- Info box -->
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
 <tr><td style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
 <p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Partnerships team</p>
-<p style="margin:0; font-size:14px; color:#374151;">uk@solavita.com · Mon–Fri 9–18 GMT</p>
+<p style="margin:0; font-size:14px; color:#374151;">uk@solavita.com · Mon-Fri 9-18 GMT</p>
 </td></tr>
 </table>
 

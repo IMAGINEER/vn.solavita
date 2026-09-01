@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import Breadcrumb from '@/components/Breadcrumb'
 
 /**
- * For Partners hero — same banner image and overlay treatment as the
+ * For Partners hero - same banner image and overlay treatment as the
  * rest of the inner-page heroes so the navigation feels unified. Copy
  * makes the B2B nature of the page clear from the first line.
  */
@@ -12,7 +12,7 @@ export default function PartnersHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-partners.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -59,7 +59,7 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Become a Solavita partner — installer, distributor or energy
+          Become a Solavita partner - installer, distributor or energy
           / business partner. UK engineering support, group supply-chain
           scale, and a 15-year warranty programme.
         </motion.p>

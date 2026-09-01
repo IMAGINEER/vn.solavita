@@ -3,7 +3,7 @@
  *
  * Each case study is fully typed so the page (and any future detail
  * pages) can iterate it without ever hardcoding copy inside JSX. The
- * homepage already shows a 3-card slice of these via CasesSection — the
+ * homepage already shows a 3-card slice of these via CasesSection - the
  * /cases page uses the full set and adds a single "Featured Case" panel
  * at the top.
  */
@@ -15,14 +15,14 @@ export type CaseSystemType =
   | 'Heat Pump + Solar'
 
 export interface CaseStudy {
-  /** Stable slug — will become the URL segment for /cases/[slug]. */
+  /** Stable slug - will become the URL segment for /cases/[slug]. */
   slug: string
   city: string
   region: string // "England" | "Wales" | "Scotland" | "Northern Ireland"
   postcode: string
   /** System label (e.g. "7.8kWp + 10kWh"). */
   systemLabel: string
-  /** System category — used for filtering and the card eyebrow tag. */
+  /** System category - used for filtering and the card eyebrow tag. */
   systemType: CaseSystemType
   /** Brief result (e.g. "Saved £1,180/yr · 8,310 kWh generated"). */
   shortResult: string

@@ -25,7 +25,7 @@ export function partnerNotificationEmail(data: {
   const track = trackLabel(data.partnerTrack)
 
   return {
-    subject: `[UK Partner] ${track} enquiry — ${data.company}`,
+    subject: `[UK Partner] ${track} enquiry - ${data.company}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">

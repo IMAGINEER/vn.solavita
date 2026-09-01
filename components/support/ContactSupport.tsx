@@ -24,7 +24,7 @@ const iconFor = (label: string) => {
 }
 
 /**
- * Contact Support — three contact channels (email / phone / chat).
+ * Contact Support - three contact channels (email / phone / chat).
  * Sits between FAQ and the page CTA. Reuses the standard card primitive
  * (rounded-2xl · uk-line border · teal hover).
  */

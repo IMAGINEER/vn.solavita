@@ -25,7 +25,7 @@ export interface HomeDetails {
   houseType: string
   /**
    * Number of people in the household. Mirrors the form Step 2 question
-   * "How many people live in your household?" — the DB column is named
+   * "How many people live in your household?" - the DB column is named
    * `household_size` for that reason. Older revisions incorrectly
    * aliased this to "bedrooms"; that's wrong because household_size is
    * a count of residents, not rooms.
@@ -33,7 +33,7 @@ export interface HomeDetails {
   householdSize: number
   roofOrientation: string
   /**
-   * Region (e.g. "England – South East"). Surfaced in the strip so the
+   * Region (e.g. "England - South East"). Surfaced in the strip so the
    * user sees their region after editing via "Edit details" without
    * needing to scroll into the plan details to spot the change.
    * Mirrors `ConsultationInput.region`.
@@ -57,7 +57,7 @@ export interface Plan {
 }
 
 /**
- * Four fixed plans. Prices are prototype values per the spec — see also
+ * Four fixed plans. Prices are prototype values per the spec - see also
  * `lib/data/uk-products.ts` for the parallel marketing product list.
  */
 export const PLANS: Plan[] = [
@@ -105,13 +105,13 @@ export function getPlan(id: PlanId): Plan {
   return plan
 }
 
-/** Lookup helper — matches the marketing data already used in ProductSelector. */
+/** Lookup helper - matches the marketing data already used in ProductSelector. */
 export function findPlanByPrice(priceGbp: number): Plan | undefined {
   return PLANS.find((p) => p.priceGbp === priceGbp)
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
- * Recommendation input — MOCK for v1.
+ * Recommendation input - MOCK for v1.
  *
  * When the real `consultation_leads` row is wired in, swap this constant
  * for whatever shape the API returns (already camelCase in FormData). The
@@ -130,7 +130,7 @@ export interface ConsultationInput {
   householdSize: '1' | '2' | '3' | '4' | '5+' | string
   /** Self-reported consumption band from the form. NOT kWh. */
   electricityUsage: ConsumptionTier
-  /** Devices present at the home — bumps demand towards Premium. */
+  /** Devices present at the home - bumps demand towards Premium. */
   devices: Array<HeavyDevice | string>
   region: string
 }
@@ -140,7 +140,7 @@ export const MOCK_CONSULTATION: ConsultationInput = {
   householdSize: '4',
   electricityUsage: 'medium',
   devices: ['heatpump'],
-  region: 'England – London',
+  region: 'England - London',
 }
 
 /** Demand-tier order, low → very high. */
@@ -165,7 +165,7 @@ const BASE_TIER_LOOKUP: Record<
   ConsultationInput['householdSize'],
   Record<ConsumptionTier, number>
 > = {
-  // householdSize → consumption → tier (0=essential … 3=premium)
+  // householdSize → consumption → tier (0=essential ... 3=premium)
   '1':  { low: 0, medium: 0, high: 1, 'very-high': 1 },
   '2':  { low: 0, medium: 0, high: 1, 'very-high': 2 },
   '3':  { low: 0, medium: 1, high: 2, 'very-high': 2 },
@@ -201,7 +201,7 @@ export function recommendPlan(c: ConsultationInput): PlanId {
  *   Export ─► Annual saving ─► 30-year degradation ─► Payback ─► 30-year ROI
  *
  * Tuning constants are UK-typical 2026 values. They're easy to tweak in
- * one place — search for `ROI_*` below.
+ * one place - search for `ROI_*` below.
  * ────────────────────────────────────────────────────────────────────────── */
 
 const ROI_KW_PER_PANEL = 0.45              // 450 W panels
@@ -281,11 +281,11 @@ export interface PlanRoi {
  * then spread user overrides on top.
  */
 export interface RoiAssumptions {
-  /** £/kWh imported. Slider range 0.10–0.50. Default 0.2632 (Ofgem 2026). */
+  /** £/kWh imported. Slider range 0.10-0.50. Default 0.2632 (Ofgem 2026). */
   importPriceGbp: number
-  /** £/kWh exported (SEG). Slider range 0.00–0.30. Default 0.15. */
+  /** £/kWh exported (SEG). Slider range 0.00-0.30. Default 0.15. */
   exportPriceGbp: number
-  /** Self-consumption rate 0–1. Default per-plan (battery=100%, no-battery=35%). */
+  /** Self-consumption rate 0-1. Default per-plan (battery=100%, no-battery=35%). */
   selfConsumptionRate: number
 }
 
@@ -302,7 +302,7 @@ export function defaultAssumptions(plan: Plan): RoiAssumptions {
   }
 }
 
-/** Slider bounds — surfaced as constants so the UI and engine agree. */
+/** Slider bounds - surfaced as constants so the UI and engine agree. */
 export const ROI_IMPORT_PRICE_MIN = 0.10
 export const ROI_IMPORT_PRICE_MAX = 0.50
 export const ROI_IMPORT_PRICE_STEP = 0.001

@@ -5,7 +5,7 @@ interface MobileStickyCTAProps {
 }
 
 /**
- * Fixed bottom CTA bar — only visible below the `lg` breakpoint. Lives
+ * Fixed bottom CTA bar - only visible below the `lg` breakpoint. Lives
  * inside the parent page section so it doesn't compete with the
  * FloatingButtons (back-to-top / theme toggle) on desktop.
  */

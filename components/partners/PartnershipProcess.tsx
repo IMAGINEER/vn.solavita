@@ -8,7 +8,7 @@ import { partnerProcess } from '@/lib/data/partners'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * "How Partnership Works" — horizontal process timeline on desktop,
+ * "How Partnership Works" - horizontal process timeline on desktop,
  * vertical stack on mobile. Connector line + step number above each
  * card, mirroring the typography hierarchy of the rest of the site.
  */
@@ -55,7 +55,7 @@ export default function PartnershipProcess() {
           </h2>
         </div>
 
-        {/* Connector line — visible on md+ only; a simple gradient bar
+        {/* Connector line - visible on md+ only; a simple gradient bar
             behind the step number row. */}
         <div className="relative">
           <div

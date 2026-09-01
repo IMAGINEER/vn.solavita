@@ -9,7 +9,7 @@ import PartnershipProcess from '@/components/partners/PartnershipProcess'
 import PartnerCTA from '@/components/partners/PartnerCTA'
 
 /**
- * /for-partners — B2B partner recruitment page.
+ * /for-partners - B2B partner recruitment page.
  *
  * Composition (per project brief):
  *   Hero → Why Partner with Solavita → Partner Types (Installer /
@@ -17,7 +17,7 @@ import PartnerCTA from '@/components/partners/PartnerCTA'
  *   Why Partner as a 6-card block) → How Partnership Works (horizontal
  *   process timeline) → Partner CTA / Enquiry Form
  *
- * No new backend — the enquiry form is a visual placeholder per the
+ * No new backend - the enquiry form is a visual placeholder per the
  * project brief. Submits to a no-op handler so the page is
  * demonstrably a destination without leaking email addresses.
  */

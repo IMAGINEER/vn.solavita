@@ -8,7 +8,7 @@ import { aboutStats } from '@/lib/data/about'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * "Who We Are" — the brand origin story and headline stats. Mirrors
+ * "Who We Are" - the brand origin story and headline stats. Mirrors
  * the visual treatment of BrandStory on the homepage but with the
  * dedicated about-us copy.
  */
@@ -63,7 +63,7 @@ export default function WhoWeAre() {
           </h2>
           <p className="mt-5 text-lg text-uk-slate font-cw-regular leading-relaxed">
             Solavita is the UK residential solar brand of the SKYWORTH
-            Group — one of the world&rsquo;s largest electronics
+            Group - one of the world&rsquo;s largest electronics
             manufacturers. Premium engineering from a £10bn group,
             designed specifically for British homes, weather and
             regulations.

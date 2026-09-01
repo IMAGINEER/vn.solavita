@@ -26,7 +26,7 @@ const iconFor = (icon: PartnerType['icon']) => {
 }
 
 /**
- * Three Partner Types — large cards on alternating subtle background
+ * Three Partner Types - large cards on alternating subtle background
  * blocks so the page reads as a clear B2B offer rather than a generic
  * product grid.
  */

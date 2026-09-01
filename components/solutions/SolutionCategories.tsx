@@ -11,7 +11,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* Lucide icons — theme-neutral via currentColor. The wrapping
+/* Lucide icons - theme-neutral via currentColor. The wrapping
    `text-uk-teal-dark` token controls the tint. */
 const iconFor = (icon: SolutionCategory['icon']) => {
   const common = 'w-6 h-6'
@@ -29,7 +29,7 @@ const iconFor = (icon: SolutionCategory['icon']) => {
 }
 
 /**
- * Four-card grid (2×2 desktop, 1 column mobile) — the four solution
+ * Four-card grid (2×2 desktop, 1 column mobile) - the four solution
  * categories. Each card jumps to the matching detail section via anchor
  * id, mirroring how the homepage `#products` section is reached.
  */
@@ -75,7 +75,7 @@ export default function SolutionCategories() {
             <span className="text-gradient">solution for your home</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Start where you are — add more later. Every Solavita system is
+            Start where you are - add more later. Every Solavita system is
             designed to grow with your home and your energy needs.
           </p>
         </div>

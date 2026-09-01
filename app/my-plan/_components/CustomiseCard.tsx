@@ -13,7 +13,7 @@ interface CustomiseCardProps {
   selectedPlanId: PlanId
   recommendedPlanId: PlanId
   onSelectPlan: (id: PlanId) => void
-  /** Read-only assumptions — surfaced in the disclosure below. */
+  /** Read-only assumptions - surfaced in the disclosure below. */
   assumptions: RoiAssumptions
 }
 
@@ -21,13 +21,13 @@ interface CustomiseCardProps {
  * 4-plan selector + a read-only "View calculation assumptions" disclosure.
  *
  * Plan selection is the **only** way to change the system's configuration
- * — Solar panels, Battery and Inverter are not independently adjustable.
+ * - Solar panels, Battery and Inverter are not independently adjustable.
  * Switching plans swaps the whole bundle (PV size + battery + inverter +
  * ROI defaults) at once.
  *
  * The "View calculation assumptions" disclosure explains the ROI inputs
  * (import price, export price, self-consumption) for transparency but is
- * deliberately read-only — there is no UI to mutate them. The values
+ * deliberately read-only - there is no UI to mutate them. The values
  * follow the active plan's defaults.
  */
 export default function CustomiseCard({
@@ -47,7 +47,7 @@ export default function CustomiseCard({
           </h2>
           <p className="text-sm text-uk-slate mt-1">
             Pick one of four ready-made plans. Each plan pairs a fixed solar
-            array, battery and inverter — they are bundled together, so the
+            array, battery and inverter - they are bundled together, so the
             whole configuration switches as one. ROI updates instantly.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function CustomiseCard({
                 <div className="flex justify-between">
                   <span>Battery</span>
                   <span className="font-cw-bold text-uk-navy">
-                    {plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '—'}
+                    {plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '-'}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -125,7 +125,7 @@ export default function CustomiseCard({
       </div>
 
       {/* Read-only disclosure of the ROI calculation parameters. No
-          sliders / reset button — the user can switch plans to swap the
+          sliders / reset button - the user can switch plans to swap the
           whole configuration, but cannot tweak individual ROI inputs. */}
       <button
         type="button"
@@ -147,7 +147,7 @@ export default function CustomiseCard({
         <div className="mt-3 rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5">
           <p className="text-xs text-uk-slate leading-relaxed mb-4">
             These figures feed the savings and payback shown above. They are
-            tuned to your active plan and current UK averages — you cannot
+            tuned to your active plan and current UK averages - you cannot
             change system capacity here, only switch to a different plan.
           </p>
 

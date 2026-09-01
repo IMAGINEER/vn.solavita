@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       devices: Array.isArray(devices) ? devices.join(', ') : devices || null,
       // Bump on every write (INSERT or UPDATE) so /admin/leads sort
       // by updated_at DESC bubbles dedup re-submissions to the top.
-      // created_at stays immutable — first-registration semantics.
+      // created_at stays immutable - first-registration semantics.
       updated_at: new Date().toISOString(),
       // Hardcoded 'uk' from this site. On UPDATE we strip this to preserve
       // the original country from the first registration (so a DE lead
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       country: 'uk',
     }
 
-    // Dedup — same email already registered → UPDATE the original row with the
+    // Dedup - same email already registered → UPDATE the original row with the
     // new fields instead of erroring, and inform the user they already registered.
     const { data: existing } = await supabase
       .from('consultation_leads')
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       .maybeSingle()
 
     if (existing) {
-      // Preserve the original country — never overwrite on re-submit.
+      // Preserve the original country - never overwrite on re-submit.
       // (A DE-registered email later hitting this UK route must stay 'de'.)
       const { country: _omitCountry, ...updatePayload } = payload
       const { error: updateError } = await supabase
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
       })
     }
 
-    // New lead — insert
+    // New lead - insert
     const { error: insertError } = await supabase.from('consultation_leads').insert({
       ...payload,
       email,
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Send confirmation email (non-blocking — a mail failure shouldn't fail the lead)
+    // Send confirmation email (non-blocking - a mail failure shouldn't fail the lead)
     const emailContent = consultationConfirmationEmail({
       country: 'uk',
       salutation,

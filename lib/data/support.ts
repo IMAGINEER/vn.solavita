@@ -2,7 +2,7 @@
  * Support page data.
  *
  * Categories drive the clickable cards on /support. FAQ items drive
- * the accordion. All copy placeholder — designed to be the single edit
+ * the accordion. All copy placeholder - designed to be the single edit
  * point when the support team fills in final wording.
  */
 
@@ -80,7 +80,7 @@ export const faqItems: FaqItem[] = [
     category: 'installation',
     question: 'Do I need to be at home for the survey?',
     answer:
-      'Yes — the survey is on-site so our engineer can inspect the roof, the consumer unit and the loft. It usually takes 60–90 minutes.',
+      'Yes - the survey is on-site so our engineer can inspect the roof, the consumer unit and the loft. It usually takes 60-90 minutes.',
   },
   {
     category: 'installation',
@@ -110,13 +110,13 @@ export const faqItems: FaqItem[] = [
     category: 'monitoring',
     question: 'Can I share access with my family?',
     answer:
-      'Yes. From the app you can invite additional household members — they will get their own login and the same view of generation and consumption.',
+      'Yes. From the app you can invite additional household members - they will get their own login and the same view of generation and consumption.',
   },
   {
     category: 'warranty',
     question: 'What is covered by the 15-year warranty?',
     answer:
-      'Product defects, performance (modules) and workmanship for the full 15 years. Batteries carry a separate cycle-based warranty — see your handover pack.',
+      'Product defects, performance (modules) and workmanship for the full 15 years. Batteries carry a separate cycle-based warranty - see your handover pack.',
   },
   {
     category: 'warranty',
@@ -126,7 +126,7 @@ export const faqItems: FaqItem[] = [
   },
   {
     category: 'troubleshooting',
-    question: 'My system has stopped generating — what should I check?',
+    question: 'My system has stopped generating - what should I check?',
     answer:
       'First check the HEMS app for an alert, then verify the inverter display is on. If both look normal, submit a service ticket and we will respond within one working day.',
   },
@@ -134,7 +134,7 @@ export const faqItems: FaqItem[] = [
     category: 'troubleshooting',
     question: 'What does error code E-12 mean?',
     answer:
-      'E-12 indicates a grid voltage transient — usually it clears within a few minutes. If it persists for more than 30 minutes, please contact support.',
+      'E-12 indicates a grid voltage transient - usually it clears within a few minutes. If it persists for more than 30 minutes, please contact support.',
   },
 ]
 
@@ -156,12 +156,12 @@ export const supportContactChannels: SupportContactChannel[] = [
     label: 'Phone',
     value: 'Customer Service',
     href: '#',
-    description: 'Mon–Fri · 09:00–18:00 · UK hours.',
+    description: 'Mon-Fri · 09:00-18:00 · UK hours.',
   },
   {
     label: 'Live chat',
     value: 'Coming soon',
     href: '#',
-    description: 'Real-time chat — in development.',
+    description: 'Real-time chat - in development.',
   },
 ]

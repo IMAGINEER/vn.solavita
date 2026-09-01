@@ -6,14 +6,14 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 /**
  * Support hero with a search field. The search input is visual-only for
- * now (no backend) — matching the project brief which says search
+ * now (no backend) - matching the project brief which says search
  * functionality is out of scope.
  */
 export default function SupportHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-support.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -65,7 +65,7 @@ export default function SupportHero() {
           your system.
         </motion.p>
 
-        {/* Visual-only search field — backend wired later. */}
+        {/* Visual-only search field - backend wired later. */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ export default function SupportHero() {
           <Search className="w-5 h-5 text-uk-slate ml-5 flex-shrink-0" strokeWidth={1.6} />
           <input
             type="search"
-            placeholder="Search guides, error codes, downloads…"
+            placeholder="Search guides, error codes, downloads..."
             className="flex-1 px-4 py-4 bg-transparent text-uk-navy placeholder:text-uk-slate focus:outline-none"
           />
           <button

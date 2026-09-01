@@ -20,7 +20,7 @@ interface SolutionDetailSectionProps {
    * sections alternate down the page). Default false = image right.
    */
   reverse?: boolean
-  /** Section background — alternates with adjacent sections for rhythm. */
+  /** Section background - alternates with adjacent sections for rhythm. */
   surface?: 'white' | 'light'
 }
 

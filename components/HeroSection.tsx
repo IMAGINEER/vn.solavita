@@ -31,7 +31,7 @@ const FlagUK = ({ className }: { className?: string }) => (
   </svg>
 )
 
-/* Lucide icons — stroke uses `currentColor` so a `text-*` wrapper decides the
+/* Lucide icons - stroke uses `currentColor` so a `text-*` wrapper decides the
    tint; the Union Jack above is full-colour on purpose (it's a national flag,
    not a UI icon). */
 
@@ -118,7 +118,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
     },
     {
       icon: <Shield className="w-4 h-4 text-white" strokeWidth={1.6} />,
-      text: '5–15 Years Warranty',
+      text: '5-15 Years Warranty',
     },
   ]
 
@@ -128,7 +128,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
       className="hero-banner relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
     >
-      {/* Directional overlay — darkest behind the left copy column, fading
+      {/* Directional overlay - darkest behind the left copy column, fading
          out toward the right so the banner image shows through behind the
          product photo column. */}
       <div
@@ -169,7 +169,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
               {subhead}
             </p>
 
-            {/* CTAs — primary uses original theme `.btn-gradient`; secondary uses a
+            {/* CTAs - primary uses original theme `.btn-gradient`; secondary uses a
                white outline that flips to white-on-navy on hover. */}
             <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 pt-2">
               <button
@@ -214,7 +214,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
                 className="w-full h-full object-cover"
               />
 
-              {/* Union Jack overlay — top-right (Figma placement) */}
+              {/* Union Jack overlay - top-right (Figma placement) */}
               <div className="absolute top-4 right-4 w-16 h-12 rounded-md shadow-md overflow-hidden border border-white/40 bg-white flex items-center justify-center">
                 <FlagUK className="w-14 h-10" />
               </div>
@@ -223,7 +223,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
         </div>
       </div>
 
-      {/* Trustpilot card — pinned to the bottom-right of the entire section
+      {/* Trustpilot card - pinned to the bottom-right of the entire section
          (sits outside the right-column image frame, over the banner image). */}
       <div
         ref={trustpilotRef}

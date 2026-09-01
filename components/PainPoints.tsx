@@ -18,7 +18,7 @@ const painPoints = [
   {
     id: 2,
     problem: 'Inflated capacity & efficiency claims',
-    problemDetail: 'Manufacturers advertise lab-tested figures. Reality is 20–30% less yield.',
+    problemDetail: 'Manufacturers advertise lab-tested figures. Reality is 20-30% less yield.',
     solution: 'Real 92% self-consumption, measured',
     solutionDetail: 'AI-optimised self-consumption control. 9,957 kWh/year from a 10kWp system, measured in the field. LCOE: £0.047/kWh. Transparent monitoring data in the app.',
     icon: '📉',
@@ -54,7 +54,7 @@ const painPoints = [
   {
     id: 6,
     problem: 'Hidden costs & inflated prices',
-    problemDetail: '3–5 middlemen drive up the price. You pay the markup.',
+    problemDetail: '3-5 middlemen drive up the price. You pay the markup.',
     solution: 'Producer-direct pricing, no middlemen',
     solutionDetail: 'Producer-Direct-to-Consumer removes every intermediary. Same premium quality, up to 50% less. £12,999 for a complete 10kW / 10kWh system, fully installed.',
     icon: '💸',
@@ -62,7 +62,7 @@ const painPoints = [
   },
   {
     id: 7,
-    problem: 'Upfront payment — then insolvency',
+    problem: 'Upfront payment - then insolvency',
     problemDetail: 'Small solar firms go bust every year. Customer deposits vanish.',
     solution: '£10bn group: Your money is safe',
     solutionDetail: 'SKYWORTH Group: £10bn turnover, dual-listed (HK). 40+ years of corporate history. No start-up risk.',

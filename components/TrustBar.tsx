@@ -9,7 +9,7 @@ import { ukTrustItems } from '@/lib/data/uk-trust'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Slim horizontal trust / certification strip — direct mirror of the
+ * Slim horizontal trust / certification strip - direct mirror of the
  * German-site TrustBar markup (dark `bg-sv-dark/50` band with translucent
  * `bg-white/70` glass icon chips).
  *

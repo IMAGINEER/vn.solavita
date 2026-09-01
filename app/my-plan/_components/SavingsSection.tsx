@@ -37,7 +37,7 @@ export default function SavingsSection({ metrics }: SavingsSectionProps) {
       label: 'Estimated Payback',
       value:
         metrics.paybackYears === Infinity
-          ? '—'
+          ? '-'
           : `${metrics.paybackYears.toFixed(1)} years`,
       sub: 'Years to break even',
     },

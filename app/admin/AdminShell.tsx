@@ -13,7 +13,7 @@ import {
 import type { AdminUser } from '@/lib/auth-types'
 import { cn } from '@/lib/utils'
 
-// UK admin shell — top-bar nav (no Sidebar, simpler than DE's full
+// UK admin shell - top-bar nav (no Sidebar, simpler than DE's full
 // shadcn Sidebar). Active state is reflected on the current route.
 // When unauthenticated (login page), renders children with no chrome
 // so /admin/login is a clean centered card.

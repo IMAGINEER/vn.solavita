@@ -3,7 +3,7 @@
 import { Sun, Banknote, ArrowRight } from 'lucide-react'
 import { type CaseStudy } from '@/lib/data/cases'
 
-/* Lucide icons — theme-neutral via currentColor. */
+/* Lucide icons - theme-neutral via currentColor. */
 const SunIcon = ({ className }: { className?: string }) => (
   <Sun className={className ?? 'w-4 h-4'} strokeWidth={1.5} />
 )
@@ -19,7 +19,7 @@ interface CaseStudyCardProps {
 }
 
 /**
- * Reusable case study card — reused by the /cases grid and any future
+ * Reusable case study card - reused by the /cases grid and any future
  * place a single case needs to appear (homepage cards, search results,
  * related-cases modules). Mirrors the homepage CasesSection card so the
  * visual language stays consistent.
@@ -30,7 +30,7 @@ export default function CaseStudyCard({
 }: CaseStudyCardProps) {
   const inner = (
     <>
-      {/* Image — full-bleed at the top, no fixed height. */}
+      {/* Image - full-bleed at the top, no fixed height. */}
       <div className="mb-5 -mx-6 -mt-6 overflow-hidden rounded-t-2xl">
         <img
           src={caseStudy.imagePath}
@@ -45,7 +45,7 @@ export default function CaseStudyCard({
         {caseStudy.postcode} · {caseStudy.region}
       </span>
 
-      {/* City — primary identifier */}
+      {/* City - primary identifier */}
       <h3 className="mt-2 text-xl font-cw-bold text-uk-navy leading-tight">
         {caseStudy.city}
       </h3>
@@ -58,7 +58,7 @@ export default function CaseStudyCard({
         {caseStudy.description}
       </p>
 
-      {/* Data row — generation & saving */}
+      {/* Data row - generation & saving */}
       {(caseStudy.annualGeneration || caseStudy.annualSaving) && (
         <div className="mt-auto pt-4 border-t border-uk-line space-y-3">
           {caseStudy.annualGeneration && (

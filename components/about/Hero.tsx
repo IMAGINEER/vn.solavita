@@ -4,14 +4,14 @@ import { motion } from 'motion/react'
 import Breadcrumb from '@/components/Breadcrumb'
 
 /**
- * About hero — same banner image and overlay treatment as the rest of
+ * About hero - same banner image and overlay treatment as the rest of
  * the inner-page heroes so the top-level navigation feels unified.
  */
 export default function AboutHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/banner_uk.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-about.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -60,7 +60,7 @@ export default function AboutHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Solavita is the UK residential solar brand of the SKYWORTH
-          Group — a £10bn global electronics company bringing 70+ years
+          Group - a £10bn global electronics company bringing 70+ years
           of engineering to British homes.
         </motion.p>
       </div>

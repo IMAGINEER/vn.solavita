@@ -24,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger)
  * Card primitive matches ProductSelector / ArticlesSection / CasesSection.
  */
 
-// Lucide icons — theme-neutral via currentColor. Sized to sit inside the
+// Lucide icons - theme-neutral via currentColor. Sized to sit inside the
 // `w-10 h-10` icon container.
 const iconFor = (icon: UkSupportItem['icon']) => {
   const common = 'w-6 h-6'

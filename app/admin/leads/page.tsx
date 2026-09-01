@@ -10,7 +10,7 @@ export default async function LeadsPage() {
   // UK + DE share the same Supabase project. Filter to country='uk' so
   // DE rows are never shown here. Order: most recently touched first so
   // re-submitted leads (UPDATE in /api/consultation dedup path) bubble
-  // to the top — same pattern as DE's /admin/leads.
+  // to the top - same pattern as DE's /admin/leads.
   const { data: rows } = await supabase
     .from('consultation_leads')
     .select(

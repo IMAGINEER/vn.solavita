@@ -38,9 +38,9 @@ const CAMPAIGNS: Record<CampaignSlug, ActiveCampaign | null> = {
       background: 'gradient-placeholder',
       badge: 'Aktion: Nur 50 Sets · Solange der Vorrat reicht',
       // Second screen = call to action + process (NOT a repeat of the Hero intro)
-      h2: ['So geht’s in', '3 Schritten', 'zum Gratis-TV'],
+      h2: ["So geht's in", '3 Schritten', 'zum Gratis-TV'],
       subhead:
-        'Anfrage senden, Angebot erhalten, Anlage installieren lassen – Ihr Metz MPE7000 ist mit dabei.',
+        'Anfrage senden, Angebot erhalten, Anlage installieren lassen - Ihr Metz MPE7000 ist mit dabei.',
       showCampaignBody: true,
     },
   },
@@ -72,7 +72,7 @@ const CAMPAIGNS: Record<CampaignSlug, ActiveCampaign | null> = {
 //   'uk-launch' = UK homepage redesign.
 export const activeCampaignSlug: CampaignSlug = 'uk-launch'
 
-// Resolved active campaign — driven entirely by the slug above.
+// Resolved active campaign - driven entirely by the slug above.
 export const activeCampaign: ActiveCampaign | null = CAMPAIGNS[activeCampaignSlug]
 
 export function isCampaignActive(now: Date = new Date()): boolean {
