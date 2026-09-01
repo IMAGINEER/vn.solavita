@@ -153,17 +153,24 @@ export async function POST(request: Request) {
         status: 'sent',
         provider_id: emailResult.id || null,
       })
-      // Stamp the Resend message id so /api/webhooks/resend can correlate
-      // delivery / open events back to this row. We deliberately do NOT
-      // write plan_sent_at here - the webhook does that on actual delivery.
+      // Stamp both `plan_provider_id` and `plan_sent_at` so /admin/leads
+      // shows the correct Plan status immediately - no need to wait for
+      // Resend to deliver the webhook. plan_sent_at here is the
+      // "we successfully handed the email to Resend" timestamp; if the
+      // Resend webhook arrives later with email.bounced, an admin
+      // follow-up is the response (no auto-bounce handler yet).
+      const stamp: Record<string, string> = {
+        plan_sent_at: new Date().toISOString(),
+      }
       if (emailResult.id) {
-        const { error: stampErr } = await supabase
-          .from('consultation_leads')
-          .update({ plan_provider_id: emailResult.id })
-          .eq('id', inserted.id)
-        if (stampErr) {
-          console.error('[/api/consultation] plan_provider_id stamp failed:', stampErr)
-        }
+        stamp.plan_provider_id = emailResult.id
+      }
+      const { error: stampErr } = await supabase
+        .from('consultation_leads')
+        .update(stamp)
+        .eq('id', inserted.id)
+      if (stampErr) {
+        console.error('[/api/consultation] plan lifecycle stamp failed:', stampErr)
       }
     } else {
       // Record the failure so it's diagnosable (previously swallowed silently)
