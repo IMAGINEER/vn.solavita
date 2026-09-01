@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+import { Badge, type BadgeVariant } from '@/components/ui/badge'
 
 export interface ConsultationLead {
   id: string
@@ -32,6 +32,52 @@ export interface ConsultationLead {
   country: string | null
   created_at: string
   updated_at: string
+  // Plan lifecycle - see migration 20260902000000_consultation_plan_lifecycle.sql.
+  // All nullable: NULL means the signal hasn't fired yet.
+  plan_sent_at: string | null
+  plan_provider_id: string | null
+  plan_first_opened_at: string | null
+  plan_last_opened_at: string | null
+  plan_confirmed_at: string | null
+}
+
+/**
+ * Derived 4-state Plan lifecycle. Order matters - the most advanced state
+ * wins. Computed in JSX (not stored in DB) so the timestamps stay the
+ * single source of truth.
+ */
+type PlanStatus =
+  | 'not_sent'
+  | 'sent_unopened'
+  | 'sent_opened_unconfirmed'
+  | 'sent_opened_confirmed'
+
+function computePlanStatus(l: ConsultationLead): PlanStatus {
+  if (l.plan_confirmed_at) return 'sent_opened_confirmed'
+  if (l.plan_first_opened_at) return 'sent_opened_unconfirmed'
+  if (l.plan_sent_at) return 'sent_unopened'
+  return 'not_sent'
+}
+
+const PLAN_STATUS_VARIANT: Record<PlanStatus, BadgeVariant> = {
+  not_sent: 'muted',                  // gray
+  sent_unopened: 'outline',           // white teal border - email in flight
+  sent_opened_unconfirmed: 'default', // teal-dark filled - engaged, no reply yet
+  sent_opened_confirmed: 'success',   // emerald - terminal / handed to sales
+}
+
+const PLAN_STATUS_LABEL: Record<PlanStatus, string> = {
+  not_sent: 'Plan: not sent',
+  sent_unopened: 'Plan: sent',
+  sent_opened_unconfirmed: 'Plan: opened',
+  sent_opened_confirmed: 'Plan: confirmed',
+}
+
+const PLAN_STATUS_TOOLTIP: Record<PlanStatus, string> = {
+  not_sent: 'No email sent yet (or Resend webhook not configured).',
+  sent_unopened: 'Email delivered, /my-plan not yet visited.',
+  sent_opened_unconfirmed: '/my-plan visited, no Talk-to-an-expert click yet.',
+  sent_opened_confirmed: 'Customer clicked Talk to an expert. Follow up.',
 }
 
 function formatDateTime(iso: string): string {
@@ -84,6 +130,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
             <TableHead>People</TableHead>
             <TableHead>Usage</TableHead>
             <TableHead>Devices</TableHead>
+            <TableHead>Plan</TableHead>
             <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
@@ -93,6 +140,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
               .filter(Boolean)
               .join(' ')
             const devices = l.devices ? l.devices : '-'
+            const planStatus = computePlanStatus(l)
             return (
               <TableRow key={l.id}>
                 <TableCell className="whitespace-nowrap">
@@ -122,6 +170,14 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
                 <TableCell>{l.electricity_usage || '-'}</TableCell>
                 <TableCell className="max-w-[12rem] truncate" title={devices}>
                   {devices}
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant={PLAN_STATUS_VARIANT[planStatus]}
+                    title={PLAN_STATUS_TOOLTIP[planStatus]}
+                  >
+                    {PLAN_STATUS_LABEL[planStatus]}
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   <Badge variant={l.status === 'new' ? 'success' : 'outline'}>

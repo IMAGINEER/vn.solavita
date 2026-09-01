@@ -107,6 +107,21 @@ export async function GET(
   // shape - both sides agree on field names because we listed them.
   const row = data as unknown as ConsultationRow
 
+  // Record this page visit. Idempotent via the SECURITY DEFINER RPC
+  // `record_my_plan_open(uuid)` - first-opened preserved, last-opened
+  // always updated. Failure here is non-fatal: the user still sees
+  // their plan. Errors are logged for diagnostics only.
+  try {
+    const { error: trackError } = await supabase.rpc('record_my_plan_open', {
+      p_token: token,
+    })
+    if (trackError) {
+      console.error('[/api/my-plan] failed to record open:', trackError)
+    }
+  } catch (trackErr) {
+    console.error('[/api/my-plan] open tracking threw:', trackErr)
+  }
+
   return NextResponse.json({
     found: true,
     consultation: toConsultationInput(row),

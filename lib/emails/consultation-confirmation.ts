@@ -5,6 +5,13 @@ export function consultationConfirmationEmail(data: {
   lastName?: string
   email: string
   phone?: string
+  /**
+   * Personalised /my-plan URL with plan_token baked in. Drives the
+   * "Plan: opened" lifecycle transition: the customer must click this
+   * link to land on /my-plan where `record_my_plan_open()` fires.
+   * Optional so older call sites can omit it.
+   */
+  planLink?: string
 }) {
   // UK repo only serves the English template. If we ever see 'de' here,
   // it's a bug - German templates live in the DE repo.
@@ -35,6 +42,17 @@ export function consultationConfirmationEmail(data: {
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Hi ${name},</p>
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Thanks for your enquiry. Our UK team is reviewing your details and will be in touch within one working day with your bespoke solar design and quote.</p>
+${
+  data.planLink
+    ? `<!-- Plan CTA - drives /my-plan open tracking -->
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
+<tr><td align="center">
+<a href="${data.planLink}" target="_blank" rel="noopener" style="display:inline-block; background: linear-gradient(135deg, #0f766e 0%, #10b981 100%); color:#ffffff; font-size:15px; font-weight:700; text-decoration:none; padding:14px 32px; border-radius:8px;">View your personalised plan &rarr;</a>
+<p style="margin:10px 0 0 0; font-size:12px; color:#9ca3af;">Opens your bespoke system design, savings estimate and quote.</p>
+</td></tr>
+</table>`
+    : ''
+}
 
 <!-- Info box -->
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">

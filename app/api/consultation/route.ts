@@ -3,6 +3,16 @@ import { supabase } from '@/lib/supabase'
 import { consultationConfirmationEmail } from '@/lib/emails/consultation-confirmation'
 import { sendEmail } from '@/lib/emails/send'
 
+/**
+ * Base URL used to build the personalised /my-plan link baked into the
+ * confirmation email. Drives the "Plan: opened" lifecycle transition:
+ * the customer must click this link for `record_my_plan_open()` to fire.
+ * Override in Netlify env when running against a non-production domain.
+ */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
+  'https://uk.solavita.com'
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -56,15 +66,23 @@ export async function POST(request: Request) {
 
     // Dedup - same email already registered → UPDATE the original row with the
     // new fields instead of erroring, and inform the user they already registered.
+    //
+    // **Country-scoped dedup**: UK + DE share the same `consultation_leads`
+    // table, but each site only dedups against its own country. A UK user
+    // and a DE user with the same email are two different leads; never
+    // merge them. The DE repo applies the same `country='de'` filter.
     const { data: existing } = await supabase
       .from('consultation_leads')
       .select('id')
       .eq('email', email)
+      .eq('country', 'uk')
       .maybeSingle()
 
     if (existing) {
-      // Preserve the original country - never overwrite on re-submit.
-      // (A DE-registered email later hitting this UK route must stay 'de'.)
+      // Defensive: even though the dedup SELECT filters by
+      // `country='uk'`, don't blindly overwrite the row's country field
+      // on UPDATE. Stays safe if the row's country is ever flipped
+      // out-of-band (manual SQL fix, data migration, etc.).
       const { country: _omitCountry, ...updatePayload } = payload
       const { error: updateError } = await supabase
         .from('consultation_leads')
@@ -87,19 +105,28 @@ export async function POST(request: Request) {
       })
     }
 
-    // New lead - insert
-    const { error: insertError } = await supabase.from('consultation_leads').insert({
-      ...payload,
-      email,
-    })
+    // New lead - insert. Capture the inserted row's id + plan_token so we
+    // can (a) bake a personalised /my-plan link into the email and
+    // (b) record `plan_provider_id` so Resend webhooks can update the
+    // lifecycle columns on delivery / open.
+    const { data: inserted, error: insertError } = await supabase
+      .from('consultation_leads')
+      .insert({
+        ...payload,
+        email,
+      })
+      .select('id, plan_token')
+      .single()
 
-    if (insertError) {
+    if (insertError || !inserted) {
       console.error('Consultation insert error:', insertError)
       return NextResponse.json(
         { success: false, message: 'Something went wrong. Please try again.' },
         { status: 500 }
       )
     }
+
+    const planLink = `${SITE_URL}/my-plan?id=${inserted.plan_token}`
 
     // Send confirmation email (non-blocking - a mail failure shouldn't fail the lead)
     const emailContent = consultationConfirmationEmail({
@@ -109,6 +136,7 @@ export async function POST(request: Request) {
       lastName,
       email,
       phone,
+      planLink,
     })
     const emailResult = await sendEmail({
       country: 'uk',
@@ -125,6 +153,18 @@ export async function POST(request: Request) {
         status: 'sent',
         provider_id: emailResult.id || null,
       })
+      // Stamp the Resend message id so /api/webhooks/resend can correlate
+      // delivery / open events back to this row. We deliberately do NOT
+      // write plan_sent_at here - the webhook does that on actual delivery.
+      if (emailResult.id) {
+        const { error: stampErr } = await supabase
+          .from('consultation_leads')
+          .update({ plan_provider_id: emailResult.id })
+          .eq('id', inserted.id)
+        if (stampErr) {
+          console.error('[/api/consultation] plan_provider_id stamp failed:', stampErr)
+        }
+      }
     } else {
       // Record the failure so it's diagnosable (previously swallowed silently)
       console.error('❌ Consultation email failed:', emailResult.error)

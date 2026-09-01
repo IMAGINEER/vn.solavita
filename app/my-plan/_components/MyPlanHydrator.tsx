@@ -101,6 +101,7 @@ export default function MyPlanHydrator({ identifier }: MyPlanHydratorProps) {
       consultation={state.consultation}
       home={state.home}
       prefill={state.prefill}
+      planToken={identifier}
     />
   )
 }

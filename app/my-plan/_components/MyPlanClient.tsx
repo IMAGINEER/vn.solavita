@@ -37,6 +37,10 @@ interface MyPlanClientProps {
   home: HomeDetails
   /** Prefill seed for the Edit-details consultation form. */
   prefill: Partial<FormData>
+  /** Raw plan_token from the URL - sent to /api/track/my-plan-confirm so
+   *  admin can see "Talk to an expert" clicks. The endpoint is idempotent
+   *  (RPC COALESCE), so multiple clicks preserve the first timestamp. */
+  planToken: string
 }
 
 const TOAST_DURATION_MS = 2600
@@ -62,6 +66,7 @@ export default function MyPlanClient({
   consultation,
   home,
   prefill,
+  planToken,
 }: MyPlanClientProps) {
   const recommendedPlanId = useMemo(
     () => recommendPlan(consultation),
@@ -106,7 +111,21 @@ export default function MyPlanClient({
     if (toastTimer.current) clearTimeout(toastTimer.current)
   }, [])
 
-  const handleContactExpert = useCallback(() => showToast(CONTACT_TOAST), [showToast])
+  const handleContactExpert = useCallback(() => {
+    // Fire-and-forget confirm tracking. The endpoint is idempotent and
+    // returns 200 even on invalid tokens, so the user always gets the
+    // toast - the only failure mode is logging.
+    if (planToken) {
+      void fetch('/api/track/my-plan-confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planToken }),
+      }).catch((err) => {
+        console.error('[/my-plan] confirm tracking failed:', err)
+      })
+    }
+    showToast(CONTACT_TOAST)
+  }, [planToken, showToast])
 
   // "Edit details" → open the consultation form with the current row
   // pre-filled so the user can tweak fields without re-entering them.
