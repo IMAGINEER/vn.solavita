@@ -143,7 +143,7 @@ export default function FreeDesignQuoteSection({
             </button>
 
             <p className="text-xs text-uk-slate">
-              5-minute form · No credit check · Reply within 1 working day
+              1-minute survey · No credit check · Reply within 1 working day
             </p>
           </div>
 
