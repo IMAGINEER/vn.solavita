@@ -73,6 +73,7 @@ export default function TermsPage() {
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 About us</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Solavita UK Ltd is a company registered in England and Wales (Company No. [TBC]).
+                Our registered office is 130 Wood Street, London EC2V 6DL, United Kingdom.
                 Solavita UK Ltd is a wholly-owned subsidiary of the SKYWORTH Group.
               </p>
             </div>

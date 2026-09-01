@@ -73,6 +73,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Who we are</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 The data controller is Solavita UK Ltd (registered in England and Wales).
+                Our registered office is 130 Wood Street, London EC2V 6DL, United Kingdom.
                 For any data protection queries, email <a href="mailto:uk@solavita.com" className="text-[#0F766E] hover:underline">uk@solavita.com</a>.
               </p>
             </div>

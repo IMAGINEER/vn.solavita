@@ -77,8 +77,8 @@ export const contactChannels: ContactChannel[] = [
   },
   {
     label: 'Office',
-    value: 'London · United Kingdom',
-    href: '#',
+    value: '130 Wood Street, London EC2V 6DL, United Kingdom',
+    href: 'https://maps.google.com/?q=130+Wood+Street+London+EC2V+6DL',
     description: 'UK HQ · Service & Support.',
     icon: 'map-pin',
   },

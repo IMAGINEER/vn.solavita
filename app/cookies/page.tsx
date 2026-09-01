@@ -126,7 +126,7 @@ export default function CookiesPage() {
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: August 2026 · Solavita UK Ltd (registered in England and Wales)
+                Last updated: August 2026 · Solavita UK Ltd · 130 Wood Street, London EC2V 6DL, United Kingdom (registered in England and Wales)
               </p>
               <p className="text-xs text-[#9CA3AF] mt-2">
                 This is a placeholder document for development purposes. Production-grade legal review

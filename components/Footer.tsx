@@ -346,8 +346,8 @@ export default function Footer({
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left">
-              © 2026 Solavita UK Ltd - A SKYWORTH Group company. All rights
-              reserved.
+              © 2026 Solavita UK Ltd · 130 Wood Street, London EC2V 6DL, United
+              Kingdom · A SKYWORTH Group company. All rights reserved.
             </p>
             <div
               className="flex items-center gap-2 text-white/50 text-xs font-cw-regular"
