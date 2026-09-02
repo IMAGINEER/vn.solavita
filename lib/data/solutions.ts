@@ -5,6 +5,10 @@
  * without touching the page structure. Image paths reuse existing assets
  * under /images and /static/images so the page renders end-to-end without
  * any new uploads.
+ *
+ * Pricing is intentionally NOT part of this file: per the product brief,
+ * prices are surfaced only on /my-plan (and feed the ROI engine). The
+ * marketing surfaces (/, /solutions, dropdown menus) show specs only.
  */
 
 /**
@@ -12,19 +16,18 @@
  * detail section anchor on /solutions. Shared between:
  *   - `<Header>` Solutions dropdown (jumps to the right block on /solutions)
  *   - `<ProductSelector>` "Plan Details →" link on /solutions
+ *
+ * IDs are 1:1 today (the marketing id *is* the anchor id), but we keep
+ * the indirection so a future product rename can detach label from anchor.
  */
 export const PRODUCT_TO_SOLUTION_ANCHOR: Record<string, string> = {
-  essential: 'residential-solar',
-  'storage-core': 'solar-storage',
-  'smart-home': 'smart-home',
-  'premium-backup': 'energy-integration',
+  one: 'one',
+  pro: 'pro',
+  max: 'max',
+  ultra: 'ultra',
 }
 
-export type SolutionCategoryId =
-  | 'residential-solar'
-  | 'solar-storage'
-  | 'smart-home'
-  | 'energy-integration'
+export type SolutionCategoryId = 'one' | 'pro' | 'max' | 'ultra'
 
 export interface SolutionCategory {
   id: SolutionCategoryId
@@ -40,41 +43,46 @@ export interface SolutionCategory {
   icon: 'sun' | 'battery' | 'home' | 'plug'
 }
 
+/**
+ * Four-tier solution ladder - Home Energy One → Pro → Max → Ultra.
+ * Each tier adds capability (storage → EV charging → whole-home) so the
+ * cards read as "upgrade your system", not "four unrelated products".
+ */
 export const solutionCategories: SolutionCategory[] = [
   {
-    id: 'residential-solar',
-    eyebrow: 'Solar PV',
-    title: 'Residential Solar',
+    id: 'one',
+    eyebrow: 'Solar only',
+    title: 'Home Energy One',
     short:
-      'Generate your own electricity with high-efficiency panels designed for UK roofs.',
-    metric: 'Cut bills by up to 70%',
+      'Generate your own electricity with 8 high-efficiency panels sized for typical UK homes.',
+    metric: 'Save from day one',
     icon: 'sun',
   },
   {
-    id: 'solar-storage',
+    id: 'pro',
     eyebrow: 'Solar + Storage',
-    title: 'Solar + Battery',
+    title: 'Home Energy Pro',
     short:
-      'Store daytime solar to power your home in the evening and during peak rates.',
+      'Add a 5.12 kWh battery and HEMS so your solar powers your home day and night.',
     metric: 'Use 80%+ of your solar',
     icon: 'battery',
   },
   {
-    id: 'smart-home',
-    eyebrow: 'HEMS',
-    title: 'Smart Home / HEMS',
+    id: 'max',
+    eyebrow: 'Solar + Storage + EV',
+    title: 'Home Energy Max',
     short:
-      'Monitor and automate your energy use from a single Solavita app.',
-    metric: 'Real-time control',
+      'Solar, battery and EV charger in one HEMS-managed system - charge your car with solar.',
+    metric: 'Drive on sunshine',
     icon: 'home',
   },
   {
-    id: 'energy-integration',
-    eyebrow: 'Whole-home',
-    title: 'Heat Pump · EV · Energy',
+    id: 'ultra',
+    eyebrow: 'Whole-home energy',
+    title: 'Home Energy Ultra',
     short:
-      'Bring solar, battery, heat pump and EV charging into one optimised system.',
-    metric: 'Whole-home energy',
+      'Solar, battery, EV and heat pump working as one - one installer, one warranty, one app.',
+    metric: 'Every source of energy',
     icon: 'plug',
   },
 ]
@@ -89,66 +97,82 @@ export interface SolutionDetail {
   imageAlt: string
 }
 
+/**
+ * Per-tier long-form copy for the detail sections on /solutions. Specs
+ * here mirror the marketing product cards and the /my-plan plans so the
+ * three surfaces tell the same story. Panels are 460 W (the unit wattage
+ * declared on the spec sheet) - 8 panels → 3.68 kWp, 12 panels → 5.52 kWp.
+ */
 export const solutionDetails: SolutionDetail[] = [
   {
-    id: 'residential-solar',
-    eyebrow: 'Solar Essential',
-    title: 'Solar Essential',
+    id: 'one',
+    eyebrow: 'Solar only',
+    title: 'Home Energy One',
     intro:
-      'A complete roof-mounted solar PV system sized for your home. MCS-certified components, G98/G100 compliant and installed in around two weeks.',
+      'A complete roof-mounted solar PV system sized for typical UK homes. MCS-certified components, G98/G100 compliant and installed in around two weeks.',
     bullets: [
-      'High-efficiency monocrystalline modules',
-      'String inverter or micro-inverter options',
-      'Roof type matched mounting kit (tile / slate / flat)',
+      '8 × 460 W monocrystalline modules (3.68 kWp)',
+      '3.6 kW string or micro inverter',
+      'Roof-type-matched mounting kit (tile / slate / flat)',
       'Smart Export Guarantee (SEG) ready',
+      'MCS-certified installation with a 15-year workmanship warranty',
     ],
     imagePath: '/images/solution_1.webp',
-    imageAlt: 'Solar Essential package - roof-mounted solar PV system',
+    imageAlt:
+      'Home Energy One - 8-panel roof-mounted solar PV system for UK homes',
   },
   {
-    id: 'solar-storage',
-    eyebrow: 'Storage Core',
-    title: 'Storage Core',
+    id: 'pro',
+    eyebrow: 'Solar + Storage',
+    title: 'Home Energy Pro',
     intro:
-      'Add a Solavita battery to store your solar energy and use it when the sun is not shining - and protect your home during a power cut.',
+      'Add a Solavita LiFePO₄ battery to store your daytime solar and use it in the evening - and keep the lights on during a power cut. HEMS automates charge / discharge around your tariff.',
     bullets: [
-      '5 kWh - 20 kWh battery options',
+      '8 × 460 W monocrystalline modules (3.68 kWp)',
+      '5.12 kWh LiFePO₄ stackable battery (expandable to 20 kWh)',
+      '3.6 kW hybrid inverter',
+      'HEMS scheduling, time-of-use optimisation and app control',
       'Backup power for essential circuits',
-      'Time-of-use optimisation',
-      'App-controlled charge / discharge',
     ],
     imagePath: '/images/solution_2.webp',
-    imageAlt: 'Storage Core package - solar panels paired with a Solavita home battery',
+    imageAlt:
+      'Home Energy Pro - 8 panels paired with a 5.12 kWh Solavita home battery',
   },
   {
-    id: 'smart-home',
-    eyebrow: 'Smart Home',
-    title: 'Smart Home',
+    id: 'max',
+    eyebrow: 'Solar + Storage + EV',
+    title: 'Home Energy Max',
     intro:
-      'A Home Energy Management System (HEMS) that connects solar, battery and major appliances - and lets you automate everything from a single app.',
+      'Solar + battery + EV charger in one HEMS-managed system. Solar powers your home, charges your car and tops up the battery - all routed to minimise grid imports.',
     bullets: [
-      'Live generation & consumption',
-      'Appliance-level scheduling',
-      'Smart tariffs & peak shaving',
-      'Voice & IFTTT integrations',
+      '12 × 460 W monocrystalline modules (5.52 kWp)',
+      '5.12 kWh LiFePO₄ stackable battery',
+      '6 kW hybrid inverter',
+      'EV charger ready (Pod Point, Easee, Andersen and others)',
+      'Smart load balancing, peak shaving and dynamic tariffs',
+      'HEMS app control with appliance-level scheduling',
     ],
     imagePath: '/images/solution_3.webp',
-    imageAlt: 'Smart Home package - energy management system dashboard',
+    imageAlt:
+      'Home Energy Max - solar, battery and EV charger managed by a single HEMS app',
   },
   {
-    id: 'energy-integration',
-    eyebrow: 'Premium Backup',
-    title: 'Premium Backup',
+    id: 'ultra',
+    eyebrow: 'Whole-home energy',
+    title: 'Home Energy Ultra',
     intro:
-      'Future-ready whole-home energy. Combine solar, battery, a heat pump and EV charging into a single optimised system - designed and installed by one team.',
+      'Future-ready whole-home energy. Solar, battery, EV charging and heat pump support - designed, installed and managed by one Solavita team for the lifetime of the system.',
     bullets: [
-      'Heat pump readiness planning',
-      'EV charger integration (Pod Point / Easee / others)',
-      'Load balancing & dynamic tariffs',
-      'One app, one installer, one warranty',
+      '12 × 460 W monocrystalline modules (5.52 kWp)',
+      '10.24 kWh LiFePO₄ stackable battery',
+      '6 kW hybrid inverter',
+      'EV charger + heat pump integrated (SG Ready / EEBUS)',
+      'Whole-home load balancing and dynamic tariffs',
+      'One installer, one warranty, one app - 15-year programme',
     ],
     imagePath: '/images/solution_4.webp',
-    imageAlt: 'Premium Backup package - whole-home energy system with heat pump and EV charging',
+    imageAlt:
+      'Home Energy Ultra - whole-home solar, battery, EV and heat pump system',
   },
 ]
 

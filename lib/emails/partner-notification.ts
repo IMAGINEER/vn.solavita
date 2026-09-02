@@ -7,7 +7,6 @@ const TEAM_EMAIL = 'uk@solavita.com'
 
 const TRACK_LABEL: Record<string, string> = {
   installer: 'Installer',
-  distributor: 'Distributor',
   business: 'Energy / Business Partner',
 }
 

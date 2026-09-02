@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS public.uk_partner_leads (
   full_name TEXT NOT NULL,
   company TEXT NOT NULL,
   email TEXT NOT NULL,
-  partner_track TEXT NOT NULL,           -- 'installer' | 'distributor' | 'business'
+  partner_track TEXT NOT NULL,           -- 'installer' | 'business'
   message TEXT,
   status TEXT NOT NULL DEFAULT 'new',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),

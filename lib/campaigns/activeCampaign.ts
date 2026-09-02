@@ -55,13 +55,13 @@ const CAMPAIGNS: Record<CampaignSlug, ActiveCampaign | null> = {
       h1: ['Power Your Home.', 'Shape a Greener UK.', ''],
       subhead:
         'Smart solar & storage solutions for UK homes. Save more. Worry less. Live better.',
-      primaryCta: { label: 'Get Free Design & Quote →' },
+      primaryCta: { label: 'Get Free Plan →' },
     },
 
     formSection: {
       background: 'gradient-placeholder',
-      badge: 'Free Design · No Obligation',
-      h2: ['Get Your Free', 'Design & Quote', 'in 24 hours'],
+      badge: 'Free Plan · No Obligation',
+      h2: ['Get Your Free', 'Plan', 'in 24 hours'],
       subhead:
         'Tell us about your home and energy needs. Our experts will design the best solution and provide a clear, no-obligation quote.',
     },

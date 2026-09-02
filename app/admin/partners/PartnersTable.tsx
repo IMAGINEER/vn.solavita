@@ -42,13 +42,11 @@ function formatDateTime(iso: string): string {
 // Keep in sync with VALID_TRACKS in /app/api/partner/route.ts.
 const TRACK_VARIANT: Record<string, BadgeVariant> = {
   installer: 'success',
-  distributor: 'default',
   business: 'muted',
 }
 
 const TRACK_LABEL: Record<string, string> = {
   installer: 'Installer',
-  distributor: 'Distributor',
   business: 'Energy / Business',
 }
 

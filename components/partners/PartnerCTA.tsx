@@ -221,7 +221,6 @@ export default function PartnerCTA() {
                     className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy focus:outline-none focus:border-uk-teal"
                   >
                     <option value="installer">Installer</option>
-                    <option value="distributor">Distributor</option>
                     <option value="business">Energy / Business Partner</option>
                   </select>
                 </label>

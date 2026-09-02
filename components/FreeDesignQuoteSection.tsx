@@ -8,7 +8,7 @@ import { Check } from 'lucide-react'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * "Free Design & Quote" section.
+ * "Get Your Free Plan" section.
  *
  * The mid-page CTA that promotes the consultation form modal. Clicking the
  * button dispatches `onOpenForm` which CampaignOverrides mirrors into modal
@@ -104,14 +104,14 @@ export default function FreeDesignQuoteSection({
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white">
               <div className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
               <span className="text-xs font-cw-regular text-uk-slate">
-                Free UK design &amp; quote
+                Free UK plan
               </span>
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
               Get Your Free
               <br />
-              <span className="text-gradient">Design &amp; Quote</span>
+              <span className="text-gradient">Plan</span>
               <br />
               in 24 hours
             </h2>
@@ -139,7 +139,7 @@ export default function FreeDesignQuoteSection({
               onClick={onOpenForm}
               className="btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white cursor-pointer"
             >
-              Get Your Free Design &amp; Quote →
+              Get Your Free Plan →
             </button>
 
             <p className="text-xs text-uk-slate">

@@ -33,7 +33,7 @@ gsap.registerPlugin(ScrollTrigger)
  *   Footer
  *
  * The 5-step consultation form modal is now hosted by `Footer`, which is
- * shared by every page on the site. "Get Free Design & Quote" buttons in
+ * shared by every page on the site. "Get Free Plan" buttons in
  * HeroSection / FreeDesignQuoteSection / ProductSelector dispatch the
  * `openFormModal()` event bus, which the Footer-hosted modal listens for.
  * No per-page modal wiring needed.

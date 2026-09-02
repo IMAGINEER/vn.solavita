@@ -59,9 +59,9 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Become a Solavita partner - installer, distributor or energy
-          / business partner. UK engineering support, group supply-chain
-          scale, and a 15-year warranty programme.
+          Become a Solavita partner - installer or energy / business
+          partner. UK engineering support, group supply-chain scale, and
+          a 15-year warranty programme.
         </motion.p>
       </div>
     </section>

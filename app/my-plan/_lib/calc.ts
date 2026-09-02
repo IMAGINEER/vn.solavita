@@ -18,7 +18,7 @@
  * later by replacing `calculateROI()` only.
  */
 
-export type PlanId = 'essential' | 'storage' | 'smart' | 'premium'
+export type PlanId = 'one' | 'pro' | 'max' | 'ultra'
 
 /** Home details surfaced at the top of the plan page. */
 export interface HomeDetails {
@@ -50,52 +50,55 @@ export interface Plan {
   name: string
   subtitle: string
   panels: number
-  /** kWh. `0` for Solar Essential. */
+  /** kWh. `0` for Home Energy One. */
   batteryKwh: number
   inverterKw: number
   priceGbp: number
 }
 
 /**
- * Four fixed plans. Prices are prototype values per the spec - see also
- * `lib/data/uk-products.ts` for the parallel marketing product list.
+ * Four fixed plans. Prices are the only place pricing lives in the app -
+ * see the project brief: "prices are surfaced only on /my-plan and used
+ * for ROI calculation". Marketing surfaces (`lib/data/uk-products.ts`,
+ * `lib/data/solutions.ts`) carry specs only. The marketing labels and
+ * the PLANS labels are kept in sync by name + tier index.
  */
 export const PLANS: Plan[] = [
   {
-    id: 'essential',
-    name: 'Solar Essential',
-    subtitle: 'Simple start',
+    id: 'one',
+    name: 'Home Energy One',
+    subtitle: 'Solar only',
     panels: 8,
     batteryKwh: 0,
     inverterKw: 3.6,
-    priceGbp: 8_999,
+    priceGbp: 5_099,
   },
   {
-    id: 'storage',
-    name: 'Storage Core',
+    id: 'pro',
+    name: 'Home Energy Pro',
     subtitle: 'Solar + Storage',
     panels: 8,
     batteryKwh: 5.12,
-    inverterKw: 5,
-    priceGbp: 12_999,
+    inverterKw: 3.6,
+    priceGbp: 6_999,
   },
   {
-    id: 'smart',
-    name: 'Smart Home',
-    subtitle: 'More control',
-    panels: 10,
-    batteryKwh: 15.36,
-    inverterKw: 6,
-    priceGbp: 19_238,
-  },
-  {
-    id: 'premium',
-    name: 'Premium Backup',
-    subtitle: 'Higher storage',
+    id: 'max',
+    name: 'Home Energy Max',
+    subtitle: 'Solar + Storage + EV',
     panels: 12,
-    batteryKwh: 20,
-    inverterKw: 8,
-    priceGbp: 23_800,
+    batteryKwh: 5.12,
+    inverterKw: 6,
+    priceGbp: 7_899,
+  },
+  {
+    id: 'ultra',
+    name: 'Home Energy Ultra',
+    subtitle: 'Whole-home energy',
+    panels: 12,
+    batteryKwh: 10.24,
+    inverterKw: 6,
+    priceGbp: 9_399,
   },
 ]
 
@@ -144,7 +147,7 @@ export const MOCK_CONSULTATION: ConsultationInput = {
 }
 
 /** Demand-tier order, low → very high. */
-const TIER_PLAN_IDS: PlanId[] = ['essential', 'storage', 'smart', 'premium']
+const TIER_PLAN_IDS: PlanId[] = ['one', 'pro', 'max', 'ultra']
 
 /**
  * Recommendation pipeline (per spec):
@@ -154,18 +157,18 @@ const TIER_PLAN_IDS: PlanId[] = ['essential', 'storage', 'smart', 'premium']
  * The base tier comes from a 5×4 lookup keyed by the form's exact
  * `householdSize` IDs (`'1' / '2' / '3' / '4' / '5+'`) × the consumption
  * band (`low / medium / high / very-high`). Heavy-load devices (wallbox,
- * heatpump, AC) each bump the tier up by one, capped at Premium.
+ * heatpump, AC) each bump the tier up by one, capped at Ultra.
  *
  * The grid encodes the implicit "people × kWh/yr" load:
  *   1 person ≈ 2,000 kWh, 5+ people ≈ 7,000+ kWh baseline.
- * So "5+ × medium" already lands in tier 2 (Smart Home), and only a
- * tiny household (1-2 people × low) keeps you in Solar Essential.
+ * So "5+ × medium" already lands in tier 2 (Home Energy Max), and only a
+ * tiny household (1-2 people × low) keeps you in Home Energy One.
  */
 const BASE_TIER_LOOKUP: Record<
   ConsultationInput['householdSize'],
   Record<ConsumptionTier, number>
 > = {
-  // householdSize → consumption → tier (0=essential ... 3=premium)
+  // householdSize → consumption → tier (0=one ... 3=ultra)
   '1':  { low: 0, medium: 0, high: 1, 'very-high': 1 },
   '2':  { low: 0, medium: 0, high: 1, 'very-high': 2 },
   '3':  { low: 0, medium: 1, high: 2, 'very-high': 2 },
@@ -179,7 +182,7 @@ export function recommendPlan(c: ConsultationInput): PlanId {
   const sizeRow = BASE_TIER_LOOKUP[c.householdSize] ?? BASE_TIER_LOOKUP['3']
   let tier = sizeRow[c.electricityUsage] ?? 1
 
-  // 2. Each heavy-load device bumps the tier up (capped at premium).
+  // 2. Each heavy-load device bumps the tier up (capped at ultra).
   for (const device of c.devices) {
     if (
       device === 'wallbox' ||
@@ -204,9 +207,9 @@ export function recommendPlan(c: ConsultationInput): PlanId {
  * one place - search for `ROI_*` below.
  * ────────────────────────────────────────────────────────────────────────── */
 
-const ROI_KW_PER_PANEL = 0.45              // 450 W panels
+const ROI_KW_PER_PANEL = 0.46              // 460 W panels (matches product spec)
 const ROI_KWH_PER_KW_YEAR = 950           // kWh per kW installed (UK average)
-const ROI_SELF_CONSUMPTION_BASE = 0.35     // no-battery baseline (Solar Essential)
+const ROI_SELF_CONSUMPTION_BASE = 0.35     // no-battery baseline (Home Energy One)
 const ROI_IMPORT_PRICE_GBP = 0.2632        // £/kWh imported (Ofgem cap, 2026)
 const ROI_EXPORT_PRICE_GBP = 0.15          // £/kWh exported (SEG rate, 2026)
 const ROI_PROJECT_LIFETIME_YEARS = 30

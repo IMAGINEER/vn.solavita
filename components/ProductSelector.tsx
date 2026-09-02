@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Check } from 'lucide-react'
-import { ukProducts, ukProductFormatPrice, type UkProduct } from '@/lib/data/uk-products'
+import { ukProducts, type UkProduct } from '@/lib/data/uk-products'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -22,7 +22,7 @@ export default function ProductSelector({
   planDetailsAnchorFor?: (productId: UkProduct['id']) => string
 } = {}) {
   const sectionRef = useRef<HTMLElement>(null)
-  const [selectedProduct, setSelectedProduct] = useState<UkProduct['id']>('storage-core')
+  const [selectedProduct, setSelectedProduct] = useState<UkProduct['id']>('pro')
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -142,7 +142,7 @@ export default function ProductSelector({
                     alt={`${product.name} solar system`}
                     loading="lazy"
                     className={`absolute right-4 bottom-[calc(100%+8px)] ${
-                    product.id === 'storage-core' ? 'w-24' : 'h-24'
+                    product.id === 'pro' ? 'w-24' : 'h-24'
                   } object-contain pointer-events-none`}
                   />
                   <a

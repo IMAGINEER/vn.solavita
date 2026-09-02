@@ -91,7 +91,7 @@ export default function MyPlanClient({
     [plan, consultation, assumptions],
   )
   const systemKw = useMemo(
-    () => plan.panels * 0.45, // 450 W per panel - same constant as in calc.ts
+    () => plan.panels * 0.46, // 460 W per panel - same constant as in calc.ts
     [plan],
   )
 
@@ -215,7 +215,7 @@ export default function MyPlanClient({
                 <ProductCard
                   kind="panel"
                   title="Solar panels"
-                  subtitle={`${plan.panels} × 450W modules`}
+                  subtitle={`${plan.panels} × 460W modules`}
                   value={`${plan.panels} modules`}
                   onChange={focusCustomise}
                 />

@@ -120,10 +120,10 @@ export default function Footer({
   // ─── Link sets (unchanged routing; cleaner labels for UK context) ─────
 
   const defaultProductLinks: FooterLink[] = [
-    { label: 'Solar Essential', href: '#products' },
-    { label: 'Storage Core', href: '#products' },
-    { label: 'Smart Home', href: '#products' },
-    { label: 'Premium Backup', href: '#products' },
+    { label: 'Home Energy One', href: '#products' },
+    { label: 'Home Energy Pro', href: '#products' },
+    { label: 'Home Energy Max', href: '#products' },
+    { label: 'Home Energy Ultra', href: '#products' },
     { label: 'Installation Process', href: '#delivery' },
   ]
 

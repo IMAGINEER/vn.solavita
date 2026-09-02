@@ -98,7 +98,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
   ]
   const defaultSubhead =
     'Smart solar & storage solutions for UK homes. Save more. Worry less. Live better.'
-  const defaultCtaLabel = 'Get Free Design & Quote →'
+  const defaultCtaLabel = 'Get Free Plan →'
 
   const badge = override?.badge ?? defaultBadge
   const h1 = override?.h1 ?? defaultH1

@@ -13,9 +13,9 @@ import PartnerCTA from '@/components/partners/PartnerCTA'
  *
  * Composition (per project brief):
  *   Hero → Why Partner with Solavita → Partner Types (Installer /
- *   Distributor / Energy · Business) → Partner Benefits (folded into
- *   Why Partner as a 6-card block) → How Partnership Works (horizontal
- *   process timeline) → Partner CTA / Enquiry Form
+ *   Energy · Business) → Partner Benefits (folded into Why Partner as
+ *   a 6-card block) → How Partnership Works (horizontal process
+ *   timeline) → Partner CTA / Enquiry Form
  *
  * No new backend - the enquiry form is a visual placeholder per the
  * project brief. Submits to a no-op handler so the page is

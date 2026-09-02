@@ -1,11 +1,11 @@
 /**
  * For Partners page data.
  *
- * B2B partner recruitment page - three partner types, partner benefits,
+ * B2B partner recruitment page - two partner types, partner benefits,
  * and a four-step partnership process. All copy placeholder.
  */
 
-export type PartnerTypeId = 'installer' | 'distributor' | 'business'
+export type PartnerTypeId = 'installer' | 'business'
 
 export interface PartnerType {
   id: PartnerTypeId
@@ -13,7 +13,7 @@ export interface PartnerType {
   title: string
   description: string
   bullets: string[]
-  icon: 'wrench' | 'truck' | 'handshake'
+  icon: 'wrench' | 'handshake'
 }
 
 export const partnerTypes: PartnerType[] = [
@@ -30,20 +30,6 @@ export const partnerTypes: PartnerType[] = [
       'Lead generation in your region',
     ],
     icon: 'wrench',
-  },
-  {
-    id: 'distributor',
-    eyebrow: 'Trade / Distribution',
-    title: 'Distributor',
-    description:
-      'Electrical wholesalers, roofing merchants and trade suppliers.',
-    bullets: [
-      'Stock & supply programmes',
-      'Marketing & POS support',
-      'Training for your counter staff',
-      'Volume pricing',
-    ],
-    icon: 'truck',
   },
   {
     id: 'business',

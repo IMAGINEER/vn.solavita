@@ -14,7 +14,7 @@ const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as cons
 // Mirrors the `<option>` values in components/partners/PartnerCTA.tsx.
 // If the UI adds a new track, update this whitelist + PartnerCTA in the
 // same change.
-const VALID_TRACKS = ['installer', 'distributor', 'business'] as const
+const VALID_TRACKS = ['installer', 'business'] as const
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 

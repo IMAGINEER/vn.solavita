@@ -38,7 +38,7 @@ export const contactSubjects: ContactSubject[] = [
   {
     id: 'partner',
     label: 'Partnership · B2B',
-    description: 'You would like to discuss installer / distributor programmes.',
+    description: 'You would like to discuss installer or energy / business partner programmes.',
   },
   {
     id: 'press',

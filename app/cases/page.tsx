@@ -38,7 +38,7 @@ export default function CasesPage() {
           </>
         }
         description="Send us your address and a recent energy bill. We will prepare a side-by-side design showing what a Solavita system would generate, store and save on your home."
-        primaryLabel="Get Free Design & Quote →"
+        primaryLabel="Get Free Plan →"
       />
 
       <Footer variant="light" />
