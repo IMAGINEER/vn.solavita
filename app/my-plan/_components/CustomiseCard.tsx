@@ -4,6 +4,15 @@ import { useState } from 'react'
 import { Check, ChevronDown, Star } from 'lucide-react'
 import {
   PLANS,
+  ROI_IMPORT_PRICE_MIN,
+  ROI_IMPORT_PRICE_MAX,
+  ROI_IMPORT_PRICE_STEP,
+  ROI_EXPORT_PRICE_MIN,
+  ROI_EXPORT_PRICE_MAX,
+  ROI_EXPORT_PRICE_STEP,
+  ROI_SELF_CONSUMPTION_MIN,
+  ROI_SELF_CONSUMPTION_MAX,
+  ROI_SELF_CONSUMPTION_STEP,
   type PlanId,
   type RoiAssumptions,
 } from '../_lib/calc'
@@ -13,30 +22,49 @@ interface CustomiseCardProps {
   selectedPlanId: PlanId
   recommendedPlanId: PlanId
   onSelectPlan: (id: PlanId) => void
-  /** Read-only assumptions - surfaced in the disclosure below. */
+  /**
+   * Effective assumptions for the active plan + any user overrides on
+   * top. All three ROI inputs are user-controlled; the plan only seeds
+   * the initial self-consumption value (battery=100%, no battery=35%).
+   */
   assumptions: RoiAssumptions
+  /** Slider handlers - fire on every input event. */
+  onImportPriceChange: (value: number) => void
+  onExportPriceChange: (value: number) => void
+  onSelfConsumptionRateChange: (value: number) => void
 }
 
 /**
- * 4-plan selector + a read-only "View calculation assumptions" disclosure.
+ * 4-plan selector + an interactive "View calculation assumptions"
+ * disclosure.
  *
- * Plan selection is the **only** way to change the system's configuration
- * - Solar panels, Battery and Inverter are not independently adjustable.
- * Switching plans swaps the whole bundle (PV size + battery + inverter +
- * ROI defaults) at once.
+ * Plan selection is the **only** way to change the system's hardware
+ * configuration - Solar panels, Battery and Inverter are not
+ * independently adjustable. Switching plans swaps the whole bundle
+ * (PV size + battery + inverter) at once. The plan's automatic
+ * self-consumption default (battery=100%, no battery=35%) is the seed
+ * for that slider, but the user's choice persists once they drag it.
  *
- * The "View calculation assumptions" disclosure explains the ROI inputs
- * (import price, export price, self-consumption) for transparency but is
- * deliberately read-only - there is no UI to mutate them. The values
- * follow the active plan's defaults.
+ * The "View calculation assumptions" disclosure exposes the three ROI
+ * inputs as sliders - import price, export price, self-consumption.
+ * All three feed back into the ROI pipeline above so the savings /
+ * payback / 30-year numbers reflow in real time.
  */
 export default function CustomiseCard({
   selectedPlanId,
   recommendedPlanId,
   onSelectPlan,
   assumptions,
+  onImportPriceChange,
+  onExportPriceChange,
+  onSelfConsumptionRateChange,
 }: CustomiseCardProps) {
   const [advancedOpen, setAdvancedOpen] = useState(false)
+
+  // Snap slider values to the configured step - parseFloat can return
+  // tiny float artefacts on some browsers even when step=0.001.
+  const snap = (step: number) => (raw: number) =>
+    Math.round(raw / step) * step
 
   return (
     <section className="rounded-2xl p-6 bg-white border border-uk-line">
@@ -124,9 +152,10 @@ export default function CustomiseCard({
         })}
       </div>
 
-      {/* Read-only disclosure of the ROI calculation parameters. No
-          sliders / reset button - the user can switch plans to swap the
-          whole configuration, but cannot tweak individual ROI inputs. */}
+      {/* Interactive disclosure of the ROI calculation parameters.
+          Import / export prices have sliders and feed back into the ROI
+          pipeline above. Self-consumption is hardware-bound and stays
+          read-only. */}
       <button
         type="button"
         onClick={() => setAdvancedOpen((v) => !v)}
@@ -144,57 +173,127 @@ export default function CustomiseCard({
       </button>
 
       {advancedOpen && (
-        <div className="mt-3 rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5">
-          <p className="text-xs text-uk-slate leading-relaxed mb-4">
-            These figures feed the savings and payback shown above. They are
-            tuned to your active plan and current UK averages - you cannot
-            change system capacity here, only switch to a different plan.
+        <div className="mt-3 rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5 space-y-5">
+          <p className="text-xs text-uk-slate leading-relaxed">
+            These figures feed the savings and payback shown above. Drag
+            the sliders to match your actual tariff and usage pattern -
+            the savings / payback / 30-year numbers above reflow in real
+            time.
           </p>
 
-          <dl className="space-y-4 text-sm">
+          {/* Import price slider */}
+          <div className="space-y-2">
             <div className="flex items-baseline justify-between gap-3">
-              <div>
-                <dt className="font-cw-bold text-uk-navy">Import price</dt>
-                <dd className="text-xs text-uk-slate mt-0.5">
-                  What you pay your supplier per kWh of grid electricity
-                </dd>
-              </div>
-              <span className="shrink-0 font-cw-bold text-uk-teal-dark tabular-nums">
+              <label
+                htmlFor="assumption-import-price"
+                className="font-cw-bold text-uk-navy"
+              >
+                Import price
+              </label>
+              <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 £{assumptions.importPriceGbp.toFixed(4)} /kWh
               </span>
             </div>
+            <p className="text-xs text-uk-slate">
+              What you pay your supplier per kWh of grid electricity
+            </p>
+            <input
+              id="assumption-import-price"
+              type="range"
+              min={ROI_IMPORT_PRICE_MIN}
+              max={ROI_IMPORT_PRICE_MAX}
+              step={ROI_IMPORT_PRICE_STEP}
+              value={assumptions.importPriceGbp}
+              onChange={(e) =>
+                onImportPriceChange(snap(ROI_IMPORT_PRICE_STEP)(parseFloat(e.target.value)))
+              }
+              aria-label="Import price in pounds per kilowatt-hour"
+              className="w-full h-1.5 cursor-pointer accent-uk-teal"
+            />
+            <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
+              <span>£{ROI_IMPORT_PRICE_MIN.toFixed(2)}</span>
+              <span>£{ROI_IMPORT_PRICE_MAX.toFixed(2)}</span>
+            </div>
+          </div>
 
+          {/* Export price slider */}
+          <div className="space-y-2">
             <div className="flex items-baseline justify-between gap-3">
-              <div>
-                <dt className="font-cw-bold text-uk-navy">
-                  Export price (SEG)
-                </dt>
-                <dd className="text-xs text-uk-slate mt-0.5">
-                  What you earn per kWh exported under the Smart Export
-                  Guarantee
-                </dd>
-              </div>
-              <span className="shrink-0 font-cw-bold text-uk-teal-dark tabular-nums">
+              <label
+                htmlFor="assumption-export-price"
+                className="font-cw-bold text-uk-navy"
+              >
+                Export price (SEG)
+              </label>
+              <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 £{assumptions.exportPriceGbp.toFixed(4)} /kWh
               </span>
             </div>
+            <p className="text-xs text-uk-slate">
+              What you earn per kWh exported under the Smart Export
+              Guarantee
+            </p>
+            <input
+              id="assumption-export-price"
+              type="range"
+              min={ROI_EXPORT_PRICE_MIN}
+              max={ROI_EXPORT_PRICE_MAX}
+              step={ROI_EXPORT_PRICE_STEP}
+              value={assumptions.exportPriceGbp}
+              onChange={(e) =>
+                onExportPriceChange(snap(ROI_EXPORT_PRICE_STEP)(parseFloat(e.target.value)))
+              }
+              aria-label="Export price (SEG) in pounds per kilowatt-hour"
+              className="w-full h-1.5 cursor-pointer accent-uk-teal"
+            />
+            <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
+              <span>£{ROI_EXPORT_PRICE_MIN.toFixed(2)}</span>
+              <span>£{ROI_EXPORT_PRICE_MAX.toFixed(2)}</span>
+            </div>
+          </div>
 
+          {/* Self-consumption rate slider. Default seeded from the
+              active plan (battery=100%, no battery=35%) - the user can
+              drag below that for solar-only homes that export a lot,
+              or down from 100% if their usage doesn't match generation. */}
+          <div className="space-y-2 pt-1 border-t border-uk-line/60">
             <div className="flex items-baseline justify-between gap-3">
-              <div>
-                <dt className="font-cw-bold text-uk-navy">
-                  Self-consumption rate
-                </dt>
-                <dd className="text-xs text-uk-slate mt-0.5">
-                  Share of generation used on-site. With a battery this can
-                  reach 100%; without one, it depends on when the sun shines
-                  vs. when you are home
-                </dd>
-              </div>
-              <span className="shrink-0 font-cw-bold text-uk-teal-dark tabular-nums">
+              <label
+                htmlFor="assumption-self-consumption"
+                className="font-cw-bold text-uk-navy"
+              >
+                Self-consumption rate
+              </label>
+              <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 {Math.round(assumptions.selfConsumptionRate * 100)}%
               </span>
             </div>
-          </dl>
+            <p className="text-xs text-uk-slate">
+              Share of generation used on-site. With a battery this
+              reaches 100%; without one, typical UK solar-only homes
+              self-consume around 35%. Drag to match your actual usage
+              pattern.
+            </p>
+            <input
+              id="assumption-self-consumption"
+              type="range"
+              min={ROI_SELF_CONSUMPTION_MIN}
+              max={ROI_SELF_CONSUMPTION_MAX}
+              step={ROI_SELF_CONSUMPTION_STEP}
+              value={assumptions.selfConsumptionRate}
+              onChange={(e) =>
+                onSelfConsumptionRateChange(
+                  snap(ROI_SELF_CONSUMPTION_STEP)(parseFloat(e.target.value)),
+                )
+              }
+              aria-label="Self-consumption rate as a percentage of generation"
+              className="w-full h-1.5 cursor-pointer accent-uk-teal"
+            />
+            <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
+              <span>{Math.round(ROI_SELF_CONSUMPTION_MIN * 100)}%</span>
+              <span>{Math.round(ROI_SELF_CONSUMPTION_MAX * 100)}%</span>
+            </div>
+          </div>
         </div>
       )}
     </section>

@@ -7,6 +7,10 @@ import { formatGBP, formatKwh } from '../_lib/format'
 
 interface SavingsSectionProps {
   metrics: PlanRoi
+  /** Region from the consultation - surfaced in the breakdown so the
+   *  customer can see their specific yield was applied, not the UK
+   *  fallback (which can overstate by ~6% on average). */
+  region?: string
 }
 
 interface MetricRow {
@@ -23,7 +27,7 @@ interface MetricRow {
  *
  * Layout: 3 cols on lg (2x3), 2 cols on sm, 1 col on mobile.
  */
-export default function SavingsSection({ metrics }: SavingsSectionProps) {
+export default function SavingsSection({ metrics, region }: SavingsSectionProps) {
   const [detailedOpen, setDetailedOpen] = useState(false)
 
   const rows: MetricRow[] = [
@@ -92,6 +96,25 @@ export default function SavingsSection({ metrics }: SavingsSectionProps) {
         ))}
       </div>
 
+      {/* Always-visible data-source line. The customer should never have
+          to expand the disclosure to see where the regional yield came
+          from - keeping it above the disclosure button means it lands
+          in the natural reading flow under the 6-card grid. */}
+      <p className="mt-3 text-xs text-uk-slate/70 leading-relaxed">
+        Generation is region-adjusted
+        {region ? ` for ${region}` : ' (UK-wide default)'} — e.g.
+        England - South East = 1,042 kWh/kWp/yr. Source:{' '}
+        <a
+          href="https://re.jrc.ec.europa.eu/pvgis/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-uk-teal hover:text-uk-teal-dark underline underline-offset-2"
+        >
+          EU JRC PVGIS 6
+        </a>
+        , 2014–2024 average, 14% system losses.
+      </p>
+
       <button
         type="button"
         onClick={() => setDetailedOpen((v) => !v)}
@@ -131,9 +154,10 @@ export default function SavingsSection({ metrics }: SavingsSectionProps) {
           <p className="mt-3 text-xs text-uk-slate/80">
             30-year figures use the panel degradation curve (year 1 = 100%,
             year 10 ≈ 95.7%, year 30 = 85%) at £0.2632/kWh imported and
-            £0.15/kWh exported. Replace the engine constants in
-            <code className="mx-1">_lib/calc.ts</code> with the real ROI
-            model before production.
+            £0.15/kWh exported. Per-region yield factors live in{' '}
+            <code className="mx-1">_lib/calc.ts</code> · REGION_YIELD_KWH_PER_KWP.
+            Replace the engine constants with the real ROI model before
+            production.
           </p>
         </div>
       )}

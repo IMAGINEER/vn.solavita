@@ -67,8 +67,8 @@
 ### Pipeline（每年独立算一遍）
 
 ```
-year1 发电量        = 板数 × 460W × 950 kWh/kW/年
-自用电             = year1 发电 × 自用率（电池=100%，无电池=35%）
+year1 发电量        = 板数 × 460W × 区域发电系数 kWh/kW/年
+自用电             = year1 发电 × 自用率（电池=100%，无电池=35%，可手动调）
 卖电网             = year1 发电 − 自用电
 year1 省的钱       = 自用电 × 买电价 + 卖电网 × 卖电价
 ```
@@ -86,11 +86,28 @@ year1 省的钱       = 自用电 × 买电价 + 卖电网 × 卖电价
 | **每块板功率** | **460 W** | Solavita 默认板子规格 |
 | **装机寿命** | **30 年** | 整套系统设计寿命 |
 
-### 发电能力
+### 发电能力（按区域）
 
-| 数字 | 值 | 业务解释 |
+| 区域 | kWh / kW / 年 | 代表点 |
 |---|---|---|
-| **UK 单位发电** | **950 kWh / kW / 年** | UK 全国平均值。装 1 千瓦一年发 950 度电 |
+| England - South East | **1,042** | Brighton |
+| England - South West | **1,012** | Plymouth |
+| England - London | **919** | London |
+| England - East | **931** | Norwich |
+| England - East Midlands | **~870** | Nottingham / Leicester proxy |
+| England - West Midlands | **874** | Birmingham |
+| England - Yorkshire & the Humber | **856** | Sheffield |
+| England - North West | **801** | Manchester |
+| England - North East | **857** | Newcastle |
+| Wales | **939** | Cardiff |
+| Scotland | **817** | Edinburgh |
+| Northern Ireland | **831** | Belfast |
+
+> Data source: European Commission JRC PVGIS 6; based on 2014–2024 average annual PV energy yield (kWh/kWp/yr) for fixed-mounted crystalline-silicon PV at optimal tilt, including 14% system losses.
+>
+> 参考链接：[https://re.jrc.ec.europa.eu/pvgis/](https://re.jrc.ec.europa.eu/pvgis/)（PVGIS 6 公开数据）。UK 12 个区域的平均值约 **896 kWh/kW/年**。如果客户区域不在表里（比如未来加了新选项），fallback 到 **950 kWh/kW/年**。
+
+> **销售话术**：南部的客户回报比北部快 —— South East 比 North West 多发 30%。Scotland 客户比 South East 客户每年少 ~22% 发电量，payback 多 ~2-3 年。
 
 ### 用电行为
 

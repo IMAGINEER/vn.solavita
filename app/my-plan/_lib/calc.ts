@@ -13,6 +13,9 @@
  * - The ROI engine implements the documented calculation chain
  *   (regional generation → consumption → self-consumption → export →
  *   annual saving → 30-year degradation → payback → 30-year return → ROI).
+ *   Year-1 generation is keyed off the user's region via JRC PVGIS 6
+ *   (see REGION_YIELD_KWH_PER_KWP below); tariff / self-consumption
+ *   inputs come from user state in MyPlanClient.
  *
  * Numbers are intentionally UK-typical constants; swap for a real engine
  * later by replacing `calculateROI()` only.
@@ -208,13 +211,52 @@ export function recommendPlan(c: ConsultationInput): PlanId {
  * ────────────────────────────────────────────────────────────────────────── */
 
 const ROI_KW_PER_PANEL = 0.46              // 460 W panels (matches product spec)
-const ROI_KWH_PER_KW_YEAR = 950           // kWh per kW installed (UK average)
+const ROI_KWH_PER_KW_YEAR = 950           // kWh per kW installed (UK-wide default / fallback)
 const ROI_SELF_CONSUMPTION_BASE = 0.35     // no-battery baseline (Home Energy One)
 const ROI_IMPORT_PRICE_GBP = 0.2632        // £/kWh imported (Ofgem cap, 2026)
 const ROI_EXPORT_PRICE_GBP = 0.15          // £/kWh exported (SEG rate, 2026)
 const ROI_PROJECT_LIFETIME_YEARS = 30
 const ROI_OFFER_DISCOUNT_GBP = 1_300
 const ROI_OFFER_VALIDITY_DAYS = 30
+
+/**
+ * Per-region PV specific yield (kWh / kWp / year).
+ *
+ * Data source: European Commission JRC PVGIS 6; based on 2014–2024
+ * average annual PV energy yield (kWh/kWp/yr) for fixed-mounted
+ * crystalline-silicon PV at optimal tilt, including 14% system losses.
+ *
+ * Reference: https://re.jrc.ec.europa.eu/pvgis/ (PVGIS 6 web interface).
+ * Each value is the regional representative city fed through PVGIS. The
+ * UK-wide mean of these 12 values is ~896 kWh/kWp/yr, so
+ * ROI_KWH_PER_KW_YEAR = 950 (legacy fallback for unrecognised regions)
+ * actually overstates by ~6% on average - this table corrects that
+ * drift on a per-region basis.
+ *
+ * Keys must stay byte-identical with the REGIONS list in
+ * components/Form.tsx (the user's "Region" dropdown). Adding a new
+ * option to the form without extending this map silently reverts to
+ * the fallback.
+ */
+const REGION_YIELD_KWH_PER_KWP: Record<string, number> = {
+  'England - South East': 1042,            // Brighton proxy
+  'England - South West': 1012,            // Plymouth proxy
+  'England - London': 919,                 // London 51.5,-0.1
+  'England - East': 931,                   // Norwich proxy
+  'England - East Midlands': 870,          // Nottingham / Leicester proxy (~870, rounded)
+  'England - West Midlands': 874,          // Birmingham proxy
+  'England - Yorkshire & the Humber': 856, // Sheffield proxy
+  'England - North West': 801,             // Manchester proxy
+  'England - North East': 857,             // Newcastle 55.0,-1.6
+  'Wales': 939,                            // Cardiff 51.5,-3.2
+  'Scotland': 817,                         // Edinburgh 55.9,-3.2
+  'Northern Ireland': 831,                 // Belfast 54.6,-5.9
+}
+
+/** Exported so the slider UI in CustomiseCard can seed its initial state. */
+export const DEFAULT_ROI_IMPORT_PRICE_GBP = ROI_IMPORT_PRICE_GBP
+export const DEFAULT_ROI_EXPORT_PRICE_GBP = ROI_EXPORT_PRICE_GBP
+export const ROI_SELF_CONSUMPTION_BASE_RATE = ROI_SELF_CONSUMPTION_BASE
 
 /**
  * Annual panel output as a fraction of year-1 performance.
@@ -312,6 +354,11 @@ export const ROI_IMPORT_PRICE_STEP = 0.001
 export const ROI_EXPORT_PRICE_MIN = 0.00
 export const ROI_EXPORT_PRICE_MAX = 0.30
 export const ROI_EXPORT_PRICE_STEP = 0.001
+/** Self-consumption 20%-100% in 1% steps. Floor at 20% to keep slider
+ *  draggable even on solar-only plans where the auto-default is 35%. */
+export const ROI_SELF_CONSUMPTION_MIN = 0.20
+export const ROI_SELF_CONSUMPTION_MAX = 1.00
+export const ROI_SELF_CONSUMPTION_STEP = 0.01
 
 /**
  * Run the full ROI pipeline for a given Plan + consultation + assumptions.
@@ -355,8 +402,12 @@ export function calculateROI(
   }
 
   // 1. Year-1 generation = system size × regional specific yield.
+  //    Region lookup falls back to the UK-wide default if the user's
+  //    `region` string is empty or not in the table (e.g. a future form
+  //    option added without updating the map).
   const systemKw = plan.panels * ROI_KW_PER_PANEL
-  const year1GenerationKwh = systemKw * ROI_KWH_PER_KW_YEAR
+  const regionYield = REGION_YIELD_KWH_PER_KWP[c.region] ?? ROI_KWH_PER_KW_YEAR
+  const year1GenerationKwh = systemKw * regionYield
 
   // 2. Year-1 breakdown using the applied assumptions.
   const year1SelfConsumed = year1GenerationKwh * selfConsumptionRate

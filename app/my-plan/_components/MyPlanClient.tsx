@@ -19,7 +19,9 @@ import {
   getPlan,
   recommendPlan,
   calculateROI,
-  defaultAssumptions,
+  DEFAULT_ROI_IMPORT_PRICE_GBP,
+  DEFAULT_ROI_EXPORT_PRICE_GBP,
+  ROI_SELF_CONSUMPTION_BASE_RATE,
   type PlanId,
   type Plan,
   type PlanRoi,
@@ -51,16 +53,21 @@ const CONTACT_TOAST =
  * Orchestrator for `/my-plan` (valid-id branch).
  *
  * State model:
- *   - `selectedPlanId` is the single piece of user-controlled state.
- *   - `recommendation`, `plan`, `assumptions`, `metrics`, `systemKw` are
- *     all derived via `useMemo`. Switching plans re-renders only the
+ *   - `selectedPlanId` controls which plan bundle is active.
+ *   - `importPriceGbp` / `exportPriceGbp` are user-tweakable so the
+ *     customer can model their actual tariff. They survive plan
+ *     switches - they describe the household's tariff, not the
+ *     hardware, so a One → Ultra swap shouldn't reset them.
+ *   - Everything else (`plan`, `assumptions`, `metrics`, `systemKw`) is
+ *     derived via `useMemo`. Switching plans re-renders only the
  *     affected children - never the whole tree.
  *
- * The "Choose your plan" card is a 4-plan selector. Solar panels / battery
- * / inverter are NOT independently adjustable: switching plans swaps the
- * whole configuration as a bundle. ROI assumptions are also derived from
- * the active plan and surfaced read-only in "View calculation assumptions"
- * - there is no UI to mutate them.
+ * The "Choose your plan" card is a 4-plan selector. Solar panels /
+ * battery / inverter are NOT independently adjustable: switching plans
+ * swaps the whole configuration as a bundle. Self-consumption rate is
+ * derived from the active plan (battery=100%, no-battery=35%) and is
+ * not editable - it depends on hardware. Import and export prices are
+ * surfaced as sliders in the "View calculation assumptions" disclosure.
  */
 export default function MyPlanClient({
   consultation,
@@ -75,16 +82,36 @@ export default function MyPlanClient({
 
   const [selectedPlanId, setSelectedPlanId] = useState<PlanId>(recommendedPlanId)
 
+  // User-tweakable tariff assumptions. Seeded from the Ofgem 2026 cap
+  // and the current SEG rate. Independent of plan choice - a customer
+  // who pays 30p/kWh on Home Energy One pays 30p/kWh on Home Energy
+  // Ultra too, so the values survive plan switches.
+  const [importPriceGbp, setImportPriceGbp] = useState<number>(DEFAULT_ROI_IMPORT_PRICE_GBP)
+  const [exportPriceGbp, setExportPriceGbp] = useState<number>(DEFAULT_ROI_EXPORT_PRICE_GBP)
+  // Self-consumption rate is also user-tweakable so a customer can model
+  // their actual usage pattern (e.g. all-day-out household). Seeded from
+  // the recommended plan's automatic default (battery=100%, no=35%) on
+  // first mount; thereafter the value persists across plan switches.
+  const [selfConsumptionRate, setSelfConsumptionRate] = useState<number>(
+    () => {
+      const seedPlan = getPlan(recommendedPlanId)
+      return seedPlan.batteryKwh > 0 ? 1 : ROI_SELF_CONSUMPTION_BASE_RATE
+    },
+  )
+
   // Single derivation point - every metric comes from this useMemo.
   const plan: Plan = useMemo(() => getPlan(selectedPlanId), [selectedPlanId])
-  // Assumptions are derived, not state: they always reflect the active
-  // plan's defaults. Switching plans replaces the whole bundle, so
-  // assumptions follow automatically. No reset path is needed (or
-  // possible) - see CustomiseCard's read-only "View calculation
-  // assumptions" disclosure.
+  // Assumptions: all three ROI inputs come from user state. The plan
+  // only determines hardware (panel count, battery, inverter) and the
+  // initial seed of the self-consumption slider - it never overrides
+  // user choices once they've touched the slider.
   const assumptions: RoiAssumptions = useMemo(
-    () => defaultAssumptions(plan),
-    [plan],
+    () => ({
+      importPriceGbp,
+      exportPriceGbp,
+      selfConsumptionRate,
+    }),
+    [importPriceGbp, exportPriceGbp, selfConsumptionRate],
   )
   const metrics: PlanRoi = useMemo(
     () => calculateROI(plan, consultation, assumptions),
@@ -245,9 +272,12 @@ export default function MyPlanClient({
                   recommendedPlanId={recommendedPlanId}
                   onSelectPlan={setSelectedPlanId}
                   assumptions={assumptions}
+                  onImportPriceChange={setImportPriceGbp}
+                  onExportPriceChange={setExportPriceGbp}
+                  onSelfConsumptionRateChange={setSelfConsumptionRate}
                 />
               </div>
-              <SavingsSection metrics={metrics} />
+              <SavingsSection metrics={metrics} region={consultation.region} />
               <OfferCard
                 metrics={metrics}
                 systemPriceGbp={plan.priceGbp}
