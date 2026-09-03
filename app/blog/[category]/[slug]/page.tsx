@@ -5,12 +5,14 @@ import Footer from '@/components/Footer'
 import CTA from '@/components/solutions/CTA'
 import { BlogHero } from '@/components/blog/BlogHero'
 import { PostBody } from '@/components/blog/PostBody'
+import { TableOfContents } from '@/components/blog/TableOfContents'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { Calendar, Clock, User } from 'lucide-react'
 import {
   getPublishedPostBySlug,
   getRelatedPosts,
 } from '@/lib/data/blog'
+import { extractHeadings } from '@/lib/blog-toc'
 import { buildPostMetadata, NOINDEX_METADATA } from '@/lib/seo/metadata'
 import { articleJsonLd, breadcrumbJsonLd, jsonLdScript } from '@/lib/seo/jsonld'
 
@@ -33,6 +35,18 @@ export default async function BlogPostPage(props: {
   if (!post) notFound()
 
   const related = await getRelatedPosts(post.category_id, post.id, 3)
+  // Headings extracted from the body. H3 is intentionally skipped
+  // (see `extractHeadings`) to keep the outline to top-level sections
+  // only.
+  const bodyHeadings = extractHeadings(post.body_md)
+  // The on-page TOC prepends a synthetic H1 entry so the article title
+  // itself is the first anchor in the list. PostBody consumes only
+  // `bodyHeadings` (the synthetic entry has no matching DOM heading to
+  // receive an id).
+  const tocHeadings = [
+    { level: 2 as const, text: post.title, id: 'article-top' },
+    ...bodyHeadings,
+  ]
 
   const publishedDateLabel = post.published_at
     ? new Date(post.published_at).toLocaleDateString('en-GB', {
@@ -71,14 +85,16 @@ export default async function BlogPostPage(props: {
         {/* Hero carries category, title, byline + date + reading time.
            Same component as /blog index and /blog/category pages so the
            three views share the same visual treatment; only the h1,
-           subhead (excerpt) and meta slot change. The post's own cover
-           image is intentionally NOT rendered - the shared hero
-           background (/images/hero-blog.webp) IS the cover, matching
-           how the parent pages present posts. Per-post covers are
-           still stored on the row for future OpenGraph / social use. */}
+           subhead (excerpt), meta slot and cover image change. The
+           article detail page passes `post.cover_image_url` (the
+           editor's cover) so the hero reflects the per-post artwork; the
+           index / category pages fall back to the shared
+           /images/hero-blog.webp since they don't have a single cover. */}
         <BlogHero
           badge={post.category.name_en}
           h1={post.title}
+          headingId="article-top"
+          coverImageUrl={post.cover_image_url ?? undefined}
           subhead={post.excerpt ?? undefined}
           breadcrumb={[
             { label: 'Home', href: '/' },
@@ -110,7 +126,7 @@ export default async function BlogPostPage(props: {
         />
 
         <div className="relative bg-white pt-10 md:pt-14 pb-16 md:pb-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Tag chips live with the body (not the hero) so the hero
                strip stays focused on the listed meta:
                category / title / author / date / reading time. */}
@@ -127,7 +143,19 @@ export default async function BlogPostPage(props: {
               </div>
             )}
 
-            <PostBody markdown={post.body_md} />
+            {/* Body + right-rail TOC. The TOC is hidden on mobile
+                (saves width and avoids covering the body); it sticks
+                on lg+ and scroll-spies the active heading. */}
+            <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_220px] lg:gap-10">
+              <div className="min-w-0">
+                <PostBody markdown={post.body_md} headings={bodyHeadings} />
+              </div>
+              <aside className="hidden lg:block">
+                <div className="sticky top-24">
+                  <TableOfContents headings={tocHeadings} />
+                </div>
+              </aside>
+            </div>
           </div>
         </div>
 

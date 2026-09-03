@@ -35,6 +35,22 @@ export interface BlogHeroProps {
    * not the white-bg `text-uk-slate` used previously).
    */
   meta?: ReactNode
+  /**
+   * Optional DOM id applied to the rendered `<h1>` so callers can
+   * deep-link or scroll-spy to the article title (e.g. the article
+   * detail page passes `article-top` to match its first TOC anchor).
+   */
+  headingId?: string
+  /**
+   * Optional per-post cover URL used as the hero background. Falls
+   * back to the shared `/images/hero-blog.webp` when omitted - the
+   * blog index and category landing pages use this default since
+   * they don't have a single cover image. The article detail page
+   * passes `post.cover_image_url` so the hero reflects whatever the
+   * editor uploaded (also stored as default `/images/hero-blog.webp`
+   * when no upload was made, so existing posts render unchanged).
+   */
+  coverImageUrl?: string
 }
 
 export function BlogHero({
@@ -44,11 +60,13 @@ export function BlogHero({
   subhead,
   breadcrumb,
   meta,
+  headingId,
+  coverImageUrl,
 }: BlogHeroProps) {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/hero-blog.webp)' }}
+      style={{ backgroundImage: `url(${coverImageUrl ?? '/images/hero-blog.webp'})` }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -69,7 +87,10 @@ export function BlogHero({
           <span className="text-xs font-cw-regular text-white/90">{badge}</span>
         </span>
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl">
+        <h1
+          id={headingId}
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl"
+        >
           {h1}
           {h1Accent && (
             <>
