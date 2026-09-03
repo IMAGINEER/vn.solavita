@@ -35,6 +35,7 @@ interface HeaderProps {
 
 const DEFAULT_NAV: HeaderNavItem[] = [
   { label: 'Solutions', href: '/solutions', dropdown: 'products' },
+  { label: 'HEMS App', href: '/hems' },
   { label: 'Cases', href: '/cases' },
   { label: 'About Us', href: '/about-us' },
   { label: 'Support', href: '/support' },

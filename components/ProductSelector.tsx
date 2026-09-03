@@ -12,14 +12,20 @@ export default function ProductSelector({
   onOpenForm,
   planDetailsAnchorFor,
 }: {
-  onOpenForm?: () => void
   /**
    * Per-product anchor target for the "Plan Details →" link. When
    * provided, the link jumps to the matching detail section on the
-   * current page (used by /solutions). When omitted, defaults to
-   * `#details` - the homepage behaviour.
+   * current page. When omitted, defaults to `/solutions` - the
+   * homepage behaviour.
    */
   planDetailsAnchorFor?: (productId: UkProduct['id']) => string
+  /**
+   * When provided, the bottom CTA renders as a button that opens the
+   * global form modal with the label "Get Free Plan →" - used by
+   * /solutions. When omitted, the CTA stays an anchor link labelled
+   * "Plan Details →" (homepage behaviour).
+   */
+  onOpenForm?: () => void
 } = {}) {
   const sectionRef = useRef<HTMLElement>(null)
   const [selectedProduct, setSelectedProduct] = useState<UkProduct['id']>('pro')
@@ -145,17 +151,34 @@ export default function ProductSelector({
                     product.id === 'pro' ? 'w-24' : 'h-24'
                   } object-contain pointer-events-none`}
                   />
-                  <a
-                    href={planDetailsAnchorFor ? planDetailsAnchorFor(product.id) : '#details'}
-                    onClick={(e) => e.stopPropagation()}
-                    className={`mt-3 w-full py-2.5 rounded-lg text-sm font-cw-bold text-center transition-all duration-300 block ${
-                      isSelected
-                        ? 'btn-gradient text-white'
-                        : 'border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-white hover:-translate-y-0.5 hover:shadow-md'
-                    }`}
-                  >
-                    Plan Details →
-                  </a>
+                  {onOpenForm ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onOpenForm()
+                      }}
+                      className={`mt-3 w-full py-2.5 rounded-lg text-sm font-cw-bold text-center transition-all duration-300 block cursor-pointer ${
+                        isSelected
+                          ? 'btn-gradient text-white'
+                          : 'border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-white hover:-translate-y-0.5 hover:shadow-md'
+                      }`}
+                    >
+                      Get Free Plan →
+                    </button>
+                  ) : (
+                    <a
+                      href={planDetailsAnchorFor ? planDetailsAnchorFor(product.id) : '/solutions'}
+                      onClick={(e) => e.stopPropagation()}
+                      className={`mt-3 w-full py-2.5 rounded-lg text-sm font-cw-bold text-center transition-all duration-300 block ${
+                        isSelected
+                          ? 'btn-gradient text-white'
+                          : 'border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-white hover:-translate-y-0.5 hover:shadow-md'
+                      }`}
+                    >
+                      Plan Details →
+                    </a>
+                  )}
                 </div>
               </div>
             )

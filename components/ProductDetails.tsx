@@ -3,15 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Check, PanelTop, Zap, Battery, Construction } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const tabs = [
-  { id: 'module', label: 'PV Modules', icon: '☀️' },
-  { id: 'inverter', label: 'Inverter', icon: '⚡' },
-  { id: 'battery', label: 'Battery', icon: '🔋' },
-  { id: 'mounting', label: 'Mounting', icon: '🏗️' },
+  { id: 'module', label: 'PV Modules', Icon: PanelTop },
+  { id: 'inverter', label: 'Inverter', Icon: Zap },
+  { id: 'battery', label: 'Battery', Icon: Battery },
+  { id: 'mounting', label: 'Mounting', Icon: Construction },
 ]
 
 const tabContent: Record<string, {
@@ -143,6 +143,7 @@ export default function ProductDetails() {
   const sectionRef = useRef<HTMLElement>(null)
   const [activeTab, setActiveTab] = useState('module')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [specsExpanded, setSpecsExpanded] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -181,10 +182,13 @@ export default function ProductDetails() {
   // Reset image index when tab changes
   useEffect(() => {
     setCurrentImageIndex(0)
+    setSpecsExpanded(false)
   }, [activeTab])
 
   const content = tabContent[activeTab]
   const imageCount = content.images.length
+  const visibleSpecs = specsExpanded ? content.specs : content.specs.slice(0, 4)
+  const hiddenSpecCount = content.specs.length - 4
 
   // Auto-play carousel
   useEffect(() => {
@@ -219,19 +223,19 @@ export default function ProductDetails() {
 
         {/* Tab Navigation */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {tabs.map((tab) => (
+          {tabs.map(({ id, label, Icon }) => (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              key={id}
+              onClick={() => setActiveTab(id)}
               className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-cw-bold transition-all duration-300
-                ${activeTab === tab.id
+                ${activeTab === id
                   ? 'bg-sv-gradient text-white shadow-lg shadow-sv-blue/20'
                   : 'bg-white/5 text-sv-gray-light border border-white/10 hover:bg-white/10 hover:text-white'
                 }
               `}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
+              <Icon className="w-4 h-4" strokeWidth={2} aria-hidden="true" />
+              <span>{label}</span>
             </button>
           ))}
         </div>
@@ -297,7 +301,7 @@ export default function ProductDetails() {
           <div className="space-y-8">
             {/* Title */}
             <div>
-              <h3 className="text-3xl font-cw-bold text-white mb-2">{content.title}</h3>
+              <h3 className="text-3xl font-cw-bold text-sv-text dark:text-white mb-2">{content.title}</h3>
               <p className="text-lg text-gradient font-cw-bold">{content.subtitle}</p>
               <p className="text-sv-gray-light font-cw-regular mt-4 leading-relaxed">
                 {content.description}
@@ -310,18 +314,39 @@ export default function ProductDetails() {
                 Technical Specifications
               </h4>
               <div className="rounded-xl overflow-hidden border border-white/10">
-                {content.specs.map((spec, idx) => (
+                {visibleSpecs.map((spec, idx) => (
                   <div
                     key={idx}
                     className={`flex justify-between items-center px-5 py-3 ${
-                      idx % 2 === 0 ? 'bg-white/[0.02]' : 'bg-white/[0.05]'
+                      idx % 2 === 0
+                        ? 'bg-sv-navy/[0.03] dark:bg-white/[0.02]'
+                        : 'bg-sv-navy/[0.06] dark:bg-white/[0.05]'
                     }`}
                   >
                     <span className="text-sm text-sv-gray-light font-cw-regular">{spec.label}</span>
-                    <span className="text-sm text-white font-cw-bold text-right">{spec.value}</span>
+                    <span className="text-sm text-sv-text dark:text-white font-cw-bold text-right">{spec.value}</span>
                   </div>
                 ))}
               </div>
+              {hiddenSpecCount > 0 && (
+                <div className="flex justify-center mt-3">
+                  <button
+                    onClick={() => setSpecsExpanded((e) => !e)}
+                    aria-expanded={specsExpanded}
+                    className="inline-flex items-center gap-1.5 text-xs font-cw-bold text-sv-gray-light hover:text-sv-text dark:hover:text-white transition-colors"
+                  >
+                    <span>
+                      {specsExpanded
+                        ? 'Show less'
+                        : `Show all ${content.specs.length} specifications`}
+                    </span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-300 ${specsExpanded ? 'rotate-180' : ''}`}
+                      strokeWidth={2.5}
+                    />
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Highlights */}

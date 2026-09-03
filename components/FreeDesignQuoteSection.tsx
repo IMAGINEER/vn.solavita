@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Check } from 'lucide-react'
+import HeroReportPreview from '@/components/HeroReportPreview'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -147,16 +148,9 @@ export default function FreeDesignQuoteSection({
             </p>
           </div>
 
-          {/* ─────────── RIGHT: sample report image ─────────── */}
+          {/* ─────────── RIGHT: live Solar Plan preview ─────────── */}
           <div ref={rightRef}>
-            <div className="relative rounded-2xl overflow-hidden border border-uk-line bg-white shadow-sm">
-              <img
-                src="/images/report_sample.webp"
-                alt="Sample Solavita solar design & quote report"
-                loading="lazy"
-                className="w-full h-auto block"
-              />
-            </div>
+            <HeroReportPreview />
           </div>
         </div>
       </div>

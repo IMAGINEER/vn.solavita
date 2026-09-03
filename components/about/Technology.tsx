@@ -111,7 +111,7 @@ export default function Technology() {
           <div className="tech-image">
             <div className="relative rounded-3xl overflow-hidden border border-uk-line bg-uk-teal-soft aspect-[4/5] shadow-sm">
               <img
-                src="/static/images/product-i.webp"
+                src="/images/electronic.webp"
                 alt="Solavita system detail"
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover"

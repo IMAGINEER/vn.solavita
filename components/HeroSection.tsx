@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import { Phone, Shield, Star } from 'lucide-react'
+import { Clock, Percent, Shield, Star, Zap } from 'lucide-react'
 import { openFormModal } from '@/lib/form-modal'
 import type { HeroCopy } from '@/lib/campaigns/types'
 
@@ -109,16 +109,20 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
   // visual identical in both light and dark mode.
   const trustPills = [
     {
-      icon: <FlagUK className="w-5 h-4 rounded-sm overflow-hidden" />,
-      text: 'Designed for the UK',
+      icon: <Percent className="w-4 h-4 text-white" strokeWidth={1.6} />,
+      text: 'Save up to 50%',
     },
     {
-      icon: <Phone className="w-4 h-4 text-white" strokeWidth={1.6} />,
-      text: 'Local Support in the UK',
+      icon: <Clock className="w-4 h-4 text-white" strokeWidth={1.6} />,
+      text: 'Installed in 14 days',
+    },
+    {
+      icon: <Zap className="w-4 h-4 text-white" strokeWidth={1.6} />,
+      text: 'Up to 92% energy independence',
     },
     {
       icon: <Shield className="w-4 h-4 text-white" strokeWidth={1.6} />,
-      text: '5-10 Years Warranty',
+      text: 'Built to last for decades',
     },
   ]
 

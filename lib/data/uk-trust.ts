@@ -12,11 +12,6 @@ export interface UkTrustItem {
 
 export const ukTrustItems: UkTrustItem[] = [
   {
-    label: '10+ Years',
-    sublabel: 'Solar Expertise',
-    icon: 'sun',
-  },
-  {
     label: 'Global Certifications',
     sublabel: 'TÜV · CE · MCS · RoHS',
     icon: 'globe',
@@ -32,7 +27,7 @@ export const ukTrustItems: UkTrustItem[] = [
     icon: 'trophy',
   },
   {
-    label: 'Our Team',
+    label: 'UK Support',
     sublabel: 'Passionate & Local',
     icon: 'users',
   },

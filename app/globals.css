@@ -455,6 +455,30 @@ html.lenis {
 }
 
 /* ────────────────────────────────────────────────────────────────
+   About-Us · Who-We-Are · brand-film video card.
+   The section itself is light-themed (matches the rest of /about-us)
+   but contains a single dark video card — the SKYWORTH brand film
+   embedded from the same CDN as the German Solavita site. The
+   project-wide light-mode flips for [rounded-3xl + bg-sv-navy] and
+   border-white/bg-white would otherwise turn that card light and
+   erase the white overlay copy. These scoped overrides keep the
+   card dark in both modes.
+   ──────────────────────────────────────────────────────────────── */
+section#who-we-are [class*="rounded-3xl"][class*="bg-sv-navy"],
+section#who-we-are .brand-film-card {
+  background-color: #0D1B2A !important;
+}
+.light-mode section#who-we-are .brand-film-card [class*="border-white"] {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.light-mode section#who-we-are .brand-film-card [class*="bg-white\/10"] {
+  background-color: rgb(255 255 255 / 0.10) !important;
+}
+.light-mode section#who-we-are .brand-film-card [class*="text-white"]:not(button):not(a):not(.btn-gradient) {
+  color: #ffffff !important;
+}
+
+/* ────────────────────────────────────────────────────────────────
    DARK MODE
    Activated when <html> has `.dark` (set by FloatingButtons toggle +
    the pre-hydration script in app/layout.tsx). Tailwind v4 picks up
@@ -559,3 +583,600 @@ html.lenis {
 
 /* Light-mode text-gradient stays the same — it already uses an
    light→emerald gradient that reads on dark just fine. */
+
+/* ──────────────────────────────────────────────────────────────────
+   HeroReportPreview — animated Solar Plan preview on the homepage
+   Free-UK-Plan section. Class prefix `hrp-` (hero report preview).
+
+   Stage machine (5 stages, ~11.2 s cycle):
+     home → system → plan → savings → offer → home …
+   Each `.hrp-section` is always mounted; its visibility is driven by
+   the `[data-active]` attribute set in React when that section's stage
+   is current. Inactive sections stay readable at low opacity + a small
+   Y offset, so the card never collapses to nothing between stages.
+
+   Under `prefers-reduced-motion`, the React component stops the cycle
+   and toggles `[data-reduced-motion]` on the host, which freezes the
+   float and removes the cursor so the preview is fully static.
+   ────────────────────────────────────────────────────────────────── */
+
+.hrp-stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.hrp-card-host {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  perspective: 1600px;
+}
+
+.hrp-card {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--color-uk-line);
+  border-radius: 18px;
+  box-shadow:
+    0 28px 70px rgba(15, 35, 63, 0.14),
+    0 8px 24px rgba(15, 35, 63, 0.06);
+  overflow: hidden;
+  transform: rotateY(-5deg) rotateX(2deg) rotateZ(0.3deg);
+  transform-origin: center right;
+  animation: hrp-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes hrp-float {
+  0%, 100% { transform: rotateY(-5deg) rotateX(2deg) rotateZ(0.3deg) translateY(0); }
+  50% { transform: rotateY(-4deg) rotateX(1.4deg) rotateZ(0.1deg) translateY(-7px); }
+}
+
+.hrp-head {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border-bottom: 1px solid #edf2f4;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+}
+
+.hrp-brand {
+  color: var(--color-uk-teal-dark);
+  font-family: var(--font-cw-bold);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+}
+
+.hrp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-uk-teal-soft);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  color: var(--color-uk-teal-dark);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hrp-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-uk-emerald);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+  animation: hrp-pulse 2s ease-in-out infinite;
+}
+
+@keyframes hrp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+.hrp-body {
+  padding: 18px 18px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+}
+
+.hrp-crumb {
+  font-size: 10px;
+  color: #8090a2;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.hrp-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 14px;
+}
+
+.hrp-title {
+  font-family: var(--font-cw-bold);
+  font-size: 22px;
+  letter-spacing: -0.035em;
+  color: var(--color-uk-navy);
+  line-height: 1.1;
+}
+
+.hrp-subtitle {
+  font-size: 11px;
+  color: var(--color-uk-slate);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.hrp-underline {
+  width: 36px;
+  height: 2px;
+  background: linear-gradient(100deg, var(--color-uk-teal), var(--color-uk-emerald));
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+/* Section blocks — opacity / Y offset driven by [data-active]. */
+.hrp-section {
+  position: relative;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.5);
+  transition:
+    opacity 480ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 480ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 480ms ease,
+    box-shadow 480ms ease;
+  opacity: 0.42;
+  transform: translateY(0) scale(0.985);
+  will-change: opacity, transform;
+}
+
+.hrp-section[data-active] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  background: #ffffff;
+  border-color: var(--color-uk-line);
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.08), 0 0 0 1px rgba(20, 184, 166, 0.12);
+}
+
+.hrp-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.hrp-section-label {
+  font-family: var(--font-cw-bold);
+  font-size: 13px;
+  color: var(--color-uk-navy);
+  letter-spacing: -0.01em;
+}
+
+.hrp-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #dbe8eb;
+  color: var(--color-uk-teal-dark);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hrp-section-badge::before {
+  content: "✓";
+  font-size: 9px;
+}
+
+/* Section 1 — Your home (HomeDetailsCard layout) */
+.hrp-home {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hrp-home-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-uk-teal-soft);
+  color: var(--color-uk-teal-dark);
+  display: grid;
+  place-items: center;
+}
+
+.hrp-edit {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-uk-line);
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-uk-slate);
+}
+
+/* Section 2 — Your system (3 product cards) */
+.hrp-system-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.hrp-system-card {
+  background: #ffffff;
+  border: 1px solid var(--color-uk-line);
+  border-radius: 10px;
+  padding: 10px 10px 12px;
+  min-height: 96px;
+}
+
+.hrp-system-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--color-uk-teal-soft);
+  color: var(--color-uk-teal-dark);
+  display: grid;
+  place-items: center;
+}
+
+/* Section 3 — Choose your plan (4 plans, recommended highlighted) */
+.hrp-plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.hrp-plan {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--color-uk-line);
+  border-radius: 10px;
+  padding: 10px 10px 12px;
+  min-height: 76px;
+  transition: all 400ms ease;
+}
+
+.hrp-plan-recommended {
+  background: var(--color-uk-teal-soft);
+  border-color: var(--color-uk-teal);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.12);
+  transform: scale(1.02);
+}
+
+.hrp-plan-star {
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--color-uk-emerald);
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.hrp-plan-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-uk-teal);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+}
+
+.hrp-plan-rows {
+  margin: 6px 0 0;
+  font-size: 10px;
+  color: var(--color-uk-slate);
+}
+
+.hrp-plan-rows > div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.hrp-plan-rows dt,
+.hrp-plan-rows dd {
+  display: inline;
+  margin: 0;
+}
+
+.hrp-plan-rows dd {
+  color: var(--color-uk-navy);
+  font-weight: 700;
+  font-family: var(--font-cw-bold);
+}
+
+/* Section 4 — Estimated savings (3 metric cards) */
+.hrp-savings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.hrp-metric {
+  background: #ffffff;
+  border: 1px solid var(--color-uk-line);
+  border-radius: 10px;
+  padding: 10px 11px;
+  transition: all 350ms ease;
+}
+
+.hrp-metric-highlight {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(16, 185, 129, 0.04) 100%);
+}
+
+.hrp-metric-counting {
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.18);
+  border-color: var(--color-uk-teal);
+}
+
+.hrp-metric-label {
+  font-size: 9px;
+  color: var(--color-uk-slate);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.hrp-metric-value {
+  margin-top: 4px;
+  font-family: var(--font-cw-bold);
+  font-size: 18px;
+  color: var(--color-uk-teal-dark);
+  line-height: 1.05;
+}
+
+.hrp-metric-highlight .hrp-metric-value {
+  color: var(--color-uk-emerald);
+}
+
+.hrp-metric-suffix {
+  margin-top: 2px;
+  font-size: 9px;
+  color: var(--color-uk-slate);
+}
+
+/* Section 5 — Your offer */
+.hrp-offer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-uk-teal-soft) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border: 1px solid rgba(20, 184, 166, 0.35);
+}
+
+.hrp-offer-eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-uk-teal-dark);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hrp-offer-value {
+  margin-top: 2px;
+  font-family: var(--font-cw-bold);
+  font-size: 24px;
+  color: var(--color-uk-emerald);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hrp-offer-valid {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--color-uk-slate);
+}
+
+.hrp-offer-cta {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: linear-gradient(100deg, var(--color-uk-teal), var(--color-uk-emerald));
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(20, 184, 166, 0.22);
+}
+
+/* Simulated cursor — sits inside the card-host, transitions between
+   stage positions via the inline `top`/`left` style. */
+.hrp-cursor {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(15, 118, 110, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 4px 12px rgba(15, 118, 110, 0.35),
+    0 0 0 6px rgba(15, 118, 110, 0.12);
+  pointer-events: none;
+  z-index: 30;
+  transform: translate(-50%, -50%);
+  transition:
+    top 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    left 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 300ms ease;
+  opacity: 0.85;
+}
+
+.hrp-cursor-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Floating "preview" tag pinned to the card's lower-left edge */
+.hrp-tag {
+  position: absolute;
+  left: -10px;
+  bottom: 28px;
+  z-index: 25;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--color-uk-line);
+  border-radius: 10px;
+  box-shadow: 0 14px 30px rgba(15, 35, 63, 0.11);
+  backdrop-filter: blur(10px);
+  font-size: 10px;
+  color: #607187;
+  max-width: 180px;
+}
+
+.hrp-tag strong {
+  display: block;
+  color: var(--color-uk-navy);
+  font-family: var(--font-cw-bold);
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+.hrp-tag i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-uk-emerald);
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Mobile — single column, drop the 3D tilt and cursor, shrink the card.
+   The preview keeps all sections visible so users on mobile still get
+   the full picture. */
+@media (max-width: 1023px) {
+  .hrp-card-host {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hrp-card {
+    transform: none;
+    animation: none;
+  }
+  .hrp-tag {
+    left: 8px;
+    bottom: 10px;
+  }
+  .hrp-cursor {
+    display: none;
+  }
+  .hrp-system-grid,
+  .hrp-savings-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .hrp-plan-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .hrp-title {
+    font-size: 18px;
+  }
+  .hrp-offer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .hrp-offer-cta {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+@media (max-width: 479px) {
+  .hrp-body {
+    padding: 14px 14px 16px;
+  }
+  .hrp-section {
+    padding: 10px;
+  }
+  .hrp-home-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .hrp-metric-value {
+    font-size: 16px;
+  }
+  .hrp-offer-value {
+    font-size: 22px;
+  }
+}
+
+/* Reduced-motion — keep the card readable but stop all transitions,
+   float, and cursor. Cycle also pauses (see React effect). */
+@media (prefers-reduced-motion: reduce) {
+  .hrp-card {
+    transform: none;
+    animation: none;
+  }
+  .hrp-section {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .hrp-pill-dot {
+    animation: none;
+  }
+  .hrp-cursor {
+    display: none;
+  }
+}
+
+/* Dark mode — the preview card lives on the light Free-UK-Plan section,
+   so we keep it white in both modes; only tag and badge tints adapt. */
+.dark .hrp-tag {
+  background: rgba(10, 22, 40, 0.92);
+  border-color: rgba(148, 163, 184, 0.25);
+}
+.dark .hrp-tag strong {
+  color: #f1f5f9;
+}
+.dark .hrp-tag,
+.dark .hrp-tag span {
+  color: #cbd5e1;
+}

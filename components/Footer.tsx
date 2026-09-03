@@ -289,12 +289,12 @@ export default function Footer({
                 </a>
               </li>
               <li>
-                <a href="#hems" className={linkClass}>
+                <a href="/hems" className={linkClass}>
                   HEMS Apps
                 </a>
               </li>
               <li>
-                <a href="#faq" className={linkClass}>
+                <a href="/support#faq" className={linkClass}>
                   FAQ
                 </a>
               </li>

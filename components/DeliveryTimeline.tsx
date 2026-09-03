@@ -3,14 +3,30 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import {
+  ScanEye,
+  FileText,
+  Truck,
+  Wrench,
+  Wifi,
+  ClipboardList,
+  type LucideIcon,
+} from 'lucide-react'
 
-const timelineSteps = [
-  { day: 'Day 1', title: 'AI Design', desc: 'Drone survey + 3D model of your roof. Shading analysis. Accurate yield forecast in 15 minutes.', icon: '🤖' },
-  { day: 'Day 2-3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', icon: '📝' },
-  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our 40,000 sq ft UK warehouse. Every component checked and pre-commissioned.', icon: '🚚' },
-  { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by NICEIC-certified electricians. Tidy site guaranteed.', icon: '🔧' },
-  { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, HEMS activation. Your system is now generating.', icon: '📶' },
-  { day: 'Day 12-14', title: 'G98/G99 Notification', desc: 'DNOs receive your commissioning certificate at the click of a button. Secures full Smart Export Guarantee (SEG) eligibility.', icon: '📋' },
+interface TimelineStep {
+  day: string
+  title: string
+  desc: string
+  Icon: LucideIcon
+}
+
+const timelineSteps: TimelineStep[] = [
+  { day: 'Day 1', title: 'AI Design', desc: 'Drone survey + 3D model of your roof. Shading analysis. Accurate yield forecast in 15 minutes.', Icon: ScanEye },
+  { day: 'Day 2-3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', Icon: FileText },
+  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our 40,000 sq ft UK warehouse. Every component checked and pre-commissioned.', Icon: Truck },
+  { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by NICEIC-certified electricians. Tidy site guaranteed.', Icon: Wrench },
+  { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, HEMS activation. Your system is now generating.', Icon: Wifi },
+  { day: 'Day 12-14', title: 'G98/G99 Notification', desc: 'DNOs receive your commissioning certificate at the click of a button. Secures full Smart Export Guarantee (SEG) eligibility.', Icon: ClipboardList },
 ]
 
 export default function DeliveryTimeline() {
@@ -44,49 +60,76 @@ export default function DeliveryTimeline() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="delivery" className="py-24 lg:py-32 bg-uk-teal-soft/40">
+    <section ref={sectionRef} id="delivery" className="py-20 md:py-24 bg-uk-teal-soft/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-uk-emerald text-sm font-cw-bold uppercase tracking-wider">Delivery Process</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy mt-4 mb-6">
+        {/* Eyebrow - same pill style as the "Why UK homeowners choose us" section */}
+        <div className="text-center mb-12 md:mb-14 max-w-3xl mx-auto">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
+            <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
+            Delivery Process
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Your solar system in <span className="text-uk-teal">14 days</span>
           </h2>
-          <p className="text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto">
+          <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto">
             While other providers take months, we deliver in two weeks - from first call to first kilowatt-hour.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left - timeline rail + compact horizontal step cards */}
           <div ref={timelineRef} className="relative pl-8">
-            <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-uk-line">
+            {/* Rail: vertically trimmed so it terminates at the first/last dot
+                centres instead of piercing them - dot circles sit on top. */}
+            <div className="absolute left-3 top-10 bottom-10 w-0.5 bg-uk-line">
               <div ref={lineRef} className="w-full h-full bg-uk-gradient origin-top" />
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-4">
               {timelineSteps.map((step, i) => (
                 <div key={i} className="timeline-step relative">
-                  <div className="absolute -left-[22px] top-2 w-4 h-4 rounded-full bg-white border-2 border-uk-teal flex items-center justify-center">
+                  {/* Dot centred to the card's vertical midpoint so the rail
+                      visually aligns with each step's middle. */}
+                  <div className="absolute -left-[22px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-uk-teal flex items-center justify-center">
                     <div className="w-2 h-2 rounded-full bg-uk-teal" />
                   </div>
 
-                  <div className="pl-6 p-5 rounded-xl bg-white border border-uk-line hover:border-uk-teal/40 hover:shadow-sm transition-all">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-xl">{step.icon}</span>
-                      <div>
-                        <span className="text-xs text-uk-teal font-cw-bold">{step.day}</span>
-                        <h4 className="text-base font-cw-bold text-uk-navy">{step.title}</h4>
+                  <div className="pl-6 p-4 rounded-xl bg-white border border-uk-line hover:border-uk-teal/40 hover:shadow-sm transition-all">
+                    <div className="flex items-start gap-4">
+                      {/* Left column: icon badge + (Day + Title) */}
+                      <div className="flex items-center gap-3 flex-shrink-0">
+                        <div className="w-10 h-10 rounded-lg bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark">
+                          <step.Icon className="w-5 h-5" strokeWidth={1.6} />
+                        </div>
+                        <div className="min-w-[88px]">
+                          <span className="block text-xs text-uk-teal font-cw-bold leading-tight">
+                            {step.day}
+                          </span>
+                          <h4 className="text-base font-cw-bold text-uk-navy leading-tight">
+                            {step.title}
+                          </h4>
+                        </div>
                       </div>
+
+                      {/* Right column: description */}
+                      <p className="text-sm text-uk-slate font-cw-regular leading-relaxed flex-1 pt-1.5">
+                        {step.desc}
+                      </p>
                     </div>
-                    <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="space-y-8">
+          {/* Right - drone/3D hero image + capability stats */}
+          <div className="space-y-6">
             <div className="rounded-2xl overflow-hidden border border-uk-line">
-              <img src="/static/images/case-placeholder.webp" alt="Two-week installation" className="w-full aspect-video object-cover" />
+              <img
+                src="/static/images/drone-3d.webp"
+                alt="Drone survey and 3D roof model used in Solavita design"
+                className="w-full aspect-video object-cover"
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4">

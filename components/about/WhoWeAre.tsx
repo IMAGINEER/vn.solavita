@@ -3,25 +3,28 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { aboutStats } from '@/lib/data/about'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * "Who We Are" - the brand origin story and headline stats. Mirrors
- * the visual treatment of BrandStory on the homepage but with the
- * dedicated about-us copy.
+ * "Who We Are" - brand-origin block on /about-us. Mirrors the German
+ * Über-uns section's content shape (eyebrow + headline + description +
+ 4 headline numbers + 2 heritage cards for Metz and SKYWORTH Global),
+ with all copy translated to English. Stays light-themed to match the
+ rest of the UK about-us page (Mission / Approach / Technology /
+ GlobalPresence), reusing the standard card primitives.
  */
 export default function WhoWeAre() {
   const sectionRef = useRef<HTMLElement>(null)
-  const countersRef = useRef<HTMLDivElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const heritageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const counters = countersRef.current?.querySelectorAll('.stat-value')
-      if (counters) {
+      const stats = statsRef.current?.querySelectorAll('.stat-value')
+      if (stats) {
         gsap.fromTo(
-          counters,
+          stats,
           { scale: 0.7, opacity: 0 },
           {
             scale: 1,
@@ -30,7 +33,26 @@ export default function WhoWeAre() {
             stagger: 0.12,
             ease: 'back.out(1.7)',
             scrollTrigger: {
-              trigger: countersRef.current,
+              trigger: statsRef.current,
+              start: 'top 80%',
+            },
+          }
+        )
+      }
+
+      const cards = heritageRef.current?.querySelectorAll('.heritage-card')
+      if (cards) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: heritageRef.current,
               start: 'top 80%',
             },
           }
@@ -53,45 +75,164 @@ export default function WhoWeAre() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <span className="text-uk-teal-dark text-sm font-cw-bold uppercase tracking-wider">
-            Who we are
+        {/* Heading */}
+        <div className="text-center mb-12 md:mb-16 max-w-3xl mx-auto">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
+            <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
+            About Solavita
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            <span className="text-uk-teal">Global heritage.</span> Built
-            for the UK.
+            <span className="text-uk-teal">Global Strength.</span>{' '}
+            European Roots.
           </h2>
-          <p className="mt-5 text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Solavita is the UK residential solar brand of the SKYWORTH
-            Group - one of the world&rsquo;s largest electronics
-            manufacturers. Premium engineering from a £10bn group,
-            designed specifically for British homes, weather and
-            regulations.
-          </p>
         </div>
 
+        {/* Featured brand video — sourced from the German Solavita
+            site (skyworth-pv.com CDN). Reused here as the focal piece
+            of the brand-origin block. Dark card on a light section
+            gives the page a visual anchor without flipping the whole
+            section into a dark theme. */}
+        <div className="brand-film-card relative mb-12 md:mb-16 rounded-3xl overflow-hidden border border-uk-line bg-sv-navy shadow-sm">
+          <video
+            src="https://www.skyworth-pv.com/Public/Uploads/uploadfile/files/20250830/2banner.mp4"
+            className="w-full aspect-video object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-sv-darker/80 via-sv-darker/30 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 pointer-events-none">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-[10px] font-cw-bold uppercase tracking-wider text-white">
+              <span className="w-1.5 h-1.5 rounded-full bg-sv-blue animate-pulse" />
+              Brand film
+            </span>
+          </div>
+        </div>
+
+        {/* Stat tiles */}
         <div
-          ref={countersRef}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+          ref={statsRef}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12 md:mb-16"
         >
-          {aboutStats.map((s) => (
-            <div
-              key={s.label}
-              className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm"
-            >
-              <div className="stat-value">
-                <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
-                  {s.value}
-                </span>
-                <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                  {s.unit}
-                </span>
-              </div>
-              <p className="text-sm text-uk-slate font-cw-regular mt-2">
-                {s.label}
-              </p>
+          <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
+            <div className="stat-value">
+              <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
+                70
+              </span>
+              <span className="text-lg font-cw-bold text-uk-slate ml-1">
+                bn RMB
+              </span>
             </div>
-          ))}
+            <p className="text-sm text-uk-slate font-cw-regular mt-2">
+              SKYWORTH Group annual revenue
+            </p>
+          </div>
+
+          <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
+            <div className="stat-value">
+              <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
+                400
+              </span>
+              <span className="text-lg font-cw-bold text-uk-slate ml-1">
+                M
+              </span>
+            </div>
+            <p className="text-sm text-uk-slate font-cw-regular mt-2">
+              Households worldwide trust SKYWORTH
+            </p>
+          </div>
+
+          <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
+            <div className="stat-value">
+              <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
+                80+
+              </span>
+              <span className="text-lg font-cw-bold text-uk-slate ml-1">
+                Years
+              </span>
+            </div>
+            <p className="text-sm text-uk-slate font-cw-regular mt-2">
+              Metz tradition in Germany
+            </p>
+          </div>
+
+          <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
+            <div className="stat-value">
+              <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
+                2
+              </span>
+              <span className="text-lg font-cw-bold text-uk-slate ml-1">
+                Listings
+              </span>
+            </div>
+            <p className="text-sm text-uk-slate font-cw-regular mt-2">
+              Listed (Hong Kong)
+            </p>
+          </div>
+        </div>
+
+        {/* Heritage cards */}
+        <div
+          ref={heritageRef}
+          className="grid lg:grid-cols-2 gap-6 md:gap-8"
+        >
+          {/* Solavita */}
+          <div className="heritage-card p-8 rounded-3xl border border-uk-line bg-white shadow-sm">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center overflow-hidden p-1">
+                <img
+                  src="/static/images/a1logo02.svg"
+                  alt="Solavita"
+                  loading="lazy"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <h3 className="text-lg font-cw-bold text-uk-navy">
+                  Solavita
+                </h3>
+                <p className="text-xs text-uk-slate">
+                  The solar brand of SKYWORTH Group
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
+              Solavita is the solar energy brand of the SKYWORTH Group
+              &mdash; one of the world&rsquo;s largest electronics
+              companies. Rooted in Germany through Metz, the legendary
+              consumer electronics brand from Franconian Zirndorf.
+            </p>
+          </div>
+
+          {/* SKYWORTH Global */}
+          <div className="heritage-card p-8 rounded-3xl border border-uk-line bg-white shadow-sm">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center overflow-hidden p-1">
+                <img
+                  src="/static/images/LOGOlan.svg"
+                  alt="SKYWORTH"
+                  loading="lazy"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <h3 className="text-lg font-cw-bold text-uk-navy uppercase">
+                  SKYWORTH Global
+                </h3>
+                <p className="text-xs text-uk-slate">
+                  Your partner for decades
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
+              The SKYWORTH Group is a publicly listed global enterprise
+              with more than 40,000 employees. As a manufacturer of
+              TVs, refrigerators and smart-home systems, SKYWORTH
+              already serves 400 million households. With Solavita, the
+              group is bringing this expertise to solar energy.
+            </p>
+          </div>
         </div>
       </div>
     </section>

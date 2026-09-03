@@ -5,25 +5,26 @@ import Footer from '@/components/Footer'
 import SolutionsHero from '@/components/solutions/Hero'
 import ProductSelector from '@/components/ProductSelector'
 import SolutionDetailSection from '@/components/solutions/SolutionDetail'
+import ProductDetails from '@/components/ProductDetails'
 import WhySolavita from '@/components/solutions/WhySolavita'
+import DeliveryTimeline from '@/components/DeliveryTimeline'
 import CTA from '@/components/solutions/CTA'
-import {
-  PRODUCT_TO_SOLUTION_ANCHOR,
-  solutionDetails,
-} from '@/lib/data/solutions'
+import { openFormModal } from '@/lib/form-modal'
+import { solutionDetails } from '@/lib/data/solutions'
 
 /**
  * /solutions - Solutions overview page.
  *
  * Composition (per project brief):
  *   Hero → Product range (matches homepage #products grid) →
- *   4 detail blocks → Why Solavita → CTA
+ *   4 detail blocks → Components in detail → Why Solavita →
+ *   Delivery Timeline → CTA
  *
  * The second screen reuses the homepage `<ProductSelector>` so the
- * card layout, image, pricing and Plan Details behaviour stays in
- * sync with `/`. Each Plan Details link scrolls to the matching
- * detail section below via the per-product mapping in
- * `PRODUCT_TO_SOLUTION_ANCHOR`.
+ * card layout, image and pricing stays in sync with `/`. Each
+ * product card's "Get Free Plan →" button opens the global form
+ * modal - the per-product detail sections below remain reachable
+ * via the page navigation / scroll instead of an anchor jump.
  */
 
 export default function SolutionsPage() {
@@ -38,9 +39,7 @@ export default function SolutionsPage() {
 
       <SolutionsHero />
 
-      <ProductSelector
-        planDetailsAnchorFor={(id) => `#${PRODUCT_TO_SOLUTION_ANCHOR[id] ?? id}`}
-      />
+      <ProductSelector onOpenForm={openFormModal} />
 
       {solutionDetails.map((d, i) => (
         <SolutionDetailSection
@@ -51,7 +50,11 @@ export default function SolutionsPage() {
         />
       ))}
 
+      <ProductDetails />
+
       <WhySolavita />
+
+      <DeliveryTimeline />
 
       <CTA
         eyebrow="Free design · No obligation"
