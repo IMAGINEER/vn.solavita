@@ -124,12 +124,12 @@ export default function Footer({
     { label: 'Home Energy Pro', href: '#products' },
     { label: 'Home Energy Max', href: '#products' },
     { label: 'Home Energy Ultra', href: '#products' },
-    { label: 'Installation Process', href: '#delivery' },
   ]
 
   const defaultCompanyLinks: FooterLink[] = [
     { label: 'About Solavita', href: '#about' },
     { label: 'SKYWORTH Group', href: 'https://www.skyworth-pv.com/about-us', external: true },
+    { label: 'Blog', href: '/blog' },
   ]
 
   const products = productLinks ?? defaultProductLinks

@@ -8,18 +8,26 @@ import type { AdminUser, AdminRole } from '@/lib/auth-types'
 export type { AdminUser, AdminRole } from '@/lib/auth-types'
 
 // UK admin session cookie is deliberately separate from DE's
-// `sv_admin_session` - UK uses `uk_admin_session`, scoped to /admin so
-// the cookie never leaks to the storefront. Logging in on DE does not
-// authenticate UK, and vice versa. Cross-row isolation is enforced by:
+// `sv_admin_session` - UK uses `uk_admin_session`. Logging in on DE
+// does not authenticate UK, and vice versa. Cross-row isolation is
+// enforced by:
 //   1. Different cookie name (no shared cookie state in the browser).
-//   2. `path: '/admin'` (cookie only sent for /admin/* requests).
+//   2. `path: '/'` - the cookie is sent to BOTH /admin/* page requests
+//      AND /api/admin/* API requests. The earlier `path: '/admin'` was
+//      too restrictive: browser path-matching means a request to
+//      /api/admin/* never started with `/admin`, so the cookie was
+//      NEVER attached to any client-side fetch from the admin UI,
+//      returning 401 on every API call (upload, logout, categories,
+//      tags, posts CRUD). httpOnly + secure already protect the
+//      cookie from JS access; the storefront server-side reads via
+//      cookies() but never inspects admin-named cookies.
 //   3. Different session tables (`admin_sessions` rows live in the
 //      same Supabase project but tokens are UUIDv4 - even if a UK
 //      cookie were somehow set on the DE domain, the lookup would
 //      miss because DE sessions are written to DE-side rows only).
 const SESSION_COOKIE = 'uk_admin_session'
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
-const SESSION_COOKIE_PATH = '/admin'
+const SESSION_COOKIE_PATH = '/'
 
 // ── Password hashing (scrypt) ───────────────────────────────────────────────
 

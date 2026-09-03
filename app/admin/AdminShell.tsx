@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   Mail,
   Briefcase,
+  Newspaper,
 } from 'lucide-react'
 import type { AdminUser } from '@/lib/auth-types'
 import { cn } from '@/lib/utils'
@@ -23,6 +24,7 @@ const NAV_ITEMS = [
   { label: 'Leads', href: '/admin/leads', icon: Inbox },
   { label: 'Contacts', href: '/admin/contacts', icon: Mail },
   { label: 'Partners', href: '/admin/partners', icon: Briefcase },
+  { label: 'Blog', href: '/admin/blog', icon: Newspaper },
 ] as const
 
 export function AdminShell({

@@ -20,15 +20,13 @@ function getResend(): Resend {
 // Single source of truth for sender address per country. Mirrors the DE repo's
 // table - keep both in sync if Resend approved-domain list changes.
 //
-// UK TEMP: `solavita.com` is not yet verified in Resend, so we send from
-// `uk@skyworth-solavita.de` (the verified DE parent domain) to keep the
-// confirmation email flowing. TODO: once `solavita.com` is verified in
-// Resend (SPF + DKIM added), flip UK back to `Solavita <no-reply@solavita.com>`
-// so the customer-facing From header matches the brand domain. The DE
-// repo's send.ts already uses the same temporary pattern.
+// `solavita.com` is now verified in Resend for both DE and UK, so both
+// countries send from the brand domain. DE uses a generic `no-reply@`
+// address (single brand); UK keeps a country-specific `uk@` alias so the
+// inbox still routes per-market.
 const FROM_BY_COUNTRY: Record<'de' | 'uk', string> = {
   de: 'Solavita <no-reply@solavita.com>',
-  uk: 'Solavita UK <uk@skyworth-solavita.de>',
+  uk: 'Solavita UK <uk@solavita.com>',
 }
 
 export async function sendEmail({
