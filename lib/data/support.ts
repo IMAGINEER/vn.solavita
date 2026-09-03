@@ -114,9 +114,9 @@ export const faqItems: FaqItem[] = [
   },
   {
     category: 'warranty',
-    question: 'What is covered by the 15-year warranty?',
+    question: 'What is covered by the 10-year warranty?',
     answer:
-      'Product defects, performance (modules) and workmanship for the full 15 years. Batteries carry a separate cycle-based warranty - see your handover pack.',
+      'Product defects, performance (modules) and workmanship for the full 10 years. Batteries carry a separate cycle-based warranty - see your handover pack.',
   },
   {
     category: 'warranty',

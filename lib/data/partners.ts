@@ -69,7 +69,7 @@ export const partnerBenefits: PartnerBenefit[] = [
       'Joint campaigns, regional lead sharing and a partner directory on solavita.uk.',
   },
   {
-    title: '15-year warranty programme',
+    title: '10-year warranty programme',
     description:
       'A single UK-backed warranty that covers product, performance and workmanship.',
   },

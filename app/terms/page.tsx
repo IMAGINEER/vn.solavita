@@ -114,8 +114,8 @@ export default function TermsPage() {
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">5 Warranties and consumer rights</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Nothing in these Terms affects your statutory rights under the Consumer Rights Act 2015.
-                Product-specific warranties (typically 10-15 years on panels, 10 years on inverters, and
-                10-15 years on batteries) are provided by the manufacturer and detailed in your order
+                Product-specific warranties (typically 10 years on panels, 10 years on inverters, and
+                10 years on batteries) are provided by the manufacturer and detailed in your order
                 confirmation.
               </p>
             </div>

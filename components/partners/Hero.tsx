@@ -61,7 +61,7 @@ export default function PartnersHero() {
         >
           Become a Solavita partner - installer or energy / business
           partner. UK engineering support, group supply-chain scale, and
-          a 15-year warranty programme.
+          a 10-year warranty programme.
         </motion.p>
       </div>
     </section>

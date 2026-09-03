@@ -34,7 +34,7 @@ const tabContent: Record<string, {
       { label: 'Efficiency', value: 'Up to 22.5%' },
       { label: 'Bifacial gain', value: 'Up to 10% (Bifaciality 80% ±5%)' },
       { label: 'Degradation', value: '≤1% (Year 1), then 0.4%/year' },
-      { label: 'Product warranty', value: '15 years' },
+      { label: 'Product warranty', value: '10 years' },
       { label: 'Performance warranty', value: '30 years linear' },
       { label: 'Protection class', value: 'IP68' },
     ],
@@ -104,7 +104,7 @@ const tabContent: Record<string, {
       'Modular: 5 kWh blocks freely combinable, also retroactively',
       'Plug & play - installation time per module under 10 minutes',
       'Integrated BMS with 24/7 cloud monitoring & remote diagnostics',
-      '15-year product warranty',
+      '10-year product warranty',
     ],
     images: [
       '/static/images/product-battery-1.webp',

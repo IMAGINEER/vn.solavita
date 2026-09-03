@@ -48,7 +48,7 @@ export const aboutApproach: AboutApproach[] = [
   {
     title: 'Engineered to last',
     description:
-      'Tier-1 modules, premium lithium-iron-phosphate batteries, and inverters built for high cycle counts. 15-year warranty as standard.',
+      'Tier-1 modules, premium lithium-iron-phosphate batteries, and inverters built for high cycle counts. 10-year warranty as standard.',
   },
   {
     title: 'One team, one journey',

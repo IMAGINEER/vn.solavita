@@ -118,7 +118,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
     },
     {
       icon: <Shield className="w-4 h-4 text-white" strokeWidth={1.6} />,
-      text: '5-15 Years Warranty',
+      text: '5-10 Years Warranty',
     },
   ]
 

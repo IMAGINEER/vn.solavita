@@ -48,7 +48,7 @@ export default function AboutPage() {
             <span className="text-gradient">for your home.</span>
           </>
         }
-        description="Two-week installation. 15-year warranty. UK-based service team for life. Start with a free, no-obligation design & quote."
+        description="Two-week installation. 10-year warranty. UK-based service team for life. Start with a free, no-obligation design & quote."
       />
 
       <Footer variant="light" />

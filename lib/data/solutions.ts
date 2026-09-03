@@ -115,7 +115,7 @@ export const solutionDetails: SolutionDetail[] = [
       '3.6 kW string or micro inverter',
       'Roof-type-matched mounting kit (tile / slate / flat)',
       'Smart Export Guarantee (SEG) ready',
-      'MCS-certified installation with a 15-year workmanship warranty',
+      'MCS-certified installation with a 10-year workmanship warranty',
     ],
     imagePath: '/images/solution_1.webp',
     imageAlt:
@@ -168,7 +168,7 @@ export const solutionDetails: SolutionDetail[] = [
       '6 kW hybrid inverter',
       'EV charger + heat pump integrated (SG Ready / EEBUS)',
       'Whole-home load balancing and dynamic tariffs',
-      'One installer, one warranty, one app - 15-year programme',
+      'One installer, one warranty, one app - 10-year programme',
     ],
     imagePath: '/images/solution_4.webp',
     imageAlt:
@@ -198,7 +198,7 @@ export const whySolavita: WhySolavitaPoint[] = [
       'Solavita is the UK residential solar brand of the SKYWORTH Group - a £10bn global electronics company.',
   },
   {
-    title: '15-year warranty',
+    title: '10-year warranty',
     description:
       'Product, performance and workmanship - backed by a UK-based service team for the lifetime of the system.',
   },

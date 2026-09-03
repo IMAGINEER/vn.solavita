@@ -13,7 +13,7 @@ export const ukSupportItems: UkSupportItem[] = [
   {
     icon: 'warranty',
     title: 'Warranty',
-    description: 'Up to 15 Years - Product & Performance',
+    description: 'Up to 10 Years - Product & Performance',
   },
   {
     icon: 'service',
