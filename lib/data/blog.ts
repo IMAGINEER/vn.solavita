@@ -75,6 +75,7 @@ export async function getTags(): Promise<BlogTag[]> {
   const { data, error } = await supabase
     .from('blog_tags')
     .select('id, slug, name_en, created_at')
+    .not('name_en', 'is', null)
     .order('name_en', { ascending: true })
   if (error) throw new Error(`getTags: ${error.message}`)
   return (data ?? []) as unknown as BlogTag[]
@@ -86,6 +87,7 @@ export async function getTagsBySlugs(slugs: string[]): Promise<BlogTag[]> {
   const { data, error } = await supabase
     .from('blog_tags')
     .select('id, slug, name_en, created_at')
+    .not('name_en', 'is', null)
     .in('slug', slugs)
   if (error) throw new Error(`getTagsBySlugs: ${error.message}`)
   return (data ?? []) as unknown as BlogTag[]
@@ -606,9 +608,14 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
   // 3. Look up existing tags by lower(name_en). The tags table is small
   // (admin-curated taxonomy) so loading the whole table once and
   // filtering in JS is cheaper than one round-trip per name.
+  //
+  // Filter out rows where `name_en` IS NULL - those are IT-only tags
+  // that share the same table on the same Supabase project. Without
+  // this filter `name_en.toLowerCase()` would throw on the first row.
   const { data: allTags, error: readErr } = await supabase
     .from('blog_tags')
     .select('id, slug, name_en')
+    .not('name_en', 'is', null)
   if (readErr) throw new Error(`resolveOrCreateTagIds read: ${readErr.message}`)
 
   const byName = new Map<string, { id: string; name_en: string }>()
