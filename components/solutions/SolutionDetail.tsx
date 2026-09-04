@@ -74,7 +74,7 @@ export default function SolutionDetailSection({
     return () => ctx.revert()
   }, [reverse])
 
-  const bgClass = surface === 'light' ? 'bg-sv-light' : 'bg-white'
+  const bgClass = surface === 'light' ? 'bg-sv-light dark:bg-sv-darker' : 'bg-white'
 
   return (
     <section

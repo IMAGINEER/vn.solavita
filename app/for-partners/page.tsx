@@ -23,7 +23,7 @@ import PartnerCTA from '@/components/partners/PartnerCTA'
  */
 export default function ForPartnersPage() {
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <PartnersHero />
@@ -36,7 +36,7 @@ export default function ForPartnersPage() {
 
       <PartnerCTA />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

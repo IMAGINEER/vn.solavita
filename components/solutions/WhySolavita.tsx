@@ -60,7 +60,7 @@ export default function WhySolavita() {
     <section
       ref={sectionRef}
       id="why-solavita"
-      className="relative py-16 md:py-24 bg-sv-light"
+      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">

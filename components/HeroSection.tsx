@@ -184,7 +184,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
               </button>
               <a
                 href="#products"
-                className="px-8 py-4 rounded-full border-2 border-white bg-uk-navy font-cw-regular text-center text-base hover:bg-white hover:text-uk-navy transition-colors"
+                className="px-8 py-4 rounded-full border-2 border-uk-line bg-uk-navy font-cw-regular text-center text-base hover:bg-white hover:text-uk-navy transition-colors"
               >
                 Explore Solutions
               </a>

@@ -173,7 +173,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

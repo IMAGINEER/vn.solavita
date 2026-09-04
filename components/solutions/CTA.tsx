@@ -72,7 +72,7 @@ export default function CTA({
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 bg-sv-light overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden">
       {/* Soft accent - matches FreeDesignQuoteSection so all CTAs feel
          like one family. */}
       <div className="absolute inset-0 pointer-events-none">

@@ -22,7 +22,7 @@ import CTA from '@/components/solutions/CTA'
  */
 export default function ContactUsPage() {
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <ContactHero />
@@ -43,7 +43,7 @@ export default function ContactUsPage() {
         description="If you are ready to explore a specific install, our team can put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home."
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

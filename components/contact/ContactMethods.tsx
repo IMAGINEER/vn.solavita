@@ -55,7 +55,7 @@ export default function ContactMethods() {
     <section
       ref={sectionRef}
       id="contact-methods"
-      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
+      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />

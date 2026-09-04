@@ -531,14 +531,14 @@ section#who-we-are .brand-film-card {
 .dark [class*="bg-white"]:not(button):not(.btn-gradient) {
   background-color: rgba(15, 23, 42, 0.6) !important;
 }
-.dark [class*="text-uk-navy"]:not(button):not(a):not(.btn-gradient):not(.text-gradient) {
+.dark [class*="text-uk-navy"]:not(button):not(.btn-gradient):not(.text-gradient) {
   color: #f1f5f9 !important;
 }
 .dark [class*="text-uk-slate"] {
   color: #94a3b8 !important;
 }
 .dark [class*="border-uk-line"] {
-  border-color: rgba(148, 163, 184, 0.20) !important;
+  border-color: rgba(148, 163, 184, 0.32) !important;
 }
 
 /* Specific section bg overrides — sections that hardcode `bg-white`

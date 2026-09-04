@@ -34,7 +34,7 @@ export default function SolutionsPage() {
   const surfaces: Array<'white' | 'light'> = ['light', 'white', 'light', 'white']
 
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <SolutionsHero />
@@ -70,7 +70,7 @@ export default function SolutionsPage() {
         secondaryHref="mailto:uk@solavita.com"
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

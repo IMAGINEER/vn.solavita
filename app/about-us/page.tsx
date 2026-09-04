@@ -25,7 +25,7 @@ import CTA from '@/components/solutions/CTA'
  */
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <AboutHero />
@@ -51,7 +51,7 @@ export default function AboutPage() {
         description="Two-week installation. 10-year warranty. UK-based service team for life. Start with a free, no-obligation design & quote."
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

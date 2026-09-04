@@ -18,7 +18,7 @@ import CTA from '@/components/solutions/CTA'
  */
 export default function HemsPage() {
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <HEMSHero />
@@ -39,7 +39,7 @@ export default function HemsPage() {
         secondaryHref="mailto:uk@solavita.com"
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

@@ -19,7 +19,7 @@ import CTA from '@/components/solutions/CTA'
  */
 export default function CasesPage() {
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <CasesHero />
@@ -41,7 +41,7 @@ export default function CasesPage() {
         primaryLabel="Get Free Plan →"
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

@@ -137,7 +137,7 @@ export default function CookiesPage() {
         </div>
       </section>
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

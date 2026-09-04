@@ -76,7 +76,7 @@ export default function FeaturesGrid() {
   }, [])
 
   return (
-    <section className="relative py-16 md:py-24 bg-sv-light overflow-hidden">
+    <section className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-10 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">

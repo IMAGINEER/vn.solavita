@@ -168,7 +168,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

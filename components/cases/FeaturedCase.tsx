@@ -70,7 +70,7 @@ export default function FeaturedCase() {
     <section
       ref={sectionRef}
       id={featured.slug}
-      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
+      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-uk-teal-soft/40 blur-3xl" />

@@ -57,7 +57,7 @@ export default async function BlogPostPage(props: {
     : null
 
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       {/* JSON-LD for SEO: Article + BreadcrumbList. */}
       <script
         type="application/ld+json"
@@ -178,7 +178,7 @@ export default async function BlogPostPage(props: {
         description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

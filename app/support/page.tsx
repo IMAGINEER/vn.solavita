@@ -20,7 +20,7 @@ import CTA from '@/components/solutions/CTA'
  */
 export default function SupportPage() {
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header logoHref="/" />
 
       <SupportHero />
@@ -43,7 +43,7 @@ export default function SupportPage() {
         description="If you are still researching, our team can put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home."
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }

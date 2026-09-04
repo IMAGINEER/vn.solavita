@@ -8,7 +8,7 @@ export function RelatedPosts({ posts }: { posts: BlogPostSummary[] }) {
   if (posts.length === 0) return null
 
   return (
-    <section className="border-t border-uk-line bg-[#F7F9FC] py-16 mt-16">
+    <section className="border-t border-uk-line bg-[#F7F9FC] dark:bg-sv-darker py-16 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">

@@ -57,7 +57,7 @@ export default function PartnerTypes() {
     <section
       ref={sectionRef}
       id="partner-types"
-      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
+      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-uk-teal-soft/40 blur-3xl" />

@@ -37,7 +37,7 @@ export default async function BlogIndexPage(props: {
     : null
 
   return (
-    <main className="min-h-screen bg-[#F7F9FC]">
+    <main className="min-h-screen">
       <Header />
       <BlogHero
         badge={activeCat ? `Category · ${activeCat.name_en}` : 'Solavita UK Blog'}
@@ -84,14 +84,14 @@ export default async function BlogIndexPage(props: {
         description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
       />
 
-      <Footer variant="light" />
+      <Footer />
     </main>
   )
 }
 
 function EmptyState({ categoryName }: { categoryName?: string | null }) {
   return (
-    <div className="rounded-2xl border border-dashed border-uk-line bg-[#F7F9FC] p-12 text-center">
+    <div className="rounded-2xl border border-dashed border-uk-line bg-[#F7F9FC] dark:bg-sv-darker p-12 text-center">
       <p className="text-uk-slate">
         {categoryName
           ? `The "${categoryName}" category has no published articles yet.`
