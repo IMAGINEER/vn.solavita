@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CTA from '@/components/solutions/CTA'
+import JsonLd from '@/components/seo/JsonLd'
 import { BlogHero } from '@/components/blog/BlogHero'
 import { BlogCard } from '@/components/blog/BlogCard'
 import {
@@ -15,6 +16,11 @@ import {
   buildCategoryMetadata,
   NOINDEX_METADATA,
 } from '@/lib/seo/metadata'
+import {
+  collectionPageJsonLd,
+  breadcrumbJsonLd,
+  categoryJsonLd,
+} from '@/lib/seo/jsonld'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,6 +51,26 @@ export default async function BlogCategoryPage(props: {
 
   return (
     <main className="min-h-screen">
+      <JsonLd
+        data={[
+          collectionPageJsonLd({
+            path: `/blog/category/${category.slug}`,
+            name: `${category.name_en} - Solavita UK Blog`,
+            description:
+              category.description_en ??
+              `Articles in the ${category.name_en} category.`,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'Blog', url: '/blog' },
+            {
+              name: category.name_en,
+              url: `/blog/category/${category.slug}`,
+            },
+          ]),
+          categoryJsonLd(category),
+        ]}
+      />
       <Header />
       <BlogHero
         badge={category.name_en}

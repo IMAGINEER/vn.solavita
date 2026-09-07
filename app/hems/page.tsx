@@ -1,45 +1,39 @@
-'use client'
+import HemsPage from './PageClient'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import JsonLd from '@/components/seo/JsonLd'
+import {
+  webPageJsonLd,
+  breadcrumbJsonLd,
+} from '@/lib/seo/jsonld'
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import HEMSHero from '@/components/hems/Hero'
-import FeaturesGrid from '@/components/hems/FeaturesGrid'
-import PhoneShowcase from '@/components/hems/PhoneShowcase'
-import CTA from '@/components/solutions/CTA'
+export const metadata = buildPageMetadata({
+  title: 'HEMS App · Smart Home Energy',
+  path: '/hems',
+  description:
+    'The Solavita HEMS app puts your solar, battery and home energy in one place — generation, consumption, scheduling and alerts.',
+  ogImage: '/images/hero-hems.webp',
+  ogImageAlt:
+    'Solavita HEMS app - generation, consumption, scheduling and alerts for solar and battery storage',
+})
 
-/**
- * /hems - Solavita HEMS App landing page (light theme).
- *
- * Composition:
- *   Hero (light, banner-style) →
- *   FeaturesGrid (heading → full-width demo video → 6 capability cards) →
- *   PhoneShowcase ("Solavita HEMS App" + phone centered + download CTAs) →
- *   Bottom CTA (re-used from /solutions for visual consistency)
- */
-export default function HemsPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen">
-      <Header logoHref="/" />
-
-      <HEMSHero />
-      <FeaturesGrid />
-      <PhoneShowcase />
-
-      <CTA
-        eyebrow="Free design · No obligation"
-        title={
-          <>
-            See the HEMS on your home.
-            <br />
-            <span className="text-gradient">Get a free design & quote.</span>
-          </>
-        }
-        description="Tell us about your home. Our UK engineers will design the right HEMS-managed system - solar, battery, EV charger and heat pump - and send you a clear, no-obligation quote."
-        secondaryLabel="Talk to our team"
-        secondaryHref="mailto:uk@solavita.com"
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            path: '/hems',
+            name: 'Solavita HEMS App',
+            description:
+              'The Solavita HEMS app puts your solar, battery and home energy in one place - generation, consumption, scheduling and alerts.',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'HEMS App', url: '/hems' },
+          ]),
+        ]}
       />
-
-      <Footer />
-    </main>
+      <HemsPage />
+    </>
   )
 }

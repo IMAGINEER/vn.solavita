@@ -1,47 +1,39 @@
-'use client'
+import CasesPage from './PageClient'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import JsonLd from '@/components/seo/JsonLd'
+import {
+  webPageJsonLd,
+  breadcrumbJsonLd,
+} from '@/lib/seo/jsonld'
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import CasesHero from '@/components/cases/Hero'
-import CaseStudyGrid from '@/components/cases/CaseStudyGrid'
-import FeaturedCase from '@/components/cases/FeaturedCase'
-import CTA from '@/components/solutions/CTA'
+export const metadata = buildPageMetadata({
+  title: 'UK Case Studies',
+  path: '/cases',
+  description:
+    'Real Solavita installations across the UK. See how solar and battery systems perform on homes like yours.',
+  ogImage: '/images/hero-cases.webp',
+  ogImageAlt:
+    'Solavita UK case studies - real installations of solar and battery systems across UK homes',
+})
 
-/**
- * /cases - Case studies index.
- *
- * Composition (per project brief):
- *   Hero → Case Study Grid → Featured Case → CTA
- *
- * The grid is filterable (client-only state) and the cards themselves
- * are a reusable component (components/cases/CaseStudyCard). Adding a
- * new case study is a single entry in lib/data/cases.ts.
- */
-export default function CasesPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen">
-      <Header logoHref="/" />
-
-      <CasesHero />
-
-      <CaseStudyGrid />
-
-      <FeaturedCase />
-
-      <CTA
-        eyebrow="See it on your home"
-        title={
-          <>
-            Like these homes?
-            <br />
-            <span className="text-gradient">See what it would look like on yours.</span>
-          </>
-        }
-        description="Send us your address and a recent energy bill. We will prepare a side-by-side design showing what a Solavita system would generate, store and save on your home."
-        primaryLabel="Get Free Plan →"
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            path: '/cases',
+            name: 'UK Case Studies',
+            description:
+              'Real Solavita installations across the UK. See how solar and battery systems perform on homes like yours.',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'Case Studies', url: '/cases' },
+          ]),
+        ]}
       />
-
-      <Footer />
-    </main>
+      <CasesPage />
+    </>
   )
 }

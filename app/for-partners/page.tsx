@@ -1,42 +1,39 @@
-'use client'
+import ForPartnersPage from './PageClient'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import JsonLd from '@/components/seo/JsonLd'
+import {
+  webPageJsonLd,
+  breadcrumbJsonLd,
+} from '@/lib/seo/jsonld'
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import PartnersHero from '@/components/partners/Hero'
-import WhyPartner from '@/components/partners/WhyPartner'
-import PartnerTypes from '@/components/partners/PartnerTypes'
-import PartnershipProcess from '@/components/partners/PartnershipProcess'
-import PartnerCTA from '@/components/partners/PartnerCTA'
+export const metadata = buildPageMetadata({
+  title: 'Partner Programmes',
+  path: '/for-partners',
+  description:
+    'Become a Solavita partner. Installer, energy and business programmes for UK solar and storage projects.',
+  ogImage: '/images/hero-partners.webp',
+  ogImageAlt:
+    'Solavita UK Partner Programmes - installer, energy and business programmes',
+})
 
-/**
- * /for-partners - B2B partner recruitment page.
- *
- * Composition (per project brief):
- *   Hero → Why Partner with Solavita → Partner Types (Installer /
- *   Energy · Business) → Partner Benefits (folded into Why Partner as
- *   a 6-card block) → How Partnership Works (horizontal process
- *   timeline) → Partner CTA / Enquiry Form
- *
- * No new backend - the enquiry form is a visual placeholder per the
- * project brief. Submits to a no-op handler so the page is
- * demonstrably a destination without leaking email addresses.
- */
-export default function ForPartnersPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen">
-      <Header logoHref="/" />
-
-      <PartnersHero />
-
-      <WhyPartner />
-
-      <PartnerTypes />
-
-      <PartnershipProcess />
-
-      <PartnerCTA />
-
-      <Footer />
-    </main>
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            path: '/for-partners',
+            name: 'Partner Programmes',
+            description:
+              'Become a Solavita partner. Installer, energy and business programmes for UK solar and storage projects.',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'Partner Programmes', url: '/for-partners' },
+          ]),
+        ]}
+      />
+      <ForPartnersPage />
+    </>
   )
 }

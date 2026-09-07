@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CTA from '@/components/solutions/CTA'
+import JsonLd from '@/components/seo/JsonLd'
 import { BlogHero } from '@/components/blog/BlogHero'
 import { BlogCard } from '@/components/blog/BlogCard'
 import { BlogFilters } from '@/components/blog/BlogFilters'
@@ -11,6 +12,10 @@ import {
   listPublishedPosts,
 } from '@/lib/data/blog'
 import { buildIndexMetadata } from '@/lib/seo/metadata'
+import {
+  blogJsonLd,
+  breadcrumbJsonLd,
+} from '@/lib/seo/jsonld'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,6 +43,20 @@ export default async function BlogIndexPage(props: {
 
   return (
     <main className="min-h-screen">
+      <JsonLd
+        data={[
+          blogJsonLd({
+            path: '/blog',
+            name: 'Solavita UK Blog',
+            description:
+              'Guides, product updates and stories from UK solar. Written by Solavita engineers so you can choose with confidence.',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'Blog', url: '/blog' },
+          ]),
+        ]}
+      />
       <Header />
       <BlogHero
         badge={activeCat ? `Category · ${activeCat.name_en}` : 'Solavita UK Blog'}

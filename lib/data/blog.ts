@@ -313,10 +313,19 @@ export interface SitemapPostEntry {
 
 export async function listAllPublishedForSitemap(): Promise<SitemapPostEntry[]> {
   // Fetch joined category slug in one round-trip.
+  //
+  // `blog_categories` is shared with the DE site on the same Supabase
+  // project. The inner join on `slug` alone would let through posts
+  // whose category row has `name_en IS NULL` (IT/DE-only category).
+  // Those rows are excluded from `getCategoryBySlug()` on the dynamic
+  // route via `.not('name_en', 'is', null)`, so the post URL would 404
+  // even though it's marked published. Mirror that filter here so the
+  // sitemap only lists URLs that actually resolve to a page.
   const { data, error } = await supabase
     .from('blog_posts')
     .select('slug, published_at, updated_at, blog_categories!inner(slug)')
     .eq('status', 'published')
+    .not('blog_categories.name_en', 'is', null)
     .order('published_at', { ascending: false })
   if (error) throw new Error(`listAllPublishedForSitemap: ${error.message}`)
   return ((data ?? []) as unknown as Array<{

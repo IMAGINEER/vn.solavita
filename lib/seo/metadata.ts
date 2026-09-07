@@ -25,13 +25,18 @@ export interface BuildIndexOpts {
 export function buildIndexMetadata(opts: BuildIndexOpts): Metadata {
   const path = opts.path ?? '/blog'
   const description = opts.description ?? DEFAULT_DESCRIPTION
+  // Pass `opts.title` raw - the root layout's `title.template: '%s | Solavita UK'`
+  // adds the brand suffix exactly once. Calling `appendSiteTitle(opts.title)`
+  // here would double the suffix (root template + manual append), producing
+  // titles like `Blog | Solavita UK | Solavita UK` on `/blog`. Same pattern
+  // as `buildPageMetadata` so the whole site is consistent.
   return {
-    title: appendSiteTitle(opts.title),
+    title: opts.title,
     description,
     alternates: { canonical: absoluteUrl(path) },
     openGraph: {
       type: 'website',
-      title: appendSiteTitle(opts.title),
+      title: opts.title,
       description,
       url: absoluteUrl(path),
       siteName: SITE_NAME,
@@ -40,7 +45,7 @@ export function buildIndexMetadata(opts: BuildIndexOpts): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: appendSiteTitle(opts.title),
+      title: opts.title,
       description,
       images: [DEFAULT_OG_IMAGE],
     },
@@ -53,13 +58,14 @@ export function buildCategoryMetadata(category: BlogCategory): Metadata {
   const description =
     category.description_en ?? DEFAULT_DESCRIPTION
   const title = `${category.name_en} | Blog`
+  // Same root-template-once pattern as buildIndexMetadata / buildPageMetadata.
   return {
-    title: appendSiteTitle(title),
+    title,
     description,
     alternates: { canonical: absoluteUrl(path) },
     openGraph: {
       type: 'website',
-      title: appendSiteTitle(title),
+      title,
       description,
       url: absoluteUrl(path),
       siteName: SITE_NAME,
@@ -68,7 +74,7 @@ export function buildCategoryMetadata(category: BlogCategory): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: appendSiteTitle(title),
+      title,
       description,
       images: [DEFAULT_OG_IMAGE],
     },
@@ -90,7 +96,11 @@ export function buildPostMetadata({ post, categorySlug }: BuildPostOpts): Metada
   const canonical = absoluteUrl(path)
   const tagNames = post.tags.map((t) => t.name_en)
   return {
-    title: appendSiteTitle(post.title),
+    // Pass `post.title` raw - the root layout's `title.template: '%s | Solavita UK'`
+    // adds the brand suffix exactly once. Same root-cause fix as
+    // `buildIndexMetadata` / `buildCategoryMetadata` (was double-suffixing
+    // `Blog | Solavita UK | Solavita UK` on every blog page).
+    title: post.title,
     description,
     alternates: { canonical },
     // Tags double as SEO keywords. Next.js emits `<meta name="keywords">`
@@ -141,3 +151,57 @@ export const NOINDEX_METADATA: Metadata = {
 
 /** Site root canonical (used by `/`). */
 export const SITE_CANONICAL = SITE_URL
+
+/* ────────────────────────────────────────────────────────────────────────
+   Static marketing-page builder.
+
+   Every public marketing page calls this so canonical/robots land in one
+   place. Title-suffix (` | Solavita UK`) is added by the root layout's
+   `title.template` - pages only pass the page-specific title.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export interface BuildPageOpts {
+  /** Page title WITHOUT the brand suffix. Root layout appends it. */
+  title: string
+  /** Site-relative path. Trailing slash is normalised by `absoluteUrl`. */
+  path: string
+  description?: string
+  /** Set false to mark this page as noindex. Default true. */
+  index?: boolean
+  /** Page-level OG / Twitter share image (site-relative or absolute). If
+   * omitted the root layout's `DEFAULT_OG_IMAGE` is used. The OG variant
+   * is `summary_large_image` so the share preview fills WhatsApp /
+   * LinkedIn / X cards - this is the single point of control. */
+  ogImage?: string
+  ogImageAlt?: string
+}
+
+export function buildPageMetadata(opts: BuildPageOpts): Metadata {
+  const description = opts.description ?? DEFAULT_DESCRIPTION
+  const image = opts.ogImage ?? DEFAULT_OG_IMAGE
+  const imageUrl = absoluteUrl(image)
+  const imageAlt = opts.ogImageAlt ?? opts.title
+  return {
+    title: opts.title,
+    description,
+    alternates: { canonical: absoluteUrl(opts.path) },
+    robots: {
+      index: opts.index !== false,
+      follow: opts.index !== false,
+    },
+    openGraph: {
+      title: opts.title,
+      description,
+      url: absoluteUrl(opts.path),
+      siteName: SITE_NAME,
+      locale: SITE_LOCALE,
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: imageAlt }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: opts.title,
+      description,
+      images: [imageUrl],
+    },
+  }
+}

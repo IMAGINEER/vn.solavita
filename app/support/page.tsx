@@ -1,49 +1,48 @@
-'use client'
+import SupportPage from './PageClient'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import JsonLd from '@/components/seo/JsonLd'
+import { faqItems } from '@/lib/data/support'
+import {
+  webPageJsonLd,
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+} from '@/lib/seo/jsonld'
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import SupportHero from '@/components/support/Hero'
-import SupportCategories from '@/components/support/SupportCategories'
-import FAQ from '@/components/support/FAQ'
-import ContactSupport from '@/components/support/ContactSupport'
-import CTA from '@/components/solutions/CTA'
+export const metadata = buildPageMetadata({
+  title: 'Support & FAQs',
+  path: '/support',
+  description:
+    'FAQs, troubleshooting and downloads for Solavita solar, battery and HEMS systems. Speak to our UK support team.',
+  ogImage: '/images/hero-support.webp',
+  ogImageAlt:
+    'Solavita UK support and FAQs - solar, battery and HEMS systems',
+})
 
-/**
- * /support - User support centre.
- *
- * Composition (per project brief):
- *   Hero / Search → Support Categories → FAQ → Contact Support → CTA
- *
- * Search input is visual-only (no backend) per the project brief.
- * FAQ accordion uses motion/react for height transitions; no external
- * accordion library needed.
- */
-export default function SupportPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen">
-      <Header logoHref="/" />
-
-      <SupportHero />
-
-      <SupportCategories />
-
-      <FAQ />
-
-      <ContactSupport />
-
-      <CTA
-        eyebrow="Need a new system?"
-        title={
-          <>
-            Not a current customer yet?
-            <br />
-            <span className="text-gradient">Start with a free design.</span>
-          </>
-        }
-        description="If you are still researching, our team can put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home."
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            path: '/support',
+            name: 'Support & FAQs',
+            description:
+              'FAQs, troubleshooting and downloads for Solavita solar, battery and HEMS systems. Speak to our UK support team.',
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'Support', url: '/support' },
+          ]),
+          faqPageJsonLd({
+            path: '/support#faq',
+            name: 'Solavita Support - Frequently Asked Questions',
+            description:
+              'Common questions about installation, product, monitoring, warranty and troubleshooting for Solavita solar, battery and HEMS systems.',
+            faqs: faqItems,
+          }),
+        ]}
       />
-
-      <Footer />
-    </main>
+      <SupportPage />
+    </>
   )
 }
