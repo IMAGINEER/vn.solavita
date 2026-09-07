@@ -110,7 +110,8 @@ export default function FreeDesignQuoteSection({
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Get Your Free Plan
+              Get Your{' '}
+              <span className="text-gradient">Free Plan</span>
               <br />
               in 24 hours
             </h2>
