@@ -3,7 +3,7 @@
  *
  * All copy here is placeholder English - easy to swap to final content
  * without touching the page structure. Image paths reuse existing assets
- * under /images and /static/images so the page renders end-to-end without
+ * under /images so the page renders end-to-end without
  * any new uploads.
  *
  * Pricing is intentionally NOT part of this file: per the product brief,

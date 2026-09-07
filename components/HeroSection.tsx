@@ -212,7 +212,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
           <div ref={imageRef} className="hidden">
             <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden border border-uk-line bg-uk-teal-soft">
               <img
-                src="/static/images/hero-placeholder.webp"
+                src="/images/hero-placeholder.webp"
                 alt="UK home with solar panels"
                 loading="eager"
                 className="w-full h-full object-cover"

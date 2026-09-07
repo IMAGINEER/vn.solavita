@@ -126,7 +126,7 @@ export default function DeliveryTimeline() {
           <div className="space-y-6">
             <div className="rounded-2xl overflow-hidden border border-uk-line">
               <img
-                src="/static/images/drone-3d.webp"
+                src="/images/drone-3d.webp"
                 alt="Drone survey and 3D roof model used in Solavita design"
                 className="w-full aspect-video object-cover"
               />

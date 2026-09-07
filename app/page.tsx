@@ -11,7 +11,7 @@ export const metadata = buildPageMetadata({
   path: '/',
   description:
     'Solavita delivers premium solar panels and battery storage for UK homes. Two-week installation. MCS-certified. UK-wide support.',
-  ogImage: '/static/images/hero-system-render.webp',
+  ogImage: '/images/hero-system-render.webp',
   ogImageAlt: 'Solavita UK - solar panels and battery storage for UK homes',
 })
 

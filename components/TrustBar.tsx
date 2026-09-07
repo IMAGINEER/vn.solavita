@@ -3,47 +3,24 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Sun, Globe2, ShieldCheck, Trophy, Users } from 'lucide-react'
 import { ukTrustItems } from '@/lib/data/uk-trust'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Slim horizontal trust / certification strip - direct mirror of the
- * German-site TrustBar markup (dark `bg-sv-dark/50` band with translucent
- * `bg-white/70` glass icon chips).
+ * Slim horizontal trust / certification strip.
+ *
+ * Renders 6 hard-coded certification marks (TÜV / CE / MCS / NICEIC /
+ * RECC / 25-year warranty) as PNG assets under `public/images/`. Each
+ * item shows: [icon] / [title] / [subtitle]. Icon height is capped at
+ * 133px and width follows the asset's intrinsic aspect ratio (so a
+ * square mark and a wider mark both render cleanly without squashing).
  *
  * Light-mode overrides in `app/globals.css` (`.light-mode .trust-bar`,
  * `.light-mode [class*="bg-sv-dark/50"]`, `.light-mode [class*="border-white/"]`,
- * `.light-mode [class*="text-white/"]`, `.light-mode [class*="bg-white/"]`)
- * already handle the dark→light inversion, so no project-level
- * token work is required to support both modes.
- *
- * Data source: `ukTrustItems` (UK-flavored, no fabricated certifications).
- *
- * Icons: lucide-react (theme-aware via `currentColor` → `text-uk-teal-dark`
- * on the wrapper span).
+ * `.light-mode [class*="text-white/"]`) invert the dark surface and
+ * white type — no per-mode code needed here.
  */
-
-/* ────────────────────────────────────────────────────────────────────────
-   Trust-icon registry. Maps the `icon` string on each trust item to a
-   lucide-react component. Lucide icons inherit colour from the parent
-   via `currentColor`, so the wrapper's `text-uk-teal-dark` sets the
-   stroke colour for all of them.
-   ──────────────────────────────────────────────────────────────────────── */
-
-import type { LucideIcon } from 'lucide-react'
-
-const TRUST_ICONS: Record<
-  'sun' | 'globe' | 'shield-check' | 'trophy' | 'users',
-  LucideIcon
-> = {
-  sun: Sun,
-  globe: Globe2,
-  'shield-check': ShieldCheck,
-  trophy: Trophy,
-  users: Users,
-}
 
 export default function TrustBar() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -75,25 +52,44 @@ export default function TrustBar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center flex-wrap sm:justify-between gap-6 sm:gap-4 overflow-x-auto pb-2 sm:pb-0">
-          {ukTrustItems.map((item, i) => {
-            const Icon = TRUST_ICONS[item.icon]
-            return (
-              <div
-                key={i}
-                className="flex flex-col items-center min-w-[80px] text-center flex-shrink-0"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/70 backdrop-blur-xl border border-white/20 flex items-center justify-center mb-2 overflow-hidden text-uk-teal-dark">
-                  <Icon className="w-9 h-9" strokeWidth={1.5} />
-                </div>
-                <span className="text-[10px] font-cw-bold">
-                  {item.label}
-                </span>
-                <span className="text-[9px] font-cw-regular">
-                  {item.sublabel}
-                </span>
+          {ukTrustItems.map((item, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center min-w-[80px] text-center flex-shrink-0"
+            >
+              {/* Icon — fixed height (matches the original lucide 48px
+                  glass-chip slot); width follows each asset's intrinsic
+                  aspect ratio. Logos range 126-266 px wide natively, so
+                  h-12 keeps every item on a single row at desktop and
+                  keeps the strip's vertical footprint close to its
+                  pre-redesign height. */}
+              <img
+                src={item.image}
+                alt={item.title}
+                width={160}
+                height={133}
+                loading="lazy"
+                className="h-12 w-auto mb-2 object-contain"
+              />
+              {/* Title — uppercase + tracking + a real size jump make the
+                  bold/regular pair visually distinct even though
+                  Chuangwei has no heavier weight than bold. Each line
+                  is its own block with whitespace-nowrap so
+                  "Up to 25 Years" can't wrap to "Up to 25 / Years"
+                  inside the wider row. */}
+              <div className="text-[12px] font-cw-bold uppercase tracking-wider leading-tight text-white">
+                <span className="block whitespace-nowrap">{item.title}</span>
+                {item.titleBold && (
+                  <span className="block whitespace-nowrap">
+                    {item.titleBold}
+                  </span>
+                )}
               </div>
-            )
-          })}
+              <div className="text-[10px] font-cw-regular mt-0.5 opacity-70 whitespace-nowrap">
+                {item.subtitle}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

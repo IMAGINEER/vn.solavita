@@ -74,7 +74,7 @@ const FlagUK = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
 
 export default function Footer({
   variant = 'dark',
-  logoSrc = '/static/images/a1logo02.svg',
+  logoSrc = '/images/a1logo02.svg',
   logoAlt = 'Solavita UK',
   productLinks,
   companyLinks,

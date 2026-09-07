@@ -8,17 +8,17 @@ export const ukArticles: UkArticle[] = [
   {
     tag: 'POLICY & INCENTIVES',
     title: 'UK Solar Grants 2026',
-    imagePath: '/static/images/article-placeholder.webp',
+    imagePath: '/images/article-placeholder.webp',
   },
   {
     tag: 'BUYING GUIDE',
     title: 'How to Choose the Right Solar System?',
-    imagePath: '/static/images/article-placeholder.webp',
+    imagePath: '/images/article-placeholder.webp',
   },
   {
     tag: 'TECHNOLOGY',
     title: 'Battery Storage 101: Everything You Need to Know',
-    imagePath: '/static/images/article-placeholder.webp',
+    imagePath: '/images/article-placeholder.webp',
   },
 ]
 

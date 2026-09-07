@@ -46,9 +46,9 @@ const tabContent: Record<string, {
       'PID-free over the full lifetime',
     ],
     images: [
-      '/static/images/product-module-1.webp',
-      '/static/images/product-module-2.webp',
-      '/static/images/product-module-3.webp',
+      '/images/product-module-1.webp',
+      '/images/product-module-2.webp',
+      '/images/product-module-3.webp',
     ],
     pdfUrl: '/static/pdfs/QM210RTHCDH-440-450W-48-All-Black Solar Panels.pdf',
   },
@@ -76,8 +76,8 @@ const tabContent: Record<string, {
       'One-click grid-connection configuration & OTA updates',
     ],
     images: [
-      '/static/images/product-inverter-1.webp',
-      '/static/images/product-inverter-2.webp',
+      '/images/product-inverter-1.webp',
+      '/images/product-inverter-2.webp',
     ],
     pdfUrl: '/static/pdfs/SWH6-15kW-T1-G2 (HV).pdf',
   },
@@ -107,8 +107,8 @@ const tabContent: Record<string, {
       '10-year product warranty',
     ],
     images: [
-      '/static/images/product-battery-1.webp',
-      '/static/images/product-battery-2.webp',
+      '/images/product-battery-1.webp',
+      '/images/product-battery-2.webp',
     ],
     pdfUrl: '/static/pdfs/SWR5.12-H1-GS.pdf',
   },
@@ -132,9 +132,9 @@ const tabContent: Record<string, {
       'Pre-assembled components - faster on-roof installation',
     ],
     images: [
-      '/static/images/product-mounting-1.webp',
-      '/static/images/product-mounting-2.webp',
-      '/static/images/product-mounting-3.webp',
+      '/images/product-mounting-1.webp',
+      '/images/product-mounting-2.webp',
+      '/images/product-mounting-3.webp',
     ],
   },
 }

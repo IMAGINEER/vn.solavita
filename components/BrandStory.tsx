@@ -68,7 +68,7 @@ export default function BrandStory() {
           <div className="p-8 rounded-3xl border border-uk-line bg-white shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center overflow-hidden p-1">
-                <img src="/static/images/a1logo02.svg" alt="Solavita" loading="lazy" className="w-full h-full object-contain" />
+                <img src="/images/a1logo02.svg" alt="Solavita" loading="lazy" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h3 className="text-lg font-cw-bold text-uk-navy">UK-First Engineering</h3>
@@ -81,14 +81,14 @@ export default function BrandStory() {
               Our UK-based service team is on hand for the lifetime of your system.
             </p>
             <div className="rounded-xl overflow-hidden border border-uk-line bg-uk-teal-soft">
-              <img src="/static/images/hero-placeholder.webp" alt="UK home with solar panels" loading="lazy" className="w-full h-full object-cover" />
+              <img src="/images/hero-placeholder.webp" alt="UK home with solar panels" loading="lazy" className="w-full h-full object-cover" />
             </div>
           </div>
 
           <div className="p-8 rounded-3xl border border-uk-line bg-white shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center overflow-hidden p-1">
-                <img src="/static/images/LOGOlan.svg" alt="SKYWORTH" loading="lazy" className="w-full h-full object-contain" />
+                <img src="/images/LOGOlan.svg" alt="SKYWORTH" loading="lazy" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h3 className="text-lg font-cw-bold text-uk-navy uppercase">SKYWORTH Global</h3>
@@ -101,7 +101,7 @@ export default function BrandStory() {
               SKYWORTH now brings the same engineering quality and supply-chain scale to UK residential solar.
             </p>
             <div className="rounded-xl overflow-hidden border border-uk-line bg-uk-teal-soft">
-              <img src="/static/images/case-placeholder.webp" alt="SKYWORTH global reach" loading="lazy" className="w-full h-full object-cover" />
+              <img src="/images/case-placeholder.webp" alt="SKYWORTH global reach" loading="lazy" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

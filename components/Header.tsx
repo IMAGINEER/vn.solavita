@@ -51,7 +51,7 @@ export default function Header({
   showBackButton = false,
   onBack,
   logoHref = '/',
-  logoSrc = '/static/images/a1logo02.svg',
+  logoSrc = '/images/a1logo02.svg',
   logoAlt = 'Solavita Logo',
   logoSrcSecondary,
   logoAltSecondary = 'Solavita',

@@ -76,7 +76,7 @@ export function organizationJsonLd() {
       url: absoluteUrl('/'),
       logo: {
         '@type': 'ImageObject',
-        url: absoluteUrl('/static/images/a1logo02.svg'),
+        url: absoluteUrl('/images/a1logo02.svg'),
       },
       // Registered office from app/terms/PageClient.tsx.
       address: {

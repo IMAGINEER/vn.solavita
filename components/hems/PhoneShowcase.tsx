@@ -78,7 +78,7 @@ export default function PhoneShowcase() {
               alt="Solavita HEMS App – Energy Dashboard"
               loading="lazy"
               className="w-full h-auto block"
-              src="/static/images/cloud-app-data.webp"
+              src="/images/cloud-app-data.webp"
             />
           </div>
         </div>

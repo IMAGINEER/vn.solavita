@@ -339,7 +339,7 @@ IT 版的完整镜像。改动：
 
 IT 版的完整镜像。改动：
 - `articleJsonLd` 里 `inLanguage: 'en-GB'`（不是 `'it-IT'`）
-- publisher logo 路径参考 IT 同款：UK 站点如有 `/static/images/a1logo02.svg` 用之；否则留 `'/images/og-default.webp'`
+- publisher logo 路径用 `/images/a1logo02.svg`（UK 已于 2026-09 资源统一迁移，所有 logo / hero 都在 `public/images/`）
 - `keywords` 拼接用 `name_en`
 
 ### 4.9 `app/api/admin/blog/posts/route.ts`（**新建**）

@@ -182,7 +182,7 @@ export default function WhoWeAre() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center overflow-hidden p-1">
                 <img
-                  src="/static/images/a1logo02.svg"
+                  src="/images/a1logo02.svg"
                   alt="Solavita"
                   loading="lazy"
                   className="w-full h-full object-contain"
@@ -210,7 +210,7 @@ export default function WhoWeAre() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center overflow-hidden p-1">
                 <img
-                  src="/static/images/LOGOlan.svg"
+                  src="/images/LOGOlan.svg"
                   alt="SKYWORTH"
                   loading="lazy"
                   className="w-full h-full object-contain"

@@ -69,13 +69,13 @@ export default function GlobalPresence() {
 
             <div className="mt-8 inline-flex items-center gap-3 px-4 py-3 rounded-xl border border-uk-line bg-white">
               <img
-                src="/static/images/a1logo02.svg"
+                src="/images/a1logo02.svg"
                 alt="Solavita"
                 className="h-6 w-auto"
               />
               <span className="text-uk-slate text-xs">×</span>
               <img
-                src="/static/images/LOGOlan.svg"
+                src="/images/LOGOlan.svg"
                 alt="SKYWORTH"
                 className="h-6 w-auto"
               />

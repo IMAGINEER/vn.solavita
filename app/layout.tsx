@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${SITE_URL}/static/images/hero-system-render.webp`,
+        url: `${SITE_URL}/images/hero-system-render.webp`,
         width: 1200,
         height: 630,
         alt: 'Solavita UK - solar panels and battery storage for UK homes',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: 'Solavita UK - Power Your Home. Shape a Greener UK.',
     description:
       'Premium solar & storage for UK homes. Two-week turnaround.',
-    images: [`${SITE_URL}/static/images/hero-system-render.webp`],
+    images: [`${SITE_URL}/images/hero-system-render.webp`],
   },
 }
 

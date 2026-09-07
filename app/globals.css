@@ -340,6 +340,13 @@ html.lenis {
   background-color: rgba(238, 242, 247, 0.9) !important;
 }
 
+/* TrustBar text colour — inverted by light-mode (background flips
+   dark↔light, so text must follow). Targets the explicit `text-white`
+   on the title and any future pinned-white text inside the strip. */
+.light-mode .trust-bar [class*="text-white"] {
+  color: #0A1628 !important;
+}
+
 /* Product cards light mode */
 .light-mode [class*="bg-white\/"],
 .light-mode [class*="bg-white/"] {

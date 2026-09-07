@@ -50,7 +50,7 @@ export default function HEMSSection() {
               <div className="relative rounded-[2.5rem] border-[6px] border-white/10 bg-sv-navy overflow-hidden shadow-2xl">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-sv-dark rounded-b-2xl z-10" />
                 <img
-                  src="/static/images/cloud-app-data.webp"
+                  src="/images/cloud-app-data.webp"
                   alt="Solavita HEMS App - Energie-Dashboard"
                   loading="lazy"
                   className="w-full h-auto"

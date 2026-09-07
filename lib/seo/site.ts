@@ -16,7 +16,7 @@ export const SITE_LEGAL_NAME = 'Solavita UK Ltd'
  * branded OG asset is produced. The page-level `buildPageMetadata` helper
  * lets each page override this with its own hero asset (see /solutions,
  * /hems, ...). */
-export const DEFAULT_OG_IMAGE = '/static/images/hero-system-render.webp'
+export const DEFAULT_OG_IMAGE = '/images/hero-system-render.webp'
 
 export const DEFAULT_DESCRIPTION =
   'Premium solar panels and battery storage for UK homes. MCS-certified. Two-week installation. UK-wide support.'
