@@ -533,8 +533,15 @@ function MetricCard({
  * with the content.
  */
 const CURSOR_POS: Record<Stage, { y: string; x: string }> = {
-  home: { y: '33%', x: '14%' },
-  system: { y: '50%', x: '50%' },
+  // Cursor y is the percentage of `.hrp-card-host` height. The card is
+  // a single stacked container (head 52px + body with crumb/title-row
+  // + 5 stacked `.hrp-section`s); cursor center lands at the section's
+  // label row (top of section + ~24px for padding + label baseline).
+  // Measured offsets assume a ~787px host: header 52 + body padding
+  // 18 + crumb/title 76 ≈ 146px before Section 1 starts; each section
+  // adds ~70-145px depending on its content height.
+  home: { y: '23%', x: '14%' },     // lands on "Your home" label / icon
+  system: { y: '38%', x: '50%' },   // lands on "Your system" label / Solar panels card
   plan: { y: '67%', x: '50%' },
   savings: { y: '80%', x: '50%' },
   offer: { y: '92%', x: '40%' },
