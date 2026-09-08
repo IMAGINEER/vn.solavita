@@ -37,7 +37,7 @@ export default function CasesHero() {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mt-6"
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-          <span className="text-xs font-cw-regular text-white/90">Real UK installations</span>
+          <span className="text-xs font-cw-regular text-white/90">Solavita in Europe</span>
         </motion.span>
 
         <motion.h1
@@ -56,9 +56,9 @@ export default function CasesHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Verified Solavita installations across the UK - actual kWh
-          generated, actual £ saved, and a real homeowner story behind
-          each one.
+          Verified Solavita installations across Italy and Germany -
+          actual kWh generated, actual € saved, and a real homeowner story
+          behind each one.
         </motion.p>
       </div>
     </section>

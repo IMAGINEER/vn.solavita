@@ -4,18 +4,17 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CasesHero from '@/components/cases/Hero'
 import CaseStudyGrid from '@/components/cases/CaseStudyGrid'
-import FeaturedCase from '@/components/cases/FeaturedCase'
 import CTA from '@/components/solutions/CTA'
 
 /**
  * /cases - Case studies index.
  *
  * Composition (per project brief):
- *   Hero → Case Study Grid → Featured Case → CTA
+ *   Hero → Case Study Grid → CTA
  *
  * The grid is filterable (client-only state) and the cards themselves
  * are a reusable component (components/cases/CaseStudyCard). Adding a
- * new case study is a single entry in lib/data/cases.ts.
+ * new case study is a single entry in lib/data/uk-cases.ts.
  */
 export default function CasesPage() {
   return (
@@ -25,8 +24,6 @@ export default function CasesPage() {
       <CasesHero />
 
       <CaseStudyGrid />
-
-      <FeaturedCase />
 
       <CTA
         eyebrow="See it on your home"

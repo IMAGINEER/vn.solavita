@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Sun, Banknote, Star, Quote } from 'lucide-react'
-import { ukCases, ukTestimonial } from '@/lib/data/uk-cases'
+import { caseStudies, featuredTestimonial } from '@/lib/data/uk-cases'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -69,23 +69,23 @@ export default function CasesSection() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Selected UK installations
+            Solavita in Europe
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Real Homes.{' '}
             <span className="text-gradient">Real Results.</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Verified installations from Leeds, Manchester and Bristol - actual
-            kWh generated, actual £ saved, and a real customer quote from
+            Verified Solavita installations across Italy and Germany - actual
+            kWh generated, actual € saved, and a real customer quote from
             someone living with the system.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-          {ukCases.map((c) => (
+          {caseStudies.slice(0, 3).map((c) => (
             <div
-              key={c.city}
+              key={c.slug}
               className="case-card rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col"
             >
               {/* Image - full-bleed banner at the top of the card, no
@@ -140,17 +140,20 @@ export default function CasesSection() {
           <div className="case-card rounded-2xl p-6 bg-white border border-uk-line hover:shadow-md transition-all flex flex-col">
             <QuoteIcon className="w-8 h-8 text-uk-teal-dark" />
             <p className="text-uk-navy leading-relaxed mt-3 text-base">
-              {ukTestimonial.quote}
+              {featuredTestimonial.quote}
             </p>
             <div className="mt-auto pt-4 border-t border-uk-teal/30">
               <div className="text-sm font-cw-bold text-uk-navy">
-                {ukTestimonial.author}
+                {featuredTestimonial.author}
+              </div>
+              <div className="text-xs text-uk-slate mt-0.5">
+                {featuredTestimonial.role}
               </div>
               <div
                 className="flex gap-0.5 text-uk-emerald mt-2"
-                aria-label={`${ukTestimonial.rating} stars`}
+                aria-label={`${featuredTestimonial.rating} stars`}
               >
-                {Array.from({ length: ukTestimonial.rating }).map((_, i) => (
+                {Array.from({ length: featuredTestimonial.rating }).map((_, i) => (
                   <StarIcon key={i} className="w-4 h-4" />
                 ))}
               </div>
@@ -160,7 +163,7 @@ export default function CasesSection() {
 
         <div className="text-center mt-10">
           <a
-            href="#cases"
+            href="/cases"
             className="inline-flex items-center gap-2 text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors"
           >
             View More Cases →

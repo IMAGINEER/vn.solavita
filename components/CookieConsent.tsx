@@ -1,29 +1,57 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+const STORAGE_KEY = 'cookie_consent'
+
+interface ConsentState {
+  /** always true — strictly necessary cookies can't be opted out of */
+  necessary: true
+  analytics: boolean
+  marketing: boolean
+}
+
+function persist(next: ConsentState, value: 'accepted' | 'rejected') {
+  if (typeof window === 'undefined') return
+  window.localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      value,
+      analytics: next.analytics,
+      marketing: next.marketing,
+    })
+  )
+}
+
+/**
+ * First-visit cookie consent banner. Reads/writes the same
+ * `cookie_consent` key the /cookies settings panel uses, so a choice
+ * made here is reflected on the settings page (and vice versa).
+ *
+ * Banner only appears when no decision has been recorded yet
+ * (`localStorage` empty). To revisit and change preferences,
+ * use the Footer's "Cookie Settings" link → /cookies#settings.
+ */
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookie_consent')
-    if (consent === null) {
+    if (typeof window === 'undefined') return
+    const raw = window.localStorage.getItem(STORAGE_KEY)
+    // Only show the banner if the user has not made a decision yet.
+    // Both the new JSON shape and the legacy plain-string shape count.
+    if (raw === null) {
       setIsVisible(true)
     }
-
-    const handleShowCookieBanner = () => {
-      setIsVisible(true)
-    }
-    window.addEventListener('show-cookie-banner', handleShowCookieBanner)
-    return () => window.removeEventListener('show-cookie-banner', handleShowCookieBanner)
   }, [])
 
-  const handleConfirm = () => {
-    localStorage.setItem('cookie_consent', 'accepted')
+  function handleAccept() {
+    persist({ necessary: true, analytics: true, marketing: true }, 'accepted')
     setIsVisible(false)
   }
 
-  const handleReject = () => {
+  function handleReject() {
+    persist({ necessary: true, analytics: false, marketing: false }, 'rejected')
     setIsVisible(false)
   }
 
@@ -37,11 +65,11 @@ export default function CookieConsent() {
             <p className="text-sm text-uk-navy font-cw-regular leading-relaxed">
               Your privacy is important to us. When you visit our website, you agree to the use of all cookies.{' '}
               <a
-                href="/cookies"
+                href="/cookies#settings"
                 rel="noopener noreferrer"
                 className="text-uk-teal hover:text-uk-teal-dark transition-colors"
               >
-                For more information about how we process your personal data, please see our Cookie Policy.
+                Manage your preferences in Cookie Settings.
               </a>
             </p>
           </div>
@@ -53,7 +81,7 @@ export default function CookieConsent() {
               Reject
             </button>
             <button
-              onClick={handleConfirm}
+              onClick={handleAccept}
               className="px-5 py-2.5 rounded-full text-sm font-cw-bold text-white bg-uk-teal hover:bg-uk-teal-dark transition-all"
             >
               Accept

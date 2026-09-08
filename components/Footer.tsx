@@ -131,7 +131,10 @@ export default function Footer({
   ]
 
   const defaultCompanyLinks: FooterLink[] = [
-    { label: 'About Solavita', href: '#about' },
+    // Route to the dedicated /about-us page so the footer works from
+    // every page that renders it (was previously '#about', which is
+    // a same-page hash and dead from any non-homepage context).
+    { label: 'About Solavita', href: '/about-us' },
     { label: 'SKYWORTH Group', href: 'https://www.skyworth-pv.com/about-us', external: true },
     { label: 'Blog', href: '/blog' },
   ]
@@ -140,11 +143,13 @@ export default function Footer({
   const companies = companyLinks ?? defaultCompanyLinks
 
   // Legal links - promoted from the bottom bar to a dedicated column.
+  // "Cookie Settings" routes to /cookies#settings where users manage
+  // their preferences on the page itself (no banner-dispatch hack).
   const legalLinks: FooterLink[] = [
     { label: 'Terms of Use', href: '/terms', external: false },
     { label: 'Privacy Policy', href: '/privacy', external: false },
     { label: 'Cookie Policy', href: '/cookies', external: false },
-    { label: 'Cookie Settings', href: '#' },
+    { label: 'Cookie Settings', href: '/cookies#settings' },
   ]
 
   // ─── Reusable class strings ────────────────────────────────────────────
@@ -254,16 +259,6 @@ export default function Footer({
                   <a
                     href={link.href}
                     rel={link.external ? 'noopener noreferrer' : undefined}
-                    onClick={
-                      link.label === 'Cookie Settings'
-                        ? (e) => {
-                            e.preventDefault()
-                            window.dispatchEvent(
-                              new Event('show-cookie-banner')
-                            )
-                          }
-                        : undefined
-                    }
                     className={linkClass}
                   >
                     {link.label}

@@ -1,7 +1,8 @@
 'use client'
 
+import Link from 'next/link'
 import { Sun, Banknote, ArrowRight } from 'lucide-react'
-import { type CaseStudy } from '@/lib/data/cases'
+import { type CaseStudy } from '@/lib/data/uk-cases'
 
 /* Lucide icons - theme-neutral via currentColor. */
 const SunIcon = ({ className }: { className?: string }) => (
@@ -109,8 +110,8 @@ export default function CaseStudyCard({
   }
 
   return (
-    <a href={`#${caseStudy.slug}`} className={cardClass}>
+    <Link href={`/cases/${caseStudy.slug}/`} className={cardClass}>
       {inner}
-    </a>
+    </Link>
   )
 }

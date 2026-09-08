@@ -77,5 +77,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('sitemap blog fetch failed:', err)
   }
 
+  // Case-study detail pages are intentionally NOT listed here. The 13
+  // current cases are IT/DE reference installs whose canonical lives
+  // on it.solavita.com / de.solavita.com; the UK copies emit
+  // `<meta name="robots" content="noindex, follow">` in
+  // app/cases/[slug]/page.tsx to keep them out of Google's UK index.
+  // Listing them here too would contradict that signal. Re-add when
+  // the UK site has its own native installs to index.
+
   return entries
 }

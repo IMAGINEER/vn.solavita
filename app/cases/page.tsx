@@ -7,13 +7,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'UK Case Studies',
+  title: 'Case Studies',
   path: '/cases',
   description:
-    'Real Solavita installations across the UK. See how solar and battery systems perform on homes like yours.',
+    'Real Solavita installations across Italy and Germany. See how solar and battery systems perform on homes like yours.',
   ogImage: '/images/hero-cases.webp',
   ogImageAlt:
-    'Solavita UK case studies - real installations of solar and battery systems across UK homes',
+    'Solavita case studies - real installations of solar and battery systems across Europe',
 })
 
 export default function Page() {
@@ -23,9 +23,9 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/cases',
-            name: 'UK Case Studies',
+            name: 'Case Studies',
             description:
-              'Real Solavita installations across the UK. See how solar and battery systems perform on homes like yours.',
+              'Real Solavita installations across Italy and Germany. See how solar and battery systems perform on homes like yours.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
