@@ -256,7 +256,7 @@ export default function HeroReportPreview() {
             <div className="hrp-crumb">Home&nbsp; / &nbsp;My Plan</div>
             <div className="hrp-title-row">
               <div>
-                <div className="hrp-title">Your Solar Plan</div>
+                <div className="hrp-title">Your Initial Solar Plan</div>
                 <div className="hrp-subtitle">
                   A personalised system designed around your home and energy needs.
                 </div>

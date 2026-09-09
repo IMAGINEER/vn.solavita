@@ -17,7 +17,7 @@ export default async function LeadsPage() {
       'id, salutation, first_name, last_name, email, phone, ' +
         'street, house_number, postal_code, city, ' +
         'region, house_type, roof_type, household_size, electricity_usage, ' +
-        'devices, status, plan_token, country, created_at, updated_at, ' +
+        'devices, plan_token, country, created_at, updated_at, ' +
         // Plan lifecycle columns - drive the 4-state Plan badge via
         // `computePlanStatus()` in LeadsTable. See migration
         // 20260902000000_consultation_plan_lifecycle.sql.

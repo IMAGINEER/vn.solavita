@@ -186,6 +186,9 @@ const ELECTRICITY_USAGE = [
   { id: 'medium', label: 'Medium', description: '3,000-5,000 kWh/year', emoji: '⚡' },
   { id: 'high', label: 'High', description: '5,000-8,000 kWh/year', emoji: '🔌' },
   { id: 'very-high', label: 'Very high', description: '> 8,000 kWh/year', emoji: '🏭' },
+  // Sentinel id for the "I don't know" answer. The server collapses this to
+  // NULL on write so /admin/leads can render the row without a Usage line.
+  { id: 'unknown', label: 'Not Sure', description: 'Skip and let us recommend', emoji: '❓' },
 ];
 
 const DEVICES = [
@@ -243,7 +246,12 @@ const CardSelect = ({
   onSelect: (id: string) => void;
   columns?: number;
 }) => (
-  <div className={`grid grid-cols-2 ${columns >= 4 ? 'md:grid-cols-4' : columns === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-3`}>
+  <div className={`grid grid-cols-2 ${
+    columns === 5 ? 'md:grid-cols-5'
+      : columns === 4 ? 'md:grid-cols-4'
+      : columns === 3 ? 'md:grid-cols-3'
+      : 'md:grid-cols-2'
+  } gap-3`}>
     {options.map((opt) => {
       const isSelected = selected === opt.id;
       const Icon = opt.icon;
@@ -743,6 +751,7 @@ const Form: React.FC<{
                           options={ELECTRICITY_USAGE as CardOption[]}
                           selected={formData.electricityUsage}
                           onSelect={id => { updateField('electricityUsage', id); clearErrors(); }}
+                          columns={5}
                         />
                         {errors.electricityUsage && <p className="text-red-500 text-xs mt-2">{errors.electricityUsage}</p>}
                       </div>
@@ -805,7 +814,9 @@ const Form: React.FC<{
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Electricity use</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.electricityUsage || '-'}
+                            {formData.electricityUsage === 'unknown'
+                              ? 'Not sure'
+                              : (formData.electricityUsage || '-')}
                           </dd>
                         </div>
                         <div className="flex items-start justify-between px-4 py-3 gap-4">

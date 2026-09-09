@@ -51,14 +51,15 @@ export async function POST(request: Request) {
     }
 
     // Validate the 6 editable fields. Match the same required-by-the-form
-    // semantics: `region`, `houseType`, `roofType`, `householdSize`,
-    // `electricityUsage` must be non-empty strings; `devices` may be `[]`.
+    // semantics: `region`, `houseType`, `roofType`, `householdSize` must be
+    // non-empty strings; `electricityUsage` may be empty or the sentinel
+    // 'unknown' (Not Sure) so the customer can skip the question; `devices`
+    // may be `[]`.
     const missing: string[] = []
     if (!region) missing.push('region')
     if (!houseType) missing.push('houseType')
     if (!roofType) missing.push('roofType')
     if (!householdSize) missing.push('householdSize')
-    if (!electricityUsage) missing.push('electricityUsage')
     if (missing.length) {
       return NextResponse.json(
         {
@@ -102,7 +103,9 @@ export async function POST(request: Request) {
       house_type: houseType,
       roof_type: roofType,
       household_size: householdSize,
-      electricity_usage: electricityUsage,
+      // 'unknown' (Not Sure sentinel from the form) → NULL so admin
+      // LeadsTable skips the Usage row entirely instead of rendering 'unknown'.
+      electricity_usage: electricityUsage === 'unknown' ? null : (electricityUsage || null),
       devices: Array.isArray(devices) ? devices.join(', ') : '',
       updated_at: new Date().toISOString(),
     }

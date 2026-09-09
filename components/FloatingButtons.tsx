@@ -15,7 +15,14 @@ import { Moon, Sun, ArrowUp } from 'lucide-react'
  * the .light-mode CSS overrides in globals.css.
  */
 export default function FloatingButtons() {
-  const [isLightMode, setIsLightMode] = useState(false)
+  // Default to `true` (light) so it matches the SSR-emitted `<html
+  // class="light-mode">` in app/layout.tsx. The DOM may still have been
+  // swapped to `.dark` by the pre-hydration inline script before
+  // hydration if the user prefers dark mode — the useEffect below
+  // re-syncs from the live DOM. Reading the DOM inside the lazy
+  // initializer would cause a hydration mismatch (server can't read
+  // `document`).
+  const [isLightMode, setIsLightMode] = useState(true)
 
   // Source of truth lives on <html> (set pre-hydration by the inline
   // bootstrap script in app/layout.tsx). On mount we just mirror whatever

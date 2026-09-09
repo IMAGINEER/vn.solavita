@@ -74,12 +74,12 @@ export const hemsFeatures: HEMSFeature[] = [
 ]
 
 /**
- * "One brain for six systems" — UK-localised.
+ * "One brain for SIX SYSTEMS" — UK-localised.
  */
 export const hemsIntro = {
   eyebrow: 'Intelligent control',
   title: 'One brain for',
-  titleHighlight: 'six systems',
+  titleHighlight: 'SIX SYSTEMS',
   body: 'The HEMS (Home Energy Management System) orchestrates solar PV, battery, EV charger, heat pump, grid and backup power from a single app.',
 }
 

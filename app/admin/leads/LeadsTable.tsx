@@ -9,6 +9,20 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Badge, type BadgeVariant } from '@/components/ui/badge'
+import {
+  House,
+  Triangle,
+  Users,
+  Zap,
+  Plug,
+  ExternalLink,
+} from 'lucide-react'
+import {
+  recommendPlan,
+  getPlan,
+  type ConsultationInput,
+  type ConsumptionTier,
+} from '@/app/my-plan/_lib/calc'
 
 export interface ConsultationLead {
   id: string
@@ -27,7 +41,6 @@ export interface ConsultationLead {
   household_size: string | null
   electricity_usage: string | null
   devices: string | null
-  status: string | null
   plan_token: string | null
   country: string | null
   created_at: string
@@ -81,13 +94,13 @@ const PLAN_STATUS_TOOLTIP: Record<PlanStatus, string> = {
 }
 
 function formatDateTime(iso: string): string {
-  // en-GB: "31 Aug 2026, 14:23". Avoids the en-US month/day ambiguity
-  // for an admin reviewing submissions.
+  // en-GB short: "31 Aug, 14:23" - drops the year because admin
+  // scans recent leads in the current year; saves ~20px in the
+  // narrow Time column. Falls back to the raw ISO if Intl fails.
   try {
     return new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
       month: 'short',
-      year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
@@ -106,6 +119,75 @@ function wasResubmitted(l: ConsultationLead): boolean {
   return l.updated_at > l.created_at
 }
 
+/** Comma-separated `devices` string → trimmed ID array. Mirrors the
+ *  helper in `lib/my-plan/adapter.ts`; duplicated here so we don't pull
+ *  the whole adapter module just for one CSV split. */
+function parseDevices(csv: string | null): Array<string> {
+  if (!csv) return []
+  return csv.split(',').map((s) => s.trim()).filter(Boolean)
+}
+
+/** Defensive defaults - match `lib/my-plan/adapter.ts` so an admin row
+ *  with missing columns falls back to the same plan the customer would
+ *  have seen when they opened /my-plan. */
+const DEFAULT_HOUSEHOLD_SIZE: ConsultationInput['householdSize'] = '3'
+const DEFAULT_USAGE: ConsumptionTier = 'medium'
+const DEFAULT_REGION = 'England - London'
+
+/** Run the recommendation engine client-side (same call as
+ *  MyPlanClient) so the Plan column shows the actual bundle
+ *  (Home Energy One / Pro / Max / Ultra). The catalogue is pure - no
+ *  I/O, no React hooks - so importing it into a 'use client' component
+ *  is safe. */
+function resolvePlanName(l: ConsultationLead): string {
+  const consultation: ConsultationInput = {
+    householdSize: (l.household_size ?? DEFAULT_HOUSEHOLD_SIZE) as ConsultationInput['householdSize'],
+    electricityUsage: (l.electricity_usage ?? DEFAULT_USAGE) as ConsumptionTier,
+    devices: parseDevices(l.devices),
+    region: l.region ?? DEFAULT_REGION,
+  }
+  return getPlan(recommendPlan(consultation)).name
+}
+
+// Merged "Home Details" cell. Each attribute that has a value renders
+// on its own line (icon + short label + value) so empty attributes
+// don't bloat the row. Order matches the original consultation form
+// sections - top-down: type, roof, household, usage, devices.
+const HOME_DETAIL_ITEMS: ReadonlyArray<{
+  key: keyof ConsultationLead
+  icon: typeof House
+  label: string
+}> = [
+  { key: 'house_type',        icon: House,    label: 'Type' },
+  { key: 'roof_type',         icon: Triangle, label: 'Roof' },
+  { key: 'household_size',    icon: Users,    label: 'Household' },
+  { key: 'electricity_usage', icon: Zap,      label: 'Usage' },
+  { key: 'devices',           icon: Plug,     label: 'Devices' },
+]
+
+function HomeDetailsCell({ lead }: { lead: ConsultationLead }) {
+  const present = HOME_DETAIL_ITEMS.filter((item) => lead[item.key])
+  if (present.length === 0) {
+    return <span className="text-uk-slate">-</span>
+  }
+  return (
+    <ul className="space-y-1">
+      {present.map(({ key, icon: Icon, label }) => (
+        <li key={key} className="flex items-center gap-2 text-sm leading-tight">
+          <span title={label} className="inline-flex shrink-0 cursor-default">
+            <Icon
+              className="size-3.5 text-uk-slate shrink-0"
+              strokeWidth={1.75}
+              aria-hidden
+            />
+          </span>
+          <span className="text-uk-navy">{lead[key] as string}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
   if (leads.length === 0) {
     return (
@@ -116,7 +198,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
   }
 
   return (
-    <div className="rounded-2xl border border-uk-line bg-white overflow-hidden">
+    <div className="rounded-2xl border border-uk-line bg-white overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
@@ -125,13 +207,8 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
             <TableHead>Email</TableHead>
             <TableHead>Phone</TableHead>
             <TableHead>Region</TableHead>
-            <TableHead>House type</TableHead>
-            <TableHead>Roof</TableHead>
-            <TableHead>People</TableHead>
-            <TableHead>Usage</TableHead>
-            <TableHead>Devices</TableHead>
+            <TableHead>Home Details</TableHead>
             <TableHead>Plan</TableHead>
-            <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -139,8 +216,8 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
             const name = [l.salutation, l.first_name, l.last_name]
               .filter(Boolean)
               .join(' ')
-            const devices = l.devices ? l.devices : '-'
             const planStatus = computePlanStatus(l)
+            const planName = resolvePlanName(l)
             return (
               <TableRow key={l.id}>
                 <TableCell className="whitespace-nowrap">
@@ -164,25 +241,31 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
                 </TableCell>
                 <TableCell>{l.phone || '-'}</TableCell>
                 <TableCell>{l.region || '-'}</TableCell>
-                <TableCell>{l.house_type || '-'}</TableCell>
-                <TableCell>{l.roof_type || '-'}</TableCell>
-                <TableCell>{l.household_size || '-'}</TableCell>
-                <TableCell>{l.electricity_usage || '-'}</TableCell>
-                <TableCell className="max-w-[12rem] truncate" title={devices}>
-                  {devices}
-                </TableCell>
+                <TableCell><HomeDetailsCell lead={l} /></TableCell>
                 <TableCell>
-                  <Badge
-                    variant={PLAN_STATUS_VARIANT[planStatus]}
-                    title={PLAN_STATUS_TOOLTIP[planStatus]}
-                  >
-                    {PLAN_STATUS_LABEL[planStatus]}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge variant={l.status === 'new' ? 'success' : 'outline'}>
-                    {l.status || 'new'}
-                  </Badge>
+                  <div className="flex flex-col items-start gap-1">
+                    <Badge
+                      variant={PLAN_STATUS_VARIANT[planStatus]}
+                      title={PLAN_STATUS_TOOLTIP[planStatus]}
+                    >
+                      {PLAN_STATUS_LABEL[planStatus]}
+                    </Badge>
+                    {l.plan_token ? (
+                      <a
+                        href={`/my-plan?id=${l.plan_token}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs font-cw-bold text-uk-teal-dark hover:underline leading-tight"
+                      >
+                        {planName}
+                        <ExternalLink className="size-3" strokeWidth={1.75} aria-hidden />
+                      </a>
+                    ) : (
+                      <span className="text-xs font-cw-bold text-uk-navy leading-tight">
+                        {planName}
+                      </span>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             )

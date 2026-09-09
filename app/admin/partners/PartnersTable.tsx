@@ -60,7 +60,7 @@ export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
   }
 
   return (
-    <div className="rounded-2xl border border-uk-line bg-white overflow-hidden">
+    <div className="rounded-2xl border border-uk-line bg-white overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>

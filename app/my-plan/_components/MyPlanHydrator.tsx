@@ -126,7 +126,7 @@ function LoadingSkeleton({ identifier }: { identifier: string }) {
           />
 
           <h1 className="text-3xl lg:text-4xl font-cw-bold text-[#0A1628] mt-6 mb-2">
-            Your Solar Plan
+            Your Initial Solar Plan
           </h1>
           <p className="text-sm text-[#4A5568] mb-4">
             Loading your personalised plan...

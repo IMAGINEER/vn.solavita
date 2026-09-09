@@ -40,7 +40,7 @@ export default function TermsPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            of Solavita UK Ltd · Last updated: August 2026
+            of Solavita UK · Last updated: August 2026
           </motion.p>
 
           <motion.div
@@ -63,7 +63,7 @@ export default function TermsPage() {
             <div>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
                 These Terms of Use govern your use of the Solavita UK website and any related
-                services offered by Solavita UK Ltd ("Solavita", "we", "us"). By accessing or using
+                services offered by Solavita UK ("Solavita", "we", "us"). By accessing or using
                 our website, you agree to be bound by these Terms. If you do not agree, please do
                 not use our website.
               </p>
@@ -72,9 +72,9 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 About us</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Solavita UK Ltd is a company registered in England and Wales (Company No. [TBC]).
+                Solavita UK is a company registered in England and Wales.
                 Our registered office is 130 Wood Street, London EC2V 6DL, United Kingdom.
-                Solavita UK Ltd is a wholly-owned subsidiary of the SKYWORTH Group.
+                Solavita UK is a wholly-owned subsidiary of the SKYWORTH Group.
               </p>
             </div>
 
@@ -124,7 +124,7 @@ export default function TermsPage() {
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 Intellectual property</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 All content on this website - including text, graphics, logos, images and software -
-                is the property of Solavita UK Ltd, the SKYWORTH Group or our licensors, and is
+                is the property of Solavita UK, the SKYWORTH Group or our licensors, and is
                 protected by UK and international copyright laws.
               </p>
             </div>
@@ -157,7 +157,7 @@ export default function TermsPage() {
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: August 2026 · Solavita UK Ltd (registered in England and Wales)
+                Last updated: August 2026 · Solavita UK (registered in England and Wales)
               </p>
               <p className="text-xs text-[#9CA3AF] mt-2">
                 This is a placeholder document for development purposes. Production-grade legal review

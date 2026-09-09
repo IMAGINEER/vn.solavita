@@ -62,7 +62,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    // SSR default is `light-mode` so the very first paint (before any
+    // inline script runs, and even when JS is disabled/blocked) matches
+    // what `.light-mode X` rules expect. Previously `<html>` shipped with
+    // no className; because `:root` itself is dark, browsers would paint
+    // a frame of :root dark before the head script could add `.light-mode`,
+    // producing the "pre-hydration dark mode looks different from the
+    // manually-toggled dark mode" mismatch users reported.
+    //
+    // `suppressHydrationWarning` on <html> is needed because the inline
+    // script below may swap the class before React hydrates.
+    <html lang="en" className="light-mode" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/favicon.ico" />
         <link rel="apple-touch-icon" href="/images/favicon.ico" />
@@ -71,18 +81,18 @@ export default function RootLayout({
            (Article.publisher, WebPage.isPartOf, ...) instead of duplicating
            inline nodes per page. See lib/seo/jsonld.ts for the builders. */}
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
-        {/* Pre-hydration theme bootstrap - must run before React paints to
-           prevent flash-of-dark when the user has light-mode saved (or no
-           preference, which defaults to light for the UK homepage). The
-           source of truth is `document.documentElement` so FloatingButtons
-           can toggle it from one place.
-           Sets the legacy `.light-mode` class so the existing `.light-mode X`
-           overrides keep firing, and (when dark) also sets `.dark` so the
-           new `.dark X` overrides + Tailwind v4 `dark:` utilities activate. */}
+        {/* Pre-hydration theme bootstrap - must run before React paints.
+           SSR ships <html class="light-mode"> as the safe default; this
+           script only flips to `.dark` when the user previously opted in
+           (localStorage.theme === 'dark'). The legacy `.light-mode` class
+           is kept on the element in the light case so existing
+           `.light-mode X` overrides keep firing; when dark, `.dark` is
+           added so the new `.dark X` overrides + Tailwind v4 `dark:`
+           utilities activate. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('theme');if(t==='light'||t===null){document.documentElement.classList.add('light-mode');}else{document.documentElement.classList.add('dark');}}catch(e){}",
+              "try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.remove('light-mode');document.documentElement.classList.add('dark');}}catch(e){}",
           }}
         />
       </head>

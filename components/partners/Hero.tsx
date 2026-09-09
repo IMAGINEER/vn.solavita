@@ -39,7 +39,7 @@ export default function PartnersHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            For installers &amp; dealers
+            For energy partners
           </span>
         </motion.span>
 

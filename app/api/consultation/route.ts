@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       house_type: houseType || null,
       roof_type: roofType || null,
       household_size: householdSize || null,
-      electricity_usage: electricityUsage || null,
+      electricity_usage: electricityUsage === 'unknown' ? null : (electricityUsage || null),
       devices: Array.isArray(devices) ? devices.join(', ') : devices || null,
       // Bump on every write (INSERT or UPDATE) so /admin/leads sort
       // by updated_at DESC bubbles dedup re-submissions to the top.

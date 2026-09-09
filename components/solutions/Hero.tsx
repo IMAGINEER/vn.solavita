@@ -48,7 +48,7 @@ export default function SolutionsHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl"
         >
-          One home. One system.
+          One HOME. One SYSTEM.
           <br />
           <span className="text-gradient">Every source of energy.</span>
         </motion.h1>

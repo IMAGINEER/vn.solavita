@@ -45,10 +45,6 @@ interface MyPlanClientProps {
   planToken: string
 }
 
-const TOAST_DURATION_MS = 2600
-const CONTACT_TOAST =
-  "Thanks - our team will be in touch within 1 business day to discuss your plan."
-
 /**
  * Orchestrator for `/my-plan` (valid-id branch).
  *
@@ -122,26 +118,16 @@ export default function MyPlanClient({
     [plan],
   )
 
-  const [toast, setToast] = useState<string | null>(null)
-
-  // Toast auto-dismiss.
-  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const showToast = useCallback((message: string) => {
-    if (toastTimer.current) clearTimeout(toastTimer.current)
-    setToast(message)
-    toastTimer.current = setTimeout(() => {
-      setToast(null)
-      toastTimer.current = null
-    }, TOAST_DURATION_MS)
-  }, [])
-  useEffect(() => () => {
-    if (toastTimer.current) clearTimeout(toastTimer.current)
-  }, [])
+  // After "Talk to an expert" the 3 CTA surfaces (OfferCard /
+  // PlanSummaryAside / MobileStickyCTA) flip to an inline success
+  // card. No floating toast - the message stays visible until the
+  // customer explicitly returns to the plan.
+  const [contactSubmitted, setContactSubmitted] = useState(false)
 
   const handleContactExpert = useCallback(() => {
     // Fire-and-forget confirm tracking. The endpoint is idempotent and
-    // returns 200 even on invalid tokens, so the user always gets the
-    // toast - the only failure mode is logging.
+    // returns 200 even on invalid tokens, so flipping to the success
+    // card is always safe - the only failure mode is logging.
     if (planToken) {
       void fetch('/api/track/my-plan-confirm', {
         method: 'POST',
@@ -151,8 +137,12 @@ export default function MyPlanClient({
         console.error('[/my-plan] confirm tracking failed:', err)
       })
     }
-    showToast(CONTACT_TOAST)
-  }, [planToken, showToast])
+    setContactSubmitted(true)
+  }, [planToken])
+
+  const handleBackToPlan = useCallback(() => {
+    setContactSubmitted(false)
+  }, [])
 
   // "Edit details" → open the consultation form with the current row
   // pre-filled so the user can tweak fields without re-entering them.
@@ -192,7 +182,7 @@ export default function MyPlanClient({
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-3xl lg:text-4xl font-cw-bold text-[#0A1628] mt-6 mb-2"
           >
-            Your Solar Plan
+            Your Initial Solar Plan
           </motion.h1>
 
           <motion.p
@@ -282,6 +272,8 @@ export default function MyPlanClient({
                 metrics={metrics}
                 systemPriceGbp={plan.priceGbp}
                 onContactExpert={handleContactExpert}
+                submitted={contactSubmitted}
+                onBackToPlan={handleBackToPlan}
               />
             </div>
 
@@ -292,30 +284,22 @@ export default function MyPlanClient({
                   metrics={metrics}
                   systemKw={systemKw}
                   onContactExpert={handleContactExpert}
+                  submitted={contactSubmitted}
+                  onBackToPlan={handleBackToPlan}
                 />
               </div>
             </div>
           </div>
 
-          <MobileStickyCTA onContactExpert={handleContactExpert} />
+          <MobileStickyCTA
+            onContactExpert={handleContactExpert}
+            submitted={contactSubmitted}
+            onBackToPlan={handleBackToPlan}
+          />
         </div>
       </section>
 
       <Footer variant="dark" />
-
-      {/* Toast - fixed bottom-right. Uses bg-uk-teal-dark + text-uk-teal-soft
-          so both light and dark modes render with contrast (the project's
-          light-mode override forces text-white to dark navy on most
-          elements, which would be invisible on a dark teal bg). */}
-      {toast && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="fixed right-6 bottom-24 lg:bottom-6 z-50 bg-uk-teal-dark text-uk-teal-soft text-sm font-cw-regular px-5 py-3 rounded-xl shadow-lg max-w-xs"
-        >
-          {toast}
-        </div>
-      )}
     </main>
   )
 }

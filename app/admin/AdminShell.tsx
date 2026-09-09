@@ -111,12 +111,6 @@ export function AdminShell({
               <LogOut className="size-4" />
               <span className="hidden sm:inline">Sign out</span>
             </button>
-            <Link
-              href="/"
-              className="text-xs text-uk-slate hover:text-uk-teal-dark"
-            >
-              ← Storefront
-            </Link>
           </div>
         </div>
 

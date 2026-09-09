@@ -8,6 +8,7 @@ import Mission from '@/components/about/Mission'
 import Approach from '@/components/about/Approach'
 import Technology from '@/components/about/Technology'
 import GlobalPresence from '@/components/about/GlobalPresence'
+import ContactMethods from '@/components/contact/ContactMethods'
 import CTA from '@/components/solutions/CTA'
 
 /**
@@ -15,13 +16,16 @@ import CTA from '@/components/solutions/CTA'
  *
  * Composition (per project brief):
  *   Hero → Who We Are → Our Mission → Our Approach / Why Solavita →
- *   Technology / Expertise → Global Presence → CTA
+ *   Technology / Expertise → Global Presence → Contact methods (info only) → CTA
  *
  * Per the brief the page must NOT read like a corporate brochure. We
  * keep the same teal/emerald soft surfaces + section badges as the
  * rest of the site, but the copy and structure tell a story (heritage →
- * mission → how we work → proof of engineering → where we operate)
- * rather than listing capabilities.
+ * mission → how we work → proof of engineering → where we operate →
+ * how to reach us) rather than listing capabilities.
+ *
+ * ContactMethods is rendered with `clickable={false}` — on /about-us the
+ * cards are informational, no mailto:/tel:/maps links open from them.
  */
 export default function AboutPage() {
   return (
@@ -39,6 +43,8 @@ export default function AboutPage() {
       <Technology />
 
       <GlobalPresence />
+
+      <ContactMethods clickable={false} />
 
       <CTA
         eyebrow="Ready when you are"

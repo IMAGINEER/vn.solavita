@@ -154,10 +154,7 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
           <p className="mt-3 text-xs text-uk-slate/80">
             30-year figures use the panel degradation curve (year 1 = 100%,
             year 10 ≈ 95.7%, year 30 = 85%) at £0.2632/kWh imported and
-            £0.15/kWh exported. Per-region yield factors live in{' '}
-            <code className="mx-1">_lib/calc.ts</code> · REGION_YIELD_KWH_PER_KWP.
-            Replace the engine constants with the real ROI model before
-            production.
+            £0.15/kWh exported.
           </p>
         </div>
       )}

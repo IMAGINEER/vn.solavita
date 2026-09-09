@@ -25,7 +25,7 @@ export const partnerTypes: PartnerType[] = [
       'UK MCS-certified installers who deliver Solavita systems to homeowners.',
     bullets: [
       'Tier-1 product catalogue',
-      'Two-week install training',
+      'Product and installation training',
       'UK design support team',
       'Lead generation in your region',
     ],

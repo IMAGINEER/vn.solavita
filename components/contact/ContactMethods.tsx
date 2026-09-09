@@ -25,8 +25,12 @@ const iconFor = (icon: ContactChannel['icon']) => {
  * Three contact-method cards (email / phone / office). Mirrors the
  * SupportCategories card primitive and the contact section on the
  * existing /support page so the visual language stays consistent.
+ *
+ * `clickable` toggles whether the cards render as `<a>` (default) or
+ * as plain `<div>`. Used by /about-us, where the section is purely
+ * informational for now — no calls / emails open from the cards.
  */
-export default function ContactMethods() {
+export default function ContactMethods({ clickable = true }: { clickable?: boolean } = {}) {
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -78,28 +82,44 @@ export default function ContactMethods() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {contactChannels.map((c) => (
-            <a
-              key={c.label}
-              href={c.href}
-              className="contact-method-card rounded-2xl p-6 lg:p-8 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col items-start"
-            >
-              <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-5">
-                {iconFor(c.icon)}
+          {contactChannels.map((c) => {
+            const cardClass =
+              'contact-method-card rounded-2xl p-6 lg:p-8 bg-white border border-uk-line flex flex-col items-start ' +
+              (clickable
+                ? 'hover:border-uk-teal/50 hover:shadow-md transition-all'
+                : '')
+            const cardInner = (
+              <>
+                <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-5">
+                  {iconFor(c.icon)}
+                </div>
+                <div className="text-xs font-cw-bold tracking-wider uppercase text-uk-teal-dark">
+                  {c.label}
+                </div>
+                <div className="mt-1 text-xl font-cw-bold text-uk-navy break-all">
+                  {c.value}
+                </div>
+                {c.description && (
+                  <p className="mt-3 text-sm text-uk-slate font-cw-regular leading-relaxed">
+                    {c.description}
+                  </p>
+                )}
+              </>
+            )
+            return clickable ? (
+              <a
+                key={c.label}
+                href={c.href}
+                className={cardClass}
+              >
+                {cardInner}
+              </a>
+            ) : (
+              <div key={c.label} className={cardClass}>
+                {cardInner}
               </div>
-              <div className="text-xs font-cw-bold tracking-wider uppercase text-uk-teal-dark">
-                {c.label}
-              </div>
-              <div className="mt-1 text-xl font-cw-bold text-uk-navy break-all">
-                {c.value}
-              </div>
-              {c.description && (
-                <p className="mt-3 text-sm text-uk-slate font-cw-regular leading-relaxed">
-                  {c.description}
-                </p>
-              )}
-            </a>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
