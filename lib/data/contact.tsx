@@ -5,6 +5,8 @@
  * list drives the three contact-method cards. All copy placeholder.
  */
 
+import type { ReactNode } from 'react'
+
 export type ContactSubjectId =
   | 'general'
   | 'sales'
@@ -56,7 +58,7 @@ export interface ContactChannel {
   label: string
   value: string
   href: string
-  description?: string
+  description?: ReactNode
   icon: 'mail' | 'phone' | 'map-pin'
 }
 
@@ -69,10 +71,23 @@ export const contactChannels: ContactChannel[] = [
     icon: 'mail',
   },
   {
-    label: 'Phone',
-    value: 'Customer Service',
-    href: '#',
-    description: 'Mon-Fri · 09:00-18:00 · UK hours.',
+    label: 'WhatsApp',
+    value: '+44 074 5494 5519',
+    href: 'https://wa.me/4407454945519',
+    description: (
+      <>
+        Tap to chat · Mon-Fri · 09:00-18:00 · UK hours.
+        <br />
+        No WhatsApp?{' '}
+        <a
+          href="tel:+4407454945519"
+          className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
+        >
+          Call directly
+        </a>
+        .
+      </>
+    ),
     icon: 'phone',
   },
   {

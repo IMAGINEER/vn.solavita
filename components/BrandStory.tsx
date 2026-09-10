@@ -97,7 +97,7 @@ export default function BrandStory() {
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed mb-4">
               The SKYWORTH Group is a publicly listed global corporation with over 40,000 employees.
-              Already serving 400 million households worldwide with TVs, appliances and smart-home systems,
+              Already serving 4 million households worldwide with TVs, appliances and smart-home systems,
               SKYWORTH now brings the same engineering quality and supply-chain scale to UK residential solar.
             </p>
             <div className="rounded-xl overflow-hidden border border-uk-line bg-uk-teal-soft">

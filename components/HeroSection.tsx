@@ -153,7 +153,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
 
             <h1
               ref={titleRef}
-              className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white"
+              className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white capitalize"
             >
               {h1[0]}
               <br />

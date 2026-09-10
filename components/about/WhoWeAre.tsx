@@ -118,10 +118,10 @@ export default function WhoWeAre() {
           <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
             <div className="stat-value">
               <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
-                70
+                £7.7
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                bn RMB
+                bn
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
@@ -132,10 +132,10 @@ export default function WhoWeAre() {
           <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
             <div className="stat-value">
               <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
-                400
+                4
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                M
+                Million
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
@@ -229,7 +229,7 @@ export default function WhoWeAre() {
               The SKYWORTH Group is a publicly listed global enterprise
               with more than 40,000 employees. As a manufacturer of
               TVs, refrigerators and smart-home systems, SKYWORTH
-              already serves 400 million households. With Solavita, the
+              already serves 4 million households. With Solavita, the
               group is bringing this expertise to solar energy.
             </p>
           </div>

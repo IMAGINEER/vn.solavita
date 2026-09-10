@@ -58,7 +58,7 @@ export interface CaseStudy {
  * Thirteen representative Solavita installations, ordered 1:1 with
  * public/images/cases/{1..13}.webp. Five Italian sites (Lecce ×3,
  * Udine ×2) reflect the active Italian product lineup. Eight German
- * sites (Wesel / Königstein im Taunus / Francoforte ×3 / Worms /
+ * sites (Wesel / Königstein im Taunus / Frankfurt ×3 / Worms /
  * Düsseldorf / Jesteburg) appear under "Solavita in Europe" as
  * reference installations.
  */
@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'lecce-6kwp-11kwh',
     city: 'Lecce',
-    region: 'Puglia',
+    region: 'Apulia',
     postcode: 'LE',
     country: 'IT',
     systemLabel: '6.56 kWp + 11 kWh + Single-Phase Inverter 6 kW',
@@ -85,7 +85,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'lecce-5kwp-11kwh',
     city: 'Lecce',
-    region: 'Puglia',
+    region: 'Apulia',
     postcode: 'LE',
     country: 'IT',
     systemLabel: '4.92 kWp + 11 kWh + Single-Phase Inverter 5 kW',
@@ -130,7 +130,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'lecce-4kwp-11kwh',
     city: 'Lecce',
-    region: 'Puglia',
+    region: 'Apulia',
     postcode: 'LE',
     country: 'IT',
     systemLabel: '4.1 kWp + 11 kWh + Single-Phase Inverter 5 kW',
@@ -174,45 +174,45 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'francoforte-ibrido-12kw-14kwh',
-    city: 'Francoforte',
+    city: 'Frankfurt',
     region: 'Hessen',
     postcode: 'DE-HE',
     country: 'DE',
     systemLabel: 'Hybrid Inverter 12 kW + 14 kWh',
     systemType: 'Solar + Storage',
-    shortResult: 'Francoforte · Hybrid Inverter 12 kW + 14 kWh · 12,000 kWh/year',
+    shortResult: 'Frankfurt · Hybrid Inverter 12 kW + 14 kWh · 12,000 kWh/year',
     description:
-      'Installation in Frankfurt (Francoforte), Germany. 12 kW hybrid inverter with 14 kWh battery storage.',
+      'Installation in Frankfurt, Germany. 12 kW hybrid inverter with 14 kWh battery storage.',
     annualGeneration: '12,000 kWh',
     annualSaving: '€2,378',
     imagePath: '/images/cases/8.webp',
   },
   {
     slug: 'francoforte-2x-ibrido-10kw-11kwh',
-    city: 'Francoforte',
+    city: 'Frankfurt',
     region: 'Hessen',
     postcode: 'DE-HE',
     country: 'DE',
     systemLabel: '2 × Hybrid Inverter 10 kW + 2 × 11 kWh',
     systemType: 'Solar + Storage',
-    shortResult: 'Francoforte · 2 × Hybrid 10 kW + 2 × 11 kWh · 20,000 kWh/year',
+    shortResult: 'Frankfurt · 2 × Hybrid 10 kW + 2 × 11 kWh · 20,000 kWh/year',
     description:
-      'Installation in Frankfurt (Francoforte), Germany. Two 10 kW hybrid inverters with two 11 kWh battery storage units.',
+      'Installation in Frankfurt, Germany. Two 10 kW hybrid inverters with two 11 kWh battery storage units.',
     annualGeneration: '20,000 kWh',
     annualSaving: '€4,030',
     imagePath: '/images/cases/9.webp',
   },
   {
     slug: 'francoforte-ibrido-10kw-11kwh',
-    city: 'Francoforte',
+    city: 'Frankfurt',
     region: 'Hessen',
     postcode: 'DE-HE',
     country: 'DE',
     systemLabel: 'Hybrid Inverter 10 kW + 11 kWh',
     systemType: 'Solar + Storage',
-    shortResult: 'Francoforte · Hybrid Inverter 10 kW + 11 kWh · 10,000 kWh/year',
+    shortResult: 'Frankfurt · Hybrid Inverter 10 kW + 11 kWh · 10,000 kWh/year',
     description:
-      'Installation in Frankfurt (Francoforte), Germany. 10 kW hybrid inverter with 11 kWh battery storage.',
+      'Installation in Frankfurt, Germany. 10 kW hybrid inverter with 11 kWh battery storage.',
     annualGeneration: '10,000 kWh',
     annualSaving: '€2,015',
     imagePath: '/images/cases/10.webp',

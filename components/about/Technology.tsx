@@ -82,7 +82,7 @@ export default function Technology() {
             <p className="text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
               Every Solavita system is built on Tier-1 components
               engineered by the SKYWORTH Group - the same supply chain
-              that powers 400 million households worldwide with TVs,
+              that powers 4 million households worldwide with TVs,
               appliances and smart-home systems.
             </p>
 

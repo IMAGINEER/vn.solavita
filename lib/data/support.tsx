@@ -6,6 +6,8 @@
  * point when the support team fills in final wording.
  */
 
+import type { ReactNode } from 'react'
+
 export type SupportCategoryId =
   | 'installation'
   | 'product'
@@ -142,7 +144,7 @@ export interface SupportContactChannel {
   label: string
   value: string
   href: string
-  description?: string
+  description?: ReactNode
 }
 
 export const supportContactChannels: SupportContactChannel[] = [
@@ -153,10 +155,23 @@ export const supportContactChannels: SupportContactChannel[] = [
     description: 'Reply within one working day.',
   },
   {
-    label: 'Phone',
-    value: 'Customer Service',
-    href: '#',
-    description: 'Mon-Fri · 09:00-18:00 · UK hours.',
+    label: 'WhatsApp',
+    value: '+44 074 5494 5519',
+    href: 'https://wa.me/4407454945519',
+    description: (
+      <>
+        Tap to chat · Mon-Fri · 09:00-18:00 · UK hours.
+        <br />
+        No WhatsApp?{' '}
+        <a
+          href="tel:+4407454945519"
+          className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
+        >
+          Call directly
+        </a>
+        .
+      </>
+    ),
   },
   {
     label: 'Live chat',

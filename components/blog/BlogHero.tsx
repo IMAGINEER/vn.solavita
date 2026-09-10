@@ -89,7 +89,7 @@ export function BlogHero({
 
         <h1
           id={headingId}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
         >
           {h1}
           {h1Accent && (
