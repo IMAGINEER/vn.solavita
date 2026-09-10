@@ -178,7 +178,9 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
                 <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-5">
                   {iconFor(c.icon)}
                 </div>
-                <div className="text-xs font-cw-bold tracking-wider uppercase text-uk-teal-dark">
+                <div
+                  className={`text-xs font-cw-bold tracking-wider uppercase text-uk-teal-dark${c.label === 'WhatsApp' ? ' normal-case' : ''}`}
+                >
                   {c.label}
                 </div>
                 <div className="mt-1 text-xl font-cw-bold text-uk-navy break-all">
@@ -233,7 +235,7 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
                     href={c.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="-m-6 lg:-m-8 p-6 lg:p-8 rounded-2xl hover:bg-uk-teal-soft/30 transition-colors cursor-pointer flex flex-col items-start text-left w-[calc(100%+3rem)] lg:w-[calc(100%+4rem)]"
+                    className="-m-6 lg:-m-8 p-6 lg:p-8 rounded-2xl transition-colors cursor-pointer flex flex-col items-start text-left w-[calc(100%+3rem)] lg:w-[calc(100%+4rem)]"
                   >
                     {cardTop}
                   </a>
