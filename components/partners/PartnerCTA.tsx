@@ -120,7 +120,7 @@ export default function PartnerCTA() {
               <span className="text-gradient">your business.</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-              We&rsquo;ll get back within two working days with next
+              We’ll get back within two working days with next
               steps - including which partner track fits your business
               best.
             </p>
@@ -140,11 +140,11 @@ export default function PartnerCTA() {
                   <Check className="w-8 h-8" strokeWidth={2.5} />
                 </span>
                 <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
-                  Thanks - we&rsquo;ve got your enquiry.
+                  Thanks - we’ve got your enquiry.
                 </h3>
                 <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
                   Our partnerships team will get back to you within two
-                  working days. If it&rsquo;s urgent, you can reach us
+                  working days. If it’s urgent, you can reach us
                   directly at{' '}
                   <a
                     href="mailto:partners@solavita.com"

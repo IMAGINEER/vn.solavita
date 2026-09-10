@@ -199,7 +199,7 @@ export default function WhoWeAre() {
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
               Solavita is the solar energy brand of the SKYWORTH Group
-              &mdash; one of the world&rsquo;s largest electronics
+              — one of the world’s largest electronics
               companies. Rooted in Germany through Metz, the legendary
               consumer electronics brand from Franconian Zirndorf.
             </p>

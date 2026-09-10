@@ -100,7 +100,7 @@ export const faqItems: FaqItem[] = [
     category: 'product',
     question: 'Are Solavita panels Tier-1?',
     answer:
-      'Yes. We only use Tier-1 monocrystalline modules from manufacturers in BloombergNEF&rsquo;s top tier.',
+      'Yes. We only use Tier-1 monocrystalline modules from manufacturers in BloombergNEF’s top tier.',
   },
   {
     category: 'monitoring',

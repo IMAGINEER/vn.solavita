@@ -59,7 +59,7 @@ export default function ContactHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Sales, support, partnerships or press - pick a topic and we&rsquo;ll
+          Sales, support, partnerships or press - pick a topic and we’ll
           get back to you within one working day.
         </motion.p>
       </div>
