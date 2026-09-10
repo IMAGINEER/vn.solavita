@@ -2,8 +2,8 @@
  * HEMS page data — UK-localised.
  *
  * UK notes on the German-source content:
- *   - `§14a EnWG` (the German grid code) → G100 / ENA Engineering
- *     Recommendation G100 for UK grid services + ENA G98/G100
+ *   - `§14a EnWG` (the German grid code) → G99 / ENA Engineering
+ *     Recommendation G99 for UK grid services + ENA G98/G99
  *     for domestic connections. Compliance still translates to
  *     "automatic grid support at the point of connection" but the
  *     regulatory hook is the GB framework, not the German one.
@@ -92,7 +92,7 @@ export const hemsIntro = {
  *
  * §14a EnWG compliance card — retired per product decision.
  * UK-localised copy was:
- *   title: 'G100 / SEG compliant'
+ *   title: 'G99 / SEG compliant'
  *   body:  'Automatic grid support at the point of connection.
  *           Smart offsetting with the battery keeps your heat pump
  *           and EV charger running at full power — even during a

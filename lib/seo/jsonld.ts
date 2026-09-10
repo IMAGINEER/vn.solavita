@@ -9,6 +9,7 @@
 // `withContext` → `JSON.stringify` for safety.
 
 import type { BlogCategory, BlogPostFull } from '@/lib/types/blog'
+import type { SolutionDetail } from '@/lib/data/solutions'
 import {
   SITE_LOCALE,
   SITE_NAME,
@@ -308,6 +309,57 @@ export function serviceListJsonLd(services: ServiceSpec[]) {
       item: { '@id': absoluteUrl(`/solutions#${s.id}`) },
     })),
   })
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Product - emitted on `/solutions/[slug]/` Amazon-style detail pages.
+
+   Each tier is sold as a delivered installation package, so structurally
+   it would also be a valid `Service`. We emit `Product` here because:
+     - the page is reachable as a deep link (Amazon-style buyable page),
+     - the schema lets Google treat the URL as a stand-alone product
+       entity it can show as a rich result, and
+     - it composes cleanly with the existing `Service` node emitted from
+       the /solutions overview (different @id, no conflict).
+
+   Pricing is intentionally omitted: the marketing surface never shows a
+   hard price. Google tolerates a Product node without `offers`; we let
+   the lead-capture form surface the price after a consultation.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export function productJsonLd(detail: SolutionDetail) {
+  const path = `/solutions/${detail.slug}/`
+  const url = absoluteUrl(path)
+  const images = detail.galleryImages.map((g) => absoluteUrl(g.src))
+  if (!images.includes(absoluteUrl(detail.imagePath))) {
+    images.unshift(absoluteUrl(detail.imagePath))
+  }
+  return withContext(
+    {
+      '@type': 'Product',
+      '@id': url,
+      name: detail.title,
+      description: detail.intro,
+      category: detail.eyebrow,
+      sku: detail.slug,
+      url,
+      image: images,
+      brand: { '@id': ORG_ID },
+      manufacturer: {
+        '@type': 'Organization',
+        name: 'SKYWORTH Group',
+        url: 'https://www.skyworth-pv.com',
+      },
+      // Per-row spec table → schema.org PropertyValue so Google's
+      // "About this product" / specification rich results can pick them up.
+      additionalProperty: detail.specTable.map((row) => ({
+        '@type': 'PropertyValue',
+        name: row.label,
+        value: row.value,
+      })),
+    },
+    url,
+  )
 }
 
 /* ────────────────────────────────────────────────────────────────────────

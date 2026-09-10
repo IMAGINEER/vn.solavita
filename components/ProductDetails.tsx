@@ -70,7 +70,7 @@ const tabContent: Record<string, {
     ],
     highlights: [
       'AFCI 3.0 - AI-assisted active arc-fault detection in real time',
-      'G98 / G100 compliant - fully grid-service ready',
+      'G98 / G99 compliant - fully grid-service ready',
       'SG Ready & EEBUS for heat-pump control',
       'Potential-free contacts for intelligent load control',
       'One-click grid-connection configuration & OTA updates',

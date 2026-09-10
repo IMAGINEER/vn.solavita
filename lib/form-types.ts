@@ -22,6 +22,13 @@ export interface FormData {
   lastName: string
   email: string
   phone: string
+  /**
+   * Free-text tag set when the user opens the modal from a tier detail
+   * page (e.g. "Home Energy Pro") or a similar package context. Never
+   * user-typed in Form.tsx; only seeded via `openFormModal(prefill)` so
+   * it's optional everywhere else.
+   */
+  interestedProduct?: string
 }
 
 /**

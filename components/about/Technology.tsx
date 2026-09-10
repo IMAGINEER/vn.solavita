@@ -15,7 +15,7 @@ const BadgeIcon = ({ className }: { className?: string }) => (
 /**
  * Technology / Expertise - explains the engineering credentials behind
  * Solavita and lists the certifications that matter to UK customers
- * (MCS · G98/G100 · TÜV · ISO).
+ * (MCS · G98/G99 · TÜV · ISO).
  *
  * The right-hand image is the existing product render used on the
  * homepage /solutions section - reusing it keeps the asset catalogue

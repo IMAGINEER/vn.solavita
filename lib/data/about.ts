@@ -73,7 +73,7 @@ export const aboutCertifications: AboutCertification[] = [
     description: 'Approved for the Smart Export Guarantee (SEG).',
   },
   {
-    label: 'G98 / G100',
+    label: 'G98 / G99',
     description: 'Compliant with UK grid connection standards.',
   },
   {
