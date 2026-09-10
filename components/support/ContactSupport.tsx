@@ -182,7 +182,7 @@ export default function ContactSupport() {
                   {iconFor(c.label)}
                 </div>
                 <div
-                  className={`text-xs font-cw-bold tracking-wider uppercase text-uk-teal-dark${c.label === 'WhatsApp' ? ' normal-case' : ''}`}
+                  className={`text-xs font-cw-bold tracking-wider text-uk-teal-dark${c.label === 'WhatsApp' ? '' : ' uppercase'}`}
                 >
                   {c.label}
                 </div>

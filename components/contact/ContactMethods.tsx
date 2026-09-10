@@ -179,7 +179,7 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
                   {iconFor(c.icon)}
                 </div>
                 <div
-                  className={`text-xs font-cw-bold tracking-wider uppercase text-uk-teal-dark${c.label === 'WhatsApp' ? ' normal-case' : ''}`}
+                  className={`text-xs font-cw-bold tracking-wider text-uk-teal-dark${c.label === 'WhatsApp' ? '' : ' uppercase'}`}
                 >
                   {c.label}
                 </div>
