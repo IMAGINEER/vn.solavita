@@ -20,13 +20,14 @@ function getResend(): Resend {
 // Single source of truth for sender address per country. Mirrors the DE repo's
 // table - keep both in sync if Resend approved-domain list changes.
 //
-// `solavita.com` is now verified in Resend for both DE and UK, so both
-// countries send from the brand domain. DE uses a generic `no-reply@`
-// address (single brand); UK keeps a country-specific `uk@` alias so the
-// inbox still routes per-market.
+// `solavita.com` is verified in Resend for both DE and UK, so both
+// countries now send from the same brand-domain `no-reply@` address.
+// (We previously kept a country-specific `uk@` alias so the inbox could
+// route per-market, but Resend's verified-domain model + reply-to rules
+// made the alias redundant and it was retired 2026-09.)
 const FROM_BY_COUNTRY: Record<'de' | 'uk', string> = {
   de: 'Solavita <no-reply@solavita.com>',
-  uk: 'Solavita UK <uk@solavita.com>',
+  uk: 'Solavita <no-reply@solavita.com>',
 }
 
 export async function sendEmail({

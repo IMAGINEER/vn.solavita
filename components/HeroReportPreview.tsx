@@ -47,10 +47,7 @@ import {
   type Plan,
   type PlanRoi,
 } from '@/app/my-plan/_lib/calc'
-import {
-  formatGBP,
-  formatDateEnGB,
-} from '@/app/my-plan/_lib/format'
+import { formatDateEnGB } from '@/app/my-plan/_lib/format'
 
 /* ────────────────────────────────────────────────────────────────────────
    Stage machine
@@ -409,8 +406,12 @@ export default function HeroReportPreview() {
               <div className="hrp-offer">
                 <div>
                   <div className="hrp-offer-eyebrow">YOUR OFFER</div>
+                  {/* Price hidden on the marketing surface — the offer
+                      card now points at the "Talk to an expert →" CTA
+                      instead, matching the no-price pattern used on
+                      /solutions/[slug]/ and the rest of the site. */}
                   <div className="hrp-offer-value">
-                    {formatGBP(metrics.offerPriceGbp)}
+                    Personalised quote
                   </div>
                   <div className="hrp-offer-valid">
                     Valid until {formatDateEnGB(metrics.offerValidUntil)}
