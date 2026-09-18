@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import { Clock, Percent, Shield, Star, Zap } from 'lucide-react'
+import { Clock, PoundSterling, Shield, Star } from 'lucide-react'
 import { openFormModal } from '@/lib/form-modal'
 import type { HeroCopy } from '@/lib/campaigns/types'
 
@@ -105,20 +105,16 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
   const subhead = override?.subhead ?? defaultSubhead
   const ctaLabel = override?.primaryCta.label ?? defaultCtaLabel
 
-  // Figma-aligned 4 trust pills (below the CTAs). Inline SVG icons keep the
+  // Trust pills (below the CTAs). Inline SVG icons keep the
   // visual identical in both light and dark mode.
   const trustPills = [
     {
-      icon: <Percent className="w-4 h-4 text-white" strokeWidth={1.6} />,
+      icon: <PoundSterling className="w-4 h-4 text-white" strokeWidth={1.6} />,
       text: 'Save up to 50%',
     },
     {
       icon: <Clock className="w-4 h-4 text-white" strokeWidth={1.6} />,
       text: 'Installed in 14 days',
-    },
-    {
-      icon: <Zap className="w-4 h-4 text-white" strokeWidth={1.6} />,
-      text: 'Up to 92% energy independence',
     },
     {
       icon: <Shield className="w-4 h-4 text-white" strokeWidth={1.6} />,

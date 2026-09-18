@@ -163,11 +163,11 @@ export default function WhoWeAre() {
                 2
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                Listings
+                Listed
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              Listed (Hong Kong)
+              Companies
             </p>
           </div>
         </div>
