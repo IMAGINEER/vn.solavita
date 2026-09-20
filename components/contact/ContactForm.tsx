@@ -451,8 +451,8 @@ export default function ContactForm() {
                         className="mt-1 w-4 h-4 rounded border-uk-line text-uk-teal focus:ring-uk-teal"
                       />
                       <span className="text-xs text-uk-slate leading-relaxed">
-                        I agree Solavita UK Ltd may contact me about my
-                        enquiry. I have read the{' '}
+                        I agree Solavita Energy UK Limited may contact
+                        me about my enquiry. I have read the{' '}
                         <a
                           href="/privacy"
                           className="text-uk-teal-dark hover:text-uk-teal underline-offset-2 hover:underline"

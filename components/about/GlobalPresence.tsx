@@ -63,7 +63,7 @@ export default function GlobalPresence() {
             <p className="mt-5 text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
               Solavita is the UK residential solar brand of the SKYWORTH
               Group. Your install is delivered by a UK team - backed by
-              the engineering depth and supply-chain scale of a £10bn
+              the engineering depth and supply-chain scale of a £7.7bn
               global group.
             </p>
 

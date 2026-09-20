@@ -13,24 +13,24 @@ export interface AboutStat {
 
 export const aboutStats: AboutStat[] = [
   {
-    value: '10+',
+    value: '80+',
     unit: 'Years',
-    label: 'Of solar expertise for homes',
+    label: 'Of German engineering heritage (Metz)',
   },
   {
-    value: '5,000+',
-    unit: 'homes',
-    label: 'Powered by Solavita systems',
+    value: '4',
+    unit: 'Million',
+    label: 'Households worldwide trust SKYWORTH',
   },
   {
-    value: '70+',
-    unit: 'Years',
-    label: 'Of engineering heritage',
-  },
-  {
-    value: '£10bn',
+    value: '£7.7bn',
     unit: 'Group',
-    label: 'Backed by the SKYWORTH Group',
+    label: 'SKYWORTH Group annual revenue',
+  },
+  {
+    value: '2',
+    unit: 'Listed',
+    label: 'Companies',
   },
 ]
 
@@ -93,7 +93,7 @@ export interface AboutRegion {
 }
 
 export const aboutRegions: AboutRegion[] = [
-  { city: 'London', country: 'United Kingdom', role: 'UK HQ · Service & Support' },
+  { city: 'London', country: 'United Kingdom', role: 'Registered Office · Service & Support' },
   { city: 'Manchester', country: 'United Kingdom', role: 'UK Installations North' },
   { city: 'Shenzhen', country: 'China', role: 'Group HQ · SKYWORTH R&D' },
   { city: 'Stuttgart', country: 'Germany', role: 'European Engineering' },

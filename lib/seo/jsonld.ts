@@ -82,7 +82,7 @@ export function organizationJsonLd() {
       // Registered office from app/terms/PageClient.tsx.
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '130 Wood Street',
+        streetAddress: 'C/O Buzzacott LLP, 130 Wood Street',
         addressLocality: 'London',
         postalCode: 'EC2V 6DL',
         addressCountry: 'GB',

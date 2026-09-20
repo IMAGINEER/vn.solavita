@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Phone, Mail } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -245,7 +245,12 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                <span>Customer Service</span>
+                <a
+                  href="https://wa.me/4407454945519"
+                  className={linkClass}
+                >
+                  +44 074 5494 5519
+                </a>
               </li>
             </ul>
           </div>
@@ -275,8 +280,10 @@ export default function Footer({
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left">
-              © 2026 Solavita UK Ltd · 130 Wood Street, London EC2V 6DL, United
-              Kingdom · A SKYWORTH Group company. All rights reserved.
+              © 2026 Solavita Energy UK Limited · Company No. 17466951 ·
+              Registered in England and Wales · Registered office: C/O
+              Buzzacott LLP, 130 Wood Street, London EC2V 6DL · A SKYWORTH
+              Group company. All rights reserved.
             </p>
             <div
               className="flex items-center gap-2 text-white/50 text-xs font-cw-regular"

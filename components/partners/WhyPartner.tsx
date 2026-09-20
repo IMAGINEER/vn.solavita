@@ -82,7 +82,7 @@ export default function WhyPartner() {
             <span className="text-gradient">with Solavita</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Backing from a £10bn group, deep UK technical support and a
+            Backing from a £7.7bn group, deep UK technical support and a
             partner programme built around long-term relationships.
           </p>
         </div>

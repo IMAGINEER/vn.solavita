@@ -714,7 +714,7 @@ export const whySolavita: WhySolavitaPoint[] = [
   {
     title: 'Backed by SKYWORTH',
     description:
-      'Solavita is the UK residential solar brand of the SKYWORTH Group - a £10bn global electronics company.',
+      'Solavita is the UK residential solar brand of the SKYWORTH Group - a £7.7bn global electronics company.',
   },
   {
     title: '10-year warranty',

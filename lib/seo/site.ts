@@ -9,7 +9,14 @@ export const SITE_NAME = 'Solavita UK'
 export const SITE_LOCALE = 'en_GB'
 export const SITE_BRAND_SHORT = 'Solavita'
 /** Legal entity name (Terms page, footer) - distinct from the marketing brand. */
-export const SITE_LEGAL_NAME = 'Solavita UK Ltd'
+export const SITE_LEGAL_NAME = 'Solavita Energy UK Limited'
+
+/** UK Companies House company number (17466951). */
+export const SITE_COMPANY_NUMBER = '17466951'
+
+/** Registered office address (per Companies House filing). */
+export const SITE_REGISTERED_OFFICE =
+  'C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom'
 
 /** Default share image. Currently reuses the homepage hero render
  * (assets already in repo) as a stand-in until a purpose-built 1200x630

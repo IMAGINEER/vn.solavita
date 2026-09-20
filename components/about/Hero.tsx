@@ -60,8 +60,8 @@ export default function AboutHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Solavita is the UK residential solar brand of the SKYWORTH
-          Group - a £10bn global electronics company bringing 70+ years
-          of engineering to British homes.
+          Group - a £7.7bn global electronics company bringing 80+
+          years of German engineering heritage (Metz) to British homes.
         </motion.p>
       </div>
     </section>

@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita UK Ltd · Last updated: August 2026
+            Solavita Energy UK Limited · Last updated: August 2026
           </motion.p>
 
           <motion.div
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
           >
             <div>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
-                Solavita UK Ltd ("we", "us", "our") is committed to protecting your privacy. This
+                Solavita Energy UK Limited ("we", "us", "our") is committed to protecting your privacy. This
                 Privacy Policy explains how we collect, use, disclose and safeguard your personal
                 data in accordance with the UK General Data Protection Regulation (UK GDPR) and the
                 Data Protection Act 2018.
@@ -72,8 +72,9 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Who we are</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                The data controller is Solavita UK Ltd (registered in England and Wales).
-                Our registered office is 130 Wood Street, London EC2V 6DL, United Kingdom.
+                The data controller is Solavita Energy UK Limited (Company No. 17466951,
+                registered in England and Wales). Our registered office is C/O Buzzacott LLP,
+                130 Wood Street, London EC2V 6DL, United Kingdom.
                 For any data protection queries, email <a href="mailto:uk@solavita.com" className="text-[#0F766E] hover:underline">uk@solavita.com</a>.
               </p>
             </div>
@@ -121,17 +122,27 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">5 Sharing your data</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 We share your data only with carefully selected processors who help us deliver our
-                service: cloud hosting (Supabase, EU region), email (Resend), and our installer
-                network. Each processor is bound by a UK GDPR-compliant data processing agreement.
+                service: cloud hosting and database storage (Supabase, EU region) and email delivery
+                (Resend, Inc., United States — see section 6 on international transfers). Each
+                processor is bound by a UK GDPR-compliant data processing agreement.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Where an installation is allocated to a Solavita-certified installer, we share the
+                contact and property details needed to deliver your installation with that installer
+                under a separate contract between you and the installer. Solavita remains your point
+                of contact and the data controller for that information.
               </p>
             </div>
 
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 International transfers</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Where data is transferred outside the UK (for example, to group companies), we use
+                Some of our processors are located outside the UK. Email delivery is provided by
+                Resend, Inc. (United States). Cloud hosting and database storage are provided by
+                Supabase (EU region). For any transfer of personal data outside the UK, we rely on
                 UK-approved transfer mechanisms such as International Data Transfer Agreements or
-                adequacy regulations in force at the time.
+                adequacy regulations in force at the time, and we carry out a transfer risk
+                assessment for each destination.
               </p>
             </div>
 
@@ -162,11 +173,7 @@ export default function PrivacyPage() {
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: August 2026 · Solavita UK Ltd (registered in England and Wales)
-              </p>
-              <p className="text-xs text-[#9CA3AF] mt-2">
-                This is a placeholder document for development purposes. Production-grade legal review
-                is the responsibility of the operator before going live.
+                Last updated: August 2026 · Solavita Energy UK Limited (Company No. 17466951, registered in England and Wales)
               </p>
             </div>
           </motion.div>

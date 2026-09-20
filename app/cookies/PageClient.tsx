@@ -129,7 +129,7 @@ export default function CookiesPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita UK Ltd · Last updated: August 2026
+            Solavita Energy UK Limited · Last updated: August 2026
           </motion.p>
 
           <motion.div
@@ -151,7 +151,7 @@ export default function CookiesPage() {
           >
             <div>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
-                This Cookie Policy explains how Solavita UK Ltd ("we", "us") uses cookies and similar
+                This Cookie Policy explains how Solavita Energy UK Limited ("we", "us") uses cookies and similar
                 technologies on our website. It should be read alongside our
                 {' '}<a href="/privacy" className="text-[#0F766E] hover:underline">Privacy Policy</a>.
               </p>
@@ -297,11 +297,7 @@ export default function CookiesPage() {
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: August 2026 · Solavita UK Ltd · 130 Wood Street, London EC2V 6DL, United Kingdom (registered in England and Wales)
-              </p>
-              <p className="text-xs text-[#9CA3AF] mt-2">
-                This is a placeholder document for development purposes. Production-grade legal review
-                is the responsibility of the operator before going live.
+                Last updated: August 2026 · Solavita Energy UK Limited (Company No. 17466951) · C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom (registered in England and Wales)
               </p>
             </div>
           </motion.div>

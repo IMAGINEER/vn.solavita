@@ -92,9 +92,9 @@ export const contactChannels: ContactChannel[] = [
   },
   {
     label: 'Office',
-    value: '130 Wood Street, London EC2V 6DL, United Kingdom',
+    value: 'C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom',
     href: 'https://maps.google.com/?q=130+Wood+Street+London+EC2V+6DL',
-    description: 'UK HQ · Service & Support.',
+    description: 'Registered Office · Service & Support.',
     icon: 'map-pin',
   },
 ]
