@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Mail } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
 
 gsap.registerPlugin(ScrollTrigger)
