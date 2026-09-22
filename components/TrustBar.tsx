@@ -52,7 +52,8 @@ export default function TrustBar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center flex-wrap sm:justify-between gap-6 sm:gap-4 overflow-x-auto pb-2 sm:pb-0">
-          {ukTrustItems.map((item, i) => (
+          {ukTrustItems.filter((it) => !it.hidden).map((item, i) => (
+            // eslint-disable-next-line react/no-array-index-key
             <div
               key={i}
               className="flex flex-col items-center min-w-[80px] text-center flex-shrink-0"

@@ -29,6 +29,16 @@ export interface UkTrustItem {
   titleBold?: string
   /** Subtitle (regular weight, single line). */
   subtitle: string
+  /**
+   * Set `true` to hide this item from the TrustBar strip.
+   *
+   * Used to temporarily retire third-party accreditation marks
+   * (MCS / NICEIC / RECC) while business reconciles the claims with
+   * the corresponding contractual evidence. The data row is kept so
+   * the assertion remains auditable in code and can be re-enabled by
+   * flipping the flag - much safer than deleting the entry.
+   */
+  hidden?: boolean
 }
 
 export const ukTrustItems: UkTrustItem[] = [
@@ -46,16 +56,19 @@ export const ukTrustItems: UkTrustItem[] = [
     image: '/images/MCS.png',
     title: 'MCS Certified',
     subtitle: 'Quality installation',
+    hidden: true,
   },
   {
     image: '/images/NICEIC.png',
     title: 'NICEIC Approved',
     subtitle: 'Trusted installers',
+    hidden: true,
   },
   {
     image: '/images/RECC.png',
     title: 'RECC Member',
     subtitle: 'Consumer protection',
+    hidden: true,
   },
   {
     image: '/images/25.png',
