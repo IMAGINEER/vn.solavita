@@ -4,6 +4,7 @@ import JsonLd from '@/components/seo/JsonLd'
 import {
   webPageJsonLd,
   breadcrumbJsonLd,
+  partnerProgramJsonLd,
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
@@ -27,6 +28,7 @@ export default function Page() {
             description:
               'Become a Solavita partner. Installer, energy and business programmes for UK solar and storage projects.',
           }),
+          partnerProgramJsonLd(),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
             { name: 'Partner Programmes', url: '/for-partners' },

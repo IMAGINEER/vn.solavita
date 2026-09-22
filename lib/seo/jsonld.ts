@@ -14,6 +14,7 @@ import {
   SITE_LOCALE,
   SITE_NAME,
   SITE_LEGAL_NAME,
+  DEFAULT_OG_IMAGE,
   absoluteUrl,
 } from './site'
 
@@ -107,6 +108,15 @@ export function organizationJsonLd() {
         name: 'SKYWORTH Group',
         url: 'https://www.skyworth-pv.com',
       },
+      // Headquarters location - only declared because `lib/data/about.ts`
+      // lists "London · United Kingdom" as the UK office. Do NOT add
+      // foundingDate / sameAs / knowsAbout / award here until business
+      // supplies verifiable values - the brand-defining entity is the
+      // single source of truth used by every other page's schema.
+      location: {
+        '@type': 'Place',
+        name: 'London, United Kingdom',
+      },
     },
     ORG_ID,
   )
@@ -173,7 +183,13 @@ export function webPageJsonLd(opts: {
   })
 }
 
-/** AboutPage - extends WebPage, used on `/about-us`. */
+/** AboutPage - extends WebPage, used on `/about-us`.
+ *
+ * `mainEntity` makes Google's entity graph treat the page as the canonical
+ * Solavita UK Organization landing page - useful when an entity exists in
+ * Google's KB but no dedicated `/about` URL has been claimed yet.
+ * `significantLink` points crawlers at the two highest-traffic surfaces
+ * so they get crawled when the about page lands (Hub-and-spoke). */
 export function aboutPageJsonLd(opts: {
   path: string
   name: string
@@ -190,6 +206,8 @@ export function aboutPageJsonLd(opts: {
     isPartOf: { '@id': SITE_ID },
     publisher: { '@id': ORG_ID },
     about: { '@id': ORG_ID },
+    mainEntity: { '@id': ORG_ID },
+    significantLink: [absoluteUrl('/'), absoluteUrl('/solutions/')],
   })
 }
 
@@ -449,4 +467,165 @@ export function categoryJsonLd(category: BlogCategory) {
     description: category.description_en ?? undefined,
     inLanguage: SITE_LOCALE,
   })
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   LocalBusiness - emitted alongside `ContactPage` on `/contact-us/`.
+
+   UK Solavita is a Companies House-registered company (No. 17466951) with a
+   real registered office, so it qualifies as a LocalBusiness entity per
+   Google's entity guidelines. Fields are limited to facts that exist in
+   the codebase - no fabricated geo coordinates, no fake opening hours,
+   no invented telephone.
+
+   `priceRange` is the schema.org token format ("££" = mid-range) and is
+   the only rating-style field safe to emit without real review evidence.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export function localBusinessJsonLd() {
+  const url = `${absoluteUrl('/contact-us/')}#localbusiness`
+  return withContext(
+    {
+      '@type': 'LocalBusiness',
+      '@id': url,
+      name: SITE_LEGAL_NAME,
+      url: absoluteUrl('/'),
+      email: 'mailto:uk@solavita.com',
+      image: absoluteUrl(DEFAULT_OG_IMAGE),
+      priceRange: '££',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'C/O Buzzacott LLP, 130 Wood Street',
+        addressLocality: 'London',
+        postalCode: 'EC2V 6DL',
+        addressCountry: 'GB',
+      },
+      areaServed: { '@type': 'Country', name: 'United Kingdom' },
+      parentOrganization: { '@id': PARENT_ORG_ID },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        email: 'mailto:uk@solavita.com',
+        areaServed: 'GB',
+        availableLanguage: ['en-GB'],
+      },
+    },
+    url,
+  )
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   ItemList of CreativeWork - emitted on `/cases/`.
+
+   Each case is a CreativeWork stub (NOT Article - the detail page is
+   `noindex` so giving it a deep Article node would create a dangling
+   entity). The list helps Google's "site links" panel discover the
+   case studies and gives AI crawlers (Perplexity, ChatGPT) a structured
+   picture of the install portfolio.
+
+   Field budget:
+     - name       : city + system label  (e.g. "London · 4-bedroom")
+     - url        : absolute case URL    (matches sitemap entry)
+     - image      : case thumbnail
+     - encodingFormat on video + text: NO (case detail pages noindex -
+                                         do not create article entities)
+   ──────────────────────────────────────────────────────────────────────── */
+
+export interface CreativeWorkListItem {
+  name: string
+  url: string
+  image: string
+  description: string
+}
+
+export function creativeWorkListJsonLd(items: CreativeWorkListItem[]) {
+  return withContext({
+    '@type': 'ItemList',
+    itemListElement: items.map((it, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: it.name,
+      url: it.url,
+      image: it.image,
+      description: it.description,
+    })),
+  })
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   SoftwareApplication - emitted on `/hems/`.
+
+   HEMS (Home Energy Management System) is Solavita's mobile/web app for
+   monitoring solar + battery + EV charging. Schema.org's SoftwareApplication
+   is the right fit: it composes with the existing `Service` node (different
+   @id) and lets Google's app panels recognise the product.
+
+   Pricing: HEMS is bundled free with every Solavita system. We emit
+   `offers.price = 0` only when the codebase confirms "free" - otherwise
+   the field is omitted to avoid fabricating a price.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export interface SoftwareAppFeatures {
+  name: string
+  featureList: string[]
+  /** Only pass when the codebase confirms the app is free. */
+  free?: boolean
+}
+
+export function softwareApplicationJsonLd(opts: SoftwareAppFeatures) {
+  const url = absoluteUrl('/hems/')
+  const node: Record<string, unknown> = {
+    '@type': 'SoftwareApplication',
+    '@id': url,
+    name: opts.name,
+    url,
+    applicationCategory: 'UtilitiesApplication',
+    applicationSubCategory: 'Home Energy Management System',
+    operatingSystem: 'iOS, Android, Web',
+    publisher: { '@id': ORG_ID },
+    featureList: opts.featureList.join(', '),
+  }
+  if (opts.free) {
+    node.offers = {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'GBP',
+    }
+  }
+  return withContext(node, url)
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   PartnerProgram - emitted on `/for-partners/`.
+
+   Conservative WebPage extension - declares the page is the canonical
+   place for B2B partnership information without fabricating specific
+   JobPosting nodes (no concrete openings) or Organization.member
+   relationships (no real partner registry in the codebase).
+   ──────────────────────────────────────────────────────────────────────── */
+
+export function partnerProgramJsonLd() {
+  const url = absoluteUrl('/for-partners/')
+  return withContext(
+    {
+      '@type': 'WebPage',
+      '@id': url,
+      url,
+      name: 'For Partners · Solavita UK',
+      description:
+        'Installer, reseller and energy-partner programmes backed by the SKYWORTH Group.',
+      inLanguage: SITE_LOCALE,
+      isPartOf: { '@id': SITE_ID },
+      publisher: { '@id': ORG_ID },
+      mainEntity: {
+        '@type': 'Service',
+        name: 'Solavita Partner Programme',
+        serviceType: 'B2B partnership',
+        provider: { '@id': ORG_ID },
+        areaServed: { '@type': 'Country', name: 'United Kingdom' },
+      },
+      about: { '@id': ORG_ID },
+    },
+    url,
+  )
 }
