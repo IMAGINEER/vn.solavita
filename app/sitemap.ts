@@ -8,6 +8,7 @@
 
 import type { MetadataRoute } from 'next'
 import { listAllPublishedForSitemap, getCategories } from '@/lib/data/blog'
+import { solutionDetails } from '@/lib/data/solutions'
 import { SITE_URL, absoluteUrl } from '@/lib/seo/site'
 
 export const dynamic = 'force-dynamic'
@@ -43,6 +44,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: s.priority,
   }))
 
+  // Solution detail pages (Amazon-style tier pages).
+  // Each tier ships as a Product schema on its detail page so it makes
+  // sense to also surface it here at the same priority as the overview
+  // (/solutions is 0.9; tier pages are 0.7 - one level deeper so we
+  // trim accordingly). They are kept out of the static array above so
+  // the list is a single source of truth derived from `solutionDetails`.
+  for (const detail of solutionDetails) {
+    entries.push({
+      url: absoluteUrl(`/solutions/${detail.slug}/`),
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    })
+  }
+
   try {
     const [categories, posts] = await Promise.all([
       getCategories(),
@@ -73,8 +89,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch (err) {
     // Don't fail the whole sitemap if Supabase is hiccupping - static
-    // routes still serve.
-    console.error('sitemap blog fetch failed:', err)
+    // routes still serve. Surface a clearly-tagged error so it can be
+    // alerted on in Netlify build logs / log drain - the previous
+    // bare `console.error` was easy to miss among build noise.
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error(
+      `[sitemap] blog fetch failed - serving ${entries.length} static + solution entries. Error: ${msg}`,
+    )
   }
 
   // Case-study detail pages are intentionally NOT listed here. The 13
