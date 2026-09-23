@@ -46,7 +46,7 @@ declare global {
  */
 
 const STORAGE_KEY = 'cookie_consent'
-const GA_ID = 'G-E43GY2X7Z3'
+const GA_ID = 'G-4RM6FL7E37'
 
 /** Read `analytics` consent without doing any I/O beyond localStorage. */
 function readAnalyticsConsent(): boolean {
