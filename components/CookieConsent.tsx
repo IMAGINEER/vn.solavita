@@ -11,6 +11,25 @@ interface ConsentState {
   marketing: boolean
 }
 
+/**
+ * Event name for the same-tab consent broadcast.
+ *
+ * Consumed by `GoogleAnalyticsConsent` (and any future consent-gated
+ * third party) so they can react to a banner click with zero polling.
+ * The `storage` event covers the cross-tab case but does NOT fire on
+ * the originating tab, which is why this CustomEvent exists.
+ *
+ * The detail payload is the full `ConsentState` so listeners don't
+ * need to re-read localStorage to act on the change.
+ */
+export const CONSENT_CHANGE_EVENT = 'solavita:consent-change'
+
+declare global {
+  interface WindowEventMap {
+    'solavita:consent-change': CustomEvent<ConsentState>
+  }
+}
+
 function persist(next: ConsentState, value: 'accepted' | 'rejected') {
   if (typeof window === 'undefined') return
   window.localStorage.setItem(
@@ -20,6 +39,15 @@ function persist(next: ConsentState, value: 'accepted' | 'rejected') {
       analytics: next.analytics,
       marketing: next.marketing,
     })
+  )
+  // Same-tab broadcast for consent-gated loaders (e.g. GA4). The
+  // `storage` event does NOT fire in the originating tab, so consumers
+  // that need instant reaction to a banner click listen for this event.
+  // Cross-tab updates still rely on the `storage` event in the loader.
+  // `CONSENT_CHANGE_EVENT` is exported so other modules can typecheck
+  // their `addEventListener` payload against `ConsentState`.
+  window.dispatchEvent(
+    new CustomEvent<ConsentState>(CONSENT_CHANGE_EVENT, { detail: next })
   )
 }
 

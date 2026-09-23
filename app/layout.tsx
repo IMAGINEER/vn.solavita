@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import ClientOnlyCookieConsent from '@/components/ClientOnlyCookieConsent'
+import GoogleAnalyticsConsent from '@/components/GoogleAnalyticsConsent'
 import JsonLd from '@/components/seo/JsonLd'
 import { SITE_URL } from '@/lib/seo/site'
 import {
@@ -99,6 +100,14 @@ export default function RootLayout({
       <body className="antialiased" suppressHydrationWarning>
         {children}
         <ClientOnlyCookieConsent />
+        {/*
+          GA4 fires only after the user accepts "analytics" cookies.
+          See components/GoogleAnalyticsConsent.tsx for the PECR-
+          compliant consent-gate pattern. Must be the LAST child of
+          <body> so the loader's effect runs after CookieConsent
+          mounts and reads the latest localStorage state.
+        */}
+        <GoogleAnalyticsConsent />
       </body>
     </html>
   )
