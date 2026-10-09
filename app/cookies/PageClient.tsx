@@ -342,18 +342,32 @@ function ConsentRow({
         aria-label={`${title} cookies`}
         disabled={disabled}
         onClick={() => onChange?.(!checked)}
+        // Bg colour + knob position are applied via inline `style` so
+        // they're immune to: (a) the parent <motion.div> animating a
+        // y-translate on mount, (b) the browser's default disabled-state
+        // CSS resets on <button>, and (c) any Tailwind class-priority
+        // surprise (e.g. `opacity-60` shifting selector specificity
+        // under arbitrary `bg-[…]` values). Only structural / cursor
+        // rules live in the className.
         className={
-          'relative mt-0.5 h-6 w-11 flex-none rounded-full transition-colors ' +
-          (checked ? 'bg-[#0F766E]' : 'bg-[#0A1628]/20') +
-          (disabled ? ' opacity-60 cursor-not-allowed' : '')
+          'relative shrink-0 mt-0.5 h-6 w-11 rounded-full transition-colors duration-200 ' +
+          (disabled ? 'opacity-60 cursor-not-allowed ' : '')
         }
+        style={{
+          backgroundColor: checked ? '#0F766E' : 'rgba(10, 22, 40, 0.20)',
+        }}
       >
         <span
           aria-hidden
-          className={
-            'absolute top-0.5 h-5 w-5 bg-white rounded-full shadow transition-transform ' +
-            (checked ? 'translate-x-5' : 'translate-x-0.5')
-          }
+          // `left-0.5` is the static base; `translateX(20px)` slides the
+          // knob to the right when checked. Using inline `transform`
+          // guarantees the same value renders for enabled AND disabled
+          // toggles (the previous `translate-x-5` / `translate-x-0.5`
+          // class swap was rendering the disabled "on" toggle in the
+          // off position for some users — likely a disabled-button
+          // transform-stacking quirk in their browser).
+          className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform duration-200 ease-out"
+          style={{ transform: checked ? 'translateX(20px)' : 'translateX(0)' }}
         />
       </button>
     </li>

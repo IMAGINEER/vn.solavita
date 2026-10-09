@@ -180,10 +180,11 @@ export default function Footer({
             <p className="text-white/70 text-sm font-cw-regular leading-snug mb-3">
               Vital Energy <span className="font-cw-bold">Vital Life!</span>
             </p>
-            <p className="text-white/70 text-sm font-cw-regular leading-relaxed mb-6 max-w-xs">
+            <p className="text-white/70 text-sm font-cw-regular leading-relaxed mb-6 max-w-sm">
               A SKYWORTH Group company.
-              Clean energy for every UK home - as easy as any household
-              appliance.
+              Company No. 17466951 · Registered in England and Wales ·
+              Registered office: C/O Buzzacott LLP, 130 Wood Street,
+              London EC2V 6DL.
             </p>
           </div>
 
@@ -287,13 +288,10 @@ export default function Footer({
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left">
-              © 2026 Solavita Energy UK Limited · Company No. 17466951 ·
-              Registered in England and Wales · Registered office: C/O
-              Buzzacott LLP, 130 Wood Street, London EC2V 6DL · A SKYWORTH
-              Group company. All rights reserved.
+              © 2026 Solavita Energy UK Limited. All rights reserved.
             </p>
             <div
-              className="flex items-center gap-2 text-white/50 text-xs font-cw-regular"
+              className="flex items-center gap-2 text-white/50 text-xs font-cw-regular whitespace-nowrap"
               aria-label="Locale: United Kingdom, English"
             >
               <FlagUK className="w-5 h-3.5 border border-white/20" />
