@@ -170,9 +170,16 @@ export default function Footer({
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-10 lg:gap-8">
           {/* ── Brand column (full row on mobile/tablet; col-span-2 on xl) ── */}
           <div className="col-span-2 md:col-span-4 xl:col-span-2 footer-col">
-            <div className="mb-6">
+            <div className="mb-3">
               <img src={logoSrc} alt={logoAlt} className="h-8 w-auto" />
             </div>
+            {/* Brand slogan — sits directly under the logo, before the
+               long-form description. Same tone as the surrounding body
+               text; "Vital Life!" is bolded so the call-to-action tail
+               lands harder than the prefix. */}
+            <p className="text-white/70 text-sm font-cw-regular leading-snug mb-3">
+              Vital Energy <span className="font-cw-bold">Vital Life!</span>
+            </p>
             <p className="text-white/70 text-sm font-cw-regular leading-relaxed mb-6 max-w-xs">
               A SKYWORTH Group company.
               Clean energy for every UK home - as easy as any household

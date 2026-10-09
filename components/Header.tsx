@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { Check, ChevronDown, ChevronLeft } from 'lucide-react'
 import { ukProducts } from '@/lib/data/uk-products'
 import { PRODUCT_TO_SOLUTION_ANCHOR } from '@/lib/data/solutions'
+import { openFormModal } from '@/lib/form-modal'
 
 export interface HeaderNavItem {
   label: string
@@ -307,6 +308,25 @@ export default function Header({
                             </a>
                             )
                           })}
+
+                          {/* Footer CTA — full-width gradient button.
+                              Inherits the parent's `gap-3` so it sits the
+                              same 12 px below the last card as the cards
+                              sit from each other. Closes the panel
+                              first, then dispatches the same openFormModal
+                              event the HeroSection / Footer CTAs use, so
+                              the form modal opens from whichever page
+                              hosts it. */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSolutionsOpen(false)
+                              openFormModal()
+                            }}
+                            className="btn-gradient w-full mt-1 px-5 py-3 rounded-full text-sm font-cw-bold text-white cursor-pointer"
+                          >
+                            Get Your Free Plan →
+                          </button>
                         </div>
                       </div>
                     </div>

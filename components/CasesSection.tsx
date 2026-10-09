@@ -129,7 +129,7 @@ export default function CasesSection() {
                     <span className="text-xs">Annual Saving</span>
                   </div>
                   <span className="font-cw-bold text-uk-emerald tabular-nums">
-                    {c.annualSaving}
+                    {c.annualSavingGbp ?? c.annualSaving}
                   </span>
                 </div>
               </div>

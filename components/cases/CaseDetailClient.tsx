@@ -186,7 +186,7 @@ export default function CaseDetailClient({
                       </span>
                     </div>
                     <div className="mt-3 text-2xl font-cw-bold text-uk-emerald tabular-nums">
-                      {c.annualSaving}
+                      {c.annualSavingGbp ?? c.annualSaving}
                     </div>
                   </div>
                 )}

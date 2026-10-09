@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
   const title = `Solavita installation in ${c.city} · ${c.systemLabel}`
-  const description = `${c.description} ${c.annualGeneration ? `Annual generation ${c.annualGeneration}.` : ''} ${c.annualSaving ? `Annual saving ${c.annualSaving}.` : ''}`.trim()
+  const description = `${c.description} ${c.annualGeneration ? `Annual generation ${c.annualGeneration}.` : ''} ${c.annualSavingGbp ?? c.annualSaving ? `Annual saving ${c.annualSavingGbp ?? c.annualSaving}.` : ''}`.trim()
   // SEO (2026-09): the 13 IT/DE reference cases duplicate content that
   // lives canonically on it.solavita.com / de.solavita.com. Marking
   // these detail pages `noindex, follow` stops Google from treating

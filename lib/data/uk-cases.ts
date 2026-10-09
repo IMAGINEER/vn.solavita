@@ -11,13 +11,16 @@
  *     `featuredTestimonial.quote`, plus any user-facing label that is
  *     prose ("anno" → "year", "Italia" → "Italy", etc.).
  *   - DO NOT change: `slug`, `city`, `region`, `postcode`, `country`,
- *     `annualGeneration`, `annualSaving`, `imagePath`, `systemType`.
- *     Those are the facts.
+ *     `annualGeneration`, `annualSaving` (EUR source), `imagePath`,
+ *     `systemType`. Those are the facts.
  *
- * Currency stays `€` (the installations are in Italy and Germany);
- * thousands stay `1.234` (IT/DE locale). Country stays `IT` / `DE`.
- * The UK's own £ / comma / GB apply only to new UK-native cases, of
- * which there are none in this set.
+ * Currency: `annualSaving` stays in € (the installs are in IT/DE —
+ * these are the real savings reported on-site). The UK UI displays
+ * a GBP-equivalent figure via the derived `annualSavingGbp` field,
+ * converted once at module load from `EUR_TO_GBP_PLACEHOLDER` below.
+ * Thousands stay `1.234` (IT/DE locale) on the EUR source. Country
+ * stays `IT` / `DE`. The UK's own £ / comma / GB apply to new
+ * UK-native cases, of which there are none in this set.
  *
  * Image assets: every entry maps 1:1 to public/images/cases/{1..13}.webp.
  */
@@ -48,10 +51,75 @@ export interface CaseStudy {
   imagePath: string
   /** Annual generation figure - fact, kept in IT/DE thousands format. */
   annualGeneration?: string
-  /** Annual saving figure - fact, kept in € (IT/DE sites). */
+  /** Annual saving figure - EUR source, kept as `€1,809`-style IT/DE
+   *  locale string. UI surfaces read `annualSavingGbp` (derived) so
+   *  the on-page figure is in £; this field stays untouched as the
+   *  source of truth. */
   annualSaving?: string
+  /** UK-display saving - derived from `annualSaving` × `EUR_TO_GBP_PLACEHOLDER`
+   *  at module load. UI consumers should read THIS field, falling back
+   *  to `annualSaving` when the source is empty or unparseable. For
+   *  future UK-native cases, the author can skip the EUR source and
+   *  fill this field directly with a `£1,xxx` string. */
+  annualSavingGbp?: string
   /** ISO-3166-1 alpha-2 country code of the installation (IT or DE). */
   country: 'IT' | 'DE'
+}
+
+// ── EUR → GBP conversion (UK display) ────────────────────────────────────
+//
+// `annualSaving` is the EUR source-of-truth string from the IT/DE install
+// reports. The UK UI never shows € to the user — it shows the GBP
+// equivalent via the derived `annualSavingGbp` field, filled in once at
+// module load from a single rate constant.
+//
+// Why a single constant (not a per-call conversion):
+//   - One edit updates every surface (grid card, detail page, meta
+//     description, future hero card, etc.) in lock-step.
+//   - The EUR source string is preserved on every case, so reverting
+//     to EUR display (e.g. if finance rejects a placeholder rate, or
+//     the project moves to a different conversion policy) is a one-line
+//     change at the consumer sites plus a removal of this section.
+//
+// PLACEHOLDER RATE: 0.85 EUR → GBP. Awaiting finance sign-off. Once the
+// business confirms a real rate (or a 30-day rolling average), update
+// the constant below — no other file needs to change.
+//
+// Initial conversion: 2026-10-09.
+const EUR_TO_GBP_PLACEHOLDER = 0.85
+
+/** Parse a EUR display string and convert to a UK-locale `£N,NNN` string.
+ *  Returns undefined when the input is empty or unparseable.
+ *
+ *  Three accepted shapes (in order of detection):
+ *    1. English-style thousands:  `1,809`  /  `12,345,678`     → 1809
+ *    2. IT/DE thousands+decimal:  `1.234,56` (`.` = thousands, `,` = decimal)
+ *    3. Plain decimal:            `1234.56` or single-comma form
+ *
+ *  Today all 13 source strings in this file are shape #1 (the data
+ *  uses English-style thousands despite the IT/DE country codes — a
+ *  holdover from how the figures were originally written). The other
+ *  shapes are here for any future EUR source with a fractional part. */
+function eurStringToGbpString(eur: string | undefined): string | undefined {
+  if (!eur) return undefined
+  const match = eur.match(/€\s*([\d][\d.,\s]*)/)
+  if (!match) return undefined
+  const s = match[1].replace(/\s/g, '')
+
+  let numeric: number
+  if (/^\d{1,3}(,\d{3})+$/.test(s)) {
+    // Shape #1: English thousands (`,` only, no decimal)
+    numeric = Number(s.replace(/,/g, ''))
+  } else if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) {
+    // Shape #2: IT/DE thousands + decimal
+    numeric = Number(s.replace(/\./g, '').replace(',', '.'))
+  } else {
+    // Shape #3: plain decimal (or fall-through)
+    numeric = Number(s.replace(',', '.'))
+  }
+
+  if (!Number.isFinite(numeric)) return undefined
+  return `£${Math.round(numeric * EUR_TO_GBP_PLACEHOLDER).toLocaleString('en-GB')}`
 }
 
 /**
@@ -61,8 +129,12 @@ export interface CaseStudy {
  * sites (Wesel / Königstein im Taunus / Frankfurt ×3 / Worms /
  * Düsseldorf / Jesteburg) appear under "Solavita in Europe" as
  * reference installations.
+ *
+ * Source list — `annualSaving` here is the raw EUR string. The exported
+ * `caseStudies` below is the post-mapped version with `annualSavingGbp`
+ * derived from the EUR_TO_GBP_PLACEHOLDER rate.
  */
-export const caseStudies: CaseStudy[] = [
+const rawCases: Omit<CaseStudy, 'annualSavingGbp'>[] = [
   // ─── Real-install photoset · 1.webp..13.webp ────────────────────────
   // Each entry maps 1:1 to public/images/cases/{N}.webp. Order is the
   // displayed order on /cases.
@@ -263,6 +335,14 @@ export const caseStudies: CaseStudy[] = [
     imagePath: '/images/cases/13.webp',
   },
 ]
+
+/** Derived list with `annualSavingGbp` filled in from the EUR source.
+ *  Consumers (grid card, detail page, CasesSection, meta description)
+ *  read `caseStudies`, not `rawCases`. */
+export const caseStudies: CaseStudy[] = rawCases.map((c) => ({
+  ...c,
+  annualSavingGbp: eurStringToGbpString(c.annualSaving),
+}))
 
 /** Lookup a single case by slug. Used by /cases/[slug] page.tsx and
  *  the sitemap builder. Returns undefined when the slug doesn't match

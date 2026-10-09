@@ -344,7 +344,7 @@ function ConsentRow({
         onClick={() => onChange?.(!checked)}
         className={
           'relative mt-0.5 h-6 w-11 flex-none rounded-full transition-colors ' +
-          (checked ? 'bg-[#0F766E]' : 'bg-[#0A1628]/15') +
+          (checked ? 'bg-[#0F766E]' : 'bg-[#0A1628]/20') +
           (disabled ? ' opacity-60 cursor-not-allowed' : '')
         }
       >

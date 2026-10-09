@@ -80,7 +80,7 @@ export default function CaseStudyCard({
                 <span className="text-xs">Annual Saving</span>
               </div>
               <span className="font-cw-bold text-uk-emerald tabular-nums">
-                {caseStudy.annualSaving}
+                {caseStudy.annualSavingGbp ?? caseStudy.annualSaving}
               </span>
             </div>
           )}
