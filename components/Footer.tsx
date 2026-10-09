@@ -170,21 +170,17 @@ export default function Footer({
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-10 lg:gap-8">
           {/* ── Brand column (full row on mobile/tablet; col-span-2 on xl) ── */}
           <div className="col-span-2 md:col-span-4 xl:col-span-2 footer-col">
-            <div className="mb-3">
+            <div className="mb-4">
               <img src={logoSrc} alt={logoAlt} className="h-8 w-auto" />
             </div>
-            {/* Brand slogan — sits directly under the logo, before the
-               long-form description. Same tone as the surrounding body
-               text; "Vital Life!" is bolded so the call-to-action tail
-               lands harder than the prefix. */}
-            <p className="text-white/70 text-sm font-cw-regular leading-snug mb-3">
+            {/* Brand slogan — sits directly under the logo. Same tone
+               as the surrounding body text; "Vital Life!" is bolded so
+               the call-to-action tail lands harder than the prefix.
+               Legal/compliance copy (company number, registered office,
+               etc.) lives in the legal block at the very bottom of the
+               footer, not in the brand column. */}
+            <p className="text-white/70 text-sm font-cw-regular leading-snug">
               Vital Energy <span className="font-cw-bold">Vital Life!</span>
-            </p>
-            <p className="text-white/70 text-sm font-cw-regular leading-relaxed mb-6 max-w-sm">
-              A SKYWORTH Group company.
-              Company No. 17466951 · Registered in England and Wales ·
-              Registered office: C/O Buzzacott LLP, 130 Wood Street,
-              London EC2V 6DL.
             </p>
           </div>
 
@@ -286,18 +282,39 @@ export default function Footer({
       {/* ───── Sub-footer: copyright + UK locale ───── */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-            <p className="text-white/50 text-xs font-cw-regular text-center md:text-left">
-              © 2026 Solavita Energy UK Limited. All rights reserved.
+          {/* The copyright paragraph can grow long ("© 2026 ... All
+              rights reserved."); letting it claim flex-1 with min-w-0
+              means it wraps inside the available space instead of
+              shoving the locale row off the right edge. The locale
+              row is `shrink-0` so the flag + label always render at
+              their natural width — they never compress or break. */}
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
+            <p className="text-white/50 text-xs font-cw-regular text-center md:text-left min-w-0 flex-1">
+              © 2026 Solavita Energy UK Limited. A SKYWORTH Group
+              company. All rights reserved.
             </p>
             <div
-              className="flex items-center gap-2 text-white/50 text-xs font-cw-regular whitespace-nowrap"
+              className="flex items-center gap-2 text-white/50 text-xs font-cw-regular shrink-0 self-center md:self-auto"
               aria-label="Locale: United Kingdom, English"
             >
               <FlagUK className="w-5 h-3.5 border border-white/20" />
               <span>United Kingdom · English</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* ───── Legal block (very bottom) ─────
+          Each clause on its own line, smallest / quietest text in the
+          footer. Source-of-truth legal copy that the cookies/privacy
+          pages also reference — keep in sync if any line changes. */}
+      <div className="max-w-7xl mx-auto px-6 pb-6">
+        <div className="text-white/40 text-[11px] font-cw-regular leading-relaxed">
+          A SKYWORTH Group company.
+          Company No. 17466951
+          Registered in England and Wales
+          Registered office: C/O Buzzacott LLP, 130 Wood Street,
+          London EC2V 6DL
         </div>
       </div>
 
