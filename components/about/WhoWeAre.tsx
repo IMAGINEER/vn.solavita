@@ -83,7 +83,7 @@ export default function WhoWeAre() {
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             <span className="text-uk-teal">Global Strength.</span>{' '}
-            European Roots.
+            Nigerian Roots.
           </h2>
         </div>
 
@@ -199,9 +199,9 @@ export default function WhoWeAre() {
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
               Solavita is the solar energy brand of the SKYWORTH Group
-              — one of the world’s largest electronics
-              companies. Rooted in Germany through Metz, the legendary
-              consumer electronics brand from Franconian Zirndorf.
+              — a global electronics group with engineering heritage
+              rooted in Germany through Metz, the legendary consumer
+              electronics brand from Franconian Zirndorf.
             </p>
           </div>
 
@@ -226,11 +226,11 @@ export default function WhoWeAre() {
               </div>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
-              The SKYWORTH Group is a publicly listed global enterprise
-              with more than 40,000 employees. As a manufacturer of
-              TVs, refrigerators and smart-home systems, SKYWORTH
-              already serves 4 million households. With Solavita, the
-              group is bringing this expertise to solar energy.
+              The SKYWORTH Group is a publicly listed global electronics
+              enterprise — manufacturer of TVs, refrigerators and
+              smart-home systems sold worldwide. With Solavita, the
+              group is bringing this manufacturing depth to Nigerian
+              households and small businesses.
             </p>
           </div>
         </div>

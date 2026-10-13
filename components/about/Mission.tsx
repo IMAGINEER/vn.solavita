@@ -47,11 +47,11 @@ export default function Mission() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Our UK mission
+            Our Nigerian mission
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Clean energy{' '}
-            <span className="text-gradient">for every UK home.</span>
+            Reliable power{' '}
+            <span className="text-gradient">for every Nigerian home.</span>
           </h2>
         </div>
 
@@ -62,9 +62,9 @@ export default function Mission() {
             </div>
             <h3 className="text-2xl font-cw-bold text-uk-navy">Mission</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
-              To make solar, storage and smart home energy as easy to buy
-              and live with as any other household appliance - installed
-              in two weeks, supported for life.
+              To give Nigerian homes a stable, clean alternative to fuel
+              generators — solar panels and battery storage sized to the
+              appliances and backup priorities of each household.
             </p>
           </div>
 
@@ -74,9 +74,10 @@ export default function Mission() {
             </div>
             <h3 className="text-2xl font-cw-bold text-uk-navy">Vision</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
-              A UK where every home generates, stores and manages its own
-              clean energy - and Solavita is the brand that made it
-              possible at scale.
+              A Nigeria where every home generates, stores and manages
+              its own clean energy — reducing reliance on petrol and
+              diesel generators, with Solavita as a long-term local
+              partner.
             </p>
           </div>
         </div>

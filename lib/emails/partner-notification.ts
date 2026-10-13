@@ -3,7 +3,7 @@
  * someone submits /for-partners.
  */
 
-const TEAM_EMAIL = 'uk@solavita.com'
+const TEAM_EMAIL = 'TBD — Verified Nigerian partner email'
 
 const TRACK_LABEL: Record<string, string> = {
   installer: 'Installer',
@@ -24,7 +24,7 @@ export function partnerNotificationEmail(data: {
   const track = trackLabel(data.partnerTrack)
 
   return {
-    subject: `[UK Partner] ${track} enquiry - ${data.company}`,
+    subject: `[NG Partner] ${track} enquiry - ${data.company}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -35,7 +35,7 @@ export function partnerNotificationEmail(data: {
 <!-- Header -->
 <tr><td style="background: linear-gradient(135deg, #0f766e 0%, #10b981 100%); padding:20px 32px;">
 <h1 style="margin:0; font-size:18px; color:#ffffff; font-weight:700;">New partnership enquiry</h1>
-<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">uk.solavita.com/for-partners → ${TEAM_EMAIL}</p>
+<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">ng.solavita.com/for-partners → ${TEAM_EMAIL}</p>
 </td></tr>
 
 <!-- Body -->

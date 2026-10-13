@@ -119,7 +119,7 @@ export default function ArticlesSection() {
             href="#learn"
             className="inline-flex items-center gap-2 text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors"
           >
-            Browse All Articles →
+            Browse All Articles
           </a>
         </div>
       </div>

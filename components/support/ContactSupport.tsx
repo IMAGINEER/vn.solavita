@@ -71,7 +71,7 @@ function rawAddress(href: string): string {
  * (rounded-2xl · uk-line border · teal hover).
  *
  * Email cards use the same clipboard + toast fallback as the /contact
- * page so clicking `uk@solavita.com` always gives the user feedback
+ * page so clicking `ng@solavita.com` always gives the user feedback
  * even when the OS has no default mail client registered.
  */
 export default function ContactSupport() {
@@ -156,14 +156,14 @@ export default function ContactSupport() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            UK team ready to help
+            NG team ready to help
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Talk to a{' '}
             <span className="text-gradient">real person.</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            UK-based service team · No bots · No long hold music.
+            NG-based service team · No bots · No long hold music.
           </p>
         </div>
 

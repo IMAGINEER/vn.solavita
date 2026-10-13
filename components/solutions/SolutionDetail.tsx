@@ -123,7 +123,7 @@ export default function SolutionDetailSection({
                 onClick={openFormModal}
                 className="inline-flex items-center gap-2 text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors cursor-pointer"
               >
-                Get a design for this solution →
+                Get a design for this solution
               </button>
             </div>
           </div>

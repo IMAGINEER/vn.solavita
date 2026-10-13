@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react'
 import { Moon, Sun, ArrowUp } from 'lucide-react'
 
 /**
- * Floating action buttons - UK homepage.
+ * Floating action buttons - NG homepage.
  *
  * Original-style structure preserved: theme toggle (dark ↔ light), back-to-top.
- * Language switcher removed - UK homepage is English-only and the
- * balkonkraftwerk paths it gated against don't exist here.
+ * Language switcher removed - NG homepage is English-only and the
+ * balkonkraftwerk paths it gated against don't exist here
+ * (lib/bk-lang.ts is also dead in NG).
  *
  * Theme toggle persists to localStorage['theme'] (original key) and toggles
  * `.light-mode` on <body> (original mechanism) - both must stay consistent with

@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
           </div>
           <div>
             <div className="font-cw-bold text-uk-navy text-base">
-              Solavita UK
+              Solavita Nigeria
             </div>
             <div className="text-xs text-uk-slate">Admin sign in</div>
           </div>

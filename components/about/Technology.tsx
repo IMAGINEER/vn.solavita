@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BadgeCheck } from 'lucide-react'
 import { aboutCertifications } from '@/lib/data/about'
+import TbdText from '@/components/ui/tbd-text'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,8 +15,11 @@ const BadgeIcon = ({ className }: { className?: string }) => (
 
 /**
  * Technology / Expertise - explains the engineering credentials behind
- * Solavita and lists the certifications that matter to UK customers
- * (MCS · G98/G99 · TÜV · ISO).
+ * Solavita and lists the certifications that apply. The list itself is
+ * data-driven from `aboutCertifications` in `lib/data/about.ts` so NG
+ * pages render TBDs until business confirms which certifications apply
+ * to the Nigerian market (per the NG content strategy: no UK or
+ * Nigerian certification may be carried over without verification).
  *
  * The right-hand image is the existing product render used on the
  * homepage /solutions section - reusing it keeps the asset catalogue
@@ -80,9 +84,10 @@ export default function Technology() {
             </h2>
 
             <p className="text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
-              Every Solavita system is built on Tier-1 components
+              Every Solavita system is built on{' '}
+              <TbdText text="Tier-1 components" inline />{' '}
               engineered by the SKYWORTH Group - the same supply chain
-              that powers 4 million households worldwide with TVs,
+              that powers millions of households worldwide with TVs,
               appliances and smart-home systems.
             </p>
 

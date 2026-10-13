@@ -58,10 +58,10 @@ export async function POST(request: Request) {
       // by updated_at DESC bubbles dedup re-submissions to the top.
       // created_at stays immutable - first-registration semantics.
       updated_at: new Date().toISOString(),
-      // Hardcoded 'uk' from this site. On UPDATE we strip this to preserve
-      // the original country from the first registration (so a DE lead
-      // doesn't get re-tagged as UK if a UK user re-submits the same email).
-      country: 'uk',
+      // Hardcoded 'ng' from this site. On UPDATE we strip this to preserve
+      // the original country from the first registration (so a UK lead
+      // doesn't get re-tagged as NG if an NG user re-submits the same email).
+      country: 'ng',
     }
 
     // Dedup - same email already registered → UPDATE the original row with the
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       .from('consultation_leads')
       .select('id')
       .eq('email', email)
-      .eq('country', 'uk')
+      .eq('country', 'ng')
       .maybeSingle()
 
     if (existing) {
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
         success: true,
         alreadyRegistered: true,
         message:
-          'This email is already registered with us. Your details have been updated. If you have not heard back yet, please contact our team at uk@solavita.com.',
+          'This email is already registered with us. Your details have been updated. If you have not heard back yet, please contact our team (TBD — Verified Nigerian sales/support email).',
       })
     }
 
@@ -130,7 +130,7 @@ export async function POST(request: Request) {
 
     // Send confirmation email (non-blocking - a mail failure shouldn't fail the lead)
     const emailContent = consultationConfirmationEmail({
-      country: 'uk',
+      country: 'ng',
       salutation,
       firstName,
       lastName,
@@ -139,7 +139,7 @@ export async function POST(request: Request) {
       planLink,
     })
     const emailResult = await sendEmail({
-      country: 'uk',
+      country: 'ng',
       to: email,
       subject: emailContent.subject,
       html: emailContent.html,
@@ -147,7 +147,7 @@ export async function POST(request: Request) {
     if (emailResult.success) {
       await supabase.from('email_logs').insert({
         customer_id: null,
-        country: 'uk',
+        country: 'ng',
         email_type: 'consultation_confirmation',
         sent_to: email,
         status: 'sent',
@@ -177,7 +177,7 @@ export async function POST(request: Request) {
       console.error('❌ Consultation email failed:', emailResult.error)
       await supabase.from('email_logs').insert({
         customer_id: null,
-        country: 'uk',
+        country: 'ng',
         email_type: 'consultation_confirmation',
         sent_to: email,
         status: 'failed',

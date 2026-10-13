@@ -5,27 +5,28 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Mail, Phone } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
+import PartnerFormModal, {
+  usePartnerFormModalEvent,
+} from '@/components/PartnerFormModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * UK homepage footer.
+ * NG site footer (Nigeria).
  *
- * Composition (per design):
+ * Composition (mirrors the UK footer structure):
  *   ┌────────────────────────────────────────────────────────────┐
  *   │  Top divider line                                           │
  *   ├────────────────────────────────────────────────────────────┤
- *   │  Brand area          │  6 link columns                     │
+ *   │  Brand area          │  Link columns                       │
  *   │  ─────────────────── │  ─────────────────                  │
- *   │  Logo                │  Solutions  Company  Learn          │
- *   │  Tagline             │  Support    For Partners  Legal     │
- *   │  Social icons        │                                     │
+ *   │  Logo                │  Solutions  Company                 │
+ *   │  Tagline             │  Support                            │
+ *   │  Legal info (TBD)    │  Legal                              │
  *   ├────────────────────────────────────────────────────────────┤
- *   │  Sub-footer                                             │
+ *   │  Sub-footer                                              │
  *   │  ──────────────────────────────────────────────────────────│
- *   │  Copyright         UK locale / flag                       │
- *   │  ──────────────────────────────────────────────────────────│
- *   │  Disclaimer (full width, small, muted)                    │
+ *   │  Copyright (TBD)        Nigeria · English                  │
  *   └────────────────────────────────────────────────────────────┘
  *
  * Footer surface colour is driven by theme rules (`.light-mode footer`,
@@ -39,6 +40,14 @@ gsap.registerPlugin(ScrollTrigger)
  * light mode the existing global CSS flips `text-white*` to dark
  * navy and `border-white*` to low-opacity navy, so no mode-specific
  * overrides are required in this file.
+ *
+ * Per `content/nigeria/products.md` the Solutions column lists the six
+ * NG packages (LITE Essential Backup, HOME Standard, HOME High-spec,
+ * BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS
+ * Flagship 3-Phase). Per NG content rules, every unverified company
+ * detail (legal entity, CAC number, registered office, contact email /
+ * phone, copyright holder) is rendered as a red `TBD — ...` placeholder
+ * until the business confirms the value.
  */
 
 export interface FooterLink {
@@ -88,8 +97,17 @@ export default function Footer({
   // page having to host it locally. The /my-plan page is the exception -
   // it intentionally doesn't render Footer because its Edit-details modal
   // uses different props (hideAddressAndContact, custom submit endpoint).
+  //
+  // PartnerFormModal is hosted here for the same reason — every page that
+  // mounts this Footer can dispatch `openPartnerFormModal()` from a partner
+  // CTA (currently only /for-partners) without each page having to mount
+  // the modal locally. Two modals instead of one because they post to
+  // different endpoints (`/api/consultation` vs `/api/partner`) and serve
+  // different purposes; see `lib/partner-form-modal.ts` for the rationale.
   const [formOpen, setFormOpen] = useState(false)
   useFormModalEvent(setFormOpen, () => {})
+  const [partnerFormOpen, setPartnerFormOpen] = useState(false)
+  usePartnerFormModalEvent(setPartnerFormOpen, () => {})
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -117,17 +135,17 @@ export default function Footer({
     return () => ctx.revert()
   }, [])
 
-  // ─── Link sets (unchanged routing; cleaner labels for UK context) ─────
+  // ─── Link sets (Nigeria) ────────────────────────────────────────────────
 
   const defaultProductLinks: FooterLink[] = [
-    // Each product link jumps to its dedicated anchor on /solutions.
-    // Was `#products` (works only on the homepage); routing to
-    // `/solutions#<id>` makes the footer usable from every page that
-    // renders it (about-us, support, hems, cases, ...).
-    { label: 'Home Energy One', href: '/solutions#one' },
-    { label: 'Home Energy Pro', href: '/solutions#pro' },
-    { label: 'Home Energy Max', href: '/solutions#max' },
-    { label: 'Home Energy Ultra', href: '/solutions#ultra' },
+    // Per `content/nigeria/solutions.md` the collection-pages brief
+    // calls for two top-level scenario links (For Home / For Business).
+    // The detailed package comparison, tech explainers, FAQs and CTAs
+    // live on the dedicated `/solutions/home-solar` and
+    // `/solutions/business-solar` pages — there are no per-tier
+    // landing pages. Mirrors the Header dropdown.
+    { label: 'For Home', href: '/solutions/home-solar' },
+    { label: 'For Business', href: '/solutions/business-solar' },
   ]
 
   const defaultCompanyLinks: FooterLink[] = [
@@ -143,13 +161,12 @@ export default function Footer({
   const companies = companyLinks ?? defaultCompanyLinks
 
   // Legal links - promoted from the bottom bar to a dedicated column.
-  // "Cookie Settings" routes to /cookies#settings where users manage
-  // their preferences on the page itself (no banner-dispatch hack).
+  // The /cookies page now serves as the sole reference for cookie use;
+  // there is no longer a separate settings panel.
   const legalLinks: FooterLink[] = [
     { label: 'Terms of Use', href: '/terms', external: false },
     { label: 'Privacy Policy', href: '/privacy', external: false },
     { label: 'Cookie Policy', href: '/cookies', external: false },
-    { label: 'Cookie Settings', href: '/cookies#settings' },
   ]
 
   // ─── Reusable class strings ────────────────────────────────────────────
@@ -173,15 +190,25 @@ export default function Footer({
             <div className="mb-4">
               <img src={logoSrc} alt={logoAlt} className="h-8 w-auto" />
             </div>
-            {/* Brand slogan — sits directly under the logo. Same tone
-               as the surrounding body text; "Vital Life!" is bolded so
-               the call-to-action tail lands harder than the prefix.
-               Legal/compliance copy (company number, registered office,
-               etc.) lives in the legal block at the very bottom of the
-               footer, not in the brand column. */}
-            <p className="text-white/70 text-sm font-cw-regular leading-snug">
-              Vital Energy <span className="font-cw-bold">Vital Life!</span>
+            {/* Brand slogan — sits directly under the logo. Colour
+               pulled from the UK brand teal (`--color-uk-teal`) to keep
+               the line consistent across locales; "Vital Life!" is
+               bolded so the call-to-action tail lands harder than the
+               prefix. Legal/compliance copy (company number, registered
+               office, etc.) sits directly below the slogan in the brand
+               column, matching the UK footer layout. NG has no verified
+               legal details, so every clause is a `TBD — ...` red
+               placeholder per project content rules. */}
+            <p className="text-uk-teal text-sm font-cw-regular leading-snug">
+              Vital Energy <span className="font-cw-bold font-extrabold">Vital Life!</span>
             </p>
+            <div className="mt-3 text-white/40 text-[11px] font-cw-regular leading-relaxed">
+              <span className="text-red-400/90">TBD — Verified Nigeria legal entity</span>
+              <br />
+              <span className="text-red-400/90">TBD — Verified CAC registration number</span>
+              <br />
+              <span className="text-red-400/90">TBD — Verified Nigeria registered office address</span>
+            </div>
           </div>
 
           {/* ── Solutions ── */}
@@ -243,23 +270,26 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                <a href="mailto:uk@solavita.com" className={linkClass}>
-                  uk@solavita.com
-                </a>
+                {/* No verified Nigerian sales/support email — render as a
+                   red TBD placeholder (no mailto: link) per project
+                   content rules. */}
+                <span className="text-red-400/90 text-sm font-cw-bold">
+                  TBD — Verified Nigerian sales/support email
+                </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                <a
-                  href="https://wa.me/4407454945519"
-                  className={linkClass}
-                >
-                  +44 074 5494 5519
-                </a>
+                {/* No verified Nigerian business number — render as a
+                   red TBD placeholder (no wa.me: link) per project
+                   content rules. */}
+                <span className="text-red-400/90 text-sm font-cw-bold">
+                  TBD — Verified Nigerian business number
+                </span>
               </li>
             </ul>
           </div>
 
-          {/* ── Legal (Terms / Privacy / Cookies / Cookie Settings) ── */}
+          {/* ── Legal (Terms / Privacy / Cookies) ── */}
           <div className="footer-col">
             <h4 className={headingClass}>Legal</h4>
             <ul className="space-y-3">
@@ -279,7 +309,7 @@ export default function Footer({
         </div>
       </div>
 
-      {/* ───── Sub-footer: copyright + UK locale ───── */}
+      {/* ───── Sub-footer: copyright + Nigeria locale ───── */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-6">
           {/* The copyright paragraph can grow long ("© 2026 ... All
@@ -287,34 +317,28 @@ export default function Footer({
               means it wraps inside the available space instead of
               shoving the locale row off the right edge. The locale
               row is `shrink-0` so the flag + label always render at
-              their natural width — they never compress or break. */}
+              their natural width — they never compress or break. The
+              entity name is a red TBD placeholder until the Nigerian
+              business confirms its registered name. */}
           <div className="flex flex-col md:flex-row md:items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left min-w-0 flex-1">
-              © 2026 Solavita Energy UK Limited. A SKYWORTH Group
-              company. All rights reserved.
+              © 2026 <span className="text-red-400/90 font-cw-bold">TBD — Verified Nigerian legal entity name</span>. All rights reserved.
             </p>
             <div
               className="flex items-center gap-2 text-white/50 text-xs font-cw-regular shrink-0 self-center md:self-auto"
-              aria-label="Locale: United Kingdom, English"
+              aria-label="Locale: Nigeria, English"
             >
-              <FlagUK className="w-5 h-3.5 border border-white/20" />
-              <span>United Kingdom · English</span>
+              {/* NG flag intentionally not rendered - brand team to
+                  confirm the official visual identity. */}
+              <span
+                className="w-5 h-3.5 border border-white/20 rounded-sm flex items-center justify-center text-[8px] font-cw-bold text-white/70"
+                aria-hidden="true"
+              >
+                NG
+              </span>
+              <span>Nigeria · English</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* ───── Legal block (very bottom) ─────
-          Each clause on its own line, smallest / quietest text in the
-          footer. Source-of-truth legal copy that the cookies/privacy
-          pages also reference — keep in sync if any line changes. */}
-      <div className="max-w-7xl mx-auto px-6 pb-6">
-        <div className="text-white/40 text-[11px] font-cw-regular leading-relaxed">
-          A SKYWORTH Group company.
-          Company No. 17466951
-          Registered in England and Wales
-          Registered office: C/O Buzzacott LLP, 130 Wood Street,
-          London EC2V 6DL
         </div>
       </div>
 
@@ -327,6 +351,15 @@ export default function Footer({
         that mounts this Footer. Portals to <body> so it sits above the
         Lenis-wrapped page surface. */}
     <FormModal open={formOpen} onClose={() => setFormOpen(false)} />
+
+    {/* Partner enquiry PartnerFormModal - listens for
+        `openPartnerFormModal()` dispatched from /for-partners partner CTAs.
+        Posts to `/api/partner` (Supabase `ng_partner_leads`); the
+        consultation FormModal above posts to `/api/consultation`. */}
+    <PartnerFormModal
+      open={partnerFormOpen}
+      onClose={() => setPartnerFormOpen(false)}
+    />
   </>
   )
 }

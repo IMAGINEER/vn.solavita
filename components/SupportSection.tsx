@@ -13,7 +13,7 @@ import {
   Lock,
   FileText,
 } from 'lucide-react'
-import { ukSupportItems, type UkSupportItem } from '@/lib/data/uk-support'
+import { ukSupportItems, type NgSupportItem } from '@/lib/data/uk-support'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -26,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Lucide icons - theme-neutral via currentColor. Sized to sit inside the
 // `w-10 h-10` icon container.
-const iconFor = (icon: UkSupportItem['icon']) => {
+const iconFor = (icon: NgSupportItem['icon']) => {
   const common = 'w-6 h-6'
   const props = { className: common, strokeWidth: 1.5 } as const
   switch (icon) {
@@ -40,7 +40,7 @@ const iconFor = (icon: UkSupportItem['icon']) => {
       return <BookOpen {...props} />
     case 'contact':
       return <Phone {...props} />
-    case 'gdpr':
+    case 'compliance':
       return <ShieldMinus {...props} />
     case 'privacy':
       return <Lock {...props} />

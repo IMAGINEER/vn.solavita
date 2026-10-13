@@ -52,13 +52,12 @@ function persist(next: ConsentState, value: 'accepted' | 'rejected') {
 }
 
 /**
- * First-visit cookie consent banner. Reads/writes the same
- * `cookie_consent` key the /cookies settings panel uses, so a choice
- * made here is reflected on the settings page (and vice versa).
+ * First-visit cookie consent banner. Reads/writes the `cookie_consent`
+ * key so the user's choice persists across visits.
  *
  * Banner only appears when no decision has been recorded yet
- * (`localStorage` empty). To revisit and change preferences,
- * use the Footer's "Cookie Settings" link → /cookies#settings.
+ * (`localStorage` empty). For details about the cookies we use, see the
+ * Cookie Policy at /cookies.
  */
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false)
@@ -93,11 +92,11 @@ export default function CookieConsent() {
             <p className="text-sm text-uk-navy font-cw-regular leading-relaxed">
               Your privacy is important to us. When you visit our website, you agree to the use of all cookies.{' '}
               <a
-                href="/cookies#settings"
+                href="/cookies"
                 rel="noopener noreferrer"
                 className="text-uk-teal hover:text-uk-teal-dark transition-colors"
               >
-                Manage your preferences in Cookie Settings.
+                Read our Cookie Policy.
               </a>
             </p>
           </div>

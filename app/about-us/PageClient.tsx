@@ -12,20 +12,19 @@ import ContactMethods from '@/components/contact/ContactMethods'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /about-us - Solavita brand & company page.
+ * /about-us - Solavita Nigeria brand & company page.
  *
- * Composition (per project brief):
- *   Hero → Who We Are → Our Mission → Our Approach / Why Solavita →
- *   Technology / Expertise → Global Presence → Contact methods (info only) → CTA
+ * Composition mirrors the UK /about-us page (`UK.solavita/app/about-us`):
+ *   AboutHero → WhoWeAre → Mission → Approach → Technology →
+ *   GlobalPresence → ContactMethods (clickable={false}) → CTA.
  *
- * Per the brief the page must NOT read like a corporate brochure. We
- * keep the same teal/emerald soft surfaces + section badges as the
- * rest of the site, but the copy and structure tell a story (heritage →
- * mission → how we work → proof of engineering → where we operate →
- * how to reach us) rather than listing capabilities.
+ * All section copy uses `lib/data/about.ts` (NG TBDs) and
+ * `lib/data/contact.tsx` (NG TBDs) — the UK trust marks, revenue
+ * figures and UK-specific claims are NOT transferred per the NG content
+ * strategy. When unverified facts land they fill the same data slots.
  *
- * ContactMethods is rendered with `clickable={false}` — on /about-us the
- * cards are informational, no mailto:/tel:/maps links open from them.
+ * The sections are kept as NG-specific components (already localized)
+ * rather than being inlined.
  */
 export default function AboutPage() {
   return (
@@ -54,7 +53,7 @@ export default function AboutPage() {
             <span className="text-gradient">for your home.</span>
           </>
         }
-        description="Two-week installation. 10-year warranty. UK-based service team for life. Start with a free, no-obligation design & quote."
+        description="Request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your home and your backup requirements."
       />
 
       <Footer />

@@ -31,10 +31,9 @@ export default function CaseStudyGrid() {
   const sectionRef = useRef<HTMLElement>(null)
   const [filter, setFilter] = useState<Filter>('All')
 
-  const visible: CaseStudy[] =
-    filter === 'All'
-      ? caseStudies
-      : caseStudies.filter((c) => c.systemType === filter)
+  const visible = caseStudies.filter((c) =>
+    filter === 'All' ? true : c.systemType === filter,
+  )
 
   useEffect(() => {
     const ctx = gsap.context(() => {

@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita Energy UK Limited · Last updated: August 2026
+            Solavita · Last updated: 13 October 2026
           </motion.p>
 
           <motion.div
@@ -61,119 +61,177 @@ export default function PrivacyPage() {
             className="space-y-8"
           >
             <div>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
-                Solavita Energy UK Limited ("we", "us", "our") is committed to protecting your privacy. This
-                Privacy Policy explains how we collect, use, disclose and safeguard your personal
-                data in accordance with the UK General Data Protection Regulation (UK GDPR) and the
-                Data Protection Act 2018.
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Introduction</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                This Privacy Policy explains how <strong className="text-[#0A1628]">[FULL LEGAL NAME OF THE WEBSITE OPERATOR]</strong> ("Solavita", "we", "our" or "us") collects, uses, stores and shares personal information when you visit this website, contact us or submit an enquiry.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                We aim to handle personal information transparently and in accordance with applicable data protection laws, including the Nigeria Data Protection Act 2023 where applicable.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Who we are</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">2 Information We May Collect</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                The data controller is Solavita Energy UK Limited (Company No. 17466951,
-                registered in England and Wales). Our registered office is C/O Buzzacott LLP,
-                130 Wood Street, London EC2V 6DL, United Kingdom.
-                For any data protection queries, email <a href="mailto:uk@solavita.com" className="text-[#0F766E] hover:underline">uk@solavita.com</a>.
+                Depending on how you interact with the website, we may collect the following categories of information:
               </p>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">2 Information we collect</h2>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                When you submit an enquiry or sign a contract with us, we collect:
-              </p>
+              <p className="text-sm text-[#4A1628] font-cw-bold mb-1">Information you provide</p>
               <ul className="list-disc pl-6 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li>Identity data: name, salutation</li>
-                <li>Contact data: address, email, phone</li>
-                <li>Property data: house type, roof type, household size, electricity usage</li>
-                <li>Survey data: roof imagery and shading analysis (if you book a survey)</li>
+                <li>Name and contact details, such as email address and telephone number.</li>
+                <li>Residential or business location information you choose to provide.</li>
+                <li>Details about your energy requirements, property, intended installation or business enquiry.</li>
+                <li>Information contained in messages and other communications you send to us.</li>
               </ul>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">3 How we use your data</h2>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We use your personal data to:
-              </p>
+              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Technical and usage information</p>
               <ul className="list-disc pl-6 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li>Prepare and deliver your bespoke solar proposal</li>
-                <li>Communicate with you about your enquiry and any contract you enter</li>
-                <li>Comply with our legal obligations (e.g. MCS / SEG registration)</li>
-                <li>Improve our services and website</li>
+                <li>IP address, browser type, device information, operating system and approximate location derived from technical information.</li>
+                <li>Pages viewed, referral information, interaction events and timestamps.</li>
+                <li>Cookie identifiers and similar technical data, where these technologies are used.</li>
               </ul>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We do not sell your data to third parties. We do not use your data for automated
-                decision-making that produces legal effects.
+                We collect only the information supported by the website's actual functionality and our business processes.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">4 Legal basis</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">3 How We Use Information</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We process your data under the following UK GDPR bases: performance of a contract
-                (Art. 6(1)(b)), compliance with legal obligations (Art. 6(1)(c)) and our legitimate
-                interests in running and improving our business (Art. 6(1)(f)).
+                Subject to applicable law and the circumstances of collection, we may use personal information to:
+              </p>
+              <ul className="list-disc pl-6 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
+                <li>Respond to enquiries and requests for information.</li>
+                <li>Assess stated energy requirements and prepare or coordinate a proposed solution.</li>
+                <li>Communicate about products, quotations, installation enquiries or after-sales requests.</li>
+                <li>Operate, secure, troubleshoot and improve the website.</li>
+                <li>Measure website performance where analytics are used lawfully.</li>
+                <li>Meet legal obligations and establish, exercise or defend legal claims.</li>
+              </ul>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                We will not use personal information for an unrelated purpose where doing so would be inconsistent with applicable law or the information provided to you.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">5 Sharing your data</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">4 Legal Basis for Processing</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We share your data only with carefully selected processors who help us deliver our
-                service: cloud hosting and database storage (Supabase, EU region) and email delivery
-                (Resend, Inc., United States — see section 6 on international transfers). Each
-                processor is bound by a UK GDPR-compliant data processing agreement.
+                Where applicable law requires a legal basis for processing, we will rely on the basis appropriate to the relevant activity. Depending on the circumstances, this may include your consent, steps taken at your request before entering a contract, compliance with a legal obligation or another lawful basis permitted by applicable law.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Where an installation is allocated to a Solavita-certified installer, we share the
-                contact and property details needed to deliver your installation with that installer
-                under a separate contract between you and the installer. Solavita remains your point
-                of contact and the data controller for that information.
+                Where consent is required, you may withdraw it using the relevant mechanism or by contacting us. Withdrawal does not affect processing lawfully carried out before withdrawal.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 International transfers</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">5 Sharing of Information</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Some of our processors are located outside the UK. Email delivery is provided by
-                Resend, Inc. (United States). Cloud hosting and database storage are provided by
-                Supabase (EU region). For any transfer of personal data outside the UK, we rely on
-                UK-approved transfer mechanisms such as International Data Transfer Agreements or
-                adequacy regulations in force at the time, and we carry out a transfer risk
-                assessment for each destination.
+                We do not sell personal information as a standalone data product.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                We may share relevant information with service providers or other recipients where necessary for purposes such as website hosting, form delivery, communications, security, analytics, customer relationship management or fulfilment of a request.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                We may also disclose information where required by law, to protect legal rights or in connection with a business reorganisation, subject to applicable legal requirements.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                The specific recipients depend on the services actually used by the website operator. <strong className="text-[#0A1628]">[Before publication, identify the actual hosting, analytics, form, messaging and CRM providers, where applicable.]</strong>
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">7 Retention</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 International Transfers</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We keep enquiry data for up to 24 months and contract-related data for up to 7
-                years to comply with HMRC, MCS and consumer law requirements.
+                Some service providers may process or store information outside Nigeria or the country in which you are located.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Where personal information is transferred internationally, we will take the steps required by applicable data protection law, including any required safeguards or assessments.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                <strong className="text-[#0A1628]">[Confirm actual hosting regions, service-provider locations and applicable transfer safeguards before publication.]</strong>
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">8 Your rights</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">7 Data Retention</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                You have the right to access, correct, delete, restrict or object to the processing
-                of your personal data, and to data portability. To exercise any of these rights,
-                contact <a href="mailto:uk@solavita.com" className="text-[#0F766E] hover:underline">uk@solavita.com</a>. You also have the right to complain to the
-                Information Commissioner's Office (<a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-[#0F766E] hover:underline">ico.org.uk</a>).
+                We retain personal information only for as long as reasonably necessary for the purposes for which it was collected, including responding to enquiries, maintaining relevant business records, meeting legal obligations and resolving disputes.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Retention periods depend on the type of information, the purpose of processing and applicable legal requirements. We will delete or anonymise information when it is no longer required, where appropriate and technically feasible.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                <strong className="text-[#0A1628]">[Confirm the actual retention periods or retention criteria used for enquiries, analytics and server logs.]</strong>
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">9 Cookies</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">8 Data Security</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                See our <a href="/cookies" className="text-[#0F766E] hover:underline">Cookie Policy</a> for details about the cookies we use.
+                We use reasonable technical and organisational measures designed to protect personal information against unauthorised access, loss, misuse or alteration.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                No method of transmission or storage is completely secure. We cannot guarantee absolute security, but we take appropriate steps to protect information within our control.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">9 Your Privacy Rights</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Subject to applicable law and any relevant exceptions, you may have the right to:
+              </p>
+              <ul className="list-disc pl-6 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
+                <li>Request access to personal information we hold about you.</li>
+                <li>Request correction of inaccurate or incomplete information.</li>
+                <li>Request deletion of personal information where legally available.</li>
+                <li>Object to or request restriction of certain processing.</li>
+                <li>Request a copy of certain information in a portable format where applicable.</li>
+                <li>Withdraw consent where processing is based on consent.</li>
+                <li>Raise a complaint with the relevant data protection authority.</li>
+              </ul>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                To make a request, contact us using the details below. We may need to verify your identity before responding.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">10 Children</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                This website is intended for general residential and commercial enquiries and is not designed to solicit personal information directly from children. If you believe a child has provided personal information inappropriately, contact us so we can assess and address the matter.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">11 Third-Party Websites</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Our website may contain links to third-party websites. Their privacy practices are governed by their own policies. Please review those policies before providing personal information to those websites.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">12 Changes to This Policy</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                We may update this Privacy Policy to reflect changes in our practices, technology or legal requirements. The latest version will be published on this page with an updated revision date.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">13 Contact Us</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                For privacy questions or requests, contact:
+              </p>
+              <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
+                <li><strong className="text-[#0A1628]">Data controller / website operator:</strong> [CONFIRM LEGAL ENTITY]</li>
+                <li><strong className="text-[#0A1628]">Privacy contact:</strong> Johny Zhang</li>
+                <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:ng@solavita.com" className="text-[#0F766E] hover:underline">ng@solavita.com</a></li>
+                <li><strong className="text-[#0A1628]">Address:</strong> [CONFIRMED BUSINESS OR REGISTERED ADDRESS]</li>
+              </ul>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                If a designated privacy or data protection officer is legally required or has been appointed, their contact details should be provided here.
               </p>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: August 2026 · Solavita Energy UK Limited (Company No. 17466951, registered in England and Wales)
+                Last updated: 13 October 2026 · Solavita
               </p>
             </div>
           </motion.div>

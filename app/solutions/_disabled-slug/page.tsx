@@ -23,11 +23,13 @@ import SolutionDetailPage from './PageClient'
  * slug as a 404 until marketing confirms launch. Flip this to `false` to
  * ship the detail pages - nothing else needs to change.
  */
-const HIDE_DETAIL_PAGES = true
+const HIDE_DETAIL_PAGES = false
 
 /**
- * /solutions/[slug] - Amazon-style detail page for one of the four
- * Home Energy tiers (one | pro | max | ultra).
+ * /solutions/[slug] - Amazon-style detail page for one of the six
+ * Nigeria packages (LITE Essential Backup | HOME Standard | HOME
+ * High-spec | BUSINESS Entry 3-Phase | BUSINESS Standard 3-Phase |
+ * BUSINESS Flagship 3-Phase).
  *
  * Server thin / client fat split (mirrors `app/cases/[slug]/page.tsx`):
  *   - This file: resolve slug → SolutionDetail, emit JSON-LD, return
@@ -35,7 +37,7 @@ const HIDE_DETAIL_PAGES = true
  *   - `PageClient.tsx`: GSAP, scroll-triggers, lucide icons and the
  *     whole page composition.
  *
- * All four slugs are pre-generated at build time via
+ * All six slugs are pre-generated at build time via
  * `generateStaticParams`, so the sitemap / Google never sees a 404
  * from this route for an unknown-but-valid slug. Genuinely unknown
  * slugs fall through to `notFound()`.

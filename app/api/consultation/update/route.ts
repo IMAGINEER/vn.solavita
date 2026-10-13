@@ -70,14 +70,15 @@ export async function POST(request: Request) {
       )
     }
 
-    // Find the row. `.eq('country', 'uk')` keeps a DE token out of this
-    // endpoint even if it's somehow reachable - defence-in-depth since
-    // the form is only ever opened from /my-plan on the UK site.
+    // Find the row. `.eq('country', 'ng')` keeps other sites' tokens
+    // out of this endpoint even if they're somehow reachable - defence-
+    // in-depth since the form is only ever opened from /my-plan on
+    // the NG site.
     const { data: existing, error: lookupError } = await supabase
       .from('consultation_leads')
       .select('id')
       .eq('plan_token', planToken)
-      .eq('country', 'uk')
+      .eq('country', 'ng')
       .maybeSingle()
 
     if (lookupError) {

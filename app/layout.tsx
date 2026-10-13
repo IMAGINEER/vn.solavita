@@ -15,13 +15,13 @@ export const metadata: Metadata = {
   // truth - change SITE_URL, this follows.
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Solar Panels & Battery Storage for UK Homes',
-    template: '%s | Solavita UK',
+    default: 'Solar & Battery Systems for Nigerian Homes',
+    template: '%s | Solavita Nigeria',
   },
   description:
-    'Solavita delivers premium solar panels and battery storage for UK homes. Two-week installation. MCS-certified. UK-wide support.',
+    'Explore solar and battery solutions for Nigerian homes and small businesses. Compare system configurations and find a solution for more reliable power and less generator dependence.',
   keywords:
-    'solar panels UK, solar battery storage, photovoltaic, UK solar, MCS certified, Solavita, SKYWORTH, renewable energy UK, SEG, Smart Export Guarantee',
+    'solar Nigeria, solar panels Nigeria, battery storage Nigeria, solar Lagos, solar Abuja, generator backup, off-grid solar, three-phase solar, Solavita, SKYWORTH, renewable energy Nigeria',
   robots: { index: true, follow: true },
   // Deliberately NO `alternates.canonical` here. Every page exports its
   // own canonical via `buildPageMetadata()`. A root-level canonical
@@ -32,27 +32,27 @@ export const metadata: Metadata = {
   // these with the page's hero asset. Twitter card is `summary_large_image`
   // so WhatsApp / LinkedIn / X show the full hero instead of a small icon.
   openGraph: {
-    title: 'Solavita UK - Power Your Home. Shape a Greener UK.',
+    title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
     description:
-      'Premium solar & storage for UK homes. Two-week turnaround.',
+      'Solar and battery solutions for Nigerian homes and small businesses.',
     url: SITE_URL,
-    siteName: 'Solavita UK',
-    locale: 'en_GB',
+    siteName: 'Solavita Nigeria',
+    locale: 'en_NG',
     type: 'website',
     images: [
       {
         url: `${SITE_URL}/images/hero-system-render.webp`,
         width: 1200,
         height: 630,
-        alt: 'Solavita UK - solar panels and battery storage for UK homes',
+        alt: 'Solavita Nigeria - solar panels and battery storage for Nigerian homes',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Solavita UK - Power Your Home. Shape a Greener UK.',
+    title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
     description:
-      'Premium solar & storage for UK homes. Two-week turnaround.',
+      'Solar and battery solutions for Nigerian homes and small businesses.',
     images: [`${SITE_URL}/images/hero-system-render.webp`],
   },
 }

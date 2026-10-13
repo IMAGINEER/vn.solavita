@@ -38,7 +38,7 @@ const statIcon = (icon: SolutionStat['icon']) =>
  */
 export default function BuyBox({ detail }: BuyBoxProps) {
   const emailSubject = `Enquiry about ${detail.title} (${detail.slug})`
-  const emailHref = `mailto:uk@solavita.com?subject=${encodeURIComponent(emailSubject)}`
+  const emailHref = `mailto:ng@solavita.com?subject=${encodeURIComponent(emailSubject)}`
 
   return (
     <div className="w-full">

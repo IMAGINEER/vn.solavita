@@ -7,10 +7,10 @@ export const dynamic = 'force-dynamic'
 export default async function LeadsPage() {
   await requireAdmin()
 
-  // UK + DE share the same Supabase project. Filter to country='uk' so
-  // DE rows are never shown here. Order: most recently touched first so
-  // re-submitted leads (UPDATE in /api/consultation dedup path) bubble
-  // to the top - same pattern as DE's /admin/leads.
+  // All Solavita sites (NG/UK/DE/IT) share the same Supabase project.
+  // Filter to country='ng' so other sites' rows are never shown here.
+  // Order: most recently touched first so re-submitted leads (UPDATE
+  // in /api/consultation dedup path) bubble to the top.
   const { data: rows } = await supabase
     .from('consultation_leads')
     .select(
@@ -24,7 +24,7 @@ export default async function LeadsPage() {
         'plan_sent_at, plan_provider_id, plan_first_opened_at, ' +
         'plan_last_opened_at, plan_confirmed_at',
     )
-    .eq('country', 'uk')
+    .eq('country', 'ng')
     .order('updated_at', { ascending: false })
     .order('created_at', { ascending: false })
 
@@ -33,9 +33,9 @@ export default async function LeadsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-cw-bold text-uk-navy">UK Leads</h1>
+        <h1 className="text-2xl font-cw-bold text-uk-navy">NG Leads</h1>
         <p className="mt-1 text-sm text-uk-slate">
-          Consultation form submissions from uk.solavita.com. Newest first.
+          Consultation form submissions from ng.solavita.com. Newest first.
         </p>
       </div>
       <LeadsTable leads={leads} />

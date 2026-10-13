@@ -91,22 +91,33 @@ export default function FeaturesGrid() {
 
         {/* Live demo video — full-width, autoplaying, muted, looping.
            Sits directly under the heading per the product brief, so
-           the section reads as one cohesive capability overview. */}
+           the section reads as one cohesive capability overview.
+           NG: the demo video is intentionally null until a verified
+           NG asset is supplied; we render the slot as an
+           ImagePlaceholder so the layout doesn't collapse. */}
         <div
           ref={videoWrapRef}
           className="mb-10 md:mb-14 rounded-2xl overflow-hidden border border-uk-line bg-sv-navy shadow-xl"
         >
-          <video
-            ref={videoRef}
-            src={hemsDemoVideo.src}
-            className="w-full aspect-video block"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label={hemsDemoVideo.caption}
-          />
+          {hemsDemoVideo ? (
+            <video
+              ref={videoRef}
+              src={hemsDemoVideo.src}
+              className="w-full aspect-video block"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={hemsDemoVideo.caption}
+            />
+          ) : (
+            <div className="w-full aspect-video flex items-center justify-center p-10 text-center">
+              <p className="text-white/80 text-sm font-cw-bold uppercase tracking-wider">
+                TBD — Verified HEMS demo video for NG audience
+              </p>
+            </div>
+          )}
         </div>
 
         <div ref={gridRef} className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">

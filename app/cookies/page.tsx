@@ -10,7 +10,7 @@ export const metadata = buildPageMetadata({
   title: 'Cookie Policy',
   path: '/cookies',
   description:
-    'How Solavita UK uses cookies and similar technologies on this website.',
+    'How Solavita uses cookies and similar technologies on this website.',
 })
 
 export default function Page() {
@@ -20,9 +20,9 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/cookies',
-            name: 'Solavita UK Cookie Policy',
+            name: 'Solavita Cookie Policy',
             description:
-              'How Solavita UK uses cookies and similar technologies on this website.',
+              'How Solavita uses cookies and similar technologies on this website.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

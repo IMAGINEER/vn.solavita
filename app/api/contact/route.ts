@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 // UK team inbox - pulled from the public-facing ContactMethods + Footer.
 // If this ever changes, update /components/Footer.tsx + ContactMethods.tsx
 // to keep customer-visible copy in sync.
-const TEAM_EMAIL = 'uk@solavita.com'
+const TEAM_EMAIL = 'TBD — Verified Nigerian sales/support email'
 
 const REQUIRED_FIELDS = [
   'firstName',
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
   // ── 4. INSERT ───────────────────────────────────────────────────
   const { data, error } = await supabase
-    .from('uk_contact_leads')
+    .from('ng_contact_leads')
     .insert(row)
     .select('id')
     .single()
@@ -92,14 +92,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'uk',
+      country: 'ng',
       to: email,
       subject: confirmation.subject,
       html: confirmation.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'contact_confirmation',
       sent_to: email,
       status: emailResult.success ? 'sent' : 'failed',
@@ -110,7 +110,7 @@ export async function POST(req: Request) {
     console.error('[/api/contact] confirmation email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'contact_confirmation',
       sent_to: email,
       status: 'failed',
@@ -133,14 +133,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'uk',
+      country: 'ng',
       to: TEAM_EMAIL,
       subject: notification.subject,
       html: notification.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'contact_notification',
       sent_to: TEAM_EMAIL,
       status: emailResult.success ? 'sent' : 'failed',
@@ -151,7 +151,7 @@ export async function POST(req: Request) {
     console.error('[/api/contact] notification email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'contact_notification',
       sent_to: TEAM_EMAIL,
       status: 'failed',

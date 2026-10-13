@@ -12,10 +12,10 @@ export const metadata = buildPageMetadata({
   title: 'Support & FAQs',
   path: '/support',
   description:
-    'FAQs, troubleshooting and downloads for Solavita solar, battery and HEMS systems. Speak to our UK support team.',
+    'FAQs, troubleshooting and downloads for Solavita solar, battery and HEMS systems. Speak to our NG support team.',
   ogImage: '/images/hero-support.webp',
   ogImageAlt:
-    'Solavita UK support and FAQs - solar, battery and HEMS systems',
+    'Solavita NG support and FAQs - solar, battery and HEMS systems',
 })
 
 export default function Page() {
@@ -27,7 +27,7 @@ export default function Page() {
             path: '/support',
             name: 'Support & FAQs',
             description:
-              'FAQs, troubleshooting and downloads for Solavita solar, battery and HEMS systems. Speak to our UK support team.',
+              'FAQs, troubleshooting and downloads for Solavita solar, battery and HEMS systems. Speak to our NG support team.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

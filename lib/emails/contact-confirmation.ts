@@ -1,6 +1,8 @@
 /**
  * Confirmation email sent to a /contact-us visitor after their
- * message is saved. UK-only - see assertion below.
+ * message is saved. NG-only - the body uses TBD markers for every
+ * verified fact (legal entity, email, address, hours) until business
+ * confirms the actual Nigerian contact details.
  *
  * Visual style mirrors consultation-confirmation.ts (gradient header
  * card, info box, footer block) so customer-facing emails share a
@@ -11,12 +13,10 @@ export function contactConfirmationEmail(data: {
   firstName?: string
   subject: string
 }) {
-  // UK repo only serves the English template. If we ever see 'de' here,
-  // it's a bug - German templates live in the DE repo.
   const name = data.firstName?.trim() || 'there'
 
   return {
-    subject: 'Thanks for getting in touch - Solavita UK',
+    subject: 'Thanks for getting in touch - Solavita Nigeria',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -32,26 +32,25 @@ export function contactConfirmationEmail(data: {
 <!-- Body -->
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Hi ${name},</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Thanks for your <strong>${data.subject}</strong> message. Our UK team is on it and will reply within one working day.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Thanks for your <strong>${data.subject}</strong> message. Our team is on it and will reply within one working day once the Nigerian contact details are live.</p>
 
 <!-- Info box -->
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
 <tr><td style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
 <p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Need to reach us directly?</p>
-<p style="margin:0; font-size:14px; color:#374151;">uk@solavita.com · Mon-Fri 9-18 GMT</p>
+<p style="margin:0; font-size:14px; color:#374151;">TBD — Verified Nigerian sales/support email · TBD — Confirmed operating hours</p>
 </td></tr>
 </table>
 
 <p style="font-size:14px; color:#374151; line-height:1.6; margin:0 0 8px 0;">In the meantime, feel free to explore:</p>
-<p style="margin:0; font-size:14px;"><a href="https://uk.solavita.com/solutions" style="color:#0f766e;">Our solar solutions</a> &nbsp;·&nbsp; <a href="https://uk.solavita.com/cases" style="color:#0f766e;">Customer stories</a></p>
+<p style="margin:0; font-size:14px;"><a href="https://ng.solavita.com/solutions" style="color:#0f766e;">Our solar solutions</a> &nbsp;·&nbsp; <a href="https://ng.solavita.com/cases" style="color:#0f766e;">Customer stories</a></p>
 </td></tr>
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">Solavita Energy UK Limited · Company No. 17466951</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Registered in England and Wales</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Registered office: C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">A SKYWORTH Group company · uk.solavita.com</p>
+<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Verified Nigeria legal entity · TBD — Verified CAC registration number</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Verified Nigeria registered office address</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita is presented as a solar and energy solutions brand associated with the SKYWORTH Group · ng.solavita.com</p>
 </td></tr>
 
 </table>

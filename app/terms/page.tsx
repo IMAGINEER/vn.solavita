@@ -10,7 +10,7 @@ export const metadata = buildPageMetadata({
   title: 'Terms of Use',
   path: '/terms',
   description:
-    'Terms governing use of the Solavita UK website and related services.',
+    'Terms of Use governing access to the Solavita website, including content, product information, enquiry forms and online tools.',
 })
 
 export default function Page() {
@@ -20,9 +20,9 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/terms',
-            name: 'Solavita UK Terms of Use',
+            name: 'Solavita Terms of Use',
             description:
-              'Terms governing use of the Solavita UK website and related services.',
+              'Terms of Use governing access to the Solavita website, including content, product information, enquiry forms and online tools.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

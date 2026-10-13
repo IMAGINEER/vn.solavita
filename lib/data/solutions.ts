@@ -1,34 +1,72 @@
 /**
- * Solutions page data.
+ * Solutions page data — Nigeria.
  *
- * All copy here is placeholder English - easy to swap to final content
- * without touching the page structure. Image paths reuse existing assets
- * under /images so the page renders end-to-end without
- * any new uploads.
+ * Source of truth: `content/nigeria/products.md`. Six packages across two
+ * customer segments:
+ *   - For Homes: LITE Essential Backup, HOME Standard, HOME High-spec
+ *   - For Larger Homes & Small Businesses: BUSINESS Entry 3-Phase,
+ *     BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase
  *
- * Pricing is intentionally NOT part of this file: per the product brief,
- * prices are surfaced only on /my-plan (and feed the ROI engine). The
- * marketing surfaces (/, /solutions, dropdown menus, /solutions/[slug])
- * show specs only.
+ * Used by:
+ *   - `<ProductSelector>` on the homepage and /solutions
+ *   - `<Header>` Solutions dropdown (each card links to its detail block)
+ *   - `/solutions/[slug]/` per-tier detail pages
+ *   - `app/my-plan/_lib/calc.ts` (PLANS array reads `priceNgn` to feed the
+ *     ROI engine — see comment on `priceNgn` below)
+ *
+ * Marketing surfaces (/, /solutions, dropdown menus, /solutions/[slug])
+ * follow the NG rule and never display a price until business supplies
+ * approved ₦ figures.
+ *
+ * Specs here mirror `lib/data/ng-products.ts` and `app/my-plan/_lib/calc.ts`
+ * (the PLANS array). Keep all three surfaces in sync.
  */
+
+/* ────────────────────────────────────────────────────────────────────────
+   Simulated ₦ prices for my-plan ROI engine.
+
+   The UK site's per-tier prices (e.g. £5,099 → £9,399) were carried over
+   so my-plan could render quotes. NG has no approved ₦ prices yet, but
+   the ROI engine on /my-plan needs a numeric input to function. The
+   values below are placeholder / simulated — clearly distinct from any
+   business-approved pricing — and MUST be replaced once the business
+   confirms NG package prices.
+
+   Round-number estimates roughly tracking the UK ladder in NGN (using
+   a notional £1 ≈ ₦1,300 for placeholder purposes). Do not publish
+   these numbers on the marketing surface.
+   ──────────────────────────────────────────────────────────────────────── */
+export const NG_SIMULATED_PRICE_NGN: Record<string, number> = {
+  'lite-essential-backup': 3_800_000,
+  'home-standard': 6_200_000,
+  'home-high-spec': 9_500_000,
+  'business-entry-3-phase': 11_500_000,
+  'business-standard-3-phase': 17_500_000,
+  'business-flagship-3-phase': 24_000_000,
+}
 
 /**
  * Map each product in the homepage Products section to the matching
  * detail section anchor on /solutions. Shared between:
  *   - `<Header>` Solutions dropdown (jumps to the right block on /solutions)
  *   - `<ProductSelector>` "Plan Details →" link on /solutions
- *
- * IDs are 1:1 today (the marketing id *is* the anchor id), but we keep
- * the indirection so a future product rename can detach label from anchor.
  */
 export const PRODUCT_TO_SOLUTION_ANCHOR: Record<string, string> = {
-  one: 'one',
-  pro: 'pro',
-  max: 'max',
-  ultra: 'ultra',
+  'lite-essential-backup': 'lite-essential-backup',
+  'home-standard': 'home-standard',
+  'home-high-spec': 'home-high-spec',
+  'business-entry-3-phase': 'business-entry-3-phase',
+  'business-standard-3-phase': 'business-standard-3-phase',
+  'business-flagship-3-phase': 'business-flagship-3-phase',
 }
 
-export type SolutionCategoryId = 'one' | 'pro' | 'max' | 'ultra'
+export type SolutionCategoryId =
+  | 'lite-essential-backup'
+  | 'home-standard'
+  | 'home-high-spec'
+  | 'business-entry-3-phase'
+  | 'business-standard-3-phase'
+  | 'business-flagship-3-phase'
 
 /**
  * Long-tail SEO-friendly URL slug for the per-tier detail pages under
@@ -37,16 +75,20 @@ export type SolutionCategoryId = 'one' | 'pro' | 'max' | 'ultra'
  * URL can be optimised for search engines.
  */
 export type SolutionSlug =
-  | 'home-energy-one'
-  | 'home-energy-pro'
-  | 'home-energy-max'
-  | 'home-energy-ultra'
+  | 'lite-essential-backup'
+  | 'home-standard'
+  | 'home-high-spec'
+  | 'business-entry-3-phase'
+  | 'business-standard-3-phase'
+  | 'business-flagship-3-phase'
 
 export const SOLUTION_SLUGS: readonly SolutionSlug[] = [
-  'home-energy-one',
-  'home-energy-pro',
-  'home-energy-max',
-  'home-energy-ultra',
+  'lite-essential-backup',
+  'home-standard',
+  'home-high-spec',
+  'business-entry-3-phase',
+  'business-standard-3-phase',
+  'business-flagship-3-phase',
 ] as const
 
 export interface SolutionCategory {
@@ -57,59 +99,88 @@ export interface SolutionCategory {
   title: string
   /** One-line description used in the grid card. */
   short: string
-  /** Optional metric (e.g. "Save up to £1,200/yr"). */
+  /** Optional metric (e.g. "Reduce generator use"). Kept qualitative. */
   metric?: string
   /** Lucide-style icon key - resolved inside SolutionCategories. */
   icon: 'sun' | 'battery' | 'home' | 'plug'
   /** Long-tail URL slug for /solutions/[slug]/ detail pages. */
   slug: SolutionSlug
+  /** Customer segment label used to group the grid. */
+  segment: 'homes' | 'businesses'
 }
 
 /**
- * Four-tier solution ladder - Home Energy One → Pro → Max → Ultra.
- * Each tier adds capability (storage → EV charging → whole-home) so the
- * cards read as "upgrade your system", not "four unrelated products".
+ * Six-tier solution ladder - LITE Essential Backup → ... → BUSINESS
+ * Flagship 3-Phase. Two segments ("For Homes" / "For Larger Homes &
+ * Small Businesses"). Each tier adds capability so the cards read as
+ * "upgrade your system", not "six unrelated products".
  */
 export const solutionCategories: SolutionCategory[] = [
   {
-    id: 'one',
-    eyebrow: 'Solar only',
-    title: 'Home Energy One',
+    id: 'lite-essential-backup',
+    eyebrow: 'Single phase · Essential backup',
+    title: 'LITE Essential Backup',
     short:
-      'Generate your own electricity with 8 high-efficiency panels sized for typical UK homes.',
-    metric: 'Save from day one',
+      'Compact solar and battery system for essential household electricity needs.',
+    metric: 'Start with the essentials',
     icon: 'sun',
-    slug: 'home-energy-one',
+    slug: 'lite-essential-backup',
+    segment: 'homes',
   },
   {
-    id: 'pro',
-    eyebrow: 'Solar + Storage',
-    title: 'Home Energy Pro',
+    id: 'home-standard',
+    eyebrow: 'Single phase · Everyday home',
+    title: 'HOME Standard',
     short:
-      'Add a 5.12 kWh battery and HEMS so your solar powers your home day and night.',
-    metric: 'Use 80%+ of your solar',
+      'Higher-capacity solution for households running refrigerators, air conditioners and other everyday appliances.',
+    metric: 'Power everyday living',
     icon: 'battery',
-    slug: 'home-energy-pro',
+    slug: 'home-standard',
+    segment: 'homes',
   },
   {
-    id: 'max',
-    eyebrow: 'Solar + Storage + EV',
-    title: 'Home Energy Max',
+    id: 'home-high-spec',
+    eyebrow: 'Single phase · Higher capacity',
+    title: 'HOME High-spec',
     short:
-      'Solar, battery and EV charger in one HEMS-managed system - charge your car with solar.',
-    metric: 'Drive on sunshine',
+      'Designed for larger homes and multi-appliance households with higher simultaneous demand.',
+    metric: 'More appliances, more hours',
     icon: 'home',
-    slug: 'home-energy-max',
+    slug: 'home-high-spec',
+    segment: 'homes',
   },
   {
-    id: 'ultra',
-    eyebrow: 'Whole-home energy',
-    title: 'Home Energy Ultra',
+    id: 'business-entry-3-phase',
+    eyebrow: 'Three phase · Entry commercial',
+    title: 'BUSINESS Entry 3-Phase',
     short:
-      'Solar, battery, EV and heat pump working as one - one installer, one warranty, one app.',
-    metric: 'Every source of energy',
+      'Three-phase solar and storage option for higher-demand residences and small commercial applications.',
+    metric: 'Three-phase starter',
     icon: 'plug',
-    slug: 'home-energy-ultra',
+    slug: 'business-entry-3-phase',
+    segment: 'businesses',
+  },
+  {
+    id: 'business-standard-3-phase',
+    eyebrow: 'Three phase · Standard commercial',
+    title: 'BUSINESS Standard 3-Phase',
+    short:
+      'Designed for SMEs, food and beverage businesses, restaurants and offices with regular daytime use.',
+    metric: 'Dependable daytime power',
+    icon: 'battery',
+    slug: 'business-standard-3-phase',
+    segment: 'businesses',
+  },
+  {
+    id: 'business-flagship-3-phase',
+    eyebrow: 'Three phase · Flagship commercial',
+    title: 'BUSINESS Flagship 3-Phase',
+    short:
+      'Higher-capacity configuration for medium-sized supermarkets, hotels and light-processing operations.',
+    metric: 'Substantial energy needs',
+    icon: 'plug',
+    slug: 'business-flagship-3-phase',
+    segment: 'businesses',
   },
 ]
 
@@ -122,9 +193,9 @@ export interface SolutionSpecRow {
   value: string
 }
 
-/** One entry in the buy-box headline spec strip (Amazon-style price slot). */
+/** One entry in the buy-box headline spec strip. */
 export interface SolutionStat {
-  /** Headline number e.g. "3.68 kWp". */
+  /** Headline number e.g. "4.34 kWp". */
   value: string
   /** Caption underneath. */
   label: string
@@ -132,7 +203,7 @@ export interface SolutionStat {
   icon: SolutionStatIcon
 }
 
-/** Add-on chip in the buy box (HEMS, EV charger, heat pump, expansion). */
+/** Add-on chip in the buy box. */
 export interface SolutionAddon {
   id: string
   label: string
@@ -140,7 +211,7 @@ export interface SolutionAddon {
   included: boolean
 }
 
-/** One large performance number with a caption (savings, payback, etc). */
+/** One large performance number with a caption. */
 export interface SolutionKpi {
   value: string
   label: string
@@ -164,6 +235,10 @@ export interface SolutionDetail {
   eyebrow: string
   title: string
   intro: string
+  /** One-sentence summary used by the collection-page card. Shorter than
+   *  `intro` (which still drives the per-tier detail pages). Optional so
+   *  older call-sites that pre-date the card work. */
+  shortIntro?: string
   bullets: string[]
   imagePath: string
   imageAlt: string
@@ -172,9 +247,9 @@ export interface SolutionDetail {
 
   /** Long-tail URL slug, drives /solutions/[slug]/ routing. */
   slug: SolutionSlug
-  /** Mirrors `UkProduct.popular` from uk-products.ts (Pro is the popular one). */
+  /** Mirrors `NgProduct.popular` from ng-products.ts. */
   popular?: boolean
-  /** Headline metric surfaced in the buy box (e.g. "Save up to £1,200/yr"). */
+  /** Headline metric surfaced in the buy box. Kept qualitative. */
   metric?: string
   /** Buy-box headline spec strip — 1–2 large numbers (kWp + kWh). */
   headlineStats: SolutionStat[]
@@ -182,11 +257,11 @@ export interface SolutionDetail {
   galleryImages: SolutionGalleryImage[]
   /** 4 short bullets for the "About this item" icon row. */
   highlights: string[]
-  /** Add-on chips shown in the buy box (HEMS / EV / heat pump / expansion). */
+  /** Add-on chips shown in the buy box. */
   addons: SolutionAddon[]
   /** Amazon-style 2-col "Technical Details" spec table. */
   specTable: SolutionSpecRow[]
-  /** KPI strip — 3–4 large numbers (savings, payback, warranty, install). */
+  /** KPI strip — 3–4 large numbers (generation, battery, ...). */
   kpis: SolutionKpi[]
   /** "What's in the box" checklist (physical + service items). */
   boxContents: string[]
@@ -198,500 +273,577 @@ export interface SolutionDetail {
   faqs: SolutionFaq[]
   /** Lifestyle gallery (full-width image strip, 3–4 images). */
   lifestyleGallery: SolutionGalleryImage[]
+  /**
+   * Simulated ₦ price for the my-plan ROI engine. NOT surfaced on the
+   * marketing surface — see NG_SIMULATED_PRICE_NGN block above. Remove
+   * this comment when business supplies approved pricing.
+   */
+  priceNgn: number
+  /**
+   * Customer segment. Mirrors `NgProduct.segment` so the collection
+   * pages can filter `solutionDetails` by `For Home` / `For Business`
+   * per `content/nigeria/solutions.md` (the collection-pages brief).
+   */
+  segment: 'homes' | 'businesses'
 }
 
-/**
- * Per-tier long-form copy for the detail sections on /solutions and the
- * standalone /solutions/[slug]/ detail pages. Specs here mirror the
- * marketing product cards and the /my-plan plans so the three surfaces
- * tell the same story. Panels are 460 W (the unit wattage declared on
- * the spec sheet) - 8 panels → 3.68 kWp, 12 panels → 5.52 kWp.
- *
- * Extended fields (galleryImages, addons, specTable, kpis, boxContents,
- * faqs, ...) power the Amazon-style layout on the per-slug pages. They
- * are ignored by the legacy /solutions overview render.
- */
+/* ────────────────────────────────────────────────────────────────────────
+   Per-tier long-form copy for the detail sections on /solutions and the
+   standalone /solutions/[slug]/ detail pages.
+
+   The image paths below are placeholders — every image is replaced by
+   the unified `ImagePlaceholder` component on the public surface, but
+   we still keep stable paths so the gallery component doesn't need
+   special-casing for the marketing vs. detail pages.
+
+   Annual generation figures are PACKAGE-LEVEL ESTIMATES per
+   `content/nigeria/products.md` and must be labelled "estimate" with
+   a note that actual output depends on location, system design,
+   shading, weather and operating conditions. Do not present these as
+   guaranteed generation, household consumption or backup runtime.
+   ──────────────────────────────────────────────────────────────────────── */
+
 export const solutionDetails: SolutionDetail[] = [
   {
-    id: 'one',
-    slug: 'home-energy-one',
-    eyebrow: 'Solar only',
-    title: 'Home Energy One',
+    id: 'lite-essential-backup',
+    slug: 'lite-essential-backup',
+    eyebrow: 'Single phase · Essential backup',
+    title: 'LITE Essential Backup',
     intro:
-      'A complete roof-mounted solar PV system sized for typical UK homes. MCS-certified components, G98/G99 compliant and installed in around two weeks.',
-    metric: 'Save from day one',
+      'A compact solar and battery solution sized for essential household electricity needs. Ideal as a starting point for smaller homes, rental properties and applications where running a generator is the alternative.',
+    shortIntro:
+      'A compact solar and battery solution for essential household electricity needs.',
+    metric: 'Start with the essentials',
     headlineStats: [
-      { value: '3.68 kWp', label: 'Solar PV', icon: 'solar' },
-      { value: '—', label: 'Battery', icon: 'battery' },
+      { value: '4.34 kWp', label: 'Solar PV', icon: 'solar' },
+      { value: '5 kWh', label: 'Battery', icon: 'battery' },
     ],
     galleryImages: [
-      { src: '/images/Solar_Essential.webp', alt: 'Home Energy One — solar panel system on a UK roof', label: 'Lifestyle' },
-      { src: '/images/solution_1.webp', alt: 'Home Energy One — 8-panel roof-mounted solar PV system', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita all-black n-Type PV module', label: 'Modules' },
-      { src: '/images/product-inverter-1.webp', alt: 'Solavita hybrid inverter', label: 'Inverter' },
-      { src: '/images/product-mounting-1.webp', alt: 'Universal tile / slate mounting kit', label: 'Mounting' },
+      { src: '/images/solution_1.webp', alt: 'LITE Essential Backup — compact solar and battery system', label: 'System' },
+      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
+      { src: '/images/product-inverter-1.webp', alt: 'Solavita inverter', label: 'Inverter' },
+      { src: '/images/product-battery-1.webp', alt: 'Solavita battery module', label: 'Battery' },
     ],
     highlights: [
-      '8 high-efficiency 460 W modules — 3.68 kWp total',
-      'G98/G99 compliant — UK-grid ready, SEG eligible',
-      'Roof-matched mounting — tile / slate / flat',
-      '10-year workmanship warranty, MCS certified',
+      '7 × 620 W PV modules — 4.34 kWp total rated PV capacity',
+      '3.6 kW single-phase inverter',
+      '5 kWh battery storage for essential-circuit backup',
+      'Right-sized for small homes, rentals and temporary power',
     ],
     addons: [
-      { id: 'hems', label: 'HEMS scheduling', included: false },
-      { id: 'battery', label: 'Battery storage', included: false },
-      { id: 'ev', label: 'EV charger', included: false },
+      { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: false },
+      { id: 'ev', label: 'EV charging', included: false },
+      { id: 'hems', label: 'HEMS app', included: false },
     ],
     specTable: [
-      { label: 'PV modules', value: '8 × 460 W all-black n-Type monocrystalline' },
-      { label: 'System size', value: '3.68 kWp DC' },
-      { label: 'Inverter', value: '3.6 kW string or micro inverter' },
-      { label: 'Inverter type', value: 'Single-phase, 230 V AC' },
-      { label: 'Mounting', value: 'Anodised aluminium + A2 stainless, tile / slate / flat' },
-      { label: 'Module efficiency', value: 'Up to 22.5%' },
-      { label: 'Expected annual yield', value: '~3,200 kWh (UK south-facing roof)' },
-      { label: 'Grid connection', value: 'G98 / G99 compliant' },
-      { label: 'SEG ready', value: 'Yes — export tariff eligible' },
-      { label: 'Backup power', value: 'Not included (solar-only)' },
-      { label: 'Monitoring', value: 'Solavita app — generation & export' },
-      { label: 'Installation time', value: '~2 weeks from signed contract' },
-      { label: 'Certifications', value: 'MCS-012, IEC 61215, IEC 61730' },
-      { label: 'Warranty', value: '10-year workmanship · 25-year module performance' },
+      { label: 'PV modules', value: '7 × 620 W monocrystalline' },
+      { label: 'Total rated PV capacity', value: '4.34 kWp' },
+      { label: 'Inverter', value: '3.6 kW, single phase' },
+      { label: 'Battery storage', value: '5 kWh' },
+      { label: 'Phase type', value: 'Single phase' },
+      { label: 'Estimated annual generation', value: '5,500–6,000 kWh (estimate)' },
     ],
     kpis: [
-      { value: '£750–£1,000', label: 'Estimated annual saving' },
-      { value: '6–8 yrs', label: 'Typical payback' },
-      { value: '25 yrs', label: 'Module performance warranty' },
-      { value: '2 wks', label: 'Install time' },
+      { value: '5,500–6,000', label: 'Estimated annual kWh' },
+      { value: '5 kWh', label: 'Battery capacity' },
+      { value: '4.34 kWp', label: 'Total rated PV' },
+      { value: 'Single phase', label: 'Phase' },
     ],
     boxContents: [
-      '8 × Solavita 460 W all-black PV modules',
-      '1 × 3.6 kW string or micro inverter',
-      'Tile / slate / flat-roof matched mounting kit',
-      'DC & AC isolators + cabling',
-      'Solavita monitoring app — iOS & Android',
-      'Free site survey and roof assessment',
-      'MCS-certified installation & commissioning',
-      '10-year workmanship warranty documents',
+      '7 × 620 W PV modules',
+      '1 × 3.6 kW single-phase inverter',
+      '1 × 5 kWh battery',
+      'Roof-type-matched mounting kit',
+      'Free site survey and load assessment',
     ],
-    installationTime: 'Two-week install',
-    warranty: '10-year workmanship warranty',
+    installationTime:
+      'TBD — Confirmed installation scope and lead time',
+    warranty: 'TBD — Approved module, inverter, battery and workmanship warranty',
     bullets: [
-      '8 × 460 W monocrystalline modules (3.68 kWp)',
-      '3.6 kW string or micro inverter',
-      'Roof-type-matched mounting kit (tile / slate / flat)',
-      'Smart Export Guarantee (SEG) ready',
-      'MCS-certified installation with a 10-year workmanship warranty',
+      '7 × 620 W PV modules (4.34 kWp total)',
+      '3.6 kW single-phase inverter',
+      '5 kWh battery storage',
+      'Right-sized for essential household electricity',
     ],
     faqs: [
       {
-        q: 'How long does installation take?',
-        a: 'From your signed contract to a commissioned system in around two weeks. The on-roof work itself usually takes a single day; the rest of the timeline covers the design survey, scaffold, DNO sign-off and commissioning.',
+        q: 'Who is LITE designed for?',
+        a: 'Smaller homes, rental properties and any site where a compact system can cover essential circuits (lighting, refrigeration, connectivity, fans).',
       },
       {
-        q: 'Is the system MCS-certified?',
-        a: 'Yes. Every Solavita system is installed by MCS-certified engineers using MCS-listed components, so your installation qualifies for the Smart Export Guarantee (SEG) payments from your energy supplier.',
+        q: 'Can I expand the system later?',
+        a: 'TBD — Confirm supported expansion limits for the LITE inverter and battery model with the engineering team before public launch.',
       },
       {
-        q: 'Do I need planning permission?',
-        a: 'In most cases, no. Roof-mounted solar on a residential property is covered by permitted development rights in England, Wales and Scotland. We confirm this as part of your free design survey.',
+        q: 'What is the estimated annual generation?',
+        a: '5,500–6,000 kWh per year. This is a solution-level estimate — actual output depends on location, system design, shading, weather and operating conditions.',
       },
       {
-        q: 'How much will I save on my energy bill?',
-        a: 'A typical 3.68 kWp system in central or southern England generates around 3,200 kWh per year — enough to offset £750–£1,000 of grid electricity at 2026 prices. Exact savings depend on your usage profile and tariff.',
-      },
-      {
-        q: 'Can I add battery storage later?',
-        a: 'Yes. Home Energy One is designed to be upgradeable — your inverter and roof layout leave room for a future 5.12 kWh Solavita battery. We can retrofit a battery without redoing the solar install.',
-      },
-      {
-        q: 'What happens during a power cut?',
-        a: 'Home Energy One is a solar-only system, so during a grid outage the inverter shuts down for safety (anti-islanding). If backup power is important, look at Home Energy Pro or above, which include battery + essential-circuit backup.',
-      },
-      {
-        q: 'Do you handle the SEG registration?',
-        a: 'Yes — we register your system with your chosen SEG licensee (Octopus, EDF, OVO, etc.) and submit the MCS certificate on your behalf. Most customers start earning export payments within 4–6 weeks of commissioning.',
-      },
-      {
-        q: 'What warranty do I get?',
-        a: '10-year workmanship warranty on the installation itself, plus the manufacturer warranties on the modules (25-year linear performance) and inverter (10-year product). SKYWORTH-backed service team for the lifetime of the system.',
+        q: 'How long will the battery last during an outage?',
+        a: 'Runtime depends on usable battery capacity and the appliances drawing power. A larger load uses stored energy more quickly. A site-specific assessment is required for a reliable estimate.',
       },
     ],
     lifestyleGallery: [
-      { src: '/images/solution_1.webp', alt: 'Home Energy One system on a UK roof' },
-      { src: '/images/hero-system-render.webp', alt: 'Solavita system overview render' },
+      { src: '/images/solution_1.webp', alt: 'LITE Essential Backup system' },
+      { src: '/images/Solar_Essential.webp', alt: 'LITE Essential Backup lifestyle render' },
       { src: '/images/product-module-1.webp', alt: 'Solavita PV module close-up' },
-      { src: '/images/drone-3d.webp', alt: 'Drone-view of a Solavita installation' },
     ],
-    imagePath: '/images/solution_1.webp',
-    imageAlt:
-      'Home Energy One - 8-panel roof-mounted solar PV system for UK homes',
+    imagePath: '/images/LITE-Essential-Backup.webp',
+    imageAlt: 'LITE Essential Backup — 4.34 kWp solar and 5 kWh battery',
+    priceNgn: NG_SIMULATED_PRICE_NGN['lite-essential-backup'],
+    segment: 'homes',
   },
   {
-    id: 'pro',
-    slug: 'home-energy-pro',
+    id: 'home-standard',
+    slug: 'home-standard',
     popular: true,
-    eyebrow: 'Solar + Storage',
-    title: 'Home Energy Pro',
+    eyebrow: 'Single phase · Everyday home',
+    title: 'HOME Standard',
     intro:
-      'Add a Solavita LiFePO₄ battery to store your daytime solar and use it in the evening - and keep the lights on during a power cut. HEMS automates charge / discharge around your tariff.',
-    metric: 'Use 80%+ of your solar',
+      'A higher-capacity solution for mainstream households running refrigerators, air conditioners and other everyday appliances. Includes off-grid-capable inverter and 10 kWh nominal battery storage.',
+    shortIntro:
+      'Higher-capacity solution for households running refrigerators, ACs and other everyday appliances.',
+    metric: 'Power everyday living',
     headlineStats: [
-      { value: '3.68 kWp', label: 'Solar PV', icon: 'solar' },
-      { value: '5.12 kWh', label: 'Battery', icon: 'battery' },
+      { value: '7.44 kWp', label: 'Solar PV', icon: 'solar' },
+      { value: '10 kWh', label: 'Battery', icon: 'battery' },
     ],
     galleryImages: [
-      { src: '/images/Storage_core.webp', alt: 'Home Energy Pro — solar plus 5.12 kWh battery stack', label: 'Lifestyle' },
-      { src: '/images/solution_2.webp', alt: 'Home Energy Pro — 8 panels paired with a 5.12 kWh Solavita home battery', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita all-black n-Type PV module', label: 'Modules' },
+      { src: '/images/solution_2.webp', alt: 'HOME Standard — 7.44 kWp solar and 10 kWh battery', label: 'System' },
+      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
       { src: '/images/product-inverter-1.webp', alt: 'Solavita hybrid inverter', label: 'Inverter' },
-      { src: '/images/product-battery-1.webp', alt: 'Solavita LiFePO₄ high-voltage battery stack', label: 'Battery' },
-      { src: '/images/product-mounting-1.webp', alt: 'Universal tile / slate mounting kit', label: 'Mounting' },
+      { src: '/images/product-battery-1.webp', alt: 'Solavita LiFePO₄ battery stack', label: 'Battery' },
     ],
     highlights: [
-      '5.12 kWh LiFePO₄ battery — expandable to 20 kWh',
-      'Backup power for essential circuits during outages',
-      'HEMS app — time-of-use tariff automation',
-      '10-year workmanship warranty, MCS certified',
+      '12 × 620 W PV modules — 7.44 kWp total',
+      '6 kW single-phase inverter with off-grid capability',
+      '10 kWh nominal battery storage (2 × 5 kWh modules)',
+      'Designed for households with refrigerators, ACs and everyday appliances',
     ],
     addons: [
-      { id: 'hems', label: 'HEMS scheduling', included: true },
       { id: 'battery', label: 'Battery storage', included: true },
-      { id: 'ev', label: 'EV charger', included: false },
       { id: 'expansion', label: 'Battery expansion', included: true },
+      { id: 'ev', label: 'EV charging', included: false },
+      { id: 'hems', label: 'HEMS app', included: false },
     ],
     specTable: [
-      { label: 'PV modules', value: '8 × 460 W all-black n-Type monocrystalline' },
-      { label: 'System size', value: '3.68 kWp DC' },
-      { label: 'Inverter', value: '3.6 kW hybrid (PV + battery)' },
-      { label: 'Battery chemistry', value: 'LiFePO₄ (lithium iron phosphate)' },
-      { label: 'Battery capacity', value: '5.12 kWh per module · expandable to 20.48 kWh' },
-      { label: 'Battery voltage', value: '102.4–409.6 V DC (high voltage stack)' },
-      { label: 'Round-trip efficiency', value: '> 96%' },
-      { label: 'Cycle life', value: '> 6,000 cycles at 90% DoD' },
-      { label: 'Backup power', value: 'Yes — automatic, essential circuits' },
-      { label: 'HEMS features', value: 'Time-of-use scheduling, dynamic tariffs, app control' },
-      { label: 'Monitoring', value: 'Solavita app — generation, storage & export' },
-      { label: 'SEG ready', value: 'Yes — export tariff eligible' },
-      { label: 'Installation time', value: '~2 weeks from signed contract' },
-      { label: 'Certifications', value: 'MCS-012, IEC 62619, BS 7671, UN38.3' },
-      { label: 'Warranty', value: '10-year workmanship · 10-year battery · 25-year module performance' },
+      { label: 'PV modules', value: '12 × 620 W monocrystalline' },
+      { label: 'Total rated PV capacity', value: '7.44 kWp' },
+      { label: 'Inverter', value: '6 kW, single phase, with off-grid capability' },
+      { label: 'Battery storage', value: '2 × 5 kWh modules; 10 kWh nominal total' },
+      { label: 'Phase type', value: 'Single phase' },
+      { label: 'Estimated annual generation', value: '9,500–10,500 kWh (estimate)' },
     ],
     kpis: [
-      { value: '£900–£1,200', label: 'Estimated annual saving' },
-      { value: '5–7 yrs', label: 'Typical payback' },
-      { value: '10 yrs', label: 'Battery warranty' },
-      { value: '2 wks', label: 'Install time' },
+      { value: '9,500–10,500', label: 'Estimated annual kWh' },
+      { value: '10 kWh', label: 'Battery capacity' },
+      { value: '7.44 kWp', label: 'Total rated PV' },
+      { value: 'Single phase', label: 'Phase' },
     ],
     boxContents: [
-      '8 × Solavita 460 W all-black PV modules',
-      '1 × 3.6 kW Solavita hybrid inverter',
-      '1 × 5.12 kWh LiFePO₄ battery module (stackable)',
-      'Tile / slate / flat-roof matched mounting kit',
-      'Backup gateway + essential-circuits panel',
-      'Solavita HEMS app — iOS & Android',
-      'Free site survey and tariff analysis',
-      'MCS-certified installation & commissioning',
-      '10-year workmanship + battery warranty documents',
+      '12 × 620 W PV modules',
+      '1 × 6 kW single-phase inverter (off-grid capable)',
+      '2 × 5 kWh battery modules (10 kWh stackable)',
+      'Roof-type-matched mounting kit',
+      'Free site survey and load assessment',
     ],
-    installationTime: 'Two-week install',
-    warranty: '10-year workmanship + 10-year battery',
+    installationTime:
+      'TBD — Confirmed installation scope and lead time',
+    warranty: 'TBD — Approved module, inverter, battery and workmanship warranty',
     bullets: [
-      '8 × 460 W monocrystalline modules (3.68 kWp)',
-      '5.12 kWh LiFePO₄ stackable battery (expandable to 20 kWh)',
-      '3.6 kW hybrid inverter',
-      'HEMS scheduling, time-of-use optimisation and app control',
-      'Backup power for essential circuits',
+      '12 × 620 W PV modules (7.44 kWp)',
+      '6 kW single-phase inverter with off-grid capability',
+      '10 kWh battery storage (2 × 5 kWh)',
+      'Sized for everyday household appliances and ACs',
     ],
     faqs: [
       {
-        q: 'How long does installation take?',
-        a: 'Around two weeks end-to-end from signed contract. The on-site work (scaffold, panels, inverter, battery, commissioning) typically fits inside two consecutive days.',
+        q: 'Will HOME Standard run an air conditioner?',
+        a: 'Compatibility depends on the AC unit\'s rated power, starting demand and the other appliances running at the same time. Confirm with a site assessment.',
       },
       {
-        q: 'What can I run during a power cut?',
-        a: 'Home Energy Pro delivers automatic backup power to your essential circuits — typically fridge, lighting, internet/router, and a couple of sockets. Total sustained load around 3 kW. The system detects an outage and switches over in under a second.',
+        q: 'What is the estimated annual generation?',
+        a: '9,500–10,500 kWh per year. This is a solution-level estimate — actual output depends on location, system design, shading, weather and operating conditions.',
       },
       {
-        q: 'Can I expand the battery later?',
-        a: 'Yes. The Solavita battery is modular — you can stack up to four 5.12 kWh modules (20.48 kWh total) at any time, mixing old and new modules. No need to replace what you have.',
-      },
-      {
-        q: 'How does the HEMS app help me save?',
-        a: 'HEMS (Home Energy Management System) learns your usage pattern and your tariff, then schedules charge and discharge to minimise grid imports. With a time-of-use tariff like Intelligent Octopus, it shifts charging to the cheapest overnight window and exports peak solar at the most expensive daytime rate.',
-      },
-      {
-        q: 'Is the system MCS-certified?',
-        a: 'Yes. Every Solavita system is MCS-certified and uses MCS-listed components, so your installation qualifies for Smart Export Guarantee payments.',
-      },
-      {
-        q: 'Do I need a smart meter?',
-        a: 'Not for installation, but a smart meter helps the HEMS app read your real-time import/export and optimise around time-of-use tariffs. We can arrange one through your supplier if you don\'t already have one.',
+        q: 'Is the inverter off-grid capable?',
+        a: 'The HOME Standard inverter is single-phase with off-grid capability, meaning it can supply your home from the battery during an outage once configured at install.',
       },
       {
         q: 'Can I add an EV charger later?',
-        a: 'Yes. If you think an EV is on the horizon, look at Home Energy Max — it adds a 6 kW inverter and EV-charger-ready load balancing. Pro can be retrofitted with an EV charger, but Max is sized for it from day one.',
-      },
-      {
-        q: 'What warranty do I get?',
-        a: '10-year workmanship warranty on the installation, 10-year product warranty on the battery (including capacity retention), and 25-year linear performance warranty on the modules. SKYWORTH-backed UK service team for the lifetime of the system.',
+        a: 'TBD — Confirm supported expansion limits for the HOME Standard inverter with the engineering team before public launch.',
       },
     ],
     lifestyleGallery: [
-      { src: '/images/solution_2.webp', alt: 'Home Energy Pro system on a UK home' },
+      { src: '/images/solution_2.webp', alt: 'HOME Standard system' },
+      { src: '/images/Storage_core.webp', alt: 'HOME Standard lifestyle render' },
       { src: '/images/product-battery-1.webp', alt: 'Solavita battery stack' },
-      { src: '/images/cloud-app-data.webp', alt: 'Solavita HEMS app dashboard' },
-      { src: '/images/electronic.webp', alt: 'Solavita hardware detail' },
     ],
-    imagePath: '/images/solution_2.webp',
-    imageAlt:
-      'Home Energy Pro - 8 panels paired with a 5.12 kWh Solavita home battery',
+    imagePath: '/images/HOME-Standard.webp',
+    imageAlt: 'HOME Standard — 7.44 kWp solar and 10 kWh battery',
+    priceNgn: NG_SIMULATED_PRICE_NGN['home-standard'],
+    segment: 'homes',
   },
   {
-    id: 'max',
-    slug: 'home-energy-max',
-    eyebrow: 'Solar + Storage + EV',
-    title: 'Home Energy Max',
+    id: 'home-high-spec',
+    slug: 'home-high-spec',
+    eyebrow: 'Single phase · Higher capacity',
+    title: 'HOME High-spec',
     intro:
-      'Solar + battery + EV charger in one HEMS-managed system. Solar powers your home, charges your car and tops up the battery - all routed to minimise grid imports.',
-    metric: 'Drive on sunshine',
+      'A higher-capacity solution for larger homes and multi-appliance households. Sized for sustained operation of multiple high-draw appliances, with 16 kWh battery storage.',
+    shortIntro:
+      'Higher-capacity solution for larger homes and multi-appliance households.',
+    metric: 'More appliances, more hours',
     headlineStats: [
-      { value: '5.52 kWp', label: 'Solar PV', icon: 'solar' },
-      { value: '5.12 kWh', label: 'Battery', icon: 'battery' },
+      { value: '9.92–12.40 kWp', label: 'Solar PV', icon: 'solar' },
+      { value: '16 kWh', label: 'Battery', icon: 'battery' },
     ],
     galleryImages: [
-      { src: '/images/Premium_backup.webp', alt: 'Home Energy Max — solar, battery and EV-ready system', label: 'Lifestyle' },
-      { src: '/images/solution_3.webp', alt: 'Home Energy Max — solar, battery and EV charger managed by a single HEMS app', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita all-black n-Type PV module', label: 'Modules' },
-      { src: '/images/product-inverter-2.webp', alt: 'Solavita 6 kW hybrid inverter', label: 'Inverter' },
-      { src: '/images/product-battery-1.webp', alt: 'Solavita LiFePO₄ battery stack', label: 'Battery' },
-      { src: '/images/product-mounting-2.webp', alt: 'Universal mounting kit detail', label: 'Mounting' },
+      { src: '/images/solution_3.webp', alt: 'HOME High-spec — 16 modules and 16 kWh battery', label: 'System' },
+      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
+      { src: '/images/product-inverter-2.webp', alt: 'Solavita 8–12 kW inverter', label: 'Inverter' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack', label: 'Battery' },
     ],
     highlights: [
-      '12 modules — 5.52 kWp — for higher yield & EV charging',
-      '6 kW hybrid inverter — solar, battery, EV on one platform',
-      'EV charger ready — Pod Point, Easee, Andersen and more',
-      '10-year workmanship warranty, MCS certified',
+      '16–20 × 620 W PV modules — 9.92–12.40 kWp total',
+      '8–12 kW single-phase inverter',
+      '16 kWh battery storage for sustained operation',
+      'Designed for larger homes and multi-appliance households',
     ],
     addons: [
-      { id: 'hems', label: 'HEMS scheduling', included: true },
       { id: 'battery', label: 'Battery storage', included: true },
-      { id: 'ev', label: 'EV charger', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
+      { id: 'ev', label: 'EV charging', included: false },
+      { id: 'hems', label: 'HEMS app', included: false },
     ],
     specTable: [
-      { label: 'PV modules', value: '12 × 460 W all-black n-Type monocrystalline' },
-      { label: 'System size', value: '5.52 kWp DC' },
-      { label: 'Inverter', value: '6 kW hybrid (PV + battery)' },
-      { label: 'Battery chemistry', value: 'LiFePO₄ (lithium iron phosphate)' },
-      { label: 'Battery capacity', value: '5.12 kWh per module · expandable to 20.48 kWh' },
-      { label: 'Battery voltage', value: '102.4–409.6 V DC (high voltage stack)' },
-      { label: 'EV charger support', value: 'Pod Point, Easee, Andersen, Wallbox, Ohme' },
-      { label: 'Load balancing', value: 'Smart dynamic — up to 6 kW charger headroom' },
-      { label: 'Peak shaving', value: 'Yes — protects main fuse during EV charging' },
-      { label: 'Backup power', value: 'Yes — automatic, essential circuits' },
-      { label: 'HEMS features', value: 'Time-of-use, peak shaving, dynamic tariffs, appliance scheduling' },
-      { label: 'Monitoring', value: 'Solavita app — solar, battery, EV & export' },
-      { label: 'Installation time', value: '~2 weeks from signed contract' },
-      { label: 'Certifications', value: 'MCS-012, IEC 62619, BS 7671, UN38.3, OZEV EVHS ready' },
-      { label: 'Warranty', value: '10-year workmanship · 10-year battery · 25-year module performance' },
+      { label: 'PV modules', value: '16–20 × 620 W monocrystalline' },
+      { label: 'Total rated PV capacity', value: '9.92–12.40 kWp' },
+      { label: 'Inverter', value: '8–12 kW, single phase' },
+      { label: 'Battery storage', value: '16 kWh' },
+      { label: 'Phase type', value: 'Single phase' },
+      { label: 'Estimated annual generation', value: '15,000–16,000 kWh (estimate)' },
     ],
     kpis: [
-      { value: '£1,200–£1,800', label: 'Estimated annual saving' },
-      { value: '5–7 yrs', label: 'Typical payback' },
-      { value: '10 yrs', label: 'Battery & inverter warranty' },
-      { value: '2 wks', label: 'Install time' },
+      { value: '15,000–16,000', label: 'Estimated annual kWh' },
+      { value: '16 kWh', label: 'Battery capacity' },
+      { value: '9.92–12.40 kWp', label: 'Total rated PV' },
+      { value: 'Single phase', label: 'Phase' },
     ],
     boxContents: [
-      '12 × Solavita 460 W all-black PV modules',
-      '1 × 6 kW Solavita hybrid inverter',
-      '1 × 5.12 kWh LiFePO₄ battery module (stackable)',
-      'Tile / slate / flat-roof matched mounting kit',
-      'EV charger (Pod Point / Easee / Andersen / Wallbox — choose at design stage)',
-      'Backup gateway + essential-circuits panel',
-      'Solavita HEMS app — iOS & Android',
-      'Free site survey + EV-charging load assessment',
-      'MCS-certified installation & commissioning',
-      '10-year workmanship + battery + inverter warranty documents',
+      '16–20 × 620 W PV modules',
+      '1 × 8–12 kW single-phase inverter',
+      '16 kWh battery storage',
+      'Roof-type-matched mounting kit',
+      'Free site survey and load assessment',
     ],
-    installationTime: 'Two-week install',
-    warranty: '10-year workmanship + 10-year battery + inverter',
+    installationTime:
+      'TBD — Confirmed installation scope and lead time',
+    warranty: 'TBD — Approved module, inverter, battery and workmanship warranty',
     bullets: [
-      '12 × 460 W monocrystalline modules (5.52 kWp)',
-      '5.12 kWh LiFePO₄ stackable battery',
-      '6 kW hybrid inverter',
-      'EV charger ready (Pod Point, Easee, Andersen and others)',
-      'Smart load balancing, peak shaving and dynamic tariffs',
-      'HEMS app control with appliance-level scheduling',
+      '16–20 × 620 W PV modules (9.92–12.40 kWp)',
+      '8–12 kW single-phase inverter',
+      '16 kWh battery storage',
+      'For larger homes and multi-appliance households',
     ],
     faqs: [
       {
-        q: 'Will solar charge my EV?',
-        a: 'Yes — HEMS routes surplus solar to your EV charger first, then to the battery, then exports the rest. On a sunny day a typical UK driver covers 20–30 miles of commuting on solar alone.',
+        q: 'How many appliances can HOME High-spec run at once?',
+        a: 'That depends on the inverter output rating, appliance starting demand and circuit design. A load assessment is required for a definitive answer.',
       },
       {
-        q: 'Which EV chargers are supported?',
-        a: 'Home Energy Max is brand-agnostic: Pod Point, Easee, Andersen, Wallbox, Ohme, and any OZEV-approved smart charger. Pick at design stage and we supply + install as part of the same project.',
+        q: 'What is the estimated annual generation?',
+        a: '15,000–16,000 kWh per year. This is a solution-level estimate — actual output depends on location, system design, shading, weather and operating conditions.',
       },
       {
-        q: 'Will charging an EV trip my fuse?',
-        a: 'No. HEMS continuously monitors household load and dynamically throttles EV charging to keep total draw under your fuse rating (typically 60–80 A). You never see a tripped main fuse, even when the oven, tumble dryer and EV charger are running together.',
+        q: 'Why is the module count a range, not a single number?',
+        a: 'The number of 620 W modules is selected at design stage based on available roof area, shading analysis and the load assessment. 16, 18 or 20 modules all fall within the solution.',
       },
       {
-        q: 'How much will I save on fuel?',
-        a: 'A typical UK driver does ~7,000 miles/year. At 4 mi/kWh and home-charging from solar/battery, that\'s roughly 1,750 kWh of EV demand covered by your own generation — £350–£450/yr saved on petrol/diesel, on top of the household offset.',
-      },
-      {
-        q: 'Is the system MCS-certified?',
-        a: 'Yes. The solar + battery side is MCS-certified for SEG payments. The EV charger is OZEV-approved under the EVHS / EVCS grant schemes where eligible.',
-      },
-      {
-        q: 'Do I need a 3-phase supply?',
-        a: 'No — Home Energy Max works on single-phase UK supplies (the most common). The 6 kW inverter is sized for single-phase draw limits. If your home is already 3-phase, we\'ll match the install accordingly.',
-      },
-      {
-        q: 'Can I expand to add a heat pump?',
-        a: 'Look at Home Energy Ultra for full heat-pump integration (SG Ready / EEBUS). Max can be retrofitted with a heat pump interface, but Ultra is the package designed around whole-home energy from day one.',
-      },
-      {
-        q: 'What warranty do I get?',
-        a: '10-year workmanship warranty on the install, 10-year product warranty on the battery and inverter, and 25-year linear performance warranty on the modules. UK-based service team for the lifetime of the system.',
+        q: 'Can I keep my generator as a fallback?',
+        a: 'Whether a generator can be integrated into the system depends on the equipment and installation design. The team can advise on the appropriate topology for your site.',
       },
     ],
     lifestyleGallery: [
-      { src: '/images/solution_3.webp', alt: 'Home Energy Max full system' },
-      { src: '/images/Premium_backup.webp', alt: 'Home Energy Max lifestyle render' },
-      { src: '/images/cloud-app-data.webp', alt: 'Solavita HEMS app — solar, battery and EV dashboard' },
-      { src: '/images/drone-3d.webp', alt: 'Drone view of a Solavita installation' },
+      { src: '/images/solution_3.webp', alt: 'HOME High-spec system' },
+      { src: '/images/Premium_backup.webp', alt: 'HOME High-spec lifestyle render' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack' },
     ],
-    imagePath: '/images/solution_3.webp',
-    imageAlt:
-      'Home Energy Max - solar, battery and EV charger managed by a single HEMS app',
+    imagePath: '/images/HOME-High-spec.webp',
+    imageAlt: 'HOME High-spec — 9.92–12.40 kWp solar and 16 kWh battery',
+    priceNgn: NG_SIMULATED_PRICE_NGN['home-high-spec'],
+    segment: 'homes',
   },
   {
-    id: 'ultra',
-    slug: 'home-energy-ultra',
-    eyebrow: 'Whole-home energy',
-    title: 'Home Energy Ultra',
+    id: 'business-entry-3-phase',
+    slug: 'business-entry-3-phase',
+    eyebrow: 'Three phase · Entry commercial',
+    title: 'BUSINESS Entry 3-Phase',
     intro:
-      'Future-ready whole-home energy. Solar, battery, EV charging and heat pump support - designed, installed and managed by one Solavita team for the lifetime of the system.',
-    metric: 'Every source of energy',
+      'A three-phase solar and storage option for higher-demand residences and small commercial applications. Designed for sites with existing three-phase supply.',
+    shortIntro:
+      'Three-phase solar and storage for higher-demand residences and small commercial sites.',
+    metric: 'Three-phase starter',
     headlineStats: [
-      { value: '5.52 kWp', label: 'Solar PV', icon: 'solar' },
-      { value: '10.24 kWh', label: 'Battery', icon: 'battery' },
+      { value: '11.78 kWp', label: 'Solar PV', icon: 'solar' },
+      { value: '16 kWh', label: 'Battery', icon: 'battery' },
     ],
     galleryImages: [
-      { src: '/images/Smart_home.webp', alt: 'Home Energy Ultra — whole-home solar, battery, EV and heat pump', label: 'Lifestyle' },
-      { src: '/images/solution_4.webp', alt: 'Home Energy Ultra — whole-home solar, battery, EV and heat pump system', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita all-black n-Type PV module', label: 'Modules' },
-      { src: '/images/product-inverter-2.webp', alt: 'Solavita 6 kW hybrid inverter', label: 'Inverter' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 10.24 kWh LiFePO₄ battery stack', label: 'Battery' },
-      { src: '/images/product-mounting-3.webp', alt: 'Universal mounting kit detail', label: 'Mounting' },
+      { src: '/images/solution_3.webp', alt: 'BUSINESS Entry 3-Phase — three-phase starter', label: 'System' },
+      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
+      { src: '/images/product-inverter-2.webp', alt: 'Solavita 10 kW three-phase inverter', label: 'Inverter' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack', label: 'Battery' },
     ],
     highlights: [
-      '10.24 kWh battery — whole-home evening & outage autonomy',
-      'EV + heat pump integrated — SG Ready / EEBUS protocols',
-      'Whole-home load balancing with dynamic tariffs',
-      '10-year programme — one installer, one warranty, one app',
+      '19 × 620 W PV modules — 11.78 kWp total',
+      '10 kW three-phase inverter',
+      '16 kWh battery storage',
+      'For high-load villas and small shops on three-phase supply',
     ],
     addons: [
-      { id: 'hems', label: 'HEMS Pro scheduling', included: true },
       { id: 'battery', label: 'Battery storage', included: true },
-      { id: 'ev', label: 'EV + heat pump', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
+      { id: 'ev', label: 'EV charging', included: false },
+      { id: 'hems', label: 'HEMS app', included: false },
     ],
     specTable: [
-      { label: 'PV modules', value: '12 × 460 W all-black n-Type monocrystalline' },
-      { label: 'System size', value: '5.52 kWp DC' },
-      { label: 'Inverter', value: '6 kW hybrid (PV + battery)' },
-      { label: 'Battery chemistry', value: 'LiFePO₄ (lithium iron phosphate)' },
-      { label: 'Battery capacity', value: '10.24 kWh (2× stackable 5.12 kWh modules) · expandable to 20.48 kWh' },
-      { label: 'Battery voltage', value: '102.4–409.6 V DC (high voltage stack)' },
-      { label: 'Heat pump integration', value: 'SG Ready / EEBUS — modulates heat pump around solar yield' },
-      { label: 'EV charger support', value: 'Pod Point, Easee, Andersen, Wallbox, Ohme' },
-      { label: 'Whole-home load balancing', value: 'Yes — across solar, battery, EV, heat pump and grid' },
-      { label: 'Dynamic tariff support', value: 'Intelligent Octopus / Go / Flux / Agile ready' },
-      { label: 'Backup power', value: 'Yes — automatic, essential + selected heavy loads' },
-      { label: 'HEMS features', value: 'Whole-home scheduling, peak shaving, weather forecast, tariff-aware' },
-      { label: 'Monitoring', value: 'Solavita app — generation, storage, EV, heat pump & export' },
-      { label: 'Installation time', value: '~2 weeks from signed contract' },
-      { label: 'Certifications', value: 'MCS-012, IEC 62619, BS 7671, UN38.3, OZEV EVHS / EVCS' },
-      { label: 'Warranty', value: '10-year programme — install + battery + inverter + module performance' },
+      { label: 'PV modules', value: '19 × 620 W monocrystalline' },
+      { label: 'Total rated PV capacity', value: '11.78 kWp' },
+      { label: 'Inverter', value: '10 kW, three phase' },
+      { label: 'Battery storage', value: '16 kWh' },
+      { label: 'Phase type', value: 'Three phase' },
+      { label: 'Estimated annual generation', value: '15,000–16,000 kWh (estimate)' },
     ],
     kpis: [
-      { value: '£1,800–£2,400', label: 'Estimated annual saving' },
-      { value: '5–7 yrs', label: 'Typical payback' },
-      { value: '10 yrs', label: 'Whole-programme warranty' },
-      { value: '2 wks', label: 'Install time' },
+      { value: '15,000–16,000', label: 'Estimated annual kWh' },
+      { value: '16 kWh', label: 'Battery capacity' },
+      { value: '11.78 kWp', label: 'Total rated PV' },
+      { value: 'Three phase', label: 'Phase' },
     ],
     boxContents: [
-      '12 × Solavita 460 W all-black PV modules',
-      '1 × 6 kW Solavita hybrid inverter',
-      '2 × 5.12 kWh LiFePO₄ battery modules (10.24 kWh stackable)',
-      'Tile / slate / flat-roof matched mounting kit',
-      'EV charger (Pod Point / Easee / Andersen / Wallbox)',
-      'Heat-pump interface module (SG Ready / EEBUS)',
-      'Whole-home backup gateway + load panel',
-      'Solavita HEMS Pro app — iOS & Android',
-      'Free site survey + whole-home energy audit',
-      'MCS-certified installation & commissioning',
-      '10-year programme warranty documents',
-      'Annual system health check (years 1–10)',
+      '19 × 620 W PV modules',
+      '1 × 10 kW three-phase inverter',
+      '16 kWh battery storage',
+      'Roof-type-matched mounting kit',
+      'Free site survey and load assessment',
     ],
-    installationTime: 'Two-week install',
-    warranty: '10-year programme warranty',
+    installationTime:
+      'TBD — Confirmed installation scope and lead time',
+    warranty: 'TBD — Approved module, inverter, battery and workmanship warranty',
     bullets: [
-      '12 × 460 W monocrystalline modules (5.52 kWp)',
-      '10.24 kWh LiFePO₄ stackable battery',
-      '6 kW hybrid inverter',
-      'EV charger + heat pump integrated (SG Ready / EEBUS)',
-      'Whole-home load balancing and dynamic tariffs',
-      'One installer, one warranty, one app - 10-year programme',
+      '19 × 620 W PV modules (11.78 kWp)',
+      '10 kW three-phase inverter',
+      '16 kWh battery storage',
+      'For three-phase residential and small commercial sites',
     ],
     faqs: [
       {
-        q: 'How does the heat pump integration work?',
-        a: 'The Solavita inverter speaks SG Ready and EEBUS to your heat pump. HEMS modulates the heat pump\'s compressor around your solar yield — running hardest when there\'s surplus sun, and throttling back when the battery needs to prioritise other loads. Most customers see a further £300–£500/yr saving on top of the solar/battery offset.',
+        q: 'Do I need three-phase supply for this solution?',
+        a: 'Yes — BUSINESS Entry is designed for sites with an existing three-phase supply. If you only have single-phase, look at the HOME Standard or HOME High-spec solutions.',
       },
       {
-        q: 'Can the battery power my whole home?',
-        a: 'The 10.24 kWh stack covers an average UK evening (5–9 pm) and provides automatic backup for essential circuits during a power cut. With a heat pump on the same network, HEMS will pre-warm the home and the hot-water cylinder during the day so the heat pump can coast through the evening on stored thermal energy.',
+        q: 'What is the estimated annual generation?',
+        a: '15,000–16,000 kWh per year. This is a solution-level estimate — actual output depends on location, system design, shading, weather and operating conditions.',
       },
       {
-        q: 'What\'s included in the 10-year programme?',
-        a: 'One installer, one warranty, one app for the lifetime of the system. Every Solavita component (modules, inverter, battery, mounting, EV charger interface, heat-pump interface) is covered for 10 years — product, performance and workmanship — plus an annual system health check during the programme.',
+        q: 'Can I run all my shop appliances at once?',
+        a: 'That depends on the inverter\'s output rating, appliance starting demand, circuit design and available energy. A load assessment is required.',
       },
       {
-        q: 'How is Ultra different from Max?',
-        a: 'Max is sized for solar + battery + EV (the average UK home). Ultra adds heat-pump integration, double the battery (10.24 vs 5.12 kWh), whole-home load balancing, dynamic-tariff automation and the 10-year programme — making it the right answer for homes moving away from gas.',
-      },
-      {
-        q: 'Is the system MCS-certified?',
-        a: 'Yes — MCS-certified for SEG payments and OZEV-approved for EVHS / EVCS grants where eligible. Heat-pump integration is via SG Ready / EEBUS open standards, so it works with the major UK heat-pump brands.',
-      },
-      {
-        q: 'Do I need 3-phase power?',
-        a: 'Not necessarily. The 6 kW inverter is sized for single-phase UK supplies. If your home is already 3-phase (common in some larger properties), we\'ll match the install accordingly.',
-      },
-      {
-        q: 'Will this future-proof my home?',
-        a: 'Yes — Home Energy Ultra is designed as a 10-year platform. Modular batteries can be expanded to 20 kWh, new HEMS features arrive over-the-air, and SKYWORTH\'s UK service team supports the system for its full lifetime.',
-      },
-      {
-        q: 'What warranty do I get?',
-        a: '10-year whole-programme warranty covering product, performance and workmanship — modules, inverter, battery, mounting, EV-charger interface and heat-pump interface, all from one installer. Annual system health check included years 1–10.',
+        q: 'Can I keep my generator as a fallback?',
+        a: 'Whether a generator can be integrated into the system depends on the equipment and installation design. The team can advise on the appropriate topology for your site.',
       },
     ],
     lifestyleGallery: [
-      { src: '/images/solution_4.webp', alt: 'Home Energy Ultra whole-home system' },
-      { src: '/images/Smart_home.webp', alt: 'Home Energy Ultra lifestyle render' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 10.24 kWh battery stack' },
-      { src: '/images/cloud-app-data.webp', alt: 'Solavita HEMS Pro app dashboard' },
+      { src: '/images/solution_3.webp', alt: 'BUSINESS Entry 3-Phase system' },
+      { src: '/images/electronic.webp', alt: 'Three-phase electrical equipment' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack' },
     ],
-    imagePath: '/images/solution_4.webp',
-    imageAlt:
-      'Home Energy Ultra - whole-home solar, battery, EV and heat pump system',
+    imagePath: '/images/BUSINESS-Entry-3-Phase.webp',
+    imageAlt: 'BUSINESS Entry 3-Phase — 11.78 kWp solar and 16 kWh battery',
+    priceNgn: NG_SIMULATED_PRICE_NGN['business-entry-3-phase'],
+    segment: 'businesses',
+  },
+  {
+    id: 'business-standard-3-phase',
+    slug: 'business-standard-3-phase',
+    eyebrow: 'Three phase · Standard commercial',
+    title: 'BUSINESS Standard 3-Phase',
+    intro:
+      'A standard three-phase solar and storage solution for SMEs, food and beverage businesses, restaurants and offices. Designed for regular daytime use with dependable backup.',
+    shortIntro:
+      'Three-phase solution for SMEs, F&B businesses, restaurants and offices.',
+    metric: 'Dependable daytime power',
+    headlineStats: [
+      { value: '17.36 kWp', label: 'Solar PV', icon: 'solar' },
+      { value: '32 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    galleryImages: [
+      { src: '/images/solution_4.webp', alt: 'BUSINESS Standard 3-Phase — 17.36 kWp solar and 32 kWh battery', label: 'System' },
+      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
+      { src: '/images/product-inverter-2.webp', alt: 'Solavita 15 kW three-phase inverter', label: 'Inverter' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module', label: 'Battery' },
+    ],
+    highlights: [
+      '28 × 620 W PV modules — 17.36 kWp total',
+      '15 kW three-phase inverter',
+      '32 kWh nominal battery storage (2 × 16 kWh modules)',
+      'For SMEs, restaurants, F&B businesses and offices',
+    ],
+    addons: [
+      { id: 'battery', label: 'Battery storage', included: true },
+      { id: 'expansion', label: 'Battery expansion', included: true },
+      { id: 'ev', label: 'EV charging', included: false },
+      { id: 'hems', label: 'HEMS app', included: false },
+    ],
+    specTable: [
+      { label: 'PV modules', value: '28 × 620 W monocrystalline' },
+      { label: 'Total rated PV capacity', value: '17.36 kWp' },
+      { label: 'Inverter', value: '15 kW, three phase' },
+      { label: 'Battery storage', value: '2 × 16 kWh modules; 32 kWh nominal total' },
+      { label: 'Phase type', value: 'Three phase' },
+      { label: 'Estimated annual generation', value: '22,000–23,000 kWh (estimate)' },
+    ],
+    kpis: [
+      { value: '22,000–23,000', label: 'Estimated annual kWh' },
+      { value: '32 kWh', label: 'Battery capacity' },
+      { value: '17.36 kWp', label: 'Total rated PV' },
+      { value: 'Three phase', label: 'Phase' },
+    ],
+    boxContents: [
+      '28 × 620 W PV modules',
+      '1 × 15 kW three-phase inverter',
+      '2 × 16 kWh battery modules (32 kWh stackable)',
+      'Roof-type-matched mounting kit',
+      'Free site survey and load assessment',
+    ],
+    installationTime:
+      'TBD — Confirmed installation scope and lead time',
+    warranty: 'TBD — Approved module, inverter, battery and workmanship warranty',
+    bullets: [
+      '28 × 620 W PV modules (17.36 kWp)',
+      '15 kW three-phase inverter',
+      '32 kWh battery storage (2 × 16 kWh)',
+      'For regular daytime use with dependable backup',
+    ],
+    faqs: [
+      {
+        q: 'What kinds of businesses is BUSINESS Standard sized for?',
+        a: 'SMEs, food and beverage businesses, restaurants and offices with regular daytime energy use and a need for dependable backup power.',
+      },
+      {
+        q: 'What is the estimated annual generation?',
+        a: '22,000–23,000 kWh per year. This is a solution-level estimate — actual output depends on location, system design, shading, weather and operating conditions.',
+      },
+      {
+        q: 'How long can the battery provide backup?',
+        a: 'Runtime depends on usable battery capacity and the connected load. Do not infer runtime from battery capacity alone — confirm with a site assessment.',
+      },
+      {
+        q: 'Can I keep my generator as a fallback?',
+        a: 'Whether a generator can be integrated into the system depends on the equipment and installation design.',
+      },
+    ],
+    lifestyleGallery: [
+      { src: '/images/solution_4.webp', alt: 'BUSINESS Standard 3-Phase system' },
+      { src: '/images/Smart_home.webp', alt: 'BUSINESS Standard lifestyle render' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
+    ],
+    imagePath: '/images/BUSINESS-Standard-3-Phase.webp',
+    imageAlt: 'BUSINESS Standard 3-Phase — 17.36 kWp solar and 32 kWh battery',
+    priceNgn: NG_SIMULATED_PRICE_NGN['business-standard-3-phase'],
+    segment: 'businesses',
+  },
+  {
+    id: 'business-flagship-3-phase',
+    slug: 'business-flagship-3-phase',
+    eyebrow: 'Three phase · Flagship commercial',
+    title: 'BUSINESS Flagship 3-Phase',
+    intro:
+      'A higher-capacity configuration for medium-sized supermarkets, hotels and light-processing operations. Substantial energy needs require a substantial system.',
+    shortIntro:
+      'Higher-capacity configuration for medium-sized supermarkets, hotels and light-processing.',
+    metric: 'Substantial energy needs',
+    headlineStats: [
+      { value: '23.56 kWp', label: 'Solar PV', icon: 'solar' },
+      { value: '32 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    galleryImages: [
+      { src: '/images/solution_4.webp', alt: 'BUSINESS Flagship 3-Phase — 23.56 kWp solar and 32 kWh battery', label: 'System' },
+      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
+      { src: '/images/product-inverter-2.webp', alt: 'Solavita 20 kW three-phase inverter', label: 'Inverter' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module', label: 'Battery' },
+    ],
+    highlights: [
+      '38 × 620 W PV modules — 23.56 kWp total',
+      '20 kW three-phase inverter',
+      '32 kWh nominal battery storage (2 × 16 kWh modules)',
+      'Sized for medium-sized supermarkets, hotels and light-processing',
+    ],
+    addons: [
+      { id: 'battery', label: 'Battery storage', included: true },
+      { id: 'expansion', label: 'Battery expansion', included: true },
+      { id: 'ev', label: 'EV charging', included: false },
+      { id: 'hems', label: 'HEMS app', included: false },
+    ],
+    specTable: [
+      { label: 'PV modules', value: '38 × 620 W monocrystalline' },
+      { label: 'Total rated PV capacity', value: '23.56 kWp' },
+      { label: 'Inverter', value: '20 kW, three phase' },
+      { label: 'Battery storage', value: '2 × 16 kWh modules; 32 kWh nominal total' },
+      { label: 'Phase type', value: 'Three phase' },
+      { label: 'Estimated annual generation', value: '30,000–32,000 kWh (estimate)' },
+    ],
+    kpis: [
+      { value: '30,000–32,000', label: 'Estimated annual kWh' },
+      { value: '32 kWh', label: 'Battery capacity' },
+      { value: '23.56 kWp', label: 'Total rated PV' },
+      { value: 'Three phase', label: 'Phase' },
+    ],
+    boxContents: [
+      '38 × 620 W PV modules',
+      '1 × 20 kW three-phase inverter',
+      '2 × 16 kWh battery modules (32 kWh stackable)',
+      'Roof-type-matched mounting kit',
+      'Free site survey and load assessment',
+    ],
+    installationTime:
+      'TBD — Confirmed installation scope and lead time',
+    warranty: 'TBD — Approved module, inverter, battery and workmanship warranty',
+    bullets: [
+      '38 × 620 W PV modules (23.56 kWp)',
+      '20 kW three-phase inverter',
+      '32 kWh battery storage (2 × 16 kWh)',
+      'For medium-sized supermarkets, hotels and light-processing',
+    ],
+    faqs: [
+      {
+        q: 'Who is BUSINESS Flagship designed for?',
+        a: 'Medium-sized supermarkets, hotels and light-processing operations with substantial energy needs and a three-phase supply.',
+      },
+      {
+        q: 'What is the estimated annual generation?',
+        a: '30,000–32,000 kWh per year. This is a solution-level estimate — actual output depends on location, system design, shading, weather and operating conditions.',
+      },
+      {
+        q: 'How long can the battery provide backup?',
+        a: 'Runtime depends on usable battery capacity and the connected load. Do not infer runtime from battery capacity alone — confirm with a site assessment.',
+      },
+      {
+        q: 'Can I expand beyond 32 kWh?',
+        a: 'TBD — Confirm supported expansion limits for the Flagship inverter and battery model with the engineering team before public launch.',
+      },
+    ],
+    lifestyleGallery: [
+      { src: '/images/solution_4.webp', alt: 'BUSINESS Flagship 3-Phase system' },
+      { src: '/images/Smart_home.webp', alt: 'BUSINESS Flagship lifestyle render' },
+      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
+    ],
+    imagePath: '/images/BUSINESS-Flagship-3-Phase.webp',
+    imageAlt: 'BUSINESS Flagship 3-Phase — 23.56 kWp solar and 32 kWh battery',
+    priceNgn: NG_SIMULATED_PRICE_NGN['business-flagship-3-phase'],
+    segment: 'businesses',
   },
 ]
 
@@ -702,24 +854,24 @@ export interface WhySolavitaPoint {
 
 export const whySolavita: WhySolavitaPoint[] = [
   {
-    title: 'UK-first engineering',
+    title: 'Defined solutions',
     description:
-      'Every system is sized for British roofs, weather and grid requirements - not adapted from elsewhere.',
+      'Compare panel counts, inverter ratings and battery capacities in one place across six solutions for homes, larger residences and small businesses.',
   },
   {
-    title: 'Two-week install',
+    title: 'Sized for real energy needs',
     description:
-      'From signed contract to commissioned system in around 14 days, with one project manager for the whole journey.',
+      'From essential backup to higher-load homes and selected small commercial applications — every solution is designed around a specific energy profile.',
   },
   {
-    title: 'Backed by SKYWORTH',
+    title: 'Backed by the SKYWORTH brand',
     description:
-      'Solavita is the UK residential solar brand of the SKYWORTH Group - a £7.7bn global electronics company.',
+      'Solar and energy solutions backed by the SKYWORTH Group, presented with clear configuration data and a transparent path from enquiry to installation.',
   },
   {
-    title: '10-year warranty',
+    title: 'Local support arrangements',
     description:
-      'Product, performance and workmanship - backed by a UK-based service team for the lifetime of the system.',
+      'TBD — Verified Nigerian installation, customer service and after-sales arrangements.',
   },
 ]
 

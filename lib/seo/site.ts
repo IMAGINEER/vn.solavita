@@ -1,34 +1,54 @@
 // Site-wide SEO constants. Every public page's `generateMetadata` +
 // the dynamic sitemap/robots feed off these so the brand stays
 // consistent across <title>, OG, Twitter, JSON-LD, and the canonical.
+//
+// Nigeria site — built from `content/nigeria/*` briefs. All business
+// facts that haven't been verified (legal entity, address, phone, ...)
+// are surfaced as visible red TBDs in the UI; this file holds the
+// placeholder strings that drive metadata so a single edit cascades
+// across every page.
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://uk.solavita.com'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ng.solavita.com'
 
-export const SITE_NAME = 'Solavita UK'
-export const SITE_LOCALE = 'en_GB'
+export const SITE_NAME = 'Solavita Nigeria'
+export const SITE_LOCALE = 'en_NG'
 export const SITE_BRAND_SHORT = 'Solavita'
-/** Legal entity name (Terms page, footer) - distinct from the marketing brand. */
-export const SITE_LEGAL_NAME = 'Solavita Energy UK Limited'
+/**
+ * Legal entity name (Terms page, footer, JSON-LD `legalName`).
+ * Placeholder — the verified Nigerian legal entity must replace this
+ * before production launch. See implementation-audit.md §5.
+ */
+export const SITE_LEGAL_NAME = 'TBD — Verified Nigeria legal entity'
 
-/** UK Companies House company number (17466951). */
-export const SITE_COMPANY_NUMBER = '17466951'
+/**
+ * Nigerian corporate registry number (CAC).
+ * Placeholder — supply the actual registration number before launch.
+ */
+export const SITE_COMPANY_NUMBER = 'TBD — Verified CAC registration number'
 
-/** Registered office address (per Companies House filing). */
+/**
+ * Registered office address.
+ * Placeholder — supply the actual registered office before launch.
+ */
 export const SITE_REGISTERED_OFFICE =
-  'C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom'
+  'TBD — Verified Nigeria registered office address'
 
-/** Default share image. Currently reuses the homepage hero render
- * (assets already in repo) as a stand-in until a purpose-built 1200x630
- * branded OG asset is produced. The page-level `buildPageMetadata` helper
- * lets each page override this with its own hero asset (see /solutions,
- * /hems, ...). */
+/**
+ * Default share image. Reuses the homepage hero render as a stand-in
+ * until a purpose-built 1200×630 branded NG OG asset is produced. The
+ * page-level `buildPageMetadata` helper lets each page override this
+ * with its own hero asset.
+ *
+ * Launch-blocker: replace with an NG-specific 1200×630 OG before
+ * production release. Tracked in implementation-qa.md.
+ */
 export const DEFAULT_OG_IMAGE = '/images/hero-system-render.webp'
 
 export const DEFAULT_DESCRIPTION =
-  'Premium solar panels and battery storage for UK homes. MCS-certified. Two-week installation. UK-wide support.'
+  'Explore solar and battery solutions for Nigerian homes and small businesses. Compare system configurations and find a solution for more reliable power and less generator dependence.'
 
-/** Append ` | Solavita UK` consistently. */
+/** Append ` | Solavita Nigeria` consistently. */
 export function appendSiteTitle(title: string | null | undefined): string {
   const t = (title ?? '').trim()
   if (!t) return SITE_NAME

@@ -8,13 +8,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Partner Programmes',
+  title: 'Solar Installer & Business Partnerships | Solavita Nigeria',
   path: '/for-partners',
   description:
-    'Become a Solavita partner. Installer, energy and business programmes for UK solar and storage projects.',
+    'Explore partnership opportunities with Solavita for solar customer referrals, installation services and local energy solutions in Nigeria.',
   ogImage: '/images/hero-partners.webp',
   ogImageAlt:
-    'Solavita UK Partner Programmes - installer, energy and business programmes',
+    'Solavita Nigeria partnerships - installer, distribution and referral programmes',
 })
 
 export default function Page() {
@@ -24,14 +24,14 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/for-partners',
-            name: 'Partner Programmes',
+            name: 'Solar Installer & Business Partnerships | Solavita Nigeria',
             description:
-              'Become a Solavita partner. Installer, energy and business programmes for UK solar and storage projects.',
+              'Explore partnership opportunities with Solavita for solar customer referrals, installation services and local energy solutions in Nigeria.',
           }),
           partnerProgramJsonLd(),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
-            { name: 'Partner Programmes', url: '/for-partners' },
+            { name: 'For Partners', url: '/for-partners' },
           ]),
         ]}
       />

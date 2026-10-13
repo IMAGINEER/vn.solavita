@@ -147,10 +147,10 @@ export default function PartnerCTA() {
                   working days. If it’s urgent, you can reach us
                   directly at{' '}
                   <a
-                    href="mailto:partners@solavita.com"
+                    href="mailto:ng@solavita.com"
                     className="text-uk-teal-dark hover:text-uk-teal transition-colors"
                   >
-                    partners@solavita.com
+                    ng@solavita.com
                   </a>
                   .
                 </p>
@@ -159,7 +159,7 @@ export default function PartnerCTA() {
                   onClick={reset}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
                 >
-                  Submit another enquiry →
+                  Submit another enquiry
                 </button>
               </motion.div>
             ) : (
@@ -250,10 +250,10 @@ export default function PartnerCTA() {
                   <p className="text-xs text-uk-slate">
                     Or email us directly:{' '}
                     <a
-                      href="mailto:partners@solavita.com"
+                      href="mailto:ng@solavita.com"
                       className="text-uk-teal-dark hover:text-uk-teal transition-colors"
                     >
-                      partners@solavita.com
+                      ng@solavita.com
                     </a>
                   </p>
 
@@ -268,7 +268,7 @@ export default function PartnerCTA() {
                         Sending...
                       </>
                     ) : (
-                      <>Submit enquiry →</>
+                      <>Submit enquiry</>
                     )}
                   </button>
                 </div>

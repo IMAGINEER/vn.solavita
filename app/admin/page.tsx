@@ -8,12 +8,12 @@ export const dynamic = 'force-dynamic'
 export default async function AdminDashboardPage() {
   const user = await requireAdmin()
 
-  // Single source of truth: count UK leads (country = 'uk') to surface on
+  // Single source of truth: count NG leads (country = 'ng') to surface on
   // the dashboard. Cheap query - keeps the index on country busy.
   const { count: leadCount } = await supabase
     .from('consultation_leads')
     .select('id', { count: 'exact', head: true })
-    .eq('country', 'uk')
+    .eq('country', 'ng')
 
   return (
     <div className="space-y-6">
@@ -22,7 +22,7 @@ export default async function AdminDashboardPage() {
           Welcome back, {user.username}
         </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          UK back-office - quick links to the consultation pipeline.
+          NG back-office - quick links to the consultation pipeline.
         </p>
       </div>
 
@@ -38,7 +38,7 @@ export default async function AdminDashboardPage() {
             {leadCount ?? 0}
           </div>
           <div className="text-xs font-cw-bold text-uk-slate uppercase tracking-wider mt-1">
-            UK consultation leads
+            NG consultation leads
           </div>
         </Link>
       </div>

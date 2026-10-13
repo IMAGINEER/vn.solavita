@@ -1,15 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { Sun, Banknote, ArrowRight } from 'lucide-react'
+import { Sun, ArrowRight } from 'lucide-react'
 import { type CaseStudy } from '@/lib/data/uk-cases'
 
 /* Lucide icons - theme-neutral via currentColor. */
 const SunIcon = ({ className }: { className?: string }) => (
   <Sun className={className ?? 'w-4 h-4'} strokeWidth={1.5} />
-)
-const PoundIcon = ({ className }: { className?: string }) => (
-  <Banknote className={className ?? 'w-4 h-4'} strokeWidth={1.6} />
 )
 
 interface CaseStudyCardProps {
@@ -73,17 +70,9 @@ export default function CaseStudyCard({
               </span>
             </div>
           )}
-          {caseStudy.annualSaving && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-uk-slate">
-                <PoundIcon className="w-4 h-4 text-uk-emerald" />
-                <span className="text-xs">Annual Saving</span>
-              </div>
-              <span className="font-cw-bold text-uk-emerald tabular-nums">
-                {caseStudy.annualSavingGbp ?? caseStudy.annualSaving}
-              </span>
-            </div>
-          )}
+          {/* NG consumer surface does not display the annualSaving
+              (price) field. The data is kept in the model so verified
+              NG cases can opt-in to show it later. */}
         </div>
       )}
 

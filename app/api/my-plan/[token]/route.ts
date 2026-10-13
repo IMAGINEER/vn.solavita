@@ -85,9 +85,10 @@ export async function GET(
       ].join(', '),
     )
     .eq('plan_token', token)
-    // UK + DE share the same Supabase project. Restrict to UK rows so a
-    // DE token can't accidentally resolve here.
-    .eq('country', 'uk')
+    // All Solavita sites (NG/UK/DE/IT) share the same Supabase project.
+    // Restrict to NG rows so another site's token can't accidentally
+    // resolve here.
+    .eq('country', 'ng')
     .maybeSingle()
 
   if (error) {

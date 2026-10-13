@@ -2,6 +2,9 @@
 // All callers share `buildPostMetadata` / `buildCategoryMetadata` /
 // `buildIndexMetadata` so a future tweak (e.g. locale flip) lands in
 // one place.
+//
+// Nigeria site - the helpers here are unchanged in shape; SITE_NAME /
+// SITE_LOCALE / DEFAULT_DESCRIPTION are now NG-flavored in `./site`.
 
 import type { Metadata } from 'next'
 import type { BlogCategory, BlogPostFull } from '@/lib/types/blog'
@@ -25,11 +28,10 @@ export interface BuildIndexOpts {
 export function buildIndexMetadata(opts: BuildIndexOpts): Metadata {
   const path = opts.path ?? '/blog'
   const description = opts.description ?? DEFAULT_DESCRIPTION
-  // Pass `opts.title` raw - the root layout's `title.template: '%s | Solavita UK'`
+  // Pass `opts.title` raw - the root layout's `title.template: '%s | Solavita Nigeria'`
   // adds the brand suffix exactly once. Calling `appendSiteTitle(opts.title)`
   // here would double the suffix (root template + manual append), producing
-  // titles like `Blog | Solavita UK | Solavita UK` on `/blog`. Same pattern
-  // as `buildPageMetadata` so the whole site is consistent.
+  // titles like `Blog | Solavita Nigeria | Solavita Nigeria` on `/blog`.
   return {
     title: opts.title,
     description,
@@ -58,7 +60,6 @@ export function buildCategoryMetadata(category: BlogCategory): Metadata {
   const description =
     category.description_en ?? DEFAULT_DESCRIPTION
   const title = `${category.name_en} | Blog`
-  // Same root-template-once pattern as buildIndexMetadata / buildPageMetadata.
   return {
     title,
     description,
@@ -96,10 +97,8 @@ export function buildPostMetadata({ post, categorySlug }: BuildPostOpts): Metada
   const canonical = absoluteUrl(path)
   const tagNames = post.tags.map((t) => t.name_en)
   return {
-    // Pass `post.title` raw - the root layout's `title.template: '%s | Solavita UK'`
-    // adds the brand suffix exactly once. Same root-cause fix as
-    // `buildIndexMetadata` / `buildCategoryMetadata` (was double-suffixing
-    // `Blog | Solavita UK | Solavita UK` on every blog page).
+    // Pass `post.title` raw - the root layout's `title.template: '%s | Solavita Nigeria'`
+    // adds the brand suffix exactly once.
     title: post.title,
     description,
     alternates: { canonical },
@@ -156,8 +155,8 @@ export const SITE_CANONICAL = SITE_URL
    Static marketing-page builder.
 
    Every public marketing page calls this so canonical/robots land in one
-   place. Title-suffix (` | Solavita UK`) is added by the root layout's
-   `title.template` - pages only pass the page-specific title.
+   place. Title-suffix (` | Solavita Nigeria`) is added by the root
+   layout's `title.template` - pages only pass the page-specific title.
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface BuildPageOpts {

@@ -36,7 +36,7 @@ export default function HemsPage() {
         }
         description="Tell us about your home. Our UK engineers will design the right HEMS-managed system - solar, battery, EV charger and heat pump - and send you a clear, no-obligation quote."
         secondaryLabel="Talk to our team"
-        secondaryHref="mailto:uk@solavita.com"
+        secondaryHref="mailto:ng@solavita.com"
       />
 
       <Footer />

@@ -38,7 +38,7 @@ export default function AboutHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Our UK engineering base
+            Our Nigerian launch
           </span>
         </motion.span>
 
@@ -50,7 +50,7 @@ export default function AboutHero() {
         >
           Global heritage.
           <br />
-          <span className="text-gradient">Built for the UK.</span>
+          <span className="text-gradient">Built for Nigeria.</span>
         </motion.h1>
 
         <motion.p
@@ -59,9 +59,9 @@ export default function AboutHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Solavita is the UK residential solar brand of the SKYWORTH
-          Group - a £7.7bn global electronics company bringing 80+
-          years of German engineering heritage (Metz) to British homes.
+          Solavita Nigeria is the residential solar brand of the
+          SKYWORTH Group — bringing decades of German engineering
+          heritage (Metz) to Nigerian homes and small businesses.
         </motion.p>
       </div>
     </section>

@@ -1,5 +1,6 @@
 export function consultationConfirmationEmail(data: {
-  country: 'de' | 'uk' // UK repo only serves 'uk' - see assertion below
+  country: 'de' | 'uk' | 'ng' // NG repo serves 'ng' or 'uk' (UK legacy template
+  // retained for now; templates are differentiated at the content layer)
   salutation?: string
   firstName?: string
   lastName?: string
@@ -13,11 +14,11 @@ export function consultationConfirmationEmail(data: {
    */
   planLink?: string
 }) {
-  // UK repo only serves the English template. If we ever see 'de' here,
-  // it's a bug - German templates live in the DE repo.
-  if (data.country !== 'uk') {
+  // NG/UK repos serve English templates. 'de' is a bug - German
+  // templates live in the DE repo.
+  if (data.country === 'de') {
     throw new Error(
-      `consultationConfirmationEmail called with country='${data.country}' from UK repo - German templates live in the DE repo.`
+      `consultationConfirmationEmail called with country='${data.country}' from NG repo - German templates live in the DE repo.`
     )
   }
 
@@ -25,7 +26,7 @@ export function consultationConfirmationEmail(data: {
   const name = [salutation, data.firstName, data.lastName].filter(Boolean).join(' ') || 'there'
 
   return {
-    subject: 'Your enquiry is with us - Solavita UK',
+    subject: 'Your enquiry is with us - Solavita Nigeria',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -64,15 +65,14 @@ ${data.phone ? `<p style="margin:0; font-size:14px; color:#374151;">Phone: ${dat
 </table>
 
 <p style="font-size:14px; color:#374151; line-height:1.6; margin:0 0 8px 0;">You can reach our team directly:</p>
-<p style="font-size:13px; color:#6b7280; line-height:1.7; margin:0;">uk@solavita.com · Mon-Fri 9-18 GMT</p>
+<p style="font-size:13px; color:#6b7280; line-height:1.7; margin:0;">TBD — Verified Nigerian sales/support email · TBD — Confirmed operating hours</p>
 </td></tr>
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">Solavita Energy UK Limited · Company No. 17466951</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Registered in England and Wales</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Registered office: C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">A SKYWORTH Group company · uk.solavita.com</p>
+<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Verified Nigeria legal entity · TBD — Verified CAC registration number</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Verified Nigeria registered office address</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita is presented as a solar and energy solutions brand associated with the SKYWORTH Group · ng.solavita.com</p>
 </td></tr>
 
 </table>

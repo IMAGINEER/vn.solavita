@@ -1,18 +1,23 @@
 /**
- * Contact Us page data.
+ * Contact Us page data — Nigeria.
  *
- * The enquiry subject list drives the dropdown on the form. The channel
- * list drives the three contact-method cards. All copy placeholder.
+ * Per `content/nigeria/contact-us.md`:
+ *   - 6 selectable enquiry categories (Section 2)
+ *   - All contact channels (phone, email, address, hours) are TBD until
+ *     business supplies verified Nigerian contact details
+ *
+ * Every TBD is surfaced in red on the website through the
+ * `components/ui/tbd-text.tsx` component.
  */
 
 import type { ReactNode } from 'react'
 
 export type ContactSubjectId =
-  | 'general'
-  | 'sales'
-  | 'support'
-  | 'partner'
-  | 'press'
+  | 'residential'
+  | 'small-commercial'
+  | 'existing-system'
+  | 'installer-partner'
+  | 'distribution-partner'
   | 'other'
 
 export interface ContactSubject {
@@ -23,33 +28,38 @@ export interface ContactSubject {
 
 export const contactSubjects: ContactSubject[] = [
   {
-    id: 'general',
-    label: 'General enquiry',
-    description: 'A general question about Solavita or our products.',
+    id: 'residential',
+    label: 'Residential solar system',
+    description:
+      'A solar and battery package for your home — including essential circuits, ACs and everyday appliances.',
   },
   {
-    id: 'sales',
-    label: 'Sales · Get a quote',
-    description: 'You would like a design, quote or pricing information.',
+    id: 'small-commercial',
+    label: 'Small commercial solar system',
+    description:
+      'Solar and storage for a shop, office, restaurant or other small commercial site.',
   },
   {
-    id: 'support',
-    label: 'Existing customer support',
-    description: 'You already have a Solavita system and need help.',
+    id: 'existing-system',
+    label: 'Existing system support',
+    description:
+      'You already have a Solavita system and need help with monitoring, batteries or service.',
   },
   {
-    id: 'partner',
-    label: 'Partnership · B2B',
-    description: 'You would like to discuss installer or energy / business partner programmes.',
+    id: 'installer-partner',
+    label: 'Installation partnership',
+    description:
+      'You are an installer or electrical service provider interested in working together.',
   },
   {
-    id: 'press',
-    label: 'Press · Media',
-    description: 'Editorial, media kit or interview requests.',
+    id: 'distribution-partner',
+    label: 'Distribution partnership',
+    description:
+      'You are a local business interested in equipment distribution or customer access.',
   },
   {
     id: 'other',
-    label: 'Something else',
+    label: 'Other enquiry',
     description: 'Tell us what you have in mind.',
   },
 ]
@@ -65,36 +75,24 @@ export interface ContactChannel {
 export const contactChannels: ContactChannel[] = [
   {
     label: 'Email',
-    value: 'uk@solavita.com',
-    href: 'mailto:uk@solavita.com',
-    description: 'Reply within one working day.',
+    value: 'TBD — Verified Nigerian sales/support email',
+    href: 'mailto:',
+    description: 'Reply within one working day once a verified address is supplied.',
     icon: 'mail',
   },
   {
     label: 'WhatsApp',
-    value: '+44 074 5494 5519',
-    href: 'https://wa.me/4407454945519',
-    description: (
-      <>
-        Tap to chat · Mon-Fri · 09:00-18:00 · UK hours.
-        <br />
-        No WhatsApp?{' '}
-        <a
-          href="tel:+4407454945519"
-          className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
-        >
-          Call directly
-        </a>
-        .
-      </>
-    ),
+    value: 'TBD — Verified Nigerian business number',
+    href: 'https://wa.me/',
+    description:
+      'TBD — Confirmed Nigerian operating hours and WhatsApp availability.',
     icon: 'phone',
   },
   {
     label: 'Office',
-    value: 'C/O Buzzacott LLP, 130 Wood Street, London EC2V 6DL, United Kingdom',
-    href: 'https://maps.google.com/?q=130+Wood+Street+London+EC2V+6DL',
-    description: 'Registered Office · Service & Support.',
+    value: 'TBD — Verified Nigeria office address',
+    href: 'https://maps.google.com/',
+    description: 'TBD — Registered office and service area.',
     icon: 'map-pin',
   },
 ]

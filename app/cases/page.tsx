@@ -1,46 +1,32 @@
 import CasesPage from './PageClient'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import JsonLd from '@/components/seo/JsonLd'
-import {
-  webPageJsonLd,
-  breadcrumbJsonLd,
-  creativeWorkListJsonLd,
-} from '@/lib/seo/jsonld'
-import { caseStudies } from '@/lib/data/uk-cases'
-import { absoluteUrl } from '@/lib/seo/site'
+import { webPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Case Studies',
+  title: 'Solar Installation Stories | Solavita Nigeria',
   path: '/cases',
   description:
-    'Real Solavita installations across Italy and Germany. See how solar and battery systems perform on homes like yours.',
+    'Explore solar and battery system applications for homes and businesses. Nigerian customer cases will be added as verified projects become available.',
   ogImage: '/images/hero-cases.webp',
   ogImageAlt:
-    'Solavita case studies - real installations of solar and battery systems across Europe',
+    'Reference solar and battery installations from across our global markets',
 })
 
 export default function Page() {
-  // Project each `CaseStudy` into the schema-friendly shape. The detail
-  // pages themselves stay `noindex` (see app/cases/[slug]/page.tsx) so
-  // we deliberately emit CreativeWork stubs here - not Article nodes.
-  const list = caseStudies.map((c) => ({
-    name: `${c.city} · ${c.systemLabel}`,
-    url: absoluteUrl(`/cases/${c.slug}/`),
-    image: absoluteUrl(c.imagePath),
-    description: c.description.slice(0, 200),
-  }))
-
+  // No NG case studies have been verified yet, so the creativeWorkList
+  // is empty. The page renders a neutral empty state via the unified
+  // ImagePlaceholder and a TBD message.
   return (
     <>
       <JsonLd
         data={[
           webPageJsonLd({
             path: '/cases',
-            name: 'Case Studies',
+            name: 'Solar Installation Stories | Solavita Nigeria',
             description:
-              'Real Solavita installations across Italy and Germany. See how solar and battery systems perform on homes like yours.',
+              'Explore solar and battery system applications for homes and businesses. Nigerian customer cases will be added as verified projects become available.',
           }),
-          creativeWorkListJsonLd(list),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
             { name: 'Case Studies', url: '/cases' },

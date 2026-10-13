@@ -165,7 +165,7 @@ function Pagination({
           href={makeHref(page + 1)}
           className="inline-flex items-center justify-center h-8 px-3 text-xs font-cw-bold rounded-md border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm transition-colors"
         >
-          Next →
+          Next
         </Link>
       )}
     </div>

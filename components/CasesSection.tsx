@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Sun, Banknote, Star, Quote } from 'lucide-react'
+import { Sun, Star, Quote } from 'lucide-react'
 import { caseStudies, featuredTestimonial } from '@/lib/data/uk-cases'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -26,9 +26,9 @@ const SunIcon = ({ className }: { className?: string }) => (
   <Sun className={className ?? 'w-4 h-4'} strokeWidth={1.5} />
 )
 
-const PoundIcon = ({ className }: { className?: string }) => (
-  <Banknote className={className ?? 'w-4 h-4'} strokeWidth={1.6} />
-)
+// PoundIcon intentionally removed - the NG consumer surface does not
+// display annual saving / price figures. The CasesSection is reused by
+// the homepage and /cases index, both of which must follow this rule.
 
 const StarIcon = ({ className }: { className?: string }) => (
   <Star className={className ?? 'w-4 h-4'} fill="currentColor" />
@@ -123,15 +123,7 @@ export default function CasesSection() {
                     {c.annualGeneration}
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-uk-slate">
-                    <PoundIcon className="w-4 h-4 text-uk-emerald" />
-                    <span className="text-xs">Annual Saving</span>
-                  </div>
-                  <span className="font-cw-bold text-uk-emerald tabular-nums">
-                    {c.annualSavingGbp ?? c.annualSaving}
-                  </span>
-                </div>
+                {/* NG consumer surface does not display price / saving. */}
               </div>
             </div>
           ))}
@@ -166,7 +158,7 @@ export default function CasesSection() {
             href="/cases"
             className="inline-flex items-center gap-2 text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors"
           >
-            View More Cases →
+            View More Cases
           </a>
         </div>
       </div>

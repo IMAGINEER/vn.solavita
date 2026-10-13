@@ -7,9 +7,9 @@ import type { AdminUser, AdminRole } from '@/lib/auth-types'
 
 export type { AdminUser, AdminRole } from '@/lib/auth-types'
 
-// UK admin session cookie is deliberately separate from DE's
-// `sv_admin_session` - UK uses `uk_admin_session`. Logging in on DE
-// does not authenticate UK, and vice versa. Cross-row isolation is
+// NG admin session cookie is deliberately separate from UK/DE/IT.
+// NG uses `ng_admin_session`. Logging in on any other site does not
+// authenticate NG, and vice versa. Cross-row isolation is
 // enforced by:
 //   1. Different cookie name (no shared cookie state in the browser).
 //   2. `path: '/'` - the cookie is sent to BOTH /admin/* page requests
@@ -22,10 +22,11 @@ export type { AdminUser, AdminRole } from '@/lib/auth-types'
 //      cookie from JS access; the storefront server-side reads via
 //      cookies() but never inspects admin-named cookies.
 //   3. Different session tables (`admin_sessions` rows live in the
-//      same Supabase project but tokens are UUIDv4 - even if a UK
-//      cookie were somehow set on the DE domain, the lookup would
-//      miss because DE sessions are written to DE-side rows only).
-const SESSION_COOKIE = 'uk_admin_session'
+//      same Supabase project but tokens are UUIDv4 - even if an NG
+//      cookie were somehow set on another site's domain, the lookup
+//      would miss because that site's sessions are written to its own
+//      rows only).
+const SESSION_COOKIE = 'ng_admin_session'
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
 const SESSION_COOKIE_PATH = '/'
 

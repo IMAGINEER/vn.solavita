@@ -1,8 +1,19 @@
 /**
- * About Us page data.
+ * About Us page data — Nigeria.
  *
- * All copy placeholder for now - designed to be the single edit point
- * when the brand team fills in final wording.
+ * Built from `content/nigeria/About Us.md` (the brief is the source of
+ * truth). All copy is placeholders / TBDs until business supplies the
+ * verified facts. Section-by-section mapping:
+ *   - Section 1 Hero: tagline + body
+ *   - Section 2 Why We Exist: lede
+ *   - Section 3 Our Approach: 4 cards
+ *   - Section 4 Our Brand: SKYWORTH association + verified corporate
+ *     facts TBD
+ *   - Section 5 Our Commitment: service coverage / warranty TBD
+ *   - Section 6 Local Presence: address / coverage TBD
+ *
+ * No UK-specific facts, no SKYWORTH-only claims, no fabricated
+ * corporate history / factory capacity / project counts.
  */
 
 export interface AboutStat {
@@ -11,26 +22,32 @@ export interface AboutStat {
   label: string
 }
 
+/**
+ * Stats block on the About page. Until verified corporate facts are
+ * supplied, every entry is a TBD placeholder; the consumer renders
+ * them with a `TbdText` so the page can be reviewed without
+ * fabricating numbers.
+ */
 export const aboutStats: AboutStat[] = [
   {
-    value: '80+',
-    unit: 'Years',
-    label: 'Of German engineering heritage (Metz)',
+    value: 'TBD',
+    unit: '',
+    label: 'TBD — Verified SKYWORTH Nigerian launch date / presence',
   },
   {
-    value: '4',
-    unit: 'Million',
-    label: 'Households worldwide trust SKYWORTH',
+    value: 'TBD',
+    unit: '',
+    label: 'TBD — Verified Nigerian installation coverage',
   },
   {
-    value: '£7.7bn',
-    unit: 'Group',
-    label: 'SKYWORTH Group annual revenue',
+    value: 'TBD',
+    unit: '',
+    label: 'TBD — Verified global SKYWORTH footprint',
   },
   {
-    value: '2',
-    unit: 'Listed',
-    label: 'Companies',
+    value: 'TBD',
+    unit: '',
+    label: 'TBD — Verified Solavita household figures',
   },
 ]
 
@@ -41,24 +58,24 @@ export interface AboutApproach {
 
 export const aboutApproach: AboutApproach[] = [
   {
-    title: 'Designed for the UK',
+    title: 'Designed Around Real Energy Needs',
     description:
-      'Every component, mounting kit and installation method is specified for British roofs, weather and grid requirements - not adapted from elsewhere.',
+      'We organise our solutions around different power requirements, from essential backup to higher-capacity household and commercial systems.',
   },
   {
-    title: 'Engineered to last',
+    title: 'Clear System Configurations',
     description:
-      'Tier-1 modules, premium lithium-iron-phosphate batteries, and inverters built for high cycle counts. 10-year warranty as standard.',
+      'We explain solar module capacity, inverter ratings and battery storage so customers can compare solutions more confidently.',
   },
   {
-    title: 'One team, one journey',
+    title: 'Technology With a Long-Term Perspective',
     description:
-      'A single Solavita project manager owns your install from survey to commissioning. No sub-contractors, no finger-pointing.',
+      'We combine solar generation and battery storage into systems designed to support more flexible energy use.',
   },
   {
-    title: 'Lifetime UK service',
+    title: 'Local Service and Support',
     description:
-      'Our UK-based service team supports you for the lifetime of your system - monitoring, warranty and any question in between.',
+      'TBD — Verified Nigerian installation, customer service and after-sales arrangements.',
   },
 ]
 
@@ -67,22 +84,28 @@ export interface AboutCertification {
   description: string
 }
 
+/**
+ * Certification list. Every entry is a TBD placeholder. Do not add
+ * MCS / NICEIC / RECC / TUV / CE / 25-year / DARES / Nigerian
+ * regulatory claims until business confirms the certification applies
+ * to Solavita Nigeria.
+ */
 export const aboutCertifications: AboutCertification[] = [
   {
-    label: 'MCS Certified',
-    description: 'Approved for the Smart Export Guarantee (SEG).',
+    label: 'TBD',
+    description: 'TBD — Verified international or Nigerian certification',
   },
   {
-    label: 'G98 / G99',
-    description: 'Compliant with UK grid connection standards.',
+    label: 'TBD',
+    description: 'TBD — Verified international or Nigerian certification',
   },
   {
-    label: 'TÜV · CE · RoHS',
-    description: 'European safety, health and environmental standards.',
+    label: 'TBD',
+    description: 'TBD — Verified international or Nigerian certification',
   },
   {
-    label: 'ISO 9001 · ISO 14001',
-    description: 'Quality management and environmental management.',
+    label: 'TBD',
+    description: 'TBD — Verified international or Nigerian certification',
   },
 ]
 
@@ -92,10 +115,13 @@ export interface AboutRegion {
   role: string
 }
 
+/**
+ * Region / office list. Only SKYWORTH Group HQ is verifiable from
+ * public sources; every Nigerian entry is a TBD until the local
+ * presence is confirmed.
+ */
 export const aboutRegions: AboutRegion[] = [
-  { city: 'London', country: 'United Kingdom', role: 'Registered Office · Service & Support' },
-  { city: 'Manchester', country: 'United Kingdom', role: 'UK Installations North' },
+  { city: 'TBD', country: 'Nigeria', role: 'TBD — Verified Nigerian office and service locations' },
+  { city: 'TBD', country: 'Nigeria', role: 'TBD — Verified installation coverage areas' },
   { city: 'Shenzhen', country: 'China', role: 'Group HQ · SKYWORTH R&D' },
-  { city: 'Stuttgart', country: 'Germany', role: 'European Engineering' },
-  { city: 'Munich', country: 'Germany', role: 'EU Distribution' },
 ]

@@ -7,14 +7,20 @@ import { partnerNotificationEmail } from '@/lib/emails/partner-notification'
 export const dynamic = 'force-dynamic'
 
 // UK team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
-const TEAM_EMAIL = 'uk@solavita.com'
+const TEAM_EMAIL = 'TBD — Verified Nigerian partner email'
 
 const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as const
 
-// Mirrors the `<option>` values in components/partners/PartnerCTA.tsx.
-// If the UI adds a new track, update this whitelist + PartnerCTA in the
-// same change.
-const VALID_TRACKS = ['installer', 'business'] as const
+// Mirrors the `id` values of `partnerTypes` in
+// `lib/data/partners.ts` (also rendered as `<option>` values inside
+// `components/PartnerForm.tsx`). If the UI adds a new track, update
+// this whitelist + `partnerTypes` + `PartnerForm` in the same change.
+const VALID_TRACKS = [
+  'installer',
+  'referral',
+  'distribution',
+  'community',
+] as const
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -70,7 +76,7 @@ export async function POST(req: Request) {
 
   // ── 4. INSERT ───────────────────────────────────────────────────
   const { data, error } = await supabase
-    .from('uk_partner_leads')
+    .from('ng_partner_leads')
     .insert(row)
     .select('id')
     .single()
@@ -90,14 +96,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'uk',
+      country: 'ng',
       to: email,
       subject: confirmation.subject,
       html: confirmation.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'partner_confirmation',
       sent_to: email,
       status: emailResult.success ? 'sent' : 'failed',
@@ -108,7 +114,7 @@ export async function POST(req: Request) {
     console.error('[/api/partner] confirmation email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'partner_confirmation',
       sent_to: email,
       status: 'failed',
@@ -127,14 +133,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'uk',
+      country: 'ng',
       to: TEAM_EMAIL,
       subject: notification.subject,
       html: notification.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'partner_notification',
       sent_to: TEAM_EMAIL,
       status: emailResult.success ? 'sent' : 'failed',
@@ -145,7 +151,7 @@ export async function POST(req: Request) {
     console.error('[/api/partner] notification email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'uk',
+      country: 'ng',
       email_type: 'partner_notification',
       sent_to: TEAM_EMAIL,
       status: 'failed',

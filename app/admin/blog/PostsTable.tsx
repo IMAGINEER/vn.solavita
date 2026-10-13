@@ -245,7 +245,7 @@ export function PostsTable({
               disabled={page >= totalPages}
               onClick={() => updateQuery({ page: page + 1 })}
             >
-              Next →
+              Next
             </Button>
           </div>
         )}

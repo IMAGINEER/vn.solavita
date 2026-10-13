@@ -100,7 +100,7 @@ export const faqItems: FaqItem[] = [
     category: 'product',
     question: 'Are Solavita panels Tier-1?',
     answer:
-      'Yes. We only use Tier-1 monocrystalline modules from manufacturers in BloombergNEF’s top tier.',
+      'TBD — Verified panel tier and BloombergNEF ranking.',
   },
   {
     category: 'monitoring',
@@ -150,21 +150,21 @@ export interface SupportContactChannel {
 export const supportContactChannels: SupportContactChannel[] = [
   {
     label: 'Email',
-    value: 'uk@solavita.com',
-    href: 'mailto:uk@solavita.com',
+    value: 'ng@solavita.com',
+    href: 'mailto:ng@solavita.com',
     description: 'Reply within one working day.',
   },
   {
     label: 'WhatsApp',
-    value: '+44 074 5494 5519',
-    href: 'https://wa.me/4407454945519',
+    value: '+234 074 5494 5519',
+    href: 'https://wa.me/23407454945519',
     description: (
       <>
-        Tap to chat · Mon-Fri · 09:00-18:00 · UK hours.
+        Tap to chat · Mon-Fri · 09:00-18:00 · NG hours.
         <br />
         No WhatsApp?{' '}
         <a
-          href="tel:+4407454945519"
+          href="tel:+23407454945519"
           className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
         >
           Call directly

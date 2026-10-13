@@ -10,7 +10,7 @@ export const metadata = buildPageMetadata({
   title: 'Privacy Policy',
   path: '/privacy',
   description:
-    'How Solavita Energy UK Limited collects, uses and protects your personal data under UK GDPR.',
+    'How Solavita collects, uses, stores and shares personal information, in accordance with applicable data protection laws.',
 })
 
 export default function Page() {
@@ -20,9 +20,9 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/privacy',
-            name: 'Solavita UK Privacy Policy',
+            name: 'Solavita Privacy Policy',
             description:
-              'How Solavita Energy UK Limited collects, uses and protects your personal data under UK GDPR.',
+              'How Solavita collects, uses, stores and shares personal information, in accordance with applicable data protection laws.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

@@ -6,7 +6,7 @@
  * to the customer's address which we put in the body).
  */
 
-const TEAM_EMAIL = 'uk@solavita.com'
+const TEAM_EMAIL = 'TBD — Verified Nigerian sales/support email'
 
 function subjectLabel(subject: string): string {
   // contactSubjects uses lowercase ids ('general', 'sales', ...). Capitalise
@@ -15,13 +15,14 @@ function subjectLabel(subject: string): string {
 }
 
 export function contactNotificationEmail(data: {
-  salutation: string | null
+  salutation?: string | null
   firstName: string
   lastName: string
   email: string
-  phone: string | null
-  postcode: string | null
-  city: string | null
+  phone?: string | null
+  postcode?: string | null
+  city?: string | null
+  state?: string | null
   subject: string
   message: string
 }) {
@@ -30,7 +31,7 @@ export function contactNotificationEmail(data: {
     .join(' ')
 
   return {
-    subject: `[UK Contact] ${subjectLabel(data.subject)} - ${fullName || data.email}`,
+    subject: `[NG Contact] ${subjectLabel(data.subject)} - ${fullName || data.email}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -41,7 +42,7 @@ export function contactNotificationEmail(data: {
 <!-- Header -->
 <tr><td style="background: linear-gradient(135deg, #0f766e 0%, #10b981 100%); padding:20px 32px;">
 <h1 style="margin:0; font-size:18px; color:#ffffff; font-weight:700;">New contact enquiry</h1>
-<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">uk.solavita.com/contact-us → ${TEAM_EMAIL}</p>
+<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">ng.solavita.com/contact-us → ${TEAM_EMAIL}</p>
 </td></tr>
 
 <!-- Body -->
@@ -53,6 +54,7 @@ export function contactNotificationEmail(data: {
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Email</td><td style="padding:8px 0; font-size:14px; border-top:1px solid #f1f5f9;"><a href="mailto:${data.email}" style="color:#0f766e;">${data.email}</a></td></tr>
 ${data.phone ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Phone</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.phone}</td></tr>` : ''}
 ${data.postcode || data.city ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Location</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${[data.city, data.postcode].filter(Boolean).join(', ')}</td></tr>` : ''}
+${data.state ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">State</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.state}</td></tr>` : ''}
 </table>
 
 <!-- Message -->

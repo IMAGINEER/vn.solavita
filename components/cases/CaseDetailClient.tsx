@@ -137,7 +137,7 @@ export default function CaseDetailClient({
                 {/* Country pill */}
                 <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm text-xs font-cw-bold text-uk-navy">
                   <span className="w-1.5 h-1.5 rounded-full bg-uk-emerald" />
-                  {c.country === 'IT' ? 'Italy' : 'Germany'}
+                  Nigeria
                 </div>
                 {/* System type pill */}
                 <div className="absolute top-4 right-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-uk-teal text-white text-xs font-cw-bold">
@@ -186,7 +186,7 @@ export default function CaseDetailClient({
                       </span>
                     </div>
                     <div className="mt-3 text-2xl font-cw-bold text-uk-emerald tabular-nums">
-                      {c.annualSavingGbp ?? c.annualSaving}
+                      {c.annualSaving}
                     </div>
                   </div>
                 )}

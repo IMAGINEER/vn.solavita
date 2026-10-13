@@ -8,12 +8,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Contact Us',
+  title: 'Contact Solavita Nigeria | Solar System Enquiries',
   path: '/contact-us',
   description:
-    'Get in touch with Solavita UK. Speak to our team about solar, battery or whole-home energy systems for your home.',
+    'Contact Solavita about residential solar solutions, battery storage, small business systems and partnership opportunities in Nigeria.',
   ogImage: '/images/hero-contact.webp',
-  ogImageAlt: 'Contact Solavita UK - solar, battery and home energy team',
+  ogImageAlt:
+    'Contact Solavita Nigeria - solar system enquiries and partnership opportunities',
 })
 
 export default function Page() {
@@ -23,9 +24,9 @@ export default function Page() {
         data={[
           contactPageJsonLd({
             path: '/contact-us',
-            name: 'Contact Solavita UK',
+            name: 'Contact Solavita Nigeria',
             description:
-              'Get in touch with Solavita UK. Speak to our team about solar, battery or whole-home energy systems for your home.',
+              'Contact Solavita about residential solar solutions, battery storage, small business systems and partnership opportunities in Nigeria.',
           }),
           localBusinessJsonLd(),
           breadcrumbJsonLd([

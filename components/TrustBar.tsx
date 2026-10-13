@@ -3,29 +3,31 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ukTrustItems } from '@/lib/data/uk-trust'
+import { ngTrustItems } from '@/lib/data/uk-trust'
+import TbdText from '@/components/ui/tbd-text'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /**
  * Slim horizontal trust / certification strip.
  *
- * Renders 6 hard-coded certification marks (TÜV / CE / MCS / NICEIC /
- * RECC / 25-year warranty) as PNG assets under `public/images/`. Each
- * item shows: [icon] / [title] / [subtitle]. Icon height is capped at
- * 133px and width follows the asset's intrinsic aspect ratio (so a
- * square mark and a wider mark both render cleanly without squashing).
+ * Nigeria site: the trust item list is intentionally empty
+ * (`ngTrustItems` in `lib/data/uk-trust.ts`) because no NG certification
+ * or warranty mark has been verified. Per the NG content strategy, the
+ * UK marks (MCS / NICEIC / RECC / TUV / CE / 25-year) must not be
+ * carried over and DARES-style claims are forbidden.
  *
- * Light-mode overrides in `app/globals.css` (`.light-mode .trust-bar`,
- * `.light-mode [class*="bg-sv-dark/50"]`, `.light-mode [class*="border-white/"]`,
- * `.light-mode [class*="text-white/"]`) invert the dark surface and
- * white type — no per-mode code needed here.
+ * When the list is empty, the component renders a single muted
+ * `TBD — Verified Nigeria trust marks` line so the strip's vertical
+ * footprint collapses and the rest of the page composition stays
+ * intact. When NG trust marks are added later, the same component
+ * renders them with the same visual treatment as before.
  */
-
 export default function TrustBar() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (ngTrustItems.length === 0) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         sectionRef.current,
@@ -45,6 +47,22 @@ export default function TrustBar() {
     return () => ctx.revert()
   }, [])
 
+  if (ngTrustItems.length === 0) {
+    return (
+      <div
+        ref={sectionRef}
+        className="trust-bar relative py-6 border-y border-white/5 bg-sv-dark/50"
+        data-trust-bar-state="empty"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-[11px] font-cw-regular text-white/60 uppercase tracking-wider">
+            <TbdText text="Verified Nigeria trust marks" className="text-red-400/90 text-[11px] font-cw-bold uppercase tracking-wider" />
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       ref={sectionRef}
@@ -52,18 +70,12 @@ export default function TrustBar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center flex-wrap sm:justify-between gap-6 sm:gap-4 overflow-x-auto pb-2 sm:pb-0">
-          {ukTrustItems.filter((it) => !it.hidden).map((item, i) => (
+          {ngTrustItems.filter((it) => !it.hidden).map((item, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <div
               key={i}
               className="flex flex-col items-center min-w-[80px] text-center flex-shrink-0"
             >
-              {/* Icon — fixed height (matches the original lucide 48px
-                  glass-chip slot); width follows each asset's intrinsic
-                  aspect ratio. Logos range 126-266 px wide natively, so
-                  h-12 keeps every item on a single row at desktop and
-                  keeps the strip's vertical footprint close to its
-                  pre-redesign height. */}
               <img
                 src={item.image}
                 alt={item.title}
@@ -72,12 +84,6 @@ export default function TrustBar() {
                 loading="lazy"
                 className="h-12 w-auto mb-2 object-contain"
               />
-              {/* Title — uppercase + tracking + a real size jump make the
-                  bold/regular pair visually distinct even though
-                  Chuangwei has no heavier weight than bold. Each line
-                  is its own block with whitespace-nowrap so
-                  "Up to 25 Years" can't wrap to "Up to 25 / Years"
-                  inside the wider row. */}
               <div className="text-[12px] font-cw-bold uppercase tracking-wider leading-tight text-white">
                 <span className="block whitespace-nowrap">{item.title}</span>
                 {item.titleBold && (

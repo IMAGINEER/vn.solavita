@@ -7,6 +7,12 @@
 // the object into a `<script type="application/ld+json">` block. Never
 // embed the returned objects unsanitized in HTML - they always go through
 // `withContext` → `JSON.stringify` for safety.
+//
+// Nigeria site - built from `content/nigeria/*` briefs. All business
+// facts that haven't been verified (legal entity, address, phone, ...)
+// are surfaced as visible red TBDs in the UI; this file holds the
+// placeholder strings that drive structured data so a single edit
+// cascades across every page.
 
 import type { BlogCategory, BlogPostFull } from '@/lib/types/blog'
 import type { SolutionDetail } from '@/lib/data/solutions'
@@ -61,11 +67,14 @@ export function jsonLdScript(obj: unknown): string {
    Brand-defining entities (Organization / WebSite)
 
    Lives in the root layout via `<JsonLd>`. Every page that mentions
-   Solavita UK can `@id`-reference these instead of duplicating them.
+   Solavita Nigeria can `@id`-reference these instead of duplicating them.
 
-   Fields are limited to values that exist in the codebase - no
-   invented phone, company number, founding year, or social handles.
-   When business confirms those, add them in one place here.
+   Nigeria rules:
+     - address, contactPoint email, contactPoint telephone: TBD until
+       business confirms.
+     - areaServed: Nigeria.
+     - parentOrganization still references the SKYWORTH Group parent
+       (per About Us.md Section 4).
    ──────────────────────────────────────────────────────────────────────── */
 
 export function organizationJsonLd() {
@@ -80,42 +89,44 @@ export function organizationJsonLd() {
         '@type': 'ImageObject',
         url: absoluteUrl('/images/a1logo02.svg'),
       },
-      // Registered office from app/terms/PageClient.tsx.
+      // Nigerian registered office. Fields TBD until the legal entity
+      // is confirmed and a real registered address is supplied.
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'C/O Buzzacott LLP, 130 Wood Street',
-        addressLocality: 'London',
-        postalCode: 'EC2V 6DL',
-        addressCountry: 'GB',
+        streetAddress: 'TBD — Verified Nigeria street address',
+        addressLocality: 'TBD — Verified Nigeria city',
+        postalCode: 'TBD — Verified Nigeria postal code',
+        addressCountry: 'NG',
       },
-      // Contact point: only fields that exist in the codebase. Telephone
-      // is intentionally omitted until business supplies a real UK number.
+      // Contact point: only fields that exist in the codebase. Email
+      // and telephone are intentionally TBD until business supplies
+      // verified Nigerian contact details.
       contactPoint: [
         {
           '@type': 'ContactPoint',
           contactType: 'customer support',
-          email: 'mailto:uk@solavita.com',
-          areaServed: 'GB',
-          availableLanguage: ['en-GB'],
+          email: 'TBD — Verified Nigerian sales/support email',
+          telephone: 'TBD — Verified Nigerian business number',
+          areaServed: 'NG',
+          availableLanguage: ['en-NG'],
         },
       ],
-      // Parent brand. Public URL from the SKYWORTH corporate site -
-      // footer link target. The parent itself is NOT described here;
-      // we only declare the relationship.
+      // Parent brand. Public URL from the SKYWORTH corporate site.
       parentOrganization: {
         '@type': 'Organization',
         '@id': PARENT_ORG_ID,
         name: 'SKYWORTH Group',
         url: 'https://www.skyworth-pv.com',
       },
-      // Headquarters location - only declared because `lib/data/about.ts`
-      // lists "London · United Kingdom" as the UK office. Do NOT add
-      // foundingDate / sameAs / knowsAbout / award here until business
-      // supplies verifiable values - the brand-defining entity is the
-      // single source of truth used by every other page's schema.
+      // Headquarters placeholder - only the country is real until
+      // business confirms the city.
       location: {
         '@type': 'Place',
-        name: 'London, United Kingdom',
+        name: 'TBD — Verified Nigeria office city',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'NG',
+        },
       },
     },
     ORG_ID,
@@ -183,13 +194,7 @@ export function webPageJsonLd(opts: {
   })
 }
 
-/** AboutPage - extends WebPage, used on `/about-us`.
- *
- * `mainEntity` makes Google's entity graph treat the page as the canonical
- * Solavita UK Organization landing page - useful when an entity exists in
- * Google's KB but no dedicated `/about` URL has been claimed yet.
- * `significantLink` points crawlers at the two highest-traffic surfaces
- * so they get crawled when the about page lands (Hub-and-spoke). */
+/** AboutPage - extends WebPage, used on `/about-us`. */
 export function aboutPageJsonLd(opts: {
   path: string
   name: string
@@ -275,7 +280,10 @@ export function collectionPageJsonLd(opts: {
    We use `Service` (not `Product`) because each tier is a delivered
    installation package (panels + battery + install + warranty), not a
    stand-alone SKU on a shelf. `Product.offers.price` would be
-   misleading and would also need a price we don't have.
+   misleading without a verified price.
+
+   Nigeria: `areaServed` is now Nigeria. Provider/brand remain the
+   canonical Solavita Nigeria Organization.
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface ServiceSpec {
@@ -300,9 +308,7 @@ export function serviceJsonLd(spec: ServiceSpec) {
     url,
     image: absoluteUrl(spec.imagePath),
     provider: { '@id': ORG_ID },
-    areaServed: { '@type': 'Country', name: 'United Kingdom' },
-    // Feature list rendered from `bullets` so we don't hard-code the same
-    // strings twice (page copy vs. Schema).
+    areaServed: { '@type': 'Country', name: 'Nigeria' },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: `${spec.title} inclusions`,
@@ -341,8 +347,9 @@ export function serviceListJsonLd(services: ServiceSpec[]) {
        the /solutions overview (different @id, no conflict).
 
    Pricing is intentionally omitted: the marketing surface never shows a
-   hard price. Google tolerates a Product node without `offers`; we let
-   the lead-capture form surface the price after a consultation.
+   hard price (NG rule: ₦ only with verified approved pricing). Google
+   tolerates a Product node without `offers`; we let the lead-capture
+   form surface the price after a consultation.
    ──────────────────────────────────────────────────────────────────────── */
 
 export function productJsonLd(detail: SolutionDetail) {
@@ -368,8 +375,6 @@ export function productJsonLd(detail: SolutionDetail) {
         name: 'SKYWORTH Group',
         url: 'https://www.skyworth-pv.com',
       },
-      // Per-row spec table → schema.org PropertyValue so Google's
-      // "About this product" / specification rich results can pick them up.
       additionalProperty: detail.specTable.map((row) => ({
         '@type': 'PropertyValue',
         name: row.label,
@@ -381,7 +386,7 @@ export function productJsonLd(detail: SolutionDetail) {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
-   FAQPage - emitted on `/support`.
+   FAQPage - emitted on home, solutions, support.
 
    2026-05-07: Google retired FAQ rich results globally. We still emit
    the schema because (a) AI/LLM crawlers and answer-engine optimisers
@@ -423,10 +428,6 @@ export function faqPageJsonLd(opts: {
 
 /* ────────────────────────────────────────────────────────────────────────
    Article - emitted on blog post pages.
-
-   `publisher` now `@id`-references the canonical Organization from the
-   root layout, so a single Solavita UK entity is the publisher of
-   every blog post and home page (was previously duplicated inline).
    ──────────────────────────────────────────────────────────────────────── */
 
 export function articleJsonLd(
@@ -472,14 +473,10 @@ export function categoryJsonLd(category: BlogCategory) {
 /* ────────────────────────────────────────────────────────────────────────
    LocalBusiness - emitted alongside `ContactPage` on `/contact-us/`.
 
-   UK Solavita is a Companies House-registered company (No. 17466951) with a
-   real registered office, so it qualifies as a LocalBusiness entity per
-   Google's entity guidelines. Fields are limited to facts that exist in
-   the codebase - no fabricated geo coordinates, no fake opening hours,
-   no invented telephone.
-
-   `priceRange` is the schema.org token format ("££" = mid-range) and is
-   the only rating-style field safe to emit without real review evidence.
+   Nigeria: registered office + contact details are TBD until business
+   supplies verified facts. Country is set to NG; `areaServed` is
+   Nigeria. `priceRange` is the schema.org token format — kept generic
+   ("₦₦" = mid-range) only as a styling hint, not a price claim.
    ──────────────────────────────────────────────────────────────────────── */
 
 export function localBusinessJsonLd() {
@@ -490,24 +487,26 @@ export function localBusinessJsonLd() {
       '@id': url,
       name: SITE_LEGAL_NAME,
       url: absoluteUrl('/'),
-      email: 'mailto:uk@solavita.com',
+      email: 'TBD — Verified Nigerian sales/support email',
+      telephone: 'TBD — Verified Nigerian business number',
       image: absoluteUrl(DEFAULT_OG_IMAGE),
-      priceRange: '££',
+      priceRange: '₦₦',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'C/O Buzzacott LLP, 130 Wood Street',
-        addressLocality: 'London',
-        postalCode: 'EC2V 6DL',
-        addressCountry: 'GB',
+        streetAddress: 'TBD — Verified Nigeria street address',
+        addressLocality: 'TBD — Verified Nigeria city',
+        postalCode: 'TBD — Verified Nigeria postal code',
+        addressCountry: 'NG',
       },
-      areaServed: { '@type': 'Country', name: 'United Kingdom' },
+      areaServed: { '@type': 'Country', name: 'Nigeria' },
       parentOrganization: { '@id': PARENT_ORG_ID },
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'mailto:uk@solavita.com',
-        areaServed: 'GB',
-        availableLanguage: ['en-GB'],
+        email: 'TBD — Verified Nigerian sales/support email',
+        telephone: 'TBD — Verified Nigerian business number',
+        areaServed: 'NG',
+        availableLanguage: ['en-NG'],
       },
     },
     url,
@@ -517,18 +516,15 @@ export function localBusinessJsonLd() {
 /* ────────────────────────────────────────────────────────────────────────
    ItemList of CreativeWork - emitted on `/cases/`.
 
-   Each case is a CreativeWork stub (NOT Article - the detail page is
-   `noindex` so giving it a deep Article node would create a dangling
-   entity). The list helps Google's "site links" panel discover the
-   case studies and gives AI crawlers (Perplexity, ChatGPT) a structured
-   picture of the install portfolio.
+   Nigeria: the cases list is empty until real Nigerian installations
+   are added. We still emit the ItemList shape (with zero items) so
+   other pages can `@id`-reference it; the creativeWorkListJsonLd
+   helper accepts an empty array.
 
    Field budget:
-     - name       : city + system label  (e.g. "London · 4-bedroom")
+     - name       : city + system label  (e.g. "Lagos · 7 kWp + 5 kWh")
      - url        : absolute case URL    (matches sitemap entry)
      - image      : case thumbnail
-     - encodingFormat on video + text: NO (case detail pages noindex -
-                                         do not create article entities)
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface CreativeWorkListItem {
@@ -555,14 +551,16 @@ export function creativeWorkListJsonLd(items: CreativeWorkListItem[]) {
 /* ────────────────────────────────────────────────────────────────────────
    SoftwareApplication - emitted on `/hems/`.
 
-   HEMS (Home Energy Management System) is Solavita's mobile/web app for
-   monitoring solar + battery + EV charging. Schema.org's SoftwareApplication
-   is the right fit: it composes with the existing `Service` node (different
-   @id) and lets Google's app panels recognise the product.
+   HEMS (Home Energy Management System) is Solavita's mobile/web app
+   for monitoring solar + battery + EV charging. Schema.org's
+   SoftwareApplication is the right fit: it composes with the existing
+   `Service` node (different @id) and lets Google's app panels
+   recognise the product.
 
-   Pricing: HEMS is bundled free with every Solavita system. We emit
-   `offers.price = 0` only when the codebase confirms "free" - otherwise
-   the field is omitted to avoid fabricating a price.
+   Nigeria: HEMS compatibility is TBD (per hems.md Sections 2, 4, 5).
+   We emit the schema with the features list and intentionally omit
+   `offers` — the `free` flag is not asserted because compatibility
+   with NG inverter/battery models is unverified.
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface SoftwareAppFeatures {
@@ -589,7 +587,7 @@ export function softwareApplicationJsonLd(opts: SoftwareAppFeatures) {
     node.offers = {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'GBP',
+      priceCurrency: 'NGN',
     }
   }
   return withContext(node, url)
@@ -611,18 +609,18 @@ export function partnerProgramJsonLd() {
       '@type': 'WebPage',
       '@id': url,
       url,
-      name: 'For Partners · Solavita UK',
+      name: 'For Partners · Solavita Nigeria',
       description:
-        'Installer, reseller and energy-partner programmes backed by the SKYWORTH Group.',
+        'Solar installer, distribution and customer-referral partnerships in Nigeria.',
       inLanguage: SITE_LOCALE,
       isPartOf: { '@id': SITE_ID },
       publisher: { '@id': ORG_ID },
       mainEntity: {
         '@type': 'Service',
-        name: 'Solavita Partner Programme',
+        name: 'Solavita Nigeria Partner Programme',
         serviceType: 'B2B partnership',
         provider: { '@id': ORG_ID },
-        areaServed: { '@type': 'Country', name: 'United Kingdom' },
+        areaServed: { '@type': 'Country', name: 'Nigeria' },
       },
       about: { '@id': ORG_ID },
     },

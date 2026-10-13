@@ -7,13 +7,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'About Us',
+  title: 'About Solavita Nigeria | Solar Solutions for Nigerian Homes',
   path: '/about-us',
   description:
-    'Solavita UK is the residential solar brand of the SKYWORTH Group. We design, install and service MCS-certified solar and battery systems for UK homes.',
+    'Solavita Nigeria is part of the SKYWORTH Group solar brand. Solar power, battery storage and smart energy management for Nigerian homes and small businesses — designed to reduce generator dependence.',
   ogImage: '/images/hero-about.webp',
   ogImageAlt:
-    'Solavita UK - the residential solar brand of the SKYWORTH Group',
+    'Solavita Nigeria — solar and battery storage for Nigerian homes and businesses',
 })
 
 export default function Page() {
@@ -23,9 +23,9 @@ export default function Page() {
         data={[
           aboutPageJsonLd({
             path: '/about-us',
-            name: 'About Solavita UK',
+            name: 'About Solavita Nigeria',
             description:
-              'Solavita UK is the residential solar brand of the SKYWORTH Group. We design, install and service MCS-certified solar and battery systems for UK homes.',
+              "Discover Solavita's approach to solar and battery storage for Nigerian homes and small businesses, supported by the SKYWORTH brand.",
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

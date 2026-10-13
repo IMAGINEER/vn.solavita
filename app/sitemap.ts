@@ -8,8 +8,7 @@
 
 import type { MetadataRoute } from 'next'
 import { listAllPublishedForSitemap, getCategories } from '@/lib/data/blog'
-import { solutionDetails } from '@/lib/data/solutions'
-import { SITE_URL, absoluteUrl } from '@/lib/seo/site'
+import { absoluteUrl } from '@/lib/seo/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,10 +23,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // next.config.js#trailingSlash.
   const staticPaths: Array<{ path: string; priority: number }> = [
     { path: '/', priority: 1.0 },
-    { path: '/solutions', priority: 0.9 },
+    // The two collection pages replace the legacy /solutions overview
+    // (per content/nigeria/solutions.md). Both point at the same hero
+    // asset and a 0.9 priority so they rank at the same level as the
+    // old overview did.
+    { path: '/solutions/home-solar', priority: 0.9 },
+    { path: '/solutions/business-solar', priority: 0.9 },
     { path: '/cases', priority: 0.8 },
     { path: '/about-us', priority: 0.7 },
-    { path: '/hems', priority: 0.7 },
     { path: '/support', priority: 0.7 },
     { path: '/for-partners', priority: 0.6 },
     { path: '/contact-us', priority: 0.6 },
@@ -44,20 +47,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: s.priority,
   }))
 
-  // Solution detail pages (Amazon-style tier pages).
-  // Each tier ships as a Product schema on its detail page so it makes
-  // sense to also surface it here at the same priority as the overview
-  // (/solutions is 0.9; tier pages are 0.7 - one level deeper so we
-  // trim accordingly). They are kept out of the static array above so
-  // the list is a single source of truth derived from `solutionDetails`.
-  for (const detail of solutionDetails) {
-    entries.push({
-      url: absoluteUrl(`/solutions/${detail.slug}/`),
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    })
-  }
+  // No per-tier /solutions/[slug]/ detail pages. Per the collection-pages
+  // brief (content/nigeria/solutions.md) the two collection pages
+  // (/solutions/home-solar and /solutions/business-solar) are the only
+  // entry points for the six NG packages - the comparison table, FAQs
+  // and tailored CTA on each collection page surface the tier-level
+  // content directly. Per-tier Product schema and SEO live on the
+  // collection page itself.
 
   try {
     const [categories, posts] = await Promise.all([
@@ -98,13 +94,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   }
 
-  // Case-study detail pages are intentionally NOT listed here. The 13
-  // current cases are IT/DE reference installs whose canonical lives
-  // on it.solavita.com / de.solavita.com; the UK copies emit
-  // `<meta name="robots" content="noindex, follow">` in
-  // app/cases/[slug]/page.tsx to keep them out of Google's UK index.
-  // Listing them here too would contradict that signal. Re-add when
-  // the UK site has its own native installs to index.
+  // Case-study detail pages are intentionally NOT listed here. The NG
+  // site has no verified cases yet (`caseStudies` in
+  // `lib/data/uk-cases.ts` is an empty array), so there are no
+  // /cases/[slug] entries to surface. When real NG cases are added,
+  // they emit `<meta name="robots" content="noindex, follow">` (see
+  // app/cases/[slug]/page.tsx) and are therefore not added here
+  // either, to keep the two signals in agreement.
 
   return entries
 }

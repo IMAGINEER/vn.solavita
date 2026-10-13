@@ -155,8 +155,8 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
             <span className="text-gradient">get in touch</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Prefer phone or email? Here are the direct lines into our UK
-            service team.
+            Prefer phone or email? Here are the direct lines into our
+            Nigerian service team.
           </p>
         </div>
 

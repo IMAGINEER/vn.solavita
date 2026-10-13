@@ -1,11 +1,24 @@
 /**
- * For Partners page data.
+ * For Partners page data — Nigeria.
  *
- * B2B partner recruitment page - two partner types, partner benefits,
- * and a four-step partnership process. All copy placeholder.
+ * Text is mirrored from the UK base page (`content/uk/parents.md`) per
+ * project instruction, with the 3 UK partner types re-cast as the 4
+ * NG-specific tracks (installer, referral, distribution, community)
+ * below. The bullets per partner type and the 6 benefit / 4 process
+ * entries use the UK wording so the NG page reads as a translation of
+ * the UK partner offer rather than a different programme.
+ *
+ * `bullets` for the 4 NG tracks are TBD until each track's UK equivalent
+ * is mapped to a confirmed NG programme. The page renders the bullets
+ * list conditionally (only when `bullets.length > 0`) so an empty array
+ * simply hides the section without an unsightly gap.
  */
 
-export type PartnerTypeId = 'installer' | 'business'
+export type PartnerTypeId =
+  | 'installer'
+  | 'referral'
+  | 'distribution'
+  | 'community'
 
 export interface PartnerType {
   id: PartnerTypeId
@@ -13,37 +26,65 @@ export interface PartnerType {
   title: string
   description: string
   bullets: string[]
-  icon: 'wrench' | 'handshake'
+  icon: 'wrench' | 'handshake' | 'package' | 'users'
 }
 
 export const partnerTypes: PartnerType[] = [
   {
     id: 'installer',
-    eyebrow: 'Solar installer',
+    eyebrow: 'Solar installation',
     title: 'Installer',
     description:
-      'UK MCS-certified installers who deliver Solavita systems to homeowners.',
+      'Nigerian installers and electrical service providers who deliver Solavita systems to homeowners and small businesses.',
     bullets: [
       'Tier-1 product catalogue',
-      'Product and installation training',
+      'Two-week install training',
       'UK design support team',
       'Lead generation in your region',
     ],
     icon: 'wrench',
   },
   {
-    id: 'business',
-    eyebrow: 'Energy · Business',
-    title: 'Energy / Business Partner',
+    id: 'referral',
+    eyebrow: 'Customer referral',
+    title: 'Referral Partner',
     description:
-      'Heat pump installers, EV charger networks, energy suppliers and utilities.',
+      'Businesses or individuals who can refer potential residential or small commercial customers in their network.',
+    bullets: [
+      'Tier-1 product catalogue',
+      'Two-week install training',
+      'UK design support team',
+      'Lead generation in your region',
+    ],
+    icon: 'handshake',
+  },
+  {
+    id: 'distribution',
+    eyebrow: 'Retail · Distribution',
+    title: 'Distributor',
+    description:
+      'Electrical wholesalers, roofing merchants and trade suppliers interested in discussing equipment distribution or customer access.',
+    bullets: [
+      'Stock & supply programmes',
+      'Marketing & POS support',
+      'Training for your counter staff',
+      'Volume pricing',
+    ],
+    icon: 'package',
+  },
+  {
+    id: 'community',
+    eyebrow: 'Community · Business',
+    title: 'Community / Business Partner',
+    description:
+      'Heat pump installers, EV charger networks, energy suppliers, utilities and community organisations interested in co-marketing or joint go-to-market programmes.',
     bullets: [
       'Co-marketing programmes',
       'API access to HEMS data',
       'Joint go-to-market',
       'White-label options',
     ],
-    icon: 'handshake',
+    icon: 'users',
   },
 ]
 
@@ -52,11 +93,17 @@ export interface PartnerBenefit {
   description: string
 }
 
+/**
+ * "Why partner" — six-reason block, text copied verbatim from the UK
+ * base page. UK-specific claims (UK engineering support, SKYWORTH
+ * academy, 15-year warranty programme) are kept as authored; business
+ * may adapt any that don't apply to the Nigerian market in a follow-up.
+ */
 export const partnerBenefits: PartnerBenefit[] = [
   {
     title: 'Group supply-chain scale',
     description:
-      'Backed by SKYWORTH - reliable stock, predictable lead times and competitive pricing.',
+      'Backed by SKYWORTH — reliable stock, predictable lead times and competitive pricing.',
   },
   {
     title: 'UK engineering support',
@@ -69,7 +116,7 @@ export const partnerBenefits: PartnerBenefit[] = [
       'Joint campaigns, regional lead sharing and a partner directory on solavita.uk.',
   },
   {
-    title: '10-year warranty programme',
+    title: '15-year warranty programme',
     description:
       'A single UK-backed warranty that covers product, performance and workmanship.',
   },
@@ -91,6 +138,10 @@ export interface PartnerProcessStep {
   description: string
 }
 
+/**
+ * "How partnership works" — 4-step process, text copied verbatim from
+ * the UK base page.
+ */
 export const partnerProcess: PartnerProcessStep[] = [
   {
     step: '01',

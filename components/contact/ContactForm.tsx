@@ -221,10 +221,10 @@ export default function ContactForm() {
                       day at the email you provided. If it’s
                       urgent, you can reach us directly at{' '}
                       <a
-                        href="mailto:uk@solavita.com"
+                        href="mailto:ng@solavita.com"
                         className="text-uk-teal-dark hover:text-uk-teal transition-colors"
                       >
-                        uk@solavita.com
+                        ng@solavita.com
                       </a>
                       .
                     </p>
@@ -233,7 +233,7 @@ export default function ContactForm() {
                       onClick={reset}
                       className="mt-6 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
                     >
-                      Send another message →
+                      Send another message
                     </button>
                   </motion.div>
                 ) : (

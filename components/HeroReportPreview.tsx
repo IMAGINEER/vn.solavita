@@ -417,7 +417,7 @@ export default function HeroReportPreview() {
                     Valid until {formatDateEnGB(metrics.offerValidUntil)}
                   </div>
                 </div>
-                <span className="hrp-offer-cta">Talk to an expert →</span>
+                <span className="hrp-offer-cta">Talk to an expert</span>
               </div>
             </Section>
           </div>

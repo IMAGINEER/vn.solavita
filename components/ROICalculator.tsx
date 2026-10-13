@@ -610,7 +610,7 @@ export default function ROICalculator() {
                 Our AI builds a fixed-price solar design in 15 minutes - accurate yield forecast and savings based on your real location.
               </p>
               <button onClick={openFormModal} className="btn-gradient px-8 py-4 rounded-full text-white font-cw-bold text-base shadow-lg shadow-uk-teal/20">
-                Start AI design →
+                Start AI design
               </button>
             </div>
           </div>

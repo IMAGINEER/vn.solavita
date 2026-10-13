@@ -17,17 +17,18 @@ function getResend(): Resend {
   return _client
 }
 
-// Single source of truth for sender address per country. Mirrors the DE repo's
-// table - keep both in sync if Resend approved-domain list changes.
+// Single source of truth for sender address per country. Mirrors the
+// DE/UK/IT repos' tables - keep them all in sync if Resend approved-domain
+// list changes.
 //
-// `solavita.com` is verified in Resend for both DE and UK, so both
-// countries now send from the same brand-domain `no-reply@` address.
-// (We previously kept a country-specific `uk@` alias so the inbox could
-// route per-market, but Resend's verified-domain model + reply-to rules
-// made the alias redundant and it was retired 2026-09.)
-const FROM_BY_COUNTRY: Record<'de' | 'uk', string> = {
+// `solavita.com` is verified in Resend for DE/UK/NG, so all sites now
+// send from the same brand-domain `no-reply@` address. (Per-market
+// aliases were retired in 2026-09; reply-to rules handle per-market
+// routing if needed.)
+const FROM_BY_COUNTRY: Record<'de' | 'uk' | 'ng', string> = {
   de: 'Solavita <no-reply@solavita.com>',
   uk: 'Solavita <no-reply@solavita.com>',
+  ng: 'Solavita <no-reply@solavita.com>',
 }
 
 export async function sendEmail({
@@ -36,15 +37,15 @@ export async function sendEmail({
   subject,
   html,
 }: {
-  // Optional with default 'uk' to mirror the DE repo's signature -
-  // keeps the two repos' send.ts byte-symmetric so future cross-repo
-  // syncs don't break either side. UK site only ever passes 'uk'.
-  country?: 'de' | 'uk'
+  // Optional with default 'ng' for the NG repo. NG site only ever
+  // passes 'ng' - kept optional so the function signature stays
+  // cross-repo compatible with DE/UK.
+  country?: 'de' | 'uk' | 'ng'
   to: string
   subject: string
   html: string
 }) {
-  const from = FROM_BY_COUNTRY[country ?? 'uk']
+  const from = FROM_BY_COUNTRY[country ?? 'ng']
   const { data, error } = await getResend().emails.send({
     from,
     to,
