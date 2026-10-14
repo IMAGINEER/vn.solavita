@@ -173,7 +173,7 @@ export default function PageHero({
 function HeroCta({ cta, variant }: { cta: PageHeroCta; variant: 'primary' | 'secondary' }) {
   const cls =
     variant === 'primary'
-      ? 'group btn-gradient text-white px-8 py-4 rounded-full font-cw-bold text-center text-base cursor-pointer inline-flex items-center gap-2'
+      ? 'group btn-gradient text-white px-8 py-4 rounded-full font-cw-bold text-center text-base cursor-pointer inline-flex items-center justify-center gap-2 leading-none'
       : 'px-8 py-4 rounded-full border-2 border-uk-line bg-uk-navy font-cw-regular text-center text-base hover:bg-white hover:text-uk-navy transition-colors'
   const inner = (
     <>

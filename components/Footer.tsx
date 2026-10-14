@@ -296,13 +296,18 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
+                {/* The `wa.me/8618500875025` link is the user-provided
+                   handoff number; the visible text intentionally hides
+                   the digits (no verified Nigerian number yet) and
+                   points visitors to the contact email / enquiry form
+                   until business confirms the production line. */}
                 <a
                   href="https://wa.me/8618500875025"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
                 >
-                  +8618500875025
+                  WhatsApp
                 </a>
               </li>
             </ul>
@@ -359,7 +364,7 @@ export default function Footer({
     </footer>
 
     {/* Universal consultation FormModal - listens for `openFormModal()`
-        dispatched from Header / HeroSection / inline CTAs across every page
+        dispatched from Header / Hero / inline CTAs across every page
         that mounts this Footer. Portals to <body> so it sits above the
         Lenis-wrapped page surface. */}
     <FormModal open={formOpen} onClose={() => setFormOpen(false)} />

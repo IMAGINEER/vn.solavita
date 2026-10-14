@@ -75,7 +75,11 @@ export const contactChannels: ContactChannel[] = [
   },
   {
     label: 'WhatsApp',
-    value: '+8618500875025',
+    // Visible label hides the digits (no verified Nigerian number
+    // yet). The wa.me link below carries the user-provided handoff
+    // number so the click target still routes correctly; the public
+    // surface never prints the digits until NG business confirms.
+    value: 'WhatsApp',
     href: 'https://wa.me/8618500875025',
     description:
       'TBD — Confirmed Nigerian operating hours and WhatsApp availability.',

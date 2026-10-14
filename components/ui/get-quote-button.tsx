@@ -31,7 +31,7 @@ export default function GetQuoteButton({
   className = '',
 }: GetQuoteButtonProps) {
   const baseCls =
-    'group inline-flex items-center gap-2 rounded-full text-sm font-cw-bold transition-all duration-300 px-6 py-3'
+    'group inline-flex items-center justify-center gap-2 rounded-full text-sm font-cw-bold leading-none transition-all duration-300 px-6 py-3'
   const variantCls =
     variant === 'primary'
       ? 'btn-gradient text-white'

@@ -24,7 +24,7 @@ export type FormSectionCopy = {
   // H2 is rendered as three stacked lines, with the middle line emphasized via text-gradient
   h2: [string, string, string]
   subhead: string
-  // When true, render <CampaignBody /> (campaign steps + FAQ) below the <Form /> in FooterCTA
+  // When true, render the campaign steps + FAQ block below the <Form /> in FooterCTA
   showCampaignBody?: boolean
 }
 

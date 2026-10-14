@@ -156,7 +156,11 @@ export const supportContactChannels: SupportContactChannel[] = [
   },
   {
     label: 'WhatsApp',
-    value: '+8618500875025',
+    // Visible label hides the digits until business supplies a
+    // verified Nigerian number; the `wa.me` link carries the user-
+    // provided handoff number so the click target still routes
+    // correctly. Same convention as components/Footer.tsx + lib/data/contact.tsx.
+    value: 'WhatsApp',
     href: 'https://wa.me/8618500875025',
     description: (
       <>
@@ -167,7 +171,7 @@ export const supportContactChannels: SupportContactChannel[] = [
           href="tel:+8618500875025"
           className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
         >
-          Call directly
+          Call the team
         </a>
         .
       </>

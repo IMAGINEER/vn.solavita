@@ -153,7 +153,7 @@ function Section2EntryCards() {
             body="Three-phase solar and battery systems, from entry-level setups to higher-capacity configurations designed around business equipment and operating needs."
             imageDescription="A Nigerian small business — shop, office or restaurant — with a solar + battery system"
             imageSrc="/images/business_cap.webp"
-            cta="Explore Business Solutions →"
+            cta="Explore Business Solutions"
           />
         </div>
       </div>

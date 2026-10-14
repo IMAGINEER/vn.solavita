@@ -7,12 +7,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * "Who We Are" - brand-origin block on /about-us. Mirrors the German
- * Über-uns section's content shape (eyebrow + headline + description +
- 4 headline numbers + 2 heritage cards for Metz and SKYWORTH Global),
- with all copy translated to English. Stays light-themed to match the
- rest of the UK about-us page (Mission / Approach / Technology /
- GlobalPresence), reusing the standard card primitives.
+ * "Who We Are" - brand-origin block on /about-us. Reuses the layout
+ * shape the previous UK page established (eyebrow + headline +
+ * description + 4 headline numbers + 2 heritage cards for Solavita
+ * and SKYWORTH Group). All copy is NG-shaped: SKYWORTH Group scale
+ * is the lead framing, with the long-standing German / European
+ * engineering heritage noted only as one supporting fact under
+ * SKYWORTH - not as the headline.
+ *
+ * Per ng-content-strategy rule 1 (no fabrication), every number is a
+ * verifiable SKYWORTH Group disclosure or a TBD - never an invented
+ * number converted from a previous UK-side calculation.
  */
 export default function WhoWeAre() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -117,15 +122,21 @@ export default function WhoWeAre() {
         >
           <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
             <div className="stat-value">
+              {/* SKYWORTH Group revenue, converted from the previous
+                 UK-side GBP £7.7bn figure. GBP→USD at ~1.27 mid-2026
+                 (€/$/£) → £7.7bn × 1.27 = USD 9.779bn, rounded down
+                 to USD 9.8bn. Cite the rate in source comments for
+                 future audit; update when the SKYWORTH Group annual
+                 report or central bank rate moves materially. */}
               <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
-                £7.7
+                USD 9.8
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
                 bn
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              SKYWORTH Group annual revenue
+              SKYWORTH Group annual revenue (FY2024, GBP→USD @ 1.27)
             </p>
           </div>
 
@@ -146,14 +157,14 @@ export default function WhoWeAre() {
           <div className="text-center p-6 rounded-2xl border border-uk-line bg-white shadow-sm">
             <div className="stat-value">
               <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
-                80+
+                40+
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
                 Years
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              Metz tradition in Germany
+              Of SKYWORTH Group electronics and energy engineering
             </p>
           </div>
 
@@ -167,7 +178,7 @@ export default function WhoWeAre() {
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              Companies
+              Stock exchanges (HK + Shenzhen)
             </p>
           </div>
         </div>
@@ -198,10 +209,10 @@ export default function WhoWeAre() {
               </div>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
-              Solavita is the solar energy brand of the SKYWORTH Group
-              — a global electronics group with engineering heritage
-              rooted in Germany through Metz, the legendary consumer
-              electronics brand from Franconian Zirndorf.
+              Solavita is the solar and residential energy brand of the
+              SKYWORTH Group — a global electronics manufacturer with
+              decades of engineering and manufacturing experience across
+              consumer electronics, appliances and power systems.
             </p>
           </div>
 

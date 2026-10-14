@@ -98,13 +98,17 @@ export function organizationJsonLd() {
         postalCode: 'TBD — Verified Nigeria postal code',
         addressCountry: 'NG',
       },
-      // Contact point: verified NG email + WhatsApp number.
+      // Contact point: NG email is verified; the NG WhatsApp / phone
+      // number is TBD until business confirms. Per ng-content-strategy
+      // rule 1 (no fabrication) we do not emit a placeholder telephone —
+      // Google's Knowledge Graph treats bogus contact data as a
+      // trust-signal violation, so we leave `telephone` off until the
+      // number is real.
       contactPoint: [
         {
           '@type': 'ContactPoint',
           contactType: 'customer support',
           email: 'ng@solavita.com',
-          telephone: '+8618500875025',
           areaServed: 'NG',
           availableLanguage: ['en-NG'],
         },
@@ -486,7 +490,8 @@ export function localBusinessJsonLd() {
       name: SITE_LEGAL_NAME,
       url: absoluteUrl('/'),
       email: 'ng@solavita.com',
-      telephone: '+8618500875025',
+      // NG WhatsApp / phone TBD - omitted (not a fabricated placeholder)
+      // until business confirms the real NG number.
       image: absoluteUrl(DEFAULT_OG_IMAGE),
       priceRange: '₦₦',
       address: {
@@ -502,7 +507,6 @@ export function localBusinessJsonLd() {
         '@type': 'ContactPoint',
         contactType: 'customer support',
         email: 'ng@solavita.com',
-        telephone: '+8618500875025',
         areaServed: 'NG',
         availableLanguage: ['en-NG'],
       },

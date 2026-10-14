@@ -31,6 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/solutions/business-solar', priority: 0.9 },
     { path: '/cases', priority: 0.8 },
     { path: '/about-us', priority: 0.7 },
+    { path: '/hems', priority: 0.6 },
     { path: '/support', priority: 0.7 },
     { path: '/for-partners', priority: 0.6 },
     { path: '/contact-us', priority: 0.6 },
@@ -99,9 +100,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // site has no verified cases yet (`caseStudies` in
   // `lib/data/uk-cases.ts` is an empty array), so there are no
   // /cases/[slug] entries to surface. When real NG cases are added,
-  // they emit `<meta name="robots" content="noindex, follow">` (see
-  // app/cases/[slug]/page.tsx) and are therefore not added here
-  // either, to keep the two signals in agreement.
+  // the detail page is reintroduced behind a noindex meta so neither
+  // signal nor sitemap list it - keeping the two signals in agreement.
 
   return entries
 }
