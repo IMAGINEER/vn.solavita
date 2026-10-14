@@ -1,6 +1,6 @@
 /**
- * Internal notification email sent to the UK team inbox whenever
- * someone submits /for-partners.
+ * Internal notification email sent to the Nigerian team inbox
+ * (`ng@solavita.com`) whenever someone submits /for-partners.
  */
 
 const TEAM_EMAIL = 'ng@solavita.com'
