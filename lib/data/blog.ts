@@ -437,6 +437,29 @@ export async function listAllPublishedForSitemap(): Promise<SitemapPostEntry[]> 
   })
 }
 
+/**
+ * Feed-source helper: full joined rows for every NG-published post.
+ *
+ * Same locale + status filter as the sitemap helper above, but joins
+ * category / author / tags too, so feed readers (and AI crawlers
+ * reading /feed.xml) get title, description, cover image and
+ * category name without a second round-trip. Order matches the
+ * sitemap so both signals agree.
+ */
+export async function listAllPublishedForFeed(): Promise<BlogPostFull[]> {
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select(POST_PUBLIC_SELECT)
+    .eq('locale', BLOG_LOCALE)
+    .eq('status', 'published')
+    .order('published_at', { ascending: false })
+  if (error) throw new Error(`listAllPublishedForFeed: ${error.message}`)
+
+  const rows = (data ?? []) as unknown as RawRow[]
+  const hydrated = await hydratePosts(rows)
+  return hydrated.map((h) => h.full)
+}
+
 // ── Admin write paths ─────────────────────────────────────────────────────────
 
 /** Admin: list every NG post regardless of status. UK/IT posts are

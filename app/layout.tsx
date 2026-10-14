@@ -23,10 +23,22 @@ export const metadata: Metadata = {
   keywords:
     'solar Nigeria, solar panels Nigeria, battery storage Nigeria, solar Lagos, solar Abuja, generator backup, off-grid solar, three-phase solar, Solavita, SKYWORTH, renewable energy Nigeria',
   robots: { index: true, follow: true },
+  alternates: {
+    languages: {
+      'en-GB': 'https://solavita.uk',
+      'de-DE': 'https://solavita.de',
+    },
+  },
   // Deliberately NO `alternates.canonical` here. Every page exports its
   // own canonical via `buildPageMetadata()`. A root-level canonical
   // propagates to every child page (this was the Phase 1 P0-1 root
   // cause) - the whole site canonicalised to `/`.
+  //
+  // Cross-domain alternates for the SKYWORTH Group family of sites.
+  // Google treats these as `hreflang`-style language alternates that
+  // associate regional sites for the same brand. Only the en-GB (`uk`)
+  // and de-DE (`de`) sibling sites are declared here - any future
+  // `ng.fr` / `ng.za` etc. would extend this list, not replace it.
   //
   // Site-wide OG defaults. Page-level `buildPageMetadata()` overrides
   // these with the page's hero asset. Twitter card is `summary_large_image`
@@ -41,10 +53,13 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${SITE_URL}/images/hero-system-render.webp`,
-        width: 1200,
-        height: 630,
-        alt: 'Solavita Nigeria - solar panels and battery storage for Nigerian homes',
+        url: `${SITE_URL}/images/og-default.png`,
+        // Source asset is 1376x768; we declare the most-common OG
+        // target box (1200x630) so social platforms letter-box
+        // consistently while the underlying ratio is preserved.
+        width: 1376,
+        height: 768,
+        alt: 'Solavita Nigeria - Cut Diesel. Own Your Power. Solar + battery systems for Nigerian homes and businesses',
       },
     ],
   },
@@ -53,7 +68,7 @@ export const metadata: Metadata = {
     title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
     description:
       'Solar and battery solutions for Nigerian homes and small businesses.',
-    images: [`${SITE_URL}/images/hero-system-render.webp`],
+    images: [`${SITE_URL}/images/og-default.png`],
   },
 }
 

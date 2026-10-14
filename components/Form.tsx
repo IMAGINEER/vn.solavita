@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, ChevronLeft, ChevronRight, Loader2, BadgeCheck } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Loader2, BadgeCheck, Lightbulb, Zap, Plug, Factory, HelpCircle } from 'lucide-react';
 import type { FormData } from '@/lib/form-types';
 
 // ============ SVG ICONS ============
@@ -178,13 +178,13 @@ const HOUSEHOLD_SIZES = [
 ];
 
 const ELECTRICITY_USAGE = [
-  { id: 'low', label: 'Low', description: '< 3,000 kWh/year', emoji: '💡' },
-  { id: 'medium', label: 'Medium', description: '3,000-5,000 kWh/year', emoji: '⚡' },
-  { id: 'high', label: 'High', description: '5,000-8,000 kWh/year', emoji: '🔌' },
-  { id: 'very-high', label: 'Very high', description: '> 8,000 kWh/year', emoji: '🏭' },
+  { id: 'low', label: 'Low', description: '< 3,000 kWh/year', icon: Lightbulb },
+  { id: 'medium', label: 'Medium', description: '3,000-5,000 kWh/year', icon: Zap },
+  { id: 'high', label: 'High', description: '5,000-8,000 kWh/year', icon: Plug },
+  { id: 'very-high', label: 'Very high', description: '> 8,000 kWh/year', icon: Factory },
   // Sentinel id for the "I don't know" answer. The server collapses this to
   // NULL on write so /admin/leads can render the row without a Usage line.
-  { id: 'unknown', label: 'Not Sure', description: 'Skip and let us recommend', emoji: '❓' },
+  { id: 'unknown', label: 'Not Sure', description: 'Skip and let us recommend', icon: HelpCircle },
 ];
 
 const DEVICES = [

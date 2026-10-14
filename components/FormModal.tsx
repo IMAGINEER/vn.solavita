@@ -119,9 +119,13 @@ export default function FormModal({
       {/* Card */}
       <div
         onClick={stop}
-        className="relative z-10 w-full max-w-3xl my-4 sm:my-8 bg-white rounded-2xl shadow-2xl"
+        className="relative z-10 w-full max-w-3xl my-4 sm:my-8 bg-white rounded-2xl shadow-2xl flex flex-col max-h-[calc(100vh-2rem)]"
       >
-        {/* Close button */}
+        {/* Close button — `position: absolute` to the card so it always
+            sits in the top-right corner regardless of form scroll. The
+            card itself is flex-col with `max-h-[calc(100vh-2rem)]`; the
+            scrollable body below it is `flex-1 overflow-y-auto`, so the
+            close button never scrolls out of view. */}
         <button
           type="button"
           onClick={onClose}
@@ -135,15 +139,20 @@ export default function FormModal({
           Get your free solar design and quote
         </h2>
 
-        <Form
-          onClose={onClose}
-          initialData={initialDataProp ?? eventInitialData}
-          hideAddressAndContact={hideAddressAndContact}
-          submitEndpoint={submitEndpoint}
-          submitPayload={submitPayload}
-          submitButtonLabel={submitButtonLabel}
-          onSubmitSuccess={onSubmitSuccess}
-        />
+        {/* Scrollable body — the form content scrolls here, NOT the
+            page or the outer container. The close button above stays
+            pinned to the card. */}
+        <div className="flex-1 overflow-y-auto">
+          <Form
+            onClose={onClose}
+            initialData={initialDataProp ?? eventInitialData}
+            hideAddressAndContact={hideAddressAndContact}
+            submitEndpoint={submitEndpoint}
+            submitPayload={submitPayload}
+            submitButtonLabel={submitButtonLabel}
+            onSubmitSuccess={onSubmitSuccess}
+          />
+        </div>
       </div>
     </div>,
     document.body,

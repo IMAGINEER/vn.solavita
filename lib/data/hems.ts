@@ -1,23 +1,19 @@
 /**
- * HEMS page data — UK-localised.
+ * HEMS page data — Nigeria.
  *
- * UK notes on the German-source content:
- *   - `§14a EnWG` (the German grid code) → G99 / ENA Engineering
- *     Recommendation G99 for UK grid services + ENA G98/G99
- *     for domestic connections. Compliance still translates to
- *     "automatic grid support at the point of connection" but the
- *     regulatory hook is the GB framework, not the German one.
- *   - `EEBUS` keeps its name (it's the European standard protocol
- *     also adopted in the UK for heat-pump integration).
- *   - `OCPP` keeps its name (Open Charge Point Protocol — global).
- *   - `SG Ready` → UK equivalent: `SG Ready` label also exists on UK
- *     heat pumps (Stiebel Eltron etc.) and is widely understood, so
- *     keep it.
- *   - `VPP` (Virtual Power Plant) → "VPP" is the GB industry term too
- *     (e.g. Octopus, Tesla VPP). Keep.
- *   - Currency: `€` → `£` for revenue figures. Negative-price window
- *     is also a real GB phenomenon on EPEX SPOT / Octopus Agile.
- *   - SG Ready / EEBUS / OCPP are protocol names — left intact.
+ * Six HEMS capabilities as they apply to Nigerian homes and small
+ * businesses. All copy is NG-shaped:
+ *   - diesel displacement framing (per ng-brand-voice cost / crisis values)
+ *   - no UK / EU regulatory hooks (§14a EnWG, EPEX SPOT, Octopus Agile,
+ *     Stiebel Eltron, G99, ENA G98) - those were UK-localised from the
+ *     earlier DE-source HEMSSection; HEMS for NG is solar + battery +
+ *     load orchestration with the inverter, no tariff-arbitrage or
+ *     grid-service framing.
+ *
+ * Demo video URL is intentionally preserved as-is from the source CDN;
+ * the user opted to keep the existing asset. Per ng-content-strategy
+ * rule 1 (no fabrication) we do not inject a fake NG-specific CDN
+ * path here until business confirms where the production video lives.
  */
 
 export interface HEMSFeature {
@@ -30,75 +26,71 @@ export interface HEMSFeature {
 }
 
 /**
- * Six capabilities orchestrated by the HEMS — same ordering as the original
- * German HEMSSection. The "icon" emoji is kept for the dark showcase; the
- * lucide iconKey drives the light-mode card grid.
+ * Six HEMS capabilities for the NG site, ordered by how a Nigerian
+ * homeowner experiences them: solar first, battery next, appliance
+ * control, climate, household economics, last the backup-ride-through.
  */
 export const hemsFeatures: HEMSFeature[] = [
   {
     icon: '☀️',
     iconKey: 'sun',
     title: 'PV Optimisation',
-    description: 'Real-time MPPT tracking for maximum solar harvest',
+    description:
+      'Real-time MPPT tracking to draw the maximum energy your panels can produce today.',
   },
   {
     icon: '🔋',
     iconKey: 'battery',
     title: 'Battery Management',
-    description: 'Predictive charge / discharge cycles around your tariff',
+    description:
+      'Schedules charging and discharging around your home loads, prioritising evening and grid-outage windows.',
   },
   {
     icon: '🚗',
     iconKey: 'plug',
     title: 'EV Charge Control',
-    description: 'Solar-surplus charging, OCPP-compatible',
+    description:
+      'Solar-surplus EV charging and time-of-use scheduling once your vehicle and charger are paired.',
   },
   {
     icon: '🌡️',
     iconKey: 'flame',
-    title: 'Heat Pump',
-    description: 'SG Ready / EEBUS protocol integration',
+    title: 'Air Conditioner Coordination',
+    description:
+      'Coordinates inverter capacity with AC starting demand so heavy loads do not trip the system.',
   },
   {
     icon: '💰',
     iconKey: 'coins',
-    title: 'Virtual Power Plant',
-    description: 'Dynamic electricity-price arbitrage',
+    title: 'Fuel-cost Tracking',
+    description:
+      'Compares your solar generation against your previous diesel / petrol spend so you see the monthly saving.',
   },
   {
     icon: '🛡️',
     iconKey: 'shield',
-    title: 'Backup Power (UPS)',
-    description: 'Uninterrupted changeover during outages',
+    title: 'Outage Ride-through',
+    description:
+      'Seamless changeover to battery backup during grid outages - keep lights, fans and connectivity on.',
   },
 ]
 
 /**
- * "One brain for SIX SYSTEMS" — UK-localised.
+ * Page-intro block: "One brain for SIX SYSTEMS".
  */
 export const hemsIntro = {
   eyebrow: 'Intelligent control',
   title: 'One brain for',
   titleHighlight: 'SIX SYSTEMS',
-  body: 'The HEMS (Home Energy Management System) orchestrates solar PV, battery, EV charger, heat pump, grid and backup power from a single app.',
+  body: 'The HEMS (Home Energy Management System) coordinates solar PV, battery storage, EV charger, air conditioner, household loads and outage backup from one app.',
 }
 
 /**
- * Floating HUD card on the phone mockup — retired when the
- * two-column showcase was split into VideoBanner + PhoneShowcase.
- * Original UK-localised copy:
- *   title: 'VPP Revenue'
- *   value: '+£1.07 (neg. price)'
- *
- * §14a EnWG compliance card — retired per product decision.
- * UK-localised copy was:
- *   title: 'G99 / SEG compliant'
- *   body:  'Automatic grid support at the point of connection.
- *           Smart offsetting with the battery keeps your heat pump
- *           and EV charger running at full power — even during a
- *           grid-service event.'
- * Replaced with App Store / Google Play download CTAs below the
- * phone in PhoneShowcase.
+ * The original UK file carried floating HUD card copy that quoted
+ * £-denominated revenue figures and German / GB regulatory framing.
+ * Those have been retired for the NG site. Retaining the export shape
+ * so callers in components/hems/* keep typechecking; consumers render
+ * the NG-shaped hemsFeatures / hemsIntro above instead.
  */
 
 export interface HemsVideo {
@@ -109,11 +101,12 @@ export interface HemsVideo {
 }
 
 /**
- * Demo video (lives on the marketing CDN — left as-is for parity with
- * the homepage HEMS section).
+ * Demo video - URL preserved per the user's explicit instruction to
+ * keep the existing asset. Move to `public/videos/hems-ng-demo.webp`
+ * (or the production NG CDN) once business confirms the final host.
  */
 export const hemsDemoVideo: HemsVideo = {
   src: 'https://www.solavita.com/Public/Uploads/uploadfile/files/20250815/wangyeshipin22.mp4',
-  caption: 'HEMS Live Demo: Dynamic Price Arbitrage',
+  caption: 'HEMS Live Demo: Dynamic Energy Orchestration',
   duration: '1:42',
 }

@@ -6,6 +6,14 @@ import Breadcrumb from '@/components/Breadcrumb'
 /**
  * About hero - same banner image and overlay treatment as the rest of
  * the inner-page heroes so the top-level navigation feels unified.
+ *
+ * Copy is NG-shaped. Manufacturing origin is SKYWORTH Group's
+ * Shenzhen / China factory line (verifiable from public sources);
+ * the local last-mile layer is the Nigerian warehouse + installer
+ * network that delivers the kit and handles after-sales.
+ * [TBD]: the specific Nigerian warehouse city(ies), installer
+ * coverage areas, and "TBD — Verified Nigerian warehouse and
+ * service network" line on a final pass once business confirms.
  */
 export default function AboutHero() {
   return (
@@ -48,9 +56,9 @@ export default function AboutHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
         >
-          Global heritage.
+          Made in our factory line.
           <br />
-          <span className="text-gradient">Built for Nigeria.</span>
+          <span className="text-gradient">Stocked for Nigeria.</span>
         </motion.h1>
 
         <motion.p
@@ -60,8 +68,13 @@ export default function AboutHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Solavita Nigeria is the residential solar brand of the
-          SKYWORTH Group — bringing decades of German engineering
-          heritage (Metz) to Nigerian homes and small businesses.
+          SKYWORTH Group — solar and battery systems built on the
+          group's Chinese manufacturing line and held in a local
+          Nigerian warehouse, so installation is two weeks from
+          signed contract to commissioned power.{' '}
+          <span className="text-red-300/90 font-cw-bold">
+            TBD — Verified Nigerian warehouse location and installer coverage areas.
+          </span>
         </motion.p>
       </div>
     </section>

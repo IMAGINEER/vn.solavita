@@ -214,7 +214,11 @@ export function aboutPageJsonLd(opts: {
     publisher: { '@id': ORG_ID },
     about: { '@id': ORG_ID },
     mainEntity: { '@id': ORG_ID },
-    significantLink: [absoluteUrl('/'), absoluteUrl('/solutions/')],
+    significantLink: [
+      absoluteUrl('/'),
+      absoluteUrl('/solutions/home-solar/'),
+      absoluteUrl('/solutions/business-solar/'),
+    ],
   })
 }
 

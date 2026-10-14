@@ -35,15 +35,18 @@ export const SITE_REGISTERED_OFFICE =
   'TBD — Verified Nigeria registered office address'
 
 /**
- * Default share image. Reuses the homepage hero render as a stand-in
- * until a purpose-built 1200×630 branded NG OG asset is produced. The
- * page-level `buildPageMetadata` helper lets each page override this
- * with its own hero asset.
+ * Default share image. Purpose-built 1376×768 PNG brand OG card (the
+ * closest aspect Figma AI emits to the 1.91:1 OG standard while
+ * keeping all copy legible). Stored as PNG rather than WebP because
+ * the generative pipeline ships PNG; Facebook / LinkedIn / X all
+ * accept PNG and re-encode on their CDN side.
  *
- * Launch-blocker: replace with an NG-specific 1200×630 OG before
- * production release. Tracked in implementation-qa.md.
+ * The page-level `buildPageMetadata` helper lets each page override
+ * this with its own hero asset via `ogImage`. Metadata on the root
+ * layout declares the actual rendered dimensions so social platforms
+ * letter-box cleanly.
  */
-export const DEFAULT_OG_IMAGE = '/images/hero-system-render.webp'
+export const DEFAULT_OG_IMAGE = '/images/og-default.png'
 
 export const DEFAULT_DESCRIPTION =
   'Explore solar and battery solutions for Nigerian homes and small businesses. Compare system configurations and find a solution for more reliable power and less generator dependence.'

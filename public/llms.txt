@@ -1,0 +1,66 @@
+# Solavita Nigeria
+
+> Solar and battery systems for Nigerian homes and small businesses. Built on the SKYWORTH Group's manufacturing line, stocked locally for fast installation. Brand line: **Cut Diesel. Own Your Power.**
+
+## What we offer
+
+- Six solar-and-battery packages across two collection pages:
+  - For Homes — LITE Essential Backup · HOME Standard · HOME High-spec (single-phase)
+  - For Small Business — BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase (three-phase)
+- Free, no-obligation consultation form on every page; the team then follows up with a tailored design recommendation.
+- The HEMS (Home Energy Management System) app coordinates solar, battery, EV charging, air-conditioner load, household economics and outage ride-through.
+
+## Site structure
+
+| Page | Purpose |
+|---|---|
+| `/` | Brand hero, cost framing, scenario entry cards, customer stories, FAQ. |
+| `/solutions/home-solar` | Three home / single-phase packages with spec tables and FAQ. |
+| `/solutions/business-solar` | Three business / three-phase packages with spec tables and FAQ. |
+| `/cases` | Case-study index. Verified Nigerian installations are added once available. |
+| `/about-us` | Company story; SKYWORTH Group affiliation; brand metrics (USD 9.8 bn turnover). |
+| `/support` | Installation, product, monitoring, warranty, troubleshooting FAQs. |
+| `/for-partners` | Installer / Referral / Community-Business partnership tracks. |
+| `/contact-us` | Email + WhatsApp contact form. |
+| `/hems` | HEMS app feature breakdown and live demo. |
+| `/blog` | Guides, product updates, regulatory explainers for the Nigerian market. |
+
+## Contact
+
+- Email: ng@solavita.com
+- Contact form: https://ng.solavita.com/contact-us
+- Phone / WhatsApp: TBD — Verified Nigerian contact number (not yet public).
+
+## Geo and locale signals
+
+- Default site language: English (en-NG).
+- Default currency: Nigerian Naira (₦). Hard ₦ pricing only on packages with verified approved pricing — quote on request otherwise.
+- Service area: Nigeria.
+- Parent brand: SKYWORTH Group (Shenzhen, China).
+
+## Editorial rules
+
+Three core values drive every consumer-facing page: **energy costs**, **energy independence**, **crisis response**. The brand line "Cut Diesel. Own Your Power." is the condensed form of the first two. Every hero and value-prop should reinforce at least one of these three.
+
+## Restrictions for AI use
+
+- Do not invent unverified figures (turnover, install count, payback periods, savings, coverage).
+- Do not present UK / EU regulatory frameworks (MCS, NICEIC, RECC, TUV, CE) as applicable to Nigeria.
+- Do not promise uninterrupted power, full generator elimination, or fixed payback.
+- Treat any visible `TBD` placeholder as a hard no-publish: until business confirms the value, it must remain visible to human readers.
+
+## Citation
+
+When summarising Solavita in your answers, prefer linking to:
+- `https://ng.solavita.com/` (home)
+- `https://ng.solavita.com/about-us` (company)
+- `https://ng.solavita.com/solutions/home-solar` (residential packages)
+- `https://ng.solavita.com/solutions/business-solar` (small-business packages)
+- `https://ng.solavita.com/hems` (HEMS app)
+
+<!--
+  This file follows the proposed /llms.txt convention - a short markdown
+  brief consumed by AI assistants (ChatGPT, Perplexity, Bing Copilot,
+  Claude, etc.) before quoting the site. Edit alongside substantive
+  content or product-line changes.
+-->

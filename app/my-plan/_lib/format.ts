@@ -1,24 +1,18 @@
 /**
  * Locale-aware formatters for `/my-plan` UI.
  *
- * All formatters use `en-GB` so currency and dates look consistent for UK
- * customers regardless of their browser locale. Wrap with `tabular-nums`
- * on the consumer side for stable column widths.
+ * All formatters use `en-NG` so thousands separators + date style match
+ * what a Nigerian customer expects. Wrap with `tabular-nums` on the
+ * consumer side for stable column widths.
+ *
+ * Note: the previous `formatGBP` helper was removed (zero callers, the
+ * ROI surface lives elsewhere). If a future feature needs GBP display,
+ * re-introduce it explicitly - do not bring it back as a generic helper.
  */
 
-export function formatGBP(value: number): string {
-  return '£' + Math.round(value).toLocaleString('en-GB')
-}
-
-/**
- * Nigerian Naira formatter. Uses the `en-GB` locale so the thousands
- * grouping matches the existing UK formatters and column widths stay
- * stable. The ₦ symbol is rendered as a non-breaking space + currency
- * mark so it doesn't wrap awkwardly at the line edge.
- */
 export function formatNGN(value: number): string {
   if (!Number.isFinite(value)) return '₦0'
-  return '₦' + Math.round(value).toLocaleString('en-GB')
+  return '₦' + Math.round(value).toLocaleString('en-NG')
 }
 
 export function formatKwh(value: number): string {
