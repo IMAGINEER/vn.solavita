@@ -3,7 +3,7 @@
  * someone submits /for-partners.
  */
 
-const TEAM_EMAIL = 'TBD — Verified Nigerian partner email'
+const TEAM_EMAIL = 'ng@solavita.com'
 
 const TRACK_LABEL: Record<string, string> = {
   installer: 'Installer',

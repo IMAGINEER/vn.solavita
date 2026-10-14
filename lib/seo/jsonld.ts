@@ -609,7 +609,7 @@ export function partnerProgramJsonLd() {
       url,
       name: 'For Partners · Solavita Nigeria',
       description:
-        'Solar installer, distribution and customer-referral partnerships in Nigeria.',
+        'Solar installer, customer-referral and community partnerships in Nigeria.',
       inLanguage: SITE_LOCALE,
       isPartOf: { '@id': SITE_ID },
       publisher: { '@id': ORG_ID },

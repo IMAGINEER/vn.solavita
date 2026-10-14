@@ -7,7 +7,7 @@ import { partnerNotificationEmail } from '@/lib/emails/partner-notification'
 export const dynamic = 'force-dynamic'
 
 // UK team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
-const TEAM_EMAIL = 'TBD — Verified Nigerian partner email'
+const TEAM_EMAIL = 'ng@solavita.com'
 
 const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as const
 
@@ -15,10 +15,11 @@ const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as cons
 // `lib/data/partners.ts` (also rendered as `<option>` values inside
 // `components/PartnerForm.tsx`). If the UI adds a new track, update
 // this whitelist + `partnerTypes` + `PartnerForm` in the same change.
+// `distribution` was removed from the NG programme - the route
+// rejects it explicitly so any stale forms can't slip through.
 const VALID_TRACKS = [
   'installer',
   'referral',
-  'distribution',
   'community',
 ] as const
 

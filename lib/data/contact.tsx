@@ -17,7 +17,6 @@ export type ContactSubjectId =
   | 'small-commercial'
   | 'existing-system'
   | 'installer-partner'
-  | 'distribution-partner'
   | 'other'
 
 export interface ContactSubject {
@@ -50,12 +49,6 @@ export const contactSubjects: ContactSubject[] = [
     label: 'Installation partnership',
     description:
       'You are an installer or electrical service provider interested in working together.',
-  },
-  {
-    id: 'distribution-partner',
-    label: 'Distribution partnership',
-    description:
-      'You are a local business interested in equipment distribution or customer access.',
   },
   {
     id: 'other',

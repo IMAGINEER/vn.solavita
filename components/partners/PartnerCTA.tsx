@@ -4,25 +4,34 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion, AnimatePresence } from 'motion/react'
-import { Check } from 'lucide-react'
+import { Check, Loader2 } from 'lucide-react'
+import { partnerTypes } from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/**
- * Partner enquiry CTA. Visually heavier than the standard CTA block
- * because this is the page's conversion goal - the inline form posts
- * to /api/partner, which saves the row to `uk_partner_leads` and
- * fires a confirmation email + a team notification.
- *
- * On 2xx the form swaps to an emerald success card mirroring the
- * ContactForm success UX.
- */
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 
+/**
+ * Partner enquiry CTA. Inline (UK-style) B2B form that posts to
+ * /api/partner, which inserts into Supabase's `ng_partner_leads`
+ * table and sends confirmation + team notification emails.
+ *
+ * Why inline rather than modal (as on the consultation form)?
+ *   The partners page is the page's primary conversion goal; an
+ *   inline form makes the destination feel like a real B2B enquiry
+ *   page rather than a contact-us alias. The form is also short
+ *   enough (5 fields) to fit comfortably inline.
+ *
+ * On 2xx the form swaps to an emerald success card mirroring the
+ * ContactForm success UX. Field contract is shared with
+ * `app/api/partner/route.ts`:
+ *   { fullName, company, email, partnerTrack, message }
+ */
 export default function PartnerCTA() {
   const sectionRef = useRef<HTMLElement>(null)
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -49,6 +58,7 @@ export default function PartnerCTA() {
     e.preventDefault()
     const form = e.currentTarget
     const data = new FormData(form)
+
     const payload = {
       fullName: String(data.get('name') || '').trim(),
       company: String(data.get('company') || '').trim(),
@@ -56,16 +66,26 @@ export default function PartnerCTA() {
       partnerTrack: String(data.get('track') || '').trim(),
       message: String(data.get('message') || '').trim(),
     }
-    if (
-      !payload.fullName ||
-      !payload.company ||
-      !payload.email ||
-      !payload.partnerTrack
-    ) {
-      setSubmitError('Please fill in all required fields.')
-      setStatus('error')
+
+    // Client-side validation - mirrors server-side checks in
+    // /api/partner/route.ts. Email regex matches the route.
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const nextErrors: Record<string, string> = {}
+    if (!payload.fullName) nextErrors.name = 'Please enter your full name.'
+    if (!payload.company) nextErrors.company = 'Please enter your company name.'
+    if (!payload.email) {
+      nextErrors.email = 'Please enter your email address.'
+    } else if (!EMAIL_RE.test(payload.email)) {
+      nextErrors.email = 'Please enter a valid email address.'
+    }
+    if (!payload.partnerTrack) {
+      nextErrors.track = 'Please choose a partner track.'
+    }
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors)
       return
     }
+    setFieldErrors({})
 
     setStatus('submitting')
     setSubmitError(null)
@@ -95,13 +115,14 @@ export default function PartnerCTA() {
   const reset = () => {
     setStatus('idle')
     setSubmitError(null)
+    setFieldErrors({})
   }
 
   return (
     <section
       ref={sectionRef}
       id="partner-cta"
-      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden"
+      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />
@@ -113,14 +134,14 @@ export default function PartnerCTA() {
           <div className="text-center mb-8 max-w-2xl mx-auto">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Partner with Solavita
+              Become a Solavita partner
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
               Tell us about{' '}
               <span className="text-gradient">your business.</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-              We’ll get back within two working days with next
+              We&apos;ll get back within two working days with next
               steps - including which partner track fits your business
               best.
             </p>
@@ -140,15 +161,15 @@ export default function PartnerCTA() {
                   <Check className="w-8 h-8" strokeWidth={2.5} />
                 </span>
                 <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
-                  Thanks - we’ve got your enquiry.
+                  Thanks - we&apos;ve got your enquiry.
                 </h3>
                 <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
-                  Our partnerships team will get back to you within two
-                  working days. If it’s urgent, you can reach us
-                  directly at{' '}
+                  Our Nigerian partnerships team will get back to you
+                  within two working days. If it&apos;s urgent, you can
+                  reach us directly at{' '}
                   <a
                     href="mailto:ng@solavita.com"
-                    className="text-uk-teal-dark hover:text-uk-teal transition-colors"
+                    className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
                   >
                     ng@solavita.com
                   </a>
@@ -170,6 +191,7 @@ export default function PartnerCTA() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
+                noValidate
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto"
               >
                 <label className="block">
@@ -181,8 +203,13 @@ export default function PartnerCTA() {
                     name="name"
                     required
                     placeholder="Jane Smith"
-                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      fieldErrors.name ? 'border-red-500' : 'border-uk-line'
+                    } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
                   />
+                  {fieldErrors.name && (
+                    <p className="text-red-500 text-xs mt-1">{fieldErrors.name}</p>
+                  )}
                 </label>
 
                 <label className="block">
@@ -194,8 +221,13 @@ export default function PartnerCTA() {
                     name="company"
                     required
                     placeholder="Acme Solar Ltd"
-                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      fieldErrors.company ? 'border-red-500' : 'border-uk-line'
+                    } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
                   />
+                  {fieldErrors.company && (
+                    <p className="text-red-500 text-xs mt-1">{fieldErrors.company}</p>
+                  )}
                 </label>
 
                 <label className="block">
@@ -206,9 +238,14 @@ export default function PartnerCTA() {
                     type="email"
                     name="email"
                     required
-                    placeholder="jane@acme.co.uk"
-                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
+                    placeholder="jane@acme.co"
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      fieldErrors.email ? 'border-red-500' : 'border-uk-line'
+                    } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
                   />
+                  {fieldErrors.email && (
+                    <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>
+                  )}
                 </label>
 
                 <label className="block">
@@ -218,11 +255,19 @@ export default function PartnerCTA() {
                   <select
                     name="track"
                     defaultValue="installer"
-                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy focus:outline-none focus:border-uk-teal"
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      fieldErrors.track ? 'border-red-500' : 'border-uk-line'
+                    } bg-white text-uk-navy focus:outline-none focus:border-uk-teal`}
                   >
-                    <option value="installer">Installer</option>
-                    <option value="business">Energy / Business Partner</option>
+                    {partnerTypes.map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.title}
+                      </option>
+                    ))}
                   </select>
+                  {fieldErrors.track && (
+                    <p className="text-red-500 text-xs mt-1">{fieldErrors.track}</p>
+                  )}
                 </label>
 
                 <label className="block md:col-span-2">
@@ -240,7 +285,7 @@ export default function PartnerCTA() {
                 {submitError && (
                   <div
                     role="alert"
-                    className="md:col-span-2 rounded-lg border border-uk-danger/40 bg-uk-danger/10 px-4 py-3 text-sm text-uk-danger"
+                    className="md:col-span-2 rounded-lg border border-red-500/40 bg-red-50 px-4 py-3 text-sm text-red-600"
                   >
                     {submitError}
                   </div>
@@ -251,7 +296,7 @@ export default function PartnerCTA() {
                     Or email us directly:{' '}
                     <a
                       href="mailto:ng@solavita.com"
-                      className="text-uk-teal-dark hover:text-uk-teal transition-colors"
+                      className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
                     >
                       ng@solavita.com
                     </a>
@@ -264,7 +309,7 @@ export default function PartnerCTA() {
                   >
                     {status === 'submitting' ? (
                       <>
-                        <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin" />
                         Sending...
                       </>
                     ) : (
@@ -272,6 +317,15 @@ export default function PartnerCTA() {
                     )}
                   </button>
                 </div>
+
+                <p className="md:col-span-2 text-xs text-uk-slate/80 leading-relaxed pt-2">
+                  By submitting, you agree to our{' '}
+                  <a href="/privacy" className="text-uk-teal-dark underline">
+                    Privacy Policy
+                  </a>
+                  . Your data is used solely to evaluate your partnership
+                  enquiry.
+                </p>
               </motion.form>
             )}
           </AnimatePresence>

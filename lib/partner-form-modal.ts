@@ -22,7 +22,7 @@ export const PARTNER_FORM_MODAL_OPEN_EVENT = 'solavita:open-partner-form-modal'
 
 export interface PartnerFormModalOpenDetail {
   /** Optional partner-track seed for the track selector. */
-  defaultTrack?: 'installer' | 'referral' | 'distribution' | 'community'
+  defaultTrack?: 'installer' | 'referral' | 'community'
 }
 
 export function openPartnerFormModal(): void

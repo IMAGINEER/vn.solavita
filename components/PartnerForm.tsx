@@ -16,8 +16,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  * PartnerForm — single-page partner enquiry form.
  *
  * Posts to `/api/partner`, which inserts into Supabase's `ng_partner_leads`
- * table and emails the Nigerian partner contact (currently a `TBD`
- * placeholder — see `TEAM_EMAIL` in `app/api/partner/route.ts`).
+ * table and emails the Nigerian partner contact (see `TEAM_EMAIL` in
+ * `app/api/partner/route.ts`).
  *
  * Why a dedicated component (and not a re-use of the consultation
  * `Form.tsx`)?
@@ -36,7 +36,7 @@ export interface PartnerFormProps {
   /** Fires after a successful submit; the modal uses this to close. */
   onClose?: () => void
   /** Optional pre-seed for the track selector. */
-  defaultTrack?: 'installer' | 'referral' | 'distribution' | 'community'
+  defaultTrack?: 'installer' | 'referral' | 'community'
   /** Visible label on the Submit button. Default `Submit enquiry`. */
   submitButtonLabel?: string
   /** Override the submit endpoint. Default `/api/partner`. */
@@ -282,9 +282,12 @@ export default function PartnerForm({
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between pt-2 border-t border-uk-line/50">
                 <p className="text-xs text-uk-slate">
                   Or email us directly:{' '}
-                  <span className="font-cw-bold">
-                    TBD — Verified Nigerian partner email
-                  </span>
+                  <a
+                    href="mailto:ng@solavita.com"
+                    className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
+                  >
+                    ng@solavita.com
+                  </a>
                 </p>
                 <button
                   type="submit"

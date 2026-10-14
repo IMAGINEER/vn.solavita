@@ -39,6 +39,12 @@ const iconFor = (i: number) => {
 /**
  * "Why Partner with Solavita" - six-reason block in a 3-column grid.
  * Mirrors the Why Solavita block on /solutions but B2B-flavoured.
+ *
+ * Body copy localizes the UK base paragraph: the UK group turnover
+ * claim is replaced with the more general "group supply-chain scale"
+ * framing until a verified Nigerian group / partner programme figure
+ * is approved. Per NG content rules, specific business claims are
+ * marked TBD on the partnerBenefits rows themselves.
  */
 export default function WhyPartner() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -75,15 +81,16 @@ export default function WhyPartner() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Why partner with us
+            Why partner
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Why partner{' '}
             <span className="text-gradient">with Solavita</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Backing from a £7.7bn group, deep Nigerian technical support and a
-            partner programme built around long-term relationships.
+            Group supply-chain scale, deep Nigerian engineering
+            support and a partner programme built around long-term
+            relationships.
           </p>
         </div>
 

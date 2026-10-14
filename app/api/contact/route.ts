@@ -62,7 +62,13 @@ export async function POST(req: Request) {
     last_name: String(body.lastName),
     email,
     phone: body.phone ? String(body.phone) : null,
-    postcode: body.postcode ? String(body.postcode) : null,
+    // Accept both `postcode` (DB column name + UK API convention) and
+    // `postalCode` (the field name the contact form uses in its
+    // FormState) so the data isn't silently dropped if either side
+    // gets renamed in isolation.
+    postcode: body.postcode || body.postalCode
+      ? String(body.postcode || body.postalCode)
+      : null,
     city: body.city ? String(body.city) : null,
     subject: String(body.subject),
     message: String(body.message),

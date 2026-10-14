@@ -1,23 +1,20 @@
 /**
- * For Partners page data — Nigeria.
+ * For Partners page data - Nigeria.
  *
- * Text is mirrored from the UK base page (`content/uk/parents.md`) per
- * project instruction, with the 3 UK partner types re-cast as the 4
- * NG-specific tracks (installer, referral, distribution, community)
- * below. The bullets per partner type and the 6 benefit / 4 process
- * entries use the UK wording so the NG page reads as a translation of
- * the UK partner offer rather than a different programme.
- *
- * `bullets` for the 4 NG tracks are TBD until each track's UK equivalent
- * is mapped to a confirmed NG programme. The page renders the bullets
- * list conditionally (only when `bullets.length > 0`) so an empty array
- * simply hides the section without an unsightly gap.
+ * Text mirrors the UK base page with the 3 UK partner types re-cast
+ * as 3 NG-specific tracks (installer, referral, community). The
+ * previous "distribution" track has been removed from the partner
+ * programme per the latest content direction - "Distributor" is no
+ * longer offered as a partner track on the NG site. UK trust marks
+ * (MCS, "UK-backed warranty", etc.) are dropped per NG content rules
+ * - NG has no verified installer certifications, warranty periods, or
+ * partner programme specifics, so unverified business claims are
+ * marked TBD.
  */
 
 export type PartnerTypeId =
   | 'installer'
   | 'referral'
-  | 'distribution'
   | 'community'
 
 export interface PartnerType {
@@ -26,7 +23,7 @@ export interface PartnerType {
   title: string
   description: string
   bullets: string[]
-  icon: 'wrench' | 'handshake' | 'package' | 'users'
+  icon: 'wrench' | 'handshake' | 'users'
 }
 
 export const partnerTypes: PartnerType[] = [
@@ -59,22 +56,8 @@ export const partnerTypes: PartnerType[] = [
     icon: 'handshake',
   },
   {
-    id: 'distribution',
-    eyebrow: 'Retail · Distribution',
-    title: 'Distributor',
-    description:
-      'Electrical wholesalers, roofing merchants and trade suppliers interested in discussing equipment distribution or customer access.',
-    bullets: [
-      'Stock & supply programmes',
-      'Marketing & POS support',
-      'Training for your counter staff',
-      'Volume pricing',
-    ],
-    icon: 'package',
-  },
-  {
     id: 'community',
-    eyebrow: 'Community · Business',
+    eyebrow: 'Community . Business',
     title: 'Community / Business Partner',
     description:
       'Heat pump installers, EV charger networks, energy suppliers, utilities and community organisations interested in co-marketing or joint go-to-market programmes.',
@@ -94,16 +77,16 @@ export interface PartnerBenefit {
 }
 
 /**
- * "Why partner" — six-reason block, text copied verbatim from the UK
- * base page. UK-specific claims (UK engineering support, SKYWORTH
- * academy, 15-year warranty programme) are kept as authored; business
- * may adapt any that don't apply to the Nigerian market in a follow-up.
+ * "Why partner" - six-reason block. UK-specific claims (UK engineering
+ * support, MCS, 15-year UK-backed warranty, SKYWORTH academy) are
+ * generalised or marked TBD per NG content rules until business
+ * verifies each claim for the Nigerian market.
  */
 export const partnerBenefits: PartnerBenefit[] = [
   {
     title: 'Group supply-chain scale',
     description:
-      'Backed by SKYWORTH — reliable stock, predictable lead times and competitive pricing.',
+      'Backed by SKYWORTH - reliable stock, predictable lead times and competitive pricing.',
   },
   {
     title: 'Nigerian engineering support',
@@ -116,9 +99,9 @@ export const partnerBenefits: PartnerBenefit[] = [
       'Joint campaigns, regional lead sharing and a partner directory on solavita.com/ng.',
   },
   {
-    title: '15-year warranty programme',
+    title: 'Warranty programme',
     description:
-      'A single warranty that covers product, performance and workmanship.',
+      'TBD - Verified Nigerian warranty period covering product, performance and workmanship.',
   },
   {
     title: 'Training & certification',
@@ -139,8 +122,7 @@ export interface PartnerProcessStep {
 }
 
 /**
- * "How partnership works" — 4-step process, text copied verbatim from
- * the UK base page.
+ * "How partnership works" - 4-step process.
  */
 export const partnerProcess: PartnerProcessStep[] = [
   {

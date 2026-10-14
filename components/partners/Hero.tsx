@@ -7,6 +7,13 @@ import Breadcrumb from '@/components/Breadcrumb'
  * For Partners hero - same banner image and overlay treatment as the
  * rest of the inner-page heroes so the navigation feels unified. Copy
  * makes the B2B nature of the page clear from the first line.
+ *
+ * Hero copy localizes the UK base text for NG: the three NG partner
+ * tracks (installer, referral, community) replace the three UK ones,
+ * and the supplier-group framing refers to SKYWORTH's group
+ * supply-chain scale rather than UK-specific infrastructure. The
+ * previous "distribution" / Distributor track has been removed from
+ * the NG partner programme.
  */
 export default function PartnersHero() {
   return (
@@ -39,7 +46,7 @@ export default function PartnersHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            For energy partners
+            For partners . B2B
           </span>
         </motion.span>
 
@@ -47,7 +54,7 @@ export default function PartnersHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl"
         >
           Grow your business{' '}
           <span className="text-gradient">with Solavita.</span>
@@ -59,9 +66,10 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Become a Solavita partner - installer or energy / business
-          partner. Nigerian engineering support, group supply-chain scale, and
-          a 10-year warranty programme.
+          Become a Solavita partner — installer, lead generation partner,
+          or community partner. Benefit from Nigerian engineering
+          support, group supply-chain scale, and a partner programme
+          built around long-term relationships.
         </motion.p>
       </div>
     </section>

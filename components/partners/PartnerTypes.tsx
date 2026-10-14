@@ -3,7 +3,13 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Wrench, Handshake, Check, ArrowRight } from 'lucide-react'
+import {
+  Wrench,
+  Handshake,
+  Users,
+  Check,
+  ArrowRight,
+} from 'lucide-react'
 import { partnerTypes, type PartnerType } from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -20,13 +26,15 @@ const iconFor = (icon: PartnerType['icon']) => {
       return <Wrench {...props} />
     case 'handshake':
       return <Handshake {...props} />
+    case 'users':
+      return <Users {...props} />
   }
 }
 
 /**
- * Three Partner Types - large cards on alternating subtle background
- * blocks so the page reads as a clear B2B offer rather than a generic
- * product grid.
+ * Three Partner Types (NG tracks) - large cards laid out in a responsive
+ * grid (1 col mobile, 2 col tablet, 3 col desktop) so each track reads
+ * as a distinct B2B offer rather than blending into one product grid.
  */
 export default function PartnerTypes() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -57,7 +65,7 @@ export default function PartnerTypes() {
     <section
       ref={sectionRef}
       id="partner-types"
-      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden"
+      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-uk-teal-soft/40 blur-3xl" />
@@ -67,15 +75,15 @@ export default function PartnerTypes() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Two ways to partner
+            Partner tracks
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Two ways to{' '}
+            Three ways to{' '}
             <span className="text-gradient">work with us</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {partnerTypes.map((p) => (
             <div
               key={p.id}
@@ -95,19 +103,21 @@ export default function PartnerTypes() {
                 {p.description}
               </p>
 
-              <ul className="space-y-3 mt-5">
-                {p.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="flex items-start gap-3 text-uk-navy"
-                  >
-                    <span className="mt-0.5 w-5 h-5 rounded-full bg-uk-emerald/10 flex items-center justify-center flex-shrink-0">
-                      <CheckIcon className="w-3 h-3 text-uk-emerald" />
-                    </span>
-                    <span className="text-sm font-cw-regular">{b}</span>
-                  </li>
-                ))}
-              </ul>
+              {p.bullets.length > 0 && (
+                <ul className="space-y-3 mt-5">
+                  {p.bullets.map((b) => (
+                    <li
+                      key={b}
+                      className="flex items-start gap-3 text-uk-navy"
+                    >
+                      <span className="mt-0.5 w-5 h-5 rounded-full bg-uk-emerald/10 flex items-center justify-center flex-shrink-0">
+                        <CheckIcon className="w-3 h-3 text-uk-emerald" />
+                      </span>
+                      <span className="text-sm font-cw-regular">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               <a
                 href="#partner-cta"
