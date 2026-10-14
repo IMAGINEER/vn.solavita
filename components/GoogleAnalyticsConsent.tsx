@@ -46,7 +46,18 @@ declare global {
  */
 
 const STORAGE_KEY = 'cookie_consent'
-const GA_ID = 'G-4RM6FL7E37'
+// GA4 measurement IDs are PUBLIC by design — the GA4 docs require the
+// ID to be embedded in client-facing JS (gtag('config', 'G-XXXXX') and
+// the `googletagmanager.com/gtag/js?id=G-XXXXX` script). Read it from
+// the build-time env var `NEXT_PUBLIC_GA4_ID` so we never hardcode the
+// literal in source (which Netlify's secrets scanner would otherwise
+// match against the env var's resolved value and fail the build). The
+// `SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_GA4_ID"` entry in
+// `netlify.toml` whitelists the inlined value in the production bundle.
+// When the env var is absent (e.g. local dev without setup) the
+// component silently no-ops via the `!GA_ID` guard below — no broken
+// gtag calls, no console spam.
+const GA_ID = process.env.NEXT_PUBLIC_GA4_ID
 
 /** Read `analytics` consent without doing any I/O beyond localStorage. */
 function readAnalyticsConsent(): boolean {
@@ -123,7 +134,7 @@ export default function GoogleAnalyticsConsent() {
     return () => window.clearInterval(id)
   }, [analyticsEnabled])
 
-  if (!analyticsEnabled) return null
+  if (!analyticsEnabled || !GA_ID) return null
 
   return (
     <>

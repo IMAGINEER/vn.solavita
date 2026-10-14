@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * Live Solar Plan Preview — the right-hand side of the Free UK Plan
+ * Live Solar Plan Preview — the right-hand side of the Free Nigeria Plan
  * section on the homepage. Renders a real HTML "Solar Plan" card that
  * auto-cycles through 5 stages (Home → System → Plan → Savings →
  * Offer) so the visitor sees what their own personalised report will
@@ -80,7 +80,13 @@ const DEMO_CONSULTATION = {
   householdSize: '1' as const,
   electricityUsage: 'low' as const,
   devices: ['wallbox'],
-  region: 'England - London',
+  region: 'Lagos',
+  // NG Step-3 demo defaults so the calculator accepts the input
+  // shape. 'unknown' is the safe sentinel - the calc still resolves
+  // a sensible plan and ROI.
+  generatorFrequency: 'unknown' as const,
+  fuelBudgetNgn: 'unknown' as const,
+  backupNeeds: [],
 }
 
 const HOUSE_TYPE_LABEL = 'Semi-detached'
@@ -103,14 +109,23 @@ interface DemoData {
 function buildDemoData(): DemoData {
   const recommendedPlanId = recommendPlan(DEMO_CONSULTATION)
   const plan = getPlan(recommendedPlanId)
+  // `assumptions` is no longer consulted by calculateROI (the NG
+  // calculator bakes its own tariffs) but we keep the call so
+  // any future display surface (sliders) can hook in without a
+  // larger refactor.
   const assumptions = defaultAssumptions(plan)
-  const metrics = calculateROI(plan, DEMO_CONSULTATION, assumptions)
+  const metrics = calculateROI(plan, DEMO_CONSULTATION)
+  // `panels` on NgPlan is actually a kWp alias. For the on-screen
+  // "N × 460W" headline we need the module count, which we
+  // back-derive as kWp / 0.46.
+  const modulesCount = Math.round((plan.panels ?? 0) / 0.46)
   return {
     recommendedPlanId,
     plan,
     metrics,
-    systemKw: plan.panels * 0.46, // 460 W panels — same constant as in calc.ts
-  }
+    systemKw: plan.panels * 0.46,
+    modulesCount,
+  } as DemoData & { modulesCount: number }
 }
 
 /* ────────────────────────────────────────────────────────────────────────

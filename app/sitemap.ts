@@ -57,14 +57,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const [categories, posts] = await Promise.all([
-      getCategories(),
+      // Only emit category landing pages that have at least one
+      // published NG post — matches the public page rule (the dynamic
+      // route also 404s empty categories via `onlyWithPublishedPosts`).
+      getCategories({ onlyWithPublishedPosts: true }),
       listAllPublishedForSitemap(),
     ])
 
     // Category landing pages.
     for (const cat of categories) {
-      const hasPost = posts.some((p) => p.categorySlug === cat.slug)
-      if (!hasPost) continue
       entries.push({
         url: absoluteUrl(`/blog/category/${cat.slug}`),
         lastModified: now,

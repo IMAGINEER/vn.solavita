@@ -39,7 +39,7 @@ export default function ContactHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Speak with our UK team
+            Speak with our Nigerian team
           </span>
         </motion.span>
 

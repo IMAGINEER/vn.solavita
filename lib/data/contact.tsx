@@ -75,15 +75,15 @@ export interface ContactChannel {
 export const contactChannels: ContactChannel[] = [
   {
     label: 'Email',
-    value: 'TBD — Verified Nigerian sales/support email',
-    href: 'mailto:',
-    description: 'Reply within one working day once a verified address is supplied.',
+    value: 'ng@solavita.com',
+    href: 'mailto:ng@solavita.com',
+    description: 'Reply within one working day.',
     icon: 'mail',
   },
   {
     label: 'WhatsApp',
-    value: 'TBD — Verified Nigerian business number',
-    href: 'https://wa.me/',
+    value: '+8618500875025',
+    href: 'https://wa.me/8618500875025',
     description:
       'TBD — Confirmed Nigerian operating hours and WhatsApp availability.',
     icon: 'phone',

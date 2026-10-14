@@ -79,7 +79,7 @@ export default function MyPlanClient({
   const [selectedPlanId, setSelectedPlanId] = useState<PlanId>(recommendedPlanId)
 
   // User-tweakable tariff assumptions. Seeded from the Ofgem 2026 cap
-  // and the current SEG rate. Independent of plan choice - a customer
+  // and the current export rate (TBD per region). Independent of plan choice - a customer
   // who pays 30p/kWh on Home Energy One pays 30p/kWh on Home Energy
   // Ultra too, so the values survive plan switches.
   const [importPriceGbp, setImportPriceGbp] = useState<number>(DEFAULT_ROI_IMPORT_PRICE_GBP)
@@ -95,12 +95,24 @@ export default function MyPlanClient({
     },
   )
 
+  /**
+   * User-tweakable annual fuel budget override (₦/year). When set,
+   * replaces the band/back-derive cap in the calculator. Surfaced
+   * as a slider in `CustomiseCard` "View calculation assumptions"
+   * so "Not sure" users can dial their assumed spend without
+   * re-opening the consultation form. `undefined` = use the
+   * calculator's default (band or back-derive + hard cap).
+   */
+  const [userFuelBudgetOverrideNgn, setUserFuelBudgetOverrideNgn] =
+    useState<number | undefined>(undefined)
+
   // Single derivation point - every metric comes from this useMemo.
   const plan: Plan = useMemo(() => getPlan(selectedPlanId), [selectedPlanId])
-  // Assumptions: all three ROI inputs come from user state. The plan
-  // only determines hardware (panel count, battery, inverter) and the
-  // initial seed of the self-consumption slider - it never overrides
-  // user choices once they've touched the slider.
+  // Assumptions: legacy RoiAssumptions object. The NG calculator bakes
+  // its own tariffs internally so the assumptions are not currently
+  // consumed - kept exported to keep the slider UI in the tree without
+  // rippling. If user-tweakable tariffs come back, pass `assumptions`
+  // into `calculateROI(plan, consultation, assumptions)`.
   const assumptions: RoiAssumptions = useMemo(
     () => ({
       importPriceGbp,
@@ -110,8 +122,8 @@ export default function MyPlanClient({
     [importPriceGbp, exportPriceGbp, selfConsumptionRate],
   )
   const metrics: PlanRoi = useMemo(
-    () => calculateROI(plan, consultation, assumptions),
-    [plan, consultation, assumptions],
+    () => calculateROI(plan, consultation, userFuelBudgetOverrideNgn),
+    [plan, consultation, userFuelBudgetOverrideNgn],
   )
   const systemKw = useMemo(
     () => plan.panels * 0.46, // 460 W per panel - same constant as in calc.ts
@@ -265,6 +277,8 @@ export default function MyPlanClient({
                   onImportPriceChange={setImportPriceGbp}
                   onExportPriceChange={setExportPriceGbp}
                   onSelfConsumptionRateChange={setSelfConsumptionRate}
+                  metrics={metrics}
+                  onFuelBudgetOverrideChange={setUserFuelBudgetOverrideNgn}
                 />
               </div>
               <SavingsSection metrics={metrics} region={consultation.region} />

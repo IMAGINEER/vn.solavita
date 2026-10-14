@@ -21,6 +21,9 @@ export async function POST(request: Request) {
       street, houseNumber, postalCode, city,
       region, houseType, roofType, householdSize,
       electricityUsage, devices,
+      // NG Step-3 extensions (all optional, all may be undefined for
+      // pre-existing form submissions or /my-plan's slim update path).
+      generatorFrequency, fuelBudgetNgn, backupNeeds,
     } = body
 
     // Basic server-side validation
@@ -54,6 +57,13 @@ export async function POST(request: Request) {
       household_size: householdSize || null,
       electricity_usage: electricityUsage === 'unknown' ? null : (electricityUsage || null),
       devices: Array.isArray(devices) ? devices.join(', ') : devices || null,
+      // NG Step-3 extensions - all map to NULL when missing or the
+      // 'unknown' sentinel so the admin table shows a clean unspecified
+      // state instead of a literal 'unknown' string. The DB columns
+      // themselves are nullable so pre-existing rows are unaffected.
+      generator_frequency: generatorFrequency && generatorFrequency !== 'unknown' ? generatorFrequency : null,
+      fuel_budget_ngn: fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
+      backup_needs: Array.isArray(backupNeeds) && backupNeeds.length > 0 ? backupNeeds.join(', ') : null,
       // Bump on every write (INSERT or UPDATE) so /admin/leads sort
       // by updated_at DESC bubbles dedup re-submissions to the top.
       // created_at stays immutable - first-registration semantics.
@@ -101,7 +111,7 @@ export async function POST(request: Request) {
         success: true,
         alreadyRegistered: true,
         message:
-          'This email is already registered with us. Your details have been updated. If you have not heard back yet, please contact our team (TBD — Verified Nigerian sales/support email).',
+          'This email is already registered with us. Your details have been updated. If you have not heard back yet, please contact our team (ng@solavita.com).',
       })
     }
 

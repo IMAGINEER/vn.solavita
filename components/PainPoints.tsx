@@ -9,7 +9,7 @@ const painPoints = [
   {
     id: 1,
     problem: 'Battery fires & safety risks',
-    problemDetail: 'NMC batteries can suffer thermal runaway. Faulty systems have caused house fires across the UK.',
+    problemDetail: 'NMC batteries can suffer thermal runaway. Faulty systems have caused house fires across Nigeria.',
     solution: 'LiFePO4: Thermally non-flammable',
     solutionDetail: 'Lithium iron phosphate cannot physically undergo thermal runaway. Millisecond cell balancing prevents overload. Double surge protection built in from the factory.',
     icon: '🔥',
@@ -27,9 +27,9 @@ const painPoints = [
   {
     id: 3,
     problem: 'Months of waiting & site chaos',
-    problemDetail: 'Established UK providers quote 6 weeks to 6 months. Install dates slip constantly.',
+    problemDetail: 'Established Nigerian providers quote 6 weeks to 6 months. Install dates slip constantly.',
     solution: '2 weeks: From contract to power',
-    solutionDetail: 'Just-in-time delivery from our 40,000 sq ft UK warehouse. Two-day installation by NICEIC-certified engineers. G99 grid application included.',
+    solutionDetail: 'Just-in-time delivery from our Nigeria warehouse. Two-day installation by certified installers. Grid application included.',
     icon: '⏳',
     solutionIcon: '⚡',
   },
@@ -46,8 +46,8 @@ const painPoints = [
     id: 5,
     problem: 'Support hotlines that never answer',
     problemDetail: 'Many solar firms are start-ups without service infrastructure. Tickets go nowhere.',
-    solution: '24/7 UK support with a national engineer network',
-    solutionDetail: 'UK service team backed by TBD — 70+ years of European engineering heritage. AI fault detection automatically opens service tickets. On-site visits by qualified local engineers.',
+    solution: '24/7 Nigerian support with a national engineer network',
+    solutionDetail: 'Nigerian service team backed by TBD — 70+ years of European engineering heritage. AI fault detection automatically opens service tickets. On-site visits by qualified local engineers.',
     icon: '📵',
     solutionIcon: '🇬🇧',
   },
@@ -56,7 +56,7 @@ const painPoints = [
     problem: 'Hidden costs & inflated prices',
     problemDetail: '3-5 middlemen drive up the price. You pay the markup.',
     solution: 'Producer-direct pricing, no middlemen',
-    solutionDetail: 'Producer-Direct-to-Consumer removes every intermediary. Same premium quality, TBD — up to 50% less. TBD — £12,999 for a complete 10kW / 10kWh system, fully installed.',
+    solutionDetail: 'Producer-Direct-to-Consumer removes every intermediary. Same premium quality, TBD — up to 50% less. Request a quote for a complete 10kW / 10kWh system, fully installed.',
     icon: '💸',
     solutionIcon: '🏭',
   },
@@ -132,7 +132,7 @@ export default function PainPoints() {
             8 Problems. <span className="text-uk-teal">8 Solutions.</span>
           </h2>
           <p className="text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto">
-            The UK solar market has systemic weaknesses. Here's how Solavita solves every one of them.
+            The Nigerian solar market has systemic weaknesses. Here's how Solavita solves every one of them.
           </p>
         </div>
 

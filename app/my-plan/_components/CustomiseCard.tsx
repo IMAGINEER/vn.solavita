@@ -14,9 +14,10 @@ import {
   ROI_SELF_CONSUMPTION_MAX,
   ROI_SELF_CONSUMPTION_STEP,
   type PlanId,
+  type PlanRoi,
   type RoiAssumptions,
 } from '../_lib/calc'
-import { formatGBP } from '../_lib/format'
+import { formatNGN } from '../_lib/format'
 
 interface CustomiseCardProps {
   selectedPlanId: PlanId
@@ -32,6 +33,20 @@ interface CustomiseCardProps {
   onImportPriceChange: (value: number) => void
   onExportPriceChange: (value: number) => void
   onSelfConsumptionRateChange: (value: number) => void
+  /**
+   * Live ROI metrics. Used to source the current annual fuel cost cap
+   * (`metrics.appliedAnnualFuelCostNgn`) for the fuel-budget slider
+   * so the slider's default value tracks the calculator's
+   * path-A / path-B choice automatically.
+   */
+  metrics: PlanRoi
+  /**
+   * When defined, replaces the band / back-derive fuel-cost cap. The
+   * slider surfaces this; passing `undefined` clears the override and
+   * the calculator falls back to the user's reported band or the
+   * segment-aware hard cap.
+   */
+  onFuelBudgetOverrideChange: (value: number | undefined) => void
 }
 
 /**
@@ -58,6 +73,8 @@ export default function CustomiseCard({
   onImportPriceChange,
   onExportPriceChange,
   onSelfConsumptionRateChange,
+  metrics,
+  onFuelBudgetOverrideChange,
 }: CustomiseCardProps) {
   const [advancedOpen, setAdvancedOpen] = useState(false)
 
@@ -144,7 +161,7 @@ export default function CustomiseCard({
               <div className="mt-4 pt-3 border-t border-uk-line flex items-baseline justify-between">
                 <span className="text-xs text-uk-slate">Plan price</span>
                 <span className="text-lg font-cw-bold text-uk-teal-dark tabular-nums">
-                  {formatGBP(plan.priceGbp)}
+                  {formatNGN(plan.priceNgn)}
                 </span>
               </div>
             </button>
@@ -174,12 +191,92 @@ export default function CustomiseCard({
 
       {advancedOpen && (
         <div className="mt-3 rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5 space-y-5">
+          <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+            <strong className="font-cw-bold">Provisional test values</strong> — the
+            grid tariff, fuel price and generator efficiency baked into
+            the calculator are estimates, not verified national averages.
+            Adjust the sliders below to model your actual situation.
+          </div>
           <p className="text-xs text-uk-slate leading-relaxed">
             These figures feed the savings and payback shown above. Drag
             the sliders to match your actual tariff and usage pattern -
             the savings / payback / 30-year numbers above reflow in real
             time.
           </p>
+
+          {/* Fuel budget slider — for "Not sure" users (and for fine-tuning
+             band picks). Range 0 – 2× segment hard cap so the user can't
+             push the calculator into absurd territory. Default value is
+             whatever the calculator currently uses
+             (`metrics.appliedAnnualFuelCostNgn`), so the slider tracks
+             path-A / path-B automatically until the user moves it. */}
+          {(() => {
+            const segment = PLANS.find((p) => p.id === selectedPlanId)?.segment ?? 'homes'
+            const hardCap = segment === 'homes' ? 600_000 : 3_600_000
+            const sliderMax = hardCap * 2
+            const fuelStep = Math.max(10_000, Math.round(sliderMax / 200 / 10_000) * 10_000)
+            const currentCap = metrics.appliedAnnualFuelCostNgn
+            const isOverridden = metrics.fuelCostOverridden
+            const sliderValue = isOverridden ? currentCap : currentCap
+            return (
+              <div className="space-y-2">
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <label
+                    htmlFor="assumption-fuel-budget"
+                    className="font-cw-bold text-uk-navy"
+                  >
+                    Annual generator fuel budget
+                    {isOverridden && (
+                      <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-uk-teal text-white text-[10px] font-cw-bold tracking-wider">
+                        CUSTOM
+                      </span>
+                    )}
+                  </label>
+                  <span className="font-cw-bold text-uk-teal-dark tabular-nums">
+                    {formatNGN(sliderValue)} / year
+                  </span>
+                </div>
+                <input
+                  id="assumption-fuel-budget"
+                  type="range"
+                  min={0}
+                  max={sliderMax}
+                  step={fuelStep}
+                  value={sliderValue}
+                  onChange={(e) => {
+                    const v = parseFloat(e.target.value)
+                    if (!Number.isFinite(v) || v < 0) return
+                    onFuelBudgetOverrideChange(v)
+                  }}
+                  className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-uk-line [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-uk-teal [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-uk-teal [&::-moz-range-thumb]:border-0"
+                />
+                <div className="flex justify-between text-xs text-uk-slate tabular-nums">
+                  <span>₦0</span>
+                  <span>
+                    {formatNGN(sliderMax)}
+                    <span className="ml-1 text-uk-slate/70">
+                      (2× default cap)
+                    </span>
+                  </span>
+                </div>
+                {isOverridden && (
+                  <button
+                    type="button"
+                    onClick={() => onFuelBudgetOverrideChange(undefined)}
+                    className="text-xs text-uk-teal hover:text-uk-teal-dark font-cw-bold underline underline-offset-2"
+                  >
+                    Reset to default ({formatNGN(currentCap)} / year)
+                  </button>
+                )}
+                <p className="text-xs text-uk-slate">
+                  Caps the generator-fuel saving the calculator can claim
+                  per year. Default reflects your consultation choice
+                  (band or back-derive); adjust if you have a better
+                  estimate.
+                </p>
+              </div>
+            )
+          })()}
 
           {/* Import price slider */}
           <div className="space-y-2">
@@ -191,7 +288,7 @@ export default function CustomiseCard({
                 Import price
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
-                £{assumptions.importPriceGbp.toFixed(4)} /kWh
+                ₦{assumptions.importPriceGbp.toFixed(2)} /kWh
               </span>
             </div>
             <p className="text-xs text-uk-slate">
@@ -211,8 +308,8 @@ export default function CustomiseCard({
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
-              <span>£{ROI_IMPORT_PRICE_MIN.toFixed(2)}</span>
-              <span>£{ROI_IMPORT_PRICE_MAX.toFixed(2)}</span>
+              <span>₦{ROI_IMPORT_PRICE_MIN.toFixed(0)}</span>
+              <span>₦{ROI_IMPORT_PRICE_MAX.toFixed(0)}</span>
             </div>
           </div>
 
@@ -226,7 +323,7 @@ export default function CustomiseCard({
                 Export price (SEG)
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
-                £{assumptions.exportPriceGbp.toFixed(4)} /kWh
+                ₦{assumptions.exportPriceGbp.toFixed(2)} /kWh
               </span>
             </div>
             <p className="text-xs text-uk-slate">
@@ -247,8 +344,8 @@ export default function CustomiseCard({
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
-              <span>£{ROI_EXPORT_PRICE_MIN.toFixed(2)}</span>
-              <span>£{ROI_EXPORT_PRICE_MAX.toFixed(2)}</span>
+              <span>₦{ROI_EXPORT_PRICE_MIN.toFixed(0)}</span>
+              <span>₦{ROI_EXPORT_PRICE_MAX.toFixed(0)}</span>
             </div>
           </div>
 
@@ -270,7 +367,7 @@ export default function CustomiseCard({
             </div>
             <p className="text-xs text-uk-slate">
               Share of generation used on-site. With a battery this
-              reaches 100%; without one, typical UK solar-only homes
+              reaches 100%; without one, typical Nigerian solar-only homes
               self-consume around 35%. Drag to match your actual usage
               pattern.
             </p>

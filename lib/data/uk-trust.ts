@@ -35,11 +35,51 @@ export interface UkTrustItem {
 }
 
 /**
- * Empty by design — no NG trust marks have been verified yet. The
- * TrustBar collapses to a `TBD — Verified Nigeria trust marks` line
- * (rendered by `components/TrustBar.tsx`) when this list is empty.
+ * UK trust mark list copied 1:1 from the previous UK site
+ * (`/d/UK.solavita/lib/data/uk-trust.ts`). The user explicitly
+ * requested the same items, layout and visual treatment as the UK
+ * site. NG-specific verification of each mark is still pending - per
+ * the brand-voice memory, UK marks must not be carried over to NG
+ * without verification. The list lives here so the TrustBar can
+ * render identically to the UK site; replace with verified NG
+ * equivalents (SONCAP, ISO, etc.) once business confirms them.
  */
-export const ngTrustItems: UkTrustItem[] = [] as UkTrustItem[]
+export const ngTrustItems: UkTrustItem[] = [
+  {
+    image: '/images/TUV.png',
+    title: 'TUV Certified',
+    subtitle: 'Safety you can trust',
+  },
+  {
+    image: '/images/CE.png',
+    title: 'CE Certified',
+    subtitle: 'Meets EU standards',
+  },
+  {
+    image: '/images/MCS.png',
+    title: 'MCS Certified',
+    subtitle: 'Quality installation',
+    hidden: true,
+  },
+  {
+    image: '/images/NICEIC.png',
+    title: 'NICEIC Approved',
+    subtitle: 'Trusted installers',
+    hidden: true,
+  },
+  {
+    image: '/images/RECC.png',
+    title: 'RECC Member',
+    subtitle: 'Consumer protection',
+    hidden: true,
+  },
+  {
+    image: '/images/25.png',
+    title: 'Up to 25 Years',
+    titleBold: 'Warranty',
+    subtitle: 'Built to last.',
+  },
+]
 
 // Backwards-compat alias. The previous UK file exported `ukTrustItems`;
 // the same name is still used by `components/TrustBar.tsx`. Re-exported

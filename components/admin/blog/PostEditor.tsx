@@ -120,7 +120,7 @@ export function PostEditor({
     // Pre-fill byline with the existing author for edits, or the
     // default UK team byline for new posts.
     author_byline:
-      initial?.author?.display_name ?? 'Solavita UK Team',
+      initial?.author?.display_name ?? 'Solavita Nigeria Team',
     status: initial?.status ?? 'draft',
     meta_title: initial?.meta_title ?? '',
     meta_description: initial?.meta_description ?? '',
@@ -499,7 +499,7 @@ export function PostEditor({
                 id={titleId}
                 value={form.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
-                placeholder="Solar savings in the UK 2026"
+                placeholder="Solar savings in Nigeria 2026"
                 className="mt-1.5"
               />
             </div>
@@ -541,7 +541,7 @@ export function PostEditor({
                 id={authorBylineId}
                 value={form.author_byline}
                 onChange={(e) => setForm((f) => ({ ...f, author_byline: e.target.value }))}
-                placeholder="e.g. Jane Smith or Solavita UK Team"
+                placeholder="e.g. Adaeze Okafor or Solavita Nigeria Team"
                 className="mt-1.5"
               />
               <p className="text-[11px] text-uk-slate mt-1">

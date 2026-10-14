@@ -76,7 +76,7 @@ export default function BusinessSolarPage() {
       eyebrow: 'NOT A STANDARD FIT',
       title: <>Your business doesn't fit <span className="text-gradient">a standard solution?</span></>,
       body: 'If your loads, operating hours or site conditions are outside what the business-solar solutions cover, request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your business.',
-      primaryCta: { label: 'Request a tailored quote', onClick: openFormModal },
+      primaryCta: { label: 'Request a tailored quote', href: '/contact-us' },
     },
     faqs: businessFaqs,
   }

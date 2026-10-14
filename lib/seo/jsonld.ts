@@ -98,15 +98,13 @@ export function organizationJsonLd() {
         postalCode: 'TBD — Verified Nigeria postal code',
         addressCountry: 'NG',
       },
-      // Contact point: only fields that exist in the codebase. Email
-      // and telephone are intentionally TBD until business supplies
-      // verified Nigerian contact details.
+      // Contact point: verified NG email + WhatsApp number.
       contactPoint: [
         {
           '@type': 'ContactPoint',
           contactType: 'customer support',
-          email: 'TBD — Verified Nigerian sales/support email',
-          telephone: 'TBD — Verified Nigerian business number',
+          email: 'ng@solavita.com',
+          telephone: '+8618500875025',
           areaServed: 'NG',
           availableLanguage: ['en-NG'],
         },
@@ -487,8 +485,8 @@ export function localBusinessJsonLd() {
       '@id': url,
       name: SITE_LEGAL_NAME,
       url: absoluteUrl('/'),
-      email: 'TBD — Verified Nigerian sales/support email',
-      telephone: 'TBD — Verified Nigerian business number',
+      email: 'ng@solavita.com',
+      telephone: '+8618500875025',
       image: absoluteUrl(DEFAULT_OG_IMAGE),
       priceRange: '₦₦',
       address: {
@@ -503,8 +501,8 @@ export function localBusinessJsonLd() {
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'TBD — Verified Nigerian sales/support email',
-        telephone: 'TBD — Verified Nigerian business number',
+        email: 'ng@solavita.com',
+        telephone: '+8618500875025',
         areaServed: 'NG',
         availableLanguage: ['en-NG'],
       },

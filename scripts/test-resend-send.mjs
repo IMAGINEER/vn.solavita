@@ -4,7 +4,7 @@
  *   node scripts/test-resend-send.mjs
  *
  * Sends a simple test message to confirm the verified-domain sender
- * (Solavita UK <uk@solavita.com>) is accepted by Resend.
+ * (Solavita NG <ng@solavita.com>) is accepted by Resend.
  */
 import { readFileSync } from 'node:fs'
 import { Resend } from 'resend'
@@ -29,8 +29,8 @@ if (!apiKey) {
 const resend = new Resend(apiKey)
 
 const TO = '715653712@qq.com'
-const FROM = 'Solavita UK <uk@solavita.com>'
-const SUBJECT = 'Solavita UK · Resend domain verification test'
+const FROM = 'Solavita NG <ng@solavita.com>'
+const SUBJECT = 'Solavita NG · Resend domain verification test'
 
 const HTML = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
@@ -43,11 +43,11 @@ const HTML = `<!DOCTYPE html>
 </td></tr>
 <tr><td style="padding:32px 36px;">
 <p style="margin:0 0 16px 0; font-size:15px; color:#374151; line-height:1.6;">
-Hi - this is a one-off test email from the Solavita UK site.
+Hi - this is a one-off test email from the Solavita NG site.
 </p>
 <p style="margin:0 0 16px 0; font-size:15px; color:#374151; line-height:1.6;">
-Confirming that <strong>uk@solavita.com</strong> is now an accepted Resend sender
-for the UK site (previously sent from uk@skyworth-solavita.de while
+Confirming that <strong>ng@solavita.com</strong> is now an accepted Resend sender
+for the NG site (previously sent from uk@skyworth-solavita.de while
 solavita.com was pending verification).
 </p>
 <p style="margin:0; font-size:13px; color:#6b7280;">

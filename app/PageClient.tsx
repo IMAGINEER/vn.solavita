@@ -144,7 +144,7 @@ function Section2EntryCards() {
             body="Single-phase solar and battery systems, from essential backup to higher-capacity setups for everyday appliances and selected high-demand loads."
             imageDescription="A modern Nigerian home with a rooftop solar system and battery storage"
             imageSrc="/images/home_cap.webp"
-            cta="Explore Home Solutions →"
+            cta="Explore Home Solutions"
           />
           <ScenarioPanel
             href="/solutions/business-solar"
@@ -643,9 +643,10 @@ function Section9FinalCta() {
           Take the Next Step Towards <span className="text-gradient">Reliable Power</span>
         </h2>
         <p className="mt-4 text-base md:text-lg text-white/85 font-cw-light leading-relaxed">
-          Cut your fuel bill. Own your power. Stay lit through any
-          outage. Tell us about your home or business and we will
-          design a tailored solar solution.
+          Whether for your home or business, Solavita helps you find
+          the right solar and battery storage solution for your energy
+          needs. Tell us what you need, and our team will help you get
+          started.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <GetQuoteButton onClick={openFormModal} />

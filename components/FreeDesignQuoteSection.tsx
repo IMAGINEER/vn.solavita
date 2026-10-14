@@ -84,7 +84,7 @@ export default function FreeDesignQuoteSection({
     'Custom system design for your roof',
     'Energy savings analysis',
     'Battery & HEMS planning',
-    'UK-specific recommendations',
+    'Nigeria-specific recommendations',
   ]
 
   return (
@@ -105,7 +105,7 @@ export default function FreeDesignQuoteSection({
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white">
               <div className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
               <span className="text-xs font-cw-regular text-uk-slate">
-                Free UK plan
+                Free Nigeria plan
               </span>
             </div>
 

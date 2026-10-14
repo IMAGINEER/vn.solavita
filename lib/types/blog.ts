@@ -1,10 +1,27 @@
-// Shared TypeScript types for the blog module. UK locale columns; the
-// schema is shared with IT but each app reads its own locale column. The
-// DB columns are lowercase_snake_case; these interfaces mirror them
-// exactly so the hand-rolled `(rows || []) as unknown as BlogPost[]` cast
-// at every call site stays safe and grep-able.
+// Shared TypeScript types for the blog module.
+//
+// Locale model: every row carries a `locale` column ('it' | 'uk' | 'de'
+// | 'ng') so each app reads and writes only its own bucket. The locale
+// text columns (`name_en`/`name_it`, `description_en`/`description_it`,
+// `bio_en`/`bio_it`) live alongside it because the project decided not
+// to fully localise the schema.
+//
+// For NG:
+//   - Read  : filter by `locale = 'ng'`
+//   - Write : always set `locale = 'ng'` explicitly
+//   - Locale text columns used: `name_en`, `description_en`, `bio_en`
+//
+// The DB columns are lowercase_snake_case; these interfaces mirror them
+// exactly so the hand-rolled `(rows || []) as unknown as BlogPost[]`
+// cast at every call site stays safe and grep-able.
 
 export type BlogPostStatus = 'draft' | 'published'
+
+export type BlogLocale = 'it' | 'uk' | 'de' | 'ng'
+
+/** Locale this app writes and reads. Centralised so call sites that
+ *  hard-code the filter (`locale='ng'`) are grep-able in one place. */
+export const BLOG_LOCALE: BlogLocale = 'ng'
 
 export interface BlogCategory {
   id: string
@@ -13,6 +30,7 @@ export interface BlogCategory {
   description_en: string | null
   sort_order: number
   created_at: string
+  locale: BlogLocale
 }
 
 export interface BlogTag {
@@ -20,6 +38,7 @@ export interface BlogTag {
   slug: string
   name_en: string
   created_at: string
+  locale: BlogLocale
 }
 
 export interface BlogAuthor {
@@ -30,6 +49,7 @@ export interface BlogAuthor {
   avatar_url: string | null
   bio_en: string | null
   created_at: string
+  locale: BlogLocale
 }
 
 /** A post as exposed to the public surface - body_md included so the
@@ -50,6 +70,7 @@ export interface BlogPost {
   reading_time_min: number
   created_at: string
   updated_at: string
+  locale: BlogLocale
 }
 
 /** A post joined with its category + author + tags - returned by the
@@ -80,6 +101,7 @@ export interface BlogPostSummary {
   category: BlogCategory
   author: BlogAuthor
   tags: BlogTag[]
+  locale: BlogLocale
 }
 
 export interface BlogPostRevision {

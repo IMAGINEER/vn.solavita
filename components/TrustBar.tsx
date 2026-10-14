@@ -4,30 +4,32 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ngTrustItems } from '@/lib/data/uk-trust'
-import TbdText from '@/components/ui/tbd-text'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Slim horizontal trust / certification strip.
+ * Slim horizontal trust / certification strip - copied 1:1 from the
+ * previous UK site (`/d/UK.solavita/components/TrustBar.tsx`).
+ * Renders the UK trust items (TÜV / CE / MCS / NICEIC / RECC /
+ * 25-year warranty) as PNG assets under `public/images/`. The
+ * `ngTrustItems` array carries the same six entries as the UK data
+ * file - per the user's instruction the structure and visual treatment
+ * are preserved.
  *
- * Nigeria site: the trust item list is intentionally empty
- * (`ngTrustItems` in `lib/data/uk-trust.ts`) because no NG certification
- * or warranty mark has been verified. Per the NG content strategy, the
- * UK marks (MCS / NICEIC / RECC / TUV / CE / 25-year) must not be
- * carried over and DARES-style claims are forbidden.
+ * Layout: each item shows [icon] / [title] / [subtitle]. Icon height
+ * is capped at 48 px; width follows the asset's intrinsic aspect
+ * ratio so square and wide marks render cleanly without squashing.
+ * Items marked `hidden: true` are filtered out (same as the UK).
  *
- * When the list is empty, the component renders a single muted
- * `TBD — Verified Nigeria trust marks` line so the strip's vertical
- * footprint collapses and the rest of the page composition stays
- * intact. When NG trust marks are added later, the same component
- * renders them with the same visual treatment as before.
+ * Note: per the brand-voice memory, UK marks must not be carried
+ * over to NG without verification. This component is a 1:1 copy of
+ * the UK site per the user's explicit instruction; replace the items
+ * here with verified NG equivalents once business confirms them.
  */
 export default function TrustBar() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (ngTrustItems.length === 0) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         sectionRef.current,
@@ -47,26 +49,10 @@ export default function TrustBar() {
     return () => ctx.revert()
   }, [])
 
-  if (ngTrustItems.length === 0) {
-    return (
-      <div
-        ref={sectionRef}
-        className="trust-bar relative py-6 border-y border-white/5 bg-sv-dark/50"
-        data-trust-bar-state="empty"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[11px] font-cw-regular text-white/60 uppercase tracking-wider">
-            <TbdText text="Verified Nigeria trust marks" className="text-red-400/90 text-[11px] font-cw-bold uppercase tracking-wider" />
-          </p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div
       ref={sectionRef}
-      className="trust-bar relative py-8 border-y border-white/5 bg-sv-dark/50"
+      className="trust-bar relative py-8 border-y border-white/5 bg-uk-navy"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center flex-wrap sm:justify-between gap-6 sm:gap-4 overflow-x-auto pb-2 sm:pb-0">
@@ -92,7 +78,7 @@ export default function TrustBar() {
                   </span>
                 )}
               </div>
-              <div className="text-[10px] font-cw-regular mt-0.5 opacity-70 whitespace-nowrap">
+              <div className="text-[10px] font-cw-regular mt-0.5 text-white/70 whitespace-nowrap">
                 {item.subtitle}
               </div>
             </div>

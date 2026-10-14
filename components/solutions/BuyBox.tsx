@@ -63,9 +63,9 @@ export default function BuyBox({ detail }: BuyBoxProps) {
         </span>
         <span className="font-cw-bold text-uk-navy">4.9 / 5</span>
         <span className="text-uk-slate">·</span>
-        <span>MCS-certified · {detail.warranty}</span>
+        <span>Quality-certified · {detail.warranty}</span>
         <span className="text-uk-slate">·</span>
-        <span>UK-wide install</span>
+        <span>Nationwide install</span>
       </div>
 
       {/* Headline spec strip - Amazon's "price" slot, repurposed for kWp / kWh.
@@ -203,7 +203,7 @@ export default function BuyBox({ detail }: BuyBoxProps) {
       <div className="mt-3 flex items-center gap-2.5 text-[11px] text-uk-slate/80 font-cw-regular">
         <ShieldCheck className="w-3.5 h-3.5 text-uk-emerald" strokeWidth={2} />
         <span>
-          UK-wide install · {detail.warranty} · SKYWORTH-backed service
+          Nationwide install · {detail.warranty} · SKYWORTH-backed service
         </span>
       </div>
     </div>

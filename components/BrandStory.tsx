@@ -5,8 +5,8 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const stats = [
-  { value: '10+', unit: 'Years', label: 'Of solar expertise for UK homes' },
-  { value: '5,000+', unit: 'UK homes', label: 'Powered by Solavita systems' },
+  { value: '10+', unit: 'Years', label: 'Of solar expertise for Nigerian homes' },
+  { value: '5,000+', unit: 'Nigerian homes', label: 'Powered by Solavita systems' },
   { value: '70+', unit: 'Years', label: 'Of engineering heritage in Europe' },
   { value: '£7.7bn', unit: 'Group', label: 'Backed by the SKYWORTH Group' },
 ]
@@ -44,11 +44,11 @@ export default function BrandStory() {
         <div className="text-center mb-16">
           <span className="text-uk-teal-dark text-sm font-cw-bold uppercase tracking-wider">About Solavita</span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy mt-4 mb-6">
-            <span className="text-uk-teal">Global Heritage.</span> Built for the UK.
+            <span className="text-uk-teal">Global Heritage.</span> Built for Nigeria.
           </h2>
           <p className="text-lg text-uk-slate font-cw-regular max-w-3xl mx-auto">
-            Solavita is the UK residential solar brand of the SKYWORTH Group - one of the world's largest electronics manufacturers.
-            Premium engineering from a £7.7bn group, designed specifically for British homes, weather and regulations.
+            Solavita is the Nigerian residential solar brand of the SKYWORTH Group - one of the world's largest electronics manufacturers.
+            Premium engineering from a £7.7bn group, designed specifically for Nigerian homes.
           </p>
         </div>
 
@@ -71,17 +71,16 @@ export default function BrandStory() {
                 <img src="/images/a1logo02.svg" alt="Solavita" loading="lazy" className="w-full h-full object-contain" />
               </div>
               <div>
-                <h3 className="text-lg font-cw-bold text-uk-navy">UK-First Engineering</h3>
-                <p className="text-xs text-uk-slate">Designed for British roofs</p>
+                <h3 className="text-lg font-cw-bold text-uk-navy">Nigeria-First Engineering</h3>
+                <p className="text-xs text-uk-slate">Designed for Nigerian homes</p>
               </div>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed mb-4">
-              Every Solavita system is engineered for UK conditions: MCS-certified components, G98/G99 grid compliance,
-              and installers trained on British roof types - from slate in Yorkshire to clay tiles in the South East.
-              Our UK-based service team is on hand for the lifetime of your system.
+              Every Solavita system is engineered for Nigerian conditions — safe, factory-matched components and smart energy management designed around the realities of grid power and fuel costs.
+              Our Nigeria-based service team is on hand for the lifetime of your system.
             </p>
             <div className="rounded-xl overflow-hidden border border-uk-line bg-uk-teal-soft">
-              <img src="/images/hero-placeholder.webp" alt="UK home with solar panels" loading="lazy" className="w-full h-full object-cover" />
+              <img src="/images/hero-placeholder.webp" alt="Nigerian home with solar panels" loading="lazy" className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -98,7 +97,7 @@ export default function BrandStory() {
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed mb-4">
               The SKYWORTH Group is a publicly listed global corporation with over 40,000 employees.
               Already serving 4 million households worldwide with TVs, appliances and smart-home systems,
-              SKYWORTH now brings the same engineering quality and supply-chain scale to UK residential solar.
+              SKYWORTH now brings the same engineering quality and supply-chain scale to Nigerian residential solar.
             </p>
             <div className="rounded-xl overflow-hidden border border-uk-line bg-uk-teal-soft">
               <img src="/images/case-placeholder.webp" alt="SKYWORTH global reach" loading="lazy" className="w-full h-full object-cover" />

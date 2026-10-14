@@ -22,7 +22,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = buildIndexMetadata({
   title: 'Blog',
   description:
-    'Guides, product updates and stories from UK solar. Written by Solavita engineers so you can choose with confidence.',
+    'Guides, product updates and stories from Nigerian solar. Written by Solavita engineers so you can choose with confidence.',
 })
 
 export default async function BlogIndexPage(props: {
@@ -33,7 +33,9 @@ export default async function BlogIndexPage(props: {
   const page = Number(sp.page ?? '1') || 1
 
   const [categories, result] = await Promise.all([
-    getCategories(),
+    // Public surface: hide NG categories with no published posts so the
+    // filter chips never surface a dead category page.
+    getCategories({ onlyWithPublishedPosts: true }),
     listPublishedPosts({ categorySlug: activeCategory, page, pageSize: 9 }),
   ])
 
@@ -47,9 +49,9 @@ export default async function BlogIndexPage(props: {
         data={[
           blogJsonLd({
             path: '/blog',
-            name: 'Solavita UK Blog',
+            name: 'Solavita Nigeria Blog',
             description:
-              'Guides, product updates and stories from UK solar. Written by Solavita engineers so you can choose with confidence.',
+              'Guides, product updates and stories from Nigerian solar. Written by Solavita engineers so you can choose with confidence.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
@@ -59,12 +61,12 @@ export default async function BlogIndexPage(props: {
       />
       <Header />
       <BlogHero
-        badge={activeCat ? `Category · ${activeCat.name_en}` : 'Solavita UK Blog'}
+        badge={activeCat ? `Category · ${activeCat.name_en}` : 'Solavita Nigeria Blog'}
         h1={activeCat ? activeCat.name_en : 'Insights & updates'}
-        h1Accent={activeCat ? 'the latest updates' : 'for UK solar'}
+        h1Accent={activeCat ? 'the latest updates' : 'for Nigerian solar'}
         subhead={
           activeCat?.description_en ??
-          'Plain-English guides on solar panels, battery storage, MCS standards and UK regulation. Written by our engineers, never generic.'
+          'Plain-English guides on solar panels, battery storage and Nigerian energy regulation. Written by our engineers, never generic.'
         }
       />
 

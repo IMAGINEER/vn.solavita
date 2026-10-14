@@ -12,27 +12,27 @@ const steps: { n: number; title: string; body: string }[] = [
   {
     n: 2,
     title: 'Quote & order',
-    body: 'Fixed-price quote including SEG setup. Your installation slot is booked.',
+    body: 'Fixed-price quote including installation slot. Everything is laid out clearly before you commit.',
   },
   {
     n: 3,
     title: 'Install & generate',
-    body: 'Two-day installation by NICEIC engineers. Your system starts generating on day one.',
+    body: 'Two-day installation by Solavita-certified installers. Your system starts generating on day one.',
   },
 ]
 
 const faqItems: { q: string; a: string }[] = [
   {
-    q: 'How does the Smart Export Guarantee (SEG) work?',
-    a: 'Once your system is commissioned and registered with your electricity supplier, they pay you for every kWh you export back to the grid. Current SEG rates are set by suppliers and typically range from 4-15p per kWh. We help with the registration paperwork.',
+    q: 'How does solar save me money?',
+    a: 'Once your system is commissioned, it generates electricity from sunlight to power your home and reduce the energy you buy from your utility or generator. Excess daytime energy is stored in the battery to cover evening and night-time use. The exact savings depend on your home, your usage pattern and your current electricity tariff — request a quote for a tailored estimate.',
   },
   {
     q: 'Do I need planning permission?',
-    a: 'In most cases, no. Solar panels fall under Permitted Development Rights in the UK. Exceptions include listed buildings, conservation areas, and some flat-roof installations. We assess this as part of your design.',
+    a: 'In most cases in Nigeria, rooftop solar does not require special permission. Exceptions include some estate covenants, conservation-designated properties, and certain flat-roof installations. We assess this as part of your design.',
   },
   {
-    q: 'What about the 0% VAT on solar?',
-    a: 'From 1 April 2022, the UK government applies 0% VAT on the supply and installation of residential solar panels and battery storage for five years. All our quotes include this benefit - no extra paperwork needed.',
+    q: 'What about taxes and import duties on solar?',
+    a: 'Nigerian solar imports currently benefit from specific duty concessions for renewable energy equipment — see the latest Finance Act or ask our team for the current position. All our quotes lay out the full landed cost up front; no extra paperwork needed.',
   },
   {
     q: 'How is my system monitored?',

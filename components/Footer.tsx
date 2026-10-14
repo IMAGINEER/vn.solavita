@@ -81,10 +81,27 @@ const FlagUK = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
   </svg>
 )
 
+/* ────────────────────────────────────────────────────────────────────────
+   Nigerian flag - three vertical stripes (green / white / green).
+   Aspect ratio matches FlagUK so the locale pill stays the same width.
+   Nigerian green per Wikipedia: #008751.
+   ──────────────────────────────────────────────────────────────────────── */
+const FlagNG = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
+  <svg
+    className={`${className} rounded-sm overflow-hidden flex-shrink-0`}
+    viewBox="0 0 60 30"
+    aria-hidden="true"
+  >
+    <rect x="0"  y="0" width="20" height="30" fill="#008751" />
+    <rect x="20" y="0" width="20" height="30" fill="#FFFFFF" />
+    <rect x="40" y="0" width="20" height="30" fill="#008751" />
+  </svg>
+)
+
 export default function Footer({
   variant = 'dark',
   logoSrc = '/images/a1logo02.svg',
-  logoAlt = 'Solavita UK',
+  logoAlt = 'Solavita Nigeria',
   productLinks,
   companyLinks,
 }: FooterProps) {
@@ -270,21 +287,23 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                {/* No verified Nigerian sales/support email — render as a
-                   red TBD placeholder (no mailto: link) per project
-                   content rules. */}
-                <span className="text-red-400/90 text-sm font-cw-bold">
-                  TBD — Verified Nigerian sales/support email
-                </span>
+                <a
+                  href="mailto:ng@solavita.com"
+                  className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
+                >
+                  ng@solavita.com
+                </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                {/* No verified Nigerian business number — render as a
-                   red TBD placeholder (no wa.me: link) per project
-                   content rules. */}
-                <span className="text-red-400/90 text-sm font-cw-bold">
-                  TBD — Verified Nigerian business number
-                </span>
+                <a
+                  href="https://wa.me/8618500875025"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
+                >
+                  +8618500875025
+                </a>
               </li>
             </ul>
           </div>
@@ -328,14 +347,7 @@ export default function Footer({
               className="flex items-center gap-2 text-white/50 text-xs font-cw-regular shrink-0 self-center md:self-auto"
               aria-label="Locale: Nigeria, English"
             >
-              {/* NG flag intentionally not rendered - brand team to
-                  confirm the official visual identity. */}
-              <span
-                className="w-5 h-3.5 border border-white/20 rounded-sm flex items-center justify-center text-[8px] font-cw-bold text-white/70"
-                aria-hidden="true"
-              >
-                NG
-              </span>
+              <FlagNG className="w-5 h-3.5" />
               <span>Nigeria · English</span>
             </div>
           </div>

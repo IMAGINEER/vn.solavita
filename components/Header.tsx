@@ -430,7 +430,7 @@ function SolutionsDropdown({
               setOpen(false)
               openFormModal()
             }}
-            className="btn-gradient w-full mt-1 px-5 py-3 rounded-full text-sm font-cw-bold text-white cursor-pointer"
+            className="btn-gradient w-full mt-1 px-5 py-3 rounded-lg text-sm font-cw-bold text-white cursor-pointer"
           >
             Get Free Quote →
           </button>

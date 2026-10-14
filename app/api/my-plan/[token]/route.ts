@@ -82,6 +82,12 @@ export async function GET(
         'household_size',
         'electricity_usage',
         'devices',
+        // NG Step-3 extensions - the recommendation engine and ROI
+        // calculation both read these to estimate generator-replacement
+        // value and battery sizing. None are PII; safe to surface.
+        'generator_frequency',
+        'fuel_budget_ngn',
+        'backup_needs',
       ].join(', '),
     )
     .eq('plan_token', token)

@@ -57,7 +57,7 @@ export default function HomeSolarPage() {
     heroProps: {
       eyebrow: 'HOME SOLAR SOLUTIONS',
       title: 'Power your home. Take control of your energy.',
-      body: 'From essential backup to higher-capacity home systems, Solavita combines solar panels, single-phase hybrid inverters and battery storage to meet your household’s energy needs.',
+      body: "From essential backup to higher-capacity home systems, Solavita combines solar panels, single-phase hybrid inverters and battery storage to meet your household's energy needs.",
       backgroundImage: '/images/nigerian_home_1600x856.webp',
       primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
       breadcrumbs: [
@@ -74,7 +74,7 @@ export default function HomeSolarPage() {
       eyebrow: 'NOT A STANDARD FIT',
       title: <>Your home doesn't fit <span className="text-gradient">a standard solution?</span></>,
       body: 'If your appliances, roof layout or backup requirements are outside what the home-solar solutions cover, request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your home.',
-      primaryCta: { label: 'Request a tailored quote', onClick: openFormModal },
+      primaryCta: { label: 'Request a tailored quote', href: '/contact-us' },
     },
     faqs: homeFaqs,
   }

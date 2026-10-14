@@ -70,8 +70,8 @@ const tabContent: Record<string, {
     ],
     highlights: [
       'AFCI 3.0 - AI-assisted active arc-fault detection in real time',
-      'G98 / G99 compliant - fully grid-service ready',
-      'SG Ready & EEBUS for heat-pump control',
+      'Grid-service ready - meets local utility requirements',
+      'Smart-ready for heat-pump control',
       'Potential-free contacts for intelligent load control',
       'One-click grid-connection configuration & OTA updates',
     ],
@@ -96,7 +96,7 @@ const tabContent: Record<string, {
       { label: 'Mounting', value: 'Floor (stackable) or wall-mounted' },
       { label: 'Connection', value: 'Plug & play connector' },
       { label: 'Protection class', value: 'IP66' },
-      { label: 'Certifications', value: 'IEC 62619 / BS 7671 / UN38.3 / MCS-012' },
+      { label: 'Certifications', value: 'IEC 62619 / UN38.3 (TBD — verified Nigeria approvals)' },
     ],
     highlights: [
       'No thermal runaway possible',
@@ -115,7 +115,7 @@ const tabContent: Record<string, {
   mounting: {
     title: 'Universal Mounting System',
     subtitle: 'Fast · Safe · Roof-Friendly',
-    description: 'Our factory-engineered mounting system is optimised for all common UK roof types. No roof penetration on tile roofs - your roof integrity remains fully preserved.',
+    description: 'Our factory-engineered mounting system is optimised for all common Nigerian roof types. No roof penetration on tile roofs - your roof integrity remains fully preserved.',
     specs: [
       { label: 'Compatible roof types', value: 'Tile / Slate / Trapezoidal metal / Flat' },
       { label: 'Material', value: 'Anodised aluminium + stainless steel A2' },
@@ -126,7 +126,7 @@ const tabContent: Record<string, {
     ],
     highlights: [
       'No roof penetration - tiles are lifted, not drilled',
-      'Tested to Eurocode for UK wind and snow load zones',
+      'Tested to Eurocode for Nigerian wind and load conditions',
       'Compatible with all common module frames and frameless modules',
       'Black rails for visual unity with all-black modules',
       'Pre-assembled components - faster on-roof installation',

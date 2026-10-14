@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import type { PlanRoi } from '../_lib/calc'
-import { formatGBP, formatKwh } from '../_lib/format'
+import { formatNGN, formatKwh } from '../_lib/format'
 
 interface SavingsSectionProps {
   metrics: PlanRoi
@@ -32,9 +32,9 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
 
   const rows: MetricRow[] = [
     {
-      label: 'Annual Saving',
-      value: formatGBP(metrics.annualSavingGbp),
-      sub: 'Estimated per year',
+      label: 'Annual Net Saving',
+      value: formatNGN(metrics.annualNetSavingNgn),
+      sub: 'Grid + generator fuel saved · ideal mode (no opex)',
       highlight: true,
     },
     {
@@ -47,19 +47,19 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
     },
     {
       label: '30-Year Return',
-      value: formatGBP(metrics.total30YearReturnGbp),
-      sub: 'Net lifetime saving',
-      highlight: metrics.total30YearReturnGbp > 0,
+      value: formatNGN(metrics.total30YearReturnNgn),
+      sub: 'Net lifetime saving (₦, post-degradation)',
+      highlight: metrics.total30YearReturnNgn > 0,
     },
     {
       label: 'Annual Solar Generation',
       value: formatKwh(metrics.annualGenerationKwh),
-      sub: 'Estimated per year',
+      sub: 'Estimated per year (year 1)',
     },
     {
-      label: 'Export Income',
-      value: formatGBP(metrics.annualExportIncomeGbp),
-      sub: 'SEG export tariff',
+      label: 'Generator Fuel Saved',
+      value: formatNGN(metrics.annualGeneratorOffsetNgn),
+      sub: 'Capped by your reported fuel budget',
       highlight: true,
     },
     {
@@ -96,23 +96,20 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
         ))}
       </div>
 
-      {/* Always-visible data-source line. The customer should never have
-          to expand the disclosure to see where the regional yield came
-          from - keeping it above the disclosure button means it lands
-          in the natural reading flow under the 6-card grid. */}
+      {/* Data-source disclosure. The yields, fuel price, and generator
+          efficiency in this calculator are PROVISIONAL test values
+          pending business verification — do NOT represent verified
+          national averages. Kept above the disclosure button so the
+          customer sees the source caveat in the natural reading flow. */}
       <p className="mt-3 text-xs text-uk-slate/70 leading-relaxed">
-        Generation is region-adjusted
-        {region ? ` for ${region}` : ' (UK-wide default)'} — e.g.
-        England - South East = 1,042 kWh/kWp/yr. Source:{' '}
-        <a
-          href="https://re.jrc.ec.europa.eu/pvgis/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-uk-teal hover:text-uk-teal-dark underline underline-offset-2"
-        >
-          EU JRC PVGIS 6
-        </a>
-        , 2014–2024 average, 14% system losses.
+        <strong className="font-cw-bold text-uk-slate">Provisional test values</strong>
+        {' — '}
+        regional yield, fuel price and generator efficiency are
+        estimates pending business confirmation. Generation is
+        region-adjusted{region ? ` for ${region}` : ' (Nigeria default)'}.
+        ROI is computed against your reported fuel budget where
+        available, and capped at conservative segment-level hard
+        limits where not.
       </p>
 
       <button
@@ -148,13 +145,18 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
             </div>
             <div className="flex justify-between border-t border-uk-line pt-2 mt-2 font-cw-bold text-uk-navy">
               <span>30-year cumulative</span>
-              <span>{formatGBP(metrics.total30YearSavingGbp)}</span>
+              <span>{formatNGN(metrics.total30YearSavingNgn)}</span>
             </div>
           </div>
           <p className="mt-3 text-xs text-uk-slate/80">
             30-year figures use the panel degradation curve (year 1 = 100%,
-            year 10 ≈ 95.7%, year 30 = 85%) at £0.2632/kWh imported and
-            £0.15/kWh exported.
+            year 10 ≈ 95.7%, year 30 = 85%) at the Nigerian grid tariff
+            (₦/kWh, TBD - verified rate). Generator fuel cost uses
+            PROVISIONAL constants: ₦1,533/L PMS @ 1.85 kWh/L, ₦1,915/L AGO
+            @ 2.95 kWh/L. Real efficiency varies with generator power
+            and load. ROI sensitivity to ±20 % efficiency variation
+            is roughly proportional — add or subtract the same
+            fraction to the generator offset to estimate the range.
           </p>
         </div>
       )}

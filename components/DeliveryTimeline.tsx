@@ -23,10 +23,10 @@ interface TimelineStep {
 const timelineSteps: TimelineStep[] = [
   { day: 'Day 1', title: 'AI Design', desc: 'Drone survey + 3D model of your roof. Shading analysis. Accurate yield forecast in 15 minutes.', Icon: ScanEye },
   { day: 'Day 2-3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', Icon: FileText },
-  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our 40,000 sq ft UK warehouse. Every component checked and pre-commissioned.', Icon: Truck },
-  { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by NICEIC-certified electricians. Tidy site guaranteed.', Icon: Wrench },
+  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our Nigeria warehouse. Every component checked and pre-commissioned.', Icon: Truck },
+  { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by certified electricians. Tidy site guaranteed.', Icon: Wrench },
   { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, HEMS activation. Your system is now generating.', Icon: Wifi },
-  { day: 'Day 12-14', title: 'G98/G99 Notification', desc: 'DNOs receive your commissioning certificate at the click of a button. Secures full Smart Export Guarantee (SEG) eligibility.', Icon: ClipboardList },
+  { day: 'Day 12-14', title: 'Grid Notification', desc: 'Utility receives your commissioning certificate. Grid approval secured so your system can export and earn credits.', Icon: ClipboardList },
 ]
 
 export default function DeliveryTimeline() {
@@ -62,7 +62,7 @@ export default function DeliveryTimeline() {
   return (
     <section ref={sectionRef} id="delivery" className="py-20 md:py-24 bg-uk-teal-soft/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Eyebrow - same pill style as the "Why UK homeowners choose us" section */}
+        {/* Eyebrow - same pill style as the "Why Nigerian homeowners choose us" section */}
         <div className="text-center mb-12 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
@@ -134,9 +134,9 @@ export default function DeliveryTimeline() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { value: '40,000 sq ft', label: 'UK warehouse', sub: 'Multi-region coverage' },
+                { value: 'Nationwide', label: 'Nigeria warehouse', sub: 'Multi-region coverage' },
                 { value: 'JIT', label: 'Delivery system', sub: 'Just-in-Time' },
-                { value: '100+', label: 'NICEIC installers', sub: 'In our partner network' },
+                { value: '100+', label: 'Certified installers', sub: 'In our partner network' },
                 { value: '2 days', label: 'Install time', sub: 'Standard installation' },
               ].map((fact, i) => (
                 <div key={i} className="p-4 rounded-xl border border-uk-line bg-white text-center">

@@ -166,7 +166,7 @@ export default function ContactForm() {
               </h2>
               <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular leading-relaxed">
                 Tell us what you’d like to discuss - we’ll
-                route it to the right person on the UK team and reply
+                route it to the right person on the Nigerian team and reply
                 within one working day.
               </p>
 
@@ -178,7 +178,7 @@ export default function ContactForm() {
                   },
                   {
                     icon: <ShieldCheck className="w-4 h-4" strokeWidth={1.6} />,
-                    title: 'UK GDPR · your data stays protected',
+                    title: 'Your data stays protected',
                   },
                   {
                     icon: <Check className="w-4 h-4" strokeWidth={2} />,
@@ -217,7 +217,7 @@ export default function ContactForm() {
                       Thanks - we’ve got your message.
                     </h3>
                     <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
-                      Our UK team will get back to you within one working
+                      Our Nigerian team will get back to you within one working
                       day at the email you provided. If it’s
                       urgent, you can reach us directly at{' '}
                       <a
@@ -318,7 +318,7 @@ export default function ContactForm() {
                           name="email"
                           value={state.email}
                           onChange={(e) => setField('email', e.target.value)}
-                          placeholder="jane@example.co.uk"
+                          placeholder="jane@example.com"
                           className={`${fieldClass} ${
                             errors.email ? 'border-uk-danger/60' : ''
                           }`}
@@ -343,7 +343,7 @@ export default function ContactForm() {
                           name="phone"
                           value={state.phone}
                           onChange={(e) => setField('phone', e.target.value)}
-                          placeholder="+44 ..."
+                          placeholder="+234 ..."
                           className={fieldClass}
                         />
                       </label>
@@ -353,7 +353,7 @@ export default function ContactForm() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <label className="block sm:col-span-1">
                         <span className={labelClass}>
-                          Postcode{' '}
+                          Postal code{' '}
                           <span className="text-uk-slate/60 normal-case tracking-normal font-cw-regular">
                             (optional)
                           </span>
@@ -365,7 +365,7 @@ export default function ContactForm() {
                           onChange={(e) =>
                             setField('postalCode', e.target.value)
                           }
-                          placeholder="SW1A 1AA"
+                          placeholder="100001"
                           className={fieldClass}
                         />
                       </label>
@@ -382,7 +382,7 @@ export default function ContactForm() {
                           name="city"
                           value={state.city}
                           onChange={(e) => setField('city', e.target.value)}
-                          placeholder="London"
+                          placeholder="Lagos"
                           className={fieldClass}
                         />
                       </label>
@@ -451,7 +451,7 @@ export default function ContactForm() {
                         className="mt-1 w-4 h-4 rounded border-uk-line text-uk-teal focus:ring-uk-teal"
                       />
                       <span className="text-xs text-uk-slate leading-relaxed">
-                        I agree Solavita Energy UK Limited may contact
+                        I agree Solavita Energy Nigeria Limited may contact
                         me about my enquiry. I have read the{' '}
                         <a
                           href="/privacy"
@@ -459,7 +459,7 @@ export default function ContactForm() {
                         >
                           Privacy Policy
                         </a>
-                        . My data will be processed in line with UK GDPR.
+                        . My data will be processed in line with the Nigeria Data Protection Regulation.
                       </span>
                     </label>
                     {errors.consent && (

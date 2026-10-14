@@ -13,6 +13,21 @@ export interface FormData {
   householdSize: string
   electricityUsage: string
   devices: string[]
+  /**
+   * NG Step-3 extensions — all optional, no validation, don't block submit.
+   * They feed the My-Plan recommendation + ROI calc to estimate generator
+   * replacement value and battery sizing. Three brand-new fields; the
+   * underlying DB columns are nullable so existing rows stay untouched.
+   *
+   * - `generatorFrequency` - 'rarely' | 'sometimes' | 'daily' | 'frequently' | 'unknown'
+   *   (maps to a 4-step CardSelect in the form).
+   * - `fuelBudgetNgn` - one of the tier IDs in `lib/data/fuel-budgets.ts`
+   *   (a Not-Sure sentinel maps to 'unknown').
+   * - `backupNeeds` - multi-select list of `BACKUP_NEEDS` ids (lights/ac/etc).
+   */
+  generatorFrequency?: string
+  fuelBudgetNgn?: string
+  backupNeeds?: string[]
   street: string
   houseNumber: string
   postalCode: string

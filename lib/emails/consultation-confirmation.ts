@@ -42,7 +42,7 @@ export function consultationConfirmationEmail(data: {
 <!-- Body -->
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Hi ${name},</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Thanks for your enquiry. Our UK team is reviewing your details and will be in touch within one working day with your bespoke solar design and quote.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Thanks for your enquiry. Our Nigerian team is reviewing your details and will be in touch within one working day with your bespoke solar design and quote.</p>
 ${
   data.planLink
     ? `<!-- Plan CTA - drives /my-plan open tracking -->
@@ -65,7 +65,7 @@ ${data.phone ? `<p style="margin:0; font-size:14px; color:#374151;">Phone: ${dat
 </table>
 
 <p style="font-size:14px; color:#374151; line-height:1.6; margin:0 0 8px 0;">You can reach our team directly:</p>
-<p style="font-size:13px; color:#6b7280; line-height:1.7; margin:0;">TBD — Verified Nigerian sales/support email · TBD — Confirmed operating hours</p>
+<p style="font-size:13px; color:#6b7280; line-height:1.7; margin:0;">ng@solavita.com · TBD — Confirmed operating hours</p>
 </td></tr>
 
 <!-- Footer -->

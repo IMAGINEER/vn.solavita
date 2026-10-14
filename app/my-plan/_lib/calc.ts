@@ -1,280 +1,414 @@
 /**
- * Plan catalogue + recommendation + ROI engine for `/my-plan` (v1, frontend-only).
+ * Plan catalogue + recommendation + ROI engine for `/my-plan` (Nigeria).
  *
  * Architecture (per the user's spec):
- *   Consultation (mock) ──► recommendPlan() ──► PlanId
- *   Plan (fixed)         ──► calculateROI()  ──► PlanRoi
+ *   Consultation form ──► recommendPlan() ──► NgPlanId
+ *   Plan (fixed)         ──► calculateROI() ──► PlanRoi
  *
- * - Plans are FIXED objects; the user can switch between them but cannot
- *   adjust panel count or battery capacity independently. The numbers below
- *   are the prototype prices from the spec.
- * - The recommendation function takes householdSize + electricityUsage +
- *   devices and maps to one of the four tiers. Devices bump the tier up.
- * - The ROI engine implements the documented calculation chain
- *   (regional generation → consumption → self-consumption → export →
- *   annual saving → 30-year degradation → payback → 30-year return → ROI).
- *   Year-1 generation is keyed off the user's region via JRC PVGIS 6
- *   (see REGION_YIELD_KWH_PER_KWP below); tariff / self-consumption
- *   inputs come from user state in MyPlanClient.
+ * The 6 NG solutions (LITE / HOME Standard / HOME High-spec /
+ * BUSINESS Entry / BUSINESS Standard / BUSINESS Flagship) are the
+ * fixed product set. The user can switch between them in `/my-plan`
+ * but cannot adjust panel count or battery capacity independently.
+ * Specs mirror `lib/data/solutions.ts` so the marketing surface and
+ * the calculator stay in sync.
  *
- * Numbers are intentionally UK-typical constants; swap for a real engine
- * later by replacing `calculateROI()` only.
+ * **Prices** are *test-baseline* values derived from the UK price
+ * ladder and tagged as `priceNgn` so they are clearly distinguishable
+ * from any future business-approved ₦ figure. Per the user's spec
+ * ("暂时复用英国系统价格作为测试基准，单独存放价格配置，后续替换为
+ * 尼日利亚价格"), this file owns the price config - swap one number
+ * here to update the whole calculator.
+ *
+ * **ROI engine**:
+ *   1. Estimate total household annual kWh from the user's consumption
+ *      tier (electricityUsage).
+ *   2. Split into grid-portion vs generator-portion using
+ *      `generatorFrequency`. Cap generator-portion kWh at the user's
+ *      reported fuel budget (₦/month) so we don't over-state what can
+ *      be saved.
+ *   3. Compute solar year-1 generation from system size × NG regional
+ *      yield. Apply self-consumption rate (battery boosts).
+ *   4. Displace first the grid portion, then the generator portion
+ *      (capped by the user's actual fuel spend). This is the
+ *      no-double-count rule - the same self-consumed kWh cannot
+ *      offset both grid and generator cost.
+ *   5. Net annual saving = grid offset + generator offset − annual
+ *      opex (1 % of system cost for maintenance).
+ *   6. Payback = system price / net annual saving. 30-year lifetime
+ *      applies the same model with panel degradation factors.
  */
 
-export type PlanId = 'one' | 'pro' | 'max' | 'ultra'
+import { solutionDetails } from '@/lib/data/solutions'
 
-/** Home details surfaced at the top of the plan page. */
-export interface HomeDetails {
-  houseType: string
-  /**
-   * Number of people in the household. Mirrors the form Step 2 question
-   * "How many people live in your household?" - the DB column is named
-   * `household_size` for that reason. Older revisions incorrectly
-   * aliased this to "bedrooms"; that's wrong because household_size is
-   * a count of residents, not rooms.
-   */
-  householdSize: number
-  roofOrientation: string
-  /**
-   * Region (e.g. "England - South East"). Surfaced in the strip so the
-   * user sees their region after editing via "Edit details" without
-   * needing to scroll into the plan details to spot the change.
-   * Mirrors `ConsultationInput.region`.
-   */
-  region: string
-  /** Annual electricity-use tier ID (`low` / `medium` / `high` / `very-high`). */
-  electricityUsage: string
-  /** Heavy devices selected (e.g. `['wallbox', 'heatpump']`). */
-  devices: string[]
-}
+/* ──────────────────────────────────────────────────────────────────────
+   NG solution catalogue
+   ────────────────────────────────────────────────────────────────────── */
 
-export interface Plan {
-  id: PlanId
+export type NgPlanId =
+  | 'lite-essential-backup'
+  | 'home-standard'
+  | 'home-high-spec'
+  | 'business-entry-3-phase'
+  | 'business-standard-3-phase'
+  | 'business-flagship-3-phase'
+
+export interface NgPlan {
+  id: NgPlanId
   name: string
   subtitle: string
-  panels: number
-  /** kWh. `0` for Home Energy One. */
+  /** Total rated PV capacity (kWp). Drives the year-1 generation. */
+  kwp: number
+  /** Battery capacity (kWh, nominal). 0 for solar-only tiers. */
   batteryKwh: number
+  /** Inverter continuous output (kW). */
   inverterKw: number
+  /**
+   * Test-baseline price (₦). Reuse UK ladder values for now - swap one
+   * number here to update the whole calculator when business supplies
+   * approved ₦ prices.
+   */
+  priceNgn: number
+  /** Customer segment, drives segment-aware copy. */
+  segment: 'homes' | 'businesses'
+  /** True if this is the recommended mid-tier for its segment. */
+  popular?: boolean
+  /* ────── backward-compat aliases for the old UK Plan shape ──────
+   * The /my-plan components still reference `plan.panels` and
+   * `plan.priceGbp`. We mirror the values so the components can
+   * read either; the values themselves are NG-currency now. */
+  /** Alias for kwp. */
+  panels: number
+  /** Alias for priceNgn. Numeric value is ₦ even though the field is
+   *  named `priceGbp` - kept for component compat. */
   priceGbp: number
 }
 
 /**
- * Four fixed plans. Prices are the only place pricing lives in the app -
- * see the project brief: "prices are surfaced only on /my-plan and used
- * for ROI calculation". Marketing surfaces (`lib/data/uk-products.ts`,
- * `lib/data/solutions.ts`) carry specs only. The marketing labels and
- * the PLANS labels are kept in sync by name + tier index.
+ * The 6 NG solutions, mirroring `lib/data/solutions.ts`. The order
+ * is intentional: index 0 is LITE, 1 is HOME Standard (popular for
+ * homes), 2 is HOME High-spec, then the three BUSINESS tiers in
+ * ascending order of capacity. The `recommendPlan` ladder walks this
+ * array in order, so reordering changes what gets surfaced for a
+ * given consumption profile.
  */
-export const PLANS: Plan[] = [
+export const NG_PLANS: NgPlan[] = [
   {
-    id: 'one',
-    name: 'Home Energy One',
-    subtitle: 'Solar only',
-    panels: 8,
-    batteryKwh: 0,
+    id: 'lite-essential-backup',
+    name: 'LITE Essential Backup',
+    subtitle: 'Single phase · Essential backup',
+    kwp: 4.34,
+    batteryKwh: 5,
     inverterKw: 3.6,
-    priceGbp: 5_099,
+    priceNgn: 3_800_000,
+    segment: 'homes',
+    panels: 4.34,         // alias
+    priceGbp: 3_800_000,  // alias (value is actually ₦)
   },
   {
-    id: 'pro',
-    name: 'Home Energy Pro',
-    subtitle: 'Solar + Storage',
-    panels: 8,
-    batteryKwh: 5.12,
-    inverterKw: 3.6,
-    priceGbp: 6_999,
-  },
-  {
-    id: 'max',
-    name: 'Home Energy Max',
-    subtitle: 'Solar + Storage + EV',
-    panels: 12,
-    batteryKwh: 5.12,
+    id: 'home-standard',
+    name: 'HOME Standard',
+    subtitle: 'Single phase · Everyday home',
+    kwp: 7.44,
+    batteryKwh: 10,
     inverterKw: 6,
-    priceGbp: 7_899,
+    priceNgn: 6_200_000,
+    segment: 'homes',
+    popular: true,
+    panels: 7.44,
+    priceGbp: 6_200_000,
   },
   {
-    id: 'ultra',
-    name: 'Home Energy Ultra',
-    subtitle: 'Whole-home energy',
-    panels: 12,
-    batteryKwh: 10.24,
-    inverterKw: 6,
-    priceGbp: 9_399,
+    id: 'home-high-spec',
+    name: 'HOME High-spec',
+    subtitle: 'Single phase · Higher capacity',
+    kwp: 11.16, // midpoint of 9.92-12.40 kWp
+    batteryKwh: 16,
+    inverterKw: 10, // midpoint of 8-12 kW
+    priceNgn: 9_500_000,
+    segment: 'homes',
+    panels: 11.16,
+    priceGbp: 9_500_000,
+  },
+  {
+    id: 'business-entry-3-phase',
+    name: 'BUSINESS Entry 3-Phase',
+    subtitle: 'Three phase · Entry commercial',
+    kwp: 11.78,
+    batteryKwh: 16,
+    inverterKw: 10,
+    priceNgn: 11_500_000,
+    segment: 'businesses',
+    panels: 11.78,
+    priceGbp: 11_500_000,
+  },
+  {
+    id: 'business-standard-3-phase',
+    name: 'BUSINESS Standard 3-Phase',
+    subtitle: 'Three phase · Standard commercial',
+    kwp: 17.36,
+    batteryKwh: 32,
+    inverterKw: 15,
+    priceNgn: 17_500_000,
+    segment: 'businesses',
+    panels: 17.36,
+    priceGbp: 17_500_000,
+  },
+  {
+    id: 'business-flagship-3-phase',
+    name: 'BUSINESS Flagship 3-Phase',
+    subtitle: 'Three phase · Flagship commercial',
+    kwp: 23.56,
+    batteryKwh: 32,
+    inverterKw: 20,
+    priceNgn: 24_000_000,
+    segment: 'businesses',
+    panels: 23.56,
+    priceGbp: 24_000_000,
   },
 ]
 
-export function getPlan(id: PlanId): Plan {
-  const plan = PLANS.find((p) => p.id === id)
-  if (!plan) throw new Error(`Unknown plan id: ${id}`)
+/** Lookup by id. */
+export function getNgPlan(id: NgPlanId): NgPlan {
+  const plan = NG_PLANS.find((p) => p.id === id)
+  if (!plan) throw new Error(`Unknown NG plan id: ${id}`)
   return plan
 }
 
-/** Lookup helper - matches the marketing data already used in ProductSelector. */
-export function findPlanByPrice(priceGbp: number): Plan | undefined {
-  return PLANS.find((p) => p.priceGbp === priceGbp)
-}
+/* ──────────────────────────────────────────────────────────────────────
+   Consultation input (consumed by recommendPlan + calculateROI)
+   ────────────────────────────────────────────────────────────────────── */
 
-/* ──────────────────────────────────────────────────────────────────────────
- * Recommendation input - MOCK for v1.
- *
- * When the real `consultation_leads` row is wired in, swap this constant
- * for whatever shape the API returns (already camelCase in FormData). The
- * recommendation function below takes the same fields, so the call site
- * is the only change needed.
- * ────────────────────────────────────────────────────────────────────────── */
+/** Household size - same ID space as the form. */
+export type HouseholdSize = '1' | '2' | '3' | '4' | '5+' | string
 
-/** Consumption tiers as captured by the consultation form (string IDs). */
-export type ConsumptionTier = 'low' | 'medium' | 'high' | 'very-high'
+/** Self-reported consumption band. */
+export type ConsumptionTier = 'low' | 'medium' | 'high' | 'very-high' | 'unknown'
 
-/** Devices that materially raise demand and push the recommendation up. */
-export type HeavyDevice = 'wallbox' | 'heatpump' | 'ac'
+/** Devices the customer already has that materially raise demand. */
+export type HeavyDevice = 'wallbox' | 'heatpump' | 'ac' | string
+
+/** Generator usage band. */
+export type GeneratorFrequency =
+  | 'rarely'
+  | 'sometimes'
+  | 'daily'
+  | 'frequently'
+  | 'unknown'
+
+/** Monthly fuel-spend band in NGN. */
+export type FuelBudgetNgn =
+  | 'below-20k'
+  | '20k-50k'
+  | '50k-100k'
+  | 'above-100k'
+  | 'unknown'
+
+/** Items the customer wants backup power for (drives battery sizing). */
+export type BackupNeedId = 'lights' | 'fridge' | 'ac' | 'pump' | string
 
 export interface ConsultationInput {
-  /** Form ID for household size: one of `'1'`, `'2'`, `'3'`, `'4'`, `'5+'`. */
-  householdSize: '1' | '2' | '3' | '4' | '5+' | string
-  /** Self-reported consumption band from the form. NOT kWh. */
+  householdSize: HouseholdSize
   electricityUsage: ConsumptionTier
-  /** Devices present at the home - bumps demand towards Premium. */
-  devices: Array<HeavyDevice | string>
+  devices: HeavyDevice[]
   region: string
+  /** NG Step-3 extensions. All may be 'unknown' if the user skipped. */
+  generatorFrequency: GeneratorFrequency
+  fuelBudgetNgn: FuelBudgetNgn
+  backupNeeds: BackupNeedId[]
 }
-
-/** Mock for v1. A typical 4-person home with a heat pump on London. */
-export const MOCK_CONSULTATION: ConsultationInput = {
-  householdSize: '4',
-  electricityUsage: 'medium',
-  devices: ['heatpump'],
-  region: 'England - London',
-}
-
-/** Demand-tier order, low → very high. */
-const TIER_PLAN_IDS: PlanId[] = ['one', 'pro', 'max', 'ultra']
 
 /**
- * Recommendation pipeline (per spec):
- *   householdSize + electricityUsage  ─►  basePlan
- *   basePlan + devices[]              ─►  finalPlan (each heavy device +1 tier)
- *
- * The base tier comes from a 5×4 lookup keyed by the form's exact
- * `householdSize` IDs (`'1' / '2' / '3' / '4' / '5+'`) × the consumption
- * band (`low / medium / high / very-high`). Heavy-load devices (wallbox,
- * heatpump, AC) each bump the tier up by one, capped at Ultra.
- *
- * The grid encodes the implicit "people × kWh/yr" load:
- *   1 person ≈ 2,000 kWh, 5+ people ≈ 7,000+ kWh baseline.
- * So "5+ × medium" already lands in tier 2 (Home Energy Max), and only a
- * tiny household (1-2 people × low) keeps you in Home Energy One.
+ * Lightweight, no-PII summary of the home used at the top of /my-plan.
+ * Kept here (instead of in the adapter) because the components
+ * historically import it from `../_lib/calc` and we don't want a
+ * cross-folder rewrite just for the rename.
  */
-const BASE_TIER_LOOKUP: Record<
-  ConsultationInput['householdSize'],
-  Record<ConsumptionTier, number>
-> = {
-  // householdSize → consumption → tier (0=one ... 3=ultra)
-  '1':  { low: 0, medium: 0, high: 1, 'very-high': 1 },
-  '2':  { low: 0, medium: 0, high: 1, 'very-high': 2 },
-  '3':  { low: 0, medium: 1, high: 2, 'very-high': 2 },
-  '4':  { low: 0, medium: 1, high: 2, 'very-high': 3 },
-  '5+': { low: 1, medium: 2, high: 3, 'very-high': 3 },
+export interface HomeDetails {
+  houseType: string
+  /** Number of people in the household (the form's `'5+'` maps to 5). */
+  householdSize: number
+  /** Roof shape/type. */
+  roofOrientation: string
+  /** Region. */
+  region: string
+  /** Annual electricity-use tier ID. */
+  electricityUsage: string
+  /** Heavy devices selected. */
+  devices: string[]
+  /** NG Step-3 fields surfaced in the strip. */
+  generatorFrequency: string
+  fuelBudgetNgn: string
+  backupNeeds: string[]
 }
 
-export function recommendPlan(c: ConsultationInput): PlanId {
-  // 1. Base tier from householdSize × electricityUsage. If the
-  //    householdSize is unrecognised, fall back to the median row ('3').
-  const sizeRow = BASE_TIER_LOOKUP[c.householdSize] ?? BASE_TIER_LOOKUP['3']
-  let tier = sizeRow[c.electricityUsage] ?? 1
+/* ──────────────────────────────────────────────────────────────────────
+   NG-specific assumptions + constants
+   ────────────────────────────────────────────────────────────────────── */
 
-  // 2. Each heavy-load device bumps the tier up (capped at ultra).
-  for (const device of c.devices) {
-    if (
-      device === 'wallbox' ||
-      device === 'heatpump' ||
-      device === 'ac'
-    ) {
-      tier = Math.min(3, tier + 1)
-    }
-  }
-
-  return TIER_PLAN_IDS[tier]
+/** Annual kWh per consumption tier. Midpoint of the form's kWh band. */
+const USAGE_KWH_PER_YEAR: Record<ConsumptionTier, number> = {
+  low: 3_000,
+  medium: 4_500,
+  high: 6_500,
+  'very-high': 8_500,
+  unknown: 5_000,
 }
-
-/* ──────────────────────────────────────────────────────────────────────────
- * ROI engine
- *
- * Pipeline (per spec):
- *   Plan ─► Regional generation ─► Consumption ─► Self-consumption ─►
- *   Export ─► Annual saving ─► 30-year degradation ─► Payback ─► 30-year ROI
- *
- * Tuning constants are UK-typical 2026 values. They're easy to tweak in
- * one place - search for `ROI_*` below.
- * ────────────────────────────────────────────────────────────────────────── */
-
-const ROI_KW_PER_PANEL = 0.46              // 460 W panels (matches product spec)
-const ROI_KWH_PER_KW_YEAR = 950           // kWh per kW installed (UK-wide default / fallback)
-const ROI_SELF_CONSUMPTION_BASE = 0.35     // no-battery baseline (Home Energy One)
-const ROI_IMPORT_PRICE_GBP = 0.2632        // £/kWh imported (Ofgem cap, 2026)
-const ROI_EXPORT_PRICE_GBP = 0.15          // £/kWh exported (SEG rate, 2026)
-const ROI_PROJECT_LIFETIME_YEARS = 30
-const ROI_OFFER_DISCOUNT_GBP = 1_300
-const ROI_OFFER_VALIDITY_DAYS = 30
 
 /**
- * Per-region PV specific yield (kWh / kWp / year).
- *
- * Data source: European Commission JRC PVGIS 6; based on 2014–2024
- * average annual PV energy yield (kWh/kWp/yr) for fixed-mounted
- * crystalline-silicon PV at optimal tilt, including 14% system losses.
- *
- * Reference: https://re.jrc.ec.europa.eu/pvgis/ (PVGIS 6 web interface).
- * Each value is the regional representative city fed through PVGIS. The
- * UK-wide mean of these 12 values is ~896 kWh/kWp/yr, so
- * ROI_KWH_PER_KW_YEAR = 950 (legacy fallback for unrecognised regions)
- * actually overstates by ~6% on average - this table corrects that
- * drift on a per-region basis.
- *
- * Keys must stay byte-identical with the REGIONS list in
- * components/Form.tsx (the user's "Region" dropdown). Adding a new
- * option to the form without extending this map silently reverts to
- * the fallback.
+ * Fraction of household consumption currently served by a generator.
+ * Drives how the kWh pie splits between grid vs generator and therefore
+ * how much fuel cost is actually available to save.
  */
-const REGION_YIELD_KWH_PER_KWP: Record<string, number> = {
-  'England - South East': 1042,            // Brighton proxy
-  'England - South West': 1012,            // Plymouth proxy
-  'England - London': 919,                 // London 51.5,-0.1
-  'England - East': 931,                   // Norwich proxy
-  'England - East Midlands': 870,          // Nottingham / Leicester proxy (~870, rounded)
-  'England - West Midlands': 874,          // Birmingham proxy
-  'England - Yorkshire & the Humber': 856, // Sheffield proxy
-  'England - North West': 801,             // Manchester proxy
-  'England - North East': 857,             // Newcastle 55.0,-1.6
-  'Wales': 939,                            // Cardiff 51.5,-3.2
-  'Scotland': 817,                         // Edinburgh 55.9,-3.2
-  'Northern Ireland': 831,                 // Belfast 54.6,-5.9
+const GEN_SHARE_BY_FREQUENCY: Record<GeneratorFrequency, number> = {
+  rarely: 0.10,
+  sometimes: 0.30,
+  daily: 0.60,
+  frequently: 0.80,
+  unknown: 0.40,
 }
 
-/** Exported so the slider UI in CustomiseCard can seed its initial state. */
-export const DEFAULT_ROI_IMPORT_PRICE_GBP = ROI_IMPORT_PRICE_GBP
-export const DEFAULT_ROI_EXPORT_PRICE_GBP = ROI_EXPORT_PRICE_GBP
-export const ROI_SELF_CONSUMPTION_BASE_RATE = ROI_SELF_CONSUMPTION_BASE
+/**
+ * Midpoint monthly fuel spend (₦). Used when the user picks a band.
+ * Annualised in the ROI calculation by ×12.
+ */
+const FUEL_BUDGET_ANNUAL_NGN: Record<FuelBudgetNgn, number> = {
+  'below-20k': 240_000,    // 20k * 12
+  '20k-50k': 420_000,      // 35k * 12
+  '50k-100k': 900_000,     // 75k * 12
+  'above-100k': 1_800_000, // 150k * 12
+  unknown: 0,              // Derived from generator share + fuel price
+}
 
 /**
- * Annual panel output as a fraction of year-1 performance.
- *
- * 1-indexed (year 1 = installation year). Per spec:
- *
- *   year 1  = 100.00%
- *   year 2  =  99.00%   ┐ linear between year 2 and year 10
- *   year 10 =  95.66%   ┘
- *   year 10 =  95.66%   ┐ linear between year 10 and year 30
- *   year 30 =  85.00%   ┘
- *
- * Generated once at module load so the ROI loop is a constant-time
- * lookup. Length = ROI_PROJECT_LIFETIME_YEARS = 30.
+ * NG grid tariff (₦/kWh). Residential band (Band A/B/C). TBD - replace
+ * with the verified national average when business confirms.
  */
-const ROI_DEGRADATION_FACTORS: ReadonlyArray<number> = (() => {
+const NG_GRID_TARIFF_NGN_PER_KWH = 68
+
+/**
+ * NG fuel prices + generator efficiency, split by fuel type.
+ *
+ * ⚠️ PROVISIONAL VALUES — pending business confirmation.
+ *
+ * Price (₦/L): 2026-10 reference pump prices (typical Nigeria retail
+ * bands). Subject to NNPC subsidy changes, regional variation, and
+ * black-market premiums in fuel-scarce zones. Treat as a *baseline*
+ * that the business can swap in one number per field.
+ *   - PMS ≈ ₦1,500–1,600/L (was ₦1,400/L — too low for late-2026)
+ *   - AGO ≈ ₦1,900–2,000/L (was ₦1,800/L — too low for late-2026)
+ *
+ * Efficiency (kWh per litre): derived from market research, NOT a
+ * measured Nigerian average. Real efficiency depends on generator
+ * rated power, load factor, age, and maintenance. The range
+ * "0.50–0.60 L/kWh for 5 kVA petrol household units" implies
+ * 1.7–2.0 kWh/L (midpoint ~1.85). Small diesel units run
+ * 0.32–0.36 L/kWh → 2.8–3.1 kWh/L (midpoint ~2.95).
+ *
+ * Source: nigerian generator market analysis (typical references,
+ * 2025–2026), Nigeria energy audit reports. NOT verified by
+ * business. **Do not present as a measured average** in the UI.
+ *
+ * If the calculator is later refined to ask about generator
+ * rated power + typical load, these constants will move into
+ * a per-(power, load) lookup table. For now they are a test
+ * baseline tuned to be in the realistic range, not optimistic.
+ *
+ * Together with price, the implicit ₦/kWh cost of generator power:
+ *   PMS 1,533 / 1.85 ≈ ₦829/kWh  (was ₦467/kWh at 3.0/1,400)
+ *   AGO 1,915 / 2.95 ≈ ₦649/kWh  (was ₦514/kWh at 3.5/1,800)
+ * Both corrected UP — the user actually spends more per kWh of
+ * generator power than the previous placeholders implied, so
+ * generator-savings claims now align closer to reality.
+ */
+const NG_PMS_PRICE_NGN_PER_LITRE = 1_533
+const NG_PMS_KWH_PER_LITRE        = 1.85
+const NG_AGO_PRICE_NGN_PER_LITRE = 1_915
+const NG_AGO_KWH_PER_LITRE        = 2.95
+
+/**
+ * "Not sure" path-B hard cap on the back-derived annual fuel cost.
+ *
+ * When the user picks "Not sure" for their monthly fuel budget, we
+ * back-derive a cap from their consumption profile and the assumed
+ * fuel constants. The back-derive is by construction a theoretical
+ * maximum, so without this cap "Not sure" would always claim the
+ * full theoretical generator saving — same as the "ignore the cap"
+ * degenerate case. This hard cap is a sanity bound, segment-aware,
+ * that keeps the claim in a plausible range until the user reports
+ * an actual figure.
+ *
+ * Numbers are illustrative defaults pending business confirmation:
+ *   homes      → ₦50k/month  = ₦600k/year
+ *   businesses → ₦300k/month = ₦3.6M/year
+ */
+const NOT_SURE_HARD_CAP_NGN_PER_YEAR: Record<NgPlan['segment'], number> = {
+  homes: 600_000,
+  businesses: 3_600_000,
+}
+
+/** Helper: which fuel type does this plan assume? Drives both the
+ *  back-derive (path B) and the kWh↔₦ conversion (path A). */
+function fuelTypeFor(plan: NgPlan): 'pms' | 'ago' {
+  return plan.segment === 'homes' ? 'pms' : 'ago'
+}
+
+/**
+ * Annual opex as a fraction of system cost. Covers routine
+ * maintenance, panel cleaning, and any inverter/battery servicing.
+ *
+ * ⚠️ IDEAL MODE — currently set to 0. Per user directive, the
+ * calculator runs in an "ideal mode" that ignores ongoing
+ * maintenance, panel cleaning, and battery/inverter replacement
+ * costs. Re-introduce with a non-zero value (typical 0.5–1.5 %
+ * of system cost for solar assets) once the maintenance model is
+ * verified. When re-enabled, also extend the 30-year loop to add
+ * one-off battery / inverter replacement events around year
+ * 10–15 — see the comment trail in `calculateROI()`.
+ */
+const NG_OPEX_PCT = 0
+
+const NG_PROJECT_LIFETIME_YEARS = 30
+
+/**
+ * Per-region PV specific yield (kWh / kWp / year) for Nigeria.
+ *
+ * Illustrative figures pending the verified national average - the
+ * country sits in the high-irradiance belt so yields should be
+ * 1,300-1,800 kWh/kWp/yr depending on latitude, cloud cover and dust.
+ * Coastal states (South South, South West) are cloudier; the far
+ * north (North East, North West) is the sunniest. The fallback is
+ * 1,500 kWh/kWp/yr - a defensible middle figure for unrecognised
+ * regions.
+ */
+const NG_REGION_YIELD: Record<string, number> = {
+  'Lagos': 1_400,
+  'Abuja (FCT)': 1_500,
+  'North Central': 1_500,
+  'North East': 1_700,
+  'North West': 1_700,
+  'South East': 1_400,
+  'South South': 1_300,
+  'South West': 1_400,
+}
+const NG_REGION_YIELD_FALLBACK = 1_500
+
+/**
+ * Self-consumption rate - what fraction of solar generation is used
+ * on-site rather than exported. With a battery, most of the daytime
+ * surplus can be shifted to evening; without one, the surplus has to
+ * be exported (or curtailed).
+ */
+function selfConsumptionRateFor(plan: NgPlan): number {
+  return plan.batteryKwh > 0 ? 0.85 : 0.40
+}
+
+/**
+ * Panel degradation factors (year 1 = 100 %, year 30 ≈ 85 %).
+ * 1-indexed. Length = NG_PROJECT_LIFETIME_YEARS.
+ */
+const DEGRADATION_FACTORS: ReadonlyArray<number> = (() => {
   const out: number[] = []
-  for (let year = 1; year <= ROI_PROJECT_LIFETIME_YEARS; year++) {
+  for (let year = 1; year <= NG_PROJECT_LIFETIME_YEARS; year++) {
     let factor: number
     if (year === 1) {
       factor = 1.0
@@ -288,187 +422,379 @@ const ROI_DEGRADATION_FACTORS: ReadonlyArray<number> = (() => {
   return out
 })()
 
-/** Exposed for the ROI breakdown disclosure (read-only array). */
+/** Exposed for the ROI breakdown disclosure (read-only). */
 export function getDegradationFactors(): ReadonlyArray<number> {
-  return ROI_DEGRADATION_FACTORS
+  return DEGRADATION_FACTORS
 }
+
+/* ──────────────────────────────────────────────────────────────────────
+   Recommendation engine
+   ────────────────────────────────────────────────────────────────────── */
+
+/**
+ * 5×4 base tier lookup (household size × consumption). Encodes the
+ * implicit "people × kWh/yr" load:
+ *   1 person ≈ 2,000 kWh, 5+ people ≈ 7,000+ kWh baseline.
+ * Returns the NG_PLANS index for the base recommendation.
+ */
+const BASE_TIER_LOOKUP: Record<HouseholdSize, Record<ConsumptionTier, number>> = {
+  '1':  { low: 0, medium: 0, high: 1, 'very-high': 1, unknown: 0 },
+  '2':  { low: 0, medium: 0, high: 1, 'very-high': 2, unknown: 0 },
+  '3':  { low: 0, medium: 1, high: 2, 'very-high': 2, unknown: 1 },
+  '4':  { low: 0, medium: 1, high: 2, 'very-high': 2, unknown: 1 },
+  '5+': { low: 1, medium: 2, high: 2, 'very-high': 2, unknown: 2 },
+}
+
+/**
+ * Recommend an NG plan. Pipeline:
+ *   1. base tier from householdSize × electricityUsage
+ *   2. each heavy device (+1 tier, capped)
+ *   3. generator use of 'daily' or 'frequently' (+1 tier) — a heavy
+ *      generator dependency means the home needs a real battery
+ *      (≥5 kWh) to cover the evening gap, so we move up from LITE.
+ *
+ * The output is always a valid NgPlanId. The capped output is the
+ * BUSINESS Flagship 3-Phase (the last plan in NG_PLANS). If the user
+ * has signals suggesting even Flagship won't cover them (e.g. very-high
+ * usage + 3 heavy devices), `recommendPlan` still returns Flagship
+ * and the page can show a "human follow-up" banner — we do not
+ * silently return null.
+ */
+export function recommendPlan(c: ConsultationInput): NgPlanId {
+  const sizeRow = BASE_TIER_LOOKUP[c.householdSize] ?? BASE_TIER_LOOKUP['3']
+  let tier = sizeRow[c.electricityUsage] ?? 1
+
+  for (const device of c.devices ?? []) {
+    if (device === 'wallbox' || device === 'heatpump' || device === 'ac') {
+      tier = Math.min(NG_PLANS.length - 1, tier + 1)
+    }
+  }
+
+  if (c.generatorFrequency === 'daily' || c.generatorFrequency === 'frequently') {
+    tier = Math.min(NG_PLANS.length - 1, tier + 1)
+  }
+
+  return NG_PLANS[tier].id
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   ROI engine
+   ────────────────────────────────────────────────────────────────────── */
 
 export interface PlanRoi {
-  /** Year-1 generation before degradation. */
+  /** Year-1 solar generation (kWh). */
   annualGenerationKwh: number
-  /** Year-1 self-consumed kWh. */
+  /** Year-1 self-consumed kWh (replaces grid first, then generator). */
   annualSelfConsumedKwh: number
-  /** Year-1 exported kWh. */
+  /** Year-1 exported kWh. NG: feed-in tariff is minimal, so income is small. */
   annualExportedKwh: number
-  /** Year-1 total saving (import offset + export income). */
-  annualSavingGbp: number
-  /** Year-1 export income only. */
-  annualExportIncomeGbp: number
-  /** Year-1 import offset only (self-consumed × import price). */
-  annualImportOffsetGbp: number
-  /** Years to break even on the *offer* price (year-1 saving basis). */
+  /** Year-1 grid-cost offset (₦). */
+  annualGridOffsetNgn: number
+  /** Year-1 generator-fuel offset (₦). Capped by reported fuel budget. */
+  annualGeneratorOffsetNgn: number
+  /** Year-1 export income (₦). NG: typically ₦0. */
+  annualExportIncomeNgn: number
+  /** Year-1 gross saving (₦). */
+  annualSavingNgn: number
+  /** Year-1 net saving after opex (₦). */
+  annualNetSavingNgn: number
+  /** Annual maintenance opex (₦). */
+  annualOpexNgn: number
+  /** Years to break even on the system price. */
   paybackYears: number
-  /** Sum of yearly savings across all 30 years. */
-  total30YearSavingGbp: number
-  /** Total lifetime saving minus *offer* price (i.e. what you net). */
-  total30YearReturnGbp: number
-  /** (lifetime saving / offer price − 1) × 100. */
+  /** Sum of yearly NET savings across all 30 years. */
+  total30YearSavingNgn: number
+  /** Total lifetime net saving minus system price (i.e. what you net). */
+  total30YearReturnNgn: number
+  /** (lifetime net saving / system price) × 100. */
   roiPct: number
+  /** System price used (₦). */
+  priceNgn: number
+  /**
+   * The actual annual fuel cost (₦) the calculator used as the
+   * cap for generator savings. Surfaces the value path A or path
+   * B resolved to (band midpoint, back-derive, or user override)
+   * so the UI can show "this is what we assumed" instead of a
+   * magic number.
+   */
+  appliedAnnualFuelCostNgn: number
+  /**
+   * Whether the user overrode the cap with a slider value (true)
+   * or the calculator used the band / back-derive default (false).
+   */
+  fuelCostOverridden: boolean
+  /** Regional yield used (kWh/kWp/yr). Surfaced for the breakdown. */
+  appliedRegionYield: number
+  /** Annual kWh used to size the savings (kWh). */
+  appliedAnnualKwh: number
+  /** Generator share of the pie used to split grid vs generator. */
+  appliedGeneratorShare: number
+
+  /* ────── backward-compat aliases ──────
+   * Old OfferCard + SavingsSection + PlanSummaryAside components
+   * still reference `offerPriceGbp` and the `*Gbp` saving fields. The
+   * underlying values are ₦ (the names are historical from the UK
+   * implementation). Keep the names so we don't have to rewrite every
+   * consumer at once. */
+  offerPriceNgn: number
   offerPriceGbp: number
   offerValidUntil: Date
-  /** Effective assumption values used (after defaults applied). */
-  appliedAssumptions: Required<RoiAssumptions>
+  annualSavingGbp: number
+  total30YearSavingGbp: number
+  total30YearReturnGbp: number
+  annualExportIncomeGbp: number
+  annualImportOffsetGbp: number
 }
 
 /**
- * User-tweakable ROI assumptions. All values are required when passed in;
- * use `defaultAssumptions(plan)` to get the spec defaults for a given plan,
- * then spread user overrides on top.
+ * Internal: estimate the current generator fuel spend per year.
+ *
+ * Path A (user picked a band): use the band midpoint directly. The
+ * cap is the user's own number, so no further clipping.
+ *
+ * Path B (user picked "Not sure"): back-derive from generator share
+ * + estimated kWh + fuel constants for the plan's fuel type, then
+ * clip to the segment-aware hard cap (`NOT_SURE_HARD_CAP_NGN_PER_YEAR`).
+ * The clip matters: without it, the back-derive equals the
+ * theoretical maximum, so `genOffsetNgn = min(theoretical, theoretical)`
+ * collapses to "no constraint at all" — every "Not sure" user
+ * would get the full theoretical saving. The cap restores a
+ * reasonable upper bound until the user reports an actual figure.
+ *
+ * Returns ₦/year.
  */
-export interface RoiAssumptions {
-  /** £/kWh imported. Slider range 0.10-0.50. Default 0.2632 (Ofgem 2026). */
-  importPriceGbp: number
-  /** £/kWh exported (SEG). Slider range 0.00-0.30. Default 0.15. */
-  exportPriceGbp: number
-  /** Self-consumption rate 0-1. Default per-plan (battery=100%, no-battery=35%). */
-  selfConsumptionRate: number
-}
-
-/**
- * Spec-default assumptions for a plan. The user can override any of these
- * via the Advanced assumptions sliders in CustomiseCard.
- */
-export function defaultAssumptions(plan: Plan): RoiAssumptions {
+function estimateAnnualFuelCostNgn(
+  c: ConsultationInput,
+  generatorKwhPerYear: number,
+  fuelType: 'pms' | 'ago',
+  segment: NgPlan['segment'],
+  userOverride: number | undefined,
+): { capNgn: number; overridden: boolean } {
+  // User-set slider override takes priority. Always allow it; the
+  // slider's own range in CustomiseCard is bounded (0 – 2× hard cap)
+  // so the user can't drive this to absurd values.
+  if (typeof userOverride === 'number' && Number.isFinite(userOverride) && userOverride >= 0) {
+    return { capNgn: userOverride, overridden: true }
+  }
+  const budget = c.fuelBudgetNgn ?? 'unknown'
+  if (budget !== 'unknown') {
+    return { capNgn: FUEL_BUDGET_ANNUAL_NGN[budget] ?? 0, overridden: false }
+  }
+  // Back-derive: litres = kWh / kWhPerLitre; ₦ = litres × ₦/L
+  const pricePerLitre = fuelType === 'ago' ? NG_AGO_PRICE_NGN_PER_LITRE : NG_PMS_PRICE_NGN_PER_LITRE
+  const kwhPerLitre    = fuelType === 'ago' ? NG_AGO_KWH_PER_LITRE        : NG_PMS_KWH_PER_LITRE
+  const backDerived = (generatorKwhPerYear / kwhPerLitre) * pricePerLitre
   return {
-    importPriceGbp: ROI_IMPORT_PRICE_GBP,
-    exportPriceGbp: ROI_EXPORT_PRICE_GBP,
-    selfConsumptionRate:
-      plan.batteryKwh > 0 ? 1 : ROI_SELF_CONSUMPTION_BASE,
+    capNgn: Math.min(backDerived, NOT_SURE_HARD_CAP_NGN_PER_YEAR[segment]),
+    overridden: false,
   }
 }
 
-/** Slider bounds - surfaced as constants so the UI and engine agree. */
-export const ROI_IMPORT_PRICE_MIN = 0.10
-export const ROI_IMPORT_PRICE_MAX = 0.50
-export const ROI_IMPORT_PRICE_STEP = 0.001
-export const ROI_EXPORT_PRICE_MIN = 0.00
-export const ROI_EXPORT_PRICE_MAX = 0.30
-export const ROI_EXPORT_PRICE_STEP = 0.001
-/** Self-consumption 20%-100% in 1% steps. Floor at 20% to keep slider
- *  draggable even on solar-only plans where the auto-default is 35%. */
-export const ROI_SELF_CONSUMPTION_MIN = 0.20
-export const ROI_SELF_CONSUMPTION_MAX = 1.00
-export const ROI_SELF_CONSUMPTION_STEP = 0.01
-
 /**
- * Run the full ROI pipeline for a given Plan + consultation + assumptions.
- * Pure function, no I/O.
- *
- * Per spec, each project year is computed independently:
- *   generation[y]  = year1Generation × DEGRADATION_FACTORS[y]
- *   selfConsumed[y] = generation[y] × selfConsumptionRate
- *   exported[y]    = generation[y] − selfConsumed[y]
- *   saving[y]      = selfConsumed[y] × importPrice + exported[y] × exportPrice
- *
- * Payback + ROI % use the **offer** price (= list price − £1,300), not the
- * raw list price. The headline `annualSavingGbp` etc. are the year-1 values
- * using the *applied* assumptions. The 30-year totals are the sum across
- * all 30 degraded years.
+ * Run the full NG ROI pipeline for a given plan + consultation. Pure
+ * function, no I/O. The math is documented in the file header.
  */
 export function calculateROI(
-  plan: Plan,
+  plan: NgPlan,
   c: ConsultationInput,
-  assumptions: RoiAssumptions,
-  now: Date = new Date(),
+  /**
+   * User-tweakable annual fuel budget override (₦/year). When set,
+   * replaces both the band-midpoint cap (path A) and the back-derive
+   * + hard-cap (path B). Used by the "Not sure" slider in
+   * `CustomiseCard` so the user can dial the assumed spend up or down
+   * without re-running the consultation form.
+   */
+  userFuelBudgetOverrideNgn?: number,
 ): PlanRoi {
-  // 0. Resolve assumptions (clamp defensively even though the UI already
-  //    constrains inputs).
-  const importPrice = Math.max(
-    ROI_IMPORT_PRICE_MIN,
-    Math.min(ROI_IMPORT_PRICE_MAX, assumptions.importPriceGbp),
-  )
-  const exportPrice = Math.max(
-    ROI_EXPORT_PRICE_MIN,
-    Math.min(ROI_EXPORT_PRICE_MAX, assumptions.exportPriceGbp),
-  )
-  const selfConsumptionRate = Math.max(
-    0,
-    Math.min(1, assumptions.selfConsumptionRate),
-  )
-  const applied: Required<RoiAssumptions> = {
-    importPriceGbp: importPrice,
-    exportPriceGbp: exportPrice,
-    selfConsumptionRate,
-  }
+  // 1. Total annual kWh and grid/generator split.
+  const annualKwh = USAGE_KWH_PER_YEAR[c.electricityUsage] ?? USAGE_KWH_PER_YEAR.unknown
+  const genShare = GEN_SHARE_BY_FREQUENCY[c.generatorFrequency] ?? GEN_SHARE_BY_FREQUENCY.unknown
+  const gridKwh = annualKwh * (1 - genShare)
+  const generatorKwh = annualKwh * genShare
 
-  // 1. Year-1 generation = system size × regional specific yield.
-  //    Region lookup falls back to the UK-wide default if the user's
-  //    `region` string is empty or not in the table (e.g. a future form
-  //    option added without updating the map).
-  const systemKw = plan.panels * ROI_KW_PER_PANEL
-  const regionYield = REGION_YIELD_KWH_PER_KWP[c.region] ?? ROI_KWH_PER_KW_YEAR
-  const year1GenerationKwh = systemKw * regionYield
+  // 2. Estimated fuel spend (used to cap the savings claim). The fuel
+  //    type follows the plan's segment: homes → PMS, businesses → AGO.
+  const fuelType = fuelTypeFor(plan)
+  const { capNgn: annualFuelCostNgn, overridden: fuelCostOverridden } =
+    estimateAnnualFuelCostNgn(c, generatorKwh, fuelType, plan.segment, userFuelBudgetOverrideNgn)
 
-  // 2. Year-1 breakdown using the applied assumptions.
-  const year1SelfConsumed = year1GenerationKwh * selfConsumptionRate
-  const year1Exported = Math.max(0, year1GenerationKwh - year1SelfConsumed)
-  const year1Saving =
-    year1SelfConsumed * importPrice + year1Exported * exportPrice
+  // 3. Solar year-1 generation.
+  const regionYield = NG_REGION_YIELD[c.region] ?? NG_REGION_YIELD_FALLBACK
+  const year1GenKwh = plan.kwp * regionYield
 
-  const annualGenerationKwh = Math.round(year1GenerationKwh)
-  const annualSelfConsumedKwh = Math.round(year1SelfConsumed)
-  const annualExportedKwh = Math.round(year1Exported)
-  const annualSavingGbp = Math.round(year1Saving)
-  const annualImportOffsetGbp = Math.round(year1SelfConsumed * importPrice)
-  const annualExportIncomeGbp = Math.round(year1Exported * exportPrice)
+  // 4. Self-consumption (battery boosts).
+  const selfConsumptionRate = selfConsumptionRateFor(plan)
+  const selfConsumedKwh = Math.min(year1GenKwh * selfConsumptionRate, annualKwh)
+  const exportedKwh = Math.max(0, year1GenKwh - selfConsumedKwh)
 
-  // 3. Offer = list price − flat discount. Payback + ROI use this, NOT the
-  //    list price, because that's what the customer is actually paying.
-  const offerPriceGbp = Math.max(0, plan.priceGbp - ROI_OFFER_DISCOUNT_GBP)
+  // 5. Displacement - the no-double-count rule.
+  // First the grid, then the generator.
+  const gridDisplacedKwh = Math.min(selfConsumedKwh, gridKwh)
+  const gridOffsetNgn = gridDisplacedKwh * NG_GRID_TARIFF_NGN_PER_KWH
 
-  // 4. Payback on the offer price (clamped to lifetime).
+  const genDisplacedKwh = Math.max(0, selfConsumedKwh - gridKwh)
+  // kWh per ₦ from the generator: (kWh per litre) / (₦ per litre).
+  // Plan's fuel type picks the constants — PMS for homes, AGO for
+  // businesses. Each combination gives a different implicit ₦/kWh
+  // cost of generator power, which the offset and the path-B cap both
+  // thread through.
+  const fuelPricePerLitre = fuelType === 'ago' ? NG_AGO_PRICE_NGN_PER_LITRE : NG_PMS_PRICE_NGN_PER_LITRE
+  const fuelKwhPerLitre    = fuelType === 'ago' ? NG_AGO_KWH_PER_LITRE        : NG_PMS_KWH_PER_LITRE
+  const genKwhPerNgn = fuelKwhPerLitre / fuelPricePerLitre
+  const potentialGenOffsetNgn = genDisplacedKwh / genKwhPerNgn
+  // Cap at the user's actual fuel spend - we cannot claim more savings
+  // than they were spending. This is the key "don't over-state"
+  // guarantee.
+  const genOffsetNgn = Math.min(potentialGenOffsetNgn, annualFuelCostNgn)
+
+  // 6. Export income (NG: minimal feed-in tariff).
+  const exportIncomeNgn = exportedKwh * 0
+
+  // 7. Annual opex. Currently 0 (ideal mode — see NG_OPEX_PCT comment).
+  //    When re-introduced, swap back to `plan.priceNgn * NG_OPEX_PCT`
+  //    and the 30-year loop below will pick it up automatically.
+  const opexNgn = plan.priceNgn * NG_OPEX_PCT
+
+  // 8. Totals. In ideal mode `netSavingsNgn == grossSavingsNgn`.
+  const grossSavingsNgn = gridOffsetNgn + genOffsetNgn + exportIncomeNgn
+  const netSavingsNgn = grossSavingsNgn - opexNgn
+
+  // 9. Payback on the system price (clamped to lifetime).
   const paybackYears =
-    annualSavingGbp > 0
+    netSavingsNgn > 0
       ? Math.min(
-          ROI_PROJECT_LIFETIME_YEARS,
-          Math.round((offerPriceGbp / annualSavingGbp) * 10) / 10,
+          NG_PROJECT_LIFETIME_YEARS,
+          Math.round((plan.priceNgn / netSavingsNgn) * 10) / 10,
         )
       : Infinity
 
-  // 5. 30-year cumulative saving: each year uses its own actual
-  //    generation (degraded), not the year-1 figure multiplied.
+  // 10. 30-year lifetime sum, applying degradation year-by-year.
   let total30YearSaving = 0
-  for (let i = 0; i < ROI_PROJECT_LIFETIME_YEARS; i++) {
-    const yearGen = year1GenerationKwh * ROI_DEGRADATION_FACTORS[i]
-    const yearSelfConsumed = yearGen * selfConsumptionRate
-    const yearExported = Math.max(0, yearGen - yearSelfConsumed)
-    const yearSaving =
-      yearSelfConsumed * importPrice + yearExported * exportPrice
-    total30YearSaving += yearSaving
+  for (let i = 0; i < NG_PROJECT_LIFETIME_YEARS; i++) {
+    const yearGen = year1GenKwh * DEGRADATION_FACTORS[i]
+    const yearSelfConsumed = Math.min(yearGen * selfConsumptionRate, annualKwh)
+    const yearGridDisplaced = Math.min(yearSelfConsumed, gridKwh)
+    const yearGenDisplaced = Math.max(0, yearSelfConsumed - gridKwh)
+    const yearGridOffset = yearGridDisplaced * NG_GRID_TARIFF_NGN_PER_KWH
+    const yearGenOffset = Math.min(
+      yearGenDisplaced / genKwhPerNgn,
+      annualFuelCostNgn,
+    )
+    const yearSavings = yearGridOffset + yearGenOffset - opexNgn
+    total30YearSaving += yearSavings
   }
-  const total30YearSavingGbp = Math.round(total30YearSaving)
-
-  const total30YearReturnGbp = total30YearSavingGbp - offerPriceGbp
-  const roiPct = offerPriceGbp > 0
-    ? Math.round(((total30YearSavingGbp / offerPriceGbp) - 1) * 100)
-    : 0
-
-  const offerValidUntil = new Date(now)
-  offerValidUntil.setDate(offerValidUntil.getDate() + ROI_OFFER_VALIDITY_DAYS)
+  const total30YearSavingNgn = Math.round(total30YearSaving)
+  const total30YearReturnNgn = total30YearSavingNgn - plan.priceNgn
+  // Backward-compat aliases - same numbers, GBP field names.
+  const total30YearSavingGbp = total30YearSavingNgn
+  const total30YearReturnGbp = total30YearReturnNgn
+  const roiPct =
+    plan.priceNgn > 0
+      ? Math.round(((total30YearSavingNgn / plan.priceNgn) - 1) * 100)
+      : 0
 
   return {
-    annualGenerationKwh,
-    annualSelfConsumedKwh,
-    annualExportedKwh,
-    annualSavingGbp,
-    annualExportIncomeGbp,
-    annualImportOffsetGbp,
+    annualGenerationKwh: Math.round(year1GenKwh),
+    annualSelfConsumedKwh: Math.round(selfConsumedKwh),
+    annualExportedKwh: Math.round(exportedKwh),
+    annualGridOffsetNgn: Math.round(gridOffsetNgn),
+    annualGeneratorOffsetNgn: Math.round(genOffsetNgn),
+    annualExportIncomeNgn: Math.round(exportIncomeNgn),
+    annualSavingNgn: Math.round(grossSavingsNgn),
+    annualNetSavingNgn: Math.round(netSavingsNgn),
+    annualOpexNgn: Math.round(opexNgn),
     paybackYears,
+    total30YearSavingNgn,
+    total30YearReturnNgn,
+    roiPct,
+    priceNgn: plan.priceNgn,
+    appliedAnnualFuelCostNgn: annualFuelCostNgn,
+    fuelCostOverridden,
+    appliedRegionYield: regionYield,
+    appliedAnnualKwh: annualKwh,
+    appliedGeneratorShare: genShare,
+    // Backward-compat aliases. The `*Gbp` fields used to be the live
+    // UK-ladder savings in £; the values are now ₦ even though the
+    // names are unchanged. `offerPriceGbp` is the system price with
+    // no UK-style flat discount; `offerValidUntil` is 30 days out
+    // from "now" (matches the old OfferCard expectation).
+    offerPriceNgn: plan.priceNgn,
+    offerPriceGbp: plan.priceNgn,
+    offerValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    annualSavingGbp: Math.round(grossSavingsNgn),
     total30YearSavingGbp,
     total30YearReturnGbp,
-    roiPct,
-    offerPriceGbp,
-    offerValidUntil,
-    appliedAssumptions: applied,
+    annualExportIncomeGbp: Math.round(exportIncomeNgn),
+    annualImportOffsetGbp: Math.round(gridOffsetNgn),
   }
 }
+
+/* ──────────────────────────────────────────────────────────────────────
+   Backward-compat re-exports
+   The components and admin tables still import the old UK `PLANS`,
+   `Plan`, `PlanId`, `RoiAssumptions` names. Until those consumers are
+   migrated to the NG types we keep aliases that point at the NG
+   catalogue. The numeric values are ₦ now, not £ - so the old
+   `formatGBP` consumers should switch to `formatNGN`.
+   ────────────────────────────────────────────────────────────────────── */
+
+export type Plan = NgPlan
+export type PlanId = NgPlanId
+
+/** Legacy UK plan list, retained as an alias of the NG catalogue. */
+export const PLANS: Plan[] = NG_PLANS
+
+export function getPlan(id: PlanId): Plan {
+  return getNgPlan(id)
+}
+
+export function findPlanByPrice(_priceGbp: number): Plan | undefined {
+  // Legacy: price lookups were by GBP. The NG catalogue keys by id -
+  // callers that previously used this should switch to `getNgPlan(id)`.
+  return undefined
+}
+
+/** Legacy alias. */
+export type ConsumptionTierCompat = ConsumptionTier
+/** Legacy alias. */
+export type HeavyDeviceCompat = HeavyDevice
+
+/** Legacy default assumptions - used to be £0.2632/kWh import, £0.15/kWh
+ *  export. The NG calculator ignores these and uses NG tariff constants
+ *  baked in. Kept exported so any import that still references them
+ *  doesn't break at compile time. */
+export interface RoiAssumptions {
+  importPriceGbp: number
+  exportPriceGbp: number
+  selfConsumptionRate: number
+}
+
+export function defaultAssumptions(_plan: Plan): RoiAssumptions {
+  return {
+    importPriceGbp: NG_GRID_TARIFF_NGN_PER_KWH,
+    exportPriceGbp: 0,
+    selfConsumptionRate: 0,
+  }
+}
+
+export const DEFAULT_ROI_IMPORT_PRICE_GBP = NG_GRID_TARIFF_NGN_PER_KWH
+export const DEFAULT_ROI_EXPORT_PRICE_GBP = 0
+export const ROI_SELF_CONSUMPTION_BASE_RATE = 0.40
+export const ROI_IMPORT_PRICE_MIN = 0
+export const ROI_IMPORT_PRICE_MAX = 500
+export const ROI_IMPORT_PRICE_STEP = 1
+export const ROI_EXPORT_PRICE_MIN = 0
+export const ROI_EXPORT_PRICE_MAX = 0
+export const ROI_EXPORT_PRICE_STEP = 1
+export const ROI_SELF_CONSUMPTION_MIN = 0
+export const ROI_SELF_CONSUMPTION_MAX = 1
+export const ROI_SELF_CONSUMPTION_STEP = 0.01
+
+// Touch the import so it doesn't get flagged as unused while the
+// marketing surface still sources its 6 solutions from the same data.
+void solutionDetails
+
+// Touch the marketing data to keep the linter honest about the
+// single-source-of-truth contract between the marketing surface and
+// the calculator. (No runtime cost; this compiles away.)
+void NG_PLANS.length

@@ -145,6 +145,11 @@ function resolvePlanName(l: ConsultationLead): string {
     electricityUsage: (l.electricity_usage ?? DEFAULT_USAGE) as ConsumptionTier,
     devices: parseDevices(l.devices),
     region: l.region ?? DEFAULT_REGION,
+    // NG Step-3 fields - older leads may have NULL here, default to
+    // 'unknown' so the recommendation engine still resolves a plan.
+    generatorFrequency: 'unknown',
+    fuelBudgetNgn: 'unknown',
+    backupNeeds: [],
   }
   return getPlan(recommendPlan(consultation)).name
 }

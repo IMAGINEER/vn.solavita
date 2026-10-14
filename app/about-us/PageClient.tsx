@@ -53,7 +53,7 @@ export default function AboutPage() {
             <span className="text-gradient">for your home.</span>
           </>
         }
-        description="Request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your home and your backup requirements."
+        description="Whether for your home or business, Solavita helps you find the right solar and battery storage solution for your energy needs. Tell us what you need, and our team will help you get started."
       />
 
       <Footer />

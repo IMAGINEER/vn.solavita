@@ -62,7 +62,7 @@ export default function ArticlesSection() {
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
             Plain-English guides, side-by-side product comparisons, and FAQs
-            written by our UK engineers - so you understand every decision
+            written by our Nigerian engineers - so you understand every decision
             before you sign anything.
           </p>
         </div>

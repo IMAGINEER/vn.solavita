@@ -6,10 +6,10 @@ import { contactNotificationEmail } from '@/lib/emails/contact-notification'
 
 export const dynamic = 'force-dynamic'
 
-// UK team inbox - pulled from the public-facing ContactMethods + Footer.
+// NG team inbox - pulled from the public-facing ContactMethods + Footer.
 // If this ever changes, update /components/Footer.tsx + ContactMethods.tsx
 // to keep customer-visible copy in sync.
-const TEAM_EMAIL = 'TBD — Verified Nigerian sales/support email'
+const TEAM_EMAIL = 'ng@solavita.com'
 
 const REQUIRED_FIELDS = [
   'firstName',

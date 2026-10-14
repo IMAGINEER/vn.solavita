@@ -90,14 +90,14 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
       )
   }, [])
 
-  const defaultBadge = 'Premium solar for UK homes'
+  const defaultBadge = 'Premium solar for Nigerian homes'
   const defaultH1: [string, string, string] = [
     'Power Your Home.',
-    'Shape a Greener UK.',
+    'Shape a Greener Nigeria.',
     '',
   ]
   const defaultSubhead =
-    'Smart solar & storage solutions for UK homes. Save more. Worry less. Live better.'
+    'Smart solar & storage solutions for Nigerian homes. Cut your fuel bill. Own your power. Stay lit through any outage.'
   const defaultCtaLabel = 'Get Free Plan →'
 
   const badge = override?.badge ?? defaultBadge
@@ -186,7 +186,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
               </a>
             </div>
 
-            {/* Trust pills row (UK Figma: 4 trust badges below the CTAs) */}
+            {/* Trust pills row (NG: trust badges below the CTAs) */}
             <div
               ref={pillsRef}
               className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-4"
@@ -209,7 +209,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
             <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden border border-uk-line bg-uk-teal-soft">
               <img
                 src="/images/hero-placeholder.webp"
-                alt="UK home with solar panels"
+                alt="Nigerian home with solar panels"
                 loading="eager"
                 className="w-full h-full object-cover"
               />
@@ -230,7 +230,7 @@ export default function HeroSection({ override }: HeroSectionProps = {}) {
         className="absolute bottom-6 right-4 sm:right-6 lg:right-8 max-w-xs bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-uk-line"
       >
         <div className="text-xs font-semibold text-uk-slate tracking-wider uppercase">
-          Trusted by UK Homeowners
+          Trusted by Nigerian Homeowners
         </div>
         <div className="flex gap-0.5 mt-2 text-uk-emerald">
           {Array.from({ length: 5 }).map((_, i) => (

@@ -60,7 +60,7 @@ export default function PartnersHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Become a Solavita partner - installer or energy / business
-          partner. UK engineering support, group supply-chain scale, and
+          partner. Nigerian engineering support, group supply-chain scale, and
           a 10-year warranty programme.
         </motion.p>
       </div>

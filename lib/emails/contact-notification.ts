@@ -1,12 +1,12 @@
 /**
- * Internal notification email sent to the UK team inbox whenever
+ * Internal notification email sent to the NG team inbox whenever
  * someone submits /contact-us. Includes the full submission so a
  * support agent can reply by hitting Reply-To (the Resend send
  * call sets `to: TEAM_EMAIL`, so the team's mail client will reply
  * to the customer's address which we put in the body).
  */
 
-const TEAM_EMAIL = 'TBD — Verified Nigerian sales/support email'
+const TEAM_EMAIL = 'ng@solavita.com'
 
 function subjectLabel(subject: string): string {
   // contactSubjects uses lowercase ids ('general', 'sales', ...). Capitalise

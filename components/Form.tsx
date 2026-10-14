@@ -145,18 +145,14 @@ const ACIcon = () => (
 // ============ FORM DATA ============
 
 const REGIONS = [
-  'England - South East',
-  'England - South West',
-  'England - London',
-  'England - East',
-  'England - East Midlands',
-  'England - West Midlands',
-  'England - Yorkshire & the Humber',
-  'England - North West',
-  'England - North East',
-  'Wales',
-  'Scotland',
-  'Northern Ireland',
+  'Lagos',
+  'Abuja (FCT)',
+  'North Central',
+  'North East',
+  'North West',
+  'South East',
+  'South South',
+  'South West',
 ];
 
 const HOUSE_TYPES = [
@@ -196,6 +192,95 @@ const DEVICES = [
   { id: 'heatpump', label: 'Heat pump', icon: HeatPumpIcon },
   { id: 'ac', label: 'Air conditioning', icon: ACIcon },
 ];
+
+/* ──────────────────────────────────────────────────────────────────────
+   Nigeria Step-3 extensions.
+
+   The original UK form asked for "household + usage + devices" and that
+   was enough. Nigeria needs more because a meaningful share of the
+   customer's bill is the generator - not the grid. Three new fields
+   capture that, all optional, all non-blocking on submit:
+
+   - GENERATOR_FREQUENCY: how often they run a generator today. Drives
+     the recommendation tier (frequent use → minimum HOME Standard) and
+     feeds the ROI calculation as a baseline assumption for how much of
+     the current power bill solar can replace.
+   - FUEL_BUDGET_NGN: monthly fuel spend in a NGN bucket. Lets the user
+     pick a band instead of typing a precise figure (which most
+     households don't know). Drives the generator-fuel saving in ROI.
+   - BACKUP_NEEDS: which circuits they want backup for. Heavy items
+     (AC, water pump) push battery sizing; lights/fans/fridge are the
+     baseline and don't.
+
+   IDs are stable wire values - the My-Plan adapter and the calc both
+   read them by id.
+   ────────────────────────────────────────────────────────────────────── */
+
+const GENERATOR_FREQUENCY = [
+  { id: 'rarely', label: 'Rarely', description: 'A few hours, rarely' },
+  { id: 'sometimes', label: 'Sometimes', description: 'A few hours, a few days a week' },
+  { id: 'daily', label: 'Daily', description: 'Most days of the week' },
+  { id: 'frequently', label: 'Frequently', description: 'Long hours every day' },
+]
+
+const FUEL_BUDGET_NGN = [
+  { id: 'below-20k', label: 'Below ₦20,000' },
+  { id: '20k-50k', label: '₦20,000 – ₦50,000' },
+  { id: '50k-100k', label: '₦50,000 – ₦100,000' },
+  { id: 'above-100k', label: 'Above ₦100,000' },
+  { id: 'unknown', label: 'Not sure' },
+]
+
+const LightsIcon = () => (
+  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
+    <path d="M20 6C13 6 8 11 8 18c0 4 2 7 5 9v3a2 2 0 002 2h10a2 2 0 002-2v-3c3-2 5-5 5-9 0-7-5-12-12-12z" stroke="currentColor" strokeWidth="2"/>
+    <path d="M15 36h10M17 40h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+)
+const FridgeIcon = () => (
+  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
+    <rect x="11" y="6" width="18" height="28" rx="2" stroke="currentColor" strokeWidth="2"/>
+    <line x1="11" y1="14" x2="29" y2="14" stroke="currentColor" strokeWidth="2"/>
+    <line x1="15" y1="10" x2="15" y2="12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="15" y1="20" x2="15" y2="26" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+  </svg>
+)
+const PumpIcon = () => (
+  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
+    <circle cx="14" cy="20" r="8" stroke="currentColor" strokeWidth="2"/>
+    <path d="M22 20h12M30 16v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+)
+
+const BACKUP_NEEDS = [
+  { id: 'lights', label: 'Lights, fans and TV', icon: LightsIcon },
+  { id: 'fridge', label: 'Refrigerator and essential appliances', icon: FridgeIcon },
+  { id: 'ac', label: 'Air conditioning', icon: ACIcon },
+  { id: 'pump', label: 'Water pump or other heavy loads', icon: PumpIcon },
+]
+
+/** Lookup a human label for a single-select id, with a fallback. */
+function labelFor(
+  id: string | undefined,
+  options: ReadonlyArray<{ id: string; label: string }>,
+  fallback = 'Not sure',
+): string {
+  if (!id) return fallback
+  if (id === 'unknown') return 'Not sure'
+  return options.find((o) => o.id === id)?.label ?? fallback
+}
+
+/** Join human labels for a multi-select id list. */
+function labelsForIds(
+  ids: string[] | undefined,
+  options: ReadonlyArray<{ id: string; label: string }>,
+): string {
+  if (!ids || ids.length === 0) return ''
+  return ids
+    .map((id) => options.find((o) => o.id === id)?.label)
+    .filter(Boolean)
+    .join(', ')
+}
 
 // ============ STEP COMPONENT ============
 const TOTAL_STEPS = 5;
@@ -251,7 +336,7 @@ const CardSelect = ({
       : columns === 4 ? 'md:grid-cols-4'
       : columns === 3 ? 'md:grid-cols-3'
       : 'md:grid-cols-2'
-  } gap-3`}>
+  } gap-2.5`}>
     {options.map((opt) => {
       const isSelected = selected === opt.id;
       const Icon = opt.icon;
@@ -262,7 +347,7 @@ const CardSelect = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onSelect(opt.id)}
-          className={`relative p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[120px] ${
+          className={`relative p-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1.5 min-h-[80px] ${
             isSelected
               ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E] shadow-md'
               : 'border-gray-200 bg-white hover:border-[#0F766E]/40 hover:bg-gray-50 text-gray-600'
@@ -272,7 +357,7 @@ const CardSelect = ({
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute top-2 right-2 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
+              className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
             >
               <Check className="w-3 h-3 text-white" strokeWidth={3} />
             </motion.div>
@@ -281,7 +366,7 @@ const CardSelect = ({
           {opt.emoji && <span className="text-2xl">{opt.emoji}</span>}
           {opt.count !== undefined && <PersonIcon count={opt.count} />}
           <span className="text-sm font-medium text-center leading-tight">{opt.label}</span>
-          {opt.description && <span className="text-xs text-gray-400">{opt.description}</span>}
+          {opt.description && <span className="text-[11px] text-gray-400 leading-tight text-center">{opt.description}</span>}
         </motion.button>
       );
     })}
@@ -298,7 +383,7 @@ const MultiCardSelect = ({
   selected: string[];
   onToggle: (id: string) => void;
 }) => (
-  <div className="grid grid-cols-3 gap-3">
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
     {options.map((opt) => {
       const isSelected = selected.includes(opt.id);
       const Icon = opt.icon;
@@ -309,7 +394,7 @@ const MultiCardSelect = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onToggle(opt.id)}
-          className={`relative p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[100px] ${
+          className={`relative p-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1.5 min-h-[80px] ${
             isSelected
               ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E] shadow-md'
               : 'border-gray-200 bg-white hover:border-[#0F766E]/40 hover:bg-gray-50 text-gray-600'
@@ -319,13 +404,13 @@ const MultiCardSelect = ({
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute top-2 right-2 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
+              className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
             >
               <Check className="w-3 h-3 text-white" strokeWidth={3} />
             </motion.div>
           )}
           <Icon />
-          <span className="text-sm font-medium text-center">{opt.label}</span>
+          <span className="text-sm font-medium text-center leading-tight">{opt.label}</span>
         </motion.button>
       );
     })}
@@ -445,7 +530,7 @@ const Form: React.FC<{
           newErrors.email = 'Please enter a valid email address.';
         }
         if (formData.phone && !validatePhone(formData.phone)) {
-          newErrors.phone = 'Please enter a valid UK phone number.';
+          newErrors.phone = 'Please enter a valid Nigerian phone number.';
         }
         break;
     }
@@ -469,6 +554,13 @@ const Form: React.FC<{
       householdSize: '',
       electricityUsage: '',
       devices: [],
+      // NG Step-3 extensions - all default to 'unknown' (sentinel) so
+      // the form's "Not sure" path is one click away. backupNeeds starts
+      // with `['lights', 'fridge']` pre-checked - the most common
+      // baseline; the user can adjust.
+      generatorFrequency: 'unknown',
+      fuelBudgetNgn: 'unknown',
+      backupNeeds: ['lights', 'fridge'],
       street: '',
       houseNumber: '',
       postalCode: '',
@@ -493,6 +585,18 @@ const Form: React.FC<{
         ? prev.devices.filter(d => d !== deviceId)
         : [...prev.devices, deviceId]
     }));
+  };
+
+  const toggleBackup = (id: string) => {
+    setFormData(prev => {
+      const current = prev.backupNeeds ?? []
+      return {
+        ...prev,
+        backupNeeds: current.includes(id)
+          ? current.filter(b => b !== id)
+          : [...current, id],
+      }
+    })
   };
 
   const canProceed = (): boolean => {
@@ -546,6 +650,12 @@ const Form: React.FC<{
           householdSize: formData.householdSize,
           electricityUsage: formData.electricityUsage,
           devices: formData.devices,
+          // NG Step-3 extensions (all optional). 'unknown' sentinels map
+          // to NULL on the server so admin can render an "unspecified"
+          // state without exposing the raw 'unknown' string.
+          generatorFrequency: formData.generatorFrequency,
+          fuelBudgetNgn: formData.fuelBudgetNgn,
+          backupNeeds: formData.backupNeeds,
         };
 
     try {
@@ -729,10 +839,10 @@ const Form: React.FC<{
 
                   {/* Step 2: Household + Electricity */}
                   {step === 2 && (
-                    <div className="space-y-8">
+                    <div className="space-y-5">
                       <div>
-                        <label className="block text-sm font-semibold mb-3">
-                          How many people live in your household?
+                        <label className="block text-sm font-semibold mb-2">
+                          How many people live in your household? <span className="text-red-500">*</span>
                         </label>
                         <CardSelect
                           options={HOUSEHOLD_SIZES as CardOption[]}
@@ -744,8 +854,8 @@ const Form: React.FC<{
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold mb-3">
-                          How would you estimate your annual electricity use?
+                        <label className="block text-sm font-semibold mb-2">
+                          How would you estimate your annual electricity use? <span className="text-red-500">*</span>
                         </label>
                         <CardSelect
                           options={ELECTRICITY_USAGE as CardOption[]}
@@ -757,14 +867,54 @@ const Form: React.FC<{
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold mb-3">
+                        <label className="block text-sm font-semibold mb-2">
                           Do you already have any of these devices?
-                          <span className="font-normal text-gray-400 ml-2">(optional, multi-select)</span>
+                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional, multi-select)</span>
                         </label>
                         <MultiCardSelect
                           options={DEVICES}
                           selected={formData.devices}
                           onToggle={toggleDevice}
+                        />
+                      </div>
+
+                      {/* ─── NG Step-3 extensions (optional, non-blocking) ─── */}
+
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          How often do you use a generator?
+                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional)</span>
+                        </label>
+                        <CardSelect
+                          options={GENERATOR_FREQUENCY as CardOption[]}
+                          selected={formData.generatorFrequency ?? 'unknown'}
+                          onSelect={id => updateField('generatorFrequency', id)}
+                          columns={4}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          How much do you spend on generator fuel each month?
+                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional)</span>
+                        </label>
+                        <CardSelect
+                          options={FUEL_BUDGET_NGN as CardOption[]}
+                          selected={formData.fuelBudgetNgn ?? 'unknown'}
+                          onSelect={id => updateField('fuelBudgetNgn', id)}
+                          columns={5}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          What do you need backup power for?
+                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional, multi-select)</span>
+                        </label>
+                        <MultiCardSelect
+                          options={BACKUP_NEEDS}
+                          selected={formData.backupNeeds ?? []}
+                          onToggle={toggleBackup}
                         />
                       </div>
                     </div>
@@ -825,6 +975,24 @@ const Form: React.FC<{
                             {formData.devices.length
                               ? formData.devices.join(', ')
                               : '-'}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Generator use</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {labelFor(formData.generatorFrequency, GENERATOR_FREQUENCY, 'Not specified')}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">Monthly fuel budget</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {labelFor(formData.fuelBudgetNgn, FUEL_BUDGET_NGN, 'Not specified')}
+                          </dd>
+                        </div>
+                        <div className="flex items-start justify-between px-4 py-3 gap-4">
+                          <dt className="text-sm text-gray-500 shrink-0">Backup needs</dt>
+                          <dd className="text-sm font-medium text-gray-800 text-right">
+                            {labelsForIds(formData.backupNeeds, BACKUP_NEEDS) || '-'}
                           </dd>
                         </div>
                       </dl>
@@ -891,7 +1059,7 @@ const Form: React.FC<{
                             type="text"
                             value={formData.city}
                             onChange={e => { updateField('city', e.target.value); clearErrors(); }}
-                            placeholder="London"
+                            placeholder="Lagos"
                             className={`w-full px-4 py-3 border-2 ${errors.city ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                           />
                           {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
@@ -980,7 +1148,7 @@ const Form: React.FC<{
                           type="tel"
                           value={formData.phone}
                           onChange={e => { updateField('phone', e.target.value); clearErrors(); }}
-                          placeholder="+44 7700 900000"
+                          placeholder="+234 800 000 0000"
                           className={`w-full px-4 py-3 border-2 ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                         />
                         {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
@@ -1005,9 +1173,16 @@ const Form: React.FC<{
 
             {/* Navigation Buttons - hidden after a successful submit so the
                 user can't trigger a duplicate POST. The success screen
-                renders its own Close / Back to homepage button. */}
+                renders its own Close / Back to homepage button.
+
+                Sticky to the bottom of the form (inside the AnimatePresence's
+                parent form, not the page) so Continue is always within reach
+                even when the Step 2 fields push the button off-screen on
+                shorter viewports. A semi-opaque white background + border-top
+                keep the sticky bar visually separated from the form fields
+                above. */}
             {!isSubmitted && (
-          <div className="flex justify-between items-center mt-10 pt-6 border-t border-gray-100">
+          <div className="sticky bottom-0 -mx-6 sm:-mx-10 mt-10 pt-4 pb-2 px-6 sm:px-10 bg-white/95 backdrop-blur-sm border-t border-gray-100 flex justify-between items-center">
             {step > 0 ? (
               <button
                 type="button"
@@ -1085,7 +1260,7 @@ const Form: React.FC<{
             <span className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
               <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />
             </span>
-            UK GDPR compliant
+            Nigeria Data Protection Regulation compliant
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">

@@ -2,7 +2,7 @@
 
 import ContactSuccessCard from './ContactSuccessCard'
 import type { PlanRoi } from '../_lib/calc'
-import { formatGBP, formatDateEnGB } from '../_lib/format'
+import { formatNGN, formatDateEnGB } from '../_lib/format'
 
 interface OfferCardProps {
   metrics: PlanRoi
@@ -47,7 +47,7 @@ export default function OfferCard({
                 System price
               </div>
               <div className="mt-1 text-2xl md:text-3xl font-cw-bold text-uk-navy tabular-nums">
-                {formatGBP(systemPriceGbp)}
+                {formatNGN(systemPriceGbp)}
               </div>
             </div>
             {/* "Your offer" - emphasised. Highlighted background + larger
@@ -58,7 +58,7 @@ export default function OfferCard({
                 Your offer
               </div>
               <div className="mt-1 text-3xl md:text-4xl font-cw-bold text-uk-emerald tabular-nums">
-                {formatGBP(metrics.offerPriceGbp)}
+                {formatNGN(metrics.offerPriceGbp)}
               </div>
             </div>
             <div className="sm:col-span-2">

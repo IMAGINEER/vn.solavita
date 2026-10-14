@@ -34,7 +34,7 @@ export default function HemsPage() {
             <span className="text-gradient">Get a free design & quote.</span>
           </>
         }
-        description="Tell us about your home. Our UK engineers will design the right HEMS-managed system - solar, battery, EV charger and heat pump - and send you a clear, no-obligation quote."
+        description="Tell us about your home. Our Nigerian team will design the right HEMS-managed system - solar, battery, EV charger and heat pump - and send you a clear, no-obligation quote."
         secondaryLabel="Talk to our team"
         secondaryHref="mailto:ng@solavita.com"
       />

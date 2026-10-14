@@ -4,6 +4,11 @@
 
 [build.environment]
   NODE_VERSION = "22"
+# GA4 measurement IDs are public (GA4 spec requires them embedded in
+# client-facing JS). Whitelist `NEXT_PUBLIC_GA4_ID` so Netlify's
+# secrets scanner doesn't flag the resolved value when Next.js
+# inlines `process.env.NEXT_PUBLIC_GA4_ID` into client bundles.
+SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_GA4_ID"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

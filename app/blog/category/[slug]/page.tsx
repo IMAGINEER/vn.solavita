@@ -41,11 +41,14 @@ export default async function BlogCategoryPage(props: {
   const sp = await props.searchParams
   const page = Number(sp.page ?? '1') || 1
 
-  const category = await getCategoryBySlug(slug)
+  const category = await getCategoryBySlug(slug, { onlyWithPublishedPosts: true })
   if (!category) notFound()
 
   const [allCategories, result] = await Promise.all([
-    getCategories(),
+    // Sibling-chip navigation: same public-surface rule as /blog index
+    // — drop empty NG categories so the chips never link to a page
+    // that 404s.
+    getCategories({ onlyWithPublishedPosts: true }),
     listPublishedPosts({ categorySlug: slug, page, pageSize: 9 }),
   ])
 
@@ -55,7 +58,7 @@ export default async function BlogCategoryPage(props: {
         data={[
           collectionPageJsonLd({
             path: `/blog/category/${category.slug}`,
-            name: `${category.name_en} - Solavita UK Blog`,
+            name: `${category.name_en} - Solavita Nigeria Blog`,
             description:
               category.description_en ??
               `Articles in the ${category.name_en} category.`,

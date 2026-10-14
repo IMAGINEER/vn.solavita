@@ -1,18 +1,23 @@
-// Blog data-access layer. UK locale columns; the schema is shared with
-// IT but each app reads its own locale column.
+// Blog data-access layer (NG locale).
+//
+// Locale model: this app writes and reads only `locale = 'ng'` rows.
+// The schema is shared with IT/UK on the same Supabase project; each
+// app filters by its own locale so the three blogs never see each
+// other's content. See `lib/types/blog.ts` for `BLOG_LOCALE`.
 //
 // Public read paths enforce the visibility contract:
-//   blog_posts      → WHERE status = 'published'
-//   blog_post_tags   → joined via post.status check
-// Categories + tags + authors are public (no PII).
+//   blog_posts      → WHERE locale='ng' AND status = 'published'
+//   blog_post_tags   → joined via post.locale/status check
+// Categories + tags + authors are public for that locale only (no
+// PII leak across apps).
 //
 // Write paths are admin-only and live in app/api/admin/blog/**/route.ts.
 // This module exports them too, but the API routes are the only callers
 // in production (no direct DB writes from server components).
 
 import { supabase } from '@/lib/supabase'
+import { BLOG_LOCALE, type BlogAuthor } from '@/lib/types/blog'
 import type {
-  BlogAuthor,
   BlogCategory,
   BlogListFilters,
   BlogListResult,
@@ -31,50 +36,121 @@ const POST_PUBLIC_SELECT =
   'id, slug, title, excerpt, body_md, cover_image_url, ' +
   'category_id, author_id, status, published_at, ' +
   'meta_title, meta_description, reading_time_min, ' +
-  'created_at, updated_at'
+  'created_at, updated_at, locale'
 
 const POST_SUMMARY_SELECT =
   'id, slug, title, excerpt, cover_image_url, ' +
   'category_id, author_id, status, published_at, ' +
   'meta_title, meta_description, reading_time_min, ' +
-  'created_at, updated_at'
+  'created_at, updated_at, locale'
 
 /**
- * Fetch all UK-locale categories ordered for nav/filtering.
+ * Options that change which categories a call returns.
+ *
+ *   - `onlyWithPublishedPosts: true` — public surfaces only. Hides any
+ *     NG category that has zero published posts so the `/blog` filter
+ *     chips and the `/blog/category/[slug]` sidebar never surface a
+ *     category landing page that would render empty. The admin path
+ *     uses the default (false) so editors can see every category they
+ *     can publish into, including empty ones they just created.
+ */
+export interface GetCategoriesOptions {
+  onlyWithPublishedPosts?: boolean
+}
+
+/**
+ * Fetch all NG-locale categories ordered for nav/filtering.
  *
  * Filters out rows where `name_en` is NULL - those are IT-only
  * categories that share the same table on the same Supabase project.
  * Without the filter they render as empty `<option>` elements in the
  * admin category dropdown (selectable but invisible), and they leak
  * into the public `/blog` filter chips as blank labels.
+ *
+ * The `locale='ng'` filter is the primary gate: it excludes both IT
+ * rows (locale='it') and UK rows (locale='uk'), so the public NG
+ * site only sees categories this app created.
+ *
+ * Pass `{ onlyWithPublishedPosts: true }` to drop categories with no
+ * published NG posts - see `GetCategoriesOptions` above.
  */
-export async function getCategories(): Promise<BlogCategory[]> {
-  const { data, error } = await supabase
+export async function getCategories(
+  opts: GetCategoriesOptions = {},
+): Promise<BlogCategory[]> {
+  let q = supabase
     .from('blog_categories')
-    .select('id, slug, name_en, description_en, sort_order, created_at')
+    .select('id, slug, name_en, description_en, sort_order, created_at, locale')
+    .eq('locale', BLOG_LOCALE)
     .not('name_en', 'is', null)
     .order('sort_order', { ascending: true })
     .order('name_en', { ascending: true })
+
+  if (opts.onlyWithPublishedPosts) {
+    // Use a sub-query via the `IN (...)` filter: pull the category ids
+    // that have at least one published NG post, then constrain the
+    // outer query to those ids. The `blog_posts_locale_published_idx`
+    // index (added by the blog locale migration) keeps the inner
+    // query cheap.
+    const { data: catIdRows, error: catIdErr } = await supabase
+      .from('blog_posts')
+      .select('category_id')
+      .eq('locale', BLOG_LOCALE)
+      .eq('status', 'published')
+    if (catIdErr) throw new Error(`getCategories: ${catIdErr.message}`)
+    const idsWithPosts = Array.from(
+      new Set((catIdRows ?? []).map((r) => r.category_id as string)),
+    )
+    if (idsWithPosts.length === 0) return []
+    q = q.in('id', idsWithPosts)
+  }
+
+  const { data, error } = await q
   if (error) throw new Error(`getCategories: ${error.message}`)
   return (data ?? []) as unknown as BlogCategory[]
 }
 
-export async function getCategoryBySlug(slug: string): Promise<BlogCategory | null> {
-  const { data, error } = await supabase
-    .from('blog_categories')
-    .select('id, slug, name_en, description_en, sort_order, created_at')
-    .eq('slug', slug)
-    .not('name_en', 'is', null)
-    .maybeSingle()
-  if (error) throw new Error(`getCategoryBySlug: ${error.message}`)
-  return (data ?? null) as unknown as BlogCategory | null
+/**
+ * Single category fetch by slug. Pass `{ onlyWithPublishedPosts: true }`
+ * from public surfaces so an empty category page 404s instead of
+ * rendering "No published articles in this category yet".
+ */
+export async function getCategoryBySlug(
+  slug: string,
+  opts: GetCategoriesOptions = {},
+): Promise<BlogCategory | null> {
+  const cat = await (async () => {
+      const { data, error } = await supabase
+        .from('blog_categories')
+        .select('id, slug, name_en, description_en, sort_order, created_at, locale')
+        .eq('slug', slug)
+        .eq('locale', BLOG_LOCALE)
+        .not('name_en', 'is', null)
+        .maybeSingle()
+      if (error) throw new Error(`getCategoryBySlug: ${error.message}`)
+      return (data ?? null) as unknown as BlogCategory | null
+    })()
+  if (!cat) return null
+  if (!opts.onlyWithPublishedPosts) return cat
+
+  // Public-surface filter: confirm the category has at least one
+  // published NG post. Cheap lookup via the published-posts index.
+  const { data: probe, error: probeErr } = await supabase
+    .from('blog_posts')
+    .select('id')
+    .eq('locale', BLOG_LOCALE)
+    .eq('status', 'published')
+    .eq('category_id', cat.id)
+    .limit(1)
+  if (probeErr) throw new Error(`getCategoryBySlug: ${probeErr.message}`)
+  return (probe ?? []).length > 0 ? cat : null
 }
 
-/** Fetch all tags (alphabetical). Used for filter chips + tag pickers. */
+/** Fetch all NG tags (alphabetical). Used for filter chips + tag pickers. */
 export async function getTags(): Promise<BlogTag[]> {
   const { data, error } = await supabase
     .from('blog_tags')
-    .select('id, slug, name_en, created_at')
+    .select('id, slug, name_en, created_at, locale')
+    .eq('locale', BLOG_LOCALE)
     .not('name_en', 'is', null)
     .order('name_en', { ascending: true })
   if (error) throw new Error(`getTags: ${error.message}`)
@@ -86,7 +162,8 @@ export async function getTagsBySlugs(slugs: string[]): Promise<BlogTag[]> {
   if (slugs.length === 0) return []
   const { data, error } = await supabase
     .from('blog_tags')
-    .select('id, slug, name_en, created_at')
+    .select('id, slug, name_en, created_at, locale')
+    .eq('locale', BLOG_LOCALE)
     .not('name_en', 'is', null)
     .in('slug', slugs)
   if (error) throw new Error(`getTagsBySlugs: ${error.message}`)
@@ -96,8 +173,9 @@ export async function getTagsBySlugs(slugs: string[]): Promise<BlogTag[]> {
 export async function getAuthor(id: string): Promise<BlogAuthor | null> {
   const { data, error } = await supabase
     .from('blog_authors')
-    .select('id, admin_user_id, display_name, role, avatar_url, bio_en, created_at')
+    .select('id, admin_user_id, display_name, role, avatar_url, bio_en, created_at, locale')
     .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
     .maybeSingle()
   if (error) throw new Error(`getAuthor: ${error.message}`)
   return (data ?? null) as unknown as BlogAuthor | null
@@ -124,6 +202,7 @@ function toSummary(row: RawRow, category: BlogCategory, author: BlogAuthor, tags
     reading_time_min: row.reading_time_min as number,
     created_at: row.created_at as string,
     updated_at: row.updated_at as string,
+    locale: (row.locale ?? BLOG_LOCALE) as BlogPostSummary['locale'],
     category,
     author,
     tags,
@@ -146,17 +225,24 @@ async function hydratePosts(
   const postIds = rows.map((r) => r.id as string)
 
   const [catRes, authRes, joinRes] = await Promise.all([
+    // Hydration queries also carry the locale filter so a post can never
+    // join to a category/tag that belongs to another app's bucket. A
+    // row whose FK points at an IT-only category would otherwise leak
+    // into the join and break the page render.
     supabase
       .from('blog_categories')
-      .select('id, slug, name_en, description_en, sort_order, created_at')
+      .select('id, slug, name_en, description_en, sort_order, created_at, locale')
+      .eq('locale', BLOG_LOCALE)
       .in('id', categoryIds),
     supabase
       .from('blog_authors')
-      .select('id, admin_user_id, display_name, role, avatar_url, bio_en, created_at')
+      .select('id, admin_user_id, display_name, role, avatar_url, bio_en, created_at, locale')
+      .eq('locale', BLOG_LOCALE)
       .in('id', authorIds),
     supabase
       .from('blog_post_tags')
-      .select('post_id, blog_tags:blog_tags(id, slug, name_en, created_at)')
+      .select('post_id, blog_tags:blog_tags!inner(id, slug, name_en, created_at, locale)')
+      .eq('blog_tags.locale', BLOG_LOCALE)
       .in('post_id', postIds),
   ])
 
@@ -171,9 +257,12 @@ async function hydratePosts(
     ((authRes.data ?? []) as unknown as BlogAuthor[]).map((a) => [a.id, a]),
   )
 
-  type JoinRow = { post_id: string; blog_tags: BlogTag | BlogTag[] | null }
+  type JoinRow = {
+    post_id: string
+    blog_tags: BlogTag | BlogTag[] | null
+  }
   const tagsByPost = new Map<string, BlogTag[]>()
-  for (const j of ((joinRes.data ?? []) as unknown as JoinRow[])) {
+  for (const j of (joinRes.data ?? []) as unknown as JoinRow[]) {
     const tag = Array.isArray(j.blog_tags) ? j.blog_tags[0] : j.blog_tags
     if (!tag) continue
     const list = tagsByPost.get(j.post_id) ?? []
@@ -201,6 +290,7 @@ export async function listPublishedPosts(filters: BlogListFilters = {}): Promise
   let query = supabase
     .from('blog_posts')
     .select(POST_SUMMARY_SELECT, { count: 'exact' })
+    .eq('locale', BLOG_LOCALE)
     .eq('status', 'published')
     .order('published_at', { ascending: false })
     .range(from, to)
@@ -219,7 +309,8 @@ export async function listPublishedPosts(filters: BlogListFilters = {}): Promise
     // Two-step: post ids with this tag, then re-query with those ids.
     const { data: joinRows, error: joinErr } = await supabase
       .from('blog_post_tags')
-      .select('post_id, blog_tags!inner(slug)')
+      .select('post_id, blog_tags!inner(slug, locale)')
+      .eq('blog_tags.locale', BLOG_LOCALE)
       .eq('blog_tags.slug', filters.tagSlug)
     if (joinErr) throw new Error(`list tag join: ${joinErr.message}`)
     const ids = ((joinRows ?? []) as unknown as Array<{ post_id: string }>).map((j) => j.post_id)
@@ -249,6 +340,7 @@ export async function getLatestPosts(limit = 3): Promise<BlogPostSummary[]> {
   const { data, error } = await supabase
     .from('blog_posts')
     .select(POST_SUMMARY_SELECT)
+    .eq('locale', BLOG_LOCALE)
     .eq('status', 'published')
     .order('published_at', { ascending: false })
     .limit(limit)
@@ -259,7 +351,7 @@ export async function getLatestPosts(limit = 3): Promise<BlogPostSummary[]> {
 }
 
 /** Single post by (category_slug, post_slug). Returns null if not found
- *  or not published. */
+ *  or not published, or the row belongs to a different locale. */
 export async function getPublishedPostBySlug(
   categorySlug: string,
   postSlug: string,
@@ -272,6 +364,7 @@ export async function getPublishedPostBySlug(
     .select(POST_PUBLIC_SELECT)
     .eq('category_id', cat.id)
     .eq('slug', postSlug)
+    .eq('locale', BLOG_LOCALE)
     .eq('status', 'published')
     .maybeSingle()
   if (error) throw new Error(`getPublishedPostBySlug: ${error.message}`)
@@ -291,6 +384,7 @@ export async function getRelatedPosts(
   const { data, error } = await supabase
     .from('blog_posts')
     .select(POST_SUMMARY_SELECT)
+    .eq('locale', BLOG_LOCALE)
     .eq('status', 'published')
     .eq('category_id', categoryId)
     .neq('id', excludePostId)
@@ -314,18 +408,17 @@ export interface SitemapPostEntry {
 export async function listAllPublishedForSitemap(): Promise<SitemapPostEntry[]> {
   // Fetch joined category slug in one round-trip.
   //
-  // `blog_categories` is shared with the DE site on the same Supabase
-  // project. The inner join on `slug` alone would let through posts
-  // whose category row has `name_en IS NULL` (IT/DE-only category).
-  // Those rows are excluded from `getCategoryBySlug()` on the dynamic
-  // route via `.not('name_en', 'is', null)`, so the post URL would 404
-  // even though it's marked published. Mirror that filter here so the
-  // sitemap only lists URLs that actually resolve to a page.
+  // `blog_categories` is shared across IT/UK/NG/IT on the same
+  // Supabase project. The inner join + locale filter is what keeps
+  // the sitemap from leaking posts that live behind an IT or UK
+  // category slug into the NG sitemap (they would 404 because the
+  // dynamic route's getCategoryBySlug() already filters by locale).
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('slug, published_at, updated_at, blog_categories!inner(slug)')
+    .select('slug, published_at, updated_at, locale, blog_categories!inner(slug, locale)')
+    .eq('locale', BLOG_LOCALE)
     .eq('status', 'published')
-    .not('blog_categories.name_en', 'is', null)
+    .eq('blog_categories.locale', BLOG_LOCALE)
     .order('published_at', { ascending: false })
   if (error) throw new Error(`listAllPublishedForSitemap: ${error.message}`)
   return ((data ?? []) as unknown as Array<{
@@ -346,7 +439,8 @@ export async function listAllPublishedForSitemap(): Promise<SitemapPostEntry[]> 
 
 // ── Admin write paths ─────────────────────────────────────────────────────────
 
-/** Admin: list every post regardless of status. */
+/** Admin: list every NG post regardless of status. UK/IT posts are
+ *  invisible here because the admin panel is a per-app surface. */
 export async function listAllPostsAdmin(opts: {
   status?: BlogPostStatus
   search?: string
@@ -361,6 +455,7 @@ export async function listAllPostsAdmin(opts: {
   let query = supabase
     .from('blog_posts')
     .select(POST_SUMMARY_SELECT, { count: 'exact' })
+    .eq('locale', BLOG_LOCALE)
     .order('updated_at', { ascending: false })
     .range(from, to)
 
@@ -386,6 +481,7 @@ export async function getPostByIdAdmin(id: string): Promise<BlogPostFull | null>
     .from('blog_posts')
     .select(POST_PUBLIC_SELECT)
     .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
     .maybeSingle()
   if (error) throw new Error(`getPostByIdAdmin: ${error.message}`)
   if (!data) return null
@@ -406,6 +502,7 @@ export async function createPost(input: BlogPostDraftInput, editorUserId: string
     category_id: input.category_id,
     author_id: authorId,
     status: input.status,
+    locale: BLOG_LOCALE,
     published_at:
       input.status === 'published'
         ? input.published_at ?? new Date().toISOString()
@@ -457,6 +554,7 @@ export async function updatePost(
     .from('blog_posts')
     .select('body_md')
     .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
     .maybeSingle()
   if (prev) {
     const prevRow = prev as unknown as { body_md: string }
@@ -480,6 +578,7 @@ export async function updatePost(
     category_id: input.category_id,
     author_id: authorId,
     status: input.status,
+    locale: BLOG_LOCALE,
     published_at:
       input.status === 'published'
         ? input.published_at ?? new Date().toISOString()
@@ -491,6 +590,7 @@ export async function updatePost(
     .from('blog_posts')
     .update(updateRow)
     .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
   if (error) throw new Error(`updatePost: ${error.message}`)
 
   // Tag diff: simplest correct strategy is full replace.
@@ -511,7 +611,14 @@ export async function updatePost(
 
 export async function deletePost(id: string): Promise<void> {
   // CASCADE on blog_post_tags + blog_post_revisions cleans the joins.
-  const { error } = await supabase.from('blog_posts').delete().eq('id', id)
+  // locale filter is defence-in-depth: the editor only ever lists NG
+  // posts, but a stray click on a foreign id would otherwise nuke a
+  // post that another app owns.
+  const { error } = await supabase
+    .from('blog_posts')
+    .delete()
+    .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
   if (error) throw new Error(`deletePost: ${error.message}`)
 }
 
@@ -536,6 +643,7 @@ export async function createCategory(input: { slug: string; name_en: string; des
       name_en: input.name_en,
       description_en: input.description_en ?? null,
       sort_order: input.sort_order ?? 0,
+      locale: BLOG_LOCALE,
     })
     .select('id')
     .single()
@@ -553,19 +661,28 @@ export async function updateCategory(id: string, input: { slug: string; name_en:
       sort_order: input.sort_order ?? 0,
     })
     .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
   if (error) throw new Error(`updateCategory: ${error.message}`)
 }
 
 export async function deleteCategory(id: string): Promise<void> {
   // FK is ON DELETE RESTRICT, so posts block this. Surface that error.
-  const { error } = await supabase.from('blog_categories').delete().eq('id', id)
+  const { error } = await supabase
+    .from('blog_categories')
+    .delete()
+    .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
   if (error) throw new Error(`deleteCategory: ${error.message}`)
 }
 
 export async function createTag(input: { slug: string; name_en: string }): Promise<string> {
   const { data, error } = await supabase
     .from('blog_tags')
-    .insert({ slug: input.slug, name_en: input.name_en })
+    .insert({
+      slug: input.slug,
+      name_en: input.name_en,
+      locale: BLOG_LOCALE,
+    })
     .select('id')
     .single()
   if (error) throw new Error(`createTag: ${error.message}`)
@@ -594,6 +711,8 @@ export function slugifyTagName(name: string): string {
 //   - Case-insensitive dedup (first occurrence's casing wins).
 //   - Slug uniqueness is enforced by DB; on race-condition collision we
 //     re-fetch the row that the other writer just inserted.
+//   - Existing-tag lookup is scoped to the NG locale so the IT and UK
+//     tag namespaces stay isolated.
 export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> {
   // 1. Normalize: trim, collapse internal whitespace, drop empties.
   const cleaned: string[] = []
@@ -614,17 +733,17 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
     unique.push(n)
   }
 
-  // 3. Look up existing tags by lower(name_en). The tags table is small
-  // (admin-curated taxonomy) so loading the whole table once and
-  // filtering in JS is cheaper than one round-trip per name.
+  // 3. Look up existing NG tags by lower(name_en). The tags table is
+  // small (admin-curated taxonomy) so loading the whole NG-locale
+  // table once and filtering in JS is cheaper than one round-trip per
+  // name.
   //
-  // Filter out rows where `name_en` IS NULL - those are IT-only tags
-  // that share the same table on the same Supabase project. Without
-  // this filter `name_en.toLowerCase()` would throw on the first row.
+  // Filter by locale='ng' so we never collide with IT or UK tag rows
+  // that happen to share the same display_name.
   const { data: allTags, error: readErr } = await supabase
     .from('blog_tags')
     .select('id, slug, name_en')
-    .not('name_en', 'is', null)
+    .eq('locale', BLOG_LOCALE)
   if (readErr) throw new Error(`resolveOrCreateTagIds read: ${readErr.message}`)
 
   const byName = new Map<string, { id: string; name_en: string }>()
@@ -661,7 +780,7 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
     const slot = createIndex[i]
     const { data: ins, error: insErr } = await supabase
       .from('blog_tags')
-      .insert(row)
+      .insert({ ...row, locale: BLOG_LOCALE })
       .select('id')
       .single()
     if (!insErr && ins) {
@@ -670,10 +789,12 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
     }
     if (insErr && /duplicate key|unique constraint/i.test(insErr.message)) {
       // Lost the race - another writer just created this slug. Fetch it.
+      // Scope the fallback lookup to the NG locale too.
       const { data: existing, error: fetchErr } = await supabase
         .from('blog_tags')
         .select('id')
         .eq('slug', row.slug)
+        .eq('locale', BLOG_LOCALE)
         .maybeSingle()
       if (fetchErr || !existing) {
         throw new Error(
@@ -692,7 +813,11 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
 }
 
 export async function deleteTag(id: string): Promise<void> {
-  const { error } = await supabase.from('blog_tags').delete().eq('id', id)
+  const { error } = await supabase
+    .from('blog_tags')
+    .delete()
+    .eq('id', id)
+    .eq('locale', BLOG_LOCALE)
   if (error) throw new Error(`deleteTag: ${error.message}`)
 }
 
@@ -701,12 +826,13 @@ export async function deleteTag(id: string): Promise<void> {
 // editor can type any contributor name without first registering them.
 //
 //   - Trims + collapses internal whitespace.
-//   - Case-insensitive dedup via lower(display_name).
+//   - Case-insensitive dedup via lower(display_name) within the NG
+//     namespace.
 //   - Empty byline throws (the editor's `author_byline` validation
 //     already prevents this reaching here, but defence-in-depth).
 //   - On insert collision (extremely unlikely because display_name is
 //     not unique; we rely on the row we just inserted) we fall back to
-//     a re-fetch by lower(display_name).
+//     a re-fetch by lower(display_name), scoped to the NG locale.
 export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
   const cleaned = byline.trim().replace(/\s+/g, ' ')
   if (cleaned.length === 0) {
@@ -716,11 +842,13 @@ export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
     throw new Error('resolveOrCreateAuthorId: byline exceeds 120 characters')
   }
 
-  // 1. Load the (small) authors table once and filter in JS. Authors
-  // accumulate slowly (one row per contributor) so this stays cheap.
+  // 1. Load the (small) NG-locale authors table once and filter in JS.
+  // Authors accumulate slowly (one row per contributor) so this stays
+  // cheap.
   const { data: rows, error: readErr } = await supabase
     .from('blog_authors')
     .select('id, display_name')
+    .eq('locale', BLOG_LOCALE)
   if (readErr) throw new Error(`resolveOrCreateAuthorId read: ${readErr.message}`)
 
   const hit = (rows ?? []).find(
@@ -729,20 +857,22 @@ export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
   if (hit) return hit.id as string
 
   // 2. Create the new author row. role defaults to 'editor' via the
-  // DB column default - we don't need to specify it.
+  // DB column default - we don't need to specify it. locale is set
+  // explicitly so the row is bucketed into the NG namespace.
   const { data: ins, error: insErr } = await supabase
     .from('blog_authors')
-    .insert({ display_name: cleaned })
+    .insert({ display_name: cleaned, locale: BLOG_LOCALE })
     .select('id')
     .single()
   if (!insErr && ins) return (ins as unknown as { id: string }).id
 
   // 3. Race fallback: another writer may have just inserted the same
-  // display_name. Re-fetch by lower(display_name).
+  // display_name. Re-fetch by lower(display_name), scoped to NG.
   const { data: existing, error: fetchErr } = await supabase
     .from('blog_authors')
     .select('id')
     .ilike('display_name', cleaned)
+    .eq('locale', BLOG_LOCALE)
     .maybeSingle()
   if (fetchErr || !existing) {
     throw new Error(
@@ -755,7 +885,8 @@ export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
 export async function listAllAuthors(): Promise<BlogAuthor[]> {
   const { data, error } = await supabase
     .from('blog_authors')
-    .select('id, admin_user_id, display_name, role, avatar_url, bio_en, created_at')
+    .select('id, admin_user_id, display_name, role, avatar_url, bio_en, created_at, locale')
+    .eq('locale', BLOG_LOCALE)
     .order('display_name', { ascending: true })
   if (error) throw new Error(`listAllAuthors: ${error.message}`)
   return (data ?? []) as unknown as BlogAuthor[]

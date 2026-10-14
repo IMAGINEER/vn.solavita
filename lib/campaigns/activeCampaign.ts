@@ -54,7 +54,7 @@ const CAMPAIGNS: Record<CampaignSlug, ActiveCampaign | null> = {
       badge: 'Designed for the UK · Premium Quality',
       h1: ['Power Your Home.', 'Shape a Greener UK.', ''],
       subhead:
-        'Smart solar & storage solutions for UK homes. Save more. Worry less. Live better.',
+        'Smart solar & storage solutions for Nigerian homes. Cut your fuel bill. Own your power. Stay lit through any outage.',
       primaryCta: { label: 'Get Free Plan →' },
     },
 

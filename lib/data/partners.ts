@@ -39,7 +39,7 @@ export const partnerTypes: PartnerType[] = [
     bullets: [
       'Tier-1 product catalogue',
       'Two-week install training',
-      'UK design support team',
+      'Nigerian design support team',
       'Lead generation in your region',
     ],
     icon: 'wrench',
@@ -53,7 +53,7 @@ export const partnerTypes: PartnerType[] = [
     bullets: [
       'Tier-1 product catalogue',
       'Two-week install training',
-      'UK design support team',
+      'Nigerian design support team',
       'Lead generation in your region',
     ],
     icon: 'handshake',
@@ -106,19 +106,19 @@ export const partnerBenefits: PartnerBenefit[] = [
       'Backed by SKYWORTH — reliable stock, predictable lead times and competitive pricing.',
   },
   {
-    title: 'UK engineering support',
+    title: 'Nigerian engineering support',
     description:
-      'Design reviews, system sizing and on-site technical back-up from our UK team.',
+      'Design reviews, system sizing and on-site technical back-up from our Nigerian team.',
   },
   {
     title: 'Co-marketing & leads',
     description:
-      'Joint campaigns, regional lead sharing and a partner directory on solavita.uk.',
+      'Joint campaigns, regional lead sharing and a partner directory on solavita.com/ng.',
   },
   {
     title: '15-year warranty programme',
     description:
-      'A single UK-backed warranty that covers product, performance and workmanship.',
+      'A single warranty that covers product, performance and workmanship.',
   },
   {
     title: 'Training & certification',
@@ -165,6 +165,6 @@ export const partnerProcess: PartnerProcessStep[] = [
     step: '04',
     title: 'Go live',
     description:
-      'First joint project kicks off with full support from the UK partner team.',
+      'First joint project kicks off with full support from the Nigerian partner team.',
   },
 ]

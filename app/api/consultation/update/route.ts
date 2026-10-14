@@ -39,6 +39,12 @@ export async function POST(request: Request) {
       householdSize,
       electricityUsage,
       devices,
+      // NG Step-3 extensions. The /my-plan Edit-details modal sends the
+      // same slim body the form does, just without PII; we still want
+      // to write the new generator fields if the user re-picks them.
+      generatorFrequency,
+      fuelBudgetNgn,
+      backupNeeds,
     } = body
 
     // Validate the bearer. UUID-only - same regex the lookup route uses
@@ -108,6 +114,10 @@ export async function POST(request: Request) {
       // LeadsTable skips the Usage row entirely instead of rendering 'unknown'.
       electricity_usage: electricityUsage === 'unknown' ? null : (electricityUsage || null),
       devices: Array.isArray(devices) ? devices.join(', ') : '',
+      // NG Step-3 extensions - same 'unknown'→NULL rule as the main endpoint.
+      generator_frequency: generatorFrequency && generatorFrequency !== 'unknown' ? generatorFrequency : null,
+      fuel_budget_ngn: fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
+      backup_needs: Array.isArray(backupNeeds) && backupNeeds.length > 0 ? backupNeeds.join(', ') : null,
       updated_at: new Date().toISOString(),
     }
 

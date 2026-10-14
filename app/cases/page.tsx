@@ -4,32 +4,29 @@ import JsonLd from '@/components/seo/JsonLd'
 import { webPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Solar Installation Stories | Solavita Nigeria',
+  title: 'Solar Solutions in Practice | Solavita Nigeria',
   path: '/cases',
   description:
-    'Explore solar and battery system applications for homes and businesses. Nigerian customer cases will be added as verified projects become available.',
+    'Explore solar installations and system configurations from across our global markets. See how Solavita systems are configured for different energy needs — verified Nigerian customer projects will be added as they become available.',
   ogImage: '/images/hero-cases.webp',
   ogImageAlt:
-    'Reference solar and battery installations from across our global markets',
+    'Solar installations and system configurations from across our global markets',
 })
 
 export default function Page() {
-  // No NG case studies have been verified yet, so the creativeWorkList
-  // is empty. The page renders a neutral empty state via the unified
-  // ImagePlaceholder and a TBD message.
   return (
     <>
       <JsonLd
         data={[
           webPageJsonLd({
             path: '/cases',
-            name: 'Solar Installation Stories | Solavita Nigeria',
+            name: 'Solar Solutions in Practice | Solavita Nigeria',
             description:
-              'Explore solar and battery system applications for homes and businesses. Nigerian customer cases will be added as verified projects become available.',
+              'Explore solar installations and system configurations from across our global markets. See how Solavita systems are configured for different energy needs.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
-            { name: 'Case Studies', url: '/cases' },
+            { name: 'Cases', url: '/cases' },
           ]),
         ]}
       />

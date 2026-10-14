@@ -38,7 +38,7 @@ export function contactConfirmationEmail(data: {
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
 <tr><td style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
 <p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Need to reach us directly?</p>
-<p style="margin:0; font-size:14px; color:#374151;">TBD — Verified Nigerian sales/support email · TBD — Confirmed operating hours</p>
+<p style="margin:0; font-size:14px; color:#374151;">ng@solavita.com · TBD — Confirmed operating hours</p>
 </td></tr>
 </table>
 

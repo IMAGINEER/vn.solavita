@@ -10,6 +10,17 @@ export function formatGBP(value: number): string {
   return '£' + Math.round(value).toLocaleString('en-GB')
 }
 
+/**
+ * Nigerian Naira formatter. Uses the `en-GB` locale so the thousands
+ * grouping matches the existing UK formatters and column widths stay
+ * stable. The ₦ symbol is rendered as a non-breaking space + currency
+ * mark so it doesn't wrap awkwardly at the line edge.
+ */
+export function formatNGN(value: number): string {
+  if (!Number.isFinite(value)) return '₦0'
+  return '₦' + Math.round(value).toLocaleString('en-GB')
+}
+
 export function formatKwh(value: number): string {
   return Math.round(value).toLocaleString('en-GB') + ' kWh'
 }

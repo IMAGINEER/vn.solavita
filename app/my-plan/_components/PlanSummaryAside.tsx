@@ -3,7 +3,7 @@
 import { ShieldCheck } from 'lucide-react'
 import ContactSuccessCard from './ContactSuccessCard'
 import type { Plan, PlanRoi } from '../_lib/calc'
-import { formatGBP, formatKw } from '../_lib/format'
+import { formatNGN, formatKw } from '../_lib/format'
 
 interface PlanSummaryAsideProps {
   plan: Plan
@@ -78,8 +78,11 @@ export default function PlanSummaryAside({
           <div>
             <div className="text-xs text-uk-slate">Estimated investment</div>
             <div className="mt-1 text-2xl font-cw-bold text-uk-navy tabular-nums">
-              {formatGBP(plan.priceGbp)}
+              {formatNGN(plan.priceNgn)}
             </div>
+            <p className="mt-1 text-[10px] text-uk-slate font-cw-regular">
+              Test-baseline price · Pending verified Nigerian pricing
+            </p>
           </div>
 
           <div className="border-t border-uk-line" />
@@ -88,9 +91,12 @@ export default function PlanSummaryAside({
           <div>
             <div className="text-xs text-uk-slate">Estimated annual saving</div>
             <div className="mt-1 text-2xl font-cw-bold text-uk-emerald tabular-nums">
-              {formatGBP(metrics.annualSavingGbp)}
+              {formatNGN(metrics.annualNetSavingNgn)}
               <span className="ml-1 text-sm font-cw-regular text-uk-slate">/ year</span>
             </div>
+            <p className="mt-1 text-[10px] text-uk-slate font-cw-regular">
+              Grid offset + generator fuel saved · ideal mode (no opex)
+            </p>
           </div>
 
           <div className="border-t border-uk-line" />
@@ -103,6 +109,9 @@ export default function PlanSummaryAside({
                 ? '-'
                 : `${metrics.paybackYears.toFixed(1)} years`}
             </div>
+            <p className="mt-1 text-[10px] text-uk-slate font-cw-regular">
+              Provisional test values — pending business verification
+            </p>
           </div>
 
           {/* CTAs */}

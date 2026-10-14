@@ -54,6 +54,15 @@ export interface ConsultationRow {
   electricity_usage: string | null
   /** CSV: `'wallbox, heatpump'`. Empty string when no devices. */
   devices: string | null
+  /**
+   * NG Step-3 extensions. All three are nullable on the row so pre-2026
+   * registrations read back as `null` (and the calc treats null as
+   * "user skipped the question").
+   */
+  generator_frequency: string | null
+  fuel_budget_ngn: string | null
+  /** CSV: `'lights, fridge, ac'`. Empty string when none. */
+  backup_needs: string | null
   country: string | null
   plan_token: string
   created_at: string
@@ -76,6 +85,11 @@ export function toConsultationInput(row: ConsultationRow): ConsultationInput {
     electricityUsage: (row.electricity_usage ?? DEFAULT_USAGE) as ConsumptionTier,
     devices: parseDevices(row.devices),
     region: row.region ?? DEFAULT_REGION,
+    // NG Step-3 extensions. Use a single 'unknown' string so the
+    // recommendation/ROI code can branch with a single equality check.
+    generatorFrequency: (row.generator_frequency ?? 'unknown') as ConsultationInput['generatorFrequency'],
+    fuelBudgetNgn: (row.fuel_budget_ngn ?? 'unknown') as ConsultationInput['fuelBudgetNgn'],
+    backupNeeds: parseDevices(row.backup_needs),
   }
 }
 
@@ -105,6 +119,12 @@ export function toHomeDetails(row: ConsultationRow): HomeDetails {
     region: row.region ?? DEFAULT_REGION,
     electricityUsage: row.electricity_usage ?? DEFAULT_USAGE,
     devices: parseDevices(row.devices),
+    // NG Step-3 fields - shown on the strip so the user can confirm
+    // their generator / fuel / backup choices without re-opening the
+    // edit modal.
+    generatorFrequency: row.generator_frequency ?? 'unknown',
+    fuelBudgetNgn: row.fuel_budget_ngn ?? 'unknown',
+    backupNeeds: parseDevices(row.backup_needs),
   }
 }
 
@@ -139,6 +159,11 @@ export function toFormPrefill(row: ConsultationRow): Partial<FormData> {
     householdSize: row.household_size ?? '',
     electricityUsage: row.electricity_usage ?? '',
     devices: parseDevices(row.devices),
+    // NG Step-3 extensions - propagate so the Edit-details modal can
+    // re-render the user's previous choices.
+    generatorFrequency: row.generator_frequency ?? 'unknown',
+    fuelBudgetNgn: row.fuel_budget_ngn ?? 'unknown',
+    backupNeeds: parseDevices(row.backup_needs),
   }
 }
 

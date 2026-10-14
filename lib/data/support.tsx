@@ -156,15 +156,15 @@ export const supportContactChannels: SupportContactChannel[] = [
   },
   {
     label: 'WhatsApp',
-    value: '+234 074 5494 5519',
-    href: 'https://wa.me/23407454945519',
+    value: '+8618500875025',
+    href: 'https://wa.me/8618500875025',
     description: (
       <>
         Tap to chat · Mon-Fri · 09:00-18:00 · NG hours.
         <br />
         No WhatsApp?{' '}
         <a
-          href="tel:+23407454945519"
+          href="tel:+8618500875025"
           className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
         >
           Call directly

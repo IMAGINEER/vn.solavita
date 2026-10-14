@@ -60,7 +60,7 @@ export default function SolutionsHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           From your first solar panel to a fully integrated home energy
-          system - Solavita solutions are designed for British homes and
+          system - Solavita solutions are designed for Nigerian homes and
           installed by one team in around two weeks.
         </motion.p>
       </div>
