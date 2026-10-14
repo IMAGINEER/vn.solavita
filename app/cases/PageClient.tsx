@@ -1,9 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
+import GetQuoteButton from '@/components/ui/get-quote-button'
 import { openFormModal } from '@/lib/form-modal'
 import { caseStudies } from '@/lib/data/uk-cases'
 import CaseStudyCard from '@/components/cases/CaseStudyCard'
@@ -67,27 +69,38 @@ export default function CasesPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="relative py-16 md:my-20 bg-gradient-to-br from-uk-teal/5 to-uk-emerald/10">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <SectionEyebrow>YOUR PROJECT</SectionEyebrow>
-          <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Your Property Could Be the <span className="text-gradient">Next Solar Project</span>
+      {/* Final CTA - mirrors the homepage Section9FinalCta visual treatment */}
+      <section
+        className="relative py-20 md:py-28 bg-cover bg-center overflow-hidden"
+        style={{ backgroundImage: 'url(/images/banner_bottom.webp)' }}
+      >
+        {/* Directional overlay - keeps the copy column legible */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(15,23,42,0.78) 0%, rgba(15,23,42,0.55) 35%, rgba(15,23,42,0.2) 60%, rgba(15,23,42,0) 80%)',
+          }}
+        />
+        <div className="relative max-w-3xl mx-auto px-6 text-center">
+          <SectionEyebrow variant="dark">MAKE A DIFFERENCE</SectionEyebrow>
+          <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-white leading-tight">
+            Take the Next Step Towards <span className="text-gradient">Reliable Power</span>
           </h2>
-          <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
+          <p className="mt-4 text-base md:text-lg text-white/85 font-cw-light leading-relaxed">
             Whether for your home or business, Solavita helps you find
-            the right solar and battery storage solution for your
-            energy needs. Tell us what you need, and our team will
-            help you get started.
+            the right solar and battery storage solution for your energy
+            needs. Tell us what you need, and our team will help you get
+            started.
           </p>
-          <div className="mt-8 flex justify-center">
-            <button
-              type="button"
-              onClick={openFormModal}
-              className="px-6 py-3 rounded-full text-sm font-cw-bold border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-white transition-colors"
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <GetQuoteButton onClick={openFormModal} />
+            <Link
+              href="/solutions/home-solar"
+              className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-white hover:border-uk-teal transition-colors"
             >
-              Request a Quote
-            </button>
+              Explore Solutions
+            </Link>
           </div>
         </div>
       </section>

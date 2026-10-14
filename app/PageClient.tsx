@@ -240,16 +240,16 @@ function Section3SolarVsDiesel() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 items-stretch">
           {/* Diesel side - red X */}
-          <div className="rounded-2xl border border-red-300 bg-red-50 p-6 lg:p-8">
+          <div className="rounded-2xl border border-red-300 dark:border-red-800/40 bg-red-50 dark:bg-red-950/30 p-6 lg:p-8">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+              <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
                 <Factory className="w-5 h-5" strokeWidth={1.6} />
               </div>
               <h3 className="text-xl font-cw-bold text-uk-navy">
                 Diesel generator
               </h3>
             </div>
-            <div className="aspect-[16/9] rounded-xl overflow-hidden bg-uk-line/30 mb-5">
+            <div className="aspect-[16/9] rounded-xl overflow-hidden bg-uk-line/30 dark:bg-slate-800 mb-5">
               <img
                 src="/images/diesel_backup.webp"
                 alt="A small diesel generator running outdoors during a power outage in a Nigerian home or business"
@@ -317,7 +317,7 @@ function Section3SolarVsDiesel() {
 function CompareXRow({ text }: { text: string }) {
   return (
     <li className="flex items-center gap-2 text-uk-navy">
-      <XCircle className="w-4 h-4 text-red-500 flex-shrink-0" strokeWidth={2} />
+      <XCircle className="w-4 h-4 text-red-500 dark:text-red-400 flex-shrink-0" strokeWidth={2} />
       <span>{text}</span>
     </li>
   )
@@ -459,9 +459,9 @@ function Section6PartnerDrivenApproach() {
 
         <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-6">
           {/* TRADITIONAL: 5 middlemen nodes, red treatment, markup badge */}
-          <div className="flex-1 w-full max-w-md rounded-2xl border border-red-300 bg-red-50 p-5">
+          <div className="flex-1 w-full max-w-md rounded-2xl border border-red-300 dark:border-red-800/40 bg-red-50 dark:bg-red-950/30 p-5">
             <div className="flex items-center justify-center mb-4">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-cw-bold uppercase tracking-wider bg-red-100 text-red-700 border border-red-300">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-cw-bold uppercase tracking-wider bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-800/40">
                 Traditional
               </span>
             </div>
@@ -475,21 +475,21 @@ function Section6PartnerDrivenApproach() {
               ].map((step, i, arr) => (
                 <div key={i} className="flex items-center">
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-full bg-white border border-red-200 flex items-center justify-center">
-                      <step.Icon className="w-6 h-6 text-red-500" strokeWidth={1.6} />
+                    <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-800 border border-red-200 dark:border-red-800/40 flex items-center justify-center">
+                      <step.Icon className="w-6 h-6 text-red-500 dark:text-red-400" strokeWidth={1.6} />
                     </div>
-                    <span className="text-[10px] text-red-700/80 mt-1 whitespace-nowrap">
+                    <span className="text-[10px] text-red-700/80 dark:text-red-300/80 mt-1 whitespace-nowrap">
                       {step.name}
                     </span>
                   </div>
                   {i < arr.length - 1 && (
-                    <ArrowRight className="w-3 h-3 text-red-300 mx-0.5 flex-shrink-0" strokeWidth={2} />
+                    <ArrowRight className="w-3 h-3 text-red-300 dark:text-red-700 mx-0.5 flex-shrink-0" strokeWidth={2} />
                   )}
                 </div>
               ))}
             </div>
             <div className="mt-4 text-center">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-cw-bold bg-red-100 text-red-700 border border-red-200">
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-cw-bold bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/40">
                 +80-150% markup
               </span>
             </div>
