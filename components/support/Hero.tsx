@@ -61,7 +61,7 @@ export default function SupportHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Browse guides, download manuals, or get in touch with our
-          NG-based service team. We’re here for the lifetime of
+          NG-based service team. We're here for the lifetime of
           your system.
         </motion.p>
 

@@ -59,7 +59,7 @@ export default function BusinessSolarPage() {
     heroProps: {
       eyebrow: 'BUSINESS SOLAR SOLUTIONS',
       title: 'Cut costs. Keep business moving.',
-      body: 'Reduce reliance on generator fuel and protect your operations from power-related downtime with solar and battery solutions sized for your business.\n**10–20 kW three-phase inverters. 16–32 kWh battery storage.**',
+      body: 'Reduce reliance on generator fuel and protect your operations from power-related downtime with solar and battery solutions sized for your business.\n10–20 kW three-phase inverters. 16–32 kWh battery storage.',
       backgroundImage: '/images/nigerian_business_solar_1600x856.webp',
       primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
       breadcrumbs: [

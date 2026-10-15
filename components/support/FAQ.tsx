@@ -137,7 +137,7 @@ export default function FAQ() {
             <span className="text-gradient">questions</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Quick answers to the things we get asked most. Can’t
+            Quick answers to the things we get asked most. Can't
             find what you need? Contact our team below.
           </p>
         </div>

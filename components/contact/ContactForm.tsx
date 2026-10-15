@@ -165,7 +165,7 @@ export default function ContactForm() {
                 Send us a message.
               </h2>
               <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular leading-relaxed">
-                Tell us what you’d like to discuss - we’ll
+                Tell us what you'd like to discuss - we'll
                 route it to the right person on the Nigerian team and reply
                 within one working day.
               </p>
@@ -214,11 +214,11 @@ export default function ContactForm() {
                       <Check className="w-8 h-8" strokeWidth={2.5} />
                     </span>
                     <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
-                      Thanks - we’ve got your message.
+                      Thanks - we've got your message.
                     </h3>
                     <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
                       Our Nigerian team will get back to you within one working
-                      day at the email you provided. If it’s
+                      day at the email you provided. If it's
                       urgent, you can reach us directly at{' '}
                       <a
                         href="mailto:ng@solavita.com"
