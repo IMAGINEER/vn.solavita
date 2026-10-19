@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react'
 import {
   Check,
   ChevronDown,
@@ -13,6 +13,11 @@ import {
   Zap,
   Battery,
   Construction,
+  Fan,
+  Refrigerator,
+  WashingMachine,
+  Microwave,
+  AirVent,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
@@ -21,7 +26,11 @@ import Footer from '@/components/Footer'
 import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import TrustBar from '@/components/TrustBar'
-import type { SolutionDetail } from '@/lib/data/solutions'
+import type {
+  LoadBreakdown,
+  LoadBreakdownIconKey,
+  SolutionDetail,
+} from '@/lib/data/solutions'
 import { openFormModal } from '@/lib/form-modal'
 
 /**
@@ -105,7 +114,7 @@ export default function CollectionPage(props: CollectionPageProps) {
       />
 
       {/* LOAD & RUNTIME — placeholder pending reference images */}
-      <LoadRuntimeSection />
+      <LoadRuntimeSection solutions={props.solutions} />
 
       {/* PRODUCT — default collapsed; placeholder tabs pending images */}
       <ProductSection />
@@ -358,21 +367,20 @@ function FaqSection({ faqs }: { faqs: CollectionFaq[] }) {
    spacing and footnote are in place.
    ────────────────────────────────────────────────────────────────────── */
 
-interface LoadRow {
-  Icon: LucideIcon
-  name: string
-  duration: string
-  scenario: string
+const LOAD_BREAKDOWN_ICONS: Record<LoadBreakdownIconKey, LucideIcon> = {
+  tv: Tv,
+  lightbulb: Lightbulb,
+  snowflake: Snowflake,
+  fan: Fan,
+  refrigerator: Refrigerator,
+  airvent: AirVent,
+  'washing-machine': WashingMachine,
+  droplet: Droplet,
+  microwave: Microwave,
 }
 
-const ILLUSTRATIVE_LOAD_ROWS: LoadRow[] = [
-  { Icon: Lightbulb, name: 'Lights', duration: '~8–10 h', scenario: 'Whole-home' },
-  { Icon: Tv, name: 'TV + Wi-Fi', duration: '~6–8 h', scenario: 'Whole-home' },
-  { Icon: Snowflake, name: 'Air Conditioner', duration: '~2–4 h', scenario: 'Selected loads' },
-  { Icon: Droplet, name: 'Water Pump', duration: '~1–2 h', scenario: 'Selected loads' },
-]
-
-function LoadRuntimeSection() {
+function LoadRuntimeSection({ solutions }: { solutions: SolutionDetail[] }) {
+  const rows = solutions.filter((s) => s.loadBreakdown)
   return (
     <section
       id="load-runtime"
@@ -386,30 +394,28 @@ function LoadRuntimeSection() {
             <span className="text-gradient">Request a tailored config.</span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {ILLUSTRATIVE_LOAD_ROWS.map((row) => (
-            <div
-              key={row.name}
-              className="rounded-2xl border border-uk-line bg-uk-line/20 p-5 flex items-center gap-4"
-            >
-              <div className="w-12 h-12 rounded-full bg-white border border-uk-line flex items-center justify-center text-uk-emerald flex-shrink-0">
-                <row.Icon className="w-6 h-6" strokeWidth={1.6} />
-              </div>
-              <div className="min-w-0">
-                <div className="text-sm font-cw-bold text-uk-navy">
-                  {row.name}
-                </div>
-                <div className="text-xs text-uk-slate font-cw-regular">
-                  Est. {row.duration}
-                </div>
-                <div className="text-[10px] uppercase tracking-wider text-uk-teal-dark font-cw-bold mt-1">
-                  {row.scenario}
-                </div>
-              </div>
-            </div>
+        <div className="space-y-4">
+          {rows.map((sol) => (
+            <LoadRow
+              key={sol.id}
+              sol={sol}
+              breakdown={sol.loadBreakdown!}
+            />
           ))}
         </div>
-        <p className="mt-6 text-xs text-uk-slate font-cw-regular leading-relaxed max-w-4xl mx-auto">
+        <div className="mt-10 text-center">
+          <Link
+            href="/contact-us"
+            className="btn-gradient px-6 py-3 rounded-full text-sm font-cw-bold text-white"
+          >
+            Request a tailored config →
+          </Link>
+        </div>
+        <p className="mt-8 text-xs text-uk-slate font-cw-regular leading-relaxed max-w-4xl mx-auto">
+          <strong className="font-cw-bold text-uk-navy">Backup runtimes are estimates.</strong>{' '}
+          Actual runtime depends on connected load and operating conditions.
+        </p>
+        <p className="mt-3 text-xs text-uk-slate font-cw-regular leading-relaxed max-w-4xl mx-auto">
           Based on average 5.5 peak sun hours/day for representative
           Nigerian off-grid towns (Lagos/Abuja/North-Central band, NASA
           POWER / GVE 10-yr monitoring avg), after 5.9% system losses,
@@ -420,6 +426,86 @@ function LoadRuntimeSection() {
         </p>
       </div>
     </section>
+  )
+}
+
+function LoadRow({
+  sol,
+  breakdown,
+}: {
+  sol: SolutionDetail
+  breakdown: LoadBreakdown
+}) {
+  const HeaderIcon = LOAD_BREAKDOWN_ICONS[breakdown.headerIcon]
+  const filledCells = Math.min(5, Math.round(breakdown.headerHours / 3))
+  return (
+    <article className="rounded-2xl border border-uk-line bg-white overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+        {/* Left: scene image */}
+        <div className="aspect-[4/3] md:aspect-auto bg-uk-line/30 overflow-hidden">
+          <img
+            src={sol.imagePath}
+            alt={sol.imageAlt}
+            loading="lazy"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Right: content */}
+        <div className="p-5 md:p-6 flex flex-col gap-4">
+          {/* scenarioLabel pill */}
+          <div className="self-start">
+            <span className="inline-flex items-center px-3 py-1 rounded-full border border-uk-line bg-uk-line/30 text-[10px] font-cw-bold uppercase tracking-wider text-uk-teal-dark">
+              {breakdown.scenarioLabel}
+            </span>
+          </div>
+
+          {/* Header strip: icon + 5-cell battery + Est. hours */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-uk-emerald/10 text-uk-emerald flex items-center justify-center flex-shrink-0">
+              <HeaderIcon className="w-5 h-5" strokeWidth={1.8} />
+            </div>
+            <div className="flex items-center gap-1.5">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className={`w-6 h-3 ${
+                    i < filledCells ? 'bg-uk-emerald' : 'bg-uk-line/60'
+                  } rounded-sm`}
+                />
+              ))}
+            </div>
+            <span className="text-sm font-cw-bold text-uk-navy">
+              Est. {breakdown.headerHours}h
+            </span>
+          </div>
+
+          {/* Load breakdown chips */}
+          <div className="flex flex-wrap items-center gap-2">
+            {breakdown.rows.map((row, i) => {
+              const RowIcon = LOAD_BREAKDOWN_ICONS[row.icon]
+              return (
+                <Fragment key={i}>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-uk-line/40 text-xs text-uk-navy">
+                    <RowIcon
+                      className="w-3.5 h-3.5 text-uk-emerald"
+                      strokeWidth={1.8}
+                    />
+                    <span className="font-cw-regular">{row.name}</span>
+                    <span className="font-cw-bold text-uk-teal-dark">
+                      ×{row.hours}h
+                    </span>
+                  </span>
+                  {i < breakdown.rows.length - 1 && (
+                    <span className="text-uk-slate text-xs">+</span>
+                  )}
+                </Fragment>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </article>
   )
 }
 
