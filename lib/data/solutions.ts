@@ -223,6 +223,39 @@ export interface SolutionFaq {
   a: string
 }
 
+/** Lucide icon key used by a LOAD & RUNTIME row chip. */
+export type LoadBreakdownIconKey =
+  | 'tv'
+  | 'lightbulb'
+  | 'snowflake'
+  | 'fan'
+  | 'refrigerator'
+  | 'airvent'
+  | 'washing-machine'
+  | 'droplet'
+  | 'microwave'
+
+/** One appliance chip in the LOAD & RUNTIME breakdown strip. */
+export interface LoadBreakdownRow {
+  icon: LoadBreakdownIconKey
+  /** Display name (e.g. "Lighting", "AC (Light)", "Refrigerator/Freezer"). */
+  name: string
+  /** Estimated runtime in hours. */
+  hours: number
+}
+
+/** Per-package LOAD & RUNTIME data consumed by `<LoadRow>`. */
+export interface LoadBreakdown {
+  /** Icon shown in the row's header strip. */
+  headerIcon: LoadBreakdownIconKey
+  /** Headline est. runtime (e.g. 4 for LITE, 12 for Flagship). */
+  headerHours: number
+  /** Pill label at the top of the row. */
+  scenarioLabel: string
+  /** One chip per appliance. */
+  rows: LoadBreakdownRow[]
+}
+
 /** One image in the gallery (main + thumbnail strip + lifestyle gallery). */
 export interface SolutionGalleryImage {
   src: string
@@ -273,6 +306,11 @@ export interface SolutionDetail {
   faqs: SolutionFaq[]
   /** Lifestyle gallery (full-width image strip, 3–4 images). */
   lifestyleGallery: SolutionGalleryImage[]
+  /**
+   * Per-package LOAD & RUNTIME data. Drives the LOAD & RUNTIME section
+   * on the collection pages; see `LoadBreakdown` below.
+   */
+  loadBreakdown?: LoadBreakdown
   /**
    * Simulated ₦ price for the my-plan ROI engine. NOT surfaced on the
    * marketing surface — see NG_SIMULATED_PRICE_NGN block above. Remove
@@ -388,6 +426,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Solar_Essential.webp', alt: 'LITE Essential Backup lifestyle render' },
       { src: '/images/product-module-1.webp', alt: 'Solavita PV module close-up' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 4,
+      scenarioLabel: 'Perfect for: Family Homes',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 4 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
+        { icon: 'fan', name: 'Ceiling Fan', hours: 12 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 4 },
+      ],
+    },
     imagePath: '/images/LITE-Essential-Backup.webp',
     imageAlt: 'LITE Essential Backup — 4.34 kWp solar and 5 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['lite-essential-backup'],
@@ -478,6 +528,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Storage_core.webp', alt: 'HOME Standard lifestyle render' },
       { src: '/images/product-battery-1.webp', alt: 'Solavita battery stack' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 6,
+      scenarioLabel: 'Perfect for: Family Homes',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 6 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
+        { icon: 'washing-machine', name: 'Washer', hours: 3 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 8 },
+      ],
+    },
     imagePath: '/images/HOME-Standard.webp',
     imageAlt: 'HOME Standard — 7.44 kWp solar and 10 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['home-standard'],
@@ -567,6 +629,19 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Premium_backup.webp', alt: 'HOME High-spec lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 6,
+      scenarioLabel: 'Perfect for: Family Homes',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 6 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
+        { icon: 'washing-machine', name: 'Washer', hours: 3 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 8 },
+        { icon: 'microwave', name: 'Microwave', hours: 2 },
+      ],
+    },
     imagePath: '/images/HOME-High-spec.webp',
     imageAlt: 'HOME High-spec — 9.92–12.40 kWp solar and 16 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['home-high-spec'],
@@ -656,6 +731,19 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/electronic.webp', alt: 'Three-phase electrical equipment' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 8,
+      scenarioLabel: 'Heavy Duty & Business',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 8 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
+        { icon: 'droplet', name: 'Pump', hours: 4 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 10 },
+        { icon: 'microwave', name: 'Microwave', hours: 2 },
+      ],
+    },
     imagePath: '/images/BUSINESS-Entry-3-Phase.webp',
     imageAlt: 'BUSINESS Entry 3-Phase — 11.78 kWp solar and 16 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['business-entry-3-phase'],
@@ -745,6 +833,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Smart_home.webp', alt: 'BUSINESS Standard lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 10,
+      scenarioLabel: 'Heavy Duty & Business',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 10 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
+        { icon: 'droplet', name: 'Pump', hours: 6 },
+        { icon: 'refrigerator', name: 'Refrigerator/Freezer', hours: 12 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 12 },
+      ],
+    },
     imagePath: '/images/BUSINESS-Standard-3-Phase.webp',
     imageAlt: 'BUSINESS Standard 3-Phase — 17.36 kWp solar and 32 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['business-standard-3-phase'],
@@ -834,6 +934,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Smart_home.webp', alt: 'BUSINESS Flagship lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
+    loadBreakdown: {
+      headerIcon: 'lightbulb',
+      headerHours: 12,
+      scenarioLabel: 'Heavy Duty & Business',
+      rows: [
+        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
+        { icon: 'droplet', name: 'Pump', hours: 8 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 6 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 12 },
+        { icon: 'refrigerator', name: 'Freezer', hours: 6 },
+      ],
+    },
     imagePath: '/images/BUSINESS-Flagship-3-Phase.webp',
     imageAlt: 'BUSINESS Flagship 3-Phase — 23.56 kWp solar and 32 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['business-flagship-3-phase'],
