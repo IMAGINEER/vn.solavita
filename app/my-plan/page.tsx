@@ -117,12 +117,11 @@ function buildUpdatePayload(
 ): unknown {
   return {
     planToken,
-    region: formData.region ?? '',
-    houseType: formData.houseType ?? '',
-    roofType: formData.roofType ?? '',
+    city: formData.city ?? '',
+    propertyType: formData.propertyType ?? '',
     householdSize: formData.householdSize ?? '',
-    electricityUsage: formData.electricityUsage ?? '',
-    devices: formData.devices ?? [],
+    generatorFrequency: formData.generatorFrequency ?? 'unknown',
+    fuelBudgetNgn: formData.fuelBudgetNgn ?? 'unknown',
   }
 }
 

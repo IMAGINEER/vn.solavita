@@ -17,7 +17,7 @@ export const metadata = buildPageMetadata({
   title: 'Solar Installer & Business Partnerships | Solavita Nigeria',
   path: '/for-partners',
   description:
-    'Explore partnership opportunities with Solavita for solar customer referrals, installation services and local energy solutions in Nigeria.',
+    'Explore partnership opportunities with Solavita Nigeria for solar customer referrals, installation services and local energy solutions.',
   ogImage: '/images/hero-partners.webp',
   ogImageAlt:
     'Solavita Nigeria partnerships - installer, referral and community programmes',
@@ -48,7 +48,7 @@ export default function ForPartnersPage() {
             path: '/for-partners',
             name: 'Solar Installer & Business Partnerships | Solavita Nigeria',
             description:
-              'Explore partnership opportunities with Solavita for solar customer referrals, installation services and local energy solutions in Nigeria.',
+              'Explore partnership opportunities with Solavita Nigeria for solar customer referrals, installation services and local energy solutions in Nigeria.',
           }),
           partnerProgramJsonLd(),
           breadcrumbJsonLd([

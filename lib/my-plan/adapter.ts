@@ -45,14 +45,22 @@ export interface ConsultationRow {
   house_type: string | null
   roof_type: string | null
   /**
+   * Step 1 from the 4-step form. `'home' | 'business' | 'exploring'`.
+   * Nullable for rows registered before this column existed.
+   */
+  solution_type: string | null
+  /**
    * One of `'1' / '2' / '3' / '4' / '5+'`. The form sends these literal
    * IDs from `components/Form.tsx`'s HOUSEHOLD_SIZES array and the API
    * route writes them straight through.
    */
   household_size: string | null
-  /** One of `'low' / 'medium' / 'high' / 'very-high'`. */
+  /** One of `'low' / 'medium' / 'high' / 'very-high'`. Carried over from
+   * the old 5-step form. New 4-step form submissions leave this NULL
+   * and `toConsultationInput` falls back to a neutral `medium` tier. */
   electricity_usage: string | null
-  /** CSV: `'wallbox, heatpump'`. Empty string when no devices. */
+  /** CSV: `'wallbox, heatpump'`. Carried over from the old form; new
+   * 4-step submissions leave this NULL → empty list. */
   devices: string | null
   /**
    * NG Step-3 extensions. All three are nullable on the row so pre-2026
@@ -61,7 +69,8 @@ export interface ConsultationRow {
    */
   generator_frequency: string | null
   fuel_budget_ngn: string | null
-  /** CSV: `'lights, fridge, ac'`. Empty string when none. */
+  /** CSV: `'lights, fridge, ac'`. Carried over from the old form; new
+   * 4-step submissions leave this NULL → empty list. */
   backup_needs: string | null
   country: string | null
   plan_token: string
@@ -82,6 +91,12 @@ const DEFAULT_REGION = 'England - London'
 export function toConsultationInput(row: ConsultationRow): ConsultationInput {
   return {
     householdSize: (row.household_size ?? DEFAULT_HOUSEHOLD_SIZE) as ConsultationInput['householdSize'],
+    // The 4-step form dropped electricityUsage / devices / region /
+    // backupNeeds. Pre-2026 rows still carry them; the calc still
+    // reads them. New rows read as NULL → fall back to a neutral
+    // 'medium' usage tier and an empty device / backup list so the
+    // recommendation engine doesn't bias toward a heavier or lighter
+    // package.
     electricityUsage: (row.electricity_usage ?? DEFAULT_USAGE) as ConsumptionTier,
     devices: parseDevices(row.devices),
     region: row.region ?? DEFAULT_REGION,
@@ -153,17 +168,14 @@ export function toHomeDetails(row: ConsultationRow): HomeDetails {
  */
 export function toFormPrefill(row: ConsultationRow): Partial<FormData> {
   return {
-    region: row.region ?? '',
-    houseType: row.house_type ?? '',
-    roofType: row.roof_type ?? '',
+    solutionType: (row.solution_type as FormData['solutionType']) ?? '',
+    city: row.city ?? '',
+    propertyType: row.house_type ?? '',
     householdSize: row.household_size ?? '',
-    electricityUsage: row.electricity_usage ?? '',
-    devices: parseDevices(row.devices),
     // NG Step-3 extensions - propagate so the Edit-details modal can
     // re-render the user's previous choices.
     generatorFrequency: row.generator_frequency ?? 'unknown',
     fuelBudgetNgn: row.fuel_budget_ngn ?? 'unknown',
-    backupNeeds: parseDevices(row.backup_needs),
   }
 }
 

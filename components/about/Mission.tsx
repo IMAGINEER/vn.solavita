@@ -47,11 +47,11 @@ export default function Mission() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Our Nigerian mission
+            Our mission
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Reliable power{' '}
-            <span className="text-gradient">for every Nigerian home.</span>
+            <span className="text-gradient">for every home.</span>
           </h2>
         </div>
 
@@ -62,7 +62,7 @@ export default function Mission() {
             </div>
             <h3 className="text-2xl font-cw-bold text-uk-navy">Mission</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
-              To give Nigerian homes a stable, clean alternative to fuel
+              To give every home a stable, clean alternative to fuel
               generators — solar panels and battery storage sized to the
               appliances and backup priorities of each household.
             </p>
@@ -74,7 +74,7 @@ export default function Mission() {
             </div>
             <h3 className="text-2xl font-cw-bold text-uk-navy">Vision</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
-              A Nigeria where every home generates, stores and manages
+              A future where every home generates, stores and manages
               its own clean energy — reducing reliance on petrol and
               diesel generators, with Solavita as a long-term local
               partner.

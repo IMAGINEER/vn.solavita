@@ -24,32 +24,20 @@ const businessSolutions = solutionDetails.filter(
 
 const businessFaqs: CollectionFaq[] = [
   {
-    q: 'Do all businesses need three-phase power?',
-    a: 'No. Whether a site needs single-phase or three-phase supply depends on actual site conditions, load profile and phase requirements. Many smaller businesses run on single-phase supply. A site-specific assessment determines the correct phase.',
+    q: 'Will this really save me money?',
+    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
   },
   {
-    q: 'Which solution is right for me?',
-    a: 'It depends on the equipment loads, operating hours, critical loads that must run during an outage, and your supply phase. The solution descriptions are a starting point; a load assessment should confirm the final system.',
+    q: 'What happens when the power goes out?',
+    a: 'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
   },
   {
-    q: 'How much electricity will the system generate?',
-    a: 'The figures shown on this page are solution-level estimates. Actual output depends on location, solar conditions, shading, installation design and system losses.',
+    q: 'How long will the battery last?',
+    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
   },
   {
-    q: 'How long can the battery provide backup?',
-    a: 'Runtime depends on usable battery capacity and the connected load. Do not infer runtime from battery capacity alone - confirm with a site-specific assessment.',
-  },
-  {
-    q: 'Can I run all my equipment at once?',
-    a: 'That depends on the inverter output rating, equipment starting demand, circuit design and available energy. A load assessment is required for a definitive answer.',
-  },
-  {
-    q: 'How much does a system cost?',
-    a: 'Approved Nigerian solution pricing is not yet published. Request a tailored quote and a Solavita representative will follow up with pricing for the configuration that matches your business.',
-  },
-  {
-    q: 'Is installation available in my area?',
-    a: 'TBD — Confirmed Nigeria service coverage.',
+    q: 'Is it hard to maintain?',
+    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
   },
 ]
 
@@ -58,8 +46,8 @@ export default function BusinessSolarPage() {
     scenario: 'business',
     heroProps: {
       eyebrow: 'BUSINESS SOLAR SOLUTIONS',
-      title: 'Cut costs. Keep business moving.',
-      body: 'Reduce reliance on generator fuel and protect your operations from power-related downtime with solar and battery solutions sized for your business.\n10–20 kW three-phase inverters. 16–32 kWh battery storage.',
+      title: 'Power Your Business. Stay In Control.',
+      body: 'Slash diesel bills and stay ahead of outages. Solavita’s solar and battery systems deliver reliable, round-the-clock energy — sized for your business, built to keep you moving.',
       backgroundImage: '/images/nigerian_business_solar_1600x856.webp',
       primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
       breadcrumbs: [

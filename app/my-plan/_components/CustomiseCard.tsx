@@ -367,7 +367,7 @@ export default function CustomiseCard({
             </div>
             <p className="text-xs text-uk-slate">
               Share of generation used on-site. With a battery this
-              reaches 100%; without one, typical Nigerian solar-only homes
+              reaches 100%; without one, typical solar-only homes
               self-consume around 35%. Drag to match your actual usage
               pattern.
             </p>

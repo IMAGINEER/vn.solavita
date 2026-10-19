@@ -1,13 +1,14 @@
 /**
- * Internal notification email sent to the Nigerian team inbox
- * (`ng@solavita.com`) whenever someone submits /for-partners.
+ * Internal notification email sent to the local partnerships team
+ * inbox (`ng@solavita.com`) whenever someone submits /for-partners.
  */
 
 const TEAM_EMAIL = 'ng@solavita.com'
 
 const TRACK_LABEL: Record<string, string> = {
-  installer: 'Installer',
-  business: 'Energy / Business Partner',
+  'core-service': 'Core Service Partner',
+  'certified-installer': 'Certified Installer',
+  'lead-partner': 'Lead Partner',
 }
 
 function trackLabel(track: string): string {
@@ -19,12 +20,13 @@ export function partnerNotificationEmail(data: {
   company: string
   email: string
   partnerTrack: string
+  whatsapp?: string | null
   message: string | null
 }) {
   const track = trackLabel(data.partnerTrack)
 
   return {
-    subject: `[NG Partner] ${track} enquiry - ${data.company}`,
+    subject: `[Partner] ${track} enquiry - ${data.company}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -46,6 +48,11 @@ export function partnerNotificationEmail(data: {
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Name</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.fullName}</td></tr>
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Company</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.company}</td></tr>
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Email</td><td style="padding:8px 0; font-size:14px; border-top:1px solid #f1f5f9;"><a href="mailto:${data.email}" style="color:#0f766e;">${data.email}</a></td></tr>
+${
+  data.whatsapp
+    ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">WhatsApp</td><td style="padding:8px 0; font-size:14px; border-top:1px solid #f1f5f9;"><a href="https://wa.me/${data.whatsapp.replace(/[^0-9+]/g, '')}" style="color:#0f766e;">${data.whatsapp}</a></td></tr>`
+    : ''
+}
 </table>
 
 ${

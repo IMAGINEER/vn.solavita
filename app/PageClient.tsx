@@ -46,7 +46,7 @@ import { openFormModal } from '@/lib/form-modal'
      3. COST COMPARISON — Solar vs. Diesel (visual)
      4. SOLUTIONS — Find the Right Solution for Your Needs
      5. YOUR SOLAR JOURNEY — From Consultation to Clean Power
-     6. WHY SOLAVITA — A Partner-Driven Approach for Nigeria
+     6. WHY SOLAVITA — A Partner-Driven Approach
      7. CUSTOMER STORIES — Real Homes and Businesses, Real Results
      8. FREQUENTLY ASKED QUESTIONS
      9. Final CTA — Take the Next Step Towards Reliable Power
@@ -84,10 +84,10 @@ function Section1Hero() {
   return (
     <PageHero
       backgroundImage="/images/banner_ng.webp"
-      eyebrow="SOLAR POWER FOR NIGERIAN HOMES"
-      title={'A More Reliable Way to Power* Nigerian Homes and Businesses*'}
-      body="Solar and battery systems for Nigerian homes and businesses — direct from the Solavita factory line to your site."
-      primaryCta={{ label: 'Get a Quote', onClick: openFormModal }}
+      eyebrow="SOLAR POWER FOR HOMES"
+      title={'Ditch The Generator.* Power Your Life.'}
+      body="Slash fuel costs and blackouts with 24/7 solar and battery. From Solavita factory to your home, business, or community."
+      primaryCta={{ label: 'Get Free Quote', onClick: openFormModal }}
       secondaryCta={{ label: 'Explore Solutions', href: '/solutions/home-solar' }}
     >
       <HeroPillsRow
@@ -131,9 +131,7 @@ function Section2EntryCards() {
             Solar Solutions for Every <span className="text-gradient">Home and Business</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-            From essential home backup to higher-capacity business
-            systems, find the right solar and battery solution for your
-            power needs.
+            End blackouts and cut diesel costs. We bring factory-direct solar power to keep your life and business running smoothly.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -141,8 +139,8 @@ function Section2EntryCards() {
             href="/solutions/home-solar"
             title="HOMES"
             subTitle="Powering homes"
-            body="Single-phase solar and battery systems, from essential backup to higher-capacity setups for everyday appliances and selected high-demand loads."
-            imageDescription="A modern Nigerian home with a rooftop solar system and battery storage"
+            body="Keep lights on and appliances running during outages. From essential backup to full energy independence, designed for homes."
+            imageDescription="A modern home with a rooftop solar system and battery storage"
             imageSrc="/images/home_cap.webp"
             cta="Explore Home Solutions"
           />
@@ -150,8 +148,8 @@ function Section2EntryCards() {
             href="/solutions/business-solar"
             title="BUSINESSES"
             subTitle="Powering businesses"
-            body="Three-phase solar and battery systems, from entry-level setups to higher-capacity configurations designed around business equipment and operating needs."
-            imageDescription="A Nigerian small business — shop, office or restaurant — with a solar + battery system"
+            body="Protect your business from grid failures with robust three-phase systems. Save on fuel and power critical equipment 24/7."
+            imageDescription="A small business — shop, office or restaurant — with a solar + battery system"
             imageSrc="/images/business_cap.webp"
             cta="Explore Business Solutions"
           />
@@ -252,19 +250,20 @@ function Section3SolarVsDiesel() {
             <div className="aspect-[16/9] rounded-xl overflow-hidden bg-uk-line/30 dark:bg-slate-800 mb-5">
               <img
                 src="/images/diesel_backup.webp"
-                alt="A small diesel generator running outdoors during a power outage in a Nigerian home or business"
+                alt="A small diesel generator running outdoors during a power outage at a home or business"
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
             <p className="text-sm font-cw-bold text-uk-navy mb-4">
-              Ongoing costs keep adding up.
+              Fuel bills, noise, and constant worries — diesel drains
+              more than power.
             </p>
             <ul className="space-y-2 text-sm">
-              <CompareXRow text="High and volatile fuel costs" />
-              <CompareXRow text="Regular maintenance and repairs" />
-              <CompareXRow text="Noise and air pollution" />
-              <CompareXRow text="Power interruptions and downtime" />
+              <CompareXRow text="Volatile fuel prices & daily refueling" />
+              <CompareXRow text="Frequent breakdowns & high upkeep" />
+              <CompareXRow text="Loud, smoky, and disruptive" />
+              <CompareXRow text="Fuel theft & startup failures" />
             </ul>
           </div>
 
@@ -293,19 +292,19 @@ function Section3SolarVsDiesel() {
             <div className="aspect-[16/9] rounded-xl overflow-hidden bg-uk-emerald/10 mb-5">
               <img
                 src="/images/solar_advantages.webp"
-                alt="A Solavita solar panel and battery system installed at a Nigerian home, generating clean power"
+                alt="A Solavita solar panel and battery system installed at a home, generating clean power"
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
             <p className="text-sm font-cw-bold text-uk-navy mb-4">
-              Generate your own clean power.
+              Clean, quiet power that puts you in control.
             </p>
             <ul className="space-y-2 text-sm">
-              <CompareCheckRow text="Lower long-term energy costs" />
-              <CompareCheckRow text="Minimal maintenance" />
-              <CompareCheckRow text="Clean and quiet operation" />
-              <CompareCheckRow text="Stable power for key loads" />
+              <CompareCheckRow text="Slash long-term energy bills" />
+              <CompareCheckRow text="Low maintenance, high durability" />
+              <CompareCheckRow text="Clean, quiet and fume-free" />
+              <CompareCheckRow text="24/7 stable power, built for yours" />
             </ul>
           </div>
         </div>
@@ -359,26 +358,26 @@ function Section5ConsultationToCleanPower() {
           <StepCard
             step="1"
             icon={ClipboardPenLine}
-            title="Free Survey"
-            body="Check roof, load & needs."
+            title="Site Assessment"
+            body="Evaluate your site, energy needs & goals."
           />
           <StepCard
             step="2"
             icon={Ruler}
-            title="Design & Quote"
-            body="Customized plan for your approval."
+            title="Professional Installation"
+            body="Expert setup of panels, storage & gear."
           />
           <StepCard
             step="3"
             icon={Wrench}
-            title="Installation"
-            body="Panels, inverter, and battery in 7 days."
+            title="System Activation"
+            body="Test the system & activate monitoring."
           />
           <StepCard
             step="4"
             icon={ClipboardCheck}
-            title="Commissioning"
-            body="Test the system & start saving."
+            title="Go Green"
+            body="Start enjoying clean, sustainable energy."
           />
         </div>
         <div className="mt-10 text-center">
@@ -438,7 +437,7 @@ function StepCard({
    Section 6 — Why we cut your costs
    Mirrors the DE site's PD2C comparison: traditional middlemen
    chain (5 steps, +80-150% markup) vs Solavita PD2C (2 steps,
-   direct). NG labels + existing uk-teal / uk-emerald theme tokens.
+   direct). Local labels + existing uk-teal / uk-emerald theme tokens.
    ────────────────────────────────────────────────────────────────────── */
 
 function Section6PartnerDrivenApproach() {
@@ -617,7 +616,7 @@ function CaseStoryCard({
 /* ──────────────────────────────────────────────────────────────────────
    Section 9 — Final CTA
    "Take the Next Step Towards Reliable Power" with two CTAs
-   (Get a Quote + Explore Solutions).
+   (Get Free Quote + Explore Solutions).
    ────────────────────────────────────────────────────────────────────── */
 
 function Section9FinalCta() {
@@ -642,12 +641,10 @@ function Section9FinalCta() {
         <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-white leading-tight">
           Take the Next Step Towards <span className="text-gradient">Reliable Power</span>
         </h2>
-        <p className="mt-4 text-base md:text-lg text-white/85 font-cw-light leading-relaxed">
-          Whether for your home or business, Solavita helps you find
-          the right solar and battery storage solution for your energy
-          needs. Tell us what you need, and our team will help you get
-          started.
-        </p>
+        <div className="mt-4 text-base md:text-lg text-white/85 font-cw-light leading-relaxed space-y-2 max-w-2xl mx-auto">
+          <p>No more midnight fuel runs. No more unexpected blackouts.</p>
+          <p>Just clean, quiet power — ready when you are.</p>
+        </div>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <GetQuoteButton onClick={openFormModal} />
           {/* Secondary CTA - white background, dark text so it is

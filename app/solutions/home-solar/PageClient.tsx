@@ -22,32 +22,20 @@ const homeSolutions = solutionDetails.filter((p) => p.segment === 'homes')
 
 const homeFaqs: CollectionFaq[] = [
   {
-    q: 'Which solution is right for me?',
-    a: 'It depends on your appliances, their rated power, how long you use them and how much backup time you need. The solution descriptions are a starting point; a load assessment should confirm the final system.',
+    q: 'Will this really save me money?',
+    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
   },
   {
-    q: 'Is a larger inverter always better?',
-    a: 'Not necessarily. The inverter must support the combined running demand and starting demand of the appliances you intend to operate. Battery capacity and solar generation must also match your requirements.',
+    q: 'What happens when the power goes out?',
+    a: 'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
   },
   {
-    q: 'How much electricity will the system generate?',
-    a: 'The figures shown on this page are solution-level estimates. Actual output depends on location, solar conditions, shading, installation design and system losses.',
+    q: 'How long will the battery last?',
+    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
   },
   {
-    q: 'Will the system work on cloudy days?',
-    a: 'Solar generation varies with sunlight conditions. Battery storage provides energy when solar generation is insufficient, but available backup depends on stored energy and the connected load.',
-  },
-  {
-    q: 'How long will the battery last during an outage?',
-    a: 'Backup duration depends on usable battery capacity and the appliances drawing power. A larger load uses stored energy more quickly. A site-specific assessment is required for a reliable estimate.',
-  },
-  {
-    q: 'How much does a system cost?',
-    a: 'Approved Nigerian solution pricing is not yet published. Request a tailored quote and a Solavita representative will follow up with pricing for the configuration that matches your home.',
-  },
-  {
-    q: 'Is installation available in my area?',
-    a: 'TBD — Confirmed Nigeria service coverage.',
+    q: 'Is it hard to maintain?',
+    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
   },
 ]
 
@@ -56,8 +44,8 @@ export default function HomeSolarPage() {
     scenario: 'home',
     heroProps: {
       eyebrow: 'HOME SOLAR SOLUTIONS',
-      title: 'Power your home. Take control of your energy.',
-      body: "From essential backup to higher-capacity home systems, Solavita combines solar panels, single-phase hybrid inverters and battery storage to meet your household's energy needs.",
+      title: 'Power Your Home. Stay In Control.',
+      body: 'Fewer blackouts, lower fuel runs. From essential backup to full-home control, Solavita delivers clean, dependable energy — so you can worry less and live more.',
       backgroundImage: '/images/nigerian_home_1600x856.webp',
       primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
       breadcrumbs: [

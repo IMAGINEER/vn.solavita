@@ -36,7 +36,7 @@ export default function CasesPage() {
         backgroundImage="/images/hero-cases.webp"
         eyebrow="CASES"
         title="Solar Solutions in Practice"
-        body="Explore solar installations and system configurations from across our global markets. See how Solavita systems are configured for different energy needs, with verified Nigerian customer projects to be added as they become available."
+        body="Explore solar installations and system configurations from across our global markets. See how Solavita Nigeria systems are configured for different energy needs, with verified Nigerian customer projects to be added as they become available."
         breadcrumbs={[
           { label: 'Home', href: '/' },
           { label: 'Cases' },

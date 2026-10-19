@@ -6,7 +6,7 @@ import { partnerNotificationEmail } from '@/lib/emails/partner-notification'
 
 export const dynamic = 'force-dynamic'
 
-// Nigerian team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
+// Local partnerships team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
 const TEAM_EMAIL = 'ng@solavita.com'
 
 const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as const
@@ -15,12 +15,12 @@ const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as cons
 // `lib/data/partners.ts` (also rendered as `<option>` values inside
 // `components/PartnerForm.tsx`). If the UI adds a new track, update
 // this whitelist + `partnerTypes` + `PartnerForm` in the same change.
-// `distribution` was removed from the NG programme - the route
-// rejects it explicitly so any stale forms can't slip through.
+// The three NG partner tracks per the latest brief: Core Service
+// Partner, Certified Installer, Lead Partner.
 const VALID_TRACKS = [
-  'installer',
-  'referral',
-  'community',
+  'core-service',
+  'certified-installer',
+  'lead-partner',
 ] as const
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -66,8 +66,13 @@ export async function POST(req: Request) {
   }
 
   // ── 3. Map to row ───────────────────────────────────────────────
+  // The `whatsapp` column + the new 3-value `partner_track` CHECK
+  // constraint were applied by
+  // `20261019000000_ng_partner_leads.sql`. Both writes now go
+  // through normally.
   const row = {
     full_name: String(body.fullName),
+    whatsapp: body.whatsapp ? String(body.whatsapp) : null,
     company: String(body.company),
     email,
     partner_track: partnerTrack,
@@ -130,6 +135,7 @@ export async function POST(req: Request) {
     company: row.company,
     email: row.email,
     partnerTrack: row.partner_track,
+    whatsapp: row.whatsapp,
     message: row.message,
   })
   try {

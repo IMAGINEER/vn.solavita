@@ -2,7 +2,7 @@
 // the dynamic sitemap/robots feed off these so the brand stays
 // consistent across <title>, OG, Twitter, JSON-LD, and the canonical.
 //
-// Nigeria site — built from `content/nigeria/*` briefs. All business
+// NG site — built from `content/nigeria/*` briefs. All business
 // facts that haven't been verified (legal entity, address, phone, ...)
 // are surfaced as visible red TBDs in the UI; this file holds the
 // placeholder strings that drive metadata so a single edit cascades

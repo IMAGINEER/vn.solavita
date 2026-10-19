@@ -61,8 +61,9 @@ export default function PartnerCTA() {
 
     const payload = {
       fullName: String(data.get('name') || '').trim(),
-      company: String(data.get('company') || '').trim(),
+      whatsapp: String(data.get('whatsapp') || '').trim(),
       email: String(data.get('email') || '').trim(),
+      company: String(data.get('company') || '').trim(),
       partnerTrack: String(data.get('track') || '').trim(),
       message: String(data.get('message') || '').trim(),
     }
@@ -72,7 +73,7 @@ export default function PartnerCTA() {
     const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const nextErrors: Record<string, string> = {}
     if (!payload.fullName) nextErrors.name = 'Please enter your full name.'
-    if (!payload.company) nextErrors.company = 'Please enter your company name.'
+    if (!payload.company) nextErrors.company = 'Please enter your business or company name.'
     if (!payload.email) {
       nextErrors.email = 'Please enter your email address.'
     } else if (!EMAIL_RE.test(payload.email)) {
@@ -137,13 +138,11 @@ export default function PartnerCTA() {
               Become a Solavita partner
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Tell us about{' '}
-              <span className="text-gradient">your business.</span>
+              Are you ready to become{' '}
+              <span className="text-gradient">a Solavita partner?</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-              We&apos;ll get back within two working days with next
-              steps - including which partner track fits your business
-              best.
+              Join us now.
             </p>
           </div>
 
@@ -161,12 +160,19 @@ export default function PartnerCTA() {
                   <Check className="w-8 h-8" strokeWidth={2.5} />
                 </span>
                 <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
-                  Thanks - we&apos;ve got your enquiry.
+                  We&apos;ve received your Solavita partner enquiry
                 </h3>
                 <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
-                  Our Nigerian partnerships team will get back to you
-                  within two working days. If it&apos;s urgent, you can
-                  reach us directly at{' '}
+                  Our Nigerian partnerships team will review your details
+                  and be in touch soon. For urgent matters, reach us
+                  directly on{' '}
+                  <a
+                    href="https://wa.me/8618500875025"
+                    className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
+                  >
+                    WhatsApp
+                  </a>{' '}
+                  or{' '}
                   <a
                     href="mailto:ng@solavita.com"
                     className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
@@ -214,25 +220,19 @@ export default function PartnerCTA() {
 
                 <label className="block">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Company
+                    WhatsApp
                   </span>
                   <input
-                    type="text"
-                    name="company"
-                    required
-                    placeholder="Acme Solar Ltd"
-                    className={`w-full px-4 py-3 rounded-xl border ${
-                      fieldErrors.company ? 'border-red-500' : 'border-uk-line'
-                    } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
+                    type="tel"
+                    name="whatsapp"
+                    placeholder="+234 800 000 0000"
+                    className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
                   />
-                  {fieldErrors.company && (
-                    <p className="text-red-500 text-xs mt-1">{fieldErrors.company}</p>
-                  )}
                 </label>
 
                 <label className="block">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Work email
+                    Email
                   </span>
                   <input
                     type="email"
@@ -250,11 +250,29 @@ export default function PartnerCTA() {
 
                 <label className="block">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                    Business / Company
+                  </span>
+                  <input
+                    type="text"
+                    name="company"
+                    required
+                    placeholder="Acme Solar Ltd"
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      fieldErrors.company ? 'border-red-500' : 'border-uk-line'
+                    } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
+                  />
+                  {fieldErrors.company && (
+                    <p className="text-red-500 text-xs mt-1">{fieldErrors.company}</p>
+                  )}
+                </label>
+
+                <label className="block md:col-span-2">
+                  <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
                     Partner track
                   </span>
                   <select
                     name="track"
-                    defaultValue="installer"
+                    defaultValue="core-service"
                     className={`w-full px-4 py-3 rounded-xl border ${
                       fieldErrors.track ? 'border-red-500' : 'border-uk-line'
                     } bg-white text-uk-navy focus:outline-none focus:border-uk-teal`}
@@ -272,12 +290,12 @@ export default function PartnerCTA() {
 
                 <label className="block md:col-span-2">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Tell us a bit about your business
+                    Message
                   </span>
                   <textarea
                     name="message"
                     rows={4}
-                    placeholder="Region, size, current focus..."
+                    placeholder="Tell us about your team, location, or current business."
                     className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
                   />
                 </label>
@@ -313,7 +331,7 @@ export default function PartnerCTA() {
                         Sending...
                       </>
                     ) : (
-                      <>Submit enquiry</>
+                      <>Get in Touch</>
                     )}
                   </button>
                 </div>

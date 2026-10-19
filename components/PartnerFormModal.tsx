@@ -33,7 +33,7 @@ export default function PartnerFormModal({
 }: PartnerFormModalProps) {
   const [mounted, setMounted] = useState(false)
   const [defaultTrack, setDefaultTrack] = useState<
-    'installer' | 'referral' | 'community' | undefined
+    'core-service' | 'certified-installer' | 'lead-partner' | undefined
   >(undefined)
 
   useEffect(() => {

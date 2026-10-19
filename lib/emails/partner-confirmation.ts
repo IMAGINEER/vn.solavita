@@ -7,8 +7,9 @@
  */
 
 const TRACK_LABEL: Record<string, string> = {
-  installer: 'Installer',
-  business: 'Energy / Business Partner',
+  'core-service': 'Core Service Partner',
+  'certified-installer': 'Certified Installer',
+  'lead-partner': 'Lead Partner',
 }
 
 function trackLabel(track: string): string {
@@ -23,7 +24,7 @@ export function partnerConfirmationEmail(data: {
   const track = trackLabel(data.partnerTrack)
 
   return {
-    subject: 'We received your partnership enquiry - Solavita Nigeria',
+    subject: "We've received your Solavita partner enquiry",
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -39,14 +40,15 @@ export function partnerConfirmationEmail(data: {
 <!-- Body -->
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Hi ${name},</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 16px 0;">Thanks for your interest in the Solavita Nigeria <strong>${track}</strong> programme.</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">TBD — Confirmed programme and response window. Our partnerships team will be in touch to discuss next steps once the programme is confirmed.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 16px 0;">Thanks for your interest in the Solavita partner programme.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">We've received your details. Our local partnerships team will review your application and be in touch soon to discuss the next steps (including the best partner track for your business).</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">For urgent matters or if you'd like to chat now, reach us directly on <a href="https://wa.me/8618500875025" style="color:#0f766e;">WhatsApp</a> or email us at <a href="mailto:ng@solavita.com" style="color:#0f766e;">ng@solavita.com</a>.</p>
 
 <!-- Info box -->
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
 <tr><td style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
-<p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Partnerships team</p>
-<p style="margin:0; font-size:14px; color:#374151;"><a href="mailto:ng@solavita.com" style="color:#0f766e; text-decoration:none;">ng@solavita.com</a> · TBD — Confirmed operating hours</p>
+<p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Track you applied for</p>
+<p style="margin:0; font-size:14px; color:#374151;">${track}</p>
 </td></tr>
 </table>
 
@@ -56,8 +58,8 @@ export function partnerConfirmationEmail(data: {
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Verified Nigeria legal entity · TBD — Verified CAC registration number</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Verified Nigeria registered office address</p>
+<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Verified legal entity · TBD — Verified registration number</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Verified registered office address</p>
 <p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita is presented as a solar and energy solutions brand associated with the SKYWORTH Group · ng.solavita.com</p>
 </td></tr>
 

@@ -19,34 +19,24 @@ export const metadata = buildPageMetadata({
 
 const HOME_FAQS = [
   {
-    question: 'What size solar system do I need?',
+    question: 'Will this really save me money?',
     answer:
-      'It depends on your appliances, simultaneous power demand, daily energy use and backup requirements. Start with a package and request a tailored recommendation.',
+      "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
   },
   {
-    question: 'Can solar replace my generator?',
+    question: 'What happens when the power goes out?',
     answer:
-      'A suitably designed solar and battery system may reduce generator use substantially. Whether it can replace a generator completely depends on your loads, available solar energy and required backup duration.',
-  },
-  {
-    question: 'Can I run an air conditioner?',
-    answer:
-      "Some solutions may support air conditioners, but compatibility depends on the unit's rated power, starting demand and the other appliances running at the same time.",
+      'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
   },
   {
     question: 'How long will the battery last?',
     answer:
-      'Runtime depends on usable battery capacity and the total load being supplied. A site-specific assessment is needed for a reliable estimate.',
+      "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
   },
   {
-    question: 'How much does a system cost?',
+    question: 'Is it hard to maintain?',
     answer:
-      'TBD — Approved Nigerian solution pricing. Request a quote for a system based on your requirements.',
-  },
-  {
-    question: 'Is installation available in my area?',
-    answer:
-      'TBD — Confirmed Nigeria service coverage.',
+      'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
   },
 ]
 

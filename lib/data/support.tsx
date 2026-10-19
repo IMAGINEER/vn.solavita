@@ -132,12 +132,6 @@ export const faqItems: FaqItem[] = [
     answer:
       'First check the HEMS app for an alert, then verify the inverter display is on. If both look normal, submit a service ticket and we will respond within one working day.',
   },
-  {
-    category: 'troubleshooting',
-    question: 'What does error code E-12 mean?',
-    answer:
-      'E-12 indicates a grid voltage transient - usually it clears within a few minutes. If it persists for more than 30 minutes, please contact support.',
-  },
 ]
 
 export interface SupportContactChannel {

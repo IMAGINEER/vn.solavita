@@ -23,7 +23,7 @@ interface TimelineStep {
 const timelineSteps: TimelineStep[] = [
   { day: 'Day 1', title: 'AI Design', desc: 'Drone survey + 3D model of your roof. Shading analysis. Accurate yield forecast in 15 minutes.', Icon: ScanEye },
   { day: 'Day 2-3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', Icon: FileText },
-  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our Nigeria warehouse. Every component checked and pre-commissioned.', Icon: Truck },
+  { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our local warehouse. Every component checked and pre-commissioned.', Icon: Truck },
   { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by certified electricians. Tidy site guaranteed.', Icon: Wrench },
   { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, HEMS activation. Your system is now generating.', Icon: Wifi },
   { day: 'Day 12-14', title: 'Grid Notification', desc: 'Utility receives your commissioning certificate. Grid approval secured so your system can export and earn credits.', Icon: ClipboardList },
@@ -134,7 +134,7 @@ export default function DeliveryTimeline() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { value: 'Nationwide', label: 'Nigeria warehouse', sub: 'Multi-region coverage' },
+                { value: 'Nationwide', label: 'Local warehouse', sub: 'Multi-region coverage' },
                 { value: 'JIT', label: 'Delivery system', sub: 'Just-in-Time' },
                 { value: '100+', label: 'Certified installers', sub: 'In our partner network' },
                 { value: '2 days', label: 'Install time', sub: 'Standard installation' },

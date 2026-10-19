@@ -3,48 +3,30 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import {
-  Factory,
-  Headphones,
-  Megaphone,
-  ShieldCheck,
-  GraduationCap,
-  UserCog,
-} from 'lucide-react'
-import { partnerBenefits } from '@/lib/data/partners'
+import ImagePlaceholder from '@/components/ui/image-placeholder'
+import { partnerBenefits, partnerStats } from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const iconFor = (i: number) => {
-  const common = 'w-6 h-6'
-  const props = { className: common, strokeWidth: 1.6 } as const
-  switch (i) {
-    case 0:
-      return <Factory {...props} />
-    case 1:
-      return <Headphones {...props} />
-    case 2:
-      return <Megaphone {...props} />
-    case 3:
-      return <ShieldCheck {...props} />
-    case 4:
-      return <GraduationCap {...props} />
-    case 5:
-      return <UserCog {...props} />
-    default:
-      return <Factory {...props} />
-  }
-}
-
 /**
- * "Why Partner with Solavita" - six-reason block in a 3-column grid.
- * Mirrors the Why Solavita block on /solutions but B2B-flavoured.
+ * "Why partner with Solavita?" — layout ported from the For-Partner
+ * 页面修改参考页 PPTX:
  *
- * Body copy localizes the UK base paragraph: the UK group turnover
- * claim is replaced with the more general "group supply-chain scale"
- * framing until a verified Nigerian group / partner programme figure
- * is approved. Per NG content rules, specific business claims are
- * marked TBD on the partnerBenefits rows themselves.
+ *   ┌─ Title: "Why Partner with Solavita?" ─────────────────────┐
+ *   │                                                          │
+ *   │   ┌─ 800,000+ ───────┐   ┌─ 34.6GW ───────────┐            │
+ *   │   │ Solar Stations  │   │ Cumulative Installed│           │
+ *   │   │ Installed       │   │ Capacity           │           │
+ *   │   │ Worldwide       │   │                    │           │
+ *   │   └─────────────────┘   └────────────────────┘            │
+ *   │                                                          │
+ *   │   Body paragraph + tagline.                              │
+ *   │                                                          │
+ *   │   ┌─ [ Local Wareh. ] ┐  ┌─ [ Full Warranty ] ┐  ┌─ [ Sales Sup. ] ┐
+ *   │   │  No full container │  │  Local backup for  │  │  Leads & tech  │
+ *   │   │  needed            │  │  claims            │  │  backup        │
+ *   │   └────────────────────┘  └────────────────────┘  └────────────────┘
+ *   └──────────────────────────────────────────────────────────┘
  */
 export default function WhyPartner() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -78,37 +60,92 @@ export default function WhyPartner() {
       className="relative py-16 md:py-24 bg-white"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Title */}
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
             Why partner
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Why partner{' '}
-            <span className="text-gradient">with Solavita</span>
+            Why Partner with{' '}
+            <span className="text-gradient">Solavita</span>?
           </h2>
-          <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Group supply-chain scale, deep Nigerian engineering
-            support and a partner programme built around long-term
-            relationships.
+        </div>
+
+        {/* Hero stats banner — 2-up grid, large numbers + caption */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-10 max-w-4xl mx-auto">
+          {partnerStats.map((s) => (
+            <div
+              key={s.caption}
+              className="why-partner-card rounded-2xl border border-uk-line bg-uk-line/20 p-6 md:p-8 text-center"
+            >
+              <div className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy">
+                {s.value}
+              </div>
+              <div className="mt-2 text-sm md:text-base text-uk-slate font-cw-regular">
+                {s.caption}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Body paragraph + tagline */}
+        <div className="max-w-4xl mx-auto text-center mb-10">
+          <p className="text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
+            Solavita empowers energy partners with factory-built products. As a
+            partner, you gain local stock access, full-system verified
+            warranty, and exclusive lead-sharing support.
+          </p>
+          <p className="mt-3 text-lg md:text-xl font-cw-bold text-uk-navy">
+            Build your business, power your region!
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {partnerBenefits.map((b, i) => (
+        {/* 3 highlight cards — image with overlay pill + caption */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {partnerBenefits.map((b) => (
             <div
-              key={b.title}
-              className="why-partner-card rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col items-start"
+              key={b.label}
+              className="why-partner-card relative rounded-2xl overflow-hidden border border-uk-line bg-uk-line/20 group"
             >
-              <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-4">
-                {iconFor(i)}
+              <div className="aspect-[4/3] relative">
+                {/* Render the real image when supplied; fall back to the
+                    neutral placeholder until business confirms the final
+                    artwork for a given card. Both branches sit under the
+                    same dark gradient + overlay pill so the visual
+                    treatment stays identical either way. */}
+                {b.image ? (
+                  <img
+                    src={b.image}
+                    alt={b.label}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <ImagePlaceholder
+                    description={b.description}
+                    aspectRatio="4/3"
+                  />
+                )}
+                {/* Dark gradient overlay so the pill + caption stay legible
+                    regardless of the eventual image content. */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(15,23,42,0.78) 0%, rgba(15,23,42,0.45) 40%, rgba(15,23,42,0) 70%)',
+                  }}
+                />
+                {/* Overlay pill + caption (positioned bottom-left) */}
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <span className="inline-flex items-center px-3 py-1 rounded-md text-xs font-cw-bold uppercase tracking-wider bg-white/95 text-uk-navy">
+                    [ {b.label} ]
+                  </span>
+                  <p className="mt-2 text-sm md:text-base text-white font-cw-bold leading-snug">
+                    {b.caption}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-lg font-cw-bold text-uk-navy">
-                {b.title}
-              </h3>
-              <p className="mt-2 text-sm text-uk-slate font-cw-regular leading-relaxed">
-                {b.description}
-              </p>
             </div>
           ))}
         </div>

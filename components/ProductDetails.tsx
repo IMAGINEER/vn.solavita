@@ -96,7 +96,7 @@ const tabContent: Record<string, {
       { label: 'Mounting', value: 'Floor (stackable) or wall-mounted' },
       { label: 'Connection', value: 'Plug & play connector' },
       { label: 'Protection class', value: 'IP66' },
-      { label: 'Certifications', value: 'IEC 62619 / UN38.3 (TBD — verified Nigeria approvals)' },
+      { label: 'Certifications', value: 'IEC 62619 / UN38.3 (TBD — verified local approvals)' },
     ],
     highlights: [
       'No thermal runaway possible',
@@ -115,7 +115,7 @@ const tabContent: Record<string, {
   mounting: {
     title: 'Universal Mounting System',
     subtitle: 'Fast · Safe · Roof-Friendly',
-    description: 'Our factory-engineered mounting system is optimised for all common Nigerian roof types. No roof penetration on tile roofs - your roof integrity remains fully preserved.',
+    description: 'Our factory-engineered mounting system is optimised for all common roof types. No roof penetration on tile roofs - your roof integrity remains fully preserved.',
     specs: [
       { label: 'Compatible roof types', value: 'Tile / Slate / Trapezoidal metal / Flat' },
       { label: 'Material', value: 'Anodised aluminium + stainless steel A2' },
@@ -126,7 +126,7 @@ const tabContent: Record<string, {
     ],
     highlights: [
       'No roof penetration - tiles are lifted, not drilled',
-      'Tested to Eurocode for Nigerian wind and load conditions',
+      'Tested to Eurocode for local wind and load conditions',
       'Compatible with all common module frames and frameless modules',
       'Black rails for visual unity with all-black modules',
       'Pre-assembled components - faster on-roof installation',

@@ -36,7 +36,7 @@ export interface PartnerFormProps {
   /** Fires after a successful submit; the modal uses this to close. */
   onClose?: () => void
   /** Optional pre-seed for the track selector. */
-  defaultTrack?: 'installer' | 'referral' | 'community'
+  defaultTrack?: 'core-service' | 'certified-installer' | 'lead-partner'
   /** Visible label on the Submit button. Default `Submit enquiry`. */
   submitButtonLabel?: string
   /** Override the submit endpoint. Default `/api/partner`. */
@@ -53,7 +53,7 @@ export default function PartnerForm({
     fullName: '',
     company: '',
     email: '',
-    partnerTrack: defaultTrack ?? 'installer',
+    partnerTrack: defaultTrack ?? 'core-service',
     message: '',
   })
   const [errors, setErrors] = useState<{ [k: string]: string }>({})

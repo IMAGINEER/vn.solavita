@@ -6,9 +6,10 @@
  * registrations and full re-submits from the homepage form).
  *
  * Differences vs the full endpoint:
- *   - **No PII in the payload.** The Edit-details modal hides Steps 3
- *     (Address) and 4 (Contact Info) and never surfaces personal data to
- *     the client, so the body here is just the 6 Steps-0/1/2 fields.
+ *   - **No PII in the payload.** The Edit-details modal hides Step 1
+ *     (solutionType — already chosen at registration) and Step 4
+ *     (Contact Info) and never surfaces personal data to the client,
+ *     so the body here is just the Step-2 + Step-3 fields.
  *   - **Identified by `plan_token`** instead of email dedup. The page
  *     already has the token in the URL.
  *   - **UPDATE only**, never INSERT. If the token is unknown (e.g. user
@@ -17,7 +18,7 @@
  *   - **No email sent.** A consultation confirmation was already sent
  *     when the lead originally registered; we don't re-send on edit.
  *
- * Server enforcement: this route only writes the 6 columns listed below
+ * Server enforcement: this route only writes the columns listed below
  * even if the client tries to include PII fields in the payload. Those
  * keys are stripped before the UPDATE.
  */
@@ -33,18 +34,16 @@ export async function POST(request: Request) {
     const body = await request.json()
     const {
       planToken,
-      region,
-      houseType,
-      roofType,
+      // Step 2 (replaces the old Step-1 region / houseType + Step-0
+      // roofType). city is now the only required field; propertyType
+      // is required by the form so it stays required here.
+      city,
+      propertyType,
+      // Step 3 — householdSize required; the two optional NG fields
+      // are passed through.
       householdSize,
-      electricityUsage,
-      devices,
-      // NG Step-3 extensions. The /my-plan Edit-details modal sends the
-      // same slim body the form does, just without PII; we still want
-      // to write the new generator fields if the user re-picks them.
       generatorFrequency,
       fuelBudgetNgn,
-      backupNeeds,
     } = body
 
     // Validate the bearer. UUID-only - same regex the lookup route uses
@@ -56,15 +55,12 @@ export async function POST(request: Request) {
       )
     }
 
-    // Validate the 6 editable fields. Match the same required-by-the-form
-    // semantics: `region`, `houseType`, `roofType`, `householdSize` must be
-    // non-empty strings; `electricityUsage` may be empty or the sentinel
-    // 'unknown' (Not Sure) so the customer can skip the question; `devices`
-    // may be `[]`.
+    // Validate the 3 editable required fields. The form requires
+    // city + propertyType + householdSize; the optional Step-3 fields
+    // (generatorFrequency, fuelBudgetNgn) are skipped if missing.
     const missing: string[] = []
-    if (!region) missing.push('region')
-    if (!houseType) missing.push('houseType')
-    if (!roofType) missing.push('roofType')
+    if (!city) missing.push('city')
+    if (!propertyType) missing.push('propertyType')
     if (!householdSize) missing.push('householdSize')
     if (missing.length) {
       return NextResponse.json(
@@ -105,19 +101,24 @@ export async function POST(request: Request) {
     // Whitelist the writable columns explicitly - ignore anything else
     // the client might sneak in. The full endpoint at /api/consultation
     // owns name/email/phone/address; we don't.
+    //
+    // Fields that were dropped from the 4-step form (roof_type,
+    // electricity_usage, devices, backup_needs, region, address)
+    // are no longer written — leaving them untouched on UPDATE so
+    // historical values from old-form submissions stay intact.
     const updatePayload = {
-      region,
-      house_type: houseType,
-      roof_type: roofType,
+      city,
+      house_type: propertyType,
       household_size: householdSize,
-      // 'unknown' (Not Sure sentinel from the form) → NULL so admin
-      // LeadsTable skips the Usage row entirely instead of rendering 'unknown'.
-      electricity_usage: electricityUsage === 'unknown' ? null : (electricityUsage || null),
-      devices: Array.isArray(devices) ? devices.join(', ') : '',
-      // NG Step-3 extensions - same 'unknown'→NULL rule as the main endpoint.
-      generator_frequency: generatorFrequency && generatorFrequency !== 'unknown' ? generatorFrequency : null,
-      fuel_budget_ngn: fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
-      backup_needs: Array.isArray(backupNeeds) && backupNeeds.length > 0 ? backupNeeds.join(', ') : null,
+      // NG optional Step-3 fields - same 'unknown'→NULL rule as the
+      // main endpoint so admin LeadsTable doesn't render a literal
+      // 'unknown' string.
+      generator_frequency:
+        generatorFrequency && generatorFrequency !== 'unknown'
+          ? generatorFrequency
+          : null,
+      fuel_budget_ngn:
+        fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
       updated_at: new Date().toISOString(),
     }
 

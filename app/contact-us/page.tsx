@@ -11,7 +11,7 @@ export const metadata = buildPageMetadata({
   title: 'Contact Solavita Nigeria | Solar System Enquiries',
   path: '/contact-us',
   description:
-    'Contact Solavita about residential solar solutions, battery storage, small business systems and partnership opportunities in Nigeria.',
+    'Contact Solavita Nigeria about residential solar solutions, battery storage, small business systems and partnership opportunities.',
   ogImage: '/images/hero-contact.webp',
   ogImageAlt:
     'Contact Solavita Nigeria - solar system enquiries and partnership opportunities',
@@ -26,7 +26,7 @@ export default function Page() {
             path: '/contact-us',
             name: 'Contact Solavita Nigeria',
             description:
-              'Contact Solavita about residential solar solutions, battery storage, small business systems and partnership opportunities in Nigeria.',
+              'Contact Solavita Nigeria about residential solar solutions, battery storage, small business systems and partnership opportunities in Nigeria.',
           }),
           localBusinessJsonLd(),
           breadcrumbJsonLd([

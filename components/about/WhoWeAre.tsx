@@ -88,7 +88,7 @@ export default function WhoWeAre() {
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             <span className="text-uk-teal">Global Strength.</span>{' '}
-            Nigerian Roots.
+            Local Roots.
           </h2>
         </div>
 
@@ -240,7 +240,7 @@ export default function WhoWeAre() {
               The SKYWORTH Group is a publicly listed global electronics
               enterprise — manufacturer of TVs, refrigerators and
               smart-home systems sold worldwide. With Solavita, the
-              group is bringing this manufacturing depth to Nigerian
+              group is bringing this manufacturing depth to local
               households and small businesses.
             </p>
           </div>

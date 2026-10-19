@@ -283,7 +283,10 @@ function labelsForIds(
 }
 
 // ============ STEP COMPONENT ============
-const TOTAL_STEPS = 5;
+// 4-step form per docs/修改建议.docx. The Compressed Edit-details
+// view (hideAddressAndContact) shows only 3 of these as data steps
+// plus 1 review — see VISIBLE_TOTAL_STEPS inside the component.
+const TOTAL_STEPS = 4
 
 const StepIndicator = ({ current, total }: { current: number; total: number }) => (
   <div className="flex items-center justify-center gap-2 mb-8">
@@ -467,14 +470,14 @@ const Form: React.FC<{
   submitButtonLabel = 'Submit',
   onSubmitSuccess,
 }) => {
-  // When `hideAddressAndContact` is true, the form shows 3 data-entry
-  // steps (region+house, roof, household+usage+devices) plus a final
-  // review step where the user sees a summary of their inputs and
-  // confirms the edit. Submit lives on the review step (index 3), not
-  // on the last data step, so the user always gets one more "Continue"
-  // between the last input and the submission - matching the homepage
-  // form's 5-step rhythm.
-  const VISIBLE_TOTAL_STEPS = hideAddressAndContact ? 4 : TOTAL_STEPS
+  // Compressed Edit-details view (hideAddressAndContact = true): the
+  // public form's Step 0 (solutionType — already chosen at
+  // registration) and Step 3 (contact info — PII, never surfaced) are
+  // hidden. 2 data steps + 1 review step = 3 visible steps. The
+  // render block below remaps the `step` index 0/1/2 to public form
+  // steps 1/2/review so the form reuses the same step-content
+  // components.
+  const VISIBLE_TOTAL_STEPS = hideAddressAndContact ? 3 : TOTAL_STEPS
   const VISIBLE_LAST_STEP = VISIBLE_TOTAL_STEPS - 1
   const [step, setStep] = useState(0);
   // Defensive clamp: if the prop flips after mount (it doesn't in
@@ -503,41 +506,49 @@ const Form: React.FC<{
   const validateStep = (): boolean => {
     const newErrors: { [key: string]: string } = {};
 
+    // 4-step form per docs/修改建议.docx. The Compressed Edit-details
+    // view (hideAddressAndContact) reuses the same step array but
+    // skips Step 0 (solutionType) and Step 3 (contact) — see
+    // VISIBLE_TOTAL_STEPS / VISIBLE_LAST_STEP at the top of the
+    // component. The check below is shared.
     switch (step) {
       case 0:
-        if (!formData.region) newErrors.region = 'Please select your region.';
-        if (!formData.houseType) newErrors.houseType = 'Please select a property type.';
+        // Step 1 — solutionType
+        if (!formData.solutionType)
+          newErrors.solutionType =
+            'Please choose what kind of solutions you are interested in.'
         break;
       case 1:
-        if (!formData.roofType) newErrors.roofType = 'Please select a roof type.';
+        // Step 2 — city + propertyType
+        if (!formData.city)
+          newErrors.city = 'Please enter the city your property is in.'
+        if (!formData.propertyType)
+          newErrors.propertyType = 'Please select a property type.'
         break;
       case 2:
-        if (!formData.householdSize) newErrors.householdSize = 'Please select your household size.';
-        if (!formData.electricityUsage) newErrors.electricityUsage = 'Please estimate your annual electricity consumption.';
+        // Step 3 — householdSize required; generator + fuel optional
+        if (!formData.householdSize)
+          newErrors.householdSize = 'Please select your household size.'
         break;
       case 3:
-        if (!formData.street) newErrors.street = 'Please enter your street.';
-        if (!formData.postalCode) newErrors.postalCode = 'Please enter your postcode.';
-        if (!formData.city) newErrors.city = 'Please enter your town or city.';
-        break;
-      case 4:
-        if (!formData.salutation) newErrors.salutation = 'Please choose a salutation.';
-        if (!formData.firstName) newErrors.firstName = 'Please enter your first name.';
-        if (!formData.lastName) newErrors.lastName = 'Please enter your last name.';
+        // Step 4 — contact info
+        if (!formData.salutation) newErrors.salutation = 'Please choose a salutation.'
+        if (!formData.firstName) newErrors.firstName = 'Please enter your first name.'
+        if (!formData.lastName) newErrors.lastName = 'Please enter your last name.'
         if (!formData.email) {
-          newErrors.email = 'Please enter your email address.';
+          newErrors.email = 'Please enter your email address.'
         } else if (!validateEmail(formData.email)) {
-          newErrors.email = 'Please enter a valid email address.';
+          newErrors.email = 'Please enter a valid email address.'
         }
         if (formData.phone && !validatePhone(formData.phone)) {
-          newErrors.phone = 'Please enter a valid Nigerian phone number.';
+          newErrors.phone = 'Please enter a valid Nigerian phone number.'
         }
         break;
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const clearErrors = () => {
     setErrors({});
@@ -545,26 +556,21 @@ const Form: React.FC<{
   const [formData, setFormData] = useState<FormData>(() => {
     // Lazy init so initialData is only consumed once on mount. Defaults
     // mirror FormData; missing fields fall back to the empty default so
-    // a partial prefill (e.g. only region + consumption) still leaves the
+    // a partial prefill (e.g. only city + householdSize) still leaves the
     // other fields blank instead of `undefined`.
     const defaults: FormData = {
-      region: '',
-      houseType: '',
-      roofType: '',
+      // Step 1
+      solutionType: '',
+      // Step 2
+      city: '',
+      propertyType: '',
+      // Step 3 — householdSize required; the two NG optional fields
+      // default to 'unknown' (sentinel) so the form's "Not sure" path
+      // is one click away.
       householdSize: '',
-      electricityUsage: '',
-      devices: [],
-      // NG Step-3 extensions - all default to 'unknown' (sentinel) so
-      // the form's "Not sure" path is one click away. backupNeeds starts
-      // with `['lights', 'fridge']` pre-checked - the most common
-      // baseline; the user can adjust.
       generatorFrequency: 'unknown',
       fuelBudgetNgn: 'unknown',
-      backupNeeds: ['lights', 'fridge'],
-      street: '',
-      houseNumber: '',
-      postalCode: '',
-      city: '',
+      // Step 4
       salutation: '',
       firstName: '',
       lastName: '',
@@ -578,41 +584,27 @@ const Form: React.FC<{
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const toggleDevice = (deviceId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      devices: prev.devices.includes(deviceId)
-        ? prev.devices.filter(d => d !== deviceId)
-        : [...prev.devices, deviceId]
-    }));
-  };
-
-  const toggleBackup = (id: string) => {
-    setFormData(prev => {
-      const current = prev.backupNeeds ?? []
-      return {
-        ...prev,
-        backupNeeds: current.includes(id)
-          ? current.filter(b => b !== id)
-          : [...current, id],
-      }
-    })
-  };
-
   const canProceed = (): boolean => {
-    // Compressed (hideAddressAndContact) view: 4 visible steps - 0/1/2 are
-    // data entry, 3 is the Review step. The Review step is always
-    // proceed-able; data correctness was validated on the previous steps.
-    if (hideAddressAndContact && step === 3) return true
+    // Compressed (hideAddressAndContact) view: 3 visible steps - 0
+    // and 1 are data entry (skipping the Step-0 solutionType and the
+    // Step-3 contact step the public form carries), 2 is the Review
+    // step. The Review step is always proceed-able; data correctness
+    // was validated on the previous steps.
+    if (hideAddressAndContact && step === 2) return true
     switch (step) {
-      case 0: return !!formData.region && !!formData.houseType;
-      case 1: return !!formData.roofType;
-      case 2: return !!formData.householdSize && !!formData.electricityUsage;
-      case 3: return !!formData.street && !!formData.postalCode && !!formData.city;
-      case 4: return !!formData.salutation && !!formData.firstName && !!formData.lastName && !!formData.email;
-      default: return false;
+      case 0: return !!formData.solutionType;
+      case 1: return !!formData.city && !!formData.propertyType;
+      case 2: return !!formData.householdSize;
+      case 3:
+        return (
+          !!formData.salutation &&
+          !!formData.firstName &&
+          !!formData.lastName &&
+          !!formData.email
+        );
+      default: return false
     }
-  };
+  }
 
   const handleBackToHome = () => {
     // Modal context → close the modal; inline context → scroll to top.
@@ -630,32 +622,30 @@ const Form: React.FC<{
 
     // Default payload = full FormData (used by the homepage flow's
     // /api/consultation). When the host supplies a `submitPayload`
-    // builder, we use that instead - currently only /my-plan does this
-    // to send a slim 6-field body to /api/consultation/update.
+    // builder, we use that instead - /my-plan does this to send a
+    // slim 5-field body (Step 2 + Step 3, no PII) to
+    // /api/consultation/update.
     const body = submitPayload
       ? submitPayload(formData)
       : {
+          // Step 1
+          solutionType: formData.solutionType,
+          // Step 2
+          city: formData.city,
+          propertyType: formData.propertyType,
+          // Step 3
+          householdSize: formData.householdSize,
+          // NG optional fields. 'unknown' sentinels map to NULL on the
+          // server so admin can render an "unspecified" state without
+          // exposing the raw 'unknown' string.
+          generatorFrequency: formData.generatorFrequency,
+          fuelBudgetNgn: formData.fuelBudgetNgn,
+          // Step 4 — contact
           salutation: formData.salutation,
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone,
-          street: formData.street,
-          houseNumber: formData.houseNumber,
-          postalCode: formData.postalCode,
-          city: formData.city,
-          region: formData.region,
-          houseType: formData.houseType,
-          roofType: formData.roofType,
-          householdSize: formData.householdSize,
-          electricityUsage: formData.electricityUsage,
-          devices: formData.devices,
-          // NG Step-3 extensions (all optional). 'unknown' sentinels map
-          // to NULL on the server so admin can render an "unspecified"
-          // state without exposing the raw 'unknown' string.
-          generatorFrequency: formData.generatorFrequency,
-          fuelBudgetNgn: formData.fuelBudgetNgn,
-          backupNeeds: formData.backupNeeds,
         };
 
     try {
@@ -785,60 +775,114 @@ const Form: React.FC<{
                 </div>
               ) : (
                 <>
-                  {/* Step 0: Region + House Type */}
-                  {step === 0 && (
-                    <div className="space-y-8">
+                  {/* ─── 4-step form per docs/修改建议.docx ──────────────────
+                     In the compressed Edit-details view (hideAddressAndContact),
+                     Step 0 (solutionType - already chosen at registration)
+                     and Step 3 (contact - PII) are hidden. The render block
+                     below uses `step` as the visible-step counter (0..N-1)
+                     and remaps internally to the matching public-form
+                     content. The compressed view's last visible step is a
+                     Review summary, NOT the public form's contact step. */}
+
+                  {/* Step 0 (public only): solutionType */}
+                  {!hideAddressAndContact && step === 0 && (
+                    <div className="space-y-5">
                       <div>
-                        <label className="block text-sm font-semibold mb-3">
-                          Where is your home located?
+                        <label className="block text-sm font-semibold mb-2">
+                          What kind of solutions are you interested in?
                         </label>
+                        <p className="text-sm text-gray-400 mb-4">
+                          Pick the option that best describes your project.
+                        </p>
+                        <div className="grid grid-cols-1 gap-3">
+                          {[
+                            { id: 'home', label: 'Home Solar solutions' },
+                            { id: 'business', label: 'Business Solar solutions' },
+                            { id: 'exploring', label: "I'm not sure / Just exploring" },
+                          ].map(opt => (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              onClick={() => {
+                                updateField('solutionType', opt.id as 'home' | 'business' | 'exploring')
+                                clearErrors()
+                              }}
+                              className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                                formData.solutionType === opt.id
+                                  ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E]'
+                                  : 'border-gray-200 text-gray-700 hover:border-[#0F766E]/40'
+                              }`}
+                            >
+                              <span className="font-medium">{opt.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                        {errors.solutionType && (
+                          <p className="text-red-500 text-xs mt-2">{errors.solutionType}</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 1 (public + compressed step 0): city + propertyType */}
+                  {((!hideAddressAndContact && step === 1) || (hideAddressAndContact && step === 0)) && (
+                    <div className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          Which city is your property in?
+                        </label>
+                        <p className="text-sm text-gray-400 mb-4">
+                          Pick the closest city. We'll use this to estimate solar
+                          yield and route your enquiry to the right team.
+                        </p>
                         <select
-                          value={formData.region}
-                          onChange={e => { updateField('region', e.target.value); clearErrors(); }}
-                          className={`w-full px-4 py-3 border-2 ${errors.region ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all appearance-none bg-white`}
+                          value={formData.city}
+                          onChange={e => { updateField('city', e.target.value); clearErrors() }}
+                          className={`w-full px-4 py-3 border-2 ${errors.city ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all appearance-none bg-white`}
                         >
                           <option value="">Please select...</option>
                           {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
                         </select>
-                        {errors.region && <p className="text-red-500 text-xs mt-1">{errors.region}</p>}
+                        {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
                       </div>
 
                       <div>
                         <label className="block text-sm font-semibold mb-3">
-                          Which property type best describes your home?
+                          Which property type best describes your home or business?
                         </label>
-                        <CardSelect
-                          options={HOUSE_TYPES as CardOption[]}
-                          selected={formData.houseType}
-                          onSelect={id => { updateField('houseType', id); clearErrors(); }}
-                        />
-                        {errors.houseType && <p className="text-red-500 text-xs mt-1">{errors.houseType}</p>}
+                        <div className="grid grid-cols-1 gap-3">
+                          {[
+                            { id: 'detached-semi', label: 'Detached / Semi-detached' },
+                            { id: 'terraced-apt', label: 'Terraced / Apartment' },
+                            { id: 'commercial', label: 'Commercial / Shop' },
+                            { id: 'others', label: 'Others' },
+                          ].map(opt => (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              onClick={() => {
+                                updateField('propertyType', opt.id)
+                                clearErrors()
+                              }}
+                              className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                                formData.propertyType === opt.id
+                                  ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E]'
+                                  : 'border-gray-200 text-gray-700 hover:border-[#0F766E]/40'
+                              }`}
+                            >
+                              <span className="font-medium">{opt.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                        {errors.propertyType && (
+                          <p className="text-red-500 text-xs mt-2">{errors.propertyType}</p>
+                        )}
                       </div>
                     </div>
                   )}
 
-                  {/* Step 1: Roof Type */}
-                  {step === 1 && (
-                    <div className="space-y-6">
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          What type of roof does your home have?
-                        </label>
-                        <p className="text-sm text-gray-400 mb-4">
-                          Pick the shape that most closely matches your roof.
-                        </p>
-                        <CardSelect
-                          options={ROOF_TYPES as CardOption[]}
-                          selected={formData.roofType}
-                          onSelect={id => { updateField('roofType', id); clearErrors(); }}
-                        />
-                        {errors.roofType && <p className="text-red-500 text-xs mt-2">{errors.roofType}</p>}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 2: Household + Electricity */}
-                  {step === 2 && (
+                  {/* Step 2 (public + compressed step 1): household + generator + fuel */}
+                  {((!hideAddressAndContact && step === 2) || (hideAddressAndContact && step === 1)) && (
                     <div className="space-y-5">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
@@ -847,38 +891,11 @@ const Form: React.FC<{
                         <CardSelect
                           options={HOUSEHOLD_SIZES as CardOption[]}
                           selected={formData.householdSize}
-                          onSelect={id => { updateField('householdSize', id); clearErrors(); }}
+                          onSelect={id => { updateField('householdSize', id); clearErrors() }}
                           columns={5}
                         />
                         {errors.householdSize && <p className="text-red-500 text-xs mt-2">{errors.householdSize}</p>}
                       </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          How would you estimate your annual electricity use? <span className="text-red-500">*</span>
-                        </label>
-                        <CardSelect
-                          options={ELECTRICITY_USAGE as CardOption[]}
-                          selected={formData.electricityUsage}
-                          onSelect={id => { updateField('electricityUsage', id); clearErrors(); }}
-                          columns={5}
-                        />
-                        {errors.electricityUsage && <p className="text-red-500 text-xs mt-2">{errors.electricityUsage}</p>}
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          Do you already have any of these devices?
-                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional, multi-select)</span>
-                        </label>
-                        <MultiCardSelect
-                          options={DEVICES}
-                          selected={formData.devices}
-                          onToggle={toggleDevice}
-                        />
-                      </div>
-
-                      {/* ─── NG Step-3 extensions (optional, non-blocking) ─── */}
 
                       <div>
                         <label className="block text-sm font-semibold mb-2">
@@ -905,27 +922,14 @@ const Form: React.FC<{
                           columns={5}
                         />
                       </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          What do you need backup power for?
-                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional, multi-select)</span>
-                        </label>
-                        <MultiCardSelect
-                          options={BACKUP_NEEDS}
-                          selected={formData.backupNeeds ?? []}
-                          onToggle={toggleBackup}
-                        />
-                      </div>
                     </div>
                   )}
 
-                  {/* Step 3 (compressed view only): Review + Confirm. Renders only
-                       when `hideAddressAndContact` is true, as the 4th visible
-                       step (index 3). Shows a read-only summary of the user's
-                       choices for the 6 editable consultation fields, with a
-                       "Back" link to revise. Submit lives here. */}
-                  {hideAddressAndContact && step === 3 && (
+                  {/* Step 2 (compressed only): Review + Confirm. Shown at the
+                       end of the Edit-details flow as the final visible step.
+                       Reads back solutionType (seeded via initialData) +
+                       city + propertyType + household + generator + fuel. */}
+                  {hideAddressAndContact && step === 2 && (
                     <div className="space-y-6">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -938,43 +942,33 @@ const Form: React.FC<{
 
                       <dl className="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white">
                         <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Region</dt>
+                          <dt className="text-sm text-gray-500">Solution</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.region || '-'}
+                            {formData.solutionType === 'home'
+                              ? 'Home Solar solutions'
+                              : formData.solutionType === 'business'
+                                ? 'Business Solar solutions'
+                                : formData.solutionType === 'exploring'
+                                  ? "I'm not sure / Just exploring"
+                                  : '-'}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <dt className="text-sm text-gray-500">City</dt>
+                          <dd className="text-sm font-medium text-gray-800">
+                            {formData.city || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Property type</dt>
                           <dd className="text-sm font-medium text-gray-800">
-                            {formData.houseType || '-'}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Roof type</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {formData.roofType || '-'}
+                            {formData.propertyType || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
                           <dt className="text-sm text-gray-500">Household</dt>
                           <dd className="text-sm font-medium text-gray-800">
                             {formData.householdSize || '-'}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Electricity use</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {formData.electricityUsage === 'unknown'
-                              ? 'Not sure'
-                              : (formData.electricityUsage || '-')}
-                          </dd>
-                        </div>
-                        <div className="flex items-start justify-between px-4 py-3 gap-4">
-                          <dt className="text-sm text-gray-500 shrink-0">Devices</dt>
-                          <dd className="text-sm font-medium text-gray-800 text-right">
-                            {formData.devices.length
-                              ? formData.devices.join(', ')
-                              : '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
@@ -989,87 +983,18 @@ const Form: React.FC<{
                             {labelFor(formData.fuelBudgetNgn, FUEL_BUDGET_NGN, 'Not specified')}
                           </dd>
                         </div>
-                        <div className="flex items-start justify-between px-4 py-3 gap-4">
-                          <dt className="text-sm text-gray-500 shrink-0">Backup needs</dt>
-                          <dd className="text-sm font-medium text-gray-800 text-right">
-                            {labelsForIds(formData.backupNeeds, BACKUP_NEEDS) || '-'}
-                          </dd>
-                        </div>
                       </dl>
 
                       <p className="text-xs text-gray-400 leading-relaxed">
                         By confirming, your plan will be re-calculated using these
-                        details. Address and contact information are unchanged.
+                        details. Contact information is unchanged.
                       </p>
                     </div>
                   )}
 
-                  {/* Step 3 (full form): Address - hidden on /my-plan Edit details (PII not surfaced). */}
+                  {/* Step 3 (public only): Contact Info. PII — never rendered in
+                       the Edit-details compressed view. */}
                   {!hideAddressAndContact && step === 3 && (
-                    <div className="space-y-6">
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          Where should the system be installed?
-                        </label>
-                        <p className="text-sm text-gray-400 mb-4">
-                          We need your address for an accurate satellite-based roof analysis.
-                        </p>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="col-span-2">
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Street</label>
-                          <input
-                            type="text"
-                            value={formData.street}
-                            onChange={e => { updateField('street', e.target.value); clearErrors(); }}
-                            placeholder="e.g. High Street"
-                            className={`w-full px-4 py-3 border-2 ${errors.street ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
-                          />
-                          {errors.street && <p className="text-red-500 text-xs mt-1">{errors.street}</p>}
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">House No.</label>
-                          <input
-                            type="text"
-                            value={formData.houseNumber}
-                            onChange={e => updateField('houseNumber', e.target.value)}
-                            placeholder="12a"
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-3">
-                        <div>
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Postcode</label>
-                          <input
-                            type="text"
-                            value={formData.postalCode}
-                            onChange={e => { updateField('postalCode', e.target.value); clearErrors(); }}
-                            placeholder="SW1 1AA"
-                            maxLength={8}
-                            className={`w-full px-4 py-3 border-2 ${errors.postalCode ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
-                          />
-                          {errors.postalCode && <p className="text-red-500 text-xs mt-1">{errors.postalCode}</p>}
-                        </div>
-                        <div className="col-span-2">
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Town / City</label>
-                          <input
-                            type="text"
-                            value={formData.city}
-                            onChange={e => { updateField('city', e.target.value); clearErrors(); }}
-                            placeholder="Lagos"
-                            className={`w-full px-4 py-3 border-2 ${errors.city ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
-                          />
-                          {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 4: Contact Info - hidden on /my-plan Edit details (PII not surfaced). */}
-                  {!hideAddressAndContact && step === 4 && (
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">

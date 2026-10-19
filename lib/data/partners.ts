@@ -1,117 +1,149 @@
 /**
- * For Partners page data - Nigeria.
+ * For Partners page data — Nigeria.
  *
- * Text mirrors the UK base page with the 3 UK partner types re-cast
- * as 3 NG-specific tracks (installer, referral, community). The
- * previous "distribution" track has been removed from the partner
- * programme per the latest content direction - "Distributor" is no
- * longer offered as a partner track on the NG site. UK trust marks
- * (MCS, "UK-backed warranty", etc.) are dropped per NG content rules
- * - NG has no verified installer certifications, warranty periods, or
- * partner programme specifics, so unverified business claims are
- * marked TBD.
+ * Text mirrors the For-Partner 页面修改参考页 PPTX layout. Three
+ * tracks (Core Service / Certified Installer / Lead Partner) replace
+ * the previous UK/IT tracks (Installer / Referral / Community).
+ * UK trust marks (MCS, "UK-backed warranty", etc.) are dropped per NG
+ * content rules — NG has no verified installer certifications, warranty
+ * periods, or partner programme specifics, so unverified business
+ * claims stay as TBD or are replaced with the generic partner
+ * programme framing the PPTX calls out.
  */
 
 export type PartnerTypeId =
-  | 'installer'
-  | 'referral'
-  | 'community'
+  | 'core-service'
+  | 'certified-installer'
+  | 'lead-partner'
 
 export interface PartnerType {
   id: PartnerTypeId
-  eyebrow: string
   title: string
+  /** Short "for whom" subtitle shown under the title. */
   description: string
-  bullets: string[]
+  /** "What You Get" — bullets the partner receives from Solavita. */
+  whatYouGet: string[]
+  /** "Your Role" — bullets the partner is expected to do. */
+  yourRole: string[]
   icon: 'wrench' | 'handshake' | 'users'
 }
 
 export const partnerTypes: PartnerType[] = [
   {
-    id: 'installer',
-    eyebrow: 'Solar installation',
-    title: 'Installer',
+    id: 'core-service',
+    title: 'Core Service Partner',
     description:
-      'Nigerian installers and electrical service providers who deliver Solavita systems to homeowners and small businesses.',
-    bullets: [
-      'Tier-1 product catalogue',
-      'Two-week install training',
-      'Nigerian design support team',
-      'Lead generation in your region',
+      'For businesses with local networks and storage capacity.',
+    whatYouGet: [
+      'Priority local inventory access',
+      'Channel development & co-marketing',
+      'Dedicated account manager',
+    ],
+    yourRole: [
+      'Maintain local inventory',
+      'Support sub-installers in your region',
     ],
     icon: 'wrench',
   },
   {
-    id: 'referral',
-    eyebrow: 'Customer referral',
-    title: 'Referral Partner',
+    id: 'certified-installer',
+    title: 'Certified Installer',
     description:
-      'Businesses or individuals who can refer potential residential or small commercial customers in their network.',
-    bullets: [
-      'Tier-1 product catalogue',
-      'Two-week install training',
-      'Nigerian design support team',
-      'Lead generation in your region',
+      'For teams with electrical and solar installation skills.',
+    whatYouGet: [
+      'No full-container minimum',
+      'Product & installation training',
+      'Customer leads in your area',
+    ],
+    yourRole: [
+      'Complete Solavita certification',
+      'Deliver quality installation & after-sales',
     ],
     icon: 'handshake',
   },
   {
-    id: 'community',
-    eyebrow: 'Community . Business',
-    title: 'Community / Business Partner',
+    id: 'lead-partner',
+    title: 'Lead Partner',
     description:
-      'Heat pump installers, EV charger networks, energy suppliers, utilities and community organisations interested in co-marketing or joint go-to-market programmes.',
-    bullets: [
-      'Co-marketing programmes',
-      'API access to HEMS data',
-      'Joint go-to-market',
-      'White-label options',
+      'For individuals or businesses focused on customer referral and lead generation.',
+    whatYouGet: [
+      'Commission per referral',
+      'Free marketing materials',
+      'No stock, no installation',
+    ],
+    yourRole: [
+      'Share leads with us',
+      'We visit and quote',
+      'You collect commission',
     ],
     icon: 'users',
   },
 ]
 
+/**
+ * "Why partner" - per the For-Partner 页面修改参考页 PPTX layout:
+ *   - 2 hero stats (800,000+ / 34.6GW) backed by the SKYWORTH Group's
+ *     public global-deployment numbers
+ *   - one body paragraph + a one-line tagline
+ *   - 3 highlight cards (Local Warehouse / Full Warranty / Sales
+ *     Support) each with an image and an overlay label
+ *
+ * The stats are real SKYWORTH Group numbers (verifiable from public
+ * sources). The 3-card grid re-frames the "value of partnership" around
+ * the PPTX's three pillars instead of the previous 6-reason block.
+ */
 export interface PartnerBenefit {
-  title: string
+  /** Pill label rendered on top of the card image (e.g. "Local Warehouse"). */
+  label: string
+  /** One-line caption under the pill (e.g. "No full container needed"). */
+  caption: string
+  /** Short description used for the card placeholder. */
   description: string
+  /** Path to the hero image under `public/`. Omit to render the
+   *  neutral `ImagePlaceholder` instead (keeps the card visible until
+   *  the partner photo / render is supplied). */
+  image?: string
 }
 
-/**
- * "Why partner" - six-reason block. UK-specific claims (UK engineering
- * support, MCS, 15-year UK-backed warranty, SKYWORTH academy) are
- * generalised or marked TBD per NG content rules until business
- * verifies each claim for the Nigerian market.
- */
 export const partnerBenefits: PartnerBenefit[] = [
   {
-    title: 'Group supply-chain scale',
+    label: 'Local Warehouse',
+    caption: 'No full container needed',
     description:
-      'Backed by SKYWORTH - reliable stock, predictable lead times and competitive pricing.',
+      'Solavita local warehouse with pallet-level stock access — no full-container minimum order.',
+    image: '/images/local_warehouse_card.webp',
   },
   {
-    title: 'Nigerian engineering support',
+    label: 'Full Warranty',
+    caption: 'Local backup for claims',
     description:
-      'Design reviews, system sizing and on-site technical back-up from our Nigerian team.',
+      'Full-system warranty with local claims backup so you and your customers are never waiting on an overseas RMA.',
+    image: '/images/full_warranty_card.webp',
   },
   {
-    title: 'Co-marketing & leads',
+    label: 'Sales Support',
+    caption: 'Leads & tech backup',
     description:
-      'Joint campaigns, regional lead sharing and a partner directory on solavita.com/ng.',
+      'Co-marketing programs, regional lead sharing, and on-call technical backup for sizing and design.',
+    image: '/images/sales_support_card.webp',
+  },
+]
+
+export interface PartnerStats {
+  /** Large headline number, e.g. "800,000+". */
+  value: string
+  /** Caption rendered under the number. */
+  caption: string
+}
+
+export const partnerStats: PartnerStats[] = [
+  {
+    value: '800,000+',
+    caption: 'Solar Stations Installed Worldwide',
   },
   {
-    title: 'Warranty programme',
-    description:
-      'TBD - Verified Nigerian warranty period covering product, performance and workmanship.',
-  },
-  {
-    title: 'Training & certification',
-    description:
-      'Installer training, product certification and access to the SKYWORTH academy.',
-  },
-  {
-    title: 'Dedicated partner manager',
-    description:
-      'A single point of contact who knows your business and your region.',
+    value: '34.6GW',
+    caption: 'Cumulative Installed Capacity',
   },
 ]
 
@@ -147,6 +179,6 @@ export const partnerProcess: PartnerProcessStep[] = [
     step: '04',
     title: 'Go live',
     description:
-      'First joint project kicks off with full support from the Nigerian partner team.',
+      'First joint project kicks off with full support from the local partner team.',
   },
 ]

@@ -56,8 +56,8 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl"
         >
-          Grow your business{' '}
-          <span className="text-gradient">with Solavita.</span>
+          Power the Energy Shift.{' '}
+          <span className="text-gradient">Build What's Next.</span>
         </motion.h1>
 
         <motion.p
@@ -66,10 +66,10 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Become a Solavita partner — installer, lead generation partner,
-          or community partner. Benefit from Nigerian engineering
-          support, group supply-chain scale, and a partner programme
-          built around long-term relationships.
+          Become a Solavita partner — Core Service, Certified Installer,
+          or Lead Partner. Benefit from local engineering support, group
+          supply-chain scale, and a partner programme built around
+          long-term relationships.
         </motion.p>
       </div>
     </section>

@@ -7,7 +7,7 @@ export const metadata = buildPageMetadata({
   title: 'Solar Solutions in Practice | Solavita Nigeria',
   path: '/cases',
   description:
-    'Explore solar installations and system configurations from across our global markets. See how Solavita systems are configured for different energy needs — verified Nigerian customer projects will be added as they become available.',
+    'Explore solar installations and system configurations from across our global markets. See how Solavita Nigeria systems are configured for different energy needs — verified Nigerian customer projects will be added as they become available.',
   ogImage: '/images/hero-cases.webp',
   ogImageAlt:
     'Solar installations and system configurations from across our global markets',
@@ -22,7 +22,7 @@ export default function Page() {
             path: '/cases',
             name: 'Solar Solutions in Practice | Solavita Nigeria',
             description:
-              'Explore solar installations and system configurations from across our global markets. See how Solavita systems are configured for different energy needs.',
+              'Explore solar installations and system configurations from across our global markets. See how Solavita Nigeria systems are configured for different energy needs.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

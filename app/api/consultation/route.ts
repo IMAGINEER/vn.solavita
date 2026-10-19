@@ -17,17 +17,33 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const {
+      // Step 1
+      solutionType,
+      // Step 2
+      city, propertyType,
+      // Step 3
+      householdSize,
+      generatorFrequency, fuelBudgetNgn,
+      // Step 4
       salutation, firstName, lastName, email, phone,
-      street, houseNumber, postalCode, city,
-      region, houseType, roofType, householdSize,
-      electricityUsage, devices,
-      // NG Step-3 extensions (all optional, all may be undefined for
-      // pre-existing form submissions or /my-plan's slim update path).
-      generatorFrequency, fuelBudgetNgn, backupNeeds,
     } = body
 
-    // Basic server-side validation
-    if (!salutation || !firstName || !lastName || !email || !postalCode || !city) {
+    // Basic server-side validation. The form has been reshaped to
+    // 4 steps per docs/修改建议.docx; the previous 5-step fields
+    // (region/roofType/electricityUsage/devices/backupNeeds/address)
+    // are gone. Postal code / street were Step 4 before; `city` now
+    // comes from Step 2 Q1 so we no longer require a separate
+    // postal_code.
+    if (
+      !solutionType ||
+      !city ||
+      !propertyType ||
+      !householdSize ||
+      !salutation ||
+      !firstName ||
+      !lastName ||
+      !email
+    ) {
       return NextResponse.json(
         { success: false, message: 'Required fields missing' },
         { status: 400 }
@@ -42,28 +58,57 @@ export async function POST(request: Request) {
       )
     }
 
+    // Validate solutionType against the DB CHECK constraint values
+    // ('home' | 'business' | 'exploring'). Reject anything else so
+    // a tampered client can't write a junk value to a shared table.
+    const allowedSolutionTypes = new Set(['home', 'business', 'exploring'])
+    if (!allowedSolutionTypes.has(solutionType)) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid solution type' },
+        { status: 400 }
+      )
+    }
+
     const payload = {
+      // Step 1 — solutionType is now persisted to the DB
+      // (column + CHECK constraint applied by
+      // `20261019000001_consultation_solution_type.sql`).
+      solution_type: solutionType,
+      // Step 2 — city is required; propertyType replaces the old
+      // houseType. region is no longer collected; we keep the
+      // column write NULL for NG.
+      city,
+      region: null,
+      house_type: propertyType,
+      // Step 3 — only householdSize is required. generatorFrequency
+      // and fuelBudgetNgn stay NULL for users who skip the optional
+      // questions (or set 'unknown'). Old fields (roofType,
+      // electricityUsage, devices, backupNeeds) are no longer
+      // collected by the public form; we keep the column writes
+      // NULL so old rows are untouched on UPDATE.
+      household_size: householdSize,
+      roof_type: null,
+      electricity_usage: null,
+      devices: null,
+      backup_needs: null,
+      generator_frequency:
+        generatorFrequency && generatorFrequency !== 'unknown'
+          ? generatorFrequency
+          : null,
+      fuel_budget_ngn:
+        fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
+      // Step 4
       salutation,
       first_name: firstName,
       last_name: lastName,
+      email,
       phone: phone || null,
-      street: street || null,
-      house_number: houseNumber || null,
-      postal_code: postalCode,
-      city,
-      region: region || null,
-      house_type: houseType || null,
-      roof_type: roofType || null,
-      household_size: householdSize || null,
-      electricity_usage: electricityUsage === 'unknown' ? null : (electricityUsage || null),
-      devices: Array.isArray(devices) ? devices.join(', ') : devices || null,
-      // NG Step-3 extensions - all map to NULL when missing or the
-      // 'unknown' sentinel so the admin table shows a clean unspecified
-      // state instead of a literal 'unknown' string. The DB columns
-      // themselves are nullable so pre-existing rows are unaffected.
-      generator_frequency: generatorFrequency && generatorFrequency !== 'unknown' ? generatorFrequency : null,
-      fuel_budget_ngn: fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
-      backup_needs: Array.isArray(backupNeeds) && backupNeeds.length > 0 ? backupNeeds.join(', ') : null,
+      // Address fields are no longer collected (Step 2 captures the
+      // city). Keep the columns NULL so existing admin tooling that
+      // reads them still works.
+      street: null,
+      house_number: null,
+      postal_code: null,
       // Bump on every write (INSERT or UPDATE) so /admin/leads sort
       // by updated_at DESC bubbles dedup re-submissions to the top.
       // created_at stays immutable - first-registration semantics.

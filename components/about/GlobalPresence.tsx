@@ -54,15 +54,15 @@ export default function GlobalPresence() {
           <div>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Global scale, Nigerian base
+              Global scale, local base
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Local in Nigeria.{' '}
+              Local on the ground.{' '}
               <span className="text-gradient">Global behind you.</span>
             </h2>
             <p className="mt-5 text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
-              Solavita Nigeria is the local solar brand of the SKYWORTH
-              Group. Your system is sized for Nigerian site conditions —
+              Solavita is the local solar brand of the SKYWORTH
+              Group. Your system is sized for local site conditions —
               backed by the engineering depth and supply-chain scale of a
               global electronics group.
             </p>

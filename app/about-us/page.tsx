@@ -25,7 +25,7 @@ export default function Page() {
             path: '/about-us',
             name: 'About Solavita Nigeria',
             description:
-              "Discover Solavita's approach to solar and battery storage for Nigerian homes and small businesses, supported by the SKYWORTH brand.",
+              "Discover Solavita Nigeria's approach to solar and battery storage for Nigerian homes and small businesses, supported by the SKYWORTH brand.",
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
