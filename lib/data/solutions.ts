@@ -223,6 +223,39 @@ export interface SolutionFaq {
   a: string
 }
 
+/** Lucide icon key used by a LOAD & RUNTIME row chip. */
+export type LoadBreakdownIconKey =
+  | 'tv'
+  | 'lightbulb'
+  | 'snowflake'
+  | 'fan'
+  | 'refrigerator'
+  | 'airvent'
+  | 'washing-machine'
+  | 'droplet'
+  | 'microwave'
+
+/** One appliance chip in the LOAD & RUNTIME breakdown strip. */
+export interface LoadBreakdownRow {
+  icon: LoadBreakdownIconKey
+  /** Display name (e.g. "Lighting", "AC (Light)", "Refrigerator/Freezer"). */
+  name: string
+  /** Estimated runtime in hours. */
+  hours: number
+}
+
+/** Per-package LOAD & RUNTIME data consumed by `<LoadRow>`. */
+export interface LoadBreakdown {
+  /** Icon shown in the row's header strip. */
+  headerIcon: LoadBreakdownIconKey
+  /** Headline est. runtime (e.g. 4 for LITE, 12 for Flagship). */
+  headerHours: number
+  /** Pill label at the top of the row. */
+  scenarioLabel: string
+  /** One chip per appliance. */
+  rows: LoadBreakdownRow[]
+}
+
 /** One image in the gallery (main + thumbnail strip + lifestyle gallery). */
 export interface SolutionGalleryImage {
   src: string
@@ -274,6 +307,11 @@ export interface SolutionDetail {
   /** Lifestyle gallery (full-width image strip, 3–4 images). */
   lifestyleGallery: SolutionGalleryImage[]
   /**
+   * Per-package LOAD & RUNTIME data. Drives the LOAD & RUNTIME section
+   * on the collection pages; see `LoadBreakdown` below.
+   */
+  loadBreakdown?: LoadBreakdown
+  /**
    * Simulated ₦ price for the my-plan ROI engine. NOT surfaced on the
    * marketing surface — see NG_SIMULATED_PRICE_NGN block above. Remove
    * this comment when business supplies approved pricing.
@@ -307,12 +345,12 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'lite-essential-backup',
     slug: 'lite-essential-backup',
-    eyebrow: 'Single phase · Essential backup',
+    eyebrow: 'Essential Backup · Ditch the diesel',
     title: 'LITE Essential Backup',
     intro:
-      'A compact solar and battery solution sized for essential household electricity needs. Ideal as a starting point for smaller homes, rental properties and applications where running a generator is the alternative.',
+      'Built for essential homes, from apartments to starter families. Compact solar and battery for everyday peace of mind.',
     shortIntro:
-      'A compact solar and battery solution for essential household electricity needs.',
+      'Built for essential homes, from apartments to starter families. Compact solar and battery for everyday peace of mind.',
     metric: 'Start with the essentials',
     headlineStats: [
       { value: '4.34 kWp', label: 'Solar PV', icon: 'solar' },
@@ -364,7 +402,6 @@ export const solutionDetails: SolutionDetail[] = [
       '7 × 620 W PV modules (4.34 kWp total)',
       '3.6 kW single-phase inverter',
       '5 kWh battery storage',
-      'Right-sized for essential household electricity',
     ],
     faqs: [
       {
@@ -389,6 +426,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Solar_Essential.webp', alt: 'LITE Essential Backup lifestyle render' },
       { src: '/images/product-module-1.webp', alt: 'Solavita PV module close-up' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 4,
+      scenarioLabel: 'Perfect for: Family Homes',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 4 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
+        { icon: 'fan', name: 'Ceiling Fan', hours: 12 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 4 },
+      ],
+    },
     imagePath: '/images/LITE-Essential-Backup.webp',
     imageAlt: 'LITE Essential Backup — 4.34 kWp solar and 5 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['lite-essential-backup'],
@@ -398,12 +447,12 @@ export const solutionDetails: SolutionDetail[] = [
     id: 'home-standard',
     slug: 'home-standard',
     popular: true,
-    eyebrow: 'Single phase · Everyday home',
+    eyebrow: 'Everyday Home · 24/7 Stable Power',
     title: 'HOME Standard',
     intro:
-      'A higher-capacity solution for mainstream households running refrigerators, air conditioners and other everyday appliances. Includes off-grid-capable inverter and 10 kWh nominal battery storage.',
+      'Built for everyday families who want comfort without the fuel runs. Higher capacity to slash fuel costs and blackouts.',
     shortIntro:
-      'Higher-capacity solution for households running refrigerators, ACs and other everyday appliances.',
+      'Built for everyday families who want comfort without the fuel runs. Higher capacity to slash fuel costs and blackouts.',
     metric: 'Power everyday living',
     headlineStats: [
       { value: '7.44 kWp', label: 'Solar PV', icon: 'solar' },
@@ -455,7 +504,6 @@ export const solutionDetails: SolutionDetail[] = [
       '12 × 620 W PV modules (7.44 kWp)',
       '6 kW single-phase inverter with off-grid capability',
       '10 kWh battery storage (2 × 5 kWh)',
-      'Sized for everyday household appliances and ACs',
     ],
     faqs: [
       {
@@ -480,6 +528,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Storage_core.webp', alt: 'HOME Standard lifestyle render' },
       { src: '/images/product-battery-1.webp', alt: 'Solavita battery stack' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 6,
+      scenarioLabel: 'Perfect for: Family Homes',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 6 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
+        { icon: 'washing-machine', name: 'Washer', hours: 3 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 8 },
+      ],
+    },
     imagePath: '/images/HOME-Standard.webp',
     imageAlt: 'HOME Standard — 7.44 kWp solar and 10 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['home-standard'],
@@ -488,12 +548,12 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'home-high-spec',
     slug: 'home-high-spec',
-    eyebrow: 'Single phase · Higher capacity',
+    eyebrow: 'Higher Capacity · Built for Yours',
     title: 'HOME High-spec',
     intro:
-      'A higher-capacity solution for larger homes and multi-appliance households. Sized for sustained operation of multiple high-draw appliances, with 16 kWh battery storage.',
+      'Built for larger homes, multi-appliances, and home-based businesses. Ultimate diesel replacement.',
     shortIntro:
-      'Higher-capacity solution for larger homes and multi-appliance households.',
+      'Built for larger homes, multi-appliances, and home-based businesses. Ultimate diesel replacement.',
     metric: 'More appliances, more hours',
     headlineStats: [
       { value: '9.92–12.40 kWp', label: 'Solar PV', icon: 'solar' },
@@ -545,7 +605,6 @@ export const solutionDetails: SolutionDetail[] = [
       '16–20 × 620 W PV modules (9.92–12.40 kWp)',
       '8–12 kW single-phase inverter',
       '16 kWh battery storage',
-      'For larger homes and multi-appliance households',
     ],
     faqs: [
       {
@@ -570,6 +629,19 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Premium_backup.webp', alt: 'HOME High-spec lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 6,
+      scenarioLabel: 'Perfect for: Family Homes',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 6 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
+        { icon: 'washing-machine', name: 'Washer', hours: 3 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 8 },
+        { icon: 'microwave', name: 'Microwave', hours: 2 },
+      ],
+    },
     imagePath: '/images/HOME-High-spec.webp',
     imageAlt: 'HOME High-spec — 9.92–12.40 kWp solar and 16 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['home-high-spec'],
@@ -578,12 +650,12 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'business-entry-3-phase',
     slug: 'business-entry-3-phase',
-    eyebrow: 'Three phase · Entry commercial',
+    eyebrow: 'Starter Commercial · Cutting Fuel Runs',
     title: 'BUSINESS Entry 3-Phase',
     intro:
-      'A three-phase solar and storage option for higher-demand residences and small commercial applications. Designed for sites with existing three-phase supply.',
+      'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting fuel runs.',
     shortIntro:
-      'Three-phase solar and storage for higher-demand residences and small commercial sites.',
+      'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting fuel runs.',
     metric: 'Three-phase starter',
     headlineStats: [
       { value: '11.78 kWp', label: 'Solar PV', icon: 'solar' },
@@ -635,7 +707,6 @@ export const solutionDetails: SolutionDetail[] = [
       '19 × 620 W PV modules (11.78 kWp)',
       '10 kW three-phase inverter',
       '16 kWh battery storage',
-      'For three-phase residential and small commercial sites',
     ],
     faqs: [
       {
@@ -660,6 +731,19 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/electronic.webp', alt: 'Three-phase electrical equipment' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 8,
+      scenarioLabel: 'Heavy Duty & Business',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 8 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
+        { icon: 'droplet', name: 'Pump', hours: 4 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 10 },
+        { icon: 'microwave', name: 'Microwave', hours: 2 },
+      ],
+    },
     imagePath: '/images/BUSINESS-Entry-3-Phase.webp',
     imageAlt: 'BUSINESS Entry 3-Phase — 11.78 kWp solar and 16 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['business-entry-3-phase'],
@@ -668,12 +752,12 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'business-standard-3-phase',
     slug: 'business-standard-3-phase',
-    eyebrow: 'Three phase · Standard commercial',
+    eyebrow: 'SMEs & F&B · Slash Diesel Bills',
     title: 'BUSINESS Standard 3-Phase',
     intro:
-      'A standard three-phase solar and storage solution for SMEs, food and beverage businesses, restaurants and offices. Designed for regular daytime use with dependable backup.',
+      'Built for SMEs, F&B, restaurants, and offices. Power daytime loads with reliable backup to stay ahead of outages.',
     shortIntro:
-      'Three-phase solution for SMEs, F&B businesses, restaurants and offices.',
+      'Built for SMEs, F&B, restaurants, and offices. Power daytime loads with reliable backup to stay ahead of outages.',
     metric: 'Dependable daytime power',
     headlineStats: [
       { value: '17.36 kWp', label: 'Solar PV', icon: 'solar' },
@@ -725,7 +809,6 @@ export const solutionDetails: SolutionDetail[] = [
       '28 × 620 W PV modules (17.36 kWp)',
       '15 kW three-phase inverter',
       '32 kWh battery storage (2 × 16 kWh)',
-      'For regular daytime use with dependable backup',
     ],
     faqs: [
       {
@@ -750,6 +833,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Smart_home.webp', alt: 'BUSINESS Standard lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
+    loadBreakdown: {
+      headerIcon: 'tv',
+      headerHours: 10,
+      scenarioLabel: 'Heavy Duty & Business',
+      rows: [
+        { icon: 'tv', name: 'TV', hours: 10 },
+        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
+        { icon: 'droplet', name: 'Pump', hours: 6 },
+        { icon: 'refrigerator', name: 'Refrigerator/Freezer', hours: 12 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 12 },
+      ],
+    },
     imagePath: '/images/BUSINESS-Standard-3-Phase.webp',
     imageAlt: 'BUSINESS Standard 3-Phase — 17.36 kWp solar and 32 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['business-standard-3-phase'],
@@ -758,12 +853,12 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'business-flagship-3-phase',
     slug: 'business-flagship-3-phase',
-    eyebrow: 'Three phase · Flagship commercial',
+    eyebrow: 'Large Sites · A Step Beyond Diesel',
     title: 'BUSINESS Flagship 3-Phase',
     intro:
-      'A higher-capacity configuration for medium-sized supermarkets, hotels and light-processing operations. Substantial energy needs require a substantial system.',
+      'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward ditching diesel.',
     shortIntro:
-      'Higher-capacity configuration for medium-sized supermarkets, hotels and light-processing.',
+      'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward ditching diesel.',
     metric: 'Substantial energy needs',
     headlineStats: [
       { value: '23.56 kWp', label: 'Solar PV', icon: 'solar' },
@@ -815,7 +910,6 @@ export const solutionDetails: SolutionDetail[] = [
       '38 × 620 W PV modules (23.56 kWp)',
       '20 kW three-phase inverter',
       '32 kWh battery storage (2 × 16 kWh)',
-      'For medium-sized supermarkets, hotels and light-processing',
     ],
     faqs: [
       {
@@ -840,6 +934,18 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Smart_home.webp', alt: 'BUSINESS Flagship lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
+    loadBreakdown: {
+      headerIcon: 'lightbulb',
+      headerHours: 12,
+      scenarioLabel: 'Heavy Duty & Business',
+      rows: [
+        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
+        { icon: 'droplet', name: 'Pump', hours: 8 },
+        { icon: 'refrigerator', name: 'Refrigerator', hours: 6 },
+        { icon: 'airvent', name: 'AC (Light)', hours: 12 },
+        { icon: 'refrigerator', name: 'Freezer', hours: 6 },
+      ],
+    },
     imagePath: '/images/BUSINESS-Flagship-3-Phase.webp',
     imageAlt: 'BUSINESS Flagship 3-Phase — 23.56 kWp solar and 32 kWh battery',
     priceNgn: NG_SIMULATED_PRICE_NGN['business-flagship-3-phase'],
