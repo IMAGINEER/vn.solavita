@@ -63,6 +63,18 @@ export interface NgPlan {
   /** Inverter continuous output (kW). */
   inverterKw: number
   /**
+   * Display string for the PV row on the plan card, e.g.
+   * "9.92–12.40 kWp". Shown when the tier's capacity is a range rather
+   * than a single number; the numeric `kwp` field stays the engine
+   * input (a midpoint for ranged tiers). Falls back to `kwp` when unset.
+   */
+  kwpLabel?: string
+  /**
+   * Display string for the inverter row, e.g. "8–12 kW". Same
+   * fallback rule as `kwpLabel`.
+   */
+  inverterLabel?: string
+  /**
    * Test-baseline price (₦). Reuse UK ladder values for now - swap one
    * number here to update the whole calculator when business supplies
    * approved ₦ prices.
@@ -124,6 +136,8 @@ export const NG_PLANS: NgPlan[] = [
     kwp: 11.16, // midpoint of 9.92-12.40 kWp
     batteryKwh: 16,
     inverterKw: 10, // midpoint of 8-12 kW
+    kwpLabel: '9.92–12.40 kWp',
+    inverterLabel: '8–12 kW',
     priceNgn: 9_500_000,
     segment: 'homes',
     panels: 11.16,

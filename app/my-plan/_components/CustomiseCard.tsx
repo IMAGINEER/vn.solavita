@@ -91,7 +91,7 @@ export default function CustomiseCard({
             Choose your plan
           </h2>
           <p className="text-sm text-uk-slate mt-1">
-            Pick one of four ready-made plans. Each plan pairs a fixed solar
+            Pick one of six ready-made plans. Each plan pairs a fixed solar
             array, battery and inverter - they are bundled together, so the
             whole configuration switches as one. ROI updates instantly.
           </p>
@@ -139,9 +139,9 @@ export default function CustomiseCard({
 
               <div className="mt-4 space-y-1 text-sm text-uk-slate tabular-nums">
                 <div className="flex justify-between">
-                  <span>Solar panels</span>
+                  <span>Solar</span>
                   <span className="font-cw-bold text-uk-navy">
-                    {plan.panels} modules
+                    {plan.kwpLabel ?? `${plan.panels} kWp`}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -153,7 +153,7 @@ export default function CustomiseCard({
                 <div className="flex justify-between">
                   <span>Inverter</span>
                   <span className="font-cw-bold text-uk-navy">
-                    {plan.inverterKw} kW
+                    {plan.inverterLabel ?? `${plan.inverterKw} kW`}
                   </span>
                 </div>
               </div>

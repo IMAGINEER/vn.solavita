@@ -88,28 +88,30 @@ export default function SupportCategories() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {supportCategories.map((cat) => (
-            <a
-              key={cat.id}
-              href={`#faq-${cat.id}`}
-              className="support-cat-card group rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col items-start"
-            >
-              <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-4">
-                {iconFor(cat.icon)}
-              </div>
-              <h3 className="text-lg font-cw-bold text-uk-navy">
-                {cat.title}
-              </h3>
-              <p className="mt-2 text-sm text-uk-slate font-cw-regular leading-relaxed">
-                {cat.description}
-              </p>
-              <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-cw-bold text-uk-teal-dark group-hover:text-uk-teal transition-colors">
-                View FAQs
-                <ArrowRight className="w-4 h-4" strokeWidth={2} />
-              </span>
-            </a>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {supportCategories
+            .filter((cat) => cat.card !== false)
+            .map((cat) => (
+              <a
+                key={cat.id}
+                href={cat.ctaHref}
+                className="support-cat-card group rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col items-start"
+              >
+                <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-4">
+                  {iconFor(cat.icon)}
+                </div>
+                <h3 className="text-lg font-cw-bold text-uk-navy">
+                  {cat.title}
+                </h3>
+                <p className="mt-2 text-sm text-uk-slate font-cw-regular leading-relaxed">
+                  {cat.description}
+                </p>
+                <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-cw-bold text-uk-teal-dark group-hover:text-uk-teal transition-colors">
+                  {cat.ctaLabel}
+                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                </span>
+              </a>
+            ))}
         </div>
       </div>
     </section>

@@ -61,7 +61,12 @@ export interface PageHeroProps {
   eyebrow: string
   /** Use `\n` for line breaks; suffix a line with `*` to wrap it in text-gradient. */
   title: string
-  body?: string
+  /**
+   * Sub-headline. A plain string renders as-is; a ReactNode allows an
+   * explicit `<br />` where the copy needs a hard break (used by the
+   * homepage hero, which splits its two claims onto separate lines).
+   */
+  body?: ReactNode
   primaryCta?: PageHeroCta
   secondaryCta?: PageHeroCta
   breadcrumbs?: { label: string; href?: string }[]

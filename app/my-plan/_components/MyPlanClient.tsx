@@ -243,9 +243,13 @@ export default function MyPlanClient({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
                 <ProductCard
                   kind="panel"
-                  title="Solar panels"
-                  subtitle={`${plan.panels} × 460W modules`}
-                  value={`${plan.panels} modules`}
+                  title="Solar"
+                  subtitle={
+                    plan.kwpLabel
+                      ? `${plan.kwpLabel} rated PV`
+                      : `${plan.panels} kWp rated PV`
+                  }
+                  value={plan.kwpLabel ?? `${plan.panels} kWp`}
                   onChange={focusCustomise}
                 />
                 <ProductCard
@@ -262,8 +266,12 @@ export default function MyPlanClient({
                 <ProductCard
                   kind="inverter"
                   title="Inverter"
-                  subtitle={`${plan.inverterKw} kW inverter`}
-                  value={`${plan.inverterKw} kW`}
+                  subtitle={
+                    plan.inverterLabel
+                      ? `${plan.inverterLabel} inverter`
+                      : `${plan.inverterKw} kW inverter`
+                  }
+                  value={plan.inverterLabel ?? `${plan.inverterKw} kW`}
                   onChange={focusCustomise}
                 />
               </div>

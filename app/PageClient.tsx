@@ -8,21 +8,15 @@ import {
   Wrench,
   Sparkles,
   Compass,
-  Zap,
-  ShieldCheck,
   Factory,
-  Truck,
   Handshake,
   Users,
   XCircle,
   CheckCircle2,
   Shield,
-  Wallet,
   Phone,
   Ruler,
   Headphones,
-  Warehouse,
-  User,
   ClipboardPenLine,
   ClipboardCheck,
 } from 'lucide-react'
@@ -31,7 +25,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import TrustBar from '@/components/TrustBar'
 import FloatingButtons from '@/components/FloatingButtons'
-import PageHero, { HeroPillsRow } from '@/components/ui/page-hero'
+import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import TbdText from '@/components/ui/tbd-text'
 import ImagePlaceholder from '@/components/ui/image-placeholder'
@@ -44,12 +38,12 @@ import { openFormModal } from '@/lib/form-modal'
      1. Hero
      2. Scenario entry cards (For Home / For Business)
      3. COST COMPARISON — Solar vs. Diesel (visual)
-     4. SOLUTIONS — Find the Right Solution for Your Needs
-     5. YOUR SOLAR JOURNEY — From Consultation to Clean Power
-     6. WHY SOLAVITA — A Partner-Driven Approach
-     7. CUSTOMER STORIES — Real Homes and Businesses, Real Results
-     8. FREQUENTLY ASKED QUESTIONS
-     9. Final CTA — Take the Next Step Towards Reliable Power
+     4. YOUR SOLAR JOURNEY — From Consultation to Clean Power
+     5. CUSTOMER STORIES — Real Homes and Businesses, Real Results
+     6. Final CTA — Take the Next Step Towards Reliable Power
+
+   The "WHY SOLAVITA — From Local Warehouse to Your Doorstep" section
+   was removed per `docs/修改建议.docx` §3 (Oct 2026).
    ═══════════════════════════════════════════════════════════════════════ */
 
 export default function Home() {
@@ -59,7 +53,6 @@ export default function Home() {
 
       <Section1Hero />
       <Section2EntryCards />
-      <Section6PartnerDrivenApproach />
       <Section3SolarVsDiesel />
       <Section5ConsultationToCleanPower />
       <Section7CustomerStories />
@@ -85,32 +78,17 @@ function Section1Hero() {
     <PageHero
       backgroundImage="/images/banner_ng.webp"
       eyebrow="SOLAR POWER FOR HOMES"
-      title={'Ditch The Generator.* Power Your Life.'}
-      body="Slash fuel costs and blackouts with 24/7 solar and battery. From Solavita factory to your home, business, or community."
+      title={'Ditch The Generator.* Power\n*Your Life.'}
+      body={
+        <>
+          Slash fuel costs and blackouts with 24/7 solar and battery.
+          <br />
+          From Solavita factory to your home, business, or community.
+        </>
+      }
       primaryCta={{ label: 'Get Free Quote', onClick: openFormModal }}
       secondaryCta={{ label: 'Explore Solutions', href: '/solutions/home-solar' }}
-    >
-      <HeroPillsRow
-        pills={[
-          {
-            icon: <Wallet className="w-4 h-4 text-white" strokeWidth={1.6} />,
-            text: 'Lower energy costs',
-          },
-          {
-            icon: <Factory className="w-4 h-4 text-white" strokeWidth={1.6} />,
-            text: 'Reduce diesel use',
-          },
-          {
-            icon: <Zap className="w-4 h-4 text-white" strokeWidth={1.6} />,
-            text: 'Power what matters',
-          },
-          {
-            icon: <ShieldCheck className="w-4 h-4 text-white" strokeWidth={1.6} />,
-            text: 'Stable power for key loads',
-          },
-        ]}
-      />
-    </PageHero>
+    />
   )
 }
 
@@ -130,9 +108,6 @@ function Section2EntryCards() {
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
             Solar Solutions for Every <span className="text-gradient">Home and Business</span>
           </h2>
-          <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-            End blackouts and cut diesel costs. We bring factory-direct solar power to keep your life and business running smoothly.
-          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ScenarioPanel
@@ -430,118 +405,6 @@ function StepCard({
         </p>
       </div>
     </div>
-  )
-}
-
-/* ──────────────────────────────────────────────────────────────────────
-   Section 6 — Why we cut your costs
-   Mirrors the DE site's PD2C comparison: traditional middlemen
-   chain (5 steps, +80-150% markup) vs Solavita PD2C (2 steps,
-   direct). Local labels + existing uk-teal / uk-emerald theme tokens.
-   ────────────────────────────────────────────────────────────────────── */
-
-function Section6PartnerDrivenApproach() {
-  return (
-    <section className="relative py-16 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-10">
-          <SectionEyebrow>WHY SOLAVITA</SectionEyebrow>
-          <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            From Local Warehouse to <span className="text-gradient">Your Doorstep</span>
-          </h2>
-          <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-            Direct delivery from local warehouses and professional
-            on-site installation, with fewer middlemen in the
-            process.
-          </p>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-6">
-          {/* TRADITIONAL: 5 middlemen nodes, red treatment, markup badge */}
-          <div className="flex-1 w-full max-w-md rounded-2xl border border-red-300 dark:border-red-800/40 bg-red-50 dark:bg-red-950/30 p-5">
-            <div className="flex items-center justify-center mb-4">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-cw-bold uppercase tracking-wider bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-800/40">
-                Traditional
-              </span>
-            </div>
-            <div className="flex items-center justify-center gap-1 flex-wrap">
-              {[
-                { name: 'Manufacturer', Icon: Factory },
-                { name: 'Wholesaler', Icon: Warehouse },
-                { name: 'Distributor', Icon: Truck },
-                { name: 'Installer', Icon: Wrench },
-                { name: 'Customer', Icon: User },
-              ].map((step, i, arr) => (
-                <div key={i} className="flex items-center">
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-800 border border-red-200 dark:border-red-800/40 flex items-center justify-center">
-                      <step.Icon className="w-6 h-6 text-red-500 dark:text-red-400" strokeWidth={1.6} />
-                    </div>
-                    <span className="text-[10px] text-red-700/80 dark:text-red-300/80 mt-1 whitespace-nowrap">
-                      {step.name}
-                    </span>
-                  </div>
-                  {i < arr.length - 1 && (
-                    <ArrowRight className="w-3 h-3 text-red-300 dark:text-red-700 mx-0.5 flex-shrink-0" strokeWidth={2} />
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 text-center">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-cw-bold bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/40">
-                +80-150% markup
-              </span>
-            </div>
-          </div>
-
-          {/* VS divider */}
-          <div className="md:flex md:items-center md:justify-center md:w-14 md:flex-shrink-0">
-            <div
-              className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 mx-auto"
-              style={{
-                background: 'linear-gradient(135deg, #2F80ED, #22C55E)',
-              }}
-            >
-              <span className="text-sm font-cw-bold text-white">VS</span>
-            </div>
-          </div>
-
-          {/* SOLAVITA PD2C: 2-step direct, green treatment, savings badge */}
-          <div className="flex-1 w-full max-w-md rounded-2xl border border-uk-emerald/40 bg-uk-emerald/5 p-5">
-            <div className="flex items-center justify-center mb-4">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-cw-bold uppercase tracking-wider bg-uk-emerald/15 text-uk-emerald border border-uk-emerald/30">
-                Solavita PD2C
-              </span>
-            </div>
-            <div className="flex items-center justify-center gap-6">
-              {[
-                { name: 'Solavita warehouse', Icon: Factory },
-                { name: 'You', Icon: User },
-              ].map((step, i, arr) => (
-                <div key={i} className="flex items-center">
-                  <div className="flex flex-col items-center">
-                    <div className="w-14 h-14 rounded-full bg-white border border-uk-emerald/30 flex items-center justify-center">
-                      <step.Icon className="w-6 h-6 text-uk-emerald" strokeWidth={1.6} />
-                    </div>
-                    <span className="text-xs text-uk-navy mt-1 font-cw-regular">
-                      {step.name}
-                    </span>
-                  </div>
-                  {i < arr.length - 1 && (
-                    <ArrowRight className="w-4 h-4 text-uk-emerald/50 mx-3 flex-shrink-0" strokeWidth={2} />
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 text-center">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-cw-bold bg-uk-emerald/15 text-uk-emerald border border-uk-emerald/30">
-                Direct to you
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   )
 }
 

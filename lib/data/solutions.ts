@@ -203,6 +203,18 @@ export interface SolutionStat {
   icon: SolutionStatIcon
 }
 
+/**
+ * One row of the 3-item spec table rendered on the collection-page
+ * package cards (Solar / Inverter / Battery), per `docs/修改建议.docx`
+ * §"①三张套餐卡片 ③表格数量3个" (Oct 2026).
+ */
+export interface SolutionSpecSummaryRow {
+  /** Row label — "Solar", "Inverter" or "Battery". */
+  label: string
+  /** Row value, e.g. "4.34 kWp", "3.6 kW", "5 kWh". */
+  value: string
+}
+
 /** Add-on chip in the buy box. */
 export interface SolutionAddon {
   id: string
@@ -223,37 +235,38 @@ export interface SolutionFaq {
   a: string
 }
 
-/** Lucide icon key used by a LOAD & RUNTIME row chip. */
-export type LoadBreakdownIconKey =
+/** Lucide icon key used by an appliance row in the LOAD & RUNTIME card. */
+export type LoadApplianceIconKey =
   | 'tv'
-  | 'lightbulb'
-  | 'snowflake'
+  | 'light'
   | 'fan'
   | 'refrigerator'
-  | 'airvent'
-  | 'washing-machine'
-  | 'droplet'
+  | 'ac'
+  | 'washer'
   | 'microwave'
+  | 'pump'
+  | 'pc'
+  | 'freezer'
 
-/** One appliance chip in the LOAD & RUNTIME breakdown strip. */
-export interface LoadBreakdownRow {
-  icon: LoadBreakdownIconKey
-  /** Display name (e.g. "Lighting", "AC (Light)", "Refrigerator/Freezer"). */
+/** One appliance row in the LOAD & RUNTIME card. */
+export interface LoadAppliance {
+  icon: LoadApplianceIconKey
+  /** Short label as printed on the card, e.g. "AC (1HP)", "AC (2units)". */
   name: string
-  /** Estimated runtime in hours. */
-  hours: number
+  /** Estimated runtime, e.g. "2–4h" (unit included). */
+  duration: string
 }
 
-/** Per-package LOAD & RUNTIME data consumed by `<LoadRow>`. */
-export interface LoadBreakdown {
-  /** Icon shown in the row's header strip. */
-  headerIcon: LoadBreakdownIconKey
-  /** Headline est. runtime (e.g. 4 for LITE, 12 for Flagship). */
-  headerHours: number
-  /** Pill label at the top of the row. */
-  scenarioLabel: string
-  /** One chip per appliance. */
-  rows: LoadBreakdownRow[]
+/**
+ * Per-package appliance-load profile rendered by the LOAD & RUNTIME
+ * card. Source of truth: `docs/套餐组合-负载及运行时间-参考示意.pptx`,
+ * referenced from `docs/修改建议.docx` §"②电器负载" (Oct 2026).
+ */
+export interface LoadProfile {
+  /** Caption printed under the package name, e.g. "[ Powers all essentials together ]". */
+  caption: string
+  /** One row per appliance, in print order. */
+  appliances: LoadAppliance[]
 }
 
 /** One image in the gallery (main + thumbnail strip + lifestyle gallery). */
@@ -286,6 +299,11 @@ export interface SolutionDetail {
   metric?: string
   /** Buy-box headline spec strip — 1–2 large numbers (kWp + kWh). */
   headlineStats: SolutionStat[]
+  /**
+   * 3-row spec table shown on the collection-page package card
+   * (Solar / Inverter / Battery). Per `docs/修改建议.docx` §"③表格数量3个".
+   */
+  specSummary: SolutionSpecSummaryRow[]
   /** Main image + thumbnail strip (drives the left column gallery). */
   galleryImages: SolutionGalleryImage[]
   /** 4 short bullets for the "About this item" icon row. */
@@ -307,10 +325,10 @@ export interface SolutionDetail {
   /** Lifestyle gallery (full-width image strip, 3–4 images). */
   lifestyleGallery: SolutionGalleryImage[]
   /**
-   * Per-package LOAD & RUNTIME data. Drives the LOAD & RUNTIME section
-   * on the collection pages; see `LoadBreakdown` below.
+   * Per-package appliance-load profile. Drives the LOAD & RUNTIME card
+   * on the collection pages; see `LoadProfile` below.
    */
-  loadBreakdown?: LoadBreakdown
+  loadProfile?: LoadProfile
   /**
    * Simulated ₦ price for the my-plan ROI engine. NOT surfaced on the
    * marketing surface — see NG_SIMULATED_PRICE_NGN block above. Remove
@@ -350,11 +368,16 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Built for essential homes, from apartments to starter families. Compact solar and battery for everyday peace of mind.',
     shortIntro:
-      'Built for essential homes, from apartments to starter families. Compact solar and battery for everyday peace of mind.',
+      'Compact power for apartments & starters.',
     metric: 'Start with the essentials',
     headlineStats: [
       { value: '4.34 kWp', label: 'Solar PV', icon: 'solar' },
       { value: '5 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    specSummary: [
+      { label: 'Solar', value: '4.34 kWp' },
+      { label: 'Inverter', value: '3.6 kW' },
+      { label: 'Battery', value: '5 kWh' },
     ],
     galleryImages: [
       { src: '/images/solution_1.webp', alt: 'LITE Essential Backup — compact solar and battery system', label: 'System' },
@@ -426,16 +449,14 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Solar_Essential.webp', alt: 'LITE Essential Backup lifestyle render' },
       { src: '/images/product-module-1.webp', alt: 'Solavita PV module close-up' },
     ],
-    loadBreakdown: {
-      headerIcon: 'tv',
-      headerHours: 4,
-      scenarioLabel: 'Perfect for: Family Homes',
-      rows: [
-        { icon: 'tv', name: 'TV', hours: 4 },
-        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
-        { icon: 'fan', name: 'Ceiling Fan', hours: 12 },
-        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
-        { icon: 'airvent', name: 'AC (Light)', hours: 4 },
+    loadProfile: {
+      caption: '[ Powers all essentials together ]',
+      appliances: [
+        { icon: 'tv', name: 'TV', duration: '2–4h' },
+        { icon: 'light', name: 'Light', duration: '8–10h' },
+        { icon: 'fan', name: 'Fan', duration: '10–12h' },
+        { icon: 'refrigerator', name: 'Refrigerator', duration: '24h' },
+        { icon: 'ac', name: 'AC (1HP)', duration: '4–6h' },
       ],
     },
     imagePath: '/images/LITE-Essential-Backup.webp',
@@ -452,11 +473,16 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Built for everyday families who want comfort without the fuel runs. Higher capacity to slash fuel costs and blackouts.',
     shortIntro:
-      'Built for everyday families who want comfort without the fuel runs. Higher capacity to slash fuel costs and blackouts.',
+      'Comfort for families. Cut fuel & blackout costs.',
     metric: 'Power everyday living',
     headlineStats: [
       { value: '7.44 kWp', label: 'Solar PV', icon: 'solar' },
       { value: '10 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    specSummary: [
+      { label: 'Solar', value: '7.44 kWp' },
+      { label: 'Inverter', value: '6 kW (incl. off-grid)' },
+      { label: 'Battery', value: '10 kWh' },
     ],
     galleryImages: [
       { src: '/images/solution_2.webp', alt: 'HOME Standard — 7.44 kWp solar and 10 kWh battery', label: 'System' },
@@ -528,16 +554,14 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Storage_core.webp', alt: 'HOME Standard lifestyle render' },
       { src: '/images/product-battery-1.webp', alt: 'Solavita battery stack' },
     ],
-    loadBreakdown: {
-      headerIcon: 'tv',
-      headerHours: 6,
-      scenarioLabel: 'Perfect for: Family Homes',
-      rows: [
-        { icon: 'tv', name: 'TV', hours: 6 },
-        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
-        { icon: 'washing-machine', name: 'Washer', hours: 3 },
-        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
-        { icon: 'airvent', name: 'AC (Light)', hours: 8 },
+    loadProfile: {
+      caption: '[ Powers all essentials together ]',
+      appliances: [
+        { icon: 'tv', name: 'TV', duration: '6–8h' },
+        { icon: 'light', name: 'Light', duration: '10–12h' },
+        { icon: 'washer', name: 'Washer', duration: '2–4h' },
+        { icon: 'refrigerator', name: 'Refrigerator', duration: '24h' },
+        { icon: 'ac', name: 'AC (1HP)', duration: '6–8h' },
       ],
     },
     imagePath: '/images/HOME-Standard.webp',
@@ -553,11 +577,16 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Built for larger homes, multi-appliances, and home-based businesses. Ultimate diesel replacement.',
     shortIntro:
-      'Built for larger homes, multi-appliances, and home-based businesses. Ultimate diesel replacement.',
+      'Ultimate diesel replacement for large homes.',
     metric: 'More appliances, more hours',
     headlineStats: [
       { value: '9.92–12.40 kWp', label: 'Solar PV', icon: 'solar' },
       { value: '16 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    specSummary: [
+      { label: 'Solar', value: '9.92–12.40 kWp' },
+      { label: 'Inverter', value: '8–12 kW (incl. off-grid)' },
+      { label: 'Battery', value: '16 kWh' },
     ],
     galleryImages: [
       { src: '/images/solution_3.webp', alt: 'HOME High-spec — 16 modules and 16 kWh battery', label: 'System' },
@@ -629,17 +658,14 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Premium_backup.webp', alt: 'HOME High-spec lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack' },
     ],
-    loadBreakdown: {
-      headerIcon: 'tv',
-      headerHours: 6,
-      scenarioLabel: 'Perfect for: Family Homes',
-      rows: [
-        { icon: 'tv', name: 'TV', hours: 6 },
-        { icon: 'lightbulb', name: 'Lighting', hours: 10 },
-        { icon: 'washing-machine', name: 'Washer', hours: 3 },
-        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
-        { icon: 'airvent', name: 'AC (Light)', hours: 8 },
-        { icon: 'microwave', name: 'Microwave', hours: 2 },
+    loadProfile: {
+      caption: '[ Powers all essentials together ]',
+      appliances: [
+        { icon: 'tv', name: 'TV', duration: '8–10h' },
+        { icon: 'washer', name: 'Washer', duration: '2–4h' },
+        { icon: 'microwave', name: 'Microwave', duration: '2–4h' },
+        { icon: 'refrigerator', name: 'Refrigerator', duration: '24h' },
+        { icon: 'ac', name: 'AC (1HP)', duration: '6–8h' },
       ],
     },
     imagePath: '/images/HOME-High-spec.webp',
@@ -655,11 +681,16 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting fuel runs.',
     shortIntro:
-      'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting fuel runs.',
+      'Power for shops & clinics. Beat outages.',
     metric: 'Three-phase starter',
     headlineStats: [
       { value: '11.78 kWp', label: 'Solar PV', icon: 'solar' },
       { value: '16 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    specSummary: [
+      { label: 'Solar', value: '11.78 kWp' },
+      { label: 'Inverter', value: '10 kW' },
+      { label: 'Battery', value: '16 kWh' },
     ],
     galleryImages: [
       { src: '/images/solution_3.webp', alt: 'BUSINESS Entry 3-Phase — three-phase starter', label: 'System' },
@@ -731,17 +762,14 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/electronic.webp', alt: 'Three-phase electrical equipment' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack' },
     ],
-    loadBreakdown: {
-      headerIcon: 'tv',
-      headerHours: 8,
-      scenarioLabel: 'Heavy Duty & Business',
-      rows: [
-        { icon: 'tv', name: 'TV', hours: 8 },
-        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
-        { icon: 'droplet', name: 'Pump', hours: 4 },
-        { icon: 'refrigerator', name: 'Refrigerator', hours: 24 },
-        { icon: 'airvent', name: 'AC (Light)', hours: 10 },
-        { icon: 'microwave', name: 'Microwave', hours: 2 },
+    loadProfile: {
+      caption: '[ Powers all essentials together ]',
+      appliances: [
+        { icon: 'light', name: 'Light', duration: '24h' },
+        { icon: 'pump', name: 'Pump', duration: '1–2h' },
+        { icon: 'refrigerator', name: 'Refrigerator', duration: '24h' },
+        { icon: 'pc', name: 'PC', duration: '6–8h' },
+        { icon: 'ac', name: 'AC', duration: '8–10h' },
       ],
     },
     imagePath: '/images/BUSINESS-Entry-3-Phase.webp',
@@ -757,11 +785,16 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Built for SMEs, F&B, restaurants, and offices. Power daytime loads with reliable backup to stay ahead of outages.',
     shortIntro:
-      'Built for SMEs, F&B, restaurants, and offices. Power daytime loads with reliable backup to stay ahead of outages.',
+      'Reliable power for offices & F&B.',
     metric: 'Dependable daytime power',
     headlineStats: [
       { value: '17.36 kWp', label: 'Solar PV', icon: 'solar' },
       { value: '32 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    specSummary: [
+      { label: 'Solar', value: '17.36 kWp' },
+      { label: 'Inverter', value: '15 kW' },
+      { label: 'Battery', value: '32 kWh' },
     ],
     galleryImages: [
       { src: '/images/solution_4.webp', alt: 'BUSINESS Standard 3-Phase — 17.36 kWp solar and 32 kWh battery', label: 'System' },
@@ -833,16 +866,14 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Smart_home.webp', alt: 'BUSINESS Standard lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
-    loadBreakdown: {
-      headerIcon: 'tv',
-      headerHours: 10,
-      scenarioLabel: 'Heavy Duty & Business',
-      rows: [
-        { icon: 'tv', name: 'TV', hours: 10 },
-        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
-        { icon: 'droplet', name: 'Pump', hours: 6 },
-        { icon: 'refrigerator', name: 'Refrigerator/Freezer', hours: 12 },
-        { icon: 'airvent', name: 'AC (Light)', hours: 12 },
+    loadProfile: {
+      caption: '[ Powers all essentials together ]',
+      appliances: [
+        { icon: 'light', name: 'Light', duration: '24h' },
+        { icon: 'freezer', name: 'Freezer', duration: '6–8h' },
+        { icon: 'pump', name: 'Pump', duration: '2–4h' },
+        { icon: 'pc', name: 'PC', duration: '10–12h' },
+        { icon: 'ac', name: 'AC (2units)', duration: '8–10h' },
       ],
     },
     imagePath: '/images/BUSINESS-Standard-3-Phase.webp',
@@ -858,11 +889,16 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward ditching diesel.',
     shortIntro:
-      'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward ditching diesel.',
+      'High capacity for supermarkets & hotels.',
     metric: 'Substantial energy needs',
     headlineStats: [
       { value: '23.56 kWp', label: 'Solar PV', icon: 'solar' },
       { value: '32 kWh', label: 'Battery', icon: 'battery' },
+    ],
+    specSummary: [
+      { label: 'Solar', value: '23.56 kWp' },
+      { label: 'Inverter', value: '20 kW' },
+      { label: 'Battery', value: '32 kWh' },
     ],
     galleryImages: [
       { src: '/images/solution_4.webp', alt: 'BUSINESS Flagship 3-Phase — 23.56 kWp solar and 32 kWh battery', label: 'System' },
@@ -934,16 +970,14 @@ export const solutionDetails: SolutionDetail[] = [
       { src: '/images/Smart_home.webp', alt: 'BUSINESS Flagship lifestyle render' },
       { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
-    loadBreakdown: {
-      headerIcon: 'lightbulb',
-      headerHours: 12,
-      scenarioLabel: 'Heavy Duty & Business',
-      rows: [
-        { icon: 'lightbulb', name: 'Lighting', hours: 12 },
-        { icon: 'droplet', name: 'Pump', hours: 8 },
-        { icon: 'refrigerator', name: 'Refrigerator', hours: 6 },
-        { icon: 'airvent', name: 'AC (Light)', hours: 12 },
-        { icon: 'refrigerator', name: 'Freezer', hours: 6 },
+    loadProfile: {
+      caption: '[ Powers all essentials together ]',
+      appliances: [
+        { icon: 'light', name: 'Light', duration: '24h' },
+        { icon: 'freezer', name: 'Freezer', duration: '8–10h' },
+        { icon: 'pump', name: 'Pump', duration: '4–6h' },
+        { icon: 'pc', name: 'PC', duration: '10–12h' },
+        { icon: 'ac', name: 'AC (2units)', duration: '10–12h' },
       ],
     },
     imagePath: '/images/BUSINESS-Flagship-3-Phase.webp',

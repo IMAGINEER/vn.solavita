@@ -29,7 +29,7 @@ const businessFaqs: CollectionFaq[] = [
   },
   {
     q: 'What happens when the power goes out?',
-    a: 'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
+    a: 'Essential systems stay on. With an instant automatic switch to battery power, your business avoids downtime, keeps data and operations secure, and maintains peak efficiency day or night.',
   },
   {
     q: 'How long will the battery last?',

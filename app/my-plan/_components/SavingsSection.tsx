@@ -51,23 +51,6 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
       sub: 'Net lifetime saving (₦, post-degradation)',
       highlight: metrics.total30YearReturnNgn > 0,
     },
-    {
-      label: 'Annual Solar Generation',
-      value: formatKwh(metrics.annualGenerationKwh),
-      sub: 'Estimated per year (year 1)',
-    },
-    {
-      label: 'Generator Fuel Saved',
-      value: formatNGN(metrics.annualGeneratorOffsetNgn),
-      sub: 'Capped by your reported fuel budget',
-      highlight: true,
-    },
-    {
-      label: 'ROI',
-      value: `${metrics.roiPct}%`,
-      sub: '30-year return on investment',
-      highlight: metrics.roiPct > 0,
-    },
   ]
 
   return (
@@ -118,7 +101,7 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
         className="inline-flex items-center gap-1 text-uk-teal hover:text-uk-teal-dark text-sm font-cw-bold transition-colors mt-2"
         aria-expanded={detailedOpen}
       >
-        View detailed ROI breakdown
+        Key Assumptions
         <ChevronDown
           className={'w-4 h-4 transition-transform duration-200 ' + (detailedOpen ? 'rotate-180' : '')}
           strokeWidth={2}
@@ -128,7 +111,7 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
       {detailedOpen && (
         <div className="rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5 text-sm text-uk-slate leading-relaxed">
           <strong className="block text-uk-navy font-cw-bold mb-2">
-            ROI breakdown
+            Key Assumptions
           </strong>
           <div className="space-y-1 tabular-nums">
             <div className="flex justify-between">

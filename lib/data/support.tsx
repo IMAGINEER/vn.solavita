@@ -25,6 +25,23 @@ export interface SupportCategory {
     | 'monitor'
     | 'shield'
     | 'life-buoy'
+  /**
+   * Label of the card's call-to-action. Per `docs/修改建议.docx`
+   * "Support页面修改" (Oct 2026) the four visible cards no longer all
+   * read "View FAQs".
+   */
+  ctaLabel: string
+  /**
+   * Where the CTA goes. A `#`-prefixed value is an on-page anchor to
+   * the matching FAQ group; an absolute path is a route.
+   */
+  ctaHref: string
+  /**
+   * Set to false to hide the card from the grid while keeping the
+   * category's FAQ group on the page. The Monitoring card was removed
+   * per `docs/修改建议.docx` (Oct 2026) but its FAQ content stays.
+   */
+  card?: boolean
 }
 
 export const supportCategories: SupportCategory[] = [
@@ -34,6 +51,8 @@ export const supportCategories: SupportCategory[] = [
     description:
       'Survey, install day, what to expect and how to prepare your home.',
     icon: 'wrench',
+    ctaLabel: 'How to Install',
+    ctaHref: '#faq-installation',
   },
   {
     id: 'product',
@@ -41,6 +60,8 @@ export const supportCategories: SupportCategory[] = [
     description:
       'Specs, manuals and downloads for panels, batteries and inverters.',
     icon: 'package',
+    ctaLabel: 'Download',
+    ctaHref: '#faq-product',
   },
   {
     id: 'monitoring',
@@ -48,6 +69,9 @@ export const supportCategories: SupportCategory[] = [
     description:
       'HEMS app setup, alerts, reports and sharing access with family.',
     icon: 'monitor',
+    ctaLabel: 'View FAQs',
+    ctaHref: '#faq-monitoring',
+    card: false,
   },
   {
     id: 'warranty',
@@ -55,6 +79,8 @@ export const supportCategories: SupportCategory[] = [
     description:
       'Coverage, claims, transfer of ownership and what is included.',
     icon: 'shield',
+    ctaLabel: 'Download',
+    ctaHref: '#faq-warranty',
   },
   {
     id: 'troubleshooting',
@@ -62,6 +88,8 @@ export const supportCategories: SupportCategory[] = [
     description:
       'Common issues, error codes and what to do before booking a visit.',
     icon: 'life-buoy',
+    ctaLabel: 'Contact Us',
+    ctaHref: '/contact-us',
   },
 ]
 
