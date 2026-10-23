@@ -1,6 +1,33 @@
 # 修改建议.docx — Round 2 (Oct 23) — remaining items for confirmation
 
-Status: **AWAITING USER CONFIRMATION** — do not execute until each item is approved.
+Status: **RESOLVED 2026-10-23** — the user confirmed the data-conflict decisions below and
+deferred all three new-page builds. No further code changes are required: the confirmed
+answers match what was already implemented in commit `e6fce82`.
+
+## Confirmed decisions (2026-10-23)
+
+| # | Question | Decision | Code state |
+|---|---|---|---|
+| A1 | HOME High-spec PV capacity | **9.92–12.40 kWp** | Already implemented |
+| A2 | HOME High-spec battery | **16 kWh** | Already implemented |
+| A3/A4 | TV vs AC runtime source | **The reference PPTX** | Already implemented |
+| A5 | Price currency | **Keep NGN** | Already implemented (no change) |
+| A6 | /my-plan savings | **Keep the live NGN calculation** | Already implemented (no change) |
+| B1 | For Microgrid page | **Deferred** | Not built |
+| B2 | Products section (4 pages + downloads) | **Deferred** | Not built |
+| B3 | Support installation Q&A page | **Deferred** | Not built |
+
+Consequences of the deferrals:
+
+- **A7 stays open.** The "7 days" lead time and "Solavita-certified engineers" wording
+  were only going to be published on the B3 installation page, which is deferred. The
+  site's existing `TBD — Confirmed installation scope and lead time` markers stay as-is.
+- **B4 (header nav restructure) stays open.** The "Solutions ▾ / Products ▾" rename
+  would create dropdown entries pointing at pages that do not exist, so the nav keeps
+  `For Home ▾` / `For Business ▾` until B1 and B2 land.
+- **B5 stays open.** The "Components in Detail" section on the collection pages is
+  retained — the docx's 5-part list omits it, but an omission is not a delete
+  instruction, and removing it now would lose the content while B2 is deferred.
 
 Source: `docs/修改建议.docx` (modified 2026-10-23 09:02)
 References: `docs/套餐组合-负载及运行时间-参考示意.pptx`, `docs/Modules&Inverter&Battery&All in One ESS.pptx`
