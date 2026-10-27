@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Download, Mail, Phone } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
+import LocaleMenu from '@/components/LocaleMenu'
 import PartnerFormModal, {
   usePartnerFormModalEvent,
 } from '@/components/PartnerFormModal'
@@ -78,23 +79,6 @@ const FlagUK = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
     <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="3.5" />
     <path d="M30,0 V30 M0,15 H60" stroke="#ffffff" strokeWidth="10" />
     <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
-  </svg>
-)
-
-/* ────────────────────────────────────────────────────────────────────────
-   Nigerian flag - three vertical stripes (green / white / green).
-   Aspect ratio matches FlagUK so the locale pill stays the same width.
-   Nigerian green per Wikipedia: #008751.
-   ──────────────────────────────────────────────────────────────────────── */
-const FlagNG = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
-  <svg
-    className={`${className} rounded-sm overflow-hidden flex-shrink-0`}
-    viewBox="0 0 60 30"
-    aria-hidden="true"
-  >
-    <rect x="0"  y="0" width="20" height="30" fill="#008751" />
-    <rect x="20" y="0" width="20" height="30" fill="#FFFFFF" />
-    <rect x="40" y="0" width="20" height="30" fill="#008751" />
   </svg>
 )
 
@@ -366,13 +350,10 @@ export default function Footer({
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left min-w-0 flex-1">
               © 2026 <span className="text-red-400/90 font-cw-bold">TBD — Verified Nigerian legal entity name</span>. All rights reserved.
             </p>
-            <div
-              className="flex items-center gap-2 text-white/50 text-xs font-cw-regular shrink-0 self-center md:self-auto"
-              aria-label="Locale: Nigeria, English"
-            >
-              <FlagNG className="w-5 h-3.5" />
-              <span>Nigeria · English</span>
-            </div>
+            {/* Locale picker — an expandable menu of every Solavita /
+                SKYWORTH Solar site. The old static "flag + label" block
+                lived here; see components/LocaleMenu.tsx. */}
+            <LocaleMenu />
           </div>
         </div>
       </div>
