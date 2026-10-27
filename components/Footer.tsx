@@ -24,10 +24,11 @@ gsap.registerPlugin(ScrollTrigger)
  *   │  Logo                │  Solutions  Company                 │
  *   │  Tagline             │  Support                            │
  *   │  Legal info (TBD)    │  Legal                              │
+ *   │  Social (Facebook)   │                                     │
  *   ├────────────────────────────────────────────────────────────┤
  *   │  Sub-footer                                              │
  *   │  ──────────────────────────────────────────────────────────│
- *   │  Copyright (TBD)        Nigeria · English                  │
+ *   │  Copyright (TBD)        Locale menu (flag + country list)  │
  *   └────────────────────────────────────────────────────────────┘
  *
  * Footer surface colour is driven by theme rules (`.light-mode footer`,
@@ -209,6 +210,30 @@ export default function Footer({
               <span className="text-red-400/90">TBD — Verified CAC registration number</span>
               <br />
               <span className="text-red-400/90">TBD — Verified Nigeria registered office address</span>
+            </div>
+            {/* Social accounts — Facebook only for the NG site.
+                The round icon button matches the DE / IT / UK footers
+                (`w-9 h-9 rounded-full border`), and the `border-white/10`
+                + `text-white` classes are picked up by the theme rules
+                in app/globals.css, so the button stays legible on both
+                the light (#EEF2F7) and dark (#060E1A) footer surfaces. */}
+            <div className="mt-5 flex gap-3">
+              <a
+                href="https://www.facebook.com/61551391782729"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center transition-all hover:bg-white/10 hover:border-white/30"
+              >
+                <svg
+                  className="w-4 h-4 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
             </div>
           </div>
 
