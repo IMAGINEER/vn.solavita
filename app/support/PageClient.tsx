@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SupportHero from '@/components/support/Hero'
 import SupportCategories from '@/components/support/SupportCategories'
+import DownloadSection from '@/components/support/DownloadSection'
 import FAQ from '@/components/support/FAQ'
 import ContactSupport from '@/components/support/ContactSupport'
 import CTA from '@/components/solutions/CTA'
@@ -13,6 +14,11 @@ import CTA from '@/components/solutions/CTA'
  *
  * Composition (per project brief):
  *   Hero / Search → Support Categories → FAQ → Contact Support → CTA
+ *
+ * The Download block sits between the categories and the FAQ — it is
+ * where the "Product → Download" and "Warranty → Download" card CTAs
+ * land. See `docs/修改建议.docx` §"Support页面修改" (Oct 2026) and the
+ * product PPTX slide 7.
  *
  * Search input is visual-only (no backend) per the project brief.
  * FAQ accordion uses motion/react for height transitions; no external
@@ -26,6 +32,8 @@ export default function SupportPage() {
       <SupportHero />
 
       <SupportCategories />
+
+      <DownloadSection />
 
       <FAQ />
 

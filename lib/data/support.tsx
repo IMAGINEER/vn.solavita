@@ -52,7 +52,7 @@ export const supportCategories: SupportCategory[] = [
       'Survey, install day, what to expect and how to prepare your home.',
     icon: 'wrench',
     ctaLabel: 'How to Install',
-    ctaHref: '#faq-installation',
+    ctaHref: '/support/installation',
   },
   {
     id: 'product',
@@ -61,7 +61,7 @@ export const supportCategories: SupportCategory[] = [
       'Specs, manuals and downloads for panels, batteries and inverters.',
     icon: 'package',
     ctaLabel: 'Download',
-    ctaHref: '#faq-product',
+    ctaHref: '#download',
   },
   {
     id: 'monitoring',
@@ -80,7 +80,7 @@ export const supportCategories: SupportCategory[] = [
       'Coverage, claims, transfer of ownership and what is included.',
     icon: 'shield',
     ctaLabel: 'Download',
-    ctaHref: '#faq-warranty',
+    ctaHref: '#download',
   },
   {
     id: 'troubleshooting',

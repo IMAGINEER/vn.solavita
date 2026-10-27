@@ -1030,3 +1030,56 @@ export function allSolutionSlugs(): SolutionSlug[] {
 export function getSolutionBySlug(slug: string): SolutionDetail | undefined {
   return solutionDetails.find((d) => d.slug === slug)
 }
+
+/* ────────────────────────────────────────────────────────────────────────
+   Shared FAQ copy.
+
+   The four Q&A come from `docs/修改建议.docx` §6 (Oct 2026). The HOME
+   set and the BUSINESS set are kept here rather than in the two page
+   files so the microgrid page can reuse the BUSINESS set, as the docx
+   asks ("⑤FAQ（沿用Business套餐详情页的FAQ）").
+   ──────────────────────────────────────────────────────────────────────── */
+
+/** One Q&A pair on a solution collection page. */
+export interface SolutionFaqItem {
+  q: string
+  a: string
+}
+
+export const homeSolutionFaqs: SolutionFaqItem[] = [
+  {
+    q: 'Will this really save me money?',
+    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
+  },
+  {
+    q: 'What happens when the power goes out?',
+    a: 'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
+  },
+  {
+    q: 'How long will the battery last?',
+    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
+  },
+  {
+    q: 'Is it hard to maintain?',
+    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
+  },
+]
+
+export const businessSolutionFaqs: SolutionFaqItem[] = [
+  {
+    q: 'Will this really save me money?',
+    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
+  },
+  {
+    q: 'What happens when the power goes out?',
+    a: 'Essential systems stay on. With an instant automatic switch to battery power, your business avoids downtime, keeps data and operations secure, and maintains peak efficiency day or night.',
+  },
+  {
+    q: 'How long will the battery last?',
+    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
+  },
+  {
+    q: 'Is it hard to maintain?',
+    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
+  },
+]

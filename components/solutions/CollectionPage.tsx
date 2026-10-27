@@ -26,10 +26,12 @@ import Footer from '@/components/Footer'
 import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import TrustBar from '@/components/TrustBar'
+import FaqSection from '@/components/solutions/FaqSection'
 import type {
   LoadApplianceIconKey,
   LoadProfile,
   SolutionDetail,
+  SolutionFaqItem,
 } from '@/lib/data/solutions'
 import { openFormModal } from '@/lib/form-modal'
 
@@ -71,10 +73,7 @@ export interface CollectionContextCopy {
   body: string
 }
 
-export interface CollectionFaq {
-  q: string
-  a: string
-}
+export type CollectionFaq = SolutionFaqItem
 
 export interface CollectionPageProps {
   scenario: 'home' | 'business'
@@ -125,8 +124,8 @@ export default function CollectionPage(props: CollectionPageProps) {
       {/* Tailored CTA */}
       <TailoredCtaSection cta={props.tailoredCta} />
 
-      {/* Smart Monitor & APP Control — placeholder pending reference images */}
-      <SmartMonitorSection />
+      {/* Monitoring System — app download block */}
+      <MonitoringSystemSection />
 
       {/* FAQ */}
       <FaqSection faqs={props.faqs} />
@@ -300,59 +299,6 @@ function TailoredCtaButton({
     <button type="button" onClick={cta.onClick} className={cls}>
       {cta.label}
     </button>
-  )
-}
-
-/* ──────────────────────────────────────────────────────────────────────
-   FAQ
-   ────────────────────────────────────────────────────────────────────── */
-
-function FaqSection({ faqs }: { faqs: CollectionFaq[] }) {
-  const [openIdx, setOpenIdx] = useState<number | null>(0)
-  return (
-    <section id="faq" className="relative py-16 md:py-20 bg-uk-line/30">
-      <div className="max-w-3xl mx-auto px-6">
-        <div className="text-center mb-8">
-          <SectionEyebrow>FAQ</SectionEyebrow>
-          <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Frequently Asked <span className="text-gradient">Questions</span>
-          </h2>
-        </div>
-        <div className="space-y-3">
-          {faqs.map((item, i) => {
-            const open = openIdx === i
-            return (
-              <div
-                key={i}
-                className="rounded-2xl border border-uk-line bg-white overflow-hidden"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenIdx(open ? null : i)}
-                  className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
-                  aria-expanded={open}
-                >
-                  <span className="text-sm md:text-base font-cw-bold text-uk-navy">
-                    {item.q}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-uk-slate flex-shrink-0 transition-transform duration-200 ${
-                      open ? 'rotate-180' : ''
-                    }`}
-                    strokeWidth={2}
-                  />
-                </button>
-                {open && (
-                  <div className="px-5 pb-5 text-sm text-uk-slate font-cw-regular leading-relaxed">
-                    {item.a}
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </section>
   )
 }
 
@@ -570,7 +516,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
       'Seamless on-/off-grid switching keeps essentials running through outages',
       'High PV oversizing headroom for maximum harvest',
       'Three-phase models for higher-demand business sites',
-      'HEMS-ready — HEMS App exposes live generation, load and battery state',
+      'Monitoring-ready — the app exposes live generation, load and battery state',
       'OTA firmware updates — keeps the inverter current without a site visit',
     ],
     images: [
@@ -868,14 +814,19 @@ function ProductSection() {
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   Solavita HEMS App — adapted from components/hems/PhoneShowcase.tsx.
+   Monitoring System — adapted from components/hems/PhoneShowcase.tsx.
    Centered phone with the dashboard screenshot + App Store / Google
    Play download CTAs. Above the phone, a 2-version rotating headline
    (motion AnimatePresence cross-fade) so the section reads as a
    single live product without splitting into two stacked cards.
+
+   Named "Monitoring System" rather than "HEMS App": HEMS stands for
+   Home Energy Management System, so it is the wrong label on the
+   BUSINESS collection page — both collection pages use the neutral
+   name and share this component.
    ────────────────────────────────────────────────────────────────────── */
 
-const HEMS_HEADLINE_VARIANTS: ReadonlyArray<{
+const MONITORING_HEADLINE_VARIANTS: ReadonlyArray<{
   title: ReactNode
   body: string
 }> = [
@@ -901,9 +852,9 @@ const HEMS_HEADLINE_VARIANTS: ReadonlyArray<{
   },
 ]
 
-const HEMS_ROTATE_MS = 5000
+const MONITORING_ROTATE_MS = 5000
 
-function SmartMonitorSection() {
+function MonitoringSystemSection() {
   const [variantIdx, setVariantIdx] = useState(0)
   // Auto-rotate the headline/body pair. Pause when the section leaves
   // the viewport so the AnimatePresence churn doesn't waste CPU off
@@ -919,8 +870,8 @@ function SmartMonitorSection() {
           if (entry.isIntersecting) {
             if (timer == null) {
               timer = setInterval(() => {
-                setVariantIdx((i) => (i + 1) % HEMS_HEADLINE_VARIANTS.length)
-              }, HEMS_ROTATE_MS)
+                setVariantIdx((i) => (i + 1) % MONITORING_HEADLINE_VARIANTS.length)
+              }, MONITORING_ROTATE_MS)
             }
           } else if (timer != null) {
             clearInterval(timer)
@@ -937,23 +888,22 @@ function SmartMonitorSection() {
     }
   }, [])
 
-  const variant = HEMS_HEADLINE_VARIANTS[variantIdx]
+  const variant = MONITORING_HEADLINE_VARIANTS[variantIdx]
 
   return (
     <section
       ref={sectionRef}
-      id="smart-monitor"
+      id="monitoring-system"
       className="relative py-16 md:py-24 bg-sv-blue/10 overflow-hidden scroll-mt-24"
     >
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title block — same shape as PhoneShowcase, with rotating
-            headline / body that cross-fades every HEMS_ROTATE_MS. */}
+        {/* Title block — trajectory matches every other section on the
+            page (SectionEyebrow + `text-3xl md:text-4xl` h2 with `mt-5`).
+            Only the headline/body pair rotates, cross-fading every
+            MONITORING_ROTATE_MS. */}
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
-            <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Solavita HEMS App
-          </span>
-          <div className="relative min-h-[1em]">
+          <SectionEyebrow>MONITORING SYSTEM</SectionEyebrow>
+          <div className="relative mt-5 min-h-[1em]">
             <AnimatePresence mode="wait">
               <motion.h2
                 key={`title-${variantIdx}`}
@@ -961,7 +911,7 @@ function SmartMonitorSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight"
+                className="text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight"
               >
                 {variant.title}
               </motion.h2>
@@ -986,7 +936,7 @@ function SmartMonitorSection() {
               click to switch manually. Hidden from screen readers since
               the rotation is decorative. */}
           <div className="mt-5 flex items-center justify-center gap-2">
-            {HEMS_HEADLINE_VARIANTS.map((_, i) => (
+            {MONITORING_HEADLINE_VARIANTS.map((_, i) => (
               <button
                 key={i}
                 type="button"
@@ -1009,7 +959,7 @@ function SmartMonitorSection() {
           <div className="relative rounded-[2.5rem] border-[6px] border-uk-navy/80 bg-sv-navy overflow-hidden shadow-2xl">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-sv-dark rounded-b-2xl z-10" />
             <img
-              alt="Solavita HEMS App - Energy Dashboard"
+              alt="Solavita monitoring system - energy dashboard"
               loading="lazy"
               className="w-full h-auto block"
               src="/images/cloud-app-data.webp"

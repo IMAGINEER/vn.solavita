@@ -29,10 +29,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // old overview did.
     { path: '/solutions/home-solar', priority: 0.9 },
     { path: '/solutions/business-solar', priority: 0.9 },
+    // Third "Solutions" entry — the 125 kW / 261 kWh all-in-one ESS
+    // microgrid product. Added per `docs/修改建议.docx` (Oct 2026).
+    { path: '/solutions/microgrid', priority: 0.9 },
+    // "Products (产品中心)" section — the hub plus the four product
+    // detail pages. Added per `docs/修改建议.docx` (Oct 2026).
+    { path: '/products', priority: 0.8 },
+    { path: '/products/module', priority: 0.7 },
+    { path: '/products/inverter', priority: 0.7 },
+    { path: '/products/battery', priority: 0.7 },
+    { path: '/products/all-in-one-ess', priority: 0.7 },
     { path: '/cases', priority: 0.8 },
     { path: '/about-us', priority: 0.7 },
     { path: '/hems', priority: 0.6 },
     { path: '/support', priority: 0.7 },
+    // "How to Install" page — the target of the Support page's
+    // Installation card CTA.
+    { path: '/support/installation', priority: 0.6 },
     { path: '/for-partners', priority: 0.6 },
     { path: '/contact-us', priority: 0.6 },
     { path: '/blog', priority: 0.8 },

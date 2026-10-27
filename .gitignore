@@ -23,10 +23,17 @@ yarn-error.log*
 AGENTS.md
 CLAUDE.md
 
-# Session-specific handoff / planning docs (may contain real env values referenced from .env.local).
-# Kept locally for Claude Code session continuity; not for VCS / Netlify deploy.
-docs/handoff-*.md
-docs/roadmap-*.md
+# Working documents (briefs, PPTX/DOCX change requests, plans, specs).
+# Session-local source material — may embed values from .env.local, and
+# is not part of the shipped site. Kept on disk for continuity, never
+# committed and never deployed to Netlify.
+docs/
+
+# Supabase CLI temp artifacts (version stamps, cached project state)
+supabase/.temp/
+
+# SEO audit scratch sheet — working notes, not site content
+SEO_PHASE3_TODO.csv
 
 # Local MCP config (URLs only, no secrets — but excluded for safety)
 .mcp.json

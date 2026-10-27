@@ -1,10 +1,9 @@
 'use client'
 
 import CollectionPage, {
-  type CollectionFaq,
   type CollectionPageProps,
 } from '@/components/solutions/CollectionPage'
-import { solutionDetails } from '@/lib/data/solutions'
+import { solutionDetails, homeSolutionFaqs } from '@/lib/data/solutions'
 import { openFormModal } from '@/lib/form-modal'
 
 /**
@@ -19,25 +18,6 @@ import { openFormModal } from '@/lib/form-modal'
  */
 
 const homeSolutions = solutionDetails.filter((p) => p.segment === 'homes')
-
-const homeFaqs: CollectionFaq[] = [
-  {
-    q: 'Will this really save me money?',
-    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
-  },
-  {
-    q: 'What happens when the power goes out?',
-    a: 'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
-  },
-  {
-    q: 'How long will the battery last?',
-    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
-  },
-  {
-    q: 'Is it hard to maintain?',
-    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
-  },
-]
 
 export default function HomeSolarPage() {
   const props: CollectionPageProps = {
@@ -64,7 +44,7 @@ export default function HomeSolarPage() {
       body: 'If your appliances, roof layout or backup requirements are outside what the home-solar solutions cover, request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your home.',
       primaryCta: { label: 'Request a tailored quote', href: '/contact-us' },
     },
-    faqs: homeFaqs,
+    faqs: homeSolutionFaqs,
   }
   return <CollectionPage {...props} />
 }

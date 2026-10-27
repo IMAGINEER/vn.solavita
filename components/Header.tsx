@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import { ChevronDown, ChevronLeft } from 'lucide-react'
-import { solutionDetails, type SolutionDetail } from '@/lib/data/solutions'
+import { ChevronDown, ChevronLeft, ArrowRight, Download } from 'lucide-react'
 import { openFormModal } from '@/lib/form-modal'
 
 export interface HeaderNavItem {
@@ -11,12 +10,11 @@ export interface HeaderNavItem {
   href: string
   /**
    * If set, the desktop link opens a hover-dropdown of this kind. The
-   * `home-solutions` / `business-solutions` variants surface the 3
-   * scenario-specific solution cards in a panel under the trigger; both
-   * are added per the user's directive to mirror the UK header treatment
-   * for the new collection pages.
+   * `solutions` / `products` variants surface the entries listed in
+   * `NAV_DROPDOWNS` — the information architecture from
+   * `docs/修改建议.docx` (Oct 2026).
    */
-  dropdown?: 'home-solutions' | 'business-solutions'
+  dropdown?: 'solutions' | 'products'
 }
 
 interface HeaderCTA {
@@ -39,13 +37,90 @@ interface HeaderProps {
   cta?: HeaderCTA
 }
 
+/** One entry inside a nav dropdown. */
+interface NavDropdownEntry {
+  label: string
+  href: string
+  description: string
+}
+
+/** A highlight CTA pinned under a dropdown's entries. */
+interface NavDropdownQuickCta {
+  label: string
+  href: string
+  description: string
+}
+
+interface NavDropdownGroup {
+  entries: NavDropdownEntry[]
+  /** Optional accent CTA, rendered above the "Get Free Quote" button. */
+  quickCta?: NavDropdownQuickCta
+}
+
+/**
+ * The two dropdown groups, per the IA table in `docs/修改建议.docx`
+ * (Oct 2026):
+ *
+ *   Solutions  → For Home / For Business / For Microgrid
+ *   Products   → Module & Inverter & Battery / All-in-One ESS
+ *
+ * The Solutions group also carries a quick CTA to the Solavita HEMS
+ * app so the download path is one hover away from the main nav.
+ */
+const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
+  solutions: {
+    entries: [
+      {
+        label: 'For Home',
+        href: '/solutions/home-solar',
+        description:
+          'HOME series — three packaged solar and battery solutions for households.',
+      },
+      {
+        label: 'For Business',
+        href: '/solutions/business-solar',
+        description:
+          'BUSINESS series — three packaged three-phase solutions for shops, SMEs and larger sites.',
+      },
+      {
+        label: 'For Microgrid',
+        href: '/solutions/microgrid',
+        description:
+          '125 kW / 261 kWh all-in-one ESS for factories, supermarkets, community mini-grids and telecom sites.',
+      },
+    ],
+    quickCta: {
+      label: 'Download HEMS App',
+      href: '/hems',
+      description:
+        'Track generation, battery and load from your phone — iOS and Android.',
+    },
+  },
+  products: {
+    entries: [
+      {
+        label: 'Module & Inverter & Battery',
+        href: '/products',
+        description:
+          'Specifications, core hardware and advantages for every component in the range.',
+      },
+      {
+        label: 'All-in-One ESS',
+        href: '/products/all-in-one-ess',
+        description:
+          'The 125 kW / 261 kWh C&I energy storage cabinet — one box for a whole site.',
+      },
+    ],
+  },
+}
+
 const DEFAULT_NAV: HeaderNavItem[] = [
-  // For Home and For Business are both hover-dropdowns that surface the 3
-  // scenario-specific solution cards. The trigger link still navigates to
-  // the matching collection page when the user clicks (or taps) the
-  // label, so the dropdown is purely a discovery aid, not the only path.
-  { label: 'For Home', href: '/solutions/home-solar', dropdown: 'home-solutions' },
-  { label: 'For Business', href: '/solutions/business-solar', dropdown: 'business-solutions' },
+  // "Solutions" and "Products" are hover-dropdowns. The trigger link
+  // still navigates to the section landing page when the user clicks
+  // (or taps) the label, so the dropdown is a discovery aid, not the
+  // only path to the content.
+  { label: 'Solutions', href: '/solutions/home-solar', dropdown: 'solutions' },
+  { label: 'Products', href: '/products', dropdown: 'products' },
   { label: 'Cases', href: '/cases' },
   { label: 'About Us', href: '/about-us' },
   { label: 'Support', href: '/support' },
@@ -55,20 +130,6 @@ const DEFAULT_NAV: HeaderNavItem[] = [
 const DEFAULT_CTA: HeaderCTA = {
   label: 'Contact Us',
   href: '/contact-us',
-}
-
-/** Project page for a given scenario - drives dropdown-card link targets. */
-const SCENARIO_PAGE: Record<'home-solutions' | 'business-solutions', string> = {
-  'home-solutions': '/solutions/home-solar',
-  'business-solutions': '/solutions/business-solar',
-}
-
-/** The 3 solutions for a given dropdown type. */
-function solutionsForDropdown(
-  dropdown: 'home-solutions' | 'business-solutions',
-): SolutionDetail[] {
-  const segment = dropdown === 'home-solutions' ? 'homes' : 'businesses'
-  return solutionDetails.filter((s) => s.segment === segment)
 }
 
 export default function Header({
@@ -171,16 +232,13 @@ export default function Header({
             <nav className="hidden lg:flex items-center gap-10 ml-auto mr-8">
               {navItems.map((item) => {
                 if (item.dropdown) {
-                  const items = solutionsForDropdown(item.dropdown)
-                  const scenarioHref = SCENARIO_PAGE[item.dropdown]
                   return (
                     <SolutionsDropdown
                       key={item.href}
                       triggerHref={item.href}
                       triggerLabel={item.label}
                       isScrolled={isScrolled}
-                      items={items}
-                      scenarioHref={scenarioHref}
+                      group={NAV_DROPDOWNS[item.dropdown]}
                     />
                   )
                 }
@@ -243,16 +301,43 @@ export default function Header({
               mobileMenuOpen ? 'max-h-[80vh] mt-6' : 'max-h-0'
             }`}
           >
-            <nav className="flex flex-col gap-4 pb-6 bg-white/95 rounded-2xl p-4 -mx-2">
+            <nav className="flex flex-col gap-2 pb-6 bg-white/95 rounded-2xl p-4 -mx-2">
               {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-base font-cw-regular text-uk-navy/80 hover:text-uk-navy py-2 border-b border-uk-line"
-                >
-                  {item.label}
-                </a>
+                <div key={item.href}>
+                  <a
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-base font-cw-regular text-uk-navy/80 hover:text-uk-navy py-2 border-b border-uk-line"
+                  >
+                    {item.label}
+                  </a>
+                  {/* Mobile has no hover, so the dropdown entries are
+                      listed inline under their parent. */}
+                  {item.dropdown && (
+                    <div className="pl-4 -mt-1 mb-1 flex flex-col">
+                      {NAV_DROPDOWNS[item.dropdown].entries.map((entry) => (
+                        <a
+                          key={entry.href}
+                          href={entry.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-sm font-cw-regular text-uk-slate hover:text-uk-teal py-2"
+                        >
+                          {entry.label}
+                        </a>
+                      ))}
+                      {NAV_DROPDOWNS[item.dropdown].quickCta && (
+                        <a
+                          href={NAV_DROPDOWNS[item.dropdown].quickCta!.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="mt-1 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark py-2"
+                        >
+                          <Download className="w-4 h-4" strokeWidth={2} />
+                          {NAV_DROPDOWNS[item.dropdown].quickCta!.label}
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
               ))}
               <div onClick={() => setMobileMenuOpen(false)}>
                 {renderCTA('w-full text-center mt-2')}
@@ -276,18 +361,16 @@ interface SolutionsDropdownProps {
   triggerHref: string
   triggerLabel: string
   isScrolled: boolean
-  items: SolutionDetail[]
-  /** Collection page the dropdown cards should anchor into. */
-  scenarioHref: string
+  group: NavDropdownGroup
 }
 
 function SolutionsDropdown({
   triggerHref,
   triggerLabel,
   isScrolled,
-  items,
-  scenarioHref,
+  group,
 }: SolutionsDropdownProps) {
+  const { entries, quickCta } = group
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -356,7 +439,7 @@ function SolutionsDropdown({
         />
       </a>
       <div
-        className={`absolute top-full left-1/2 -translate-x-1/2 w-[580px] pt-3 z-50
+        className={`absolute top-full left-1/2 -translate-x-1/2 w-[420px] pt-3 z-50
                     transition-all duration-200 ease-out origin-top
                     ${
                       open
@@ -370,60 +453,62 @@ function SolutionsDropdown({
           aria-hidden="true"
           className="absolute top-[6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-uk-line rotate-45 z-[1]"
         />
-        <div className="relative bg-white rounded-2xl shadow-[0_20px_40px_-12px_rgba(15,118,110,0.18),0_8px_24px_-4px_rgba(10,22,40,0.06)] ring-1 ring-uk-teal/5 border border-uk-line p-4 flex flex-col gap-3">
-          {items.map((s) => (
+        <div className="relative bg-white rounded-2xl shadow-[0_20px_40px_-12px_rgba(15,118,110,0.18),0_8px_24px_-4px_rgba(10,22,40,0.06)] ring-1 ring-uk-teal/5 border border-uk-line p-3 flex flex-col gap-1.5">
+          {entries.map((entry) => (
             <a
-              key={s.id}
-              href={`${scenarioHref}#${s.id}`}
+              key={entry.href}
+              href={entry.href}
               onClick={() => setOpen(false)}
-              className="group relative p-4 rounded-xl border border-uk-line bg-white
-                         hover:border-uk-teal hover:shadow-md hover:-translate-y-0.5
-                         transition-all duration-300"
+              className="group flex items-start gap-3 p-3 rounded-xl border border-transparent
+                         hover:border-uk-line hover:bg-uk-teal-soft/40
+                         transition-all duration-200"
             >
-              {s.popular && (
-                <span className="absolute top-2 right-2 z-10 px-2 py-0.5 rounded-full bg-uk-emerald text-white text-[10px] font-cw-bold tracking-wider">
-                  POPULAR
-                </span>
-              )}
-              <div className="flex items-center gap-4">
-                <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center">
-                  <img
-                    src={s.imagePath}
-                    alt={s.imageAlt}
-                    className="max-h-full max-w-full object-contain
-                               transition-transform duration-500 ease-out
-                               group-hover:scale-110"
-                  />
+              <div className="flex-1 min-w-0">
+                <div className="font-cw-bold text-uk-navy text-sm leading-tight">
+                  {entry.label}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-cw-bold text-uk-navy text-sm leading-tight truncate">
-                    {s.title}
-                  </div>
-                  <div className="text-xs text-uk-slate mt-1 truncate">
-                    {s.eyebrow}
-                  </div>
-                  <div className="flex items-center gap-1.5 mt-1.5">
-                    {s.headlineStats[0] && (
-                      <span className="text-uk-teal font-cw-bold text-xs">
-                        {s.headlineStats[0].value}
-                      </span>
-                    )}
-                    {s.headlineStats[1] && (
-                      <>
-                        <span className="text-uk-slate text-xs">/</span>
-                        <span className="text-uk-teal font-cw-bold text-xs">
-                          {s.headlineStats[1].value}
-                        </span>
-                      </>
-                    )}
-                  </div>
+                <div className="text-xs text-uk-slate mt-1 leading-relaxed">
+                  {entry.description}
                 </div>
-                <span className="flex-shrink-0 text-uk-slate group-hover:text-uk-teal transition-all duration-300 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0">
-                  →
-                </span>
               </div>
+              <ArrowRight
+                className="flex-shrink-0 w-4 h-4 mt-0.5 text-uk-slate
+                           transition-all duration-200 opacity-0 -translate-x-1
+                           group-hover:opacity-100 group-hover:translate-x-0
+                           group-hover:text-uk-teal"
+                strokeWidth={2}
+              />
             </a>
           ))}
+          {/* Optional accent CTA — the Solutions group uses it for the
+              HEMS app download, so the app is one hover from the nav. */}
+          {quickCta && (
+            <a
+              href={quickCta.href}
+              onClick={() => setOpen(false)}
+              className="group flex items-center gap-3 p-3 rounded-xl border border-uk-teal/30
+                         bg-uk-teal-soft/50 hover:bg-uk-teal-soft/80 hover:border-uk-teal/60
+                         transition-all duration-200"
+            >
+              <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-uk-teal/25 flex items-center justify-center text-uk-teal-dark">
+                <Download className="w-4 h-4" strokeWidth={2} />
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="font-cw-bold text-uk-navy text-sm leading-tight">
+                  {quickCta.label}
+                </div>
+                <div className="text-xs text-uk-slate mt-1 leading-relaxed">
+                  {quickCta.description}
+                </div>
+              </div>
+              <ArrowRight
+                className="flex-shrink-0 w-4 h-4 mt-0.5 text-uk-teal
+                           transition-all duration-200 opacity-0 -translate-x-1
+                           group-hover:opacity-100 group-hover:translate-x-0"
+                strokeWidth={2}
+              />
+            </a>
+          )}
           <button
             type="button"
             onClick={() => {

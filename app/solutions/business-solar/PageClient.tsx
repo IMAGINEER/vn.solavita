@@ -1,10 +1,9 @@
 'use client'
 
 import CollectionPage, {
-  type CollectionFaq,
   type CollectionPageProps,
 } from '@/components/solutions/CollectionPage'
-import { solutionDetails } from '@/lib/data/solutions'
+import { solutionDetails, businessSolutionFaqs } from '@/lib/data/solutions'
 import { openFormModal } from '@/lib/form-modal'
 
 /**
@@ -16,30 +15,14 @@ import { openFormModal } from '@/lib/form-modal'
  * Per the brief, the page does NOT imply that all businesses need
  * three-phase power. The page's FAQ makes the
  * "phase depends on site conditions" point explicitly.
+ *
+ * The FAQ copy lives in `lib/data/solutions.ts` so the microgrid page
+ * can reuse the same set, as `docs/修改建议.docx` asks.
  */
 
 const businessSolutions = solutionDetails.filter(
   (p) => p.segment === 'businesses',
 )
-
-const businessFaqs: CollectionFaq[] = [
-  {
-    q: 'Will this really save me money?',
-    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
-  },
-  {
-    q: 'What happens when the power goes out?',
-    a: 'Essential systems stay on. With an instant automatic switch to battery power, your business avoids downtime, keeps data and operations secure, and maintains peak efficiency day or night.',
-  },
-  {
-    q: 'How long will the battery last?',
-    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
-  },
-  {
-    q: 'Is it hard to maintain?',
-    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
-  },
-]
 
 export default function BusinessSolarPage() {
   const props: CollectionPageProps = {
@@ -66,7 +49,7 @@ export default function BusinessSolarPage() {
       body: 'If your loads, operating hours or site conditions are outside what the business-solar solutions cover, request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your business.',
       primaryCta: { label: 'Request a tailored quote', href: '/contact-us' },
     },
-    faqs: businessFaqs,
+    faqs: businessSolutionFaqs,
   }
   return <CollectionPage {...props} />
 }

@@ -1,0 +1,57 @@
+import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
+import ProductDetail from '@/components/products/ProductDetail'
+import JsonLd from '@/components/seo/JsonLd'
+import { allProductSlugs, getProduct } from '@/lib/data/products'
+import { buildPageMetadata } from '@/lib/seo/metadata'
+import { webPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld'
+
+/** Pre-render every product detail page. */
+export function generateStaticParams() {
+  return allProductSlugs().map((slug) => ({ slug }))
+}
+
+export async function generateMetadata(
+  props: { params: Promise<{ slug: string }> },
+): Promise<Metadata> {
+  const { slug } = await props.params
+  const product = getProduct(slug)
+  if (!product) {
+    return { title: 'Product not found | Solavita' }
+  }
+  return buildPageMetadata({
+    title: `${product.name} — Specifications & Advantages | Solavita`,
+    path: `/products/${product.slug}`,
+    description: product.description,
+    ogImage: '/images/hero-solutions.webp',
+    ogImageAlt: `Solavita ${product.name}`,
+  })
+}
+
+export default async function ProductPage(props: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await props.params
+  const product = getProduct(slug)
+  if (!product) notFound()
+
+  return (
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({
+            path: `/products/${product.slug}`,
+            name: `${product.name} | Solavita`,
+            description: product.description,
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: 'Products', url: '/products' },
+            { name: product.name, url: `/products/${product.slug}` },
+          ]),
+        ]}
+      />
+      <ProductDetail product={product} />
+    </>
+  )
+}

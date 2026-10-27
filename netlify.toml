@@ -7,10 +7,9 @@
   NODE_VERSION = "22"
 
   # GA4 measurement IDs are public and embedded in client-facing JS.
+  # Without this, the secrets scan flags the inlined "G-…" literal in
+  # the built bundle as a leaked env-var value and fails the build.
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_GA4_ID"
-
-  # Exclude this documentation file from Netlify's secrets scan.
-  SECRETS_SCAN_OMIT_PATHS = "docs/superpowers/plans/2026-10-19-load-runtime.md"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

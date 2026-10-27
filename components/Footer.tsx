@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Mail, Phone } from 'lucide-react'
+import { Download, Mail, Phone } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
 import PartnerFormModal, {
   usePartnerFormModalEvent,
@@ -278,6 +278,24 @@ export default function Footer({
               <li>
                 <a href="/hems" className={linkClass}>
                   HEMS Apps
+                </a>
+              </li>
+              {/* Quick download entry — sits directly under the HEMS
+                 Apps overview link so visitors who already know what
+                 the app is can jump straight to the install CTAs. Both
+                 point at /hems: the page opens on the app hero, with
+                 the App Store / Google Play buttons further down. */}
+              <li className="flex items-center gap-2.5">
+                <Download className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
+                {/* `text-white` (not a teal token) so the light-mode
+                   footer rule `[class*="text-white"] → #0A1628` keeps
+                   it legible on the #EEF2F7 surface; bold weight is
+                   what marks it apart from the plain links above. */}
+                <a
+                  href="/hems"
+                  className="text-sm font-cw-bold text-white hover:text-uk-teal-soft transition-colors"
+                >
+                  Download HEMS App
                 </a>
               </li>
               <li>
