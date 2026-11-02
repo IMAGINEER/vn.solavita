@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Phone } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
 import LocaleMenu from '@/components/LocaleMenu'
 import PartnerFormModal, {
@@ -49,8 +48,8 @@ gsap.registerPlugin(ScrollTrigger)
  * Flagship 3-Phase). The legal entity is the Hong Kong parent,
  * SKYWORTH RENEWABLE ENERGY COMPANY LIMITED; contact details in the
  * Support column and the copyright line use the confirmed NG email
- * and WhatsApp number. Details still awaiting verification are
- * rendered as red `TBD — ...` placeholders.
+ * address. Details still awaiting verification are rendered as red
+ * `TBD — ...` placeholders.
  */
 
 export interface FooterLink {
@@ -291,20 +290,6 @@ export default function Footer({
                   className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
                 >
                   ng@solavita.com
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                {/* The `wa.me/8618500875025` link is the confirmed
-                   WhatsApp handoff number; the visible label stays
-                   text-only so it reads cleanly in both themes. */}
-                <a
-                  href="https://wa.me/8618500875025"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
-                >
-                  WhatsApp
                 </a>
               </li>
             </ul>
