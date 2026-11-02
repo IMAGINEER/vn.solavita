@@ -732,7 +732,7 @@ const LOAD_APPLIANCE_ICONS: Record<LoadApplianceIconKey, LucideIcon> = {
    System. Each tab surfaces title, subtitle, description, spec
    table, highlights, and a 4-second auto-rotating image carousel
    with arrows + dots. Image hover reveals a "Learn More" CTA that
-   routes to /support (where the Download chapter is built later).
+   routes to the matching product page (`/products/<slug>`).
    ────────────────────────────────────────────────────────────────────── */
 
 interface ProductDetailTab {
@@ -751,6 +751,9 @@ const PRODUCT_DETAIL_TABS: ProductDetailTab[] = [
 interface ProductDetailContent {
   title: string
   subtitle: string
+  /** Target of the carousel's "Learn More" overlay — the product
+      detail page for this tab's family (`/products/<slug>`). */
+  href: string
   description: string
   specs: { label: string; value: string }[]
   highlights: string[]
@@ -764,6 +767,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
   module: {
     title: 'High-Output Monocrystalline PV Modules',
     subtitle: '620 W All-Black · High Efficiency',
+    href: '/products/module',
     description:
       'Our all-black 620 W monocrystalline modules deliver high efficiency in a clean residential aesthetic. Engineered for low degradation and durable performance in local site conditions.',
     specs: [
@@ -792,6 +796,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
   inverter: {
     title: 'Hybrid and Off-Grid Inverters',
     subtitle: '3–12 kW Single Phase · 5–20 kW Three Phase · 6 kW Off-Grid',
+    href: '/products/inverter',
     description:
       'Three inverter families cover the whole range: a single-phase hybrid from 3 kW to 12 kW for homes, a three-phase hybrid from 5 kW to 20 kW for commercial sites, and a dedicated 6 kW off-grid unit for pure backup.',
     specs: [
@@ -838,6 +843,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
   battery: {
     title: 'LiFePO₄ Battery Storage',
     subtitle: 'SWR Series · 51.2 V Low Voltage · 5.12–16.08 kWh',
+    href: '/products/battery',
     description:
       'SWR modules come in 5.12 and 16.08 kWh cabinets that combine freely up to 16 units in parallel — enough to size a single home or a whole site. 1C continuous charge and discharge, IP65 for outdoor installation and a 10-year warranty.',
     specs: [
@@ -881,6 +887,9 @@ const PRODUCT_DETAIL_CONTENT: Record<
   mounting: {
     title: 'Universal Mounting System',
     subtitle: 'Fast · Safe · Roof-Friendly',
+    // No standalone mounting product page exists — the mounting system
+    // ships with the module line, so route to /products/module.
+    href: '/products/module',
     description:
       'Our factory-engineered mounting system is optimised for all common roof types. No roof penetration on tile roofs — your roof integrity stays fully preserved.',
     specs: [
@@ -1002,9 +1011,11 @@ function ProductSection() {
                 </div>
               ))}
 
-              {/* Hover-revealed "Learn More" → /support overlay */}
+              {/* Hover-revealed "Learn More" overlay — routes to the
+                  product page for the active tab (`content.href`), not
+                  the generic /support page. */}
               <Link
-                href="/support"
+                href={content.href}
                 className="absolute inset-0 hidden group-hover:flex items-center justify-center bg-uk-navy/55 text-white text-sm font-cw-bold transition-opacity"
               >
                 Learn More →
