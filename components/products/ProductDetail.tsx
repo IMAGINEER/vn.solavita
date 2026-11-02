@@ -390,7 +390,9 @@ export default function ProductDetail({ product }: { product: Product }) {
                   'mt-8 grid gap-2 sm:gap-3',
                   product.configs.length === 1
                     ? 'grid-cols-1 max-w-sm mx-auto'
-                    : 'grid-cols-3',
+                    : product.configs.length === 2
+                      ? 'grid-cols-2'
+                      : 'grid-cols-3',
                 )}
               >
                 {product.configs.map((c, i) => {
@@ -398,7 +400,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                   // supplied a render of it — otherwise there is no
                   // picture to switch to, so the card stays a plain
                   // spec summary (the module series photo covers all
-                  // five power classes; there is no 10.24 kWh render).
+                  // five power classes).
                   const interactive = Boolean(c.views?.length)
                   const cardClass = cn(
                     'rounded-xl border bg-white p-2.5 sm:p-3.5 text-left',

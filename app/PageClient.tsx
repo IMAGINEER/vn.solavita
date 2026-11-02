@@ -58,12 +58,11 @@ export default function Home() {
       <Section7CustomerStories />
       <Section9FinalCta />
 
-      {/* TrustBar is intentionally not rendered. It still carries the
-          UK / EU certification marks (TÜV / CE / 25-year warranty),
-          which are unverified for Nigeria - NG content strategy
-          rule 2. Component and data are intact at
-          `components/TrustBar.tsx` + `lib/data/uk-trust.ts`; re-enable
-          once business confirms which NG approvals actually apply. */}
+      {/* The trust-mark strip (formerly TrustBar) has been removed:
+          it carried TÜV / CE / MCS / NICEIC / RECC / 25-year warranty
+          marks that are unverified for Nigeria (NG content strategy
+          rule 2). Re-introduce a NG-specific strip only once business
+          confirms which approvals actually apply. */}
       <Footer />
       <FloatingButtons />
     </main>

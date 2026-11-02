@@ -18,8 +18,8 @@
  * follow the NG rule and never display a price until business supplies
  * approved ₦ figures.
  *
- * Specs here mirror `lib/data/ng-products.ts` and `app/my-plan/_lib/calc.ts`
- * (the PLANS array). Keep all three surfaces in sync.
+ * Specs here mirror `app/my-plan/_lib/calc.ts` (the PLANS array). Keep
+ * both surfaces in sync.
  */
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -293,7 +293,7 @@ export interface SolutionDetail {
 
   /** Long-tail URL slug, drives /solutions/[slug]/ routing. */
   slug: SolutionSlug
-  /** Mirrors `NgProduct.popular` from ng-products.ts. */
+  /** Highlighted on the collection page as the recommended tier. */
   popular?: boolean
   /** Headline metric surfaced in the buy box. Kept qualitative. */
   metric?: string
@@ -332,8 +332,8 @@ export interface SolutionDetail {
    */
   priceNgn: number
   /**
-   * Customer segment. Mirrors `NgProduct.segment` so the collection
-   * pages can filter `solutionDetails` by `For Home` / `For Business`
+   * Customer segment, so the collection pages can filter
+   * `solutionDetails` by `For Home` / `For Business`
    * per `content/nigeria/solutions.md` (the collection-pages brief).
    */
   segment: 'homes' | 'businesses'

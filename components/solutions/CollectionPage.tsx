@@ -213,12 +213,11 @@ export default function CollectionPage(props: CollectionPageProps) {
       {/* FAQ */}
       <FaqSection faqs={props.faqs} />
 
-      {/* TrustBar is intentionally not rendered. It still carries the
-          UK / EU certification marks (TÜV / CE / 25-year warranty),
-          which are unverified for Nigeria - NG content strategy
-          rule 2. Component and data are intact at
-          `components/TrustBar.tsx` + `lib/data/uk-trust.ts`; re-enable
-          once business confirms which NG approvals actually apply. */}
+      {/* The trust-mark strip (formerly TrustBar) has been removed:
+          it carried TÜV / CE / MCS / NICEIC / RECC / 25-year warranty
+          marks that are unverified for Nigeria (NG content strategy
+          rule 2). Re-introduce a NG-specific strip only once business
+          confirms which approvals actually apply. */}
       <Footer />
     </main>
   )
@@ -791,60 +790,92 @@ const PRODUCT_DETAIL_CONTENT: Record<
     ],
   },
   inverter: {
-    title: 'Hybrid Inverter',
-    subtitle: 'Single-Phase or Three-Phase · On-/Off-Grid',
+    title: 'Hybrid and Off-Grid Inverters',
+    subtitle: '3–12 kW Single Phase · 5–20 kW Three Phase · 6 kW Off-Grid',
     description:
-      'The Solavita hybrid inverter combines PV conversion, battery management, and seamless on-/off-grid switching in a single unit. Supports essential-circuit backup so your home stays powered through outages.',
+      'Three inverter families cover the whole range: a single-phase hybrid from 3 kW to 12 kW for homes, a three-phase hybrid from 5 kW to 20 kW for commercial sites, and a dedicated 6 kW off-grid unit for pure backup.',
     specs: [
-      { label: 'Range', value: '3.6 kW (single-phase) — 20 kW (three-phase)' },
-      { label: 'PV oversizing', value: 'Up to 150% DC/AC' },
-      { label: 'Grid connection', value: '1-phase 230V / 3-phase 400V' },
-      { label: 'Backup output', value: 'Yes — full automatic transfer' },
-      { label: 'Safety', value: 'DC/AC SPD Type II, integrated protections' },
-      { label: 'Communication', value: 'WiFi / Ethernet / RS485 / CAN' },
-      { label: 'Protection class', value: 'IP66' },
-      { label: 'Operating temperature', value: '-25°C to +60°C' },
+      {
+        label: 'Model families',
+        value: 'SWH single-phase · SWH three-phase · SWO off-grid',
+      },
+      { label: 'Rated AC output', value: '3–12 kW · 5–20 kW · 6 kW' },
+      {
+        label: 'PV oversizing',
+        value: '200% (single-phase) · up to 160% (three-phase)',
+      },
+      { label: 'Battery voltage', value: '48 V low voltage' },
+      { label: 'Battery type', value: 'Li-ion / lead-acid' },
+      {
+        label: 'Backup switching',
+        value: '<4 ms (single-phase) · <10 ms (three-phase)',
+      },
+      {
+        label: 'Max. efficiency',
+        value: '97.6% (single-phase) · 97.8–97.9% (three-phase)',
+      },
+      { label: 'Protection rating', value: 'IP66 (SWH hybrid) · IP65 (SWO off-grid)' },
+      { label: 'Operating temperature', value: '−35 ~ +60 °C' },
+      {
+        label: 'Communication',
+        value: 'RS485 · WiFi + LAN + Bluetooth · Modbus-RTU/TCP',
+      },
       { label: 'Certifications', value: 'TBD — Verified local approvals' },
     ],
     highlights: [
-      'Seamless on-/off-grid switching keeps essentials running through outages',
-      'High PV oversizing headroom for maximum harvest',
-      'Three-phase models for higher-demand business sites',
-      'Monitoring-ready — the app exposes live generation, load and battery state',
-      'OTA firmware updates — keeps the inverter current without a site visit',
+      'Single-phase hybrid from 3 kW to 12 kW with 20 A per string and 200% PV oversizing',
+      'Three-phase hybrid from 5 kW to 20 kW with up to 40 kW PV input',
+      'Backup switching in under 4 ms (single-phase) and under 10 ms (three-phase)',
+      'AI-driven AFCI and Type II SPD protection, in IP66 enclosures',
+      'Dedicated 6 kW off-grid unit for pure backup, with generator peak-shaving',
     ],
     images: [
-      '/images/product-inverter-1.webp',
-      '/images/product-inverter-2.webp',
+      '/images/products/inverter/swh-single-phase-1.webp',
+      '/images/products/inverter/swh-three-phase-1.webp',
+      '/images/products/inverter/swo-6000w.webp',
     ],
   },
   battery: {
     title: 'LiFePO₄ Battery Storage',
-    subtitle: 'Safe · Long-Cycle · Modular',
+    subtitle: 'SWR Series · 51.2 V Low Voltage · 5.12–16.08 kWh',
     description:
-      'A modular lithium-iron-phosphate storage stack sized to your backup needs. Cells balance in milliseconds to prevent capacity drift; stackable blocks expand capacity as your home grows.',
+      'SWR modules come in 5.12 and 16.08 kWh cabinets that combine freely up to 16 units in parallel — enough to size a single home or a whole site. 1C continuous charge and discharge, IP65 for outdoor installation and a 10-year warranty.',
     specs: [
       { label: 'Chemistry', value: 'LiFePO₄ (lithium iron phosphate)' },
-      { label: 'Capacity per module', value: '5 kWh' },
-      { label: 'System capacity', value: '5 / 10 / 16 / 32 kWh (modular)' },
-      { label: 'Cycle life', value: '> 6,000 cycles at 90% DoD' },
-      { label: 'Round-trip efficiency', value: '> 95%' },
-      { label: 'Expandable', value: 'Yes — modular stacking (old/new mixable)' },
-      { label: 'Mounting', value: 'Floor (stackable) or wall-mounted' },
-      { label: 'Connection', value: 'Plug & play connector' },
-      { label: 'Protection class', value: 'IP66' },
-      { label: 'Warranty', value: '5 years (extendable — TBD)' },
+      { label: 'Rated voltage', value: '51.2 V (low voltage)' },
+      { label: 'Rated energy', value: '5.12 kWh / 16.08 kWh' },
+      { label: 'Rated capacity', value: '100 Ah / 314 Ah' },
+      { label: 'Max. charge / discharge', value: '100 A / 200 A' },
+      {
+        label: 'Cycle life',
+        value: '>8,000 cycles (0.5C) · ≥10,000 cycles (0.35C), 90% DOD',
+      },
+      {
+        label: 'Dimensions (L × W × H)',
+        value: '600 × 480 × 180 mm / 840 × 490 × 250 mm',
+      },
+      { label: 'Weight', value: '52 kg / 128 kg' },
+      {
+        label: 'Operating temperature',
+        value: 'Charge 0 ~ 55 °C · Discharge −20 ~ 55 °C',
+      },
+      { label: 'Protection rating', value: 'IP65' },
+      { label: 'Communication', value: 'RS485 · RS232 · CAN' },
+      { label: 'Max. units in parallel', value: '16' },
+      { label: 'Warranty', value: '10 years' },
     ],
     highlights: [
-      'No thermal runaway possible — LiFePO₄ chemistry',
-      'Millisecond cell balancing to prevent capacity drift',
-      'Modular: 5 kWh blocks freely combinable, also retroactively',
-      'Plug & play — installation time per module under 10 minutes',
-      'Integrated BMS with 24/7 cloud monitoring & remote diagnostics',
+      'Max. 16 modules in parallel for scalable energy storage',
+      '1C/1C continuous charge and discharge',
+      'Flexible installation — modules at different SOC can be mixed safely',
+      'Short-circuit lockout and surge resistance for all-round safety',
+      'Automatic self-heating (−20 °C to 55 °C, optional) for outdoor installation',
+      '10-year standard warranty',
     ],
     images: [
-      '/images/product-battery-1.webp',
-      '/images/product-battery-2.webp',
+      '/images/products/battery/swr-5-12-front.webp',
+      '/images/products/battery/swr-16-08-front.webp',
+      '/images/products/battery/swr-5-12-left.webp',
     ],
   },
   mounting: {

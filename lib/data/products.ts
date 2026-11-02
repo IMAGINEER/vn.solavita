@@ -134,9 +134,9 @@ export interface ProductConfig {
    * chips under the image.
    *
    * Empty when the factory supplied no render for that configuration
-   * (the module series photo covers all five power classes; there is no
-   * 10.24 kWh render). Those cards fall back to pointing the reader at
-   * the matching column of the spec table.
+   * (the module series photo covers all five power classes). Those
+   * cards fall back to pointing the reader at the matching column of
+   * the spec table.
    */
   views?: ProductImage[]
   /**
@@ -940,17 +940,6 @@ export const products: Product[] = [
         ],
       },
       {
-        name: '10.24 kWh',
-        summary: 'SWR10.24-L1-WW',
-        specs: [
-          { value: '200 Ah', label: 'Capacity' },
-          { value: '150 A', label: 'Max. current' },
-        ],
-        // The factory supplied renders for the 5.12 and 16.08 kWh
-        // cabinets only — there is no 10.24 kWh photo, so this card
-        // stays a plain spec summary.
-      },
-      {
         name: '16.08 kWh',
         summary: 'SWR16.08-L1-WW',
         specs: [
@@ -1226,18 +1215,6 @@ export function getProduct(slug: string): Product | undefined {
 /** All product slugs — feeds `generateStaticParams()`. */
 export function allProductSlugs(): ProductSlug[] {
   return products.map((p) => p.slug)
-}
-
-/**
- * The product's lead image — the series photo when it has one, else the
- * first configuration's first render.
- */
-export function getProductHeroImage(product: Product): string | undefined {
-  if (product.hero) return product.hero.src
-  for (const config of product.configs) {
-    if (config.views?.length) return config.views[0].src
-  }
-  return undefined
 }
 
 /**
