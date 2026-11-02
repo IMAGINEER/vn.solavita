@@ -57,8 +57,8 @@ export default function GlobalPresence() {
               Global scale, local base
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Local on the ground.{' '}
-              <span className="text-gradient">Global behind you.</span>
+              Local on the Ground.{' '}
+              <span className="text-gradient">Global behind You.</span>
             </h2>
             <p className="mt-5 text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
               Solavita is the local solar brand of the SKYWORTH

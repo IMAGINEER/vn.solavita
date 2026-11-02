@@ -47,9 +47,9 @@ export default function ContactUsPage() {
         eyebrow="Ready when you are"
         title={
           <>
-            Have a project in mind?
+            Have a Project in Mind?
             <br />
-            <span className="text-gradient">Start with a free quote.</span>
+            <span className="text-gradient">Start with a Free Quote.</span>
           </>
         }
         description="Tell us what you want to power — our Nigerian team will put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home or business."

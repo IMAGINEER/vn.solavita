@@ -10,7 +10,7 @@ import TbdText from '@/components/ui/tbd-text'
 /**
  * PageHero — full-bleed background-image hero, matching the UK site's
  * previous visual treatment. Use on every marketing-page hero
- * (homepage, /solutions, /about-us, /hems, /cases, /support,
+ * (homepage, /solutions, /about-us, /monitoring-app, /cases, /support,
  * /for-partners, /contact-us, /solutions/[slug]).
  *
  * Two variants — pass `variant` to pick the section sizing:

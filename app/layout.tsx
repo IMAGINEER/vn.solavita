@@ -3,7 +3,7 @@ import './globals.css'
 import ClientOnlyCookieConsent from '@/components/ClientOnlyCookieConsent'
 import GoogleAnalyticsConsent from '@/components/GoogleAnalyticsConsent'
 import JsonLd from '@/components/seo/JsonLd'
-import { SITE_URL } from '@/lib/seo/site'
+import { SITE_URL, absoluteUrl } from '@/lib/seo/site'
 import {
   organizationJsonLd,
   websiteJsonLd,
@@ -47,13 +47,13 @@ export const metadata: Metadata = {
     title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
     description:
       'Solar and battery solutions for Nigerian homes and small businesses.',
-    url: SITE_URL,
+    url: absoluteUrl('/'),
     siteName: 'Solavita Nigeria',
     locale: 'en_NG',
     type: 'website',
     images: [
       {
-        url: `${SITE_URL}/images/og-default.png`,
+        url: `${SITE_URL}/images/og-default.jpg`,
         // Source asset is 1376x768; we declare the most-common OG
         // target box (1200x630) so social platforms letter-box
         // consistently while the underlying ratio is preserved.
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
     description:
       'Solar and battery solutions for Nigerian homes and small businesses.',
-    images: [`${SITE_URL}/images/og-default.png`],
+    images: [`${SITE_URL}/images/og-default.jpg`],
   },
 }
 

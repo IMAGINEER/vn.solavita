@@ -87,7 +87,7 @@ export default function WhoWeAre() {
             About Solavita
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            <span className="text-uk-teal">Global Strength.</span>{' '}
+            <span className="text-gradient">Global Strength.</span>{' '}
             Local Roots.
           </h2>
         </div>

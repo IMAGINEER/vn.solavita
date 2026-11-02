@@ -7,10 +7,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Third screen — HEMS app headline + phone + download CTAs.
+ * Third screen — Monitoring App headline + phone + download CTAs.
  *
  *   ┌────────────────────────────────────┐
- *   │        Solavita HEMS App          │  ← eyebrow pill
+ *   │        Solavita Monitoring App          │  ← eyebrow pill
  *   │      Energy Dashboard              │  ← heading
  *   │  Live flows across every device…   │  ← body copy
  *   │                                    │
@@ -24,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger)
  * The phone frame keeps its dark `bg-sv-navy` body — the
  * dashboard screenshot inside it has a light surface, so a
  * light frame would clash. Download buttons sit directly below
- * the phone so the reader can install HEMS the moment they
+ * the phone so the reader can install the app the moment they
  * decide it fits.
  */
 export default function PhoneShowcase() {
@@ -58,14 +58,14 @@ export default function PhoneShowcase() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Solavita HEMS App
+            Solavita Monitoring App
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Energy <span className="text-gradient">Dashboard</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto leading-relaxed">
-            Live flows across every device in your home — solar, battery,
-            EV, heat pump and grid — on a single screen.
+            Live energy flows across your home — solar, battery, air
+            conditioner, generator and grid — on a single screen.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function PhoneShowcase() {
             {/* Notch */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-sv-dark rounded-b-2xl z-10" />
             <img
-              alt="Solavita HEMS App – Energy Dashboard"
+              alt="Solavita Monitoring App – Energy Dashboard"
               loading="lazy"
               className="w-full h-auto block"
               src="/images/cloud-app-data.webp"

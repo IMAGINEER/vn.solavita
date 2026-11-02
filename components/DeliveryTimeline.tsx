@@ -25,8 +25,8 @@ const timelineSteps: TimelineStep[] = [
   { day: 'Day 2-3', title: 'Contract', desc: 'Tailored proposal, digital contract signed online.', Icon: FileText },
   { day: 'Day 4-7', title: 'JIT Delivery', desc: 'Dispatched from our local warehouse. Every component checked and pre-commissioned.', Icon: Truck },
   { day: 'Day 8-10', title: 'Installation', desc: 'Two-day install by certified electricians. Tidy site guaranteed.', Icon: Wrench },
-  { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, HEMS activation. Your system is now generating.', Icon: Wifi },
-  { day: 'Day 12-14', title: 'Grid Notification', desc: 'Utility receives your commissioning certificate. Grid approval secured so your system can export and earn credits.', Icon: ClipboardList },
+  { day: 'Day 11', title: 'Commissioning', desc: 'Meter setup, grid connection, Monitoring App activation. Your system is now generating.', Icon: Wifi },
+  { day: 'Day 12-14', title: 'Handover', desc: 'Final walkthrough, Monitoring App account and your handover pack. Our team stays reachable for questions.', Icon: ClipboardList },
 ]
 
 export default function DeliveryTimeline() {
@@ -69,7 +69,7 @@ export default function DeliveryTimeline() {
             Delivery Process
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Your solar system in <span className="text-uk-teal">14 days</span>
+            Your Solar System in <span className="text-gradient">14 Days</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto">
             While other providers take months, we deliver in two weeks - from first call to first kilowatt-hour.

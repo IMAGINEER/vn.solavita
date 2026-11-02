@@ -138,7 +138,7 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
     <section
       ref={sectionRef}
       id="contact-methods"
-      className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden"
+      className="relative py-16 md:py-24 bg-sv-blue/10 dark:bg-sv-darker overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-uk-teal/10 blur-[150px]" />
@@ -151,8 +151,8 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
             Choose your channel
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Other ways to{' '}
-            <span className="text-gradient">get in touch</span>
+            Other Ways to{' '}
+            <span className="text-gradient">Get in Touch</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
             Prefer phone or email? Here are the direct lines into our

@@ -43,9 +43,9 @@ export default function SupportPage() {
         eyebrow="Need a new system?"
         title={
           <>
-            Not a current customer yet?
+            Not a Current Customer Yet?
             <br />
-            <span className="text-gradient">Start with a free design.</span>
+            <span className="text-gradient">Start with a Free Design.</span>
           </>
         }
         description="If you are still researching, our team can put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home."

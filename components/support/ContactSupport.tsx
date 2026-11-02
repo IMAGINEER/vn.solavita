@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Check, Mail, MessageCircle, Phone } from 'lucide-react'
+import { Check, Mail, Phone } from 'lucide-react'
 import { supportContactChannels } from '@/lib/data/support'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,11 +16,8 @@ const iconFor = (label: string) => {
       return <Mail {...props} />
     case 'WhatsApp':
       // WhatsApp IS a phone number you message - keep the phone icon so
-      // the channel visually echoes "tap to dial / chat" rather than
-      // duplicating the MessageCircle already used for Live chat.
+      // the channel visually echoes "tap to dial / chat".
       return <Phone {...props} />
-    case 'Live chat':
-      return <MessageCircle {...props} />
     default:
       return <Mail {...props} />
   }
@@ -66,9 +63,12 @@ function rawAddress(href: string): string {
 }
 
 /**
- * Contact Support - three contact channels (email / WhatsApp / live chat).
+ * Contact Support - two contact channels (email / WhatsApp).
  * Sits between FAQ and the page CTA. Reuses the standard card primitive
- * (rounded-2xl · uk-line border · teal hover).
+ * (rounded-2xl · uk-line border · teal hover). Live chat was removed
+ * until the feature ships; the two remaining cards are laid out as a
+ * centred two-up row so they stay balanced rather than stretched
+ * across a three-column grid.
  *
  * Email cards use the same clipboard + toast fallback as the /contact
  * page so clicking `ng@solavita.com` always gives the user feedback
@@ -160,14 +160,14 @@ export default function ContactSupport() {
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Talk to a{' '}
-            <span className="text-gradient">real person.</span>
+            <span className="text-gradient">Real Person.</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
             NG-based service team · No bots · No long hold music.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {supportContactChannels.map((c) => {
             // Top portion of the card: icon + label + value. This is the
             // part that becomes the main clickable region. The description

@@ -40,7 +40,7 @@ export default function TermsPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Last updated: 13 October 2026
+            Solavita · Last updated: 2 November 2026
           </motion.p>
 
           <motion.div
@@ -66,7 +66,7 @@ export default function TermsPage() {
                 These Terms of Use govern your access to and use of the Solavita website, including its content, product information, solution descriptions, enquiry forms and online tools.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                In these Terms, "Solavita", "we", "our" and "us" refer to <strong className="text-[#0A1628]">[FULL LEGAL NAME OF THE WEBSITE OPERATOR]</strong>, the operator of this website. Our contact details are provided at the end of these Terms.
+                In these Terms, "Solavita", "we", "our" and "us" refer to <strong className="text-[#0A1628]">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</strong>, a company incorporated in Hong Kong and the operator of this website. Our contact details are provided at the end of these Terms.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 By accessing or using this website, you agree to these Terms. If you do not agree, please discontinue use of the website.
@@ -178,7 +178,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">9 Privacy and Cookies</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Our collection and use of personal information is described in our <a href="/privacy" className="text-[#0F766E] hover:underline">Privacy Policy</a>. Information about cookies and similar technologies is described in our <a href="/cookies" className="text-[#0F766E] hover:underline">Cookie Policy</a>.
+                Our collection and use of personal information is described in our <a href="/privacy/" className="text-[#0F766E] hover:underline">Privacy Policy</a>. Information about cookies and similar technologies is described in our <a href="/cookies/" className="text-[#0F766E] hover:underline">Cookie Policy</a>.
               </p>
             </div>
 
@@ -192,7 +192,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">11 Governing Law</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                These Terms are subject to the laws of <strong className="text-[#0A1628]">[CONFIRM GOVERNING JURISDICTION WITH LEGAL COUNSEL]</strong>, without excluding any mandatory consumer protections or other rights that apply under relevant law.
+                These Terms are subject to the laws of the Hong Kong Special Administrative Region, without excluding any mandatory consumer protections or other rights that apply under the law of your country of residence.
               </p>
             </div>
 
@@ -202,16 +202,16 @@ export default function TermsPage() {
                 For questions about these Terms, contact:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Website operator:</strong> [FULL LEGAL NAME]</li>
+                <li><strong className="text-[#0A1628]">Website operator:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</li>
                 <li><strong className="text-[#0A1628]">Contact:</strong> Johny Zhang</li>
                 <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:ng@solavita.com" className="text-[#0F766E] hover:underline">ng@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Registered or business address:</strong> [CONFIRMED ADDRESS]</li>
+                <li><strong className="text-[#0A1628]">Registered or business address:</strong> <span className="text-red-600">TBD — Verified Hong Kong registered office address</span></li>
               </ul>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: 13 October 2026 · Solavita
+                Last updated: 2 November 2026 · Solavita
               </p>
             </div>
           </motion.div>

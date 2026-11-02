@@ -29,19 +29,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // old overview did.
     { path: '/solutions/home-solar', priority: 0.9 },
     { path: '/solutions/business-solar', priority: 0.9 },
-    // Third "Solutions" entry — the 125 kW / 261 kWh all-in-one ESS
-    // microgrid product. Added per `docs/修改建议.docx` (Oct 2026).
-    { path: '/solutions/microgrid', priority: 0.9 },
-    // "Products (产品中心)" section — the hub plus the four product
-    // detail pages. Added per `docs/修改建议.docx` (Oct 2026).
-    { path: '/products', priority: 0.8 },
+    // Products — the four detail pages only. The /products hub was
+    // removed (Oct 2026); the nav links straight to each product and
+    // /products redirects to /products/module (next.config.js).
+    // The 125 kW / 261 kWh All-in-One ESS lives here as a PRODUCT
+    // (/products/all-in-one-ess), not as a third solutions page.
     { path: '/products/module', priority: 0.7 },
     { path: '/products/inverter', priority: 0.7 },
     { path: '/products/battery', priority: 0.7 },
     { path: '/products/all-in-one-ess', priority: 0.7 },
     { path: '/cases', priority: 0.8 },
     { path: '/about-us', priority: 0.7 },
-    { path: '/hems', priority: 0.6 },
+    { path: '/monitoring-app', priority: 0.6 },
     { path: '/support', priority: 0.7 },
     // "How to Install" page — the target of the Support page's
     // Installation card CTA.
@@ -109,12 +108,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   }
 
-  // Case-study detail pages are intentionally NOT listed here. The NG
-  // site has no verified cases yet (`caseStudies` in
-  // `lib/data/uk-cases.ts` is an empty array), so there are no
-  // /cases/[slug] entries to surface. When real NG cases are added,
-  // the detail page is reintroduced behind a noindex meta so neither
-  // signal nor sitemap list it - keeping the two signals in agreement.
+  // Case-study detail pages are intentionally NOT listed here. The
+  // public surface is the /cases index only (`lib/data/ng-cases.ts`
+  // holds the 16 reference installations, none of which has a detail
+  // page yet). When real NG cases are added, the detail route is
+  // reintroduced behind a noindex meta so neither signal nor sitemap
+  // list it - keeping the two signals in agreement.
 
   return entries
 }

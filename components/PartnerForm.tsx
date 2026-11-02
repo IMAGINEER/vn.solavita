@@ -314,7 +314,7 @@ export default function PartnerForm({
               {/* Privacy */}
               <p className="text-xs text-uk-slate/80 leading-relaxed pt-2">
                 By submitting, you agree to our{' '}
-                <a href="/privacy" className="text-uk-teal-dark underline">
+                <a href="/privacy/" className="text-uk-teal-dark underline">
                   Privacy Policy
                 </a>
                 . Your data is used solely to evaluate your partnership

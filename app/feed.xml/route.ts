@@ -15,7 +15,7 @@
  */
 
 import { listAllPublishedForFeed } from '@/lib/data/blog'
-import { SITE_URL } from '@/lib/seo/site'
+import { SITE_URL, absoluteUrl } from '@/lib/seo/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -54,7 +54,7 @@ export async function GET(): Promise<Response> {
 
   const items = posts
     .map((post) => {
-      const url = `${SITE_URL}/blog/${post.category.slug}/${post.slug}`
+      const url = absoluteUrl(`/blog/${post.category.slug}/${post.slug}`)
       const pubDate = new Date(
         post.published_at ?? post.updated_at ?? Date.now(),
       ).toUTCString()
@@ -80,7 +80,7 @@ export async function GET(): Promise<Response> {
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(SITE_TITLE)}</title>
-    <link>${escapeXml(SITE_URL)}</link>
+    <link>${escapeXml(absoluteUrl('/'))}</link>
     <description>${escapeXml(SITE_DESCRIPTION)}</description>
     <language>${escapeXml(FEED_LANG)}</language>
     <lastBuildDate>${escapeXml(lastBuild)}</lastBuildDate>

@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Last updated: 13 October 2026
+            Solavita · Last updated: 2 November 2026
           </motion.p>
 
           <motion.div
@@ -63,10 +63,10 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Introduction</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                This Privacy Policy explains how <strong className="text-[#0A1628]">[FULL LEGAL NAME OF THE WEBSITE OPERATOR]</strong> ("Solavita", "we", "our" or "us") collects, uses, stores and shares personal information when you visit this website, contact us or submit an enquiry.
+                This Privacy Policy explains how <strong className="text-[#0A1628]">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</strong> ("Solavita", "we", "our" or "us") collects, uses, stores and shares personal information when you visit this website, contact us or submit an enquiry.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We aim to handle personal information transparently and in accordance with applicable data protection laws, including the Nigeria Data Protection Act 2023 where applicable.
+                We aim to handle personal information transparently and in accordance with applicable data protection laws, including the Nigeria Data Protection Act 2023 where it applies to you, and the Hong Kong Personal Data (Privacy) Ordinance to the extent it applies to processing carried out by our Hong Kong-incorporated parent entity.
               </p>
             </div>
 
@@ -133,20 +133,20 @@ export default function PrivacyPage() {
                 We may also disclose information where required by law, to protect legal rights or in connection with a business reorganisation, subject to applicable legal requirements.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                The specific recipients depend on the services actually used by the website operator. <strong className="text-[#0A1628]">[Before publication, identify the actual hosting, analytics, form, messaging and CRM providers, where applicable.]</strong>
+                The specific recipients depend on the services actually used by the website operator. <span className="text-red-600 font-bold">TBD — Verified list of third-party service providers (hosting, analytics, forms, messaging, CRM).</span>
               </p>
             </div>
 
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 International Transfers</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Some service providers may process or store information outside Nigeria or the country in which you are located.
+                Some service providers may process or store information outside Nigeria, Hong Kong or the country in which you are located.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Where personal information is transferred internationally, we will take the steps required by applicable data protection law, including any required safeguards or assessments.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <strong className="text-[#0A1628]">[Confirm actual hosting regions, service-provider locations and applicable transfer safeguards before publication.]</strong>
+                <span className="text-red-600 font-bold">TBD — Confirmed hosting regions, service-provider locations and applicable transfer safeguards.</span>
               </p>
             </div>
 
@@ -159,7 +159,7 @@ export default function PrivacyPage() {
                 Retention periods depend on the type of information, the purpose of processing and applicable legal requirements. We will delete or anonymise information when it is no longer required, where appropriate and technically feasible.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <strong className="text-[#0A1628]">[Confirm the actual retention periods or retention criteria used for enquiries, analytics and server logs.]</strong>
+                <span className="text-red-600 font-bold">TBD — Confirmed retention periods or criteria for enquiries, analytics and server logs.</span>
               </p>
             </div>
 
@@ -219,19 +219,19 @@ export default function PrivacyPage() {
                 For privacy questions or requests, contact:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Data controller / website operator:</strong> [CONFIRM LEGAL ENTITY]</li>
+                <li><strong className="text-[#0A1628]">Data controller / website operator:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED (a company incorporated in Hong Kong)</li>
                 <li><strong className="text-[#0A1628]">Privacy contact:</strong> Johny Zhang</li>
                 <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:ng@solavita.com" className="text-[#0F766E] hover:underline">ng@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Address:</strong> [CONFIRMED BUSINESS OR REGISTERED ADDRESS]</li>
+                <li><strong className="text-[#0A1628]">Address:</strong> <span className="text-red-600">TBD — Verified Hong Kong registered office address</span></li>
               </ul>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                If a designated privacy or data protection officer is legally required or has been appointed, their contact details should be provided here.
+                <span className="text-red-600 font-bold">TBD — Whether a designated data protection officer has been appointed, and their contact details.</span>
               </p>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: 13 October 2026 · Solavita
+                Last updated: 2 November 2026 · Solavita
               </p>
             </div>
           </motion.div>

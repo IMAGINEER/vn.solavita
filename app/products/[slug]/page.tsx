@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import ProductDetail from '@/components/products/ProductDetail'
 import JsonLd from '@/components/seo/JsonLd'
-import { allProductSlugs, getProduct } from '@/lib/data/products'
+import { allProductSlugs, getProduct, getProductHeroImage } from '@/lib/data/products'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import { webPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld'
 
@@ -23,7 +23,7 @@ export async function generateMetadata(
     title: `${product.name} — Specifications & Advantages | Solavita`,
     path: `/products/${product.slug}`,
     description: product.description,
-    ogImage: '/images/hero-solutions.webp',
+    ogImage: getProductHeroImage(product) ?? '/images/hero-solutions.webp',
     ogImageAlt: `Solavita ${product.name}`,
   })
 }
@@ -46,7 +46,6 @@ export default async function ProductPage(props: {
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
-            { name: 'Products', url: '/products' },
             { name: product.name, url: `/products/${product.slug}` },
           ]),
         ]}

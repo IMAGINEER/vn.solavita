@@ -7,7 +7,11 @@ import { openFormModal } from '@/lib/form-modal'
 
 export interface HeaderNavItem {
   label: string
-  href: string
+  /**
+   * Omit on a dropdown-only item (e.g. Products) so the label opens the
+   * menu without navigating — there is no aggregate page behind it.
+   */
+  href?: string
   /**
    * If set, the desktop link opens a hover-dropdown of this kind. The
    * `solutions` / `products` variants surface the entries listed in
@@ -61,37 +65,35 @@ interface NavDropdownGroup {
  * The two dropdown groups, per the IA table in `docs/修改建议.docx`
  * (Oct 2026):
  *
- *   Solutions  → For Home / For Business / For Microgrid
- *   Products   → Module & Inverter & Battery / All-in-One ESS
+ *   Solutions  → For Home / For Business
+ *   Products   → Module / Inverter / Battery / All-in-One ESS
  *
- * The Solutions group also carries a quick CTA to the Solavita HEMS
- * app so the download path is one hover away from the main nav.
+ * Each Products entry goes straight to its own detail page — there is
+ * no aggregate /products hub (removed Oct 2026).
+ *
+ * The Solutions group also carries a quick CTA to the Solavita
+ * Monitoring App so the download path is one hover away from the main
+ * nav.
  */
 const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
   solutions: {
     entries: [
       {
         label: 'For Home',
-        href: '/solutions/home-solar',
+        href: '/solutions/home-solar/',
         description:
           'HOME series — three packaged solar and battery solutions for households.',
       },
       {
         label: 'For Business',
-        href: '/solutions/business-solar',
+        href: '/solutions/business-solar/',
         description:
           'BUSINESS series — three packaged three-phase solutions for shops, SMEs and larger sites.',
       },
-      {
-        label: 'For Microgrid',
-        href: '/solutions/microgrid',
-        description:
-          '125 kW / 261 kWh all-in-one ESS for factories, supermarkets, community mini-grids and telecom sites.',
-      },
     ],
     quickCta: {
-      label: 'Download HEMS App',
-      href: '/hems',
+      label: 'Download Monitoring App',
+      href: '/monitoring-app/',
       description:
         'Track generation, battery and load from your phone — iOS and Android.',
     },
@@ -99,14 +101,26 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
   products: {
     entries: [
       {
-        label: 'Module & Inverter & Battery',
-        href: '/products',
+        label: 'Module',
+        href: '/products/module/',
         description:
-          'Specifications, core hardware and advantages for every component in the range.',
+          '620–640 W TOPCon module — up to 23.7% efficiency, bifacial yield, 30-year performance warranty.',
+      },
+      {
+        label: 'Inverter',
+        href: '/products/inverter/',
+        description:
+          'Hybrid and off-grid inverters from 3 kW to 20 kW, single and three phase.',
+      },
+      {
+        label: 'Battery',
+        href: '/products/battery/',
+        description:
+          'Modular LiFePO₄ storage — 5.12–16.08 kWh blocks, stackable to 16 units.',
       },
       {
         label: 'All-in-One ESS',
-        href: '/products/all-in-one-ess',
+        href: '/products/all-in-one-ess/',
         description:
           'The 125 kW / 261 kWh C&I energy storage cabinet — one box for a whole site.',
       },
@@ -115,21 +129,20 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
 }
 
 const DEFAULT_NAV: HeaderNavItem[] = [
-  // "Solutions" and "Products" are hover-dropdowns. The trigger link
-  // still navigates to the section landing page when the user clicks
-  // (or taps) the label, so the dropdown is a discovery aid, not the
-  // only path to the content.
-  { label: 'Solutions', href: '/solutions/home-solar', dropdown: 'solutions' },
-  { label: 'Products', href: '/products', dropdown: 'products' },
-  { label: 'Cases', href: '/cases' },
-  { label: 'About Us', href: '/about-us' },
-  { label: 'Support', href: '/support' },
-  { label: 'For Partners', href: '/for-partners' },
+  // "Solutions" and "Products" are hover-dropdowns. Solutions still
+  // navigates to its landing page when the label is clicked; Products
+  // has no landing page, so its label only opens the menu.
+  { label: 'Solutions', href: '/solutions/home-solar/', dropdown: 'solutions' },
+  { label: 'Products', dropdown: 'products' },
+  { label: 'Cases', href: '/cases/' },
+  { label: 'About Us', href: '/about-us/' },
+  { label: 'Support', href: '/support/' },
+  { label: 'For Partners', href: '/for-partners/' },
 ]
 
 const DEFAULT_CTA: HeaderCTA = {
   label: 'Contact Us',
-  href: '/contact-us',
+  href: '/contact-us/',
 }
 
 export default function Header({
@@ -233,8 +246,8 @@ export default function Header({
               {navItems.map((item) => {
                 if (item.dropdown) {
                   return (
-                    <SolutionsDropdown
-                      key={item.href}
+                    <NavDropdown
+                      key={item.label}
                       triggerHref={item.href}
                       triggerLabel={item.label}
                       isScrolled={isScrolled}
@@ -244,7 +257,7 @@ export default function Header({
                 }
                 return (
                   <a
-                    key={item.href}
+                    key={item.label}
                     href={item.href}
                     className={`text-sm font-cw-regular transition-colors duration-300 ${
                       isScrolled
@@ -303,14 +316,22 @@ export default function Header({
           >
             <nav className="flex flex-col gap-2 pb-6 bg-white/95 rounded-2xl p-4 -mx-2">
               {navItems.map((item) => (
-                <div key={item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-base font-cw-regular text-uk-navy/80 hover:text-uk-navy py-2 border-b border-uk-line"
-                  >
-                    {item.label}
-                  </a>
+                <div key={item.label}>
+                  {/* Dropdown-only items (Products) have no href — their
+                      label is a plain heading above the inline entries. */}
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-base font-cw-regular text-uk-navy/80 hover:text-uk-navy py-2 border-b border-uk-line block"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <span className="text-base font-cw-regular text-uk-navy/80 py-2 border-b border-uk-line block">
+                      {item.label}
+                    </span>
+                  )}
                   {/* Mobile has no hover, so the dropdown entries are
                       listed inline under their parent. */}
                   {item.dropdown && (
@@ -351,25 +372,28 @@ export default function Header({
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   SolutionsDropdown - one dropdown panel per top-level nav item with
-   a `dropdown` type. Encapsulates open/close state + outside-click + ESC
+   NavDropdown - one dropdown panel per top-level nav item with a
+   `dropdown` type. Encapsulates open/close state + outside-click + ESC
    + 150ms hover grace so the user can travel from the trigger to the
    panel without it snapping shut.
+
+   `triggerHref` is optional: Solutions navigates to its landing page,
+   Products has no landing page so its trigger only toggles the panel.
    ────────────────────────────────────────────────────────────────────── */
 
-interface SolutionsDropdownProps {
-  triggerHref: string
+interface NavDropdownProps {
+  triggerHref?: string
   triggerLabel: string
   isScrolled: boolean
   group: NavDropdownGroup
 }
 
-function SolutionsDropdown({
+function NavDropdown({
   triggerHref,
   triggerLabel,
   isScrolled,
   group,
-}: SolutionsDropdownProps) {
+}: NavDropdownProps) {
   const { entries, quickCta } = group
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -410,6 +434,10 @@ function SolutionsDropdown({
     }, 150)
   }
 
+  /** Shared trigger typography — identical for the link and button forms. */
+  const triggerClass =
+    'text-sm font-cw-regular transition-colors duration-300 inline-flex items-center gap-1.5'
+
   return (
     <div
       ref={wrapperRef}
@@ -417,27 +445,52 @@ function SolutionsDropdown({
       onMouseEnter={openPanel}
       onMouseLeave={scheduleClose}
     >
-      <a
-        href={triggerHref}
-        onFocus={openPanel}
-        aria-haspopup="true"
-        aria-expanded={open}
-        className={`text-sm font-cw-regular transition-colors duration-300 inline-flex items-center gap-1.5 ${
-          open
-            ? 'text-uk-teal'
-            : isScrolled
-            ? 'text-uk-navy/70 hover:text-uk-navy'
-            : 'text-uk-navy/80 hover:text-uk-navy'
-        }`}
-      >
-        {triggerLabel}
-        <ChevronDown
-          className={`w-3 h-3 transition-all duration-300 ${
-            open ? 'rotate-180 text-uk-teal' : ''
+      {triggerHref ? (
+        <a
+          href={triggerHref}
+          onFocus={openPanel}
+          aria-haspopup="true"
+          aria-expanded={open}
+          className={`${triggerClass} ${
+            open
+              ? 'text-uk-teal'
+              : isScrolled
+              ? 'text-uk-navy/70 hover:text-uk-navy'
+              : 'text-uk-navy/80 hover:text-uk-navy'
           }`}
-          strokeWidth={2}
-        />
-      </a>
+        >
+          {triggerLabel}
+          <ChevronDown
+            className={`w-3 h-3 transition-all duration-300 ${
+              open ? 'rotate-180 text-uk-teal' : ''
+            }`}
+            strokeWidth={2}
+          />
+        </a>
+      ) : (
+        <button
+          type="button"
+          onClick={() => (open ? setOpen(false) : openPanel())}
+          onFocus={openPanel}
+          aria-haspopup="true"
+          aria-expanded={open}
+          className={`${triggerClass} cursor-pointer ${
+            open
+              ? 'text-uk-teal'
+              : isScrolled
+              ? 'text-uk-navy/70 hover:text-uk-navy'
+              : 'text-uk-navy/80 hover:text-uk-navy'
+          }`}
+        >
+          {triggerLabel}
+          <ChevronDown
+            className={`w-3 h-3 transition-all duration-300 ${
+              open ? 'rotate-180 text-uk-teal' : ''
+            }`}
+            strokeWidth={2}
+          />
+        </button>
+      )}
       <div
         className={`absolute top-full left-1/2 -translate-x-1/2 w-[420px] pt-3 z-50
                     transition-all duration-200 ease-out origin-top
@@ -481,7 +534,8 @@ function SolutionsDropdown({
             </a>
           ))}
           {/* Optional accent CTA — the Solutions group uses it for the
-              HEMS app download, so the app is one hover from the nav. */}
+              Monitoring App download, so the app is one hover from the
+              nav. */}
           {quickCta && (
             <a
               href={quickCta.href}

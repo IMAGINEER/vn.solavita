@@ -8,8 +8,8 @@ import { formatNGN, formatKwh } from '../_lib/format'
 interface SavingsSectionProps {
   metrics: PlanRoi
   /** Region from the consultation - surfaced in the breakdown so the
-   *  customer can see their specific yield was applied, not the UK
-   *  fallback (which can overstate by ~6% on average). */
+   *  customer can see their specific yield was applied, not the
+   *  Nigeria national-average fallback. */
   region?: string
 }
 

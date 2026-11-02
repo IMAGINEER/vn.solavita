@@ -138,8 +138,8 @@ export default function PartnerCTA() {
               Become a Solavita partner
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Are you ready to become{' '}
-              <span className="text-gradient">a Solavita partner?</span>
+              Are You Ready to Become{' '}
+              <span className="text-gradient">a Solavita Partner?</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
               Join us now.
@@ -338,7 +338,7 @@ export default function PartnerCTA() {
 
                 <p className="md:col-span-2 text-xs text-uk-slate/80 leading-relaxed pt-2">
                   By submitting, you agree to our{' '}
-                  <a href="/privacy" className="text-uk-teal-dark underline">
+                  <a href="/privacy/" className="text-uk-teal-dark underline">
                     Privacy Policy
                   </a>
                   . Your data is used solely to evaluate your partnership

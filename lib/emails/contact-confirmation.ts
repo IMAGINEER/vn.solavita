@@ -48,8 +48,6 @@ export function contactConfirmationEmail(data: {
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Verified Nigeria legal entity · TBD — Verified CAC registration number</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Verified Nigeria registered office address</p>
 <p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita is presented as a solar and energy solutions brand associated with the SKYWORTH Group · ng.solavita.com</p>
 </td></tr>
 

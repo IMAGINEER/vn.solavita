@@ -73,8 +73,8 @@ export default function Approach() {
             Our approach
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            How we work{' '}
-            <span className="text-gradient">end-to-end</span>
+            How We Work{' '}
+            <span className="text-gradient">End-to-End</span>
           </h2>
         </div>
 

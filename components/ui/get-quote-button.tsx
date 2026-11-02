@@ -35,7 +35,7 @@ export default function GetQuoteButton({
   const variantCls =
     variant === 'primary'
       ? 'btn-gradient text-white'
-      : 'border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-white'
+      : 'border border-uk-teal text-uk-teal hover:bg-uk-teal hover:text-uk-navy'
   const cls = `${baseCls} ${variantCls} ${className}`.trim()
 
   const inner = (

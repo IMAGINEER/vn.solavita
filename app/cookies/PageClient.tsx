@@ -40,7 +40,7 @@ export default function CookiesPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Last updated: 13 October 2026
+            Solavita · Last updated: 2 November 2026
           </motion.p>
 
           <motion.div
@@ -62,7 +62,7 @@ export default function CookiesPage() {
           >
             <div>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
-                This Cookie Policy explains how Solavita uses cookies and similar technologies on this website. It should be read alongside our <a href="/privacy" className="text-[#0F766E] hover:underline">Privacy Policy</a>.
+                This Cookie Policy explains how Solavita uses cookies and similar technologies on this website. It should be read alongside our <a href="/privacy/" className="text-[#0F766E] hover:underline">Privacy Policy</a>.
               </p>
             </div>
 
@@ -101,10 +101,7 @@ export default function CookiesPage() {
                 The precise cookies and similar technologies depend on the tools enabled on the website.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <strong className="text-[#0A1628]">[Before publication, complete a cookie inventory based on a browser inspection and the production configuration. For each technology, list its name, provider, purpose, category, duration and whether it transmits data to a third party.]</strong>
-              </p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Do not publish unverified cookie names, providers or expiry periods.
+                <span className="text-red-600 font-bold">TBD — Verified cookie inventory: for each technology, its name, provider, purpose, category, duration and whether it transmits data to a third party.</span>
               </p>
             </div>
 
@@ -127,7 +124,7 @@ export default function CookiesPage() {
                 Some website features may depend on third-party services, such as embedded content, analytics, advertising or communication tools. If enabled, those providers may process technical information in accordance with their own policies.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                The operator should identify the actual providers used on this website and link to their relevant privacy or cookie documentation.
+                <span className="text-red-600 font-bold">TBD — Verified third-party providers used on this website and links to their privacy and cookie documentation.</span>
               </p>
             </div>
 
@@ -144,16 +141,16 @@ export default function CookiesPage() {
                 For questions about cookies or similar technologies, contact:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Website operator:</strong> [FULL LEGAL NAME]</li>
+                <li><strong className="text-[#0A1628]">Website operator:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED (a company incorporated in Hong Kong)</li>
                 <li><strong className="text-[#0A1628]">Contact:</strong> Johny Zhang</li>
                 <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:ng@solavita.com" className="text-[#0F766E] hover:underline">ng@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Address:</strong> [CONFIRMED BUSINESS OR REGISTERED ADDRESS]</li>
+                <li><strong className="text-[#0A1628]">Address:</strong> <span className="text-red-600">TBD — Verified Hong Kong registered office address</span></li>
               </ul>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: 13 October 2026 · Solavita
+                Last updated: 2 November 2026 · Solavita
               </p>
             </div>
           </motion.div>

@@ -69,8 +69,8 @@ export default function WhySolavita() {
             Why homeowners choose us
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Built to last.{' '}
-            <span className="text-gradient">Backed for life.</span>
+            Built to Last.{' '}
+            <span className="text-gradient">Backed for Life.</span>
           </h2>
         </div>
 

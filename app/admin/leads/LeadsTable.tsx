@@ -104,7 +104,7 @@ function formatDateTime(iso: string): string {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-      timeZone: 'Europe/London',
+      timeZone: 'Africa/Lagos',
     }).format(new Date(iso))
   } catch {
     return iso
@@ -132,11 +132,16 @@ function parseDevices(csv: string | null): Array<string> {
  *  have seen when they opened /my-plan. */
 const DEFAULT_HOUSEHOLD_SIZE: ConsultationInput['householdSize'] = '3'
 const DEFAULT_USAGE: ConsumptionTier = 'medium'
-const DEFAULT_REGION = 'England - London'
+/** Fallback region for rows with a NULL region column. Matches
+ *  `lib/my-plan/adapter.ts` - the NG form no longer collects a
+ *  region, so most rows land here. */
+const DEFAULT_REGION = 'Nigeria'
 
 /** Run the recommendation engine client-side (same call as
  *  MyPlanClient) so the Plan column shows the actual bundle
- *  (Home Energy One / Pro / Max / Ultra). The catalogue is pure - no
+ *  (LITE Essential Backup / HOME Standard / HOME High-spec /
+ *  BUSINESS Entry 3-Phase / BUSINESS Standard 3-Phase / BUSINESS
+ *  Flagship 3-Phase). The catalogue is pure - no
  *  I/O, no React hooks - so importing it into a 'use client' component
  *  is safe. */
 function resolvePlanName(l: ConsultationLead): string {
@@ -197,7 +202,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
   if (leads.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        No UK leads yet.
+        No NG leads yet.
       </div>
     )
   }

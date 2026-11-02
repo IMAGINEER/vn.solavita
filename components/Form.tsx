@@ -3,103 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Check, ChevronLeft, ChevronRight, Loader2, BadgeCheck, Lightbulb, Zap, Plug, Factory, HelpCircle } from 'lucide-react';
 import type { FormData } from '@/lib/form-types';
 
-// ============ SVG ICONS ============
-
-const HouseDetached = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <path d="M40 10L8 35V70H72V35L40 10Z" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="32" y="45" width="16" height="25" stroke="currentColor" strokeWidth="2"/>
-    <rect x="15" y="40" width="12" height="12" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="53" y="40" width="12" height="12" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M40 10L5 37" stroke="currentColor" strokeWidth="2"/>
-    <path d="M40 10L75 37" stroke="currentColor" strokeWidth="2"/>
-  </svg>
-);
-
-const HouseSemiDetached = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <path d="M20 15L4 32V70H40V32L20 15Z" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <path d="M60 15L40 32V70H76V32L60 15Z" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="14" y="45" width="10" height="25" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="54" y="45" width="10" height="25" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="10" y="36" width="8" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="56" y="36" width="8" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <line x1="40" y1="32" x2="40" y2="70" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2"/>
-  </svg>
-);
-
-const HouseTerraced = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <rect x="4" y="30" width="24" height="40" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="28" y="30" width="24" height="40" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="52" y="30" width="24" height="40" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <path d="M4 30L16 18L28 30" stroke="currentColor" strokeWidth="2"/>
-    <path d="M28 30L40 18L52 30" stroke="currentColor" strokeWidth="2"/>
-    <path d="M52 30L64 18L76 30" stroke="currentColor" strokeWidth="2"/>
-    <rect x="11" y="50" width="8" height="20" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="36" y="50" width="8" height="20" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="60" y="50" width="8" height="20" stroke="currentColor" strokeWidth="1.5"/>
-  </svg>
-);
-
-const HouseApartment = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <rect x="12" y="10" width="56" height="60" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="20" y="18" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="35" y="18" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="50" y="18" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="20" y="32" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="35" y="32" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="50" y="32" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="20" y="46" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="35" y="46" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="50" y="46" width="10" height="8" stroke="currentColor" strokeWidth="1.5"/>
-    <rect x="33" y="58" width="14" height="12" stroke="currentColor" strokeWidth="1.5"/>
-  </svg>
-);
-
-const RoofGable = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <path d="M10 50L40 20L70 50" stroke="currentColor" strokeWidth="2.5"/>
-    <rect x="10" y="50" width="60" height="20" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <path d="M15 50L40 25L65 50" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" opacity="0.5"/>
-    {/* Solar panels on roof */}
-    <rect x="20" y="32" width="8" height="5" stroke="currentColor" strokeWidth="1" transform="rotate(-33 24 34.5)" opacity="0.6"/>
-    <rect x="30" y="27" width="8" height="5" stroke="currentColor" strokeWidth="1" transform="rotate(-33 34 29.5)" opacity="0.6"/>
-  </svg>
-);
-
-const RoofFlat = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <rect x="10" y="35" width="60" height="5" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="10" y="40" width="60" height="30" stroke="currentColor" strokeWidth="2" fill="none"/>
-    {/* Solar panels on flat roof */}
-    <path d="M20 35L20 30L30 30L30 35" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
-    <path d="M35 35L35 30L45 30L45 35" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
-    <path d="M50 35L50 30L60 30L60 35" stroke="currentColor" strokeWidth="1.5" opacity="0.6"/>
-  </svg>
-);
-
-const RoofHip = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <path d="M25 35L40 20L55 35" stroke="currentColor" strokeWidth="2"/>
-    <path d="M10 50L25 35L55 35L70 50" stroke="currentColor" strokeWidth="2"/>
-    <rect x="10" y="50" width="60" height="20" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <line x1="25" y1="35" x2="10" y2="50" stroke="currentColor" strokeWidth="2"/>
-    <line x1="55" y1="35" x2="70" y2="50" stroke="currentColor" strokeWidth="2"/>
-  </svg>
-);
-
-const RoofPent = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-    <path d="M10 50L10 30L70 42L70 50" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <rect x="10" y="50" width="60" height="20" stroke="currentColor" strokeWidth="2" fill="none"/>
-    {/* Solar panel indication */}
-    <rect x="18" y="34" width="12" height="6" stroke="currentColor" strokeWidth="1" transform="rotate(-10 24 37)" opacity="0.6"/>
-    <rect x="38" y="37" width="12" height="6" stroke="currentColor" strokeWidth="1" transform="rotate(-10 44 40)" opacity="0.6"/>
-  </svg>
-);
-
 // ============ PERSON ICONS ============
 const PersonIcon = ({ count }: { count: number }) => (
   <div className="flex items-center justify-center gap-0.5">
@@ -153,20 +56,6 @@ const REGIONS = [
   'South East',
   'South South',
   'South West',
-];
-
-const HOUSE_TYPES = [
-  { id: 'detached', label: 'Detached house', icon: HouseDetached },
-  { id: 'semi-detached', label: 'Semi-detached', icon: HouseSemiDetached },
-  { id: 'terraced', label: 'Terraced house', icon: HouseTerraced },
-  { id: 'apartment', label: 'Flat / Apartment', icon: HouseApartment },
-];
-
-const ROOF_TYPES = [
-  { id: 'gable', label: 'Pitched (gable)', icon: RoofGable },
-  { id: 'hip', label: 'Hipped', icon: RoofHip },
-  { id: 'flat', label: 'Flat roof', icon: RoofFlat },
-  { id: 'pent', label: 'Mono-pitched', icon: RoofPent },
 ];
 
 const HOUSEHOLD_SIZES = [
@@ -852,7 +741,7 @@ const Form: React.FC<{
                         </label>
                         <div className="grid grid-cols-1 gap-3">
                           {[
-                            { id: 'detached-semi', label: 'Detached / Semi-detached' },
+                            { id: 'detached-semi', label: 'Detached / Duplex' },
                             { id: 'terraced-apt', label: 'Terraced / Apartment' },
                             { id: 'commercial', label: 'Commercial / Shop' },
                             { id: 'others', label: 'Others' },
@@ -1060,7 +949,7 @@ const Form: React.FC<{
                           type="email"
                           value={formData.email}
                           onChange={e => { updateField('email', e.target.value); clearErrors(); }}
-                          placeholder="alex.smith@example.co.uk"
+                          placeholder="alex.smith@example.com"
                           className={`w-full px-4 py-3 border-2 ${errors.email ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                         />
                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -1082,7 +971,7 @@ const Form: React.FC<{
                       {/* Privacy */}
                       <p className="text-xs text-gray-400 leading-relaxed">
                         By submitting, you agree to our{' '}
-                        <a href="/privacy" className="text-[#0F766E] underline">Privacy Policy</a>.
+                        <a href="/privacy/" className="text-[#0F766E] underline">Privacy Policy</a>.
                         Your data is used solely to prepare your quote.
                       </p>
 

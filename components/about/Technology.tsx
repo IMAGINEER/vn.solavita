@@ -80,7 +80,7 @@ export default function Technology() {
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
               Engineering{' '}
-              <span className="text-gradient">that lasts decades</span>
+              <span className="text-gradient">That Lasts Decades</span>
             </h2>
 
             <p className="text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">

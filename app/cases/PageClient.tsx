@@ -7,24 +7,28 @@ import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import GetQuoteButton from '@/components/ui/get-quote-button'
 import { openFormModal } from '@/lib/form-modal'
-import { caseStudies } from '@/lib/data/uk-cases'
-import CaseStudyCard from '@/components/cases/CaseStudyCard'
+import {
+  ngResidentialCases,
+  ngCommercialCases,
+} from '@/lib/data/ng-cases'
+import NgCaseCard from '@/components/cases/NgCaseCard'
 
 /**
  * /cases - Case studies index.
  *
- * The NG site has no verified Nigerian cases yet. Per the user's
- * directive, this page surfaces the 13 reference installations from
- * the previous UK site (Italian + German) so the consumer surface
- * still has real install imagery and system configurations. Prices
- * are not shown. Each card is linked to its detail page (noindex).
+ * Rebuilt per `docs/修改建议(2).docx` §"Cases页面" (Oct 2026): the
+ * 16 reference installations are now split into two bubble-box
+ * categories —
  *
- * Copy: hero is "Solar Solutions in Practice" with a global reference
- * framing; the section below introduces the installs as global project
- * references. The closing line in both blocks notes that verified
- * Nigerian installations will be added when local projects become
- * available — per NG content strategy we don't repurpose the UK cases
- * as if they were Nigerian.
+ *   Residential            → 12 installs
+ *   Commercial & Industrial →  4 installs
+ *
+ * and every card uses the new format: type badge → capacity → place.
+ * The case facts themselves now come from `docs/创维光伏海外案例2.0(1).pptx`
+ * (Nov 2026), which supersedes the docx figures.
+ *
+ * Photos: all 16 cases now carry a photo taken from the case deck
+ * (`docs/创维光伏海外案例2.0(1).pptx`).
  */
 export default function CasesPage() {
   return (
@@ -36,34 +40,57 @@ export default function CasesPage() {
         backgroundImage="/images/hero-cases.webp"
         eyebrow="CASES"
         title="Solar Solutions in Practice"
-        body="Explore solar installations and system configurations from across our global markets. See how Solavita Nigeria systems are configured for different energy needs, with verified Nigerian customer projects to be added as they become available."
+        body="Explore solar installations and system configurations in different scenarios."
         breadcrumbs={[
           { label: 'Home', href: '/' },
           { label: 'Cases' },
         ]}
       />
 
-      <section className="relative py-16 md:py-20 bg-white">
+      {/* Residential */}
+      <section
+        id="residential-cases"
+        className="relative py-16 md:py-20 bg-white scroll-mt-24"
+      >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-10">
-            <SectionEyebrow>GLOBAL PROJECT REFERENCES</SectionEyebrow>
+            <SectionEyebrow>RESIDENTIAL</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Solar Installations <span className="text-gradient">Across Different Markets</span>
+              Home Systems, <span className="text-gradient">Configured to the Roof</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-              Discover reference installations featuring Solavita
-              products, system components and installation approaches.
-              These examples offer practical insights into solar and
-              battery storage configurations for different applications.
-            </p>
-            <p className="mt-3 text-sm text-uk-slate font-cw-regular">
-              Verified Nigerian installations will be added as local
-              projects become available.
+              Reference installations on homes across Asia, Europe and
+              West Africa — showing the array size, the battery stack and
+              the inverter rating each site runs.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {caseStudies.map((c) => (
-              <CaseStudyCard key={c.slug} caseStudy={c} linked={false} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ngResidentialCases.map((c) => (
+              <NgCaseCard key={c.slug} c={c} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Commercial & Industrial */}
+      <section
+        id="commercial-cases"
+        className="relative py-16 md:py-20 bg-uk-line/30 scroll-mt-24"
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <SectionEyebrow>COMMERCIAL &amp; INDUSTRIAL</SectionEyebrow>
+            <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
+              Business Systems, <span className="text-gradient">Scaled to the Load</span>
+            </h2>
+            <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
+              Reference installations for schools, trading cities,
+              commercial rooftops and utility-scale storage.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {ngCommercialCases.map((c) => (
+              <NgCaseCard key={c.slug} c={c} />
             ))}
           </div>
         </div>
@@ -97,7 +124,7 @@ export default function CasesPage() {
             <GetQuoteButton onClick={openFormModal} />
             <Link
               href="/solutions/home-solar"
-              className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-white hover:border-uk-teal transition-colors"
+              className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-uk-navy hover:border-uk-teal transition-colors"
             >
               Explore Solutions
             </Link>

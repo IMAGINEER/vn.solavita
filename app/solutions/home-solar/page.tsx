@@ -44,8 +44,8 @@ export default function Page() {
             { name: 'Home', url: '/' },
             { name: 'For Home', url: '/solutions/home-solar' },
           ]),
-          serviceListJsonLd(serviceSpecs),
-          ...serviceSpecs.map((s) => serviceJsonLd(s)),
+          serviceListJsonLd(serviceSpecs, '/solutions/home-solar'),
+          ...serviceSpecs.map((s) => serviceJsonLd(s, '/solutions/home-solar')),
         ]}
       />
       <HomeSolarPage />

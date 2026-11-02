@@ -26,9 +26,9 @@ export interface NgSupportItem {
 export const ngSupportItems: NgSupportItem[] = [
   {
     icon: 'app',
-    title: 'HEMS App',
+    title: 'Monitoring App',
     description:
-      'TBD — Confirmed HEMS app download link and supported NG regions.',
+      'TBD — Confirmed Monitoring App download link and supported NG regions.',
   },
   {
     icon: 'warranty',
@@ -73,13 +73,6 @@ export const ngSupportItems: NgSupportItem[] = [
       'TBD — Approved written policies (terms, privacy, cookies).',
   },
 ]
-
-/**
- * Backwards-compat alias. The original UK file exported `ukSupportItems`;
- * `components/support/*` and `app/support/PageClient.tsx` may still
- * import under the old name. Re-exported to avoid a fan-out rename.
- */
-export const ukSupportItems: NgSupportItem[] = ngSupportItems
 
 /**
  * Support FAQ data — built from `content/nigeria/support.md` Section 2.

@@ -46,8 +46,10 @@ export default function Page() {
             { name: 'Home', url: '/' },
             { name: 'For Business', url: '/solutions/business-solar' },
           ]),
-          serviceListJsonLd(serviceSpecs),
-          ...serviceSpecs.map((s) => serviceJsonLd(s)),
+          serviceListJsonLd(serviceSpecs, '/solutions/business-solar'),
+          ...serviceSpecs.map((s) =>
+            serviceJsonLd(s, '/solutions/business-solar'),
+          ),
         ]}
       />
       <BusinessSolarPage />

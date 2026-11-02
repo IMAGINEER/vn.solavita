@@ -2,10 +2,10 @@
 
 import { motion } from 'motion/react'
 import Breadcrumb from '@/components/Breadcrumb'
-import { hemsIntro } from '@/lib/data/hems'
+import { monitoringAppIntro } from '@/lib/data/monitoring-app'
 
 /**
- * HEMS hero — light theme.
+ * Monitoring App hero — light theme.
  *
  * Mirrors the visual rhythm of `<SolutionsHero>` (full-bleed, eyebrow
  * pill + heading + body, soft surface that flows into the next white
@@ -13,11 +13,11 @@ import { hemsIntro } from '@/lib/data/hems'
  * so the navy headline stays legible while the page stays in the same
  * teal-leaning palette as `/solutions`.
  */
-export default function HEMSHero() {
+export default function MonitoringAppHero() {
   return (
     <section
       className="hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/hero-hems.webp)' }}
+      style={{ backgroundImage: 'url(/images/hero-monitoring-app.webp)' }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -32,7 +32,7 @@ export default function HEMSHero() {
           theme="light"
           items={[
             { label: 'Home', href: '/' },
-            { label: 'HEMS App' },
+            { label: 'Monitoring App' },
           ]}
         />
 
@@ -44,7 +44,7 @@ export default function HEMSHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            {hemsIntro.eyebrow}
+            {monitoringAppIntro.eyebrow}
           </span>
         </motion.span>
 
@@ -54,8 +54,8 @@ export default function HEMSHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
         >
-          {hemsIntro.title}{' '}
-          <span className="text-gradient">{hemsIntro.titleHighlight}</span>
+          {monitoringAppIntro.title}{' '}
+          <span className="text-gradient">{monitoringAppIntro.titleHighlight}</span>
         </motion.h1>
 
         <motion.p
@@ -64,7 +64,7 @@ export default function HEMSHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          {hemsIntro.body}
+          {monitoringAppIntro.body}
         </motion.p>
       </div>
     </section>

@@ -281,7 +281,10 @@ export function collectionPageJsonLd(opts: {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
-   Service - emitted as a `Service` ItemList on `/solutions`.
+   Service - emitted as a `Service` ItemList on the two collection
+   pages (`/solutions/home-solar`, `/solutions/business-solar`). `path`
+   is required so the `@id` always anchors to a live page instead of
+   the removed `/solutions` overview.
 
    We use `Service` (not `Product`) because each tier is a delivered
    installation package (panels + battery + install + warranty), not a
@@ -302,9 +305,8 @@ export interface ServiceSpec {
   imageAlt: string
 }
 
-export function serviceJsonLd(spec: ServiceSpec) {
-  const path = `/solutions#${spec.id}`
-  const url = absoluteUrl(path)
+export function serviceJsonLd(spec: ServiceSpec, path: string) {
+  const url = absoluteUrl(`${path}#${spec.id}`)
   return withContext({
     '@type': 'Service',
     '@id': url,
@@ -330,13 +332,13 @@ export function serviceJsonLd(spec: ServiceSpec) {
   })
 }
 
-export function serviceListJsonLd(services: ServiceSpec[]) {
+export function serviceListJsonLd(services: ServiceSpec[], path: string) {
   return withContext({
     '@type': 'ItemList',
     itemListElement: services.map((s, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,
-      item: { '@id': absoluteUrl(`/solutions#${s.id}`) },
+      item: { '@id': absoluteUrl(`${path}#${s.id}`) },
     })),
   })
 }
@@ -361,10 +363,7 @@ export function serviceListJsonLd(services: ServiceSpec[]) {
 export function productJsonLd(detail: SolutionDetail) {
   const path = `/solutions/${detail.slug}/`
   const url = absoluteUrl(path)
-  const images = detail.galleryImages.map((g) => absoluteUrl(g.src))
-  if (!images.includes(absoluteUrl(detail.imagePath))) {
-    images.unshift(absoluteUrl(detail.imagePath))
-  }
+  const images = [absoluteUrl(detail.imagePath)]
   return withContext(
     {
       '@type': 'Product',
@@ -555,18 +554,17 @@ export function creativeWorkListJsonLd(items: CreativeWorkListItem[]) {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
-   SoftwareApplication - emitted on `/hems/`.
+   SoftwareApplication - emitted on `/monitoring-app/`.
 
-   HEMS (Home Energy Management System) is Solavita's mobile/web app
-   for monitoring solar + battery + EV charging. Schema.org's
-   SoftwareApplication is the right fit: it composes with the existing
-   `Service` node (different @id) and lets Google's app panels
-   recognise the product.
+   The Solavita Monitoring App is the mobile/web app for watching solar,
+   battery and household load. Schema.org's SoftwareApplication is the
+   right fit: it composes with the existing `Service` node (different
+   @id) and lets Google's app panels recognise the product.
 
-   Nigeria: HEMS compatibility is TBD (per hems.md Sections 2, 4, 5).
-   We emit the schema with the features list and intentionally omit
-   `offers` — the `free` flag is not asserted because compatibility
-   with NG inverter/battery models is unverified.
+   Nigeria: app compatibility with the NG inverter/battery models is
+   TBD. We emit the schema with the
+   features list and intentionally omit `offers` — the `free` flag is
+   not asserted until that compatibility is verified.
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface SoftwareAppFeatures {
@@ -577,14 +575,14 @@ export interface SoftwareAppFeatures {
 }
 
 export function softwareApplicationJsonLd(opts: SoftwareAppFeatures) {
-  const url = absoluteUrl('/hems/')
+  const url = absoluteUrl('/monitoring-app/')
   const node: Record<string, unknown> = {
     '@type': 'SoftwareApplication',
     '@id': url,
     name: opts.name,
     url,
     applicationCategory: 'UtilitiesApplication',
-    applicationSubCategory: 'Home Energy Management System',
+    applicationSubCategory: 'Home Energy Monitoring',
     operatingSystem: 'iOS, Android, Web',
     publisher: { '@id': ORG_ID },
     featureList: opts.featureList.join(', '),

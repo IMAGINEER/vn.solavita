@@ -53,7 +53,7 @@ interface MyPlanClientProps {
  *   - `importPriceGbp` / `exportPriceGbp` are user-tweakable so the
  *     customer can model their actual tariff. They survive plan
  *     switches - they describe the household's tariff, not the
- *     hardware, so a One → Ultra swap shouldn't reset them.
+ *     hardware, so a package swap shouldn't reset them.
  *   - Everything else (`plan`, `assumptions`, `metrics`, `systemKw`) is
  *     derived via `useMemo`. Switching plans re-renders only the
  *     affected children - never the whole tree.
@@ -78,10 +78,12 @@ export default function MyPlanClient({
 
   const [selectedPlanId, setSelectedPlanId] = useState<PlanId>(recommendedPlanId)
 
-  // User-tweakable tariff assumptions. Seeded from the Ofgem 2026 cap
-  // and the current export rate (TBD per region). Independent of plan choice - a customer
-  // who pays 30p/kWh on Home Energy One pays 30p/kWh on Home Energy
-  // Ultra too, so the values survive plan switches.
+  // User-tweakable tariff assumptions. Seeded from the NG residential
+  // grid tariff (Band A/B/C - TBD, verified rate pending) and the
+  // current export rate (TBD - Nigeria has no confirmed feed-in
+  // tariff yet). Independent of plan choice - a customer who pays
+  // ₦68/kWh on LITE Essential Backup pays ₦68/kWh on BUSINESS
+  // Flagship 3-Phase too, so the values survive plan switches.
   const [importPriceGbp, setImportPriceGbp] = useState<number>(DEFAULT_ROI_IMPORT_PRICE_GBP)
   const [exportPriceGbp, setExportPriceGbp] = useState<number>(DEFAULT_ROI_EXPORT_PRICE_GBP)
   // Self-consumption rate is also user-tweakable so a customer can model

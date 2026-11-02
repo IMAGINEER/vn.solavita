@@ -71,8 +71,8 @@ export default function SolutionCategories() {
             Find your system
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Find the right{' '}
-            <span className="text-gradient">solution for your home</span>
+            Find the Right{' '}
+            <span className="text-gradient">Solution for Your Home</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
             Start where you are - add more later. Every Solavita system is

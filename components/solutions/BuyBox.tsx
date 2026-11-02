@@ -177,7 +177,7 @@ export default function BuyBox({ detail }: BuyBoxProps) {
         onClick={() => openFormModal({ interestedProduct: detail.title })}
         className="mt-6 w-full btn-gradient px-8 py-4 rounded-full font-cw-bold text-base text-white cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
       >
-        Get Free Plan →
+        Get Free Quote →
       </button>
 
       {/* Secondary CTA - mailto with prefilled subject */}

@@ -140,9 +140,9 @@ export default async function BlogCategoryPage(props: {
         eyebrow="Ready when you are"
         title={
           <>
-            Not a Solavita customer yet?
+            Not a Solavita Customer Yet?
             <br />
-            <span className="text-gradient">Start with a free design.</span>
+            <span className="text-gradient">Start with a Free Design.</span>
           </>
         }
         description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."

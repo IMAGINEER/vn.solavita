@@ -2,26 +2,29 @@
 
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import HEMSHero from '@/components/hems/Hero'
-import FeaturesGrid from '@/components/hems/FeaturesGrid'
-import PhoneShowcase from '@/components/hems/PhoneShowcase'
+import MonitoringAppHero from '@/components/monitoring-app/Hero'
+import FeaturesGrid from '@/components/monitoring-app/FeaturesGrid'
+import PhoneShowcase from '@/components/monitoring-app/PhoneShowcase'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /hems - Solavita HEMS App landing page (light theme).
+ * /monitoring-app - Solavita Monitoring App landing page (light theme).
  *
  * Composition:
  *   Hero (light, banner-style) →
  *   FeaturesGrid (heading → full-width demo video → 6 capability cards) →
- *   PhoneShowcase ("Solavita HEMS App" + phone centered + download CTAs) →
+ *   PhoneShowcase ("Solavita Monitoring App" + phone centered + download
+ *   CTAs) →
  *   Bottom CTA (re-used from /solutions for visual consistency)
+ *
+ * The old `/hems` URL permanently redirects here (see next.config.js).
  */
-export default function HemsPage() {
+export default function MonitoringAppPage() {
   return (
     <main className="min-h-screen">
       <Header logoHref="/" />
 
-      <HEMSHero />
+      <MonitoringAppHero />
       <FeaturesGrid />
       <PhoneShowcase />
 
@@ -29,12 +32,12 @@ export default function HemsPage() {
         eyebrow="Free design · No obligation"
         title={
           <>
-            See the HEMS on your home.
+            See the Monitoring App on Your Home.
             <br />
-            <span className="text-gradient">Get a free design & quote.</span>
+            <span className="text-gradient">Get a Free Design &amp; Quote.</span>
           </>
         }
-        description="Tell us about your home. Our Nigerian team will design the right HEMS-managed system - solar, battery, EV charger and heat pump - and send you a clear, no-obligation quote."
+        description="Tell us about your home. Our Nigerian team will design the right Monitoring App-managed system - solar, battery and backup power - and send you a clear, no-obligation quote."
         secondaryLabel="Talk to our team"
         secondaryHref="mailto:ng@solavita.com"
       />

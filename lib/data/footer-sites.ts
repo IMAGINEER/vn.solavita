@@ -80,9 +80,9 @@ export const footerSiteGroups: FooterSiteGroup[] = [
   {
     title: 'SKYWORTH Solar',
     sites: [
+      site('Global', 'globe', 'https://www.skyworth-pv.com/'),
       site('Thailand', 'th', 'https://th.skyworth-pv.com/'),
       site('Brazil', 'br', 'https://br.skyworth-pv.com/'),
-      site('Global', 'globe', 'https://www.skyworth-pv.com/'),
       site('Germany', 'de', 'https://de.skyworth-pv.com/'),
       site('Italy', 'it', 'https://it.skyworth-pv.com/'),
     ],

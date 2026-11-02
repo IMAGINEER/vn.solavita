@@ -81,7 +81,13 @@ export interface ConsultationRow {
 /** Defensive defaults when the row is missing fields (e.g. legacy rows). */
 const DEFAULT_HOUSEHOLD_SIZE: ConsultationInput['householdSize'] = '3'
 const DEFAULT_USAGE: ConsumptionTier = 'medium'
-const DEFAULT_REGION = 'England - London'
+/** Fallback region when the consultation row carries no region. The NG
+ *  form stopped collecting a region, so this is what most NG plans
+ *  show. It is intentionally NOT a Nigerian state: the calculator
+ *  treats an unknown region as the national average yield
+ *  (`NG_REGION_YIELD_FALLBACK`), and the UI says "region-adjusted
+ *  for Nigeria" rather than naming a state we never captured. */
+const DEFAULT_REGION = 'Nigeria'
 
 /**
  * Build the `ConsultationInput` that feeds `recommendPlan()` + `calculateROI()`.

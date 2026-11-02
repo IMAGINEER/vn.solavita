@@ -67,7 +67,7 @@ export const supportCategories: SupportCategory[] = [
     id: 'monitoring',
     title: 'Monitoring',
     description:
-      'HEMS app setup, alerts, reports and sharing access with family.',
+      'Monitoring App setup, alerts, reports and sharing access with family.',
     icon: 'monitor',
     ctaLabel: 'View FAQs',
     ctaHref: '#faq-monitoring',
@@ -122,7 +122,7 @@ export const faqItems: FaqItem[] = [
     category: 'product',
     question: 'Where can I find the manuals?',
     answer:
-      'Product manuals are available in the Downloads section of your HEMS app, and on request from our service team.',
+      'Product manuals are available in the Downloads section of your Monitoring App, and on request from our service team.',
   },
   {
     category: 'product',
@@ -132,9 +132,9 @@ export const faqItems: FaqItem[] = [
   },
   {
     category: 'monitoring',
-    question: 'How do I get the HEMS app?',
+    question: 'How do I get the Monitoring App?',
     answer:
-      'Once your system is commissioned we create your HEMS account and email the download link. The app is available on iOS and Android.',
+      'Once your system is commissioned we create your Monitoring App account and email the download link. The app is available on iOS and Android.',
   },
   {
     category: 'monitoring',
@@ -158,7 +158,7 @@ export const faqItems: FaqItem[] = [
     category: 'troubleshooting',
     question: 'My system has stopped generating - what should I check?',
     answer:
-      'First check the HEMS app for an alert, then verify the inverter display is on. If both look normal, submit a service ticket and we will respond within one working day.',
+      'First check the Monitoring App for an alert, then verify the inverter display is on. If both look normal, submit a service ticket and we will respond within one working day.',
   },
 ]
 
@@ -198,11 +198,5 @@ export const supportContactChannels: SupportContactChannel[] = [
         .
       </>
     ),
-  },
-  {
-    label: 'Live chat',
-    value: 'Coming soon',
-    href: '#',
-    description: 'Real-time chat - in development.',
   },
 ]

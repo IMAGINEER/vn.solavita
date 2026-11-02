@@ -56,7 +56,7 @@ interface FormState {
    * Free-text author byline (e.g. "Jane Smith"). The server resolves
    * this to a blog_authors row - case-insensitive lookup on
    * display_name, creating a new row on miss. Defaults to the
-   * Solavita UK Team byline for new posts.
+   * Solavita Nigeria Team byline for new posts.
    */
   author_byline: string
   status: BlogPostStatus
@@ -118,7 +118,7 @@ export function PostEditor({
     category_id:
       initial?.category_id ?? categories[0]?.id ?? '',
     // Pre-fill byline with the existing author for edits, or the
-    // default UK team byline for new posts.
+    // default Nigeria team byline for new posts.
     author_byline:
       initial?.author?.display_name ?? 'Solavita Nigeria Team',
     status: initial?.status ?? 'draft',

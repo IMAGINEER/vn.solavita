@@ -49,8 +49,8 @@ export default function AboutPage() {
         eyebrow="Ready when you are"
         title={
           <>
-            See what Solavita can do{' '}
-            <span className="text-gradient">for your home.</span>
+            See What Solavita Can Do{' '}
+            <span className="text-gradient">for Your Home.</span>
           </>
         }
         description="Whether for your home or business, Solavita helps you find the right solar and battery storage solution for your energy needs. Tell us what you need, and our team will help you get started."

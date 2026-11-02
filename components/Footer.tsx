@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Download, Mail, Phone } from 'lucide-react'
+import { Phone } from 'lucide-react'
 import FormModal, { useFormModalEvent } from '@/components/FormModal'
 import LocaleMenu from '@/components/LocaleMenu'
 import PartnerFormModal, {
@@ -23,12 +23,12 @@ gsap.registerPlugin(ScrollTrigger)
  *   │  ─────────────────── │  ─────────────────                  │
  *   │  Logo                │  Solutions  Company                 │
  *   │  Tagline             │  Support                            │
- *   │  Legal info (TBD)    │  Legal                              │
- *   │  Social (Facebook)   │                                     │
+ *   │  Contact             │  Legal                              │
+ *   │  Social (FB, WA)     │                                     │
  *   ├────────────────────────────────────────────────────────────┤
  *   │  Sub-footer                                              │
  *   │  ──────────────────────────────────────────────────────────│
- *   │  Copyright (TBD)        Locale menu (flag + country list)  │
+ *   │  Copyright              Locale menu (flag + country list)  │
  *   └────────────────────────────────────────────────────────────┘
  *
  * Footer surface colour is driven by theme rules (`.light-mode footer`,
@@ -46,10 +46,11 @@ gsap.registerPlugin(ScrollTrigger)
  * Per `content/nigeria/products.md` the Solutions column lists the six
  * NG packages (LITE Essential Backup, HOME Standard, HOME High-spec,
  * BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS
- * Flagship 3-Phase). Per NG content rules, every unverified company
- * detail (legal entity, CAC number, registered office, contact email /
- * phone, copyright holder) is rendered as a red `TBD — ...` placeholder
- * until the business confirms the value.
+ * Flagship 3-Phase). The legal entity is the Hong Kong parent,
+ * SKYWORTH RENEWABLE ENERGY COMPANY LIMITED; contact details in the
+ * Support column and the copyright line use the confirmed NG email
+ * and WhatsApp number. Details still awaiting verification are
+ * rendered as red `TBD — ...` placeholders.
  */
 
 export interface FooterLink {
@@ -65,23 +66,6 @@ interface FooterProps {
   productLinks?: FooterLink[]
   companyLinks?: FooterLink[]
 }
-
-/* ────────────────────────────────────────────────────────────────────────
-   Stylised Union Jack - same artwork used in Hero trust pills and Header.
-   ──────────────────────────────────────────────────────────────────────── */
-const FlagUK = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
-  <svg
-    className={`${className} rounded-sm overflow-hidden flex-shrink-0`}
-    viewBox="0 0 60 30"
-    aria-hidden="true"
-  >
-    <rect width="60" height="30" fill="#012169" />
-    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" strokeWidth="6" />
-    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="3.5" />
-    <path d="M30,0 V30 M0,15 H60" stroke="#ffffff" strokeWidth="10" />
-    <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
-  </svg>
-)
 
 export default function Footer({
   variant = 'dark',
@@ -146,17 +130,17 @@ export default function Footer({
     // live on the dedicated `/solutions/home-solar` and
     // `/solutions/business-solar` pages — there are no per-tier
     // landing pages. Mirrors the Header dropdown.
-    { label: 'For Home', href: '/solutions/home-solar' },
-    { label: 'For Business', href: '/solutions/business-solar' },
+    { label: 'For Home', href: '/solutions/home-solar/' },
+    { label: 'For Business', href: '/solutions/business-solar/' },
   ]
 
   const defaultCompanyLinks: FooterLink[] = [
     // Route to the dedicated /about-us page so the footer works from
     // every page that renders it (was previously '#about', which is
     // a same-page hash and dead from any non-homepage context).
-    { label: 'About Solavita', href: '/about-us' },
+    { label: 'About Solavita', href: '/about-us/' },
     { label: 'SKYWORTH Group', href: 'https://www.skyworth-pv.com/about-us', external: true },
-    { label: 'Blog', href: '/blog' },
+    { label: 'Blog', href: '/blog/' },
   ]
 
   const products = productLinks ?? defaultProductLinks
@@ -166,9 +150,9 @@ export default function Footer({
   // The /cookies page now serves as the sole reference for cookie use;
   // there is no longer a separate settings panel.
   const legalLinks: FooterLink[] = [
-    { label: 'Terms of Use', href: '/terms', external: false },
-    { label: 'Privacy Policy', href: '/privacy', external: false },
-    { label: 'Cookie Policy', href: '/cookies', external: false },
+    { label: 'Terms of Use', href: '/terms/', external: false },
+    { label: 'Privacy Policy', href: '/privacy/', external: false },
+    { label: 'Cookie Policy', href: '/cookies/', external: false },
   ]
 
   // ─── Reusable class strings ────────────────────────────────────────────
@@ -196,22 +180,13 @@ export default function Footer({
                pulled from the UK brand teal (`--color-uk-teal`) to keep
                the line consistent across locales; "Vital Life!" is
                bolded so the call-to-action tail lands harder than the
-               prefix. Legal/compliance copy (company number, registered
-               office, etc.) sits directly below the slogan in the brand
-               column, matching the UK footer layout. NG has no verified
-               legal details, so every clause is a `TBD — ...` red
-               placeholder per project content rules. */}
+               prefix. Legal/compliance copy (entity name, company
+               number, registered office) lives in the sub-footer
+               copyright row, not here. */}
             <p className="text-uk-teal text-sm font-cw-regular leading-snug">
               Vital Energy <span className="font-cw-bold font-extrabold">Vital Life!</span>
             </p>
-            <div className="mt-3 text-white/40 text-[11px] font-cw-regular leading-relaxed">
-              <span className="text-red-400/90">TBD — Verified Nigeria legal entity</span>
-              <br />
-              <span className="text-red-400/90">TBD — Verified CAC registration number</span>
-              <br />
-              <span className="text-red-400/90">TBD — Verified Nigeria registered office address</span>
-            </div>
-            {/* Social accounts — Facebook only for the NG site.
+            {/* Social accounts — Facebook + WhatsApp for the NG site.
                 The round icon button matches the DE / IT / UK footers
                 (`w-9 h-9 rounded-full border`), and the `border-white/10`
                 + `text-white` classes are picked up by the theme rules
@@ -232,6 +207,22 @@ export default function Footer({
                   aria-hidden="true"
                 >
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+              <a
+                href="https://wa.me/8618500875025"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center transition-all hover:bg-white/10 hover:border-white/30"
+              >
+                <svg
+                  className="w-4 h-4 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.548 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
                 </svg>
               </a>
             </div>
@@ -280,40 +271,21 @@ export default function Footer({
             <h4 className={headingClass}>Support</h4>
             <ul className="space-y-3 text-white/70 text-sm font-cw-regular">
               <li>
-                <a href="/contact-us" className={linkClass}>
+                <a href="/contact-us/" className={linkClass}>
                   Contact Us
                 </a>
               </li>
               <li>
-                <a href="/hems" className={linkClass}>
-                  HEMS Apps
-                </a>
-              </li>
-              {/* Quick download entry — sits directly under the HEMS
-                 Apps overview link so visitors who already know what
-                 the app is can jump straight to the install CTAs. Both
-                 point at /hems: the page opens on the app hero, with
-                 the App Store / Google Play buttons further down. */}
-              <li className="flex items-center gap-2.5">
-                <Download className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                {/* `text-white` (not a teal token) so the light-mode
-                   footer rule `[class*="text-white"] → #0A1628` keeps
-                   it legible on the #EEF2F7 surface; bold weight is
-                   what marks it apart from the plain links above. */}
-                <a
-                  href="/hems"
-                  className="text-sm font-cw-bold text-white hover:text-uk-teal-soft transition-colors"
-                >
-                  Download HEMS App
+                <a href="/monitoring-app/" className={linkClass}>
+                  Monitoring App
                 </a>
               </li>
               <li>
-                <a href="/support#faq" className={linkClass}>
+                <a href="/support/#faq" className={linkClass}>
                   FAQ
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
                 <a
                   href="mailto:ng@solavita.com"
                   className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
@@ -323,11 +295,9 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 flex-shrink-0 text-white/60" strokeWidth={2} />
-                {/* The `wa.me/8618500875025` link is the user-provided
-                   handoff number; the visible text intentionally hides
-                   the digits (no verified Nigerian number yet) and
-                   points visitors to the contact email / enquiry form
-                   until business confirms the production line. */}
+                {/* The `wa.me/8618500875025` link is the confirmed
+                   WhatsApp handoff number; the visible label stays
+                   text-only so it reads cleanly in both themes. */}
                 <a
                   href="https://wa.me/8618500875025"
                   target="_blank"
@@ -369,11 +339,11 @@ export default function Footer({
               shoving the locale row off the right edge. The locale
               row is `shrink-0` so the flag + label always render at
               their natural width — they never compress or break. The
-              entity name is a red TBD placeholder until the Nigerian
-              business confirms its registered name. */}
+              legal entity is the Hong Kong parent, SKYWORTH RENEWABLE
+              ENERGY COMPANY LIMITED. */}
           <div className="flex flex-col md:flex-row md:items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left min-w-0 flex-1">
-              © 2026 <span className="text-red-400/90 font-cw-bold">TBD — Verified Nigerian legal entity name</span>. All rights reserved.
+              © 2026 <span className="font-cw-bold">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</span>. All rights reserved.
             </p>
             {/* Locale picker — an expandable menu of every Solavita /
                 SKYWORTH Solar site. The old static "flag + label" block

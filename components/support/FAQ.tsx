@@ -133,8 +133,8 @@ export default function FAQ() {
             Common questions
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Frequently asked{' '}
-            <span className="text-gradient">questions</span>
+            Frequently Asked{' '}
+            <span className="text-gradient">Questions</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
             Quick answers to the things we get asked most. Can't

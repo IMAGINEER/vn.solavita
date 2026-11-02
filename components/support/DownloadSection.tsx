@@ -1,9 +1,7 @@
 'use client'
 
-import Link from 'next/link'
-import { Download, ArrowRight } from 'lucide-react'
+import { Download, ArrowRight, FileText } from 'lucide-react'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
-import ImagePlaceholder from '@/components/ui/image-placeholder'
 import { productDownloads } from '@/lib/data/products'
 
 /**
@@ -18,10 +16,9 @@ import { productDownloads } from '@/lib/data/products'
  * The Support page's Product and Warranty cards both point their
  * "Download →" CTA here.
  *
- * Each entry links to the matching product detail page, which carries
- * the full technical data. The actual PDF files are not in the repo
- * yet, so the card imagery is an `ImagePlaceholder` per the NG content
- * strategy.
+ * Each card now links straight to the PDF in `public/downloads/products/`
+ * and shows the real product render as its thumbnail — the documents and
+ * imagery arrived in Nov 2026.
  */
 export default function DownloadSection() {
   return (
@@ -44,19 +41,31 @@ export default function DownloadSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {productDownloads.map((d) => (
-            <Link
+            <a
               key={d.id}
               href={d.href}
+              download
               className="group flex flex-col rounded-2xl border border-uk-line bg-white overflow-hidden transition-all duration-300 hover:border-uk-teal hover:shadow-md hover:-translate-y-0.5"
             >
-              <ImagePlaceholder
-                description={d.imageDescription}
-                aspectRatio="4/3"
-                className="!rounded-none !border-0 !border-b !border-dashed !border-slate-300"
-              />
+              <div className="relative aspect-[4/3] bg-white border-b border-uk-line flex items-center justify-center">
+                {d.image ? (
+                  <img
+                    src={d.image}
+                    alt={d.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-contain p-4"
+                  />
+                ) : (
+                  <FileText
+                    className="w-14 h-14 text-uk-teal-dark/40"
+                    strokeWidth={1.25}
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
               <div className="p-5 flex-1 flex flex-col">
                 <div className="text-[10px] font-cw-bold uppercase tracking-wider text-uk-teal-dark">
-                  {d.category}
+                  {d.category} · PDF · {d.size}
                 </div>
                 <h3 className="mt-1.5 text-sm font-cw-bold text-uk-navy leading-snug flex-1">
                   {d.title}
@@ -67,7 +76,7 @@ export default function DownloadSection() {
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

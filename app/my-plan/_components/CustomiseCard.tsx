@@ -278,21 +278,24 @@ export default function CustomiseCard({
             )
           })()}
 
-          {/* Import price slider */}
+          {/* Import price slider — what the household pays the
+              distribution company for each kWh it draws from the
+              grid. */}
           <div className="space-y-2">
             <div className="flex items-baseline justify-between gap-3">
               <label
                 htmlFor="assumption-import-price"
                 className="font-cw-bold text-uk-navy"
               >
-                Import price
+                Grid import price
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 ₦{assumptions.importPriceGbp.toFixed(2)} /kWh
               </span>
             </div>
             <p className="text-xs text-uk-slate">
-              What you pay your supplier per kWh of grid electricity
+              What your distribution company charges per kWh of grid
+              electricity (residential Band A / B / C tariff)
             </p>
             <input
               id="assumption-import-price"
@@ -304,7 +307,7 @@ export default function CustomiseCard({
               onChange={(e) =>
                 onImportPriceChange(snap(ROI_IMPORT_PRICE_STEP)(parseFloat(e.target.value)))
               }
-              aria-label="Import price in pounds per kilowatt-hour"
+              aria-label="Grid import price in naira per kilowatt-hour"
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
@@ -313,22 +316,25 @@ export default function CustomiseCard({
             </div>
           </div>
 
-          {/* Export price slider */}
+          {/* Export price slider — what the household earns for each
+              kWh pushed back onto the grid. Nigeria has no confirmed
+              feed-in tariff yet, so this defaults to ₦0. */}
           <div className="space-y-2">
             <div className="flex items-baseline justify-between gap-3">
               <label
                 htmlFor="assumption-export-price"
                 className="font-cw-bold text-uk-navy"
               >
-                Export price (SEG)
+                Export price
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 ₦{assumptions.exportPriceGbp.toFixed(2)} /kWh
               </span>
             </div>
             <p className="text-xs text-uk-slate">
-              What you earn per kWh exported under the Smart Export
-              Guarantee
+              What you earn per kWh exported back to the grid. Nigeria
+              has no confirmed feed-in tariff yet, so this starts at
+              ₦0 — dial in your own rate if you have one.
             </p>
             <input
               id="assumption-export-price"
@@ -340,7 +346,7 @@ export default function CustomiseCard({
               onChange={(e) =>
                 onExportPriceChange(snap(ROI_EXPORT_PRICE_STEP)(parseFloat(e.target.value)))
               }
-              aria-label="Export price (SEG) in pounds per kilowatt-hour"
+              aria-label="Export price in naira per kilowatt-hour"
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">

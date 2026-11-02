@@ -50,8 +50,8 @@ export default function Mission() {
             Our mission
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Reliable power{' '}
-            <span className="text-gradient">for every home.</span>
+            Reliable Power{' '}
+            <span className="text-gradient">for Every Home.</span>
           </h2>
         </div>
 

@@ -42,7 +42,7 @@ export default function CTA({
   eyebrow,
   title,
   description,
-  primaryLabel = 'Get Free Plan →',
+  primaryLabel = 'Get Free Quote →',
   primaryHref,
   secondaryLabel,
   secondaryHref,

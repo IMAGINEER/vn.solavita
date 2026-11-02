@@ -454,7 +454,7 @@ export default function ContactForm() {
                         I agree Solavita may contact me about my enquiry. I
                         have read the{' '}
                         <a
-                          href="/privacy"
+                          href="/privacy/"
                           className="text-uk-teal-dark hover:text-uk-teal underline-offset-2 hover:underline"
                         >
                           Privacy Policy

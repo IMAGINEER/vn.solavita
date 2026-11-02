@@ -4,14 +4,18 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Sun, Battery, Plug, Flame, Coins, ShieldCheck } from 'lucide-react'
-import { hemsFeatures, hemsDemoVideo, type HEMSFeature } from '@/lib/data/hems'
+import {
+  monitoringAppFeatures,
+  monitoringAppDemoVideo,
+  type MonitoringAppFeature,
+} from '@/lib/data/monitoring-app'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /* Lucide icons — resolved by `iconKey` so we don't depend on emoji at
    paint time (some terminals / readers strip emoji glyphs). The
    wrapping `text-uk-teal-dark` token controls the tint. */
-const lucideFor = (key: HEMSFeature['iconKey']) => {
+const lucideFor = (key: MonitoringAppFeature['iconKey']) => {
   const common = 'w-6 h-6'
   const props = { className: common, strokeWidth: 1.6 } as const
   switch (key) {
@@ -31,7 +35,8 @@ const lucideFor = (key: HEMSFeature['iconKey']) => {
 }
 
 /**
- * "Everything HEMS orchestrates" — heading → live demo video → 6-card
+ * "Everything the Monitoring App orchestrates" — heading → live demo
+ * video → 6-card
  * grid. The video sits directly under the heading (per product brief)
  * rather than as its own section, so the section reads as one cohesive
  * capability overview. Video is full-width, autoplaying, muted and
@@ -84,8 +89,9 @@ export default function FeaturesGrid() {
             One brain, SIX SYSTEMS
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Everything HEMS{' '}
-            <span className="text-gradient">orchestrates</span>
+            Everything the{' '}
+            <span className="text-gradient">Monitoring App</span>{' '}
+            Orchestrates
           </h2>
         </div>
 
@@ -99,29 +105,29 @@ export default function FeaturesGrid() {
           ref={videoWrapRef}
           className="mb-10 md:mb-14 rounded-2xl overflow-hidden border border-uk-line bg-sv-navy shadow-xl"
         >
-          {hemsDemoVideo ? (
+          {monitoringAppDemoVideo ? (
             <video
               ref={videoRef}
-              src={hemsDemoVideo.src}
+              src={monitoringAppDemoVideo.src}
               className="w-full aspect-video block"
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-              aria-label={hemsDemoVideo.caption}
+              aria-label={monitoringAppDemoVideo.caption}
             />
           ) : (
             <div className="w-full aspect-video flex items-center justify-center p-10 text-center">
               <p className="text-white/80 text-sm font-cw-bold uppercase tracking-wider">
-                TBD — Verified HEMS demo video for NG audience
+                TBD — Verified Monitoring App demo video for NG audience
               </p>
             </div>
           )}
         </div>
 
         <div ref={gridRef} className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-          {hemsFeatures.map((f) => (
+          {monitoringAppFeatures.map((f) => (
             <div
               key={f.title}
               className="group p-4 sm:p-5 rounded-xl bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all duration-300"

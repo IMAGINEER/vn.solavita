@@ -6,11 +6,11 @@ import SectionEyebrow from '@/components/ui/section-eyebrow'
 
 /**
  * FaqSection — the accordion used at the bottom of the solution
- * collection pages and the microgrid page.
+ * collection pages.
  *
  * Extracted from `CollectionPage.tsx` so more than one page can share
  * it without duplicating the markup. `CollectionPage` imports this
- * component; the microgrid page does too.
+ * component.
  */
 
 export interface FaqItem {
@@ -21,7 +21,7 @@ export interface FaqItem {
 export default function FaqSection({ faqs }: { faqs: FaqItem[] }) {
   const [openIdx, setOpenIdx] = useState<number | null>(0)
   return (
-    <section id="faq" className="relative py-16 md:py-20 bg-uk-line/30">
+    <section id="faq" className="relative py-16 md:py-20 bg-white">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-8">
           <SectionEyebrow>FAQ</SectionEyebrow>

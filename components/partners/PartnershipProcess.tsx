@@ -50,8 +50,8 @@ export default function PartnershipProcess() {
             How it works
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            From first call to{' '}
-            <span className="text-gradient">first install</span>
+            From First Call to{' '}
+            <span className="text-gradient">First Install</span>
           </h2>
         </div>
 

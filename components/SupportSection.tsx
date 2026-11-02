@@ -13,7 +13,7 @@ import {
   Lock,
   FileText,
 } from 'lucide-react'
-import { ukSupportItems, type NgSupportItem } from '@/lib/data/uk-support'
+import { ngSupportItems, type NgSupportItem } from '@/lib/data/ng-support'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -79,12 +79,12 @@ export default function SupportSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy">
-            We're Here to Support You
+            We&rsquo;re Here to <span className="text-gradient">Support You</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {ukSupportItems.map((item) => (
+          {ngSupportItems.map((item) => (
             <div
               key={item.title}
               className="support-card rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col items-start"

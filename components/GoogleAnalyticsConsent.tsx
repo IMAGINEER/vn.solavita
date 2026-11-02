@@ -16,10 +16,14 @@ declare global {
 }
 
 /**
- * UK GDPR / PECR-compliant GA4 loader.
+ * Consent-gated GA4 loader (NG).
  *
  * Only fires the gtag.js bootstrap + the page_view hit AFTER the user
  * has accepted "analytics" cookies via the CookieConsent banner.
+ * The same pattern satisfies the Nigerian Data Protection Act (NDPR)
+ * consent requirement and the stricter UK PECR rule the loader was
+ * originally written for — no analytics script is fetched at all until
+ * the visitor opts in.
  *
  * Consent propagation:
  *   1. On mount, this loader reads `localStorage.cookie_consent` once
@@ -36,8 +40,10 @@ declare global {
  * That component ships gtag.js unconditionally on first paint, which
  * means users who click "Reject" are still tracked until gtag boots.
  * Under UK PECR that is a breach regardless of whether we subsequently
- * issue `gtag('consent', 'update', {analytics_storage:'denied'})`. The
- * only safe pattern is "do not load the script until consent is given".
+ * issue `gtag('consent', 'update', {analytics_storage:'denied'})`, and
+ * the same "load nothing until consent" rule is what NDPR requires in
+ * Nigeria. The only safe pattern is "do not load the script until
+ * consent is given".
  *
  * We DO send a page_view on every SPA-style route change once analytics
  * is on, because Next.js client routing doesn't reload the page - so a
@@ -149,7 +155,7 @@ export default function GoogleAnalyticsConsent() {
         // The init script must run after the gtag.js library loads.
         // Setting transport_type='beacon' ensures hits use
         // navigator.sendBeacon when available, surviving page
-        // navigations - important because UK visitors often land and
+        // navigations - important because visitors often land and
         // leave within a few seconds.
         dangerouslySetInnerHTML={{
           __html: `

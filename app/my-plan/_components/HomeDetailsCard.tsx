@@ -35,7 +35,7 @@ const DEVICE_LABEL: Record<string, string> = {
  */
 const HOUSE_TYPE_LABEL: Record<string, string> = {
   detached: 'Detached house',
-  'semi-detached': 'Semi-detached',
+  'semi-detached': 'Duplex / semi-detached',
   terraced: 'Terraced house',
   apartment: 'Flat / Apartment',
 }

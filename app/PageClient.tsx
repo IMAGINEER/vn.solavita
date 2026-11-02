@@ -23,14 +23,14 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import TrustBar from '@/components/TrustBar'
 import FloatingButtons from '@/components/FloatingButtons'
 import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import TbdText from '@/components/ui/tbd-text'
 import ImagePlaceholder from '@/components/ui/image-placeholder'
 import GetQuoteButton from '@/components/ui/get-quote-button'
-import { caseStudies } from '@/lib/data/uk-cases'
+import { featuredNgCases } from '@/lib/data/ng-cases'
+import NgCaseCard from '@/components/cases/NgCaseCard'
 import { openFormModal } from '@/lib/form-modal'
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -58,7 +58,12 @@ export default function Home() {
       <Section7CustomerStories />
       <Section9FinalCta />
 
-      <TrustBar />
+      {/* TrustBar is intentionally not rendered. It still carries the
+          UK / EU certification marks (TÜV / CE / 25-year warranty),
+          which are unverified for Nigeria - NG content strategy
+          rule 2. Component and data are intact at
+          `components/TrustBar.tsx` + `lib/data/uk-trust.ts`; re-enable
+          once business confirms which NG approvals actually apply. */}
       <Footer />
       <FloatingButtons />
     </main>
@@ -112,7 +117,7 @@ function Section2EntryCards() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ScenarioPanel
             href="/solutions/home-solar"
-            title="HOMES"
+            title="For Residential"
             subTitle="Powering homes"
             body="Keep lights on and appliances running during outages. From essential backup to full energy independence, designed for homes."
             imageDescription="A modern home with a rooftop solar system and battery storage"
@@ -121,11 +126,11 @@ function Section2EntryCards() {
           />
           <ScenarioPanel
             href="/solutions/business-solar"
-            title="BUSINESSES"
+            title="For Commercial & Industrial"
             subTitle="Powering businesses"
             body="Protect your business from grid failures with robust three-phase systems. Save on fuel and power critical equipment 24/7."
-            imageDescription="A small business — shop, office or restaurant — with a solar + battery system"
-            imageSrc="/images/business_cap.webp"
+            imageDescription="Solavita local warehouse and service depot with a rooftop solar array"
+            imageSrc="/images/ng-warehouse.webp"
             cta="Explore Business Solutions"
           />
         </div>
@@ -410,12 +415,13 @@ function StepCard({
 
 /* ──────────────────────────────────────────────────────────────────────
    Section 7 — Real Homes and Businesses, Real Results
-   Three reference installs from the 13 European cases. Country label
-   (Germany / Italy) on each card. No price / saving rendered.
+   Four featured installs in the new card format defined by
+   `docs/修改建议(2).docx` §"首页修改" §2:
+     [type badge] → [capacity] → [place, country]
+   The full 16-case list lives on /cases.
    ────────────────────────────────────────────────────────────────────── */
 
 function Section7CustomerStories() {
-  const featured = [caseStudies[6], caseStudies[0], caseStudies[11]]
   return (
     <section className="relative py-16 md:py-20 bg-uk-line/30">
       <div className="max-w-7xl mx-auto px-6">
@@ -430,49 +436,13 @@ function Section7CustomerStories() {
             each project.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featured.map((c) => (
-            <CaseStoryCard key={c.slug} c={c} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredNgCases.map((c) => (
+            <NgCaseCard key={c.slug} c={c} />
           ))}
         </div>
       </div>
     </section>
-  )
-}
-
-function CaseStoryCard({
-  c,
-}: {
-  c: (typeof caseStudies)[number]
-}) {
-  return (
-    <div className="rounded-2xl border border-uk-line bg-white overflow-hidden flex flex-col">
-      <div className="aspect-[4/3] overflow-hidden bg-uk-line/30">
-        <img
-          src={c.imagePath}
-          alt={c.city}
-          loading="lazy"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="p-5 flex flex-col flex-1">
-        <div className="text-[10px] font-cw-bold tracking-wider uppercase text-uk-teal-dark">
-          {c.region}
-        </div>
-        <h3 className="mt-2 text-lg font-cw-bold text-uk-navy leading-tight">
-          {c.city}
-        </h3>
-        <p className="mt-1 text-sm text-uk-slate font-cw-regular">
-          {c.systemLabel}
-        </p>
-        {c.annualGeneration && (
-          <p className="mt-3 text-xs text-uk-slate font-cw-regular pt-3 border-t border-uk-line/40">
-            <span className="font-cw-bold text-uk-navy">Annual generation: </span>
-            {c.annualGeneration}
-          </p>
-        )}
-      </div>
-    </div>
   )
 }
 
@@ -512,10 +482,11 @@ function Section9FinalCta() {
           <GetQuoteButton onClick={openFormModal} />
           {/* Secondary CTA - white background, dark text so it is
               visible against the dark hero image. Hover flips the
-              background to teal and the text to white. */}
+              background to teal; the label stays navy, because white
+              on #14B8A6 only reaches ~2.4:1 contrast. */}
           <Link
             href="/solutions/home-solar"
-            className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-white hover:border-uk-teal transition-colors"
+            className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-uk-navy hover:border-uk-teal transition-colors"
           >
             Explore Solutions
           </Link>

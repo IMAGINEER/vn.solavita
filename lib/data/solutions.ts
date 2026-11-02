@@ -304,8 +304,6 @@ export interface SolutionDetail {
    * (Solar / Inverter / Battery). Per `docs/修改建议.docx` §"③表格数量3个".
    */
   specSummary: SolutionSpecSummaryRow[]
-  /** Main image + thumbnail strip (drives the left column gallery). */
-  galleryImages: SolutionGalleryImage[]
   /** 4 short bullets for the "About this item" icon row. */
   highlights: string[]
   /** Add-on chips shown in the buy box. */
@@ -322,8 +320,6 @@ export interface SolutionDetail {
   warranty: string
   /** Per-tier FAQ, rendered by TierFAQ. */
   faqs: SolutionFaq[]
-  /** Lifestyle gallery (full-width image strip, 3–4 images). */
-  lifestyleGallery: SolutionGalleryImage[]
   /**
    * Per-package appliance-load profile. Drives the LOAD & RUNTIME card
    * on the collection pages; see `LoadProfile` below.
@@ -379,12 +375,6 @@ export const solutionDetails: SolutionDetail[] = [
       { label: 'Inverter', value: '3.6 kW' },
       { label: 'Battery', value: '5 kWh' },
     ],
-    galleryImages: [
-      { src: '/images/solution_1.webp', alt: 'LITE Essential Backup — compact solar and battery system', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
-      { src: '/images/product-inverter-1.webp', alt: 'Solavita inverter', label: 'Inverter' },
-      { src: '/images/product-battery-1.webp', alt: 'Solavita battery module', label: 'Battery' },
-    ],
     highlights: [
       '7 × 620 W PV modules — 4.34 kWp total rated PV capacity',
       '3.6 kW single-phase inverter',
@@ -395,7 +385,7 @@ export const solutionDetails: SolutionDetail[] = [
       { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: false },
       { id: 'ev', label: 'EV charging', included: false },
-      { id: 'hems', label: 'HEMS app', included: false },
+      { id: 'hems', label: 'Monitoring App', included: false },
     ],
     specTable: [
       { label: 'PV modules', value: '7 × 620 W monocrystalline' },
@@ -444,11 +434,6 @@ export const solutionDetails: SolutionDetail[] = [
         a: 'Runtime depends on usable battery capacity and the appliances drawing power. A larger load uses stored energy more quickly. A site-specific assessment is required for a reliable estimate.',
       },
     ],
-    lifestyleGallery: [
-      { src: '/images/solution_1.webp', alt: 'LITE Essential Backup system' },
-      { src: '/images/Solar_Essential.webp', alt: 'LITE Essential Backup lifestyle render' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module close-up' },
-    ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
       appliances: [
@@ -484,12 +469,6 @@ export const solutionDetails: SolutionDetail[] = [
       { label: 'Inverter', value: '6 kW (incl. off-grid)' },
       { label: 'Battery', value: '10 kWh' },
     ],
-    galleryImages: [
-      { src: '/images/solution_2.webp', alt: 'HOME Standard — 7.44 kWp solar and 10 kWh battery', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
-      { src: '/images/product-inverter-1.webp', alt: 'Solavita hybrid inverter', label: 'Inverter' },
-      { src: '/images/product-battery-1.webp', alt: 'Solavita LiFePO₄ battery stack', label: 'Battery' },
-    ],
     highlights: [
       '12 × 620 W PV modules — 7.44 kWp total',
       '6 kW single-phase inverter with off-grid capability',
@@ -500,7 +479,7 @@ export const solutionDetails: SolutionDetail[] = [
       { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
       { id: 'ev', label: 'EV charging', included: false },
-      { id: 'hems', label: 'HEMS app', included: false },
+      { id: 'hems', label: 'Monitoring App', included: false },
     ],
     specTable: [
       { label: 'PV modules', value: '12 × 620 W monocrystalline' },
@@ -549,11 +528,6 @@ export const solutionDetails: SolutionDetail[] = [
         a: 'TBD — Confirm supported expansion limits for the HOME Standard inverter with the engineering team before public launch.',
       },
     ],
-    lifestyleGallery: [
-      { src: '/images/solution_2.webp', alt: 'HOME Standard system' },
-      { src: '/images/Storage_core.webp', alt: 'HOME Standard lifestyle render' },
-      { src: '/images/product-battery-1.webp', alt: 'Solavita battery stack' },
-    ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
       appliances: [
@@ -588,12 +562,6 @@ export const solutionDetails: SolutionDetail[] = [
       { label: 'Inverter', value: '8–12 kW (incl. off-grid)' },
       { label: 'Battery', value: '16 kWh' },
     ],
-    galleryImages: [
-      { src: '/images/solution_3.webp', alt: 'HOME High-spec — 16 modules and 16 kWh battery', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
-      { src: '/images/product-inverter-2.webp', alt: 'Solavita 8–12 kW inverter', label: 'Inverter' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack', label: 'Battery' },
-    ],
     highlights: [
       '16–20 × 620 W PV modules — 9.92–12.40 kWp total',
       '8–12 kW single-phase inverter',
@@ -604,7 +572,7 @@ export const solutionDetails: SolutionDetail[] = [
       { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
       { id: 'ev', label: 'EV charging', included: false },
-      { id: 'hems', label: 'HEMS app', included: false },
+      { id: 'hems', label: 'Monitoring App', included: false },
     ],
     specTable: [
       { label: 'PV modules', value: '16–20 × 620 W monocrystalline' },
@@ -653,11 +621,6 @@ export const solutionDetails: SolutionDetail[] = [
         a: 'Whether a generator can be integrated into the system depends on the equipment and installation design. The team can advise on the appropriate topology for your site.',
       },
     ],
-    lifestyleGallery: [
-      { src: '/images/solution_3.webp', alt: 'HOME High-spec system' },
-      { src: '/images/Premium_backup.webp', alt: 'HOME High-spec lifestyle render' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery stack' },
-    ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
       appliances: [
@@ -681,7 +644,7 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting fuel runs.',
     shortIntro:
-      'Power for shops & clinics. Beat outages.',
+      'Shops, clinics, offices, restaurants, and small hotels. Keep operations bright, cool, and uninterrupted.',
     metric: 'Three-phase starter',
     headlineStats: [
       { value: '11.78 kWp', label: 'Solar PV', icon: 'solar' },
@@ -691,12 +654,6 @@ export const solutionDetails: SolutionDetail[] = [
       { label: 'Solar', value: '11.78 kWp' },
       { label: 'Inverter', value: '10 kW' },
       { label: 'Battery', value: '16 kWh' },
-    ],
-    galleryImages: [
-      { src: '/images/solution_3.webp', alt: 'BUSINESS Entry 3-Phase — three-phase starter', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
-      { src: '/images/product-inverter-2.webp', alt: 'Solavita 10 kW three-phase inverter', label: 'Inverter' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack', label: 'Battery' },
     ],
     highlights: [
       '19 × 620 W PV modules — 11.78 kWp total',
@@ -708,7 +665,7 @@ export const solutionDetails: SolutionDetail[] = [
       { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
       { id: 'ev', label: 'EV charging', included: false },
-      { id: 'hems', label: 'HEMS app', included: false },
+      { id: 'hems', label: 'Monitoring App', included: false },
     ],
     specTable: [
       { label: 'PV modules', value: '19 × 620 W monocrystalline' },
@@ -757,11 +714,6 @@ export const solutionDetails: SolutionDetail[] = [
         a: 'Whether a generator can be integrated into the system depends on the equipment and installation design. The team can advise on the appropriate topology for your site.',
       },
     ],
-    lifestyleGallery: [
-      { src: '/images/solution_3.webp', alt: 'BUSINESS Entry 3-Phase system' },
-      { src: '/images/electronic.webp', alt: 'Three-phase electrical equipment' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita battery stack' },
-    ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
       appliances: [
@@ -796,12 +748,6 @@ export const solutionDetails: SolutionDetail[] = [
       { label: 'Inverter', value: '15 kW' },
       { label: 'Battery', value: '32 kWh' },
     ],
-    galleryImages: [
-      { src: '/images/solution_4.webp', alt: 'BUSINESS Standard 3-Phase — 17.36 kWp solar and 32 kWh battery', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
-      { src: '/images/product-inverter-2.webp', alt: 'Solavita 15 kW three-phase inverter', label: 'Inverter' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module', label: 'Battery' },
-    ],
     highlights: [
       '28 × 620 W PV modules — 17.36 kWp total',
       '15 kW three-phase inverter',
@@ -812,7 +758,7 @@ export const solutionDetails: SolutionDetail[] = [
       { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
       { id: 'ev', label: 'EV charging', included: false },
-      { id: 'hems', label: 'HEMS app', included: false },
+      { id: 'hems', label: 'Monitoring App', included: false },
     ],
     specTable: [
       { label: 'PV modules', value: '28 × 620 W monocrystalline' },
@@ -861,11 +807,6 @@ export const solutionDetails: SolutionDetail[] = [
         a: 'Whether a generator can be integrated into the system depends on the equipment and installation design.',
       },
     ],
-    lifestyleGallery: [
-      { src: '/images/solution_4.webp', alt: 'BUSINESS Standard 3-Phase system' },
-      { src: '/images/Smart_home.webp', alt: 'BUSINESS Standard lifestyle render' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
-    ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
       appliances: [
@@ -889,7 +830,7 @@ export const solutionDetails: SolutionDetail[] = [
     intro:
       'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward ditching diesel.',
     shortIntro:
-      'High capacity for supermarkets & hotels.',
+      'Supermarkets, large hotels, factories, warehouses. Industrial-grade energy for maximum yield and savings.',
     metric: 'Substantial energy needs',
     headlineStats: [
       { value: '23.56 kWp', label: 'Solar PV', icon: 'solar' },
@@ -899,12 +840,6 @@ export const solutionDetails: SolutionDetail[] = [
       { label: 'Solar', value: '23.56 kWp' },
       { label: 'Inverter', value: '20 kW' },
       { label: 'Battery', value: '32 kWh' },
-    ],
-    galleryImages: [
-      { src: '/images/solution_4.webp', alt: 'BUSINESS Flagship 3-Phase — 23.56 kWp solar and 32 kWh battery', label: 'System' },
-      { src: '/images/product-module-1.webp', alt: 'Solavita PV module', label: 'Modules' },
-      { src: '/images/product-inverter-2.webp', alt: 'Solavita 20 kW three-phase inverter', label: 'Inverter' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module', label: 'Battery' },
     ],
     highlights: [
       '38 × 620 W PV modules — 23.56 kWp total',
@@ -916,7 +851,7 @@ export const solutionDetails: SolutionDetail[] = [
       { id: 'battery', label: 'Battery storage', included: true },
       { id: 'expansion', label: 'Battery expansion', included: true },
       { id: 'ev', label: 'EV charging', included: false },
-      { id: 'hems', label: 'HEMS app', included: false },
+      { id: 'hems', label: 'Monitoring App', included: false },
     ],
     specTable: [
       { label: 'PV modules', value: '38 × 620 W monocrystalline' },
@@ -964,11 +899,6 @@ export const solutionDetails: SolutionDetail[] = [
         q: 'Can I expand beyond 32 kWh?',
         a: 'TBD — Confirm supported expansion limits for the Flagship inverter and battery model with the engineering team before public launch.',
       },
-    ],
-    lifestyleGallery: [
-      { src: '/images/solution_4.webp', alt: 'BUSINESS Flagship 3-Phase system' },
-      { src: '/images/Smart_home.webp', alt: 'BUSINESS Flagship lifestyle render' },
-      { src: '/images/product-battery-2.webp', alt: 'Solavita 16 kWh battery module' },
     ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
@@ -1036,7 +966,7 @@ export function getSolutionBySlug(slug: string): SolutionDetail | undefined {
 
    The four Q&A come from `docs/修改建议.docx` §6 (Oct 2026). The HOME
    set and the BUSINESS set are kept here rather than in the two page
-   files so the microgrid page can reuse the BUSINESS set, as the docx
+   files so other surfaces can reuse the BUSINESS set, as the docx
    asks ("⑤FAQ（沿用Business套餐详情页的FAQ）").
    ──────────────────────────────────────────────────────────────────────── */
 

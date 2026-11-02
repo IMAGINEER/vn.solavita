@@ -31,7 +31,7 @@ function formatDateTime(iso: string): string {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-      timeZone: 'Europe/London',
+      timeZone: 'Africa/Lagos',
     }).format(new Date(iso))
   } catch {
     return iso

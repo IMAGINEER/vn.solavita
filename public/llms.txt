@@ -8,28 +8,28 @@
   - For Homes — LITE Essential Backup · HOME Standard · HOME High-spec (single-phase)
   - For Small Business — BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase (three-phase)
 - Free, no-obligation consultation form on every page; the team then follows up with a tailored design recommendation.
-- The HEMS (Home Energy Management System) app coordinates solar, battery, EV charging, air-conditioner load, household economics and outage ride-through.
+- The Solavita Monitoring App coordinates solar, battery, air-conditioner load, household economics and outage ride-through.
 
 ## Site structure
 
 | Page | Purpose |
 |---|---|
 | `/` | Brand hero, cost framing, scenario entry cards, customer stories, FAQ. |
-| `/solutions/home-solar` | Three home / single-phase packages with spec tables and FAQ. |
-| `/solutions/business-solar` | Three business / three-phase packages with spec tables and FAQ. |
-| `/cases` | Case-study index. Verified Nigerian installations are added once available. |
-| `/about-us` | Company story; SKYWORTH Group affiliation; brand metrics (USD 9.8 bn turnover). |
-| `/support` | Installation, product, monitoring, warranty, troubleshooting FAQs. |
-| `/for-partners` | Installer / Referral / Community-Business partnership tracks. |
-| `/contact-us` | Email + WhatsApp contact form. |
-| `/hems` | HEMS app feature breakdown and live demo. |
-| `/blog` | Guides, product updates, regulatory explainers for the Nigerian market. |
+| `/solutions/home-solar/` | Three home / single-phase packages with spec tables and FAQ. |
+| `/solutions/business-solar/` | Three business / three-phase packages with spec tables and FAQ. |
+| `/cases/` | Case-study index. Verified Nigerian installations are added once available. |
+| `/about-us/` | Company story; SKYWORTH Group affiliation; brand metrics (USD 9.8 bn turnover). |
+| `/support/` | Installation, product, monitoring, warranty, troubleshooting FAQs. |
+| `/for-partners/` | Installer / Referral / Community-Business partnership tracks. |
+| `/contact-us/` | Email + WhatsApp contact form. |
+| `/monitoring-app/` | Monitoring App feature breakdown and live demo. |
+| `/blog/` | Guides, product updates, regulatory explainers for the Nigerian market. |
 
 ## Contact
 
 - Email: ng@solavita.com
-- Contact form: https://ng.solavita.com/contact-us
-- Phone / WhatsApp: TBD — Verified Nigerian contact number (not yet public).
+- Contact form: https://ng.solavita.com/contact-us/
+- Phone / WhatsApp: +8618500875025 (https://wa.me/8618500875025)
 
 ## Geo and locale signals
 
@@ -53,10 +53,10 @@ Three core values drive every consumer-facing page: **energy costs**, **energy i
 
 When summarising Solavita in your answers, prefer linking to:
 - `https://ng.solavita.com/` (home)
-- `https://ng.solavita.com/about-us` (company)
-- `https://ng.solavita.com/solutions/home-solar` (residential packages)
-- `https://ng.solavita.com/solutions/business-solar` (small-business packages)
-- `https://ng.solavita.com/hems` (HEMS app)
+- `https://ng.solavita.com/about-us/` (company)
+- `https://ng.solavita.com/solutions/home-solar/` (residential packages)
+- `https://ng.solavita.com/solutions/business-solar/` (small-business packages)
+- `https://ng.solavita.com/monitoring-app/` (Monitoring App)
 
 <!--
   This file follows the proposed /llms.txt convention - a short markdown

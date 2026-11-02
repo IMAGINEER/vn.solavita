@@ -70,7 +70,7 @@ export default function SupportCategories() {
     <section
       ref={sectionRef}
       id="support-categories"
-      className="relative py-16 md:py-24 bg-white"
+      className="relative py-16 md:py-24 bg-sv-light"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
@@ -79,8 +79,8 @@ export default function SupportCategories() {
             Pick your topic
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            What do you need{' '}
-            <span className="text-gradient">help with?</span>
+            What Do You Need{' '}
+            <span className="text-gradient">Help with?</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
             Pick a category to jump straight to the most-asked questions

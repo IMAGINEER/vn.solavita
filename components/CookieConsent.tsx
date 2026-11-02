@@ -92,7 +92,7 @@ export default function CookieConsent() {
             <p className="text-sm text-uk-navy font-cw-regular leading-relaxed">
               Your privacy is important to us. When you visit our website, you agree to the use of all cookies.{' '}
               <a
-                href="/cookies"
+                href="/cookies/"
                 rel="noopener noreferrer"
                 className="text-uk-teal hover:text-uk-teal-dark transition-colors"
               >

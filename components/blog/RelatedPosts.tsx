@@ -17,7 +17,7 @@ export function RelatedPosts({ posts }: { posts: BlogPostSummary[] }) {
           </span>
           <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
             Related{' '}
-            <span className="text-gradient">posts</span>
+            <span className="text-gradient">Posts</span>
           </h2>
         </div>
 
