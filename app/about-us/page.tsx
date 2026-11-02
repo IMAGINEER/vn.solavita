@@ -11,7 +11,7 @@ export const metadata = buildPageMetadata({
   path: '/about-us',
   description:
     'Solavita Nigeria is part of the SKYWORTH Group solar brand. Solar power, battery storage and smart energy management for Nigerian homes and small businesses — designed to reduce generator dependence.',
-  ogImage: '/images/hero-about.webp',
+  ogImage: '/images/og-about.jpg',
   ogImageAlt:
     'Solavita Nigeria — solar and battery storage for Nigerian homes and businesses',
 })

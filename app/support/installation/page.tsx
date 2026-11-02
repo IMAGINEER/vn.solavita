@@ -9,7 +9,7 @@ export const metadata = buildPageMetadata({
   path: '/support/installation',
   description:
     'How your Solavita system gets installed: a free survey, a tailored design and quote, installation by our team, and full commissioning — plus answers to common installation questions.',
-  ogImage: '/images/hero-solutions.webp',
+  ogImage: '/images/og-solutions.jpg',
   ogImageAlt: 'Solavita solar and battery installation',
 })
 

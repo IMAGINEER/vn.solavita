@@ -14,7 +14,7 @@ export const metadata = buildPageMetadata({
   path: '/solutions/business-solar',
   description:
     'Compare three business-solar solutions for Nigerian small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase. Sized for equipment loads, operating hours and critical-load priorities.',
-  ogImage: '/images/hero-solutions.webp',
+  ogImage: '/images/og-solutions.jpg',
   ogImageAlt: 'Business Solar solutions for Nigerian small businesses',
 })
 

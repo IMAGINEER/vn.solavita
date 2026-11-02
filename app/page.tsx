@@ -12,7 +12,7 @@ export const metadata = buildPageMetadata({
   path: '/',
   description:
     'Explore solar and battery solutions for Nigerian homes and small businesses. Compare home-solar and business-solar solutions designed for more reliable power and less generator dependence.',
-  ogImage: '/images/hero-system-render.webp',
+  ogImage: '/images/og-home.jpg',
   ogImageAlt:
     'Solavita Nigeria - solar panels and battery storage for Nigerian homes and small businesses',
 })

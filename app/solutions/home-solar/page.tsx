@@ -14,7 +14,7 @@ export const metadata = buildPageMetadata({
   path: '/solutions/home-solar',
   description:
     'Compare three home-solar solutions for Nigerian households — LITE Essential Backup, HOME Standard, HOME High-spec. Sized for appliances, essential loads, comfort and backup priorities.',
-  ogImage: '/images/hero-solutions.webp',
+  ogImage: '/images/og-solutions.jpg',
   ogImageAlt: 'Home Solar solutions for Nigerian households',
 })
 

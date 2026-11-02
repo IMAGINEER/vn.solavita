@@ -8,7 +8,7 @@ export const metadata = buildPageMetadata({
   path: '/cases',
   description:
     'Explore solar installations and system configurations in different scenarios.',
-  ogImage: '/images/hero-cases.webp',
+  ogImage: '/images/og-cases.jpg',
   ogImageAlt:
     'Solar installations and system configurations from across our global markets',
 })

@@ -13,7 +13,7 @@ export const metadata = buildPageMetadata({
   path: '/support',
   description:
     'FAQs, troubleshooting and downloads for Solavita solar, battery and monitoring systems. Speak to our NG support team.',
-  ogImage: '/images/hero-support.webp',
+  ogImage: '/images/og-support.jpg',
   ogImageAlt:
     'Solavita NG support and FAQs - solar, battery and monitoring systems',
 })

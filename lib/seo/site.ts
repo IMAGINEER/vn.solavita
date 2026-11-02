@@ -85,4 +85,6 @@ export function absoluteUrl(path: string): string {
   const normalized =
     pathname === '/' || isFile
       ? pathname
-      : `${pathname.replace(/\/+$/,
+      : `${pathname.replace(/\/+$/, '')}/`
+  return `${SITE_URL}${normalized}${suffix}`
+}

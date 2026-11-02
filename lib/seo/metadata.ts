@@ -11,6 +11,8 @@ import type { BlogCategory, BlogPostFull } from '@/lib/types/blog'
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
   SITE_LOCALE,
   SITE_NAME,
   SITE_URL,
@@ -43,7 +45,13 @@ export function buildIndexMetadata(opts: BuildIndexOpts): Metadata {
       url: absoluteUrl(path),
       siteName: SITE_NAME,
       locale: SITE_LOCALE,
-      images: [{ url: DEFAULT_OG_IMAGE, width: 1376, height: 768 }],
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          width: OG_IMAGE_WIDTH,
+          height: OG_IMAGE_HEIGHT,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -71,7 +79,13 @@ export function buildCategoryMetadata(category: BlogCategory): Metadata {
       url: absoluteUrl(path),
       siteName: SITE_NAME,
       locale: SITE_LOCALE,
-      images: [{ url: DEFAULT_OG_IMAGE, width: 1376, height: 768 }],
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          width: OG_IMAGE_WIDTH,
+          height: OG_IMAGE_HEIGHT,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -170,7 +184,12 @@ export interface BuildPageOpts {
   /** Page-level OG / Twitter share image (site-relative or absolute). If
    * omitted the root layout's `DEFAULT_OG_IMAGE` is used. The OG variant
    * is `summary_large_image` so the share preview fills WhatsApp /
-   * LinkedIn / X cards - this is the single point of control. */
+   * LinkedIn / X cards - this is the single point of control.
+   *
+   * Must point at one of the pre-rendered `public/images/og-*.jpg` cards
+   * (1200×630). The dimensions are declared in the metadata below and
+   * are not inferred per page, so passing an arbitrary hero asset here
+   * would advertise the wrong aspect ratio to crawlers. */
   ogImage?: string
   ogImageAlt?: string
 }
@@ -194,7 +213,14 @@ export function buildPageMetadata(opts: BuildPageOpts): Metadata {
       url: absoluteUrl(opts.path),
       siteName: SITE_NAME,
       locale: SITE_LOCALE,
-      images: [{ url: imageUrl, width: 1376, height: 768, alt: imageAlt }],
+      images: [
+        {
+          url: imageUrl,
+          width: OG_IMAGE_WIDTH,
+          height: OG_IMAGE_HEIGHT,
+          alt: imageAlt,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',

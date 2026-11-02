@@ -12,7 +12,7 @@ export const metadata = buildPageMetadata({
   path: '/contact-us',
   description:
     'Contact Solavita Nigeria about residential solar solutions, battery storage, small business systems and partnership opportunities.',
-  ogImage: '/images/hero-contact.webp',
+  ogImage: '/images/og-contact.jpg',
   ogImageAlt:
     'Contact Solavita Nigeria - solar system enquiries and partnership opportunities',
 })

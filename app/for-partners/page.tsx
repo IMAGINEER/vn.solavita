@@ -18,7 +18,7 @@ export const metadata = buildPageMetadata({
   path: '/for-partners',
   description:
     'Explore partnership opportunities with Solavita Nigeria for solar customer referrals, installation services and local energy solutions.',
-  ogImage: '/images/hero-partners.webp',
+  ogImage: '/images/og-partners.jpg',
   ogImageAlt:
     'Solavita Nigeria partnerships - installer, referral and community programmes',
 })

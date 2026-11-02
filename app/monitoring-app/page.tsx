@@ -13,7 +13,7 @@ export const metadata = buildPageMetadata({
   path: '/monitoring-app',
   description:
     'The Solavita Monitoring App puts your solar, battery and home energy in one place — generation, consumption, scheduling and alerts.',
-  ogImage: '/images/hero-monitoring-app.webp',
+  ogImage: '/images/og-monitoring-app.jpg',
   ogImageAlt:
     'Solavita Monitoring App - generation, consumption, scheduling and alerts for solar and battery storage',
 })
