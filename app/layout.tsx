@@ -54,11 +54,12 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${SITE_URL}/images/og-default.jpg`,
-        // Source asset is 1376x768; we declare the most-common OG
-        // target box (1200x630) so social platforms letter-box
-        // consistently while the underlying ratio is preserved.
-        width: 1376,
-        height: 768,
+        // The asset is rendered at exactly the 1200x630 OG box, so the
+        // declared size matches the file and every platform crops
+        // nothing. Keep in sync with OG_IMAGE_WIDTH/HEIGHT in
+        // lib/seo/site.ts.
+        width: 1200,
+        height: 630,
         alt: 'Solavita Nigeria - Cut Diesel. Own Your Power. Solar + battery systems for Nigerian homes and businesses',
       },
     ],

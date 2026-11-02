@@ -1230,7 +1230,7 @@ export function allProductSlugs(): ProductSlug[] {
 
 /**
  * The product's lead image — the series photo when it has one, else the
- * first configuration's first render. Used for the social card.
+ * first configuration's first render.
  */
 export function getProductHeroImage(product: Product): string | undefined {
   if (product.hero) return product.hero.src
@@ -1238,6 +1238,26 @@ export function getProductHeroImage(product: Product): string | undefined {
     if (config.views?.length) return config.views[0].src
   }
   return undefined
+}
+
+/**
+ * Pre-rendered 1200×630 JPEG social card for each product page.
+ *
+ * The raw product renders are portrait (or square) and sit on a
+ * transparent or white background — sharing one directly would make
+ * every platform advert to a 1.91:1 box and crop the product. These
+ * cards are generated from the same renders, centred on white, so the
+ * declared OG dimensions are always truthful.
+ */
+const PRODUCT_OG_IMAGES: Partial<Record<ProductSlug, string>> = {
+  module: '/images/og-product-module.jpg',
+  inverter: '/images/og-product-inverter.jpg',
+  battery: '/images/og-product-battery.jpg',
+  'all-in-one-ess': '/images/og-product-all-in-one-ess.jpg',
+}
+
+export function getProductOgImage(product: Product): string {
+  return PRODUCT_OG_IMAGES[product.slug] ?? '/images/og-default.jpg'
 }
 
 /**
