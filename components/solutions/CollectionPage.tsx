@@ -728,7 +728,7 @@ const LOAD_APPLIANCE_ICONS: Record<LoadApplianceIconKey, LucideIcon> = {
    Components in Detail — 4-tab product deep-dive. Pattern ported
    from the UK `solutions/ProductDetails.tsx` and re-skinned for the
    NG light theme (uk-teal / uk-emerald / uk-navy / uk-slate tokens).
-   Tabs: PV Modules / Hybrid Inverter / Battery Storage / Mounting
+   Tabs: PV Modules / Inverters / Battery Storage / Mounting
    System. Each tab surfaces title, subtitle, description, spec
    table, highlights, and a 4-second auto-rotating image carousel
    with arrows + dots. Image hover reveals a "Learn More" CTA that
@@ -743,7 +743,7 @@ interface ProductDetailTab {
 
 const PRODUCT_DETAIL_TABS: ProductDetailTab[] = [
   { id: 'module', label: 'PV Modules', Icon: PanelTop },
-  { id: 'inverter', label: 'Hybrid Inverter', Icon: Zap },
+  { id: 'inverter', label: 'Inverters', Icon: Zap },
   { id: 'battery', label: 'Battery Storage', Icon: Battery },
   { id: 'mounting', label: 'Mounting System', Icon: Construction },
 ]
@@ -990,7 +990,14 @@ function ProductSection() {
                     src={img}
                     alt={`${content.title} – image ${idx + 1}`}
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    // `object-contain`, not `cover`: the inverter and
+                    // battery shots are alpha-cutout product renders at
+                    // 1:1 / 0.60 / 0.74 ratios — `cover` inside this
+                    // 4:3 frame crops their sides/top off. The module
+                    // and mounting photos are already exactly 4:3, so
+                    // `contain` renders them identically with no
+                    // letterboxing.
+                    className="w-full h-full object-contain"
                   />
                 </div>
               ))}
