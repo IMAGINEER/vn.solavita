@@ -256,10 +256,10 @@ export default function ProductDetail({ product }: { product: Product }) {
           <div className="mb-6">
             <Breadcrumb
               items={[
-                { label: 'Home', href: '/' },
+                { label: 'Trang chủ', href: '/' },
                 // No Products page to link to — the header opens the
                 // dropdown instead — so this crumb is a plain label.
-                { label: 'Products' },
+                { label: 'Sản phẩm' },
                 { label: product.name },
               ]}
             />
@@ -267,7 +267,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             <div>
-              <SectionEyebrow>PRODUCTS</SectionEyebrow>
+              <SectionEyebrow>SẢN PHẨM</SectionEyebrow>
               <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-cw-bold text-gradient leading-tight">
                 {product.name}
               </h1>
@@ -279,7 +279,9 @@ export default function ProductDetail({ product }: { product: Product }) {
               </p>
 
               <div className="mt-7">
-                <GetQuoteButton onClick={openFormModal} />
+                <GetQuoteButton onClick={openFormModal}>
+                  Nhận báo giá miễn phí
+                </GetQuoteButton>
               </div>
 
               {/* The selling points that used to live in the separate
@@ -474,10 +476,10 @@ export default function ProductDetail({ product }: { product: Product }) {
         >
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
-              <SectionEyebrow>RELIABILITY</SectionEyebrow>
+              <SectionEyebrow>ĐỘ TIN CẬY</SectionEyebrow>
               <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-                Engineered for{' '}
-                <span className="text-gradient">Extreme Climates</span>
+                Thiết kế cho{' '}
+                <span className="text-gradient">khí hậu khắc nghiệt</span>
               </h2>
               <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
                 {product.reliability}
@@ -500,9 +502,9 @@ export default function ProductDetail({ product }: { product: Product }) {
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-10">
-            <SectionEyebrow>TECHNICAL DATA</SectionEyebrow>
+            <SectionEyebrow>DỮ LIỆU KỸ THUẬT</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Specifications <span className="text-gradient">at a Glance</span>
+              Thông số kỹ thuật <span className="text-gradient">tổng quan</span>
             </h2>
           </div>
 
@@ -550,7 +552,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           {variant.columns.length > 5 && (
             <p className="mb-3 text-xs text-uk-slate font-cw-regular lg:hidden">
-              Swipe sideways to compare every model.
+              Vuốt ngang để so sánh mọi model.
             </p>
           )}
 
@@ -587,9 +589,9 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           {hasTbd && (
             <p className="mt-6 text-xs text-uk-slate font-cw-regular leading-relaxed max-w-4xl mx-auto">
-              Figures marked in red are pending confirmation from the
-              manufacturer&apos;s full datasheet and will be published once
-              verified.
+              Các thông số được đánh dấu đỏ đang chờ xác nhận từ tài liệu kỹ
+              thuật đầy đủ của nhà sản xuất và sẽ được công bố sau khi xác
+              minh.
             </p>
           )}
 
@@ -615,13 +617,13 @@ export default function ProductDetail({ product }: { product: Product }) {
       >
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-10">
-            <SectionEyebrow>DOWNLOADS</SectionEyebrow>
+            <SectionEyebrow>TẢI XUỐNG</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Datasheets &amp; <span className="text-gradient">Warranty</span>
+              Tài liệu kỹ thuật &amp; <span className="text-gradient">Bảo hành</span>
             </h2>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-              Every figure on this page is taken from the documents below.
-              Download them for the full technical detail.
+              Mọi thông số trên trang này đều lấy từ các tài liệu bên dưới. Hãy
+              tải xuống để xem đầy đủ chi tiết kỹ thuật.
             </p>
           </div>
 
@@ -648,7 +650,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                   </span>
                   <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-cw-bold text-uk-teal group-hover:text-uk-teal-dark transition-colors">
                     <Download className="w-4 h-4" strokeWidth={2} />
-                    Download
+                    Tải xuống
                     <ArrowRight
                       className="w-4 h-4 transition-transform group-hover:translate-x-1"
                       strokeWidth={2}
@@ -660,24 +662,24 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
 
           <p className="mt-8 text-center text-sm text-uk-slate font-cw-regular">
-            Looking for another document?{' '}
+            Bạn cần tìm tài liệu khác?{' '}
             <Link href="/support#download" className="text-uk-teal-dark font-cw-bold hover:underline">
-              See all product downloads
+              Xem tất cả tài liệu tải xuống
             </Link>
           </p>
         </div>
       </section>
 
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            Not a Solavita Customer Yet?
+            Chưa phải khách hàng của Solavita?
             <br />
-            <span className="text-gradient">Start with a Free Design.</span>
+            <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
+        description="Nếu bạn vẫn đang cân nhắc các phương án, đội ngũ của chúng tôi có thể chuẩn bị bản thiết kế miễn phí, không ràng buộc, cho thấy tấm quang năng, pin lưu trữ hoặc hệ thống năng lượng gia đình trọn gói sẽ phù hợp với ngôi nhà của bạn như thế nào."
       />
 
       <Footer />

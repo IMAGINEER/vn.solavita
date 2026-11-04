@@ -3,8 +3,8 @@
 // `buildIndexMetadata` so a future tweak (e.g. locale flip) lands in
 // one place.
 //
-// Nigeria site - the helpers here are unchanged in shape; SITE_NAME /
-// SITE_LOCALE / DEFAULT_DESCRIPTION are now NG-flavored in `./site`.
+// Vietnam site - the helpers here are unchanged in shape; SITE_NAME /
+// SITE_LOCALE / DEFAULT_DESCRIPTION carry the VN values from `./site`.
 
 import type { Metadata } from 'next'
 import type { BlogCategory, BlogPostFull } from '@/lib/types/blog'
@@ -30,10 +30,10 @@ export interface BuildIndexOpts {
 export function buildIndexMetadata(opts: BuildIndexOpts): Metadata {
   const path = opts.path ?? '/blog'
   const description = opts.description ?? DEFAULT_DESCRIPTION
-  // Pass `opts.title` raw - the root layout's `title.template: '%s | Solavita Nigeria'`
+  // Pass `opts.title` raw - the root layout's `title.template: '%s | Solavita Việt Nam'`
   // adds the brand suffix exactly once. Calling `appendSiteTitle(opts.title)`
   // here would double the suffix (root template + manual append), producing
-  // titles like `Blog | Solavita Nigeria | Solavita Nigeria` on `/blog`.
+  // titles like `Blog | Solavita Việt Nam | Solavita Việt Nam` on `/blog`.
   return {
     title: opts.title,
     description,
@@ -111,7 +111,7 @@ export function buildPostMetadata({ post, categorySlug }: BuildPostOpts): Metada
   const canonical = absoluteUrl(path)
   const tagNames = post.tags.map((t) => t.name_en)
   return {
-    // Pass `post.title` raw - the root layout's `title.template: '%s | Solavita Nigeria'`
+    // Pass `post.title` raw - the root layout's `title.template: '%s | Solavita Việt Nam'`
     // adds the brand suffix exactly once.
     title: post.title,
     description,
@@ -169,7 +169,7 @@ export const SITE_CANONICAL = SITE_URL
    Static marketing-page builder.
 
    Every public marketing page calls this so canonical/robots land in one
-   place. Title-suffix (` | Solavita Nigeria`) is added by the root
+   place. Title-suffix (` | Solavita Việt Nam`) is added by the root
    layout's `title.template` - pages only pass the page-specific title.
    ──────────────────────────────────────────────────────────────────────── */
 

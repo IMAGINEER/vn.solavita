@@ -8,13 +8,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Contact Solavita Nigeria | Solar System Enquiries',
+  title: 'Liên hệ Solavita Việt Nam | Tư vấn hệ thống điện mặt trời',
   path: '/contact-us',
   description:
-    'Contact Solavita Nigeria about residential solar solutions, battery storage, small business systems and partnership opportunities.',
+    'Liên hệ Solavita Việt Nam để được tư vấn giải pháp điện mặt trời cho hộ gia đình, pin lưu trữ, hệ thống cho doanh nghiệp nhỏ và cơ hội hợp tác.',
   ogImage: '/images/og-contact.jpg',
   ogImageAlt:
-    'Contact Solavita Nigeria - solar system enquiries and partnership opportunities',
+    'Liên hệ Solavita Việt Nam - tư vấn hệ thống điện mặt trời và cơ hội hợp tác',
 })
 
 export default function Page() {
@@ -24,14 +24,14 @@ export default function Page() {
         data={[
           contactPageJsonLd({
             path: '/contact-us',
-            name: 'Contact Solavita Nigeria',
+            name: 'Liên hệ Solavita Việt Nam',
             description:
-              'Contact Solavita Nigeria about residential solar solutions, battery storage, small business systems and partnership opportunities in Nigeria.',
+              'Liên hệ Solavita Việt Nam để được tư vấn giải pháp điện mặt trời cho hộ gia đình, pin lưu trữ, hệ thống cho doanh nghiệp nhỏ và cơ hội hợp tác tại Việt Nam.',
           }),
           localBusinessJsonLd(),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Contact Us', url: '/contact-us' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Liên hệ', url: '/contact-us' },
           ]),
         ]}
       />

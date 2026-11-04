@@ -1,14 +1,14 @@
 /**
  * Internal notification email sent to the local partnerships team
- * inbox (`ng@solavita.com`) whenever someone submits /for-partners.
+ * inbox (`vn@solavita.com`) whenever someone submits /for-partners.
  */
 
-const TEAM_EMAIL = 'ng@solavita.com'
+const TEAM_EMAIL = 'vn@solavita.com'
 
 const TRACK_LABEL: Record<string, string> = {
-  'core-service': 'Core Service Partner',
-  'certified-installer': 'Certified Installer',
-  'lead-partner': 'Lead Partner',
+  'core-service': 'Đối tác dịch vụ chính',
+  'certified-installer': 'Đơn vị lắp đặt được chứng nhận',
+  'lead-partner': 'Đối tác giới thiệu khách hàng',
 }
 
 function trackLabel(track: string): string {
@@ -26,7 +26,7 @@ export function partnerNotificationEmail(data: {
   const track = trackLabel(data.partnerTrack)
 
   return {
-    subject: `[Partner] ${track} enquiry - ${data.company}`,
+    subject: `[Đối tác] Yêu cầu ${track} - ${data.company}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -36,17 +36,17 @@ export function partnerNotificationEmail(data: {
 
 <!-- Header -->
 <tr><td style="background: linear-gradient(135deg, #0f766e 0%, #10b981 100%); padding:20px 32px;">
-<h1 style="margin:0; font-size:18px; color:#ffffff; font-weight:700;">New partnership enquiry</h1>
-<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">ng.solavita.com/for-partners → ${TEAM_EMAIL}</p>
+<h1 style="margin:0; font-size:18px; color:#ffffff; font-weight:700;">Yêu cầu hợp tác mới</h1>
+<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">vn.solavita.com/for-partners → ${TEAM_EMAIL}</p>
 </td></tr>
 
 <!-- Body -->
 <tr><td style="padding:24px 32px;">
 
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">
-<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; width:120px; vertical-align:top;">Track</td><td style="padding:8px 0; font-size:14px; color:#0f172a; font-weight:600;">${track}</td></tr>
-<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Name</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.fullName}</td></tr>
-<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Company</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.company}</td></tr>
+<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; width:120px; vertical-align:top;">Hình thức</td><td style="padding:8px 0; font-size:14px; color:#0f172a; font-weight:600;">${track}</td></tr>
+<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Họ tên</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.fullName}</td></tr>
+<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Công ty</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.company}</td></tr>
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Email</td><td style="padding:8px 0; font-size:14px; border-top:1px solid #f1f5f9;"><a href="mailto:${data.email}" style="color:#0f766e;">${data.email}</a></td></tr>
 ${
   data.whatsapp
@@ -59,14 +59,14 @@ ${
   data.message
     ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px 0;">
 <tr><td style="background-color:#f0fdfa; border-left:4px solid #14B8A6; border-radius:8px; padding:16px;">
-<p style="margin:0 0 8px 0; font-size:12px; color:#0f766e; text-transform:uppercase; letter-spacing:1px; font-weight:600;">About the business</p>
+<p style="margin:0 0 8px 0; font-size:12px; color:#0f766e; text-transform:uppercase; letter-spacing:1px; font-weight:600;">Giới thiệu doanh nghiệp</p>
 <p style="margin:0; font-size:14px; color:#374151; line-height:1.6; white-space:pre-wrap;">${data.message}</p>
 </td></tr>
 </table>`
     : ''
 }
 
-<p style="margin:24px 0 0 0; font-size:12px; color:#6b7280;">Hit Reply to respond directly to ${data.email}.</p>
+<p style="margin:24px 0 0 0; font-size:12px; color:#6b7280;">Chọn Trả lời để phản hồi trực tiếp cho ${data.email}.</p>
 </td></tr>
 
 </table>

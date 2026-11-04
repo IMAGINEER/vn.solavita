@@ -8,7 +8,7 @@ export default async function LeadsPage() {
   await requireAdmin()
 
   // All Solavita sites (NG/UK/DE/IT) share the same Supabase project.
-  // Filter to country='ng' so other sites' rows are never shown here.
+  // Filter to country='vn' so other sites' rows are never shown here.
   // Order: most recently touched first so re-submitted leads (UPDATE
   // in /api/consultation dedup path) bubble to the top.
   const { data: rows } = await supabase
@@ -24,7 +24,7 @@ export default async function LeadsPage() {
         'plan_sent_at, plan_provider_id, plan_first_opened_at, ' +
         'plan_last_opened_at, plan_confirmed_at',
     )
-    .eq('country', 'ng')
+    .eq('country', 'vn')
     .order('updated_at', { ascending: false })
     .order('created_at', { ascending: false })
 
@@ -33,9 +33,11 @@ export default async function LeadsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-cw-bold text-uk-navy">NG Leads</h1>
+        <h1 className="text-2xl font-cw-bold text-uk-navy">
+          Khách hàng tiềm năng
+        </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          Consultation form submissions from ng.solavita.com. Newest first.
+          Yêu cầu tư vấn gửi từ vn.solavita.com. Mới nhất trước.
         </p>
       </div>
       <LeadsTable leads={leads} />

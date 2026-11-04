@@ -94,13 +94,13 @@ export default function PartnerFormModal({
           type="button"
           onClick={onClose}
           className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-9 h-9 rounded-full bg-white/95 hover:bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 shadow-sm transition-colors"
-          aria-label="Close partner form"
+          aria-label="Đóng biểu mẫu đối tác"
         >
           <X className="w-5 h-5" strokeWidth={2} />
         </button>
 
         <h2 id="partner-form-modal-title" className="sr-only">
-          Tell us about your business
+          Giới thiệu về doanh nghiệp của bạn
         </h2>
 
         <PartnerForm onClose={onClose} defaultTrack={defaultTrack} />

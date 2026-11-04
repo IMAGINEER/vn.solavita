@@ -20,8 +20,8 @@ export default function CookiesPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'Cookie Policy' },
+              { label: 'Trang chủ', href: '/' },
+              { label: 'Chính sách cookie' },
             ]}
           />
 
@@ -31,7 +31,7 @@ export default function CookiesPage() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-3xl lg:text-4xl font-cw-bold text-[#0A1628] mt-6 mb-2"
           >
-            Cookie Policy
+            Chính sách cookie
           </motion.h1>
 
           <motion.p
@@ -40,7 +40,7 @@ export default function CookiesPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Last updated: 2 November 2026
+            Solavita · Cập nhật lần cuối: 2 tháng 11 năm 2026
           </motion.p>
 
           <motion.div
@@ -62,95 +62,95 @@ export default function CookiesPage() {
           >
             <div>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
-                This Cookie Policy explains how Solavita uses cookies and similar technologies on this website. It should be read alongside our <a href="/privacy/" className="text-[#0F766E] hover:underline">Privacy Policy</a>.
+                Chính sách cookie này giải thích cách Solavita sử dụng cookie và các công nghệ tương tự trên trang web này. Chính sách này nên được đọc cùng với <a href="/privacy/" className="text-[#0F766E] hover:underline">Chính sách bảo mật</a> của chúng tôi.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 What Are Cookies?</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Cookie là gì?</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Cookies are small text files stored on your device when you visit a website. Websites may also use similar technologies, such as local storage, pixels or scripts, to remember preferences, maintain functionality, understand usage or support advertising.
+                Cookie là các tệp văn bản nhỏ được lưu trên thiết bị của Bạn khi Bạn truy cập một trang web. Trang web cũng có thể sử dụng các công nghệ tương tự, chẳng hạn như lưu trữ cục bộ (local storage), pixel hoặc script, để ghi nhớ tùy chọn, duy trì chức năng, tìm hiểu cách sử dụng hoặc hỗ trợ quảng cáo.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                This policy explains how Solavita may use cookies and similar technologies on this website. The technologies actually used depend on the website's configuration and the services enabled by the operator.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">2 Categories of Cookies</h2>
-              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Strictly necessary technologies</p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                These technologies support essential website functions, security, network management or features you specifically request. Where permitted by law, they may operate without consent.
-              </p>
-              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Analytics and performance technologies</p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                These technologies help measure traffic, understand how visitors use the website and identify technical issues. They should be enabled only in accordance with applicable consent requirements and the website's actual configuration.
-              </p>
-              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Marketing and advertising technologies</p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                These technologies may be used to measure advertising performance, attribute enquiries to campaigns or personalise marketing. They should be used only where they are actually installed and the required consent or other lawful conditions have been satisfied.
-              </p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We will not treat analytics or marketing technologies as active merely because this policy describes them.
+                Chính sách này giải thích cách Solavita có thể sử dụng cookie và các công nghệ tương tự trên trang web này. Các công nghệ thực tế được sử dụng phụ thuộc vào cấu hình của trang web và các dịch vụ do đơn vị vận hành bật.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">3 Cookies Used on This Website</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">2 Các loại cookie</h2>
+              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Các công nghệ thiết yếu</p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                The precise cookies and similar technologies depend on the tools enabled on the website.
+                Các công nghệ này hỗ trợ các chức năng thiết yếu của trang web, bảo mật, quản lý mạng hoặc các tính năng mà Bạn yêu cầu cụ thể. Khi pháp luật cho phép, các công nghệ này có thể hoạt động mà không cần sự đồng ý.
+              </p>
+              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Các công nghệ phân tích và hiệu suất</p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Các công nghệ này giúp đo lường lưu lượng truy cập, tìm hiểu cách khách truy cập sử dụng trang web và xác định các vấn đề kỹ thuật. Các công nghệ này chỉ nên được bật theo đúng yêu cầu áp dụng về sự đồng ý và cấu hình thực tế của trang web.
+              </p>
+              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Các công nghệ tiếp thị và quảng cáo</p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Các công nghệ này có thể được sử dụng để đo lường hiệu quả quảng cáo, xác định yêu cầu tư vấn thuộc các chiến dịch hoặc cá nhân hóa hoạt động tiếp thị. Các công nghệ này chỉ nên được sử dụng khi thực sự được cài đặt và đáp ứng sự đồng ý cần thiết hoặc các điều kiện hợp pháp khác.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Verified cookie inventory: for each technology, its name, provider, purpose, category, duration and whether it transmits data to a third party.</span>
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">4 Managing Your Preferences</h2>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Where a cookie preference or consent tool is provided, you can use it to review or change your choices. If the website does not currently provide such a tool, do not assume that preferences can be changed through a website settings panel.
-              </p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                You can also manage or delete cookies through your browser settings. Blocking all cookies may affect some website functions. Browser controls do not necessarily prevent all similar technologies from operating.
-              </p>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Where applicable law requires prior consent for non-essential technologies, those technologies should not be activated before the required consent is obtained.
+                Chúng tôi sẽ không coi các công nghệ phân tích hoặc tiếp thị là đang hoạt động chỉ vì chính sách này mô tả chúng.
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">5 Third-Party Services</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">3 Cookie được sử dụng trên trang web này</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Some website features may depend on third-party services, such as embedded content, analytics, advertising or communication tools. If enabled, those providers may process technical information in accordance with their own policies.
+                Các cookie và công nghệ tương tự chính xác phụ thuộc vào các công cụ được bật trên trang web.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Verified third-party providers used on this website and links to their privacy and cookie documentation.</span>
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 Changes to This Policy</h2>
-              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                We may update this Cookie Policy when website technologies, service providers or legal requirements change. The latest version will be published on this page with an updated revision date.
+                <span className="text-red-600 font-bold">TBD — Danh mục cookie đã được xác minh: đối với từng công nghệ, tên, nhà cung cấp, mục đích, phân loại, thời hạn và việc có truyền dữ liệu đến bên thứ ba hay không.</span>
               </p>
             </div>
 
             <div>
-              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">7 Contact Us</h2>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">4 Quản lý tùy chọn của Bạn</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                For questions about cookies or similar technologies, contact:
+                Khi có công cụ tùy chọn cookie hoặc công cụ đồng ý, Bạn có thể sử dụng công cụ đó để xem xét hoặc thay đổi lựa chọn của mình. Nếu hiện tại trang web không cung cấp công cụ như vậy, vui lòng không giả định rằng có thể thay đổi tùy chọn thông qua bảng cài đặt của trang web.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Bạn cũng có thể quản lý hoặc xóa cookie thông qua cài đặt trình duyệt. Việc chặn toàn bộ cookie có thể ảnh hưởng đến một số chức năng của trang web. Các điều khiển của trình duyệt không nhất thiết ngăn được mọi công nghệ tương tự hoạt động.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Khi pháp luật hiện hành yêu cầu có sự đồng ý trước đối với các công nghệ không thiết yếu, các công nghệ đó không được kích hoạt trước khi có được sự đồng ý cần thiết.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">5 Dịch vụ của bên thứ ba</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Một số tính năng của trang web có thể phụ thuộc vào dịch vụ của bên thứ ba, chẳng hạn như nội dung nhúng, phân tích, quảng cáo hoặc công cụ liên lạc. Nếu được bật, các nhà cung cấp đó có thể xử lý thông tin kỹ thuật theo chính sách riêng của họ.
+              </p>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                <span className="text-red-600 font-bold">TBD — Các nhà cung cấp bên thứ ba đã được xác minh được sử dụng trên trang web này và liên kết đến tài liệu về quyền riêng tư và cookie của họ.</span>
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">6 Thay đổi đối với Chính sách này</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Chúng tôi có thể cập nhật Chính sách cookie này khi công nghệ của trang web, nhà cung cấp dịch vụ hoặc yêu cầu pháp lý thay đổi. Phiên bản mới nhất sẽ được công bố trên trang này kèm ngày sửa đổi được cập nhật.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">7 Liên hệ với chúng tôi</h2>
+              <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
+                Nếu có câu hỏi về cookie hoặc các công nghệ tương tự, vui lòng liên hệ:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Website operator:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED (a company incorporated in Hong Kong)</li>
-                <li><strong className="text-[#0A1628]">Contact:</strong> Johny Zhang</li>
-                <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:ng@solavita.com" className="text-[#0F766E] hover:underline">ng@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Address:</strong> <span className="text-red-600">TBD — Verified Hong Kong registered office address</span></li>
+                <li><strong className="text-[#0A1628]">Đơn vị vận hành trang web:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED (công ty được thành lập tại Hồng Kông)</li>
+                <li><strong className="text-[#0A1628]">Liên hệ:</strong> Johny Zhang</li>
+                <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:vn@solavita.com" className="text-[#0F766E] hover:underline">vn@solavita.com</a></li>
+                <li><strong className="text-[#0A1628]">Địa chỉ:</strong> <span className="text-red-600">TBD — Địa chỉ trụ sở đã đăng ký tại Hồng Kông (chờ xác nhận)</span></li>
               </ul>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Last updated: 2 November 2026 · Solavita
+                Cập nhật lần cuối: 2 tháng 11 năm 2026 · Solavita
               </p>
             </div>
           </motion.div>

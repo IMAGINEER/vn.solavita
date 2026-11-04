@@ -27,8 +27,8 @@ export default function SupportHero() {
         <Breadcrumb
           theme="light"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Support' },
+            { label: 'Trang chủ', href: '/' },
+            { label: 'Hỗ trợ' },
           ]}
         />
 
@@ -40,7 +40,7 @@ export default function SupportHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Help for NG customers
+            Hỗ trợ khách hàng tại Việt Nam
           </span>
         </motion.span>
 
@@ -50,8 +50,8 @@ export default function SupportHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
         >
-          How can we{' '}
-          <span className="text-gradient">help today?</span>
+          Hôm nay chúng tôi có thể{' '}
+          <span className="text-gradient">giúp gì cho bạn?</span>
         </motion.h1>
 
         <motion.p
@@ -60,9 +60,9 @@ export default function SupportHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Browse guides, download manuals, or get in touch with our
-          NG-based service team. We're here for the lifetime of
-          your system.
+          Tra cứu hướng dẫn, tải tài liệu hoặc liên hệ với đội ngũ hỗ trợ
+          tại Việt Nam. Chúng tôi đồng hành cùng hệ thống của bạn trong
+          suốt vòng đời sử dụng.
         </motion.p>
 
         {/* Visual-only search field - backend wired later. */}
@@ -77,14 +77,14 @@ export default function SupportHero() {
           <Search className="w-5 h-5 text-uk-slate ml-5 flex-shrink-0" strokeWidth={1.6} />
           <input
             type="search"
-            placeholder="Search guides, error codes, downloads..."
+            placeholder="Tìm kiếm hướng dẫn, mã lỗi, tài liệu tải về..."
             className="flex-1 px-4 py-4 bg-transparent text-uk-navy placeholder:text-uk-slate focus:outline-none"
           />
           <button
             type="submit"
             className="btn-gradient px-6 py-3 m-1.5 rounded-full font-cw-bold text-sm text-white"
           >
-            Search
+            Tìm kiếm
           </button>
         </motion.form>
       </div>

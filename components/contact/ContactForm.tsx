@@ -18,7 +18,7 @@ import {
  * destination, not a quote request.
  *
  * Submit POSTs to /api/contact, which saves the row to
- * `uk_contact_leads` and fires a confirmation email + a team
+ * `vn_contact_leads` and fires a confirmation email + a team
  * notification. On 2xx the form swaps to the success card inline.
  */
 
@@ -94,17 +94,17 @@ export default function ContactForm() {
 
     REQUIRED_FIELDS.forEach((f) => {
       if (f === 'consent') {
-        if (!state.consent) next.consent = 'Please confirm to continue.'
+        if (!state.consent) next.consent = 'Vui lòng xác nhận để tiếp tục.'
         return
       }
       const v = state[f]
       if (typeof v === 'string' && !v.trim()) {
-        next[f] = 'This field is required.'
+        next[f] = 'Trường này là bắt buộc.'
       }
     })
 
     if (state.email && !EMAIL_RE.test(state.email)) {
-      next.email = 'Please enter a valid email address.'
+      next.email = 'Vui lòng nhập địa chỉ email hợp lệ.'
     }
 
     setErrors(next)
@@ -128,14 +128,14 @@ export default function ContactForm() {
       }
       if (!res.ok || !json.success) {
         setSubmitError(
-          json.message || 'Something went wrong. Please try again.'
+          json.message || 'Đã xảy ra lỗi. Vui lòng thử lại.'
         )
         setStatus('idle')
         return
       }
       setStatus('success')
     } catch {
-      setSubmitError('Network error. Please try again.')
+      setSubmitError('Lỗi kết nối mạng. Vui lòng thử lại.')
       setStatus('idle')
     }
   }
@@ -159,30 +159,30 @@ export default function ContactForm() {
             <div className="lg:col-span-2 p-8 lg:p-10 bg-uk-teal-soft/40 border-b lg:border-b-0 lg:border-r border-uk-line">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-uk-emerald" />
-                Send us a message
+                Gửi tin nhắn cho chúng tôi
               </span>
               <h2 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy leading-tight">
-                Send us a message.
+                Gửi tin nhắn cho chúng tôi.
               </h2>
               <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular leading-relaxed">
-                Tell us what you'd like to discuss - we'll
-                route it to the right person on the Nigerian team and reply
-                within one working day.
+                Hãy cho chúng tôi biết điều bạn muốn trao đổi — chúng tôi sẽ
+                chuyển đến đúng người phụ trách trong đội ngũ Solavita Việt Nam
+                và phản hồi trong vòng một ngày làm việc.
               </p>
 
               <ul className="mt-6 space-y-3">
                 {[
                   {
                     icon: <Mail className="w-4 h-4" strokeWidth={1.6} />,
-                    title: 'Replies within 1 working day',
+                    title: 'Phản hồi trong 1 ngày làm việc',
                   },
                   {
                     icon: <ShieldCheck className="w-4 h-4" strokeWidth={1.6} />,
-                    title: 'Your data stays protected',
+                    title: 'Thông tin của bạn được bảo vệ',
                   },
                   {
                     icon: <Check className="w-4 h-4" strokeWidth={2} />,
-                    title: 'No marketing spam - ever',
+                    title: 'Không gửi email quảng cáo',
                   },
                 ].map((it) => (
                   <li
@@ -214,17 +214,17 @@ export default function ContactForm() {
                       <Check className="w-8 h-8" strokeWidth={2.5} />
                     </span>
                     <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
-                      Thanks - we've got your message.
+                      Cảm ơn bạn — chúng tôi đã nhận được tin nhắn.
                     </h3>
                     <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
-                      Our Nigerian team will get back to you within one working
-                      day at the email you provided. If it's
-                      urgent, you can reach us directly at{' '}
+                      Đội ngũ Solavita Việt Nam sẽ phản hồi trong vòng một ngày
+                      làm việc qua email bạn đã cung cấp. Nếu cần gấp, bạn có thể
+                      liên hệ trực tiếp tại{' '}
                       <a
-                        href="mailto:ng@solavita.com"
+                        href="mailto:vn@solavita.com"
                         className="text-uk-teal-dark hover:text-uk-teal transition-colors"
                       >
-                        ng@solavita.com
+                        vn@solavita.com
                       </a>
                       .
                     </p>
@@ -233,7 +233,7 @@ export default function ContactForm() {
                       onClick={reset}
                       className="mt-6 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
                     >
-                      Send another message
+                      Gửi tin nhắn khác
                     </button>
                   </motion.div>
                 ) : (
@@ -250,7 +250,7 @@ export default function ContactForm() {
                     {/* Salutation + first / last name */}
                     <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
                       <label className="block sm:col-span-2">
-                        <span className={labelClass}>Salutation</span>
+                        <span className={labelClass}>Danh xưng</span>
                         <select
                           name="salutation"
                           value={state.salutation}
@@ -273,7 +273,7 @@ export default function ContactForm() {
                       </label>
 
                       <label className="block sm:col-span-2">
-                        <span className={labelClass}>First name</span>
+                        <span className={labelClass}>Họ và tên đệm</span>
                         <input
                           type="text"
                           name="firstName"
@@ -281,7 +281,7 @@ export default function ContactForm() {
                           onChange={(e) =>
                             setField('firstName', e.target.value)
                           }
-                          placeholder="Jane"
+                          placeholder="Nguyễn Văn"
                           className={`${fieldClass} ${
                             errors.firstName
                               ? 'border-uk-danger/60'
@@ -292,7 +292,7 @@ export default function ContactForm() {
                       </label>
 
                       <label className="block sm:col-span-2">
-                        <span className={labelClass}>Last name</span>
+                        <span className={labelClass}>Tên</span>
                         <input
                           type="text"
                           name="lastName"
@@ -300,7 +300,7 @@ export default function ContactForm() {
                           onChange={(e) =>
                             setField('lastName', e.target.value)
                           }
-                          placeholder="Smith"
+                          placeholder="A"
                           className={`${fieldClass} ${
                             errors.lastName ? 'border-uk-danger/60' : ''
                           }`}
@@ -318,7 +318,7 @@ export default function ContactForm() {
                           name="email"
                           value={state.email}
                           onChange={(e) => setField('email', e.target.value)}
-                          placeholder="jane@example.com"
+                          placeholder="email@example.com"
                           className={`${fieldClass} ${
                             errors.email ? 'border-uk-danger/60' : ''
                           }`}
@@ -333,9 +333,9 @@ export default function ContactForm() {
 
                       <label className="block">
                         <span className={labelClass}>
-                          Phone{' '}
+                          Điện thoại{' '}
                           <span className="text-uk-slate/60 normal-case tracking-normal font-cw-regular">
-                            (optional)
+                            (không bắt buộc)
                           </span>
                         </span>
                         <input
@@ -343,7 +343,7 @@ export default function ContactForm() {
                           name="phone"
                           value={state.phone}
                           onChange={(e) => setField('phone', e.target.value)}
-                          placeholder="+234 ..."
+                          placeholder="+84 900 000 000"
                           className={fieldClass}
                         />
                       </label>
@@ -353,9 +353,9 @@ export default function ContactForm() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <label className="block sm:col-span-1">
                         <span className={labelClass}>
-                          Postal code{' '}
+                          Mã bưu chính{' '}
                           <span className="text-uk-slate/60 normal-case tracking-normal font-cw-regular">
-                            (optional)
+                            (không bắt buộc)
                           </span>
                         </span>
                         <input
@@ -372,9 +372,9 @@ export default function ContactForm() {
 
                       <label className="block sm:col-span-2">
                         <span className={labelClass}>
-                          City{' '}
+                          Tỉnh / Thành phố{' '}
                           <span className="text-uk-slate/60 normal-case tracking-normal font-cw-regular">
-                            (optional)
+                            (không bắt buộc)
                           </span>
                         </span>
                         <input
@@ -382,7 +382,7 @@ export default function ContactForm() {
                           name="city"
                           value={state.city}
                           onChange={(e) => setField('city', e.target.value)}
-                          placeholder="Lagos"
+                          placeholder="Hà Nội"
                           className={fieldClass}
                         />
                       </label>
@@ -390,7 +390,7 @@ export default function ContactForm() {
 
                     {/* Subject */}
                     <label className="block">
-                      <span className={labelClass}>Subject / Enquiry type</span>
+                      <span className={labelClass}>Chủ đề / Loại yêu cầu</span>
                       <select
                         name="subject"
                         value={state.subject}
@@ -405,7 +405,7 @@ export default function ContactForm() {
                         }`}
                         required
                       >
-                        <option value="">Choose a topic...</option>
+                        <option value="">Chọn chủ đề...</option>
                         {contactSubjects.map((s) => (
                           <option key={s.id} value={s.id}>
                             {s.label}
@@ -421,13 +421,13 @@ export default function ContactForm() {
 
                     {/* Message */}
                     <label className="block">
-                      <span className={labelClass}>Message</span>
+                      <span className={labelClass}>Nội dung</span>
                       <textarea
                         name="message"
                         value={state.message}
                         onChange={(e) => setField('message', e.target.value)}
                         rows={5}
-                        placeholder="Tell us a bit about what you have in mind..."
+                        placeholder="Chia sẻ ngắn gọn về nhu cầu của bạn..."
                         className={`${fieldClass} resize-y ${
                           errors.message ? 'border-uk-danger/60' : ''
                         }`}
@@ -451,16 +451,16 @@ export default function ContactForm() {
                         className="mt-1 w-4 h-4 rounded border-uk-line text-uk-teal focus:ring-uk-teal"
                       />
                       <span className="text-xs text-uk-slate leading-relaxed">
-                        I agree Solavita may contact me about my enquiry. I
-                        have read the{' '}
+                        Tôi đồng ý để Solavita liên hệ về yêu cầu của mình. Tôi đã
+                        đọc{' '}
                         <a
                           href="/privacy/"
                           className="text-uk-teal-dark hover:text-uk-teal underline-offset-2 hover:underline"
                         >
-                          Privacy Policy
+                          Chính sách bảo mật
                         </a>
-                        . My data will be processed in line with the
-                        applicable local data-protection regulation.
+                        . Dữ liệu của tôi sẽ được xử lý theo quy định pháp luật
+                        hiện hành về bảo vệ dữ liệu cá nhân tại Việt Nam.
                       </span>
                     </label>
                     {errors.consent && (
@@ -481,7 +481,7 @@ export default function ContactForm() {
                       )}
                       <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
                       <p className="text-xs text-uk-slate">
-                        We reply within one working day.
+                        Chúng tôi phản hồi trong vòng một ngày làm việc.
                       </p>
                       <button
                         type="submit"
@@ -491,12 +491,12 @@ export default function ContactForm() {
                         {status === 'submitting' ? (
                           <>
                             <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                            Sending...
+                            Đang gửi...
                           </>
                         ) : (
                           <>
                             <Send className="w-4 h-4" strokeWidth={2} />
-                            Send message
+                            Gửi tin nhắn
                           </>
                         )}
                       </button>

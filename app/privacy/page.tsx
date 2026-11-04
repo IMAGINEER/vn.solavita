@@ -7,10 +7,10 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Privacy Policy',
+  title: 'Chính sách bảo mật',
   path: '/privacy',
   description:
-    'How Solavita collects, uses, stores and shares personal information, in accordance with applicable data protection laws.',
+    'Cách Solavita thu thập, sử dụng, lưu trữ và chia sẻ thông tin cá nhân, phù hợp với pháp luật hiện hành về bảo vệ dữ liệu cá nhân.',
 })
 
 export default function Page() {
@@ -20,13 +20,13 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/privacy',
-            name: 'Solavita Privacy Policy',
+            name: 'Chính sách bảo mật Solavita',
             description:
-              'How Solavita collects, uses, stores and shares personal information, in accordance with applicable data protection laws.',
+              'Cách Solavita thu thập, sử dụng, lưu trữ và chia sẻ thông tin cá nhân, phù hợp với pháp luật hiện hành về bảo vệ dữ liệu cá nhân.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Privacy Policy', url: '/privacy' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Chính sách bảo mật', url: '/privacy' },
           ]),
         ]}
       />

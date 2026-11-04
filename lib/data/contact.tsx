@@ -1,10 +1,9 @@
 /**
- * Contact Us page data — Nigeria.
+ * Contact Us page data — Vietnam.
  *
- * Per `content/nigeria/contact-us.md`:
- *   - 6 selectable enquiry categories (Section 2)
+ *   - 5 selectable enquiry categories (Section 2)
  *   - All contact channels (phone, email, address, hours) are TBD until
- *     business supplies verified Nigerian contact details
+ *     business supplies verified Vietnamese contact details
  *
  * Every TBD is surfaced in red on the website through the
  * `components/ui/tbd-text.tsx` component.
@@ -28,32 +27,32 @@ export interface ContactSubject {
 export const contactSubjects: ContactSubject[] = [
   {
     id: 'residential',
-    label: 'Residential solar system',
+    label: 'Hệ thống điện mặt trời cho hộ gia đình',
     description:
-      'A solar and battery package for your home — including essential circuits, ACs and everyday appliances.',
+      'Gói điện mặt trời và pin lưu trữ cho gia đình — bao gồm mạch điện thiết yếu, điều hoà và thiết bị sinh hoạt hằng ngày.',
   },
   {
     id: 'small-commercial',
-    label: 'Small commercial solar system',
+    label: 'Hệ thống điện mặt trời cho doanh nghiệp nhỏ',
     description:
-      'Solar and storage for a shop, office, restaurant or other small commercial site.',
+      'Điện mặt trời và lưu trữ cho cửa hàng, văn phòng, nhà hàng hoặc công trình thương mại quy mô nhỏ.',
   },
   {
     id: 'existing-system',
-    label: 'Existing system support',
+    label: 'Hỗ trợ hệ thống đã lắp đặt',
     description:
-      'You already have a Solavita system and need help with monitoring, batteries or service.',
+      'Bạn đã có hệ thống Solavita và cần hỗ trợ về giám sát, pin lưu trữ hoặc bảo trì.',
   },
   {
     id: 'installer-partner',
-    label: 'Installation partnership',
+    label: 'Hợp tác lắp đặt',
     description:
-      'You are an installer or electrical service provider interested in working together.',
+      'Bạn là đơn vị lắp đặt hoặc nhà cung cấp dịch vụ điện muốn hợp tác cùng chúng tôi.',
   },
   {
     id: 'other',
-    label: 'Other enquiry',
-    description: 'Tell us what you have in mind.',
+    label: 'Yêu cầu khác',
+    description: 'Hãy cho chúng tôi biết bạn đang cần gì.',
   },
 ]
 
@@ -68,38 +67,38 @@ export interface ContactChannel {
 export const contactChannels: ContactChannel[] = [
   {
     label: 'Email',
-    value: 'ng@solavita.com',
-    href: 'mailto:ng@solavita.com',
-    description: 'Reply within one working day.',
+    value: 'vn@solavita.com',
+    href: 'mailto:vn@solavita.com',
+    description: 'Phản hồi trong vòng một ngày làm việc.',
     icon: 'mail',
   },
   {
     label: 'WhatsApp',
-    // Visible label hides the digits (no verified Nigerian number
-    // yet). The wa.me link below carries the user-provided handoff
-    // number so the click target still routes correctly; the public
-    // surface never prints the digits until NG business confirms.
+    // Visible label hides the digits until a verified Vietnamese
+    // number is supplied. The wa.me link below carries the
+    // user-provided handoff number so the click target still routes
+    // correctly.
     value: 'WhatsApp',
     href: 'https://wa.me/8618500875025',
     description:
-      'TBD — Confirmed Nigerian operating hours and WhatsApp availability.',
+      'TBD — Giờ làm việc và khung giờ hỗ trợ WhatsApp tại Việt Nam (chờ xác nhận).',
     icon: 'phone',
   },
   {
-    label: 'Office',
-    value: 'TBD — Verified Nigeria office address',
+    label: 'Văn phòng',
+    value: 'TBD — Địa chỉ văn phòng tại Việt Nam (chờ xác nhận)',
     href: 'https://maps.google.com/',
-    description: 'TBD — Registered office and service area.',
+    description: 'TBD — Văn phòng đăng ký và khu vực phục vụ (chờ xác nhận).',
     icon: 'map-pin',
   },
 ]
 
 /** Salutation options - mirrors the existing Consultation form. */
 export const contactSalutations = [
-  { value: '', label: 'Salutation' },
-  { value: 'Mr', label: 'Mr' },
-  { value: 'Mrs', label: 'Mrs' },
-  { value: 'Ms', label: 'Ms' },
-  { value: 'Dr', label: 'Dr' },
-  { value: 'Other', label: 'Other' },
+  { value: '', label: 'Danh xưng' },
+  { value: 'Anh', label: 'Anh' },
+  { value: 'Chị', label: 'Chị' },
+  { value: 'Ông', label: 'Ông' },
+  { value: 'Bà', label: 'Bà' },
+  { value: 'Khác', label: 'Khác' },
 ] as const

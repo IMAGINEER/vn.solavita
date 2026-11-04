@@ -7,10 +7,10 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Cookie Policy',
+  title: 'Chính sách cookie',
   path: '/cookies',
   description:
-    'How Solavita uses cookies and similar technologies on this website.',
+    'Cách Solavita sử dụng cookie và các công nghệ tương tự trên trang web này.',
 })
 
 export default function Page() {
@@ -20,13 +20,13 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/cookies',
-            name: 'Solavita Cookie Policy',
+            name: 'Chính sách cookie Solavita',
             description:
-              'How Solavita uses cookies and similar technologies on this website.',
+              'Cách Solavita sử dụng cookie và các công nghệ tương tự trên trang web này.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Cookie Policy', url: '/cookies' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Chính sách cookie', url: '/cookies' },
           ]),
         ]}
       />

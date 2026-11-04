@@ -15,13 +15,13 @@ export default async function AdminTagsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-cw-bold text-uk-navy">Blog tags</h1>
+          <h1 className="text-2xl font-cw-bold text-uk-navy">Thẻ blog</h1>
           <p className="mt-1 text-sm text-uk-slate">
-            Tags are cross-cutting: the same tag can appear across different categories.
+            Thẻ dùng xuyên danh mục: cùng một thẻ có thể xuất hiện ở nhiều danh mục khác nhau.
           </p>
         </div>
         <ButtonLink href="/admin/blog" variant="ghost">
-          ← Posts
+          ← Bài viết
         </ButtonLink>
       </div>
 

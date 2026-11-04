@@ -46,7 +46,7 @@ export default async function BlogCategoryPage(props: {
 
   const [allCategories, result] = await Promise.all([
     // Sibling-chip navigation: same public-surface rule as /blog index
-    // — drop empty NG categories so the chips never link to a page
+    // — drop empty VN categories so the chips never link to a page
     // that 404s.
     getCategories({ onlyWithPublishedPosts: true }),
     listPublishedPosts({ categorySlug: slug, page, pageSize: 9 }),
@@ -58,13 +58,13 @@ export default async function BlogCategoryPage(props: {
         data={[
           collectionPageJsonLd({
             path: `/blog/category/${category.slug}`,
-            name: `${category.name_en} - Solavita Nigeria Blog`,
+            name: `${category.name_en} - Blog Solavita Việt Nam`,
             description:
               category.description_en ??
-              `Articles in the ${category.name_en} category.`,
+              `Các bài viết trong danh mục ${category.name_en}.`,
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
+            { name: 'Trang chủ', url: '/' },
             { name: 'Blog', url: '/blog' },
             {
               name: category.name_en,
@@ -78,10 +78,10 @@ export default async function BlogCategoryPage(props: {
       <BlogHero
         badge={category.name_en}
         h1={category.name_en}
-        h1Accent="articles & guides"
+        h1Accent="bài viết & hướng dẫn"
         subhead={
           category.description_en ??
-          'Everything we have written on this category.'
+          'Tất cả những gì chúng tôi đã viết về danh mục này.'
         }
       />
 
@@ -93,7 +93,7 @@ export default async function BlogCategoryPage(props: {
               href="/blog"
               className="inline-flex items-center px-4 h-9 text-sm font-cw-bold rounded-full border border-uk-line bg-white text-uk-slate hover:bg-uk-teal-soft hover:text-uk-teal-dark transition-colors"
             >
-              All
+              Tất cả
             </Link>
             {allCategories.map((c) => (
               <Link
@@ -112,7 +112,7 @@ export default async function BlogCategoryPage(props: {
 
           {result.posts.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-uk-line bg-[#F7F9FC] dark:bg-sv-darker p-12 text-center text-uk-slate">
-              No published articles in this category yet.
+              Danh mục này chưa có bài viết nào được xuất bản.
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -137,15 +137,15 @@ export default async function BlogCategoryPage(props: {
           opens the universal FormModal (hosted in Footer) via
           openFormModal(). */}
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            Not a Solavita Customer Yet?
+            Bạn chưa phải khách hàng của Solavita?
             <br />
-            <span className="text-gradient">Start with a Free Design.</span>
+            <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
+        description="Nếu bạn vẫn đang cân nhắc, đội ngũ của chúng tôi có thể chuẩn bị một bản thiết kế miễn phí, không ràng buộc, cho thấy tấm pin mặt trời, pin lưu trữ hoặc trọn bộ hệ thống năng lượng cho gia đình sẽ phù hợp với ngôi nhà của bạn như thế nào."
       />
 
       <Footer />
@@ -174,18 +174,18 @@ function Pagination({
           href={makeHref(page - 1)}
           className="inline-flex items-center justify-center h-8 px-3 text-xs font-cw-bold rounded-md border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm transition-colors"
         >
-          ← Previous
+          ← Trước
         </Link>
       )}
       <span className="text-sm text-uk-slate">
-        Page {page} of {totalPages}
+        Trang {page} / {totalPages}
       </span>
       {page < totalPages && (
         <Link
           href={makeHref(page + 1)}
           className="inline-flex items-center justify-center h-8 px-3 text-xs font-cw-bold rounded-md border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm transition-colors"
         >
-          Next
+          Sau →
         </Link>
       )}
     </div>

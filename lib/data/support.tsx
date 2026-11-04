@@ -47,48 +47,48 @@ export interface SupportCategory {
 export const supportCategories: SupportCategory[] = [
   {
     id: 'installation',
-    title: 'Installation',
+    title: 'Lắp đặt',
     description:
-      'Survey, install day, what to expect and how to prepare your home.',
+      'Khảo sát, ngày lắp đặt, những gì cần chuẩn bị và cách chuẩn bị cho ngôi nhà của bạn.',
     icon: 'wrench',
-    ctaLabel: 'How to Install',
+    ctaLabel: 'Hướng dẫn lắp đặt',
     ctaHref: '/support/installation',
   },
   {
     id: 'product',
-    title: 'Product',
+    title: 'Sản phẩm',
     description:
-      'Specs, manuals and downloads for panels, batteries and inverters.',
+      'Thông số kỹ thuật, hướng dẫn sử dụng và tài liệu tải về cho tấm quang năng, pin lưu trữ và bộ biến tần.',
     icon: 'package',
-    ctaLabel: 'Download',
+    ctaLabel: 'Tải tài liệu',
     ctaHref: '#download',
   },
   {
     id: 'monitoring',
-    title: 'Monitoring',
+    title: 'Giám sát',
     description:
-      'Monitoring App setup, alerts, reports and sharing access with family.',
+      'Thiết lập ứng dụng giám sát, cảnh báo, báo cáo và chia sẻ quyền truy cập với gia đình.',
     icon: 'monitor',
-    ctaLabel: 'View FAQs',
+    ctaLabel: 'Xem Câu hỏi thường gặp',
     ctaHref: '#faq-monitoring',
     card: false,
   },
   {
     id: 'warranty',
-    title: 'Warranty',
+    title: 'Bảo hành',
     description:
-      'Coverage, claims, transfer of ownership and what is included.',
+      'Phạm vi bảo hành, yêu cầu bảo hành, chuyển nhượng quyền sở hữu và những gì được bao gồm.',
     icon: 'shield',
-    ctaLabel: 'Download',
+    ctaLabel: 'Tải tài liệu',
     ctaHref: '#download',
   },
   {
     id: 'troubleshooting',
-    title: 'Troubleshooting',
+    title: 'Xử lý sự cố',
     description:
-      'Common issues, error codes and what to do before booking a visit.',
+      'Các vấn đề thường gặp, mã lỗi và những việc cần làm trước khi đặt lịch kiểm tra.',
     icon: 'life-buoy',
-    ctaLabel: 'Contact Us',
+    ctaLabel: 'Liên hệ',
     ctaHref: '/contact-us',
   },
 ]
@@ -102,63 +102,63 @@ export interface FaqItem {
 export const faqItems: FaqItem[] = [
   {
     category: 'installation',
-    question: 'How long does installation take?',
+    question: 'Lắp đặt mất bao lâu?',
     answer:
-      'Most installs are completed in a single day, with the full journey from signed contract to commissioned system taking around two weeks.',
+      'TBD — Thời gian lắp đặt chính thức (chờ xác nhận).',
   },
   {
     category: 'installation',
-    question: 'Do I need to be at home for the survey?',
+    question: 'Tôi có cần có mặt tại nhà khi khảo sát không?',
     answer:
-      'Yes - the survey is on-site so our engineer can inspect the roof, the consumer unit and the loft. It usually takes 60-90 minutes.',
+      'Có - buổi khảo sát được thực hiện tại chỗ để kỹ thuật viên kiểm tra mái nhà, tủ điện và gác mái. Thường mất 60-90 phút.',
   },
   {
     category: 'installation',
-    question: 'Will installation cause disruption?',
+    question: 'Việc lắp đặt có gây gián đoạn không?',
     answer:
-      'We lift tiles to mount the rails, drill fixings into the rafters and run a cable to your consumer unit. Most homes are back to normal the same day.',
+      'Chúng tôi tháo ngói để gắn thanh ray, khoan bắt vít vào xà mái và đi dây đến tủ điện của bạn. Hầu hết các hộ gia đình trở lại sinh hoạt bình thường trong cùng ngày.',
   },
   {
     category: 'product',
-    question: 'Where can I find the manuals?',
+    question: 'Tôi có thể tìm hướng dẫn sử dụng ở đâu?',
     answer:
-      'Product manuals are available in the Downloads section of your Monitoring App, and on request from our service team.',
+      'Hướng dẫn sử dụng sản phẩm có trong mục Tải về của Ứng dụng giám sát và có thể yêu cầu từ đội ngũ dịch vụ của chúng tôi.',
   },
   {
     category: 'product',
-    question: 'Are Solavita panels Tier-1?',
+    question: 'Tấm quang năng Solavita có đạt chuẩn Tier-1 không?',
     answer:
-      'TBD — Verified panel tier and BloombergNEF ranking.',
+      'TBD — Xếp hạng Tier-1 và thứ hạng BloombergNEF của tấm quang năng (chờ xác nhận).',
   },
   {
     category: 'monitoring',
-    question: 'How do I get the Monitoring App?',
+    question: 'Làm thế nào để tôi có Ứng dụng giám sát?',
     answer:
-      'Once your system is commissioned we create your Monitoring App account and email the download link. The app is available on iOS and Android.',
+      'Sau khi hệ thống được đưa vào vận hành, chúng tôi tạo tài khoản Ứng dụng giám sát cho bạn và gửi email kèm liên kết tải về. Ứng dụng có trên iOS và Android.',
   },
   {
     category: 'monitoring',
-    question: 'Can I share access with my family?',
+    question: 'Tôi có thể chia sẻ quyền truy cập với gia đình không?',
     answer:
-      'Yes. From the app you can invite additional household members - they will get their own login and the same view of generation and consumption.',
+      'Có. Trong ứng dụng, bạn có thể mời thêm các thành viên trong hộ gia đình - họ sẽ có tài khoản riêng và cùng xem được sản lượng điện tạo ra và mức tiêu thụ.',
   },
   {
     category: 'warranty',
-    question: 'What is covered by the 10-year warranty?',
+    question: 'Chế độ bảo hành bao gồm những gì?',
     answer:
-      'Product defects, performance (modules) and workmanship for the full 10 years. Batteries carry a separate cycle-based warranty - see your handover pack.',
+      'TBD — Thời hạn và phạm vi bảo hành chính thức cho sản phẩm, hiệu suất tấm quang năng và tay nghề lắp đặt (chờ xác nhận).',
   },
   {
     category: 'warranty',
-    question: 'Does the warranty transfer if I sell my home?',
+    question: 'Bảo hành có được chuyển nhượng nếu tôi bán nhà không?',
     answer:
-      'Yes. The warranty stays with the system. Please notify us of the change of ownership so we can update our records.',
+      'Có. Bảo hành đi theo hệ thống. Vui lòng thông báo cho chúng tôi về việc thay đổi chủ sở hữu để chúng tôi cập nhật hồ sơ.',
   },
   {
     category: 'troubleshooting',
-    question: 'My system has stopped generating - what should I check?',
+    question: 'Hệ thống của tôi ngừng phát điện - tôi nên kiểm tra gì?',
     answer:
-      'First check the Monitoring App for an alert, then verify the inverter display is on. If both look normal, submit a service ticket and we will respond within one working day.',
+      'Trước tiên, hãy kiểm tra cảnh báo trong Ứng dụng giám sát, sau đó xác nhận màn hình bộ biến tần vẫn sáng. Nếu cả hai đều bình thường, hãy gửi yêu cầu dịch vụ và chúng tôi sẽ phản hồi theo thời gian phản hồi chính thức.',
   },
 ]
 
@@ -172,28 +172,28 @@ export interface SupportContactChannel {
 export const supportContactChannels: SupportContactChannel[] = [
   {
     label: 'Email',
-    value: 'ng@solavita.com',
-    href: 'mailto:ng@solavita.com',
-    description: 'Reply within one working day.',
+    value: 'vn@solavita.com',
+    href: 'mailto:vn@solavita.com',
+    description: 'TBD — Thời gian phản hồi chính thức (chờ xác nhận).',
   },
   {
     label: 'WhatsApp',
     // Visible label hides the digits until business supplies a
-    // verified Nigerian number; the `wa.me` link carries the user-
+    // verified Vietnamese number; the `wa.me` link carries the user-
     // provided handoff number so the click target still routes
     // correctly. Same convention as components/Footer.tsx + lib/data/contact.tsx.
     value: 'WhatsApp',
     href: 'https://wa.me/8618500875025',
     description: (
       <>
-        Tap to chat · Mon-Fri · 09:00-18:00 · NG hours.
+        Nhấn để trò chuyện · TBD — Giờ làm việc chính thức (chờ xác nhận).
         <br />
-        No WhatsApp?{' '}
+        Không dùng WhatsApp?{' '}
         <a
           href="tel:+8618500875025"
           className="underline underline-offset-2 hover:text-uk-teal-dark font-cw-bold"
         >
-          Call the team
+          Gọi cho đội ngũ
         </a>
         .
       </>

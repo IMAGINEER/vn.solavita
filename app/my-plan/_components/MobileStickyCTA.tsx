@@ -35,10 +35,10 @@ export default function MobileStickyCTA({
             onClick={onContactExpert}
             className="btn-gradient text-white px-6 py-4 rounded-full font-cw-bold text-base w-full"
           >
-            Talk to an expert
+            Liên hệ chuyên gia
           </button>
           <p className="mt-2 text-center text-xs text-uk-slate">
-            Our team will be in touch to discuss your plan.
+            Đội ngũ của chúng tôi sẽ liên hệ để trao đổi về phương án của bạn.
           </p>
         </>
       )}

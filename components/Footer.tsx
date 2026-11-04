@@ -12,7 +12,7 @@ import PartnerFormModal, {
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * NG site footer (Nigeria).
+ * VN site footer (Vietnam).
  *
  * Composition (mirrors the UK footer structure):
  *   ┌────────────────────────────────────────────────────────────┐
@@ -42,14 +42,11 @@ gsap.registerPlugin(ScrollTrigger)
  * navy and `border-white*` to low-opacity navy, so no mode-specific
  * overrides are required in this file.
  *
- * Per `content/nigeria/products.md` the Solutions column lists the six
- * NG packages (LITE Essential Backup, HOME Standard, HOME High-spec,
- * BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS
- * Flagship 3-Phase). The legal entity is the Hong Kong parent,
- * SKYWORTH RENEWABLE ENERGY COMPANY LIMITED; contact details in the
- * Support column and the copyright line use the confirmed NG email
- * address. Details still awaiting verification are rendered as red
- * `TBD — ...` placeholders.
+ * The Solutions column lists the two collection pages. The legal
+ * entity is the Hong Kong parent, SKYWORTH RENEWABLE ENERGY COMPANY
+ * LIMITED; contact details in the Support column and the copyright
+ * line use the VN email address. Details still awaiting verification
+ * are rendered as red `TBD — ...` placeholders.
  */
 
 export interface FooterLink {
@@ -69,7 +66,7 @@ interface FooterProps {
 export default function Footer({
   variant = 'dark',
   logoSrc = '/images/a1logo02.svg',
-  logoAlt = 'Solavita Nigeria',
+  logoAlt = 'Solavita Việt Nam',
   productLinks,
   companyLinks,
 }: FooterProps) {
@@ -120,25 +117,25 @@ export default function Footer({
     return () => ctx.revert()
   }, [])
 
-  // ─── Link sets (Nigeria) ────────────────────────────────────────────────
+  // ─── Link sets (Vietnam) ────────────────────────────────────────────────
 
   const defaultProductLinks: FooterLink[] = [
-    // Per `content/nigeria/solutions.md` the collection-pages brief
-    // calls for two top-level scenario links (For Home / For Business).
+    // The collection-pages brief calls for two top-level scenario links
+    // (Home / Business).
     // The detailed package comparison, tech explainers, FAQs and CTAs
     // live on the dedicated `/solutions/home-solar` and
     // `/solutions/business-solar` pages — there are no per-tier
     // landing pages. Mirrors the Header dropdown.
-    { label: 'For Home', href: '/solutions/home-solar/' },
-    { label: 'For Business', href: '/solutions/business-solar/' },
+    { label: 'Cho hộ gia đình', href: '/solutions/home-solar/' },
+    { label: 'Cho doanh nghiệp', href: '/solutions/business-solar/' },
   ]
 
   const defaultCompanyLinks: FooterLink[] = [
     // Route to the dedicated /about-us page so the footer works from
     // every page that renders it (was previously '#about', which is
     // a same-page hash and dead from any non-homepage context).
-    { label: 'About Solavita', href: '/about-us/' },
-    { label: 'SKYWORTH Group', href: 'https://www.skyworth-pv.com/about-us', external: true },
+    { label: 'Về Solavita', href: '/about-us/' },
+    { label: 'Tập đoàn SKYWORTH', href: 'https://www.skyworth-pv.com/about-us', external: true },
     { label: 'Blog', href: '/blog/' },
   ]
 
@@ -149,9 +146,9 @@ export default function Footer({
   // The /cookies page now serves as the sole reference for cookie use;
   // there is no longer a separate settings panel.
   const legalLinks: FooterLink[] = [
-    { label: 'Terms of Use', href: '/terms/', external: false },
-    { label: 'Privacy Policy', href: '/privacy/', external: false },
-    { label: 'Cookie Policy', href: '/cookies/', external: false },
+    { label: 'Điều khoản sử dụng', href: '/terms/', external: false },
+    { label: 'Chính sách bảo mật', href: '/privacy/', external: false },
+    { label: 'Chính sách cookie', href: '/cookies/', external: false },
   ]
 
   // ─── Reusable class strings ────────────────────────────────────────────
@@ -185,29 +182,14 @@ export default function Footer({
             <p className="text-uk-teal text-sm font-cw-regular leading-snug">
               Vital Energy <span className="font-cw-bold font-extrabold">Vital Life!</span>
             </p>
-            {/* Social accounts — Facebook + WhatsApp for the NG site.
+            {/* Social accounts — WhatsApp only until a verified VN
+                Facebook page is supplied (the previous site page ID was removed).
                 The round icon button matches the DE / IT / UK footers
                 (`w-9 h-9 rounded-full border`), and the `border-white/10`
                 + `text-white` classes are picked up by the theme rules
                 in app/globals.css, so the button stays legible on both
                 the light (#EEF2F7) and dark (#060E1A) footer surfaces. */}
             <div className="mt-5 flex gap-3">
-              <a
-                href="https://www.facebook.com/61551391782729"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center transition-all hover:bg-white/10 hover:border-white/30"
-              >
-                <svg
-                  className="w-4 h-4 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-              </a>
               <a
                 href="https://wa.me/8618500875025"
                 target="_blank"
@@ -229,7 +211,7 @@ export default function Footer({
 
           {/* ── Solutions ── */}
           <div className="footer-col">
-            <h4 className={headingClass}>Solutions</h4>
+            <h4 className={headingClass}>Giải pháp</h4>
             <ul className="space-y-3">
               {products.map((link) => (
                 <li key={link.label}>
@@ -248,7 +230,7 @@ export default function Footer({
 
           {/* ── Company ── */}
           <div className="footer-col">
-            <h4 className={headingClass}>Company</h4>
+            <h4 className={headingClass}>Công ty</h4>
             <ul className="space-y-3 text-white/70 text-sm font-cw-regular">
               {companies.map((link) => (
                 <li key={link.label}>
@@ -267,16 +249,16 @@ export default function Footer({
 
           {/* ── Support ── */}
           <div className="footer-col">
-            <h4 className={headingClass}>Support</h4>
+            <h4 className={headingClass}>Hỗ trợ</h4>
             <ul className="space-y-3 text-white/70 text-sm font-cw-regular">
               <li>
                 <a href="/contact-us/" className={linkClass}>
-                  Contact Us
+                  Liên hệ
                 </a>
               </li>
               <li>
                 <a href="/monitoring-app/" className={linkClass}>
-                  Monitoring App
+                  Ứng dụng giám sát
                 </a>
               </li>
               <li>
@@ -286,10 +268,10 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <a
-                  href="mailto:ng@solavita.com"
+                  href="mailto:vn@solavita.com"
                   className="text-sm font-cw-regular text-white/80 hover:text-white transition-colors"
                 >
-                  ng@solavita.com
+                  vn@solavita.com
                 </a>
               </li>
             </ul>
@@ -297,7 +279,7 @@ export default function Footer({
 
           {/* ── Legal (Terms / Privacy / Cookies) ── */}
           <div className="footer-col">
-            <h4 className={headingClass}>Legal</h4>
+            <h4 className={headingClass}>Pháp lý</h4>
             <ul className="space-y-3">
               {legalLinks.map((link) => (
                 <li key={link.label}>
@@ -315,7 +297,7 @@ export default function Footer({
         </div>
       </div>
 
-      {/* ───── Sub-footer: copyright + Nigeria locale ───── */}
+      {/* ───── Sub-footer: copyright + Vietnam locale ───── */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-6">
           {/* The copyright paragraph can grow long ("© 2026 ... All
@@ -328,7 +310,7 @@ export default function Footer({
               ENERGY COMPANY LIMITED. */}
           <div className="flex flex-col md:flex-row md:items-center gap-3">
             <p className="text-white/50 text-xs font-cw-regular text-center md:text-left min-w-0 flex-1">
-              © 2026 <span className="font-cw-bold">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</span>. All rights reserved.
+              © 2026 <span className="font-cw-bold">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</span>. Bảo lưu mọi quyền.
             </p>
             {/* Locale picker — an expandable menu of every Solavita /
                 SKYWORTH Solar site. The old static "flag + label" block
@@ -350,7 +332,7 @@ export default function Footer({
 
     {/* Partner enquiry PartnerFormModal - listens for
         `openPartnerFormModal()` dispatched from /for-partners partner CTAs.
-        Posts to `/api/partner` (Supabase `ng_partner_leads`); the
+        Posts to `/api/partner` (Supabase `vn_partner_leads`); the
         consultation FormModal above posts to `/api/consultation`. */}
     <PartnerFormModal
       open={partnerFormOpen}

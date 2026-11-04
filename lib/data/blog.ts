@@ -1,12 +1,12 @@
-// Blog data-access layer (NG locale).
+// Blog data-access layer (VN locale).
 //
-// Locale model: this app writes and reads only `locale = 'ng'` rows.
-// The schema is shared with IT/UK on the same Supabase project; each
-// app filters by its own locale so the three blogs never see each
+// Locale model: this app writes and reads only `locale = 'vn'` rows.
+// The schema is shared with IT/UK/DE/NG on the same Supabase project;
+// each app filters by its own locale so the blogs never see each
 // other's content. See `lib/types/blog.ts` for `BLOG_LOCALE`.
 //
 // Public read paths enforce the visibility contract:
-//   blog_posts      → WHERE locale='ng' AND status = 'published'
+//   blog_posts      → WHERE locale='vn' AND status = 'published'
 //   blog_post_tags   → joined via post.locale/status check
 // Categories + tags + authors are public for that locale only (no
 // PII leak across apps).
@@ -48,7 +48,7 @@ const POST_SUMMARY_SELECT =
  * Options that change which categories a call returns.
  *
  *   - `onlyWithPublishedPosts: true` — public surfaces only. Hides any
- *     NG category that has zero published posts so the `/blog` filter
+ *     VN category that has zero published posts so the `/blog` filter
  *     chips and the `/blog/category/[slug]` sidebar never surface a
  *     category landing page that would render empty. The admin path
  *     uses the default (false) so editors can see every category they
@@ -59,20 +59,22 @@ export interface GetCategoriesOptions {
 }
 
 /**
- * Fetch all NG-locale categories ordered for nav/filtering.
+ * Fetch all VN-locale categories ordered for nav/filtering.
  *
- * Filters out rows where `name_en` is NULL - those are IT-only
- * categories that share the same table on the same Supabase project.
- * Without the filter they render as empty `<option>` elements in the
- * admin category dropdown (selectable but invisible), and they leak
- * into the public `/blog` filter chips as blank labels.
+ * Filters out rows where `name_en` is NULL - those are categories
+ * owned by other locales that share the same table on the same
+ * Supabase project. Without the filter they render as empty
+ * `<option>` elements in the admin category dropdown (selectable but
+ * invisible), and they leak into the public `/blog` filter chips as
+ * blank labels.
  *
- * The `locale='ng'` filter is the primary gate: it excludes both IT
- * rows (locale='it') and UK rows (locale='uk'), so the public NG
- * site only sees categories this app created.
+ * The `locale='vn'` filter is the primary gate: it excludes IT
+ * rows (locale='it'), UK rows (locale='uk'), DE rows (locale='de')
+ * and NG rows (locale='ng'), so the public VN site only sees
+ * categories this app created.
  *
  * Pass `{ onlyWithPublishedPosts: true }` to drop categories with no
- * published NG posts - see `GetCategoriesOptions` above.
+ * published VN posts - see `GetCategoriesOptions` above.
  */
 export async function getCategories(
   opts: GetCategoriesOptions = {},
@@ -87,7 +89,7 @@ export async function getCategories(
 
   if (opts.onlyWithPublishedPosts) {
     // Use a sub-query via the `IN (...)` filter: pull the category ids
-    // that have at least one published NG post, then constrain the
+    // that have at least one published VN post, then constrain the
     // outer query to those ids. The `blog_posts_locale_published_idx`
     // index (added by the blog locale migration) keeps the inner
     // query cheap.
@@ -133,7 +135,7 @@ export async function getCategoryBySlug(
   if (!opts.onlyWithPublishedPosts) return cat
 
   // Public-surface filter: confirm the category has at least one
-  // published NG post. Cheap lookup via the published-posts index.
+  // published VN post. Cheap lookup via the published-posts index.
   const { data: probe, error: probeErr } = await supabase
     .from('blog_posts')
     .select('id')
@@ -145,7 +147,7 @@ export async function getCategoryBySlug(
   return (probe ?? []).length > 0 ? cat : null
 }
 
-/** Fetch all NG tags (alphabetical). Used for filter chips + tag pickers. */
+/** Fetch all VN tags (alphabetical). Used for filter chips + tag pickers. */
 export async function getTags(): Promise<BlogTag[]> {
   const { data, error } = await supabase
     .from('blog_tags')
@@ -408,10 +410,10 @@ export interface SitemapPostEntry {
 export async function listAllPublishedForSitemap(): Promise<SitemapPostEntry[]> {
   // Fetch joined category slug in one round-trip.
   //
-  // `blog_categories` is shared across IT/UK/NG/IT on the same
+  // `blog_categories` is shared across IT/UK/DE/NG/VN on the same
   // Supabase project. The inner join + locale filter is what keeps
-  // the sitemap from leaking posts that live behind an IT or UK
-  // category slug into the NG sitemap (they would 404 because the
+  // the sitemap from leaking posts that live behind another locale's
+  // category slug into the VN sitemap (they would 404 because the
   // dynamic route's getCategoryBySlug() already filters by locale).
   const { data, error } = await supabase
     .from('blog_posts')
@@ -438,7 +440,7 @@ export async function listAllPublishedForSitemap(): Promise<SitemapPostEntry[]> 
 }
 
 /**
- * Feed-source helper: full joined rows for every NG-published post.
+ * Feed-source helper: full joined rows for every VN-published post.
  *
  * Same locale + status filter as the sitemap helper above, but joins
  * category / author / tags too, so feed readers (and AI crawlers
@@ -462,8 +464,9 @@ export async function listAllPublishedForFeed(): Promise<BlogPostFull[]> {
 
 // ── Admin write paths ─────────────────────────────────────────────────────────
 
-/** Admin: list every NG post regardless of status. UK/IT posts are
- *  invisible here because the admin panel is a per-app surface. */
+/** Admin: list every VN post regardless of status. Posts from other
+ *  locales are invisible here because the admin panel is a per-app
+ *  surface. */
 export async function listAllPostsAdmin(opts: {
   status?: BlogPostStatus
   search?: string
@@ -634,7 +637,7 @@ export async function updatePost(
 
 export async function deletePost(id: string): Promise<void> {
   // CASCADE on blog_post_tags + blog_post_revisions cleans the joins.
-  // locale filter is defence-in-depth: the editor only ever lists NG
+  // locale filter is defence-in-depth: the editor only ever lists VN
   // posts, but a stray click on a foreign id would otherwise nuke a
   // post that another app owns.
   const { error } = await supabase
@@ -712,10 +715,10 @@ export async function createTag(input: { slug: string; name_en: string }): Promi
   return (data as unknown as { id: string }).id
 }
 
-// Slug derivation for tag names. Italian-style diacritics are stripped to
-// ASCII so "Città" and "citta" produce the same slug. Mirrors the slugify
-// already used in components/admin/blog/PostEditor.tsx (the editor only
-// needs the local copy for the post slug).
+// Slug derivation for tag names. Diacritics are stripped to ASCII so
+// different spellings of the same word produce the same slug. Mirrors
+// the slugify already used in components/admin/blog/PostEditor.tsx (the
+// editor only needs the local copy for the post slug).
 export function slugifyTagName(name: string): string {
   return name
     .toLowerCase()
@@ -734,8 +737,8 @@ export function slugifyTagName(name: string): string {
 //   - Case-insensitive dedup (first occurrence's casing wins).
 //   - Slug uniqueness is enforced by DB; on race-condition collision we
 //     re-fetch the row that the other writer just inserted.
-//   - Existing-tag lookup is scoped to the NG locale so the IT and UK
-//     tag namespaces stay isolated.
+//   - Existing-tag lookup is scoped to the VN locale so the other
+//     locales' tag namespaces stay isolated.
 export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> {
   // 1. Normalize: trim, collapse internal whitespace, drop empties.
   const cleaned: string[] = []
@@ -756,13 +759,13 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
     unique.push(n)
   }
 
-  // 3. Look up existing NG tags by lower(name_en). The tags table is
-  // small (admin-curated taxonomy) so loading the whole NG-locale
+  // 3. Look up existing VN tags by lower(name_en). The tags table is
+  // small (admin-curated taxonomy) so loading the whole VN-locale
   // table once and filtering in JS is cheaper than one round-trip per
   // name.
   //
-  // Filter by locale='ng' so we never collide with IT or UK tag rows
-  // that happen to share the same display_name.
+  // Filter by locale='vn' so we never collide with tag rows from
+  // other locales that happen to share the same display_name.
   const { data: allTags, error: readErr } = await supabase
     .from('blog_tags')
     .select('id, slug, name_en')
@@ -812,7 +815,7 @@ export async function resolveOrCreateTagIds(names: string[]): Promise<string[]> 
     }
     if (insErr && /duplicate key|unique constraint/i.test(insErr.message)) {
       // Lost the race - another writer just created this slug. Fetch it.
-      // Scope the fallback lookup to the NG locale too.
+      // Scope the fallback lookup to the VN locale too.
       const { data: existing, error: fetchErr } = await supabase
         .from('blog_tags')
         .select('id')
@@ -849,13 +852,13 @@ export async function deleteTag(id: string): Promise<void> {
 // editor can type any contributor name without first registering them.
 //
 //   - Trims + collapses internal whitespace.
-//   - Case-insensitive dedup via lower(display_name) within the NG
+//   - Case-insensitive dedup via lower(display_name) within the VN
 //     namespace.
 //   - Empty byline throws (the editor's `author_byline` validation
 //     already prevents this reaching here, but defence-in-depth).
 //   - On insert collision (extremely unlikely because display_name is
 //     not unique; we rely on the row we just inserted) we fall back to
-//     a re-fetch by lower(display_name), scoped to the NG locale.
+//     a re-fetch by lower(display_name), scoped to the VN locale.
 export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
   const cleaned = byline.trim().replace(/\s+/g, ' ')
   if (cleaned.length === 0) {
@@ -865,7 +868,7 @@ export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
     throw new Error('resolveOrCreateAuthorId: byline exceeds 120 characters')
   }
 
-  // 1. Load the (small) NG-locale authors table once and filter in JS.
+  // 1. Load the (small) VN-locale authors table once and filter in JS.
   // Authors accumulate slowly (one row per contributor) so this stays
   // cheap.
   const { data: rows, error: readErr } = await supabase
@@ -881,7 +884,7 @@ export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
 
   // 2. Create the new author row. role defaults to 'editor' via the
   // DB column default - we don't need to specify it. locale is set
-  // explicitly so the row is bucketed into the NG namespace.
+  // explicitly so the row is bucketed into the VN namespace.
   const { data: ins, error: insErr } = await supabase
     .from('blog_authors')
     .insert({ display_name: cleaned, locale: BLOG_LOCALE })
@@ -890,7 +893,7 @@ export async function resolveOrCreateAuthorId(byline: string): Promise<string> {
   if (!insErr && ins) return (ins as unknown as { id: string }).id
 
   // 3. Race fallback: another writer may have just inserted the same
-  // display_name. Re-fetch by lower(display_name), scoped to NG.
+  // display_name. Re-fetch by lower(display_name), scoped to VN.
   const { data: existing, error: fetchErr } = await supabase
     .from('blog_authors')
     .select('id')

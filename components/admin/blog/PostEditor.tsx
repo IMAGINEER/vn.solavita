@@ -53,10 +53,10 @@ interface FormState {
   cover_image_url: string
   category_id: string
   /**
-   * Free-text author byline (e.g. "Jane Smith"). The server resolves
-   * this to a blog_authors row - case-insensitive lookup on
+   * Free-text author byline (e.g. "Nguyễn Văn A"). The server
+   * resolves this to a blog_authors row - case-insensitive lookup on
    * display_name, creating a new row on miss. Defaults to the
-   * Solavita Nigeria Team byline for new posts.
+   * Đội ngũ Solavita Việt Nam byline for new posts.
    */
   author_byline: string
   status: BlogPostStatus
@@ -118,9 +118,9 @@ export function PostEditor({
     category_id:
       initial?.category_id ?? categories[0]?.id ?? '',
     // Pre-fill byline with the existing author for edits, or the
-    // default Nigeria team byline for new posts.
+    // default Vietnam team byline for new posts.
     author_byline:
-      initial?.author?.display_name ?? 'Solavita Nigeria Team',
+      initial?.author?.display_name ?? 'Đội ngũ Solavita Việt Nam',
     status: initial?.status ?? 'draft',
     meta_title: initial?.meta_title ?? '',
     meta_description: initial?.meta_description ?? '',
@@ -167,13 +167,13 @@ export function PostEditor({
           error?: string
         }
         if (!res.ok || !json.success || !json.url) {
-          setError(json.error ?? 'Upload failed')
+          setError(json.error ?? 'Tải lên thất bại')
           return null
         }
         return json.url
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : 'Upload network error',
+          err instanceof Error ? err.message : 'Lỗi kết nối khi tải lên',
         )
         return null
       }
@@ -348,19 +348,19 @@ export function PostEditor({
   const handleSave = async (nextStatus?: BlogPostStatus) => {
     setError(null)
     if (!form.title.trim()) {
-      setError('Enter a title.')
+      setError('Vui lòng nhập tiêu đề.')
       return
     }
     if (!form.slug.trim()) {
-      setError('Enter a slug.')
+      setError('Vui lòng nhập slug.')
       return
     }
     if (!form.category_id) {
-      setError('Select a category.')
+      setError('Vui lòng chọn danh mục.')
       return
     }
     if (!form.author_byline.trim()) {
-      setError('Enter an author byline.')
+      setError('Vui lòng nhập tên tác giả.')
       return
     }
     setSaving(true)
@@ -381,14 +381,14 @@ export function PostEditor({
         error?: string
       }
       if (!res.ok || !json.success) {
-        setError(json.error ?? 'Save failed')
+        setError(json.error ?? 'Lưu thất bại')
         return
       }
       const id = initial?.id ?? json.id
       router.push(`/admin/blog/${id}`)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Network error')
+      setError(err instanceof Error ? err.message : 'Lỗi kết nối mạng')
     } finally {
       setSaving(false)
     }
@@ -396,7 +396,7 @@ export function PostEditor({
 
   const handleDelete = async () => {
     if (!initial) return
-    if (!window.confirm('Permanently delete this post?')) return
+    if (!window.confirm('Xoá vĩnh viễn bài viết này?')) return
     setDeleting(true)
     try {
       const res = await fetch(`/api/admin/blog/posts/${initial.id}`, {
@@ -404,13 +404,13 @@ export function PostEditor({
       })
       const json = (await res.json()) as { success: boolean; error?: string }
       if (!res.ok || !json.success) {
-        setError(json.error ?? 'Deletion failed')
+        setError(json.error ?? 'Xoá thất bại')
         return
       }
       router.push('/admin/blog')
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Network error')
+      setError(err instanceof Error ? err.message : 'Lỗi kết nối mạng')
     } finally {
       setDeleting(false)
     }
@@ -443,18 +443,18 @@ export function PostEditor({
         <aside className="space-y-5 lg:col-span-1 order-2 lg:order-1">
           <section className="rounded-2xl border border-uk-line bg-white p-5 space-y-4">
             <div>
-              <Label htmlFor={coverId}>Cover image</Label>
+              <Label htmlFor={coverId}>Ảnh bìa</Label>
               <div className="mt-1.5 space-y-2">
                 {form.cover_image_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={form.cover_image_url}
-                    alt="Cover"
+                    alt="Ảnh bìa"
                     className="w-full h-32 object-cover rounded-md border border-uk-line"
                   />
                 ) : (
                   <div className="w-full h-32 rounded-md border border-dashed border-uk-line flex items-center justify-center text-xs text-uk-slate">
-                    No image
+                    Chưa có ảnh
                   </div>
                 )}
                 <div className="flex gap-2">
@@ -467,7 +467,7 @@ export function PostEditor({
                     ) : (
                       <ImagePlus className="size-3.5" />
                     )}
-                    {coverUploading ? 'Uploading…' : 'Upload'}
+                    {coverUploading ? 'Đang tải lên…' : 'Tải lên'}
                   </label>
                   <input
                     id={coverId}
@@ -483,23 +483,23 @@ export function PostEditor({
                       size="sm"
                       onClick={() => setForm((f) => ({ ...f, cover_image_url: '' }))}
                     >
-                      Remove
+                      Xoá
                     </Button>
                   )}
                 </div>
                 <p className="text-[11px] text-uk-slate">
-                  Default for new posts: <code className="font-mono">{DEFAULT_COVER}</code>
+                  Mặc định cho bài viết mới: <code className="font-mono">{DEFAULT_COVER}</code>
                 </p>
               </div>
             </div>
 
             <div>
-              <Label htmlFor={titleId}>Title</Label>
+              <Label htmlFor={titleId}>Tiêu đề</Label>
               <Input
                 id={titleId}
                 value={form.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
-                placeholder="Solar savings in Nigeria 2026"
+                placeholder="Tiết kiệm điện mặt trời tại Việt Nam 2026"
                 className="mt-1.5"
               />
             </div>
@@ -513,7 +513,7 @@ export function PostEditor({
                   slugTouchedRef.current = true
                   setForm((f) => ({ ...f, slug: e.target.value }))
                 }}
-                placeholder="solar-savings-uk-2026"
+                placeholder="tiet-kiem-dien-mat-troi-vn-2026"
                 className="mt-1.5 font-mono"
               />
               <p className="text-[11px] text-uk-slate mt-1">
@@ -522,7 +522,7 @@ export function PostEditor({
             </div>
 
             <div>
-              <Label htmlFor={categoryId}>Category</Label>
+              <Label htmlFor={categoryId}>Danh mục</Label>
               <select
                 value={form.category_id}
                 onChange={(e) => setForm((f) => ({ ...f, category_id: e.target.value }))}
@@ -536,23 +536,23 @@ export function PostEditor({
             </div>
 
             <div>
-              <Label htmlFor={authorBylineId}>Author byline</Label>
+              <Label htmlFor={authorBylineId}>Tên tác giả</Label>
               <Input
                 id={authorBylineId}
                 value={form.author_byline}
                 onChange={(e) => setForm((f) => ({ ...f, author_byline: e.target.value }))}
-                placeholder="e.g. Adaeze Okafor or Solavita Nigeria Team"
+                placeholder="VD: Nguyễn Văn A hoặc Đội ngũ Solavita Việt Nam"
                 className="mt-1.5"
               />
               <p className="text-[11px] text-uk-slate mt-1">
-                Free text shown as the post's author. Saved names are auto-linked to existing authors; new names create a new author record on save.
+                Văn bản tự do hiển thị làm tác giả bài viết. Tên đã có sẽ được tự động liên kết với tác giả hiện có; tên mới sẽ tạo bản ghi tác giả mới khi lưu.
               </p>
             </div>
 
             <div>
-              <Label htmlFor={tagId}>Tags</Label>
+              <Label htmlFor={tagId}>Thẻ</Label>
               <p className="mt-1 text-[11px] text-uk-slate">
-                Type a tag and press Enter, comma, or space to add. Names that don't exist yet are auto-created on save.
+                Nhập thẻ rồi nhấn Enter, dấu phẩy hoặc dấu cách để thêm. Những tên chưa tồn tại sẽ được tự động tạo khi lưu.
               </p>
               <div
                 id={tagId}
@@ -573,7 +573,7 @@ export function PostEditor({
                       <button
                         type="button"
                         onClick={() => removeTagToken(i)}
-                        aria-label={`Remove tag ${t.name}`}
+                        aria-label={`Xoá thẻ ${t.name}`}
                         className={`inline-flex items-center justify-center rounded-full ${
                           isExisting
                             ? 'hover:bg-white/20'
@@ -593,7 +593,7 @@ export function PostEditor({
                   onBlur={handleTagInputBlur}
                   placeholder={
                     form.tag_tokens.length === 0
-                      ? 'e.g. solar, battery inverter'
+                      ? 'VD: điện mặt trời, pin lưu trữ'
                       : ''
                   }
                   className="min-w-[140px] flex-1 bg-transparent text-sm text-uk-navy outline-none placeholder:text-uk-slate/60"
@@ -602,12 +602,12 @@ export function PostEditor({
             </div>
 
             <div>
-              <Label htmlFor={excerptId}>Excerpt</Label>
+              <Label htmlFor={excerptId}>Tóm tắt</Label>
               <Textarea
                 id={excerptId}
                 value={form.excerpt}
                 onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
-                placeholder="Short description of the post (shown on the card and in OpenGraph)"
+                placeholder="Mô tả ngắn về bài viết (hiển thị trên thẻ bài viết và OpenGraph)"
                 className="mt-1.5 min-h-[80px] font-sans"
               />
             </div>
@@ -625,34 +625,34 @@ export function PostEditor({
                   disabled={!canGenerateSeo}
                   title={
                     canGenerateSeo
-                      ? 'Fill empty meta fields from title and excerpt'
-                      : 'Both fields are already filled'
+                      ? 'Điền các trường meta còn trống từ tiêu đề và tóm tắt'
+                      : 'Cả hai trường đều đã được điền'
                   }
                 >
                   <Sparkles className="size-3.5" />
-                  Generate SEO
+                  Tạo SEO
                 </Button>
               </div>
               <p className="text-[11px] text-uk-slate -mt-2">
-                Tags attached to the post are emitted as <code>&lt;meta name=&quot;keywords&quot;&gt;</code> automatically.
+                Các thẻ gắn với bài viết sẽ tự động được xuất thành <code>&lt;meta name=&quot;keywords&quot;&gt;</code>.
               </p>
               <div>
-                <Label htmlFor={metaTitleId}>Meta title (SEO)</Label>
+                <Label htmlFor={metaTitleId}>Tiêu đề meta (SEO)</Label>
                 <Input
                   id={metaTitleId}
                   value={form.meta_title}
                   onChange={(e) => setForm((f) => ({ ...f, meta_title: e.target.value }))}
-                  placeholder="If empty, uses the post title"
+                  placeholder="Nếu để trống, dùng tiêu đề bài viết"
                   className="mt-1.5"
                 />
               </div>
               <div>
-                <Label htmlFor={metaDescId}>Meta description (SEO)</Label>
+                <Label htmlFor={metaDescId}>Mô tả meta (SEO)</Label>
                 <Textarea
                   id={metaDescId}
                   value={form.meta_description}
                   onChange={(e) => setForm((f) => ({ ...f, meta_description: e.target.value }))}
-                  placeholder="~150 characters. If empty, uses the excerpt."
+                  placeholder="~150 ký tự. Nếu để trống, dùng phần tóm tắt."
                   className="mt-1.5 min-h-[70px] font-sans"
                 />
               </div>
@@ -664,9 +664,9 @@ export function PostEditor({
         <div className="lg:col-span-2 space-y-4 order-1 lg:order-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <Label htmlFor={bodyId}>Content (Markdown)</Label>
+              <Label htmlFor={bodyId}>Nội dung (Markdown)</Label>
               <span className="text-[11px] text-uk-slate">
-                {wordCount} words · {form.body_md.length} characters
+                {wordCount} từ · {form.body_md.length} ký tự
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -679,7 +679,7 @@ export function PostEditor({
                 ) : (
                   <ImagePlus className="size-3.5" />
                 )}
-                {bodyUploading ? 'Uploading…' : 'Insert image'}
+                {bodyUploading ? 'Đang tải lên…' : 'Chèn ảnh'}
               </label>
               <input
                 id="body-upload"
@@ -697,13 +697,13 @@ export function PostEditor({
               ref={bodyTextareaRef}
               value={form.body_md}
               onChange={(e) => setForm((f) => ({ ...f, body_md: e.target.value }))}
-              placeholder={'Write here in **markdown**…\n\nSkip the top-level # heading — the post title on the left is already rendered as the page H1.'}
+              placeholder={'Viết nội dung bằng **markdown** tại đây…\n\nKhông cần tiêu đề cấp # — tiêu đề bài viết bên trái đã được hiển thị làm H1 của trang.'}
               className="h-[60vh] font-mono text-[13px] leading-relaxed"
             />
             <div className="h-[60vh] overflow-auto rounded-md border border-uk-line bg-white px-5 py-4">
               <div className="prose prose-sm md:prose-base max-w-none text-uk-navy prose-headings:text-uk-navy prose-a:text-uk-teal-dark prose-strong:text-uk-navy">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {previewMd || '*Empty preview*'}
+                  {previewMd || '*Bản xem trước trống*'}
                 </ReactMarkdown>
               </div>
             </div>
@@ -718,14 +718,14 @@ export function PostEditor({
                 variant="outline"
               >
                 {saving ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
-                Save draft
+                Lưu bản nháp
               </Button>
               <Button
                 onClick={() => handleSave('published')}
                 disabled={saving}
               >
                 {saving ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
-                {isEditing ? 'Update and publish' : 'Publish'}
+                {isEditing ? 'Cập nhật và xuất bản' : 'Xuất bản'}
               </Button>
             </div>
             <div className="flex items-center gap-2">
@@ -737,11 +737,11 @@ export function PostEditor({
                   className="text-red-700 border-red-200 hover:bg-red-50"
                 >
                   {deleting ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />}
-                  Delete
+                  Xoá
                 </Button>
               )}
               <ButtonLink href="/admin/blog" variant="ghost">
-                Cancel
+                Huỷ
               </ButtonLink>
             </div>
           </div>

@@ -6,10 +6,10 @@ import { contactNotificationEmail } from '@/lib/emails/contact-notification'
 
 export const dynamic = 'force-dynamic'
 
-// NG team inbox - pulled from the public-facing ContactMethods + Footer.
+// VN team inbox - pulled from the public-facing ContactMethods + Footer.
 // If this ever changes, update /components/Footer.tsx + ContactMethods.tsx
 // to keep customer-visible copy in sync.
-const TEAM_EMAIL = 'ng@solavita.com'
+const TEAM_EMAIL = 'vn@solavita.com'
 
 const REQUIRED_FIELDS = [
   'firstName',
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
 
   // ── 4. INSERT ───────────────────────────────────────────────────
   const { data, error } = await supabase
-    .from('ng_contact_leads')
+    .from('vn_contact_leads')
     .insert(row)
     .select('id')
     .single()
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
   if (error || !data) {
     console.error('[/api/contact] insert error:', error)
     return NextResponse.json(
-      { success: false, message: 'Something went wrong. Please try again.' },
+      { success: false, message: 'Đã xảy ra lỗi. Vui lòng thử lại.' },
       { status: 500 },
     )
   }
@@ -98,14 +98,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'ng',
+      country: 'vn',
       to: email,
       subject: confirmation.subject,
       html: confirmation.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'contact_confirmation',
       sent_to: email,
       status: emailResult.success ? 'sent' : 'failed',
@@ -116,7 +116,7 @@ export async function POST(req: Request) {
     console.error('[/api/contact] confirmation email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'contact_confirmation',
       sent_to: email,
       status: 'failed',
@@ -139,14 +139,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'ng',
+      country: 'vn',
       to: TEAM_EMAIL,
       subject: notification.subject,
       html: notification.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'contact_notification',
       sent_to: TEAM_EMAIL,
       status: emailResult.success ? 'sent' : 'failed',
@@ -157,7 +157,7 @@ export async function POST(req: Request) {
     console.error('[/api/contact] notification email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'contact_notification',
       sent_to: TEAM_EMAIL,
       status: 'failed',

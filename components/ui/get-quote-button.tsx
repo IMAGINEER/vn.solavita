@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 /**
- * GetQuoteButton — the "Get Free Quote" CTA used across the site.
+ * GetQuoteButton — the "Nhận báo giá miễn phí" CTA used across the site.
  *
  * Visual treatment:
  *   - Default: text + a small ArrowUpRight icon at the right
@@ -27,7 +27,7 @@ export default function GetQuoteButton({
   onClick,
   href,
   variant = 'primary',
-  children = 'Get Free Quote',
+  children = 'Nhận báo giá miễn phí',
   className = '',
 }: GetQuoteButtonProps) {
   const baseCls =

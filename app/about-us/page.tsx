@@ -7,13 +7,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'About Solavita Nigeria | Solar Solutions for Nigerian Homes',
+  title: 'Về Solavita Việt Nam | Giải pháp điện mặt trời cho hộ gia đình',
   path: '/about-us',
   description:
-    'Solavita Nigeria is part of the SKYWORTH Group solar brand. Solar power, battery storage and smart energy management for Nigerian homes and small businesses — designed to reduce generator dependence.',
+    'Solavita Việt Nam thuộc thương hiệu điện mặt trời của Tập đoàn SKYWORTH. Điện mặt trời, pin lưu trữ và quản lý năng lượng thông minh cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
   ogImage: '/images/og-about.jpg',
   ogImageAlt:
-    'Solavita Nigeria — solar and battery storage for Nigerian homes and businesses',
+    'Solavita Việt Nam — điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp',
 })
 
 export default function Page() {
@@ -23,13 +23,13 @@ export default function Page() {
         data={[
           aboutPageJsonLd({
             path: '/about-us',
-            name: 'About Solavita Nigeria',
+            name: 'Về Solavita Việt Nam',
             description:
-              "Discover Solavita Nigeria's approach to solar and battery storage for Nigerian homes and small businesses, supported by the SKYWORTH brand.",
+              'Tìm hiểu cách Solavita Việt Nam tiếp cận giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ, với sự hậu thuẫn của thương hiệu SKYWORTH.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'About Us', url: '/about-us' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Về chúng tôi', url: '/about-us' },
           ]),
         ]}
       />

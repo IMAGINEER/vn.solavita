@@ -11,7 +11,7 @@ import { sendEmail } from '@/lib/emails/send'
  */
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
-  'https://uk.solavita.com'
+  'https://vn.solavita.com'
 
 export async function POST(request: Request) {
   try {
@@ -23,7 +23,6 @@ export async function POST(request: Request) {
       city, propertyType,
       // Step 3
       householdSize,
-      generatorFrequency, fuelBudgetNgn,
       // Step 4
       salutation, firstName, lastName, email, phone,
     } = body
@@ -80,23 +79,17 @@ export async function POST(request: Request) {
       city,
       region: null,
       house_type: propertyType,
-      // Step 3 — only householdSize is required. generatorFrequency
-      // and fuelBudgetNgn stay NULL for users who skip the optional
-      // questions (or set 'unknown'). Old fields (roofType,
-      // electricityUsage, devices, backupNeeds) are no longer
-      // collected by the public form; we keep the column writes
+      // Step 3 — only householdSize is required. Old fields (roofType,
+      // electricityUsage, devices, backupNeeds, generator/fuel) are no
+      // longer collected by the public form; we keep the column writes
       // NULL so old rows are untouched on UPDATE.
       household_size: householdSize,
       roof_type: null,
       electricity_usage: null,
       devices: null,
       backup_needs: null,
-      generator_frequency:
-        generatorFrequency && generatorFrequency !== 'unknown'
-          ? generatorFrequency
-          : null,
-      fuel_budget_ngn:
-        fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
+      generator_frequency: null,
+      fuel_budget_ngn: null,
       // Step 4
       salutation,
       first_name: firstName,
@@ -113,29 +106,30 @@ export async function POST(request: Request) {
       // by updated_at DESC bubbles dedup re-submissions to the top.
       // created_at stays immutable - first-registration semantics.
       updated_at: new Date().toISOString(),
-      // Hardcoded 'ng' from this site. On UPDATE we strip this to preserve
-      // the original country from the first registration (so a UK lead
-      // doesn't get re-tagged as NG if an NG user re-submits the same email).
-      country: 'ng',
+      // Hardcoded 'vn' from this site. On UPDATE we strip this to preserve
+      // the original country from the first registration (so a lead from
+      // another Solavita site doesn't get re-tagged as VN if a VN user
+      // re-submits the same email).
+      country: 'vn',
     }
 
     // Dedup - same email already registered → UPDATE the original row with the
     // new fields instead of erroring, and inform the user they already registered.
     //
-    // **Country-scoped dedup**: UK + DE share the same `consultation_leads`
-    // table, but each site only dedups against its own country. A UK user
-    // and a DE user with the same email are two different leads; never
-    // merge them. The DE repo applies the same `country='de'` filter.
+    // **Country-scoped dedup**: every Solavita site shares the same
+    // `consultation_leads` table, but each site only dedups against its
+    // own country. Two users with the same email on different country
+    // sites are two different leads; never merge them.
     const { data: existing } = await supabase
       .from('consultation_leads')
       .select('id')
       .eq('email', email)
-      .eq('country', 'ng')
+      .eq('country', 'vn')
       .maybeSingle()
 
     if (existing) {
       // Defensive: even though the dedup SELECT filters by
-      // `country='uk'`, don't blindly overwrite the row's country field
+      // `country='vn'`, don't blindly overwrite the row's country field
       // on UPDATE. Stays safe if the row's country is ever flipped
       // out-of-band (manual SQL fix, data migration, etc.).
       const { country: _omitCountry, ...updatePayload } = payload
@@ -147,7 +141,7 @@ export async function POST(request: Request) {
       if (updateError) {
         console.error('Consultation update error:', updateError)
         return NextResponse.json(
-          { success: false, message: 'Something went wrong. Please try again.' },
+          { success: false, message: 'Đã xảy ra lỗi. Vui lòng thử lại.' },
           { status: 500 }
         )
       }
@@ -156,7 +150,7 @@ export async function POST(request: Request) {
         success: true,
         alreadyRegistered: true,
         message:
-          'This email is already registered with us. Your details have been updated. If you have not heard back yet, please contact our team (ng@solavita.com).',
+          'Email này đã được đăng ký trước đó. Thông tin của bạn đã được cập nhật. Nếu chưa nhận được phản hồi, vui lòng liên hệ đội ngũ Solavita Việt Nam (vn@solavita.com).',
       })
     }
 
@@ -176,7 +170,7 @@ export async function POST(request: Request) {
     if (insertError || !inserted) {
       console.error('Consultation insert error:', insertError)
       return NextResponse.json(
-        { success: false, message: 'Something went wrong. Please try again.' },
+        { success: false, message: 'Đã xảy ra lỗi. Vui lòng thử lại.' },
         { status: 500 }
       )
     }
@@ -185,7 +179,7 @@ export async function POST(request: Request) {
 
     // Send confirmation email (non-blocking - a mail failure shouldn't fail the lead)
     const emailContent = consultationConfirmationEmail({
-      country: 'ng',
+      country: 'vn',
       salutation,
       firstName,
       lastName,
@@ -194,7 +188,7 @@ export async function POST(request: Request) {
       planLink,
     })
     const emailResult = await sendEmail({
-      country: 'ng',
+      country: 'vn',
       to: email,
       subject: emailContent.subject,
       html: emailContent.html,
@@ -202,7 +196,7 @@ export async function POST(request: Request) {
     if (emailResult.success) {
       await supabase.from('email_logs').insert({
         customer_id: null,
-        country: 'ng',
+        country: 'vn',
         email_type: 'consultation_confirmation',
         sent_to: email,
         status: 'sent',
@@ -232,7 +226,7 @@ export async function POST(request: Request) {
       console.error('❌ Consultation email failed:', emailResult.error)
       await supabase.from('email_logs').insert({
         customer_id: null,
-        country: 'ng',
+        country: 'vn',
         email_type: 'consultation_confirmation',
         sent_to: email,
         status: 'failed',

@@ -1,14 +1,13 @@
 /**
- * For Partners page data — Nigeria.
+ * For Partners page data — Vietnam.
  *
  * Text mirrors the For-Partner 页面修改参考页 PPTX layout. Three
- * tracks (Core Service / Certified Installer / Lead Partner) replace
- * the previous UK/IT tracks (Installer / Referral / Community).
- * UK trust marks (MCS, "UK-backed warranty", etc.) are dropped per NG
- * content rules — NG has no verified installer certifications, warranty
- * periods, or partner programme specifics, so unverified business
- * claims stay as TBD or are replaced with the generic partner
- * programme framing the PPTX calls out.
+ * tracks (Đối tác dịch vụ chính / Đơn vị lắp đặt được chứng nhận /
+ * Đối tác giới thiệu khách hàng). Other markets' trust marks (MCS,
+ * "UK-backed warranty", etc.) are dropped — Vietnam has no verified
+ * installer certifications, warranty periods, or partner programme
+ * specifics, so unverified business claims stay as TBD or are replaced
+ * with the generic partner programme framing the PPTX calls out.
  */
 
 export type PartnerTypeId =
@@ -31,50 +30,50 @@ export interface PartnerType {
 export const partnerTypes: PartnerType[] = [
   {
     id: 'core-service',
-    title: 'Core Service Partner',
+    title: 'Đối tác dịch vụ chính',
     description:
-      'For businesses with local networks and storage capacity.',
+      'Dành cho doanh nghiệp có mạng lưới địa phương và năng lực tồn kho.',
     whatYouGet: [
-      'Priority local inventory access',
-      'Channel development & co-marketing',
-      'Dedicated account manager',
+      'Ưu tiên tiếp cận tồn kho tại địa phương',
+      'Hỗ trợ phát triển kênh và đồng tiếp thị',
+      'Quản lý tài khoản chuyên trách',
     ],
     yourRole: [
-      'Maintain local inventory',
-      'Support sub-installers in your region',
+      'Duy trì tồn kho tại địa phương',
+      'Hỗ trợ các đơn vị lắp đặt trong khu vực',
     ],
     icon: 'wrench',
   },
   {
     id: 'certified-installer',
-    title: 'Certified Installer',
+    title: 'Đơn vị lắp đặt được chứng nhận',
     description:
-      'For teams with electrical and solar installation skills.',
+      'Dành cho đội ngũ có kỹ năng lắp đặt điện và điện mặt trời.',
     whatYouGet: [
-      'No full-container minimum',
-      'Product & installation training',
-      'Customer leads in your area',
+      'Không yêu cầu đặt hàng theo container',
+      'Đào tạo sản phẩm và kỹ thuật lắp đặt',
+      'Chia sẻ khách hàng tiềm năng trong khu vực',
     ],
     yourRole: [
-      'Complete Solavita certification',
-      'Deliver quality installation & after-sales',
+      'Hoàn thành chứng nhận Solavita',
+      'Đảm bảo chất lượng lắp đặt và hậu mãi',
     ],
     icon: 'handshake',
   },
   {
     id: 'lead-partner',
-    title: 'Lead Partner',
+    title: 'Đối tác giới thiệu khách hàng',
     description:
-      'For individuals or businesses focused on customer referral and lead generation.',
+      'Dành cho cá nhân hoặc doanh nghiệp tập trung vào giới thiệu khách hàng và phát triển nhu cầu.',
     whatYouGet: [
-      'Commission per referral',
-      'Free marketing materials',
-      'No stock, no installation',
+      'Hoa hồng theo mỗi khách hàng giới thiệu',
+      'Tài liệu tiếp thị miễn phí',
+      'Không cần tồn kho, không cần lắp đặt',
     ],
     yourRole: [
-      'Share leads with us',
-      'We visit and quote',
-      'You collect commission',
+      'Chia sẻ khách hàng tiềm năng',
+      'Chúng tôi khảo sát và báo giá',
+      'Bạn nhận hoa hồng',
     ],
     icon: 'users',
   },
@@ -107,24 +106,24 @@ export interface PartnerBenefit {
 
 export const partnerBenefits: PartnerBenefit[] = [
   {
-    label: 'Local Warehouse',
-    caption: 'No full container needed',
+    label: 'Kho tại địa phương',
+    caption: 'Không cần đặt cả container',
     description:
-      'Solavita local warehouse with pallet-level stock access — no full-container minimum order.',
+      'Kho Solavita tại địa phương cho phép lấy hàng theo từng pallet — không yêu cầu đặt tối thiểu cả container.',
     image: '/images/local_warehouse_card.webp',
   },
   {
-    label: 'Full Warranty',
-    caption: 'Local backup for claims',
+    label: 'Bảo hành toàn hệ thống',
+    caption: 'Hỗ trợ bảo hành tại địa phương',
     description:
-      'Full-system warranty with local claims backup so you and your customers are never waiting on an overseas RMA.',
+      'Bảo hành toàn hệ thống với đầu mối xử lý tại địa phương, để bạn và khách hàng không phải chờ xử lý bảo hành ở nước ngoài.',
     image: '/images/full_warranty_card.webp',
   },
   {
-    label: 'Sales Support',
-    caption: 'Leads & tech backup',
+    label: 'Hỗ trợ bán hàng',
+    caption: 'Khách hàng & hỗ trợ kỹ thuật',
     description:
-      'Co-marketing programs, regional lead sharing, and on-call technical backup for sizing and design.',
+      'Chương trình đồng tiếp thị, chia sẻ khách hàng theo khu vực và hỗ trợ kỹ thuật trong tính toán, thiết kế hệ thống.',
     image: '/images/sales_support_card.webp',
   },
 ]
@@ -139,11 +138,11 @@ export interface PartnerStats {
 export const partnerStats: PartnerStats[] = [
   {
     value: '800,000+',
-    caption: 'Solar Stations Installed Worldwide',
+    caption: 'Trạm điện mặt trời đã lắp đặt trên toàn thế giới',
   },
   {
     value: '34.6GW',
-    caption: 'Cumulative Installed Capacity',
+    caption: 'Tổng công suất lắp đặt luỹ kế',
   },
 ]
 
@@ -159,26 +158,26 @@ export interface PartnerProcessStep {
 export const partnerProcess: PartnerProcessStep[] = [
   {
     step: '01',
-    title: 'Get in touch',
+    title: 'Liên hệ với chúng tôi',
     description:
-      'Tell us about your business and which partner track you are interested in.',
+      'Cho chúng tôi biết về doanh nghiệp của bạn và hình thức hợp tác bạn quan tâm.',
   },
   {
     step: '02',
-    title: 'Discovery call',
+    title: 'Trao đổi sơ bộ',
     description:
-      'A 30-minute call with our partner team to map fit and discuss your region.',
+      'Buổi trao đổi 30 phút với đội ngũ đối tác để xác định mức độ phù hợp và khu vực hoạt động.',
   },
   {
     step: '03',
-    title: 'Onboarding & training',
+    title: 'Tiếp nhận & đào tạo',
     description:
-      'Product training, certification (where applicable) and systems access.',
+      'Đào tạo sản phẩm, chứng nhận (nếu áp dụng) và cấp quyền truy cập hệ thống.',
   },
   {
     step: '04',
-    title: 'Go live',
+    title: 'Bắt đầu triển khai',
     description:
-      'First joint project kicks off with full support from the local partner team.',
+      'Dự án hợp tác đầu tiên khởi động với sự hỗ trợ đầy đủ từ đội ngũ đối tác tại Việt Nam.',
   },
 ]

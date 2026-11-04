@@ -9,13 +9,13 @@ import {
 import { monitoringAppFeatures } from '@/lib/data/monitoring-app'
 
 export const metadata = buildPageMetadata({
-  title: 'Monitoring App · Smart Home Energy',
+  title: 'Ứng dụng giám sát · Năng lượng thông minh cho ngôi nhà',
   path: '/monitoring-app',
   description:
-    'The Solavita Monitoring App puts your solar, battery and home energy in one place — generation, consumption, scheduling and alerts.',
+    'Ứng dụng giám sát Solavita đưa điện mặt trời, pin lưu trữ và năng lượng trong nhà về cùng một nơi — sản lượng, mức tiêu thụ, lịch trình vận hành và cảnh báo.',
   ogImage: '/images/og-monitoring-app.jpg',
   ogImageAlt:
-    'Solavita Monitoring App - generation, consumption, scheduling and alerts for solar and battery storage',
+    'Ứng dụng giám sát Solavita - sản lượng, mức tiêu thụ, lịch trình vận hành và cảnh báo cho điện mặt trời và pin lưu trữ',
 })
 
 export default function Page() {
@@ -31,18 +31,18 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/monitoring-app',
-            name: 'Solavita Monitoring App',
+            name: 'Ứng dụng giám sát Solavita',
             description:
-              'The Solavita Monitoring App puts your solar, battery and home energy in one place - generation, consumption, scheduling and alerts.',
+              'Ứng dụng giám sát Solavita đưa điện mặt trời, pin lưu trữ và năng lượng trong nhà về cùng một nơi - sản lượng, mức tiêu thụ, lịch trình vận hành và cảnh báo.',
           }),
           softwareApplicationJsonLd({
-            name: 'Solavita Monitoring App',
+            name: 'Ứng dụng giám sát Solavita',
             featureList: featureTitles,
             free: true,
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Monitoring App', url: '/monitoring-app' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Ứng dụng giám sát', url: '/monitoring-app' },
           ]),
         ]}
       />

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Sun, Battery, Plug, Flame, Coins, ShieldCheck } from 'lucide-react'
+import { Sun, Battery, Plug, Flame, Gauge, ShieldCheck } from 'lucide-react'
 import {
   monitoringAppFeatures,
   monitoringAppDemoVideo,
@@ -27,8 +27,8 @@ const lucideFor = (key: MonitoringAppFeature['iconKey']) => {
       return <Plug {...props} />
     case 'flame':
       return <Flame {...props} />
-    case 'coins':
-      return <Coins {...props} />
+    case 'gauge':
+      return <Gauge {...props} />
     case 'shield':
       return <ShieldCheck {...props} />
   }
@@ -86,20 +86,20 @@ export default function FeaturesGrid() {
         <div className="text-center mb-8 md:mb-10 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            One brain, SIX SYSTEMS
+            Một bộ não, SÁU HỆ THỐNG
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Everything the{' '}
-            <span className="text-gradient">Monitoring App</span>{' '}
-            Orchestrates
+            Mọi thứ{' '}
+            <span className="text-gradient">Ứng dụng giám sát</span>{' '}
+            điều phối
           </h2>
         </div>
 
         {/* Live demo video — full-width, autoplaying, muted, looping.
            Sits directly under the heading per the product brief, so
            the section reads as one cohesive capability overview.
-           NG: the demo video is intentionally null until a verified
-           NG asset is supplied; we render the slot as an
+           VN: the demo video is intentionally null until a verified
+           VN asset is supplied; we render the slot as an
            ImagePlaceholder so the layout doesn't collapse. */}
         <div
           ref={videoWrapRef}
@@ -120,7 +120,7 @@ export default function FeaturesGrid() {
           ) : (
             <div className="w-full aspect-video flex items-center justify-center p-10 text-center">
               <p className="text-white/80 text-sm font-cw-bold uppercase tracking-wider">
-                TBD — Verified Monitoring App demo video for NG audience
+                TBD — Video demo Ứng dụng giám sát đã xác minh cho khách hàng Việt Nam (chờ xác nhận)
               </p>
             </div>
           )}

@@ -25,10 +25,11 @@ function getResend(): Resend {
 // send from the same brand-domain `no-reply@` address. (Per-market
 // aliases were retired in 2026-09; reply-to rules handle per-market
 // routing if needed.)
-const FROM_BY_COUNTRY: Record<'de' | 'uk' | 'ng', string> = {
+const FROM_BY_COUNTRY: Record<'de' | 'uk' | 'ng' | 'vn', string> = {
   de: 'Solavita <no-reply@solavita.com>',
   uk: 'Solavita <no-reply@solavita.com>',
   ng: 'Solavita <no-reply@solavita.com>',
+  vn: 'Solavita Việt Nam <no-reply@solavita.com>',
 }
 
 export async function sendEmail({
@@ -37,15 +38,15 @@ export async function sendEmail({
   subject,
   html,
 }: {
-  // Optional with default 'ng' for the NG repo. NG site only ever
-  // passes 'ng' - kept optional so the function signature stays
-  // cross-repo compatible with DE/UK.
-  country?: 'de' | 'uk' | 'ng'
+  // Optional with default 'vn' for the VN repo. The VN site always
+  // passes 'vn'; kept optional so the signature stays cross-repo
+  // compatible with DE/UK/NG.
+  country?: 'de' | 'uk' | 'ng' | 'vn'
   to: string
   subject: string
   html: string
 }) {
-  const from = FROM_BY_COUNTRY[country ?? 'ng']
+  const from = FROM_BY_COUNTRY[country ?? 'vn']
   const { data, error } = await getResend().emails.send({
     from,
     to,

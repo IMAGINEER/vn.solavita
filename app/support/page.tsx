@@ -9,13 +9,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Support & FAQs',
+  title: 'Hỗ trợ & Câu hỏi thường gặp',
   path: '/support',
   description:
-    'FAQs, troubleshooting and downloads for Solavita solar, battery and monitoring systems. Speak to our NG support team.',
+    'Câu hỏi thường gặp, hướng dẫn xử lý sự cố và tài liệu tải về cho hệ thống điện mặt trời, pin lưu trữ và giám sát của Solavita. Liên hệ đội ngũ hỗ trợ Solavita Việt Nam.',
   ogImage: '/images/og-support.jpg',
   ogImageAlt:
-    'Solavita NG support and FAQs - solar, battery and monitoring systems',
+    'Hỗ trợ và Câu hỏi thường gặp của Solavita Việt Nam - hệ thống điện mặt trời, pin lưu trữ và giám sát',
 })
 
 export default function Page() {
@@ -25,19 +25,19 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/support',
-            name: 'Support & FAQs',
+            name: 'Hỗ trợ & Câu hỏi thường gặp',
             description:
-              'FAQs, troubleshooting and downloads for Solavita solar, battery and monitoring systems. Speak to our NG support team.',
+              'Câu hỏi thường gặp, hướng dẫn xử lý sự cố và tài liệu tải về cho hệ thống điện mặt trời, pin lưu trữ và giám sát của Solavita. Liên hệ đội ngũ hỗ trợ Solavita Việt Nam.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Support', url: '/support' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Hỗ trợ', url: '/support' },
           ]),
           faqPageJsonLd({
             path: '/support#faq',
-            name: 'Solavita Support - Frequently Asked Questions',
+            name: 'Solavita Hỗ trợ - Câu hỏi thường gặp',
             description:
-              'Common questions about installation, product, monitoring, warranty and troubleshooting for Solavita solar, battery and monitoring systems.',
+              'Các câu hỏi phổ biến về lắp đặt, sản phẩm, giám sát, bảo hành và xử lý sự cố cho hệ thống điện mặt trời, pin lưu trữ và giám sát của Solavita.',
             faqs: faqItems,
           }),
         ]}

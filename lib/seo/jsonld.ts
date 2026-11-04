@@ -8,7 +8,7 @@
 // embed the returned objects unsanitized in HTML - they always go through
 // `withContext` → `JSON.stringify` for safety.
 //
-// Nigeria site - built from `content/nigeria/*` briefs. All business
+// Vietnam site - localisation pass from the NG source. All business
 // facts that haven't been verified (legal entity, address, phone, ...)
 // are surfaced as visible red TBDs in the UI; this file holds the
 // placeholder strings that drive structured data so a single edit
@@ -67,12 +67,12 @@ export function jsonLdScript(obj: unknown): string {
    Brand-defining entities (Organization / WebSite)
 
    Lives in the root layout via `<JsonLd>`. Every page that mentions
-   Solavita Nigeria can `@id`-reference these instead of duplicating them.
+   Solavita Việt Nam can `@id`-reference these instead of duplicating them.
 
-   Nigeria rules:
+   Vietnam rules:
      - address, contactPoint email, contactPoint telephone: TBD until
        business confirms.
-     - areaServed: Nigeria.
+     - areaServed: Vietnam.
      - parentOrganization still references the SKYWORTH Group parent
        (per About Us.md Section 4).
    ──────────────────────────────────────────────────────────────────────── */
@@ -89,18 +89,17 @@ export function organizationJsonLd() {
         '@type': 'ImageObject',
         url: absoluteUrl('/images/a1logo02.svg'),
       },
-      // Nigerian registered office. Fields TBD until the legal entity
+      // Vietnam registered office. Fields TBD until the legal entity
       // is confirmed and a real registered address is supplied.
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'TBD — Verified Nigeria street address',
-        addressLocality: 'TBD — Verified Nigeria city',
-        postalCode: 'TBD — Verified Nigeria postal code',
-        addressCountry: 'NG',
+        streetAddress: 'TBD — Địa chỉ văn phòng tại Việt Nam (chờ xác minh)',
+        addressLocality: 'TBD — Thành phố tại Việt Nam (chờ xác minh)',
+        postalCode: 'TBD — Mã bưu chính tại Việt Nam (chờ xác minh)',
+        addressCountry: 'VN',
       },
-      // Contact point: NG email is verified; the NG WhatsApp / phone
-      // number is TBD until business confirms. Per ng-content-strategy
-      // rule 1 (no fabrication) we do not emit a placeholder telephone —
+      // Contact point: VN email is verified; the VN phone number is TBD
+      // until business confirms. We do not emit a placeholder telephone —
       // Google's Knowledge Graph treats bogus contact data as a
       // trust-signal violation, so we leave `telephone` off until the
       // number is real.
@@ -108,9 +107,9 @@ export function organizationJsonLd() {
         {
           '@type': 'ContactPoint',
           contactType: 'customer support',
-          email: 'ng@solavita.com',
-          areaServed: 'NG',
-          availableLanguage: ['en-NG'],
+          email: 'vn@solavita.com',
+          areaServed: 'VN',
+          availableLanguage: ['vi-VN'],
         },
       ],
       // Parent brand. Public URL from the SKYWORTH corporate site.
@@ -124,10 +123,10 @@ export function organizationJsonLd() {
       // business confirms the city.
       location: {
         '@type': 'Place',
-        name: 'TBD — Verified Nigeria office city',
+        name: 'TBD — Thành phố văn phòng tại Việt Nam (chờ xác minh)',
         address: {
           '@type': 'PostalAddress',
-          addressCountry: 'NG',
+          addressCountry: 'VN',
         },
       },
     },
@@ -291,8 +290,8 @@ export function collectionPageJsonLd(opts: {
    stand-alone SKU on a shelf. `Product.offers.price` would be
    misleading without a verified price.
 
-   Nigeria: `areaServed` is now Nigeria. Provider/brand remain the
-   canonical Solavita Nigeria Organization.
+   Vietnam: `areaServed` is Vietnam. Provider/brand remain the
+   canonical Solavita Việt Nam Organization.
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface ServiceSpec {
@@ -316,10 +315,10 @@ export function serviceJsonLd(spec: ServiceSpec, path: string) {
     url,
     image: absoluteUrl(spec.imagePath),
     provider: { '@id': ORG_ID },
-    areaServed: { '@type': 'Country', name: 'Nigeria' },
+    areaServed: { '@type': 'Country', name: 'Vietnam' },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: `${spec.title} inclusions`,
+      name: `Hạng mục bao gồm trong ${spec.title}`,
       itemListElement: spec.bullets.map((b, idx) => ({
         '@type': 'Offer',
         position: idx + 1,
@@ -355,7 +354,7 @@ export function serviceListJsonLd(services: ServiceSpec[], path: string) {
        the /solutions overview (different @id, no conflict).
 
    Pricing is intentionally omitted: the marketing surface never shows a
-   hard price (NG rule: ₦ only with verified approved pricing). Google
+   hard price (VN rule: price only with verified approved pricing). Google
    tolerates a Product node without `offers`; we let the lead-capture
    form surface the price after a consultation.
    ──────────────────────────────────────────────────────────────────────── */
@@ -478,10 +477,10 @@ export function categoryJsonLd(category: BlogCategory) {
 /* ────────────────────────────────────────────────────────────────────────
    LocalBusiness - emitted alongside `ContactPage` on `/contact-us/`.
 
-   Nigeria: registered office + contact details are TBD until business
-   supplies verified facts. Country is set to NG; `areaServed` is
-   Nigeria. `priceRange` is the schema.org token format — kept generic
-   ("₦₦" = mid-range) only as a styling hint, not a price claim.
+   Vietnam: registered office + contact details are TBD until business
+   supplies verified facts. Country is set to VN; `areaServed` is
+   Vietnam. `priceRange` is the schema.org token format — kept generic
+   ("₫₫" = mid-range) only as a styling hint, not a price claim.
    ──────────────────────────────────────────────────────────────────────── */
 
 export function localBusinessJsonLd() {
@@ -492,26 +491,26 @@ export function localBusinessJsonLd() {
       '@id': url,
       name: SITE_LEGAL_NAME,
       url: absoluteUrl('/'),
-      email: 'ng@solavita.com',
-      // NG WhatsApp / phone TBD - omitted (not a fabricated placeholder)
-      // until business confirms the real NG number.
+      email: 'vn@solavita.com',
+      // VN phone TBD - omitted (not a fabricated placeholder)
+      // until business confirms the real VN number.
       image: absoluteUrl(DEFAULT_OG_IMAGE),
-      priceRange: '₦₦',
+      priceRange: '₫₫',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'TBD — Verified Nigeria street address',
-        addressLocality: 'TBD — Verified Nigeria city',
-        postalCode: 'TBD — Verified Nigeria postal code',
-        addressCountry: 'NG',
+        streetAddress: 'TBD — Địa chỉ văn phòng tại Việt Nam (chờ xác minh)',
+        addressLocality: 'TBD — Thành phố tại Việt Nam (chờ xác minh)',
+        postalCode: 'TBD — Mã bưu chính tại Việt Nam (chờ xác minh)',
+        addressCountry: 'VN',
       },
-      areaServed: { '@type': 'Country', name: 'Nigeria' },
+      areaServed: { '@type': 'Country', name: 'Vietnam' },
       parentOrganization: { '@id': PARENT_ORG_ID },
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'ng@solavita.com',
-        areaServed: 'NG',
-        availableLanguage: ['en-NG'],
+        email: 'vn@solavita.com',
+        areaServed: 'VN',
+        availableLanguage: ['vi-VN'],
       },
     },
     url,
@@ -521,13 +520,13 @@ export function localBusinessJsonLd() {
 /* ────────────────────────────────────────────────────────────────────────
    ItemList of CreativeWork - emitted on `/cases/`.
 
-   Nigeria: the cases list is empty until real Nigerian installations
-   are added. We still emit the ItemList shape (with zero items) so
+   Vietnam: the cases list shows global reference projects until real
+   Vietnamese installations are added. We still emit the ItemList shape (with zero items) so
    other pages can `@id`-reference it; the creativeWorkListJsonLd
    helper accepts an empty array.
 
    Field budget:
-     - name       : city + system label  (e.g. "Lagos · 7 kWp + 5 kWh")
+     - name       : city + system label  (e.g. "Hà Nội · 7 kWp + 5 kWh")
      - url        : absolute case URL    (matches sitemap entry)
      - image      : case thumbnail
    ──────────────────────────────────────────────────────────────────────── */
@@ -561,7 +560,7 @@ export function creativeWorkListJsonLd(items: CreativeWorkListItem[]) {
    right fit: it composes with the existing `Service` node (different
    @id) and lets Google's app panels recognise the product.
 
-   Nigeria: app compatibility with the NG inverter/battery models is
+   Vietnam: app compatibility with the VN inverter/battery models is
    TBD. We emit the schema with the
    features list and intentionally omit `offers` — the `free` flag is
    not asserted until that compatibility is verified.
@@ -591,7 +590,7 @@ export function softwareApplicationJsonLd(opts: SoftwareAppFeatures) {
     node.offers = {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'NGN',
+      priceCurrency: 'VND',
     }
   }
   return withContext(node, url)
@@ -613,18 +612,18 @@ export function partnerProgramJsonLd() {
       '@type': 'WebPage',
       '@id': url,
       url,
-      name: 'For Partners · Solavita Nigeria',
+      name: 'Dành cho đối tác · Solavita Việt Nam',
       description:
-        'Solar installer, customer-referral and community partnerships in Nigeria.',
+        'Chương trình hợp tác dành cho đơn vị lắp đặt, đối tác giới thiệu khách hàng và cộng đồng tại Việt Nam.',
       inLanguage: SITE_LOCALE,
       isPartOf: { '@id': SITE_ID },
       publisher: { '@id': ORG_ID },
       mainEntity: {
         '@type': 'Service',
-        name: 'Solavita Nigeria Partner Programme',
-        serviceType: 'B2B partnership',
+        name: 'Chương trình đối tác Solavita Việt Nam',
+        serviceType: 'Hợp tác B2B',
         provider: { '@id': ORG_ID },
-        areaServed: { '@type': 'Country', name: 'Nigeria' },
+        areaServed: { '@type': 'Country', name: 'Vietnam' },
       },
       about: { '@id': ORG_ID },
     },

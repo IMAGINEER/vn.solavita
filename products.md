@@ -1,7 +1,7 @@
-# Solavita Nigeria — Product Line & Packages
+# Solavita Việt Nam — Product Line & Packages
 
 > Source of truth for the packages and component line published on the
-> Nigeria site. The web app reads the same numbers from
+> Vietnam site. The web app reads the same numbers from
 > `lib/data/solutions.ts` (packages) and `lib/data/products.ts`
 > (component spec sheets) — keep the three in sync.
 >

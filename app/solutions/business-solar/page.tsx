@@ -10,12 +10,12 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Business Solar Solutions in Nigeria | Solavita',
+  title: 'Business Solar Solutions in Vietnam | Solavita Việt Nam',
   path: '/solutions/business-solar',
   description:
-    'Compare three business-solar solutions for Nigerian small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase. Sized for equipment loads, operating hours and critical-load priorities.',
+    'Compare three business-solar solutions for Vietnamese small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase. Sized for equipment loads, operating hours and critical-load priorities.',
   ogImage: '/images/og-solutions.jpg',
-  ogImageAlt: 'Business Solar solutions for Nigerian small businesses',
+  ogImageAlt: 'Business Solar solutions for Vietnamese small businesses',
 })
 
 export default function Page() {
@@ -38,9 +38,9 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/solutions/business-solar',
-            name: 'Business Solar Solutions in Nigeria | Solavita',
+            name: 'Business Solar Solutions in Vietnam | Solavita Việt Nam',
             description:
-              'Compare three business-solar solutions for Nigerian small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase.',
+              'Compare three business-solar solutions for Vietnamese small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

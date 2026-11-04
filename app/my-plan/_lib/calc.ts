@@ -1,47 +1,46 @@
 /**
- * Plan catalogue + recommendation + ROI engine for `/my-plan` (Nigeria).
+ * Danh mục gói + gợi ý + công cụ ROI cho `/my-plan`.
  *
- * Architecture (per the user's spec):
- *   Consultation form ──► recommendPlan() ──► NgPlanId
- *   Plan (fixed)         ──► calculateROI() ──► PlanRoi
+ * Kiến trúc:
+ *   Biểu mẫu tư vấn ──► recommendPlan() ──► NgPlanId
+ *   Gói (cố định)    ──► calculateROI() ──► PlanRoi
  *
- * The 6 NG solutions (LITE / HOME Standard / HOME High-spec /
- * BUSINESS Entry / BUSINESS Standard / BUSINESS Flagship) are the
- * fixed product set. The user can switch between them in `/my-plan`
- * but cannot adjust panel count or battery capacity independently.
- * Specs mirror `lib/data/solutions.ts` so the marketing surface and
- * the calculator stay in sync.
+ * Sáu gói (LITE / HOME Standard / HOME High-spec / BUSINESS Entry /
+ * BUSINESS Standard / BUSINESS Flagship) là bộ sản phẩm cố định. Người
+ * dùng có thể chuyển đổi giữa các gói trong `/my-plan` nhưng không thể tự
+ * điều chỉnh số tấm pin hay dung lượng pin lưu trữ. Thông số phản chiếu
+ * `lib/data/solutions.ts` để bề mặt marketing và công cụ tính luôn khớp.
  *
- * **Prices** are *test-baseline* values derived from the UK price
- * ladder and tagged as `priceNgn` so they are clearly distinguishable
- * from any future business-approved ₦ figure. Per the user's spec
- * ("暂时复用英国系统价格作为测试基准，单独存放价格配置，后续替换为
- * 尼日利亚价格"), this file owns the price config - swap one number
- * here to update the whole calculator.
+ * **Giá** là giá *tạm tính* lấy từ bảng giá UK và được đánh dấu bằng
+ * `priceNgn` để phân biệt rõ với mọi con số ₦ đã được phê duyệt sau này.
+ * Theo đặc tả của dự án, tệp này sở hữu cấu hình giá - chỉ cần thay một
+ * con số ở đây là cập nhật toàn bộ công cụ tính.
  *
- * **ROI engine**:
- *   1. Estimate total household annual kWh from the user's consumption
- *      tier (electricityUsage).
- *   2. Split into grid-portion vs generator-portion using
- *      `generatorFrequency`. Cap generator-portion kWh at the user's
- *      reported fuel budget (₦/month) so we don't over-state what can
- *      be saved.
- *   3. Compute solar year-1 generation from system size × NG regional
- *      yield. Apply self-consumption rate (battery boosts).
- *   4. Displace first the grid portion, then the generator portion
- *      (capped by the user's actual fuel spend). This is the
- *      no-double-count rule - the same self-consumed kWh cannot
- *      offset both grid and generator cost.
- *   5. Net annual saving = grid offset + generator offset − annual
- *      opex (1 % of system cost for maintenance).
- *   6. Payback = system price / net annual saving. 30-year lifetime
- *      applies the same model with panel degradation factors.
+ * **Công cụ ROI**:
+ *   1. Ước tính tổng kWh điện tiêu thụ hằng năm của hộ từ mức tiêu thụ
+ *      (electricityUsage).
+ *   2. Chia thành phần dùng điện lưới và phần dùng nguồn dự phòng dựa
+ *      trên `generatorFrequency` (trường cũ được giữ để tương thích dữ
+ *      liệu). Giới hạn phần kWh nguồn dự phòng theo ngân sách năng lượng
+ *      người dùng khai báo để không phóng đại khoản tiết kiệm.
+ *   3. Tính sản lượng điện mặt trời năm 1 từ công suất hệ thống × sản
+ *      lượng theo khu vực. Áp dụng tỷ lệ tự tiêu thụ (pin lưu trữ giúp
+ *      tăng tỷ lệ này).
+ *   4. Thay thế trước hết phần điện lưới, sau đó phần nguồn dự phòng
+ *      (giới hạn bởi chi phí năng lượng thực tế người dùng khai báo).
+ *      Đây là quy tắc không tính trùng - cùng một kWh tự tiêu thụ không
+ *      thể vừa giảm chi phí điện lưới vừa giảm chi phí nguồn dự phòng.
+ *   5. Tiết kiệm ròng hằng năm = phần điện lưới được thay thế + phần
+ *      nguồn dự phòng được thay thế − chi phí vận hành hằng năm (1 %
+ *      giá hệ thống cho bảo trì).
+ *   6. Thời gian hoàn vốn = giá hệ thống / tiết kiệm ròng hằng năm.
+ *      Vòng đời 30 năm áp dụng cùng mô hình với hệ số suy giảm của tấm pin.
  */
 
 import { solutionDetails } from '@/lib/data/solutions'
 
 /* ──────────────────────────────────────────────────────────────────────
-   NG solution catalogue
+   Danh mục gói
    ────────────────────────────────────────────────────────────────────── */
 
 export type NgPlanId =
@@ -96,18 +95,17 @@ export interface NgPlan {
 }
 
 /**
- * The 6 NG solutions, mirroring `lib/data/solutions.ts`. The order
- * is intentional: index 0 is LITE, 1 is HOME Standard (popular for
- * homes), 2 is HOME High-spec, then the three BUSINESS tiers in
- * ascending order of capacity. The `recommendPlan` ladder walks this
- * array in order, so reordering changes what gets surfaced for a
- * given consumption profile.
+ * Sáu gói, phản chiếu `lib/data/solutions.ts`. Thứ tự là có chủ đích:
+ * chỉ số 0 là LITE, 1 là HOME Standard (phổ biến cho hộ gia đình), 2 là
+ * HOME High-spec, sau đó là ba gói BUSINESS theo công suất tăng dần.
+ * Thang gợi ý của `recommendPlan` duyệt mảng này theo thứ tự, nên đổi
+ * thứ tự sẽ thay đổi gói được đề xuất cho một hồ sơ tiêu thụ nhất định.
  */
 export const NG_PLANS: NgPlan[] = [
   {
     id: 'lite-essential-backup',
     name: 'LITE Essential Backup',
-    subtitle: 'Single phase · Essential backup',
+    subtitle: 'Một pha · Dự phòng thiết yếu',
     kwp: 4.34,
     batteryKwh: 5,
     inverterKw: 3.6,
@@ -119,7 +117,7 @@ export const NG_PLANS: NgPlan[] = [
   {
     id: 'home-standard',
     name: 'HOME Standard',
-    subtitle: 'Single phase · Everyday home',
+    subtitle: 'Một pha · Hộ gia đình thông thường',
     kwp: 7.44,
     batteryKwh: 10,
     inverterKw: 6,
@@ -132,7 +130,7 @@ export const NG_PLANS: NgPlan[] = [
   {
     id: 'home-high-spec',
     name: 'HOME High-spec',
-    subtitle: 'Single phase · Higher capacity',
+    subtitle: 'Một pha · Công suất cao hơn',
     kwp: 11.16, // midpoint of 9.92-12.40 kWp
     batteryKwh: 16,
     inverterKw: 10, // midpoint of 8-12 kW
@@ -146,7 +144,7 @@ export const NG_PLANS: NgPlan[] = [
   {
     id: 'business-entry-3-phase',
     name: 'BUSINESS Entry 3-Phase',
-    subtitle: 'Three phase · Entry commercial',
+    subtitle: 'Ba pha · Doanh nghiệp cơ bản',
     kwp: 11.78,
     batteryKwh: 16,
     inverterKw: 10,
@@ -158,7 +156,7 @@ export const NG_PLANS: NgPlan[] = [
   {
     id: 'business-standard-3-phase',
     name: 'BUSINESS Standard 3-Phase',
-    subtitle: 'Three phase · Standard commercial',
+    subtitle: 'Ba pha · Doanh nghiệp tiêu chuẩn',
     kwp: 17.36,
     batteryKwh: 32,
     inverterKw: 15,
@@ -170,7 +168,7 @@ export const NG_PLANS: NgPlan[] = [
   {
     id: 'business-flagship-3-phase',
     name: 'BUSINESS Flagship 3-Phase',
-    subtitle: 'Three phase · Flagship commercial',
+    subtitle: 'Ba pha · Doanh nghiệp cao cấp',
     kwp: 23.56,
     batteryKwh: 32,
     inverterKw: 20,
@@ -184,7 +182,7 @@ export const NG_PLANS: NgPlan[] = [
 /** Lookup by id. */
 export function getNgPlan(id: NgPlanId): NgPlan {
   const plan = NG_PLANS.find((p) => p.id === id)
-  if (!plan) throw new Error(`Unknown NG plan id: ${id}`)
+  if (!plan) throw new Error(`Unknown plan id: ${id}`)
   return plan
 }
 
@@ -201,7 +199,7 @@ export type ConsumptionTier = 'low' | 'medium' | 'high' | 'very-high' | 'unknown
 /** Devices the customer already has that materially raise demand. */
 export type HeavyDevice = 'wallbox' | 'heatpump' | 'ac' | string
 
-/** Generator usage band. */
+/** Mức sử dụng nguồn dự phòng. */
 export type GeneratorFrequency =
   | 'rarely'
   | 'sometimes'
@@ -209,7 +207,7 @@ export type GeneratorFrequency =
   | 'frequently'
   | 'unknown'
 
-/** Monthly fuel-spend band in NGN. */
+/** Khoảng ngân sách năng lượng hằng tháng (₦). */
 export type FuelBudgetNgn =
   | 'below-20k'
   | '20k-50k'
@@ -225,7 +223,8 @@ export interface ConsultationInput {
   electricityUsage: ConsumptionTier
   devices: HeavyDevice[]
   region: string
-  /** NG Step-3 extensions. All may be 'unknown' if the user skipped. */
+  /** Các trường mở rộng ở bước 3. Tất cả có thể là 'unknown' nếu người
+   *  dùng đã bỏ qua. */
   generatorFrequency: GeneratorFrequency
   fuelBudgetNgn: FuelBudgetNgn
   backupNeeds: BackupNeedId[]
@@ -249,17 +248,17 @@ export interface HomeDetails {
   electricityUsage: string
   /** Heavy devices selected. */
   devices: string[]
-  /** NG Step-3 fields surfaced in the strip. */
+  /** Các trường mở rộng ở bước 3 được hiển thị trên dải thông tin. */
   generatorFrequency: string
   fuelBudgetNgn: string
   backupNeeds: string[]
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   NG-specific assumptions + constants
+   Các giả định + hằng số
    ────────────────────────────────────────────────────────────────────── */
 
-/** Annual kWh per consumption tier. Midpoint of the form's kWh band. */
+/** kWh hằng năm theo mức tiêu thụ. Điểm giữa của khoảng kWh trong biểu mẫu. */
 const USAGE_KWH_PER_YEAR: Record<ConsumptionTier, number> = {
   low: 3_000,
   medium: 4_500,
@@ -269,9 +268,9 @@ const USAGE_KWH_PER_YEAR: Record<ConsumptionTier, number> = {
 }
 
 /**
- * Fraction of household consumption currently served by a generator.
- * Drives how the kWh pie splits between grid vs generator and therefore
- * how much fuel cost is actually available to save.
+ * Tỷ lệ điện tiêu thụ hiện đang được đáp ứng bởi nguồn dự phòng. Quyết
+ * định cách chia kWh giữa điện lưới và nguồn dự phòng, từ đó quyết định
+ * phần chi phí năng lượng thực sự có thể tiết kiệm.
  */
 const GEN_SHARE_BY_FREQUENCY: Record<GeneratorFrequency, number> = {
   rarely: 0.10,
@@ -282,57 +281,45 @@ const GEN_SHARE_BY_FREQUENCY: Record<GeneratorFrequency, number> = {
 }
 
 /**
- * Midpoint monthly fuel spend (₦). Used when the user picks a band.
- * Annualised in the ROI calculation by ×12.
+ * Chi phí năng lượng trung bình hằng tháng (₦). Dùng khi người dùng chọn
+ * một khoảng. Quy đổi theo năm trong phép tính ROI bằng ×12.
  */
 const FUEL_BUDGET_ANNUAL_NGN: Record<FuelBudgetNgn, number> = {
   'below-20k': 240_000,    // 20k * 12
   '20k-50k': 420_000,      // 35k * 12
   '50k-100k': 900_000,     // 75k * 12
   'above-100k': 1_800_000, // 150k * 12
-  unknown: 0,              // Derived from generator share + fuel price
+  unknown: 0,              // Suy ra từ tỷ lệ nguồn dự phòng + đơn giá năng lượng
 }
 
 /**
- * NG grid tariff (₦/kWh). Residential band (Band A/B/C). TBD - replace
- * with the verified national average when business confirms.
+ * Biểu giá điện lưới (₦/kWh). Giá trị dân dụng hiện được dùng làm mức
+ * tạm tính. TBD - thay bằng biểu giá EVN đã được xác nhận khi bộ phận
+ * kinh doanh phê duyệt.
  */
 const NG_GRID_TARIFF_NGN_PER_KWH = 68
 
 /**
- * NG fuel prices + generator efficiency, split by fuel type.
+ * Đơn giá năng lượng + hiệu suất hệ thống, tách theo loại nhiên liệu.
  *
- * ⚠️ PROVISIONAL VALUES — pending business confirmation.
+ * ⚠️ GIÁ TRỊ TẠM TÍNH — đang chờ xác nhận từ bộ phận kinh doanh.
  *
- * Price (₦/L): 2026-10 reference pump prices (typical Nigeria retail
- * bands). Subject to NNPC subsidy changes, regional variation, and
- * black-market premiums in fuel-scarce zones. Treat as a *baseline*
- * that the business can swap in one number per field.
- *   - PMS ≈ ₦1,500–1,600/L (was ₦1,400/L — too low for late-2026)
- *   - AGO ≈ ₦1,900–2,000/L (was ₦1,800/L — too low for late-2026)
+ * Các hằng số bên dưới thuộc mô hình chi phí năng lượng cũ, được giữ
+ * nguyên định danh và con số vì các cột dữ liệu hiện có cùng toàn bộ
+ * công thức ROI đọc trực tiếp chúng. Không thay đổi các giá trị này cho
+ * đến khi có mô hình chi phí mới được phê duyệt.
  *
- * Efficiency (kWh per litre): derived from market research, NOT a
- * measured Nigerian average. Real efficiency depends on generator
- * rated power, load factor, age, and maintenance. The range
- * "0.50–0.60 L/kWh for 5 kVA petrol household units" implies
- * 1.7–2.0 kWh/L (midpoint ~1.85). Small diesel units run
- * 0.32–0.36 L/kWh → 2.8–3.1 kWh/L (midpoint ~2.95).
+ * Hiệu suất (kWh mỗi lít) được suy ra từ khảo sát thị trường, KHÔNG phải
+ * mức trung bình đo đạc. Hiệu suất thực tế phụ thuộc vào công suất định
+ * mức, hệ số phụ tải, tuổi thiết bị và chế độ bảo trì. Đây là mức tạm
+ * tính được chọn trong khoảng hợp lý, không lạc quan.
  *
- * Source: nigerian generator market analysis (typical references,
- * 2025–2026), Nigeria energy audit reports. NOT verified by
- * business. **Do not present as a measured average** in the UI.
+ * **Không trình bày các con số này như mức trung bình đã kiểm chứng trên
+ * giao diện.**
  *
- * If the calculator is later refined to ask about generator
- * rated power + typical load, these constants will move into
- * a per-(power, load) lookup table. For now they are a test
- * baseline tuned to be in the realistic range, not optimistic.
- *
- * Together with price, the implicit ₦/kWh cost of generator power:
- *   PMS 1,533 / 1.85 ≈ ₦829/kWh  (was ₦467/kWh at 3.0/1,400)
- *   AGO 1,915 / 2.95 ≈ ₦649/kWh  (was ₦514/kWh at 3.5/1,800)
- * Both corrected UP — the user actually spends more per kWh of
- * generator power than the previous placeholders implied, so
- * generator-savings claims now align closer to reality.
+ * Nếu sau này công cụ được cải tiến để hỏi công suất định mức và phụ tải
+ * điển hình, các hằng số này sẽ chuyển thành bảng tra theo (công suất,
+ * phụ tải).
  */
 const NG_PMS_PRICE_NGN_PER_LITRE = 1_533
 const NG_PMS_KWH_PER_LITRE        = 1.85
@@ -340,28 +327,28 @@ const NG_AGO_PRICE_NGN_PER_LITRE = 1_915
 const NG_AGO_KWH_PER_LITRE        = 2.95
 
 /**
- * "Not sure" path-B hard cap on the back-derived annual fuel cost.
+ * Mức trần cứng cho chi phí năng lượng hằng năm suy ra ngược (nhánh B
+ * "Không chắc chắn").
  *
- * When the user picks "Not sure" for their monthly fuel budget, we
- * back-derive a cap from their consumption profile and the assumed
- * fuel constants. The back-derive is by construction a theoretical
- * maximum, so without this cap "Not sure" would always claim the
- * full theoretical generator saving — same as the "ignore the cap"
- * degenerate case. This hard cap is a sanity bound, segment-aware,
- * that keeps the claim in a plausible range until the user reports
- * an actual figure.
+ * Khi người dùng chọn "Không chắc chắn" cho ngân sách năng lượng hằng
+ * tháng, hệ thống suy ra mức trần từ hồ sơ tiêu thụ và các hằng số đơn
+ * giá năng lượng. Phép suy ngược này về bản chất là mức tối đa lý thuyết,
+ * nên nếu không có giới hạn này thì "Không chắc chắn" sẽ luôn ghi nhận
+ * toàn bộ khoản tiết kiệm lý thuyết. Mức trần cứng này là giới hạn hợp lý
+ * theo phân khúc, giữ khoản ghi nhận trong khoảng hợp lý cho đến khi
+ * người dùng báo con số thực tế.
  *
- * Numbers are illustrative defaults pending business confirmation:
- *   homes      → ₦50k/month  = ₦600k/year
- *   businesses → ₦300k/month = ₦3.6M/year
+ * Các con số là mặc định minh hoạ, đang chờ xác nhận:
+ *   homes      → ₦50k/tháng  = ₦600k/năm
+ *   businesses → ₦300k/tháng = ₦3.6M/năm
  */
 const NOT_SURE_HARD_CAP_NGN_PER_YEAR: Record<NgPlan['segment'], number> = {
   homes: 600_000,
   businesses: 3_600_000,
 }
 
-/** Helper: which fuel type does this plan assume? Drives both the
- *  back-derive (path B) and the kWh↔₦ conversion (path A). */
+/** Helper: gói này giả định loại nhiên liệu nào? Dùng cho cả phép suy
+ *  ngược (nhánh B) và quy đổi kWh↔₦ (nhánh A). */
 function fuelTypeFor(plan: NgPlan): 'pms' | 'ago' {
   return plan.segment === 'homes' ? 'pms' : 'ago'
 }
@@ -384,15 +371,12 @@ const NG_OPEX_PCT = 0
 const NG_PROJECT_LIFETIME_YEARS = 30
 
 /**
- * Per-region PV specific yield (kWh / kWp / year) for Nigeria.
+ * Sản lượng riêng của PV theo khu vực (kWh / kWp / năm).
  *
- * Illustrative figures pending the verified national average - the
- * country sits in the high-irradiance belt so yields should be
- * 1,300-1,800 kWh/kWp/yr depending on latitude, cloud cover and dust.
- * Coastal states (South South, South West) are cloudier; the far
- * north (North East, North West) is the sunniest. The fallback is
- * 1,500 kWh/kWp/yr - a defensible middle figure for unrecognised
- * regions.
+ * Các khoá bên dưới là tên vùng cũ, được giữ để tương thích với dữ liệu
+ * tư vấn đã ghi trước đây; các giá trị là số minh hoạ đang chờ mức trung
+ * bình quốc gia được xác nhận. Khu vực chưa có trong bảng sẽ dùng mức dự
+ * phòng 1.500 kWh/kWp/năm.
  */
 const NG_REGION_YIELD: Record<string, number> = {
   'Lagos': 1_400,
@@ -460,12 +444,12 @@ const BASE_TIER_LOOKUP: Record<HouseholdSize, Record<ConsumptionTier, number>> =
 }
 
 /**
- * Recommend an NG plan. Pipeline:
- *   1. base tier from householdSize × electricityUsage
- *   2. each heavy device (+1 tier, capped)
- *   3. generator use of 'daily' or 'frequently' (+1 tier) — a heavy
- *      generator dependency means the home needs a real battery
- *      (≥5 kWh) to cover the evening gap, so we move up from LITE.
+ * Gợi ý một gói. Quy trình:
+ *   1. bậc cơ sở từ householdSize × electricityUsage
+ *   2. mỗi thiết bị tiêu thụ lớn (+1 bậc, có giới hạn)
+ *   3. mức dùng nguồn dự phòng 'daily' hoặc 'frequently' (+1 bậc) — mức
+ *      phụ thuộc nguồn dự phòng cao nghĩa là hộ cần pin lưu trữ thực sự
+ *      (≥5 kWh) để bù vào khoảng thiếu buổi tối, nên ta nâng từ LITE lên.
  *
  * The output is always a valid NgPlanId. The capped output is the
  * BUSINESS Flagship 3-Phase (the last plan in NG_PLANS). If the user
@@ -498,15 +482,17 @@ export function recommendPlan(c: ConsultationInput): NgPlanId {
 export interface PlanRoi {
   /** Year-1 solar generation (kWh). */
   annualGenerationKwh: number
-  /** Year-1 self-consumed kWh (replaces grid first, then generator). */
+  /** Year-1 self-consumed kWh (thay thế điện lưới trước, sau đó nguồn dự phòng). */
   annualSelfConsumedKwh: number
-  /** Year-1 exported kWh. NG: feed-in tariff is minimal, so income is small. */
+  /** Year-1 exported kWh. Giá điện phát lên lưới chưa xác nhận nên thu nhập
+   *  hiện được tính bằng 0. */
   annualExportedKwh: number
   /** Year-1 grid-cost offset (₦). */
   annualGridOffsetNgn: number
-  /** Year-1 generator-fuel offset (₦). Capped by reported fuel budget. */
+  /** Khoản chi phí năng lượng được thay thế trong năm 1 (₦). Giới hạn
+   *  theo ngân sách năng lượng đã khai báo. */
   annualGeneratorOffsetNgn: number
-  /** Year-1 export income (₦). NG: typically ₦0. */
+  /** Year-1 export income (₦). Hiện được tính bằng ₦0. */
   annualExportIncomeNgn: number
   /** Year-1 gross saving (₦). */
   annualSavingNgn: number
@@ -525,11 +511,11 @@ export interface PlanRoi {
   /** System price used (₦). */
   priceNgn: number
   /**
-   * The actual annual fuel cost (₦) the calculator used as the
-   * cap for generator savings. Surfaces the value path A or path
-   * B resolved to (band midpoint, back-derive, or user override)
-   * so the UI can show "this is what we assumed" instead of a
-   * magic number.
+   * Chi phí năng lượng hằng năm thực tế (₦) mà công cụ dùng làm mức
+   * trần cho khoản tiết kiệm. Hiển thị giá trị mà nhánh A hoặc nhánh B
+   * đã chọn (điểm giữa của khoảng, suy ngược, hoặc người dùng ghi đè) để
+   * giao diện có thể nói "đây là giả định của chúng tôi" thay vì một con
+   * số khó hiểu.
    */
   appliedAnnualFuelCostNgn: number
   /**
@@ -541,7 +527,7 @@ export interface PlanRoi {
   appliedRegionYield: number
   /** Annual kWh used to size the savings (kWh). */
   appliedAnnualKwh: number
-  /** Generator share of the pie used to split grid vs generator. */
+  /** Tỷ lệ phần nguồn dự phòng dùng để chia điện lưới và nguồn dự phòng. */
   appliedGeneratorShare: number
 
   /* ────── backward-compat aliases ──────
@@ -561,21 +547,22 @@ export interface PlanRoi {
 }
 
 /**
- * Internal: estimate the current generator fuel spend per year.
+ * Internal: ước tính chi phí năng lượng hiện tại mỗi năm.
  *
- * Path A (user picked a band): use the band midpoint directly. The
- * cap is the user's own number, so no further clipping.
+ * Path A (người dùng chọn một khoảng): dùng trực tiếp điểm giữa của
+ * khoảng. Mức trần chính là con số người dùng đưa ra nên không cắt thêm.
  *
- * Path B (user picked "Not sure"): back-derive from generator share
- * + estimated kWh + fuel constants for the plan's fuel type, then
- * clip to the segment-aware hard cap (`NOT_SURE_HARD_CAP_NGN_PER_YEAR`).
- * The clip matters: without it, the back-derive equals the
- * theoretical maximum, so `genOffsetNgn = min(theoretical, theoretical)`
- * collapses to "no constraint at all" — every "Not sure" user
- * would get the full theoretical saving. The cap restores a
- * reasonable upper bound until the user reports an actual figure.
+ * Path B (người dùng chọn "Không chắc chắn"): suy ngược từ tỷ lệ nguồn
+ * dự phòng + kWh ước tính + các hằng số năng lượng của loại nhiên liệu
+ * tương ứng, sau đó cắt theo mức trần cứng của phân khúc
+ * (`NOT_SURE_HARD_CAP_NGN_PER_YEAR`). Việc cắt này rất quan trọng: nếu
+ * không, phép suy ngược bằng đúng mức tối đa lý thuyết, nên
+ * `genOffsetNgn = min(theoretical, theoretical)` sẽ thành "không có giới
+ * hạn nào" — mọi người dùng "Không chắc chắn" đều nhận toàn bộ khoản
+ * tiết kiệm lý thuyết. Mức trần khôi phục một giới hạn trên hợp lý cho
+ * đến khi người dùng báo con số thực tế.
  *
- * Returns ₦/year.
+ * Trả về ₦/năm.
  */
 function estimateAnnualFuelCostNgn(
   c: ConsultationInput,
@@ -605,75 +592,77 @@ function estimateAnnualFuelCostNgn(
 }
 
 /**
- * Run the full NG ROI pipeline for a given plan + consultation. Pure
- * function, no I/O. The math is documented in the file header.
+ * Chạy toàn bộ quy trình ROI cho một gói + hồ sơ tư vấn. Hàm thuần, không
+ * có I/O. Phần toán được mô tả ở đầu tệp.
  */
 export function calculateROI(
   plan: NgPlan,
   c: ConsultationInput,
   /**
-   * User-tweakable annual fuel budget override (₦/year). When set,
-   * replaces both the band-midpoint cap (path A) and the back-derive
-   * + hard-cap (path B). Used by the "Not sure" slider in
-   * `CustomiseCard` so the user can dial the assumed spend up or down
-   * without re-running the consultation form.
+   * Ghi đè ngân sách năng lượng hằng năm do người dùng điều chỉnh
+   * (₦/năm). Khi được đặt, giá trị này thay thế cả mức trần lấy từ điểm
+   * giữa của khoảng (nhánh A) lẫn phép suy ngược + mức trần cứng (nhánh
+   * B). Dùng bởi thanh trượt "Không chắc chắn" trong `CustomiseCard` để
+   * người dùng có thể tăng/giảm mức chi phí giả định mà không cần chạy
+   * lại biểu mẫu tư vấn.
    */
   userFuelBudgetOverrideNgn?: number,
 ): PlanRoi {
-  // 1. Total annual kWh and grid/generator split.
+  // 1. Tổng kWh hằng năm và cách chia điện lưới / nguồn dự phòng.
   const annualKwh = USAGE_KWH_PER_YEAR[c.electricityUsage] ?? USAGE_KWH_PER_YEAR.unknown
   const genShare = GEN_SHARE_BY_FREQUENCY[c.generatorFrequency] ?? GEN_SHARE_BY_FREQUENCY.unknown
   const gridKwh = annualKwh * (1 - genShare)
   const generatorKwh = annualKwh * genShare
 
-  // 2. Estimated fuel spend (used to cap the savings claim). The fuel
-  //    type follows the plan's segment: homes → PMS, businesses → AGO.
+  // 2. Chi phí năng lượng ước tính (dùng để giới hạn khoản tiết kiệm).
+  //    Loại nhiên liệu theo phân khúc của gói: homes → PMS,
+  //    businesses → AGO.
   const fuelType = fuelTypeFor(plan)
   const { capNgn: annualFuelCostNgn, overridden: fuelCostOverridden } =
     estimateAnnualFuelCostNgn(c, generatorKwh, fuelType, plan.segment, userFuelBudgetOverrideNgn)
 
-  // 3. Solar year-1 generation.
+  // 3. Sản lượng điện mặt trời năm 1.
   const regionYield = NG_REGION_YIELD[c.region] ?? NG_REGION_YIELD_FALLBACK
   const year1GenKwh = plan.kwp * regionYield
 
-  // 4. Self-consumption (battery boosts).
+  // 4. Tự tiêu thụ (pin lưu trữ giúp tăng tỷ lệ này).
   const selfConsumptionRate = selfConsumptionRateFor(plan)
   const selfConsumedKwh = Math.min(year1GenKwh * selfConsumptionRate, annualKwh)
   const exportedKwh = Math.max(0, year1GenKwh - selfConsumedKwh)
 
-  // 5. Displacement - the no-double-count rule.
-  // First the grid, then the generator.
+  // 5. Thay thế - quy tắc không tính trùng.
+  // Trước hết là điện lưới, sau đó là nguồn dự phòng.
   const gridDisplacedKwh = Math.min(selfConsumedKwh, gridKwh)
   const gridOffsetNgn = gridDisplacedKwh * NG_GRID_TARIFF_NGN_PER_KWH
 
   const genDisplacedKwh = Math.max(0, selfConsumedKwh - gridKwh)
-  // kWh per ₦ from the generator: (kWh per litre) / (₦ per litre).
-  // Plan's fuel type picks the constants — PMS for homes, AGO for
-  // businesses. Each combination gives a different implicit ₦/kWh
-  // cost of generator power, which the offset and the path-B cap both
-  // thread through.
+  // kWh mỗi ₦ của nguồn dự phòng: (kWh mỗi lít) / (₦ mỗi lít). Loại
+  // nhiên liệu của gói quyết định hằng số — PMS cho homes, AGO cho
+  // businesses. Mỗi tổ hợp cho một chi phí quy đổi ₦/kWh khác nhau, và
+  // giá trị này được dùng cho cả phần thay thế lẫn mức trần của nhánh B.
   const fuelPricePerLitre = fuelType === 'ago' ? NG_AGO_PRICE_NGN_PER_LITRE : NG_PMS_PRICE_NGN_PER_LITRE
   const fuelKwhPerLitre    = fuelType === 'ago' ? NG_AGO_KWH_PER_LITRE        : NG_PMS_KWH_PER_LITRE
   const genKwhPerNgn = fuelKwhPerLitre / fuelPricePerLitre
   const potentialGenOffsetNgn = genDisplacedKwh / genKwhPerNgn
-  // Cap at the user's actual fuel spend - we cannot claim more savings
-  // than they were spending. This is the key "don't over-state"
-  // guarantee.
+  // Giới hạn theo chi phí năng lượng thực tế của người dùng - không thể
+  // ghi nhận khoản tiết kiệm lớn hơn mức họ đang chi. Đây là bảo đảm
+  // cốt lõi "không phóng đại".
   const genOffsetNgn = Math.min(potentialGenOffsetNgn, annualFuelCostNgn)
 
-  // 6. Export income (NG: minimal feed-in tariff).
+  // 6. Thu nhập từ phát điện lên lưới (hiện tính bằng 0 vì giá chờ xác nhận).
   const exportIncomeNgn = exportedKwh * 0
 
-  // 7. Annual opex. Currently 0 (ideal mode — see NG_OPEX_PCT comment).
-  //    When re-introduced, swap back to `plan.priceNgn * NG_OPEX_PCT`
-  //    and the 30-year loop below will pick it up automatically.
+  // 7. Chi phí vận hành hằng năm. Hiện bằng 0 (chế độ lý tưởng — xem
+  //    chú thích NG_OPEX_PCT). Khi bật lại, đổi về
+  //    `plan.priceNgn * NG_OPEX_PCT` và vòng lặp 30 năm bên dưới sẽ tự
+  //    động áp dụng.
   const opexNgn = plan.priceNgn * NG_OPEX_PCT
 
-  // 8. Totals. In ideal mode `netSavingsNgn == grossSavingsNgn`.
+  // 8. Tổng cộng. Ở chế độ lý tưởng `netSavingsNgn == grossSavingsNgn`.
   const grossSavingsNgn = gridOffsetNgn + genOffsetNgn + exportIncomeNgn
   const netSavingsNgn = grossSavingsNgn - opexNgn
 
-  // 9. Payback on the system price (clamped to lifetime).
+  // 9. Thời gian hoàn vốn trên giá hệ thống (giới hạn theo vòng đời).
   const paybackYears =
     netSavingsNgn > 0
       ? Math.min(
@@ -682,7 +671,7 @@ export function calculateROI(
         )
       : Infinity
 
-  // 10. 30-year lifetime sum, applying degradation year-by-year.
+  // 10. Tổng vòng đời 30 năm, áp dụng suy giảm theo từng năm.
   let total30YearSaving = 0
   for (let i = 0; i < NG_PROJECT_LIFETIME_YEARS; i++) {
     const yearGen = year1GenKwh * DEGRADATION_FACTORS[i]
@@ -744,18 +733,18 @@ export function calculateROI(
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   Backward-compat re-exports
-   The components and admin tables still import the old UK `PLANS`,
-   `Plan`, `PlanId`, `RoiAssumptions` names. Until those consumers are
-   migrated to the NG types we keep aliases that point at the NG
-   catalogue. The numeric values are ₦ now, not £ - so the old
-   `formatGBP` consumers should switch to `formatNGN`.
+   Xuất lại để tương thích ngược
+   Các component và bảng admin vẫn import các tên `PLANS`, `Plan`,
+   `PlanId`, `RoiAssumptions` kiểu UK cũ. Cho đến khi các nơi gọi này
+   được chuyển sang kiểu hiện tại, ta giữ các alias trỏ vào danh mục hiện
+   hành. Giá trị số hiện là ₦, không phải £ - nên các nơi còn dùng
+   `formatGBP` nên chuyển sang `formatNGN`.
    ────────────────────────────────────────────────────────────────────── */
 
 export type Plan = NgPlan
 export type PlanId = NgPlanId
 
-/** Legacy UK plan list, retained as an alias of the NG catalogue. */
+/** Danh sách gói kiểu UK cũ, được giữ làm alias của danh mục hiện hành. */
 export const PLANS: Plan[] = NG_PLANS
 
 export function getPlan(id: PlanId): Plan {
@@ -763,7 +752,7 @@ export function getPlan(id: PlanId): Plan {
 }
 
 export function findPlanByPrice(_priceGbp: number): Plan | undefined {
-  // Legacy: price lookups were by GBP. The NG catalogue keys by id -
+  // Legacy: price lookups were by GBP. The current catalogue keys by id -
   // callers that previously used this should switch to `getNgPlan(id)`.
   return undefined
 }
@@ -773,10 +762,10 @@ export type ConsumptionTierCompat = ConsumptionTier
 /** Legacy alias. */
 export type HeavyDeviceCompat = HeavyDevice
 
-/** Legacy default assumptions - used to be £0.2632/kWh import, £0.15/kWh
- *  export. The NG calculator ignores these and uses NG tariff constants
- *  baked in. Kept exported so any import that still references them
- *  doesn't break at compile time. */
+/** Giả định mặc định cũ - từng là £0.2632/kWh giá mua và £0.15/kWh giá
+ *  bán. Công cụ tính hiện bỏ qua các giá trị này và dùng các hằng số biểu
+ *  giá tích hợp sẵn. Vẫn được xuất để mọi import còn tham chiếu không bị
+ *  lỗi biên dịch. */
 export interface RoiAssumptions {
   importPriceGbp: number
   exportPriceGbp: number

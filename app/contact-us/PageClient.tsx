@@ -8,26 +8,27 @@ import ContactForm from '@/components/contact/ContactForm'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /contact-us - Solavita Nigeria contact destination.
+ * /contact-us - Solavita Việt Nam contact destination.
  *
  * Composition mirrors the original UK v1 page (`UK.solavita/app/contact-us`):
  *   Header → Hero → Contact Methods → Contact Form → CTA → Footer
  *
- * The four section components used here are NG-localised:
- *   - components/contact/Hero           "Speak with our Nigerian team"
- *                                        uses /images/hero-contact.webp.
- *   - components/contact/ContactMethods ng@solavita.com, NG channels with
+ * The four section components used here are VN-localised:
+ *   - components/contact/Hero           "Trao đổi trực tiếp với đội ngũ
+ *                                        Solavita Việt Nam", uses
+ *                                        /images/hero-contact.webp.
+ *   - components/contact/ContactMethods vn@solavita.com, VN channels with
  *                                        clipboard fallback + toast.
- *   - components/contact/ContactForm    +234 phone placeholder, Lagos
- *                                        city placeholder, NDPR consent,
- *                                        Nigerian-team success copy.
+ *   - components/contact/ContactForm    +84 phone placeholder, Hà Nội
+ *                                        city placeholder, consent copy,
+ *                                        Vietnamese-team success copy.
  *                                        Submits to /api/contact.
- *   - components/solutions/CTA          opens the NG consultation modal
+ *   - components/solutions/CTA          opens the VN consultation modal
  *                                        via the shared `openFormModal()`
  *                                        event bus.
  *
  * Form behaviour: posts JSON to /api/contact, which writes to the
- * `ng_contact_leads` table and fires both the customer-confirmation
+ * `vn_contact_leads` table and fires both the customer-confirmation
  * and team-notification emails. On 2xx the form swaps to an inline
  * success card; on non-2xx it shows a readable error and keeps the
  * values.
@@ -44,15 +45,15 @@ export default function ContactUsPage() {
       <ContactForm />
 
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            Have a Project in Mind?
+            Bạn đang có dự án trong đầu?
             <br />
-            <span className="text-gradient">Start with a Free Quote.</span>
+            <span className="text-gradient">Bắt đầu với báo giá miễn phí.</span>
           </>
         }
-        description="Tell us what you want to power — our Nigerian team will put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home or business."
+        description="Hãy cho chúng tôi biết bạn muốn cấp điện cho điều gì — đội ngũ Solavita Việt Nam sẽ thiết kế miễn phí, không ràng buộc, để bạn thấy hệ thống điện mặt trời, lưu trữ hoặc trọn bộ nguồn điện cho gia đình hay doanh nghiệp của mình sẽ như thế nào."
       />
 
       <Footer />

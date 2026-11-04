@@ -58,14 +58,14 @@ export default function PhoneShowcase() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Solavita Monitoring App
+            Ứng dụng giám sát Solavita
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Energy <span className="text-gradient">Dashboard</span>
+            Bảng điều khiển <span className="text-gradient">năng lượng</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular max-w-2xl mx-auto leading-relaxed">
-            Live energy flows across your home — solar, battery, air
-            conditioner, generator and grid — on a single screen.
+            Theo dõi dòng năng lượng trực tiếp trong ngôi nhà của bạn —
+            điện mặt trời, pin lưu trữ, điều hòa và lưới điện — trên một màn hình duy nhất.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function PhoneShowcase() {
             {/* Notch */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-sv-dark rounded-b-2xl z-10" />
             <img
-              alt="Solavita Monitoring App – Energy Dashboard"
+              alt="Ứng dụng giám sát Solavita – Bảng điều khiển năng lượng"
               loading="lazy"
               className="w-full h-auto block"
               src="/images/cloud-app-data.webp"
@@ -91,7 +91,7 @@ export default function PhoneShowcase() {
             href="https://apps.apple.com/us/app/skyworth-pv/id6499499800"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="App Store download"
+            aria-label="Tải ứng dụng trên App Store"
             className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-uk-teal-soft border border-uk-teal/30 hover:bg-uk-teal-soft/80 hover:border-uk-teal/60 transition-colors"
           >
             <svg
@@ -104,7 +104,7 @@ export default function PhoneShowcase() {
             </svg>
             <div className="text-left">
               <div className="text-[10px] text-uk-slate font-cw-regular">
-                Download on the
+                Tải trên
               </div>
               <div className="text-sm font-cw-bold text-uk-navy">
                 App Store
@@ -116,7 +116,7 @@ export default function PhoneShowcase() {
             href="https://play.google.com/store/apps/details?id=com.solavita.cloud"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Google Play download"
+            aria-label="Tải ứng dụng trên Google Play"
             className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-uk-teal-soft border border-uk-teal/30 hover:bg-uk-teal-soft/80 hover:border-uk-teal/60 transition-colors"
           >
             <svg
@@ -131,7 +131,7 @@ export default function PhoneShowcase() {
             </svg>
             <div className="text-left">
               <div className="text-[10px] text-uk-slate font-cw-regular">
-                Get it on
+                Tải trên
               </div>
               <div className="text-sm font-cw-bold text-uk-navy">
                 Google Play

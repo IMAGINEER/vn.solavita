@@ -32,7 +32,7 @@ export default function Breadcrumb({ items, theme = 'dark' }: BreadcrumbProps) {
   const sepText = isLight ? 'text-white/40' : 'text-[#9CA3AF]'
 
   return (
-    <nav className="hidden lg:block" aria-label="Breadcrumb">
+    <nav className="hidden lg:block" aria-label="Đường dẫn">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

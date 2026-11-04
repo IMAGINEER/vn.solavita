@@ -14,9 +14,9 @@ gsap.registerPlugin(ScrollTrigger)
  * Per `docs/修改建议(2).docx`:
  *   - Residential 详情页 ②优势-解决方案整体优势
  *       eyebrow : "POWERED BY VITAL LIFE."
- *       DIESEL, STEP DOWN. / BLACKOUT-PROOF NIGHTS. / ONE SCREEN. FULL CONTROL.
+ *       ENERGY COSTS, STEP DOWN. / BLACKOUT-PROOF NIGHTS. / ONE SCREEN. FULL CONTROL.
  *   - Commercial & Industrial 详情页 ②优势-解决方案优势
- *       Zero Downtime / Cut Diesel / Built Tough
+ *       Zero Downtime / Cut Energy Costs / Built Tough
  *
  * Layout — the three advantages are NOT three separate cards. They are
  * three parts of ONE card: each part is a full-width band with its own
@@ -29,7 +29,7 @@ gsap.registerPlugin(ScrollTrigger)
  */
 
 export interface SolutionAdvantage {
-  /** Headline, e.g. "DIESEL, STEP DOWN." */
+  /** Headline, e.g. "ENERGY COSTS, STEP DOWN." */
   title: string
   /** One-line body. */
   body: string

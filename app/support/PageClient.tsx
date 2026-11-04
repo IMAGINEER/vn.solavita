@@ -40,15 +40,15 @@ export default function SupportPage() {
       <ContactSupport />
 
       <CTA
-        eyebrow="Need a new system?"
+        eyebrow="Cần một hệ thống mới?"
         title={
           <>
-            Not a Current Customer Yet?
+            Bạn chưa phải khách hàng?
             <br />
-            <span className="text-gradient">Start with a Free Design.</span>
+            <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="If you are still researching, our team can put together a free, no-obligation design showing what solar, storage or a full home energy system would look like for your home."
+        description="Nếu bạn vẫn đang tìm hiểu, đội ngũ của chúng tôi có thể chuẩn bị một thiết kế miễn phí, không ràng buộc, cho thấy hệ thống điện mặt trời, pin lưu trữ hoặc hệ thống năng lượng trọn nhà sẽ như thế nào với ngôi nhà của bạn."
       />
 
       <Footer />

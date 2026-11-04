@@ -24,14 +24,14 @@ export interface PartnerLead {
 
 function formatDateTime(iso: string): string {
   try {
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat('vi-VN', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-      timeZone: 'Africa/Lagos',
+      timeZone: 'Asia/Ho_Chi_Minh',
     }).format(new Date(iso))
   } catch {
     return iso
@@ -46,15 +46,15 @@ const TRACK_VARIANT: Record<string, BadgeVariant> = {
 }
 
 const TRACK_LABEL: Record<string, string> = {
-  installer: 'Installer',
-  business: 'Energy / Business',
+  installer: 'Đơn vị lắp đặt',
+  business: 'Năng lượng / Doanh nghiệp',
 }
 
 export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
   if (partners.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        No partner enquiries yet.
+        Chưa có yêu cầu hợp tác nào.
       </div>
     )
   }
@@ -64,13 +64,13 @@ export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Time</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Company</TableHead>
+            <TableHead>Thời gian</TableHead>
+            <TableHead>Họ tên</TableHead>
+            <TableHead>Công ty</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Track</TableHead>
-            <TableHead className="max-w-[20rem]">About</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>Nhóm đối tác</TableHead>
+            <TableHead className="max-w-[20rem]">Giới thiệu</TableHead>
+            <TableHead>Trạng thái</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -101,7 +101,7 @@ export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
               </TableCell>
               <TableCell>
                 <Badge variant={p.status === 'new' ? 'success' : 'outline'}>
-                  {p.status || 'new'}
+                  {p.status === 'new' ? 'Mới' : p.status || 'Mới'}
                 </Badge>
               </TableCell>
             </TableRow>

@@ -130,13 +130,13 @@ export default function FormModal({
           type="button"
           onClick={onClose}
           className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-9 h-9 rounded-full bg-white/95 hover:bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 shadow-sm transition-colors"
-          aria-label="Close form"
+          aria-label="Đóng biểu mẫu"
         >
           <X className="w-5 h-5" strokeWidth={2} />
         </button>
 
         <h2 id="form-modal-title" className="sr-only">
-          Get your free solar design and quote
+          Nhận thiết kế và báo giá điện mặt trời miễn phí
         </h2>
 
         {/* Scrollable body — the form content scrolls here, NOT the

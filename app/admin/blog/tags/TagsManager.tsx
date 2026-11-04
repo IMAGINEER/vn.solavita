@@ -26,7 +26,7 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
       })
       const json = (await res.json()) as { success: boolean; error?: string }
       if (!res.ok || !json.success) {
-        setError(json.error ?? 'Error')
+        setError(json.error ?? 'Đã có lỗi xảy ra')
         return
       }
       setDraft({ slug: '', name_en: '' })
@@ -38,13 +38,13 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
 
   const handleDelete = useCallback(
     async (id: string) => {
-      if (!window.confirm('Delete this tag?')) return
+      if (!window.confirm('Xoá thẻ này?')) return
       const res = await fetch(`/api/admin/blog/tags?id=${id}`, {
         method: 'DELETE',
       })
       const json = (await res.json()) as { success: boolean; error?: string }
       if (!res.ok || !json.success) {
-        alert(json.error ?? 'Deletion failed')
+        alert(json.error ?? 'Xoá thất bại')
         return
       }
       router.refresh()
@@ -57,13 +57,13 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
       <section className="lg:col-span-2 rounded-2xl border border-uk-line bg-white overflow-hidden">
         {tags.length === 0 ? (
           <div className="text-center text-uk-slate py-12">
-            No tags. Add one on the right.
+            Chưa có thẻ nào. Hãy thêm ở bên phải.
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead className="bg-uk-teal-soft/50 text-uk-slate">
               <tr>
-                <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">Name</th>
+                <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">Tên</th>
                 <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">Slug</th>
                 <th className="text-right font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5 w-20" />
               </tr>
@@ -78,7 +78,7 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDelete(t.id)}
-                      aria-label="Delete"
+                      aria-label="Xoá"
                     >
                       <Trash2 className="size-4" />
                     </Button>
@@ -95,15 +95,15 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
         className="rounded-2xl border border-uk-line bg-white p-5 space-y-3 h-fit"
       >
         <h2 className="text-sm font-cw-bold text-uk-navy uppercase tracking-wider">
-          Add tag
+          Thêm thẻ
         </h2>
         <div>
-          <Label htmlFor="tag-name">Name</Label>
+          <Label htmlFor="tag-name">Tên</Label>
           <Input
             id="tag-name"
             value={draft.name_en}
             onChange={(e) => setDraft((d) => ({ ...d, name_en: e.target.value }))}
-            placeholder="Solar PV"
+            placeholder="Điện mặt trời"
             required
             className="mt-1.5"
           />
@@ -114,7 +114,7 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
             id="tag-slug"
             value={draft.slug}
             onChange={(e) => setDraft((d) => ({ ...d, slug: e.target.value }))}
-            placeholder="solar-pv"
+            placeholder="dien-mat-troi"
             required
             className="mt-1.5 font-mono"
           />
@@ -122,7 +122,7 @@ export function TagsManager({ tags }: { tags: BlogTag[] }) {
         {error && <p className="text-xs text-red-600">{error}</p>}
         <Button type="submit" disabled={saving}>
           {saving ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
-          Add
+          Thêm
         </Button>
       </form>
     </div>

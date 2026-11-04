@@ -14,13 +14,13 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Solar Installer & Business Partnerships | Solavita Nigeria',
+  title: 'Hợp tác lắp đặt & kinh doanh điện mặt trời | Solavita Việt Nam',
   path: '/for-partners',
   description:
-    'Explore partnership opportunities with Solavita Nigeria for solar customer referrals, installation services and local energy solutions.',
+    'Khám phá cơ hội hợp tác cùng Solavita Việt Nam: giới thiệu khách hàng điện mặt trời, dịch vụ lắp đặt và giải pháp năng lượng tại địa phương.',
   ogImage: '/images/og-partners.jpg',
   ogImageAlt:
-    'Solavita Nigeria partnerships - installer, referral and community programmes',
+    'Hợp tác cùng Solavita Việt Nam - chương trình đơn vị lắp đặt, giới thiệu khách hàng và đối tác dịch vụ',
 })
 
 /**
@@ -32,12 +32,10 @@ export const metadata = buildPageMetadata({
  *   into Why Partner as a 6-card block) -> How Partnership Works
  *   (horizontal process timeline) -> Partner CTA / Enquiry Form
  *
- * Three NG tracks are offered: installer, referral, community. The
- * previous Distributor track has been removed from the NG programme.
+ * Three VN tracks are offered: Đối tác dịch vụ chính, Đơn vị lắp đặt
+ * được chứng nhận, Đối tác giới thiệu khách hàng.
  *
- * No new backend - the enquiry form is a visual placeholder per the
- * project brief. Submits to a no-op handler so the page is
- * demonstrably a destination without leaking email addresses.
+ * The enquiry form posts to /api/partner → `vn_partner_leads`.
  */
 export default function ForPartnersPage() {
   return (
@@ -46,14 +44,14 @@ export default function ForPartnersPage() {
         data={[
           webPageJsonLd({
             path: '/for-partners',
-            name: 'Solar Installer & Business Partnerships | Solavita Nigeria',
+            name: 'Hợp tác lắp đặt & kinh doanh điện mặt trời | Solavita Việt Nam',
             description:
-              'Explore partnership opportunities with Solavita Nigeria for solar customer referrals, installation services and local energy solutions in Nigeria.',
+              'Khám phá cơ hội hợp tác cùng Solavita Việt Nam: giới thiệu khách hàng điện mặt trời, dịch vụ lắp đặt và giải pháp năng lượng tại Việt Nam.',
           }),
           partnerProgramJsonLd(),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'For Partners', url: '/for-partners' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Dành cho đối tác', url: '/for-partners' },
           ]),
         ]}
       />

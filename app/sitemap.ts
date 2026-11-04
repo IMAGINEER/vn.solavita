@@ -23,8 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // next.config.js#trailingSlash.
   const staticPaths: Array<{ path: string; priority: number }> = [
     { path: '/', priority: 1.0 },
-    // The two collection pages replace the legacy /solutions overview
-    // (per content/nigeria/solutions.md). Both point at the same hero
+    // The two collection pages replace the legacy /solutions overview. Both point at the same hero
     // asset and a 0.9 priority so they rank at the same level as the
     // old overview did.
     { path: '/solutions/home-solar', priority: 0.9 },
@@ -61,9 +60,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // No per-tier /solutions/[slug]/ detail pages. Per the collection-pages
-  // brief (content/nigeria/solutions.md) the two collection pages
+  // brief the two collection pages
   // (/solutions/home-solar and /solutions/business-solar) are the only
-  // entry points for the six NG packages - the comparison table, FAQs
+  // entry points for the six VN packages - the comparison table, FAQs
   // and tailored CTA on each collection page surface the tier-level
   // content directly. Per-tier Product schema and SEO live on the
   // collection page itself.
@@ -71,7 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const [categories, posts] = await Promise.all([
       // Only emit category landing pages that have at least one
-      // published NG post — matches the public page rule (the dynamic
+      // published VN post — matches the public page rule (the dynamic
       // route also 404s empty categories via `onlyWithPublishedPosts`).
       getCategories({ onlyWithPublishedPosts: true }),
       listAllPublishedForSitemap(),
@@ -109,9 +108,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Case-study detail pages are intentionally NOT listed here. The
-  // public surface is the /cases index only (`lib/data/ng-cases.ts`
-  // holds the 16 reference installations, none of which has a detail
-  // page yet). When real NG cases are added, the detail route is
+  // public surface is the /cases index only (`lib/data/vn-cases.ts`
+  // holds the reference installations, none of which has a detail
+  // page yet). When real VN cases are added, the detail route is
   // reintroduced behind a noindex meta so neither signal nor sitemap
   // list it - keeping the two signals in agreement.
 

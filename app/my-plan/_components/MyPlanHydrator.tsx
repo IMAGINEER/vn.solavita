@@ -120,16 +120,16 @@ function LoadingSkeleton({ identifier }: { identifier: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'My Plan' },
+              { label: 'Trang chủ', href: '/' },
+              { label: 'Phương án của tôi' },
             ]}
           />
 
           <h1 className="text-3xl lg:text-4xl font-cw-bold text-[#0A1628] mt-6 mb-2">
-            Your Initial Solar Plan
+            Phương án điện mặt trời ban đầu của bạn
           </h1>
           <p className="text-sm text-[#4A5568] mb-4">
-            Loading your personalised plan...
+            Đang tải phương án cá nhân hóa của bạn...
             <span className="ml-2 inline-flex items-center gap-1 text-uk-slate/80">
               <span className="hidden sm:inline">·</span>
               <code className="px-1.5 py-0.5 rounded bg-white border border-uk-line text-xs">

@@ -26,7 +26,7 @@ export interface BlogHeroProps {
   h1Accent?: string
   /** Subhead under the headline. Pass empty string to hide. */
   subhead?: string
-  /** Optional breadcrumb items above the badge. Defaults to Home → Blog. */
+  /** Optional breadcrumb items above the badge. Defaults to Trang chủ → Blog. */
   breadcrumb?: Array<{ label: string; href?: string }>
   /**
    * Optional meta strip rendered below the subhead. Used by the
@@ -79,7 +79,7 @@ export function BlogHero({
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <Breadcrumb
           theme="light"
-          items={breadcrumb ?? [{ label: 'Home', href: '/' }, { label: 'Blog' }]}
+          items={breadcrumb ?? [{ label: 'Trang chủ', href: '/' }, { label: 'Blog' }]}
         />
 
         <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mt-6">

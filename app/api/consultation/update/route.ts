@@ -39,11 +39,8 @@ export async function POST(request: Request) {
       // is required by the form so it stays required here.
       city,
       propertyType,
-      // Step 3 — householdSize required; the two optional NG fields
-      // are passed through.
+      // Step 3 — householdSize required.
       householdSize,
-      generatorFrequency,
-      fuelBudgetNgn,
     } = body
 
     // Validate the bearer. UUID-only - same regex the lookup route uses
@@ -55,9 +52,8 @@ export async function POST(request: Request) {
       )
     }
 
-    // Validate the 3 editable required fields. The form requires
-    // city + propertyType + householdSize; the optional Step-3 fields
-    // (generatorFrequency, fuelBudgetNgn) are skipped if missing.
+    // Validate the 3 editable required fields: city + propertyType +
+    // householdSize.
     const missing: string[] = []
     if (!city) missing.push('city')
     if (!propertyType) missing.push('propertyType')
@@ -72,21 +68,21 @@ export async function POST(request: Request) {
       )
     }
 
-    // Find the row. `.eq('country', 'ng')` keeps other sites' tokens
+    // Find the row. `.eq('country', 'vn')` keeps other sites' tokens
     // out of this endpoint even if they're somehow reachable - defence-
     // in-depth since the form is only ever opened from /my-plan on
-    // the NG site.
+    // the VN site.
     const { data: existing, error: lookupError } = await supabase
       .from('consultation_leads')
       .select('id')
       .eq('plan_token', planToken)
-      .eq('country', 'ng')
+      .eq('country', 'vn')
       .maybeSingle()
 
     if (lookupError) {
       console.error('[/api/consultation/update] lookup error:', lookupError)
       return NextResponse.json(
-        { success: false, message: 'Something went wrong. Please try again.' },
+        { success: false, message: 'Đã xảy ra lỗi. Vui lòng thử lại.' },
         { status: 500 },
       )
     }
@@ -110,15 +106,10 @@ export async function POST(request: Request) {
       city,
       house_type: propertyType,
       household_size: householdSize,
-      // NG optional Step-3 fields - same 'unknown'→NULL rule as the
-      // main endpoint so admin LeadsTable doesn't render a literal
-      // 'unknown' string.
-      generator_frequency:
-        generatorFrequency && generatorFrequency !== 'unknown'
-          ? generatorFrequency
-          : null,
-      fuel_budget_ngn:
-        fuelBudgetNgn && fuelBudgetNgn !== 'unknown' ? fuelBudgetNgn : null,
+      // Generator/fuel fields are no longer collected on the VN site;
+      // keep them NULL so historical rows from other country sites stay put.
+      generator_frequency: null,
+      fuel_budget_ngn: null,
       updated_at: new Date().toISOString(),
     }
 
@@ -130,14 +121,14 @@ export async function POST(request: Request) {
     if (updateError) {
       console.error('[/api/consultation/update] update error:', updateError)
       return NextResponse.json(
-        { success: false, message: 'Something went wrong. Please try again.' },
+        { success: false, message: 'Đã xảy ra lỗi. Vui lòng thử lại.' },
         { status: 500 },
       )
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Your details have been updated.',
+      message: 'Thông tin của bạn đã được cập nhật.',
     })
   } catch (error) {
     console.error('[/api/consultation/update] error:', error)

@@ -74,7 +74,7 @@ export default function ProductCard({
           onClick={onChange}
           className="text-uk-teal hover:text-uk-teal-dark text-sm font-cw-bold transition-colors"
         >
-          Change plan ›
+          Đổi gói ›
         </button>
       </div>
     </article>

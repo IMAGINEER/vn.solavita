@@ -10,8 +10,8 @@ import Footer from '@/components/Footer'
 // `robots: { index: true, follow: true }` and would have indexed; this
 // override flips both to false.
 export const metadata: Metadata = {
-  title: 'Page Not Found',
-  description: 'The page you are looking for could not be found.',
+  title: 'Không tìm thấy trang',
+  description: 'Không thể tìm thấy trang Bạn đang tìm kiếm.',
   robots: { index: false, follow: false },
   // No canonical on 404 - crawlers should NOT pin this URL.
   alternates: { canonical: undefined },
@@ -28,11 +28,12 @@ export default function NotFound() {
             404
           </p>
           <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-cw-bold text-uk-navy leading-tight">
-            Page not found
+            Không tìm thấy trang
           </h1>
           <p className="mt-6 text-base md:text-lg font-cw-regular text-uk-slate leading-relaxed">
-            The page you are looking for might have moved, been retired, or
-            never existed. Use one of the links below to get back on track.
+            Trang Bạn đang tìm kiếm có thể đã được di chuyển, ngừng sử dụng hoặc
+            chưa từng tồn tại. Hãy sử dụng một trong các liên kết dưới đây để
+            tiếp tục.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -40,21 +41,21 @@ export default function NotFound() {
               href="/"
               className="inline-flex items-center justify-center h-12 px-6 text-sm font-cw-bold rounded-full bg-uk-teal-dark text-white hover:bg-uk-teal transition-colors"
             >
-              Back to homepage
+              Về trang chủ
             </Link>
             <Link
               href="/contact-us"
               className="inline-flex items-center justify-center h-12 px-6 text-sm font-cw-bold rounded-full border border-uk-line bg-white text-uk-navy hover:border-uk-teal/40 transition-colors"
             >
-              Contact support
+              Liên hệ hỗ trợ
             </Link>
           </div>
 
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-left">
             {[
-              { label: 'Solutions', href: '/solutions/home-solar' },
-              { label: 'Case Studies', href: '/cases' },
-              { label: 'About Solavita', href: '/about-us' },
+              { label: 'Giải pháp', href: '/solutions/home-solar' },
+              { label: 'Dự án tiêu biểu', href: '/cases' },
+              { label: 'Về Solavita', href: '/about-us' },
               { label: 'Blog', href: '/blog' },
             ].map((l) => (
               <Link

@@ -76,14 +76,14 @@ export default function PartnerTypes() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Partnership tracks
+            Hình thức hợp tác
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Pick the Partnership{' '}
-            <span className="text-gradient">That Fits</span>
+            Chọn hình thức hợp tác{' '}
+            <span className="text-gradient">phù hợp với bạn</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Not sure which fits? Reach out on{' '}
+            Chưa chắc hình thức nào phù hợp? Liên hệ qua{' '}
             <a
               href="https://wa.me/8618500875025"
               target="_blank"
@@ -92,14 +92,14 @@ export default function PartnerTypes() {
             >
               WhatsApp
             </a>{' '}
-            or{' '}
+            hoặc{' '}
             <a
-              href="mailto:ng@solavita.com"
+              href="mailto:vn@solavita.com"
               className="text-uk-teal-dark font-cw-bold hover:text-uk-teal transition-colors"
             >
               Email
             </a>{' '}
-            and our local team will help you choose.
+            để đội ngũ tại Việt Nam tư vấn lựa chọn.
           </p>
         </div>
 
@@ -122,7 +122,7 @@ export default function PartnerTypes() {
 
               <div className="mt-5 pt-5 border-t border-uk-line/60">
                 <h4 className="text-xs font-cw-bold uppercase tracking-wider text-uk-teal-dark mb-3">
-                  What You Get
+                  Quyền lợi của bạn
                 </h4>
                 <ul className="space-y-2.5">
                   {p.whatYouGet.map((item) => (
@@ -142,7 +142,7 @@ export default function PartnerTypes() {
 
               <div className="mt-5 pt-5 border-t border-uk-line/60">
                 <h4 className="text-xs font-cw-bold uppercase tracking-wider text-uk-teal-dark mb-3">
-                  Your Role
+                  Vai trò của bạn
                 </h4>
                 <ul className="space-y-2.5">
                   {p.yourRole.map((item) => (

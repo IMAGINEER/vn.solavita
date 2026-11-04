@@ -62,7 +62,7 @@ export default function DeliveryTimeline() {
   return (
     <section ref={sectionRef} id="delivery" className="py-20 md:py-24 bg-uk-teal-soft/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Eyebrow - same pill style as the "Why Nigerian homeowners choose us" section */}
+        {/* Eyebrow - same pill style as the "Why Vietnamese homeowners choose us" section */}
         <div className="text-center mb-12 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />

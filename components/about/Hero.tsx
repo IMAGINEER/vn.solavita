@@ -7,13 +7,13 @@ import Breadcrumb from '@/components/Breadcrumb'
  * About hero - same banner image and overlay treatment as the rest of
  * the inner-page heroes so the top-level navigation feels unified.
  *
- * Copy is NG-shaped. Manufacturing origin is SKYWORTH Group's
- * Shenzhen / China factory line (verifiable from public sources);
- * the local last-mile layer is the local warehouse + installer
- * network that delivers the kit and handles after-sales.
- * [TBD]: the specific warehouse city(ies), installer
- * coverage areas, and "TBD — Verified local warehouse and
- * service network" line on a final pass once business confirms.
+ * Manufacturing origin is SKYWORTH Group's Shenzhen / China factory
+ * line (verifiable from public sources); the local last-mile layer is
+ * the Vietnam warehouse + installer network that delivers the kit and
+ * handles after-sales.
+ * [TBD]: the specific warehouse city(ies), installer coverage areas,
+ * and the local warehouse / service-network line once business
+ * confirms.
  */
 export default function AboutHero() {
   return (
@@ -33,8 +33,8 @@ export default function AboutHero() {
         <Breadcrumb
           theme="light"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'About Us' },
+            { label: 'Trang chủ', href: '/' },
+            { label: 'Về chúng tôi' },
           ]}
         />
 
@@ -46,7 +46,7 @@ export default function AboutHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Our local launch
+            Ra mắt tại Việt Nam
           </span>
         </motion.span>
 
@@ -56,9 +56,9 @@ export default function AboutHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
         >
-          Made in our factory line.
+          Sản xuất trên dây chuyền của chúng tôi.
           <br />
-          <span className="text-gradient">Stocked locally.</span>
+          <span className="text-gradient">Sẵn hàng tại địa phương.</span>
         </motion.h1>
 
         <motion.p
@@ -67,13 +67,12 @@ export default function AboutHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Solavita is the residential solar brand of the
-          SKYWORTH Group — solar and battery systems built on the
-          group's Chinese manufacturing line and held in a local
-          warehouse, so installation is two weeks from
-          signed contract to commissioned power.{' '}
+          Solavita là thương hiệu điện mặt trời cho hộ gia đình của Tập đoàn
+          SKYWORTH — hệ thống điện mặt trời và pin lưu trữ sản xuất trên dây
+          chuyền của tập đoàn và dự trữ tại kho địa phương, giúp rút ngắn thời
+          gian từ ký hợp đồng đến khi hệ thống vận hành.{' '}
           <span className="text-red-300/90 font-cw-bold">
-            TBD — Verified local warehouse location and installer coverage areas.
+            TBD — Vị trí kho và khu vực lắp đặt tại Việt Nam (chờ xác minh).
           </span>
         </motion.p>
       </div>

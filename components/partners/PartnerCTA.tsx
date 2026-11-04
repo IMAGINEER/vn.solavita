@@ -13,7 +13,7 @@ type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 /**
  * Partner enquiry CTA. Inline (UK-style) B2B form that posts to
- * /api/partner, which inserts into Supabase's `ng_partner_leads`
+ * /api/partner, which inserts into Supabase's `vn_partner_leads`
  * table and sends confirmation + team notification emails.
  *
  * Why inline rather than modal (as on the consultation form)?
@@ -72,15 +72,15 @@ export default function PartnerCTA() {
     // /api/partner/route.ts. Email regex matches the route.
     const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const nextErrors: Record<string, string> = {}
-    if (!payload.fullName) nextErrors.name = 'Please enter your full name.'
-    if (!payload.company) nextErrors.company = 'Please enter your business or company name.'
+    if (!payload.fullName) nextErrors.name = 'Vui lòng nhập họ tên.'
+    if (!payload.company) nextErrors.company = 'Vui lòng nhập tên doanh nghiệp hoặc công ty.'
     if (!payload.email) {
-      nextErrors.email = 'Please enter your email address.'
+      nextErrors.email = 'Vui lòng nhập địa chỉ email.'
     } else if (!EMAIL_RE.test(payload.email)) {
-      nextErrors.email = 'Please enter a valid email address.'
+      nextErrors.email = 'Vui lòng nhập địa chỉ email hợp lệ.'
     }
     if (!payload.partnerTrack) {
-      nextErrors.track = 'Please choose a partner track.'
+      nextErrors.track = 'Vui lòng chọn hình thức hợp tác.'
     }
     if (Object.keys(nextErrors).length > 0) {
       setFieldErrors(nextErrors)
@@ -101,14 +101,14 @@ export default function PartnerCTA() {
         message?: string
       }
       if (!res.ok || !json.success) {
-        setSubmitError(json.message || 'Something went wrong. Please try again.')
+        setSubmitError(json.message || 'Đã xảy ra lỗi. Vui lòng thử lại.')
         setStatus('error')
         return
       }
       setStatus('success')
       form.reset()
     } catch {
-      setSubmitError('Network error. Please try again.')
+      setSubmitError('Lỗi kết nối mạng. Vui lòng thử lại.')
       setStatus('error')
     }
   }
@@ -135,14 +135,14 @@ export default function PartnerCTA() {
           <div className="text-center mb-8 max-w-2xl mx-auto">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Become a Solavita partner
+              Trở thành đối tác Solavita
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Are You Ready to Become{' '}
-              <span className="text-gradient">a Solavita Partner?</span>
+              Bạn đã sẵn sàng trở thành{' '}
+              <span className="text-gradient">đối tác Solavita?</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-              Join us now.
+              Đồng hành cùng chúng tôi ngay hôm nay.
             </p>
           </div>
 
@@ -160,12 +160,12 @@ export default function PartnerCTA() {
                   <Check className="w-8 h-8" strokeWidth={2.5} />
                 </span>
                 <h3 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy">
-                  We&apos;ve received your Solavita partner enquiry
+                  Chúng tôi đã nhận được yêu cầu hợp tác của bạn
                 </h3>
                 <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular max-w-md">
-                  Our Nigerian partnerships team will review your details
-                  and be in touch soon. For urgent matters, reach us
-                  directly on{' '}
+                  Đội ngũ đối tác Solavita Việt Nam sẽ xem xét thông tin và
+                  liên hệ với bạn sớm. Nếu cần trao đổi ngay, hãy liên hệ trực
+                  tiếp qua{' '}
                   <a
                     href="https://wa.me/8618500875025"
                     className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
@@ -174,10 +174,10 @@ export default function PartnerCTA() {
                   </a>{' '}
                   or{' '}
                   <a
-                    href="mailto:ng@solavita.com"
+                    href="mailto:vn@solavita.com"
                     className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
                   >
-                    ng@solavita.com
+                    vn@solavita.com
                   </a>
                   .
                 </p>
@@ -186,7 +186,7 @@ export default function PartnerCTA() {
                   onClick={reset}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
                 >
-                  Submit another enquiry
+                  Gửi yêu cầu khác
                 </button>
               </motion.div>
             ) : (
@@ -208,7 +208,7 @@ export default function PartnerCTA() {
                     type="text"
                     name="name"
                     required
-                    placeholder="Jane Smith"
+                    placeholder="Nguyễn Văn A"
                     className={`w-full px-4 py-3 rounded-xl border ${
                       fieldErrors.name ? 'border-red-500' : 'border-uk-line'
                     } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
@@ -225,7 +225,7 @@ export default function PartnerCTA() {
                   <input
                     type="tel"
                     name="whatsapp"
-                    placeholder="+234 800 000 0000"
+                    placeholder="+84 900 000 000"
                     className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
                   />
                 </label>
@@ -238,7 +238,7 @@ export default function PartnerCTA() {
                     type="email"
                     name="email"
                     required
-                    placeholder="jane@acme.co"
+                    placeholder="email@congty.vn"
                     className={`w-full px-4 py-3 rounded-xl border ${
                       fieldErrors.email ? 'border-red-500' : 'border-uk-line'
                     } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
@@ -256,7 +256,7 @@ export default function PartnerCTA() {
                     type="text"
                     name="company"
                     required
-                    placeholder="Acme Solar Ltd"
+                    placeholder="Công ty TNHH Năng lượng ABC"
                     className={`w-full px-4 py-3 rounded-xl border ${
                       fieldErrors.company ? 'border-red-500' : 'border-uk-line'
                     } bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal`}
@@ -295,7 +295,7 @@ export default function PartnerCTA() {
                   <textarea
                     name="message"
                     rows={4}
-                    placeholder="Tell us about your team, location, or current business."
+                    placeholder="Giới thiệu về đội ngũ, địa bàn hoạt động hoặc mô hình kinh doanh hiện tại."
                     className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
                   />
                 </label>
@@ -311,12 +311,12 @@ export default function PartnerCTA() {
 
                 <div className="md:col-span-2 flex flex-col sm:flex-row gap-4 items-center justify-between pt-2">
                   <p className="text-xs text-uk-slate">
-                    Or email us directly:{' '}
+                    Hoặc gửi email trực tiếp:{' '}
                     <a
-                      href="mailto:ng@solavita.com"
+                      href="mailto:vn@solavita.com"
                       className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
                     >
-                      ng@solavita.com
+                      vn@solavita.com
                     </a>
                   </p>
 
@@ -328,21 +328,21 @@ export default function PartnerCTA() {
                     {status === 'submitting' ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        Sending...
+                        Đang gửi...
                       </>
                     ) : (
-                      <>Get in Touch</>
+                      <>Liên hệ với chúng tôi</>
                     )}
                   </button>
                 </div>
 
                 <p className="md:col-span-2 text-xs text-uk-slate/80 leading-relaxed pt-2">
-                  By submitting, you agree to our{' '}
+                  Khi gửi thông tin, bạn đồng ý với{' '}
                   <a href="/privacy/" className="text-uk-teal-dark underline">
-                    Privacy Policy
+                    Chính sách bảo mật
                   </a>
-                  . Your data is used solely to evaluate your partnership
-                  enquiry.
+                  của chúng tôi. Dữ liệu chỉ được dùng để xem xét yêu cầu hợp tác
+                  của bạn.
                 </p>
               </motion.form>
             )}

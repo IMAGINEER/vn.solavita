@@ -17,14 +17,14 @@ export async function generateMetadata(
   const { slug } = await props.params
   const product = getProduct(slug)
   if (!product) {
-    return { title: 'Product not found | Solavita' }
+    return { title: 'Không tìm thấy sản phẩm' }
   }
   return buildPageMetadata({
-    title: `${product.name} — Specifications & Advantages | Solavita`,
+    title: `${product.name} — Thông số kỹ thuật & ưu điểm`,
     path: `/products/${product.slug}`,
     description: product.description,
     ogImage: getProductOgImage(product),
-    ogImageAlt: `Solavita ${product.name}`,
+    ogImageAlt: `${product.name} của Solavita`,
   })
 }
 
@@ -41,11 +41,11 @@ export default async function ProductPage(props: {
         data={[
           webPageJsonLd({
             path: `/products/${product.slug}`,
-            name: `${product.name} | Solavita`,
+            name: `${product.name} | Solavita Việt Nam`,
             description: product.description,
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
+            { name: 'Trang chủ', url: '/' },
             { name: product.name, url: `/products/${product.slug}` },
           ]),
         ]}

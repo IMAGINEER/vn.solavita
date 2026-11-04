@@ -2,7 +2,7 @@ import { BlogCard } from './BlogCard'
 import type { BlogPostSummary } from '@/lib/types/blog'
 
 // Related posts block - server-rendered grid of 3 cards from the same
-// category. Mirrors the CasesSection "scopri altri progetti" footer.
+// category. Mirrors the "more projects" footer used across the site.
 
 export function RelatedPosts({ posts }: { posts: BlogPostSummary[] }) {
   if (posts.length === 0) return null
@@ -13,11 +13,11 @@ export function RelatedPosts({ posts }: { posts: BlogPostSummary[] }) {
         <div className="text-center mb-10 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Continue reading
+            Đọc tiếp
           </span>
           <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Related{' '}
-            <span className="text-gradient">Posts</span>
+            Bài viết{' '}
+            <span className="text-gradient">liên quan</span>
           </h2>
         </div>
 

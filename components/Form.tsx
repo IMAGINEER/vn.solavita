@@ -48,77 +48,54 @@ const ACIcon = () => (
 // ============ FORM DATA ============
 
 const REGIONS = [
-  'Lagos',
-  'Abuja (FCT)',
-  'North Central',
-  'North East',
-  'North West',
-  'South East',
-  'South South',
-  'South West',
+  'Hà Nội',
+  'TP. Hồ Chí Minh',
+  'Đà Nẵng',
+  'Hải Phòng',
+  'Cần Thơ',
+  'Bình Dương',
+  'Đồng Nai',
+  'Bà Rịa - Vũng Tàu',
+  'Quảng Ninh',
+  'Khánh Hòa',
+  'Nghệ An',
+  'Thanh Hóa',
+  'Thừa Thiên Huế',
+  'Lâm Đồng',
+  'Tỉnh / thành khác',
 ];
 
 const HOUSEHOLD_SIZES = [
-  { id: '1', label: '1 person', count: 1 },
-  { id: '2', label: '2 people', count: 2 },
-  { id: '3', label: '3 people', count: 3 },
-  { id: '4', label: '4 people', count: 4 },
-  { id: '5+', label: '5+ people', count: 5 },
+  { id: '1', label: '1 người', count: 1 },
+  { id: '2', label: '2 người', count: 2 },
+  { id: '3', label: '3 người', count: 3 },
+  { id: '4', label: '4 người', count: 4 },
+  { id: '5+', label: '5+ người', count: 5 },
 ];
 
 const ELECTRICITY_USAGE = [
-  { id: 'low', label: 'Low', description: '< 3,000 kWh/year', icon: Lightbulb },
-  { id: 'medium', label: 'Medium', description: '3,000-5,000 kWh/year', icon: Zap },
-  { id: 'high', label: 'High', description: '5,000-8,000 kWh/year', icon: Plug },
-  { id: 'very-high', label: 'Very high', description: '> 8,000 kWh/year', icon: Factory },
+  { id: 'low', label: 'Thấp', description: '< 3.000 kWh/năm', icon: Lightbulb },
+  { id: 'medium', label: 'Trung bình', description: '3.000–5.000 kWh/năm', icon: Zap },
+  { id: 'high', label: 'Cao', description: '5.000–8.000 kWh/năm', icon: Plug },
+  { id: 'very-high', label: 'Rất cao', description: '> 8.000 kWh/năm', icon: Factory },
   // Sentinel id for the "I don't know" answer. The server collapses this to
   // NULL on write so /admin/leads can render the row without a Usage line.
-  { id: 'unknown', label: 'Not Sure', description: 'Skip and let us recommend', icon: HelpCircle },
+  { id: 'unknown', label: 'Chưa rõ', description: 'Bỏ qua và để chúng tôi tư vấn', icon: HelpCircle },
 ];
 
 const DEVICES = [
-  { id: 'wallbox', label: 'EV charger / EV', icon: WallboxIcon },
-  { id: 'heatpump', label: 'Heat pump', icon: HeatPumpIcon },
-  { id: 'ac', label: 'Air conditioning', icon: ACIcon },
+  { id: 'wallbox', label: 'Trạm sạc / xe điện', icon: WallboxIcon },
+  { id: 'heatpump', label: 'Máy bơm nhiệt', icon: HeatPumpIcon },
+  { id: 'ac', label: 'Điều hòa', icon: ACIcon },
 ];
 
 /* ──────────────────────────────────────────────────────────────────────
-   Nigeria Step-3 extensions.
+   VN Step-3 backup needs.
 
-   The original UK form asked for "household + usage + devices" and that
-   was enough. Nigeria needs more because a meaningful share of the
-   customer's bill is the generator - not the grid. Three new fields
-   capture that, all optional, all non-blocking on submit:
-
-   - GENERATOR_FREQUENCY: how often they run a generator today. Drives
-     the recommendation tier (frequent use → minimum HOME Standard) and
-     feeds the ROI calculation as a baseline assumption for how much of
-     the current power bill solar can replace.
-   - FUEL_BUDGET_NGN: monthly fuel spend in a NGN bucket. Lets the user
-     pick a band instead of typing a precise figure (which most
-     households don't know). Drives the generator-fuel saving in ROI.
-   - BACKUP_NEEDS: which circuits they want backup for. Heavy items
-     (AC, water pump) push battery sizing; lights/fans/fridge are the
-     baseline and don't.
-
-   IDs are stable wire values - the My-Plan adapter and the calc both
-   read them by id.
+   BACKUP_NEEDS: which circuits they want backup for. Heavy items
+   (air conditioning, water pump) push battery sizing; lights/fans/
+   fridge are the baseline and don't. Optional and non-blocking.
    ────────────────────────────────────────────────────────────────────── */
-
-const GENERATOR_FREQUENCY = [
-  { id: 'rarely', label: 'Rarely', description: 'A few hours, rarely' },
-  { id: 'sometimes', label: 'Sometimes', description: 'A few hours, a few days a week' },
-  { id: 'daily', label: 'Daily', description: 'Most days of the week' },
-  { id: 'frequently', label: 'Frequently', description: 'Long hours every day' },
-]
-
-const FUEL_BUDGET_NGN = [
-  { id: 'below-20k', label: 'Below ₦20,000' },
-  { id: '20k-50k', label: '₦20,000 – ₦50,000' },
-  { id: '50k-100k', label: '₦50,000 – ₦100,000' },
-  { id: 'above-100k', label: 'Above ₦100,000' },
-  { id: 'unknown', label: 'Not sure' },
-]
 
 const LightsIcon = () => (
   <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
@@ -142,20 +119,20 @@ const PumpIcon = () => (
 )
 
 const BACKUP_NEEDS = [
-  { id: 'lights', label: 'Lights, fans and TV', icon: LightsIcon },
-  { id: 'fridge', label: 'Refrigerator and essential appliances', icon: FridgeIcon },
-  { id: 'ac', label: 'Air conditioning', icon: ACIcon },
-  { id: 'pump', label: 'Water pump or other heavy loads', icon: PumpIcon },
+  { id: 'lights', label: 'Đèn, quạt và TV', icon: LightsIcon },
+  { id: 'fridge', label: 'Tủ lạnh và thiết bị thiết yếu', icon: FridgeIcon },
+  { id: 'ac', label: 'Điều hòa', icon: ACIcon },
+  { id: 'pump', label: 'Máy bơm nước và tải nặng khác', icon: PumpIcon },
 ]
 
 /** Lookup a human label for a single-select id, with a fallback. */
 function labelFor(
   id: string | undefined,
   options: ReadonlyArray<{ id: string; label: string }>,
-  fallback = 'Not sure',
+  fallback = 'Chưa rõ',
 ): string {
   if (!id) return fallback
-  if (id === 'unknown') return 'Not sure'
+  if (id === 'unknown') return 'Chưa rõ'
   return options.find((o) => o.id === id)?.label ?? fallback
 }
 
@@ -356,7 +333,7 @@ const Form: React.FC<{
   hideAddressAndContact = false,
   submitEndpoint = DEFAULT_SUBMIT_URL,
   submitPayload,
-  submitButtonLabel = 'Submit',
+  submitButtonLabel = 'Gửi thông tin',
   onSubmitSuccess,
 }) => {
   // Compressed Edit-details view (hideAddressAndContact = true): the
@@ -405,32 +382,32 @@ const Form: React.FC<{
         // Step 1 — solutionType
         if (!formData.solutionType)
           newErrors.solutionType =
-            'Please choose what kind of solutions you are interested in.'
+            'Vui lòng chọn loại giải pháp bạn quan tâm.'
         break;
       case 1:
         // Step 2 — city + propertyType
         if (!formData.city)
-          newErrors.city = 'Please enter the city your property is in.'
+          newErrors.city = 'Vui lòng chọn tỉnh / thành phố của công trình.'
         if (!formData.propertyType)
-          newErrors.propertyType = 'Please select a property type.'
+          newErrors.propertyType = 'Vui lòng chọn loại công trình.'
         break;
       case 2:
-        // Step 3 — householdSize required; generator + fuel optional
+        // Step 3 — householdSize required
         if (!formData.householdSize)
-          newErrors.householdSize = 'Please select your household size.'
+          newErrors.householdSize = 'Vui lòng chọn số người trong hộ gia đình.'
         break;
       case 3:
         // Step 4 — contact info
-        if (!formData.salutation) newErrors.salutation = 'Please choose a salutation.'
-        if (!formData.firstName) newErrors.firstName = 'Please enter your first name.'
-        if (!formData.lastName) newErrors.lastName = 'Please enter your last name.'
+        if (!formData.salutation) newErrors.salutation = 'Vui lòng chọn cách xưng hô.'
+        if (!formData.firstName) newErrors.firstName = 'Vui lòng nhập tên.'
+        if (!formData.lastName) newErrors.lastName = 'Vui lòng nhập họ.'
         if (!formData.email) {
-          newErrors.email = 'Please enter your email address.'
+          newErrors.email = 'Vui lòng nhập địa chỉ email.'
         } else if (!validateEmail(formData.email)) {
-          newErrors.email = 'Please enter a valid email address.'
+          newErrors.email = 'Vui lòng nhập địa chỉ email hợp lệ.'
         }
         if (formData.phone && !validatePhone(formData.phone)) {
-          newErrors.phone = 'Please enter a valid Nigerian phone number.'
+          newErrors.phone = 'Vui lòng nhập số điện thoại hợp lệ.'
         }
         break;
     }
@@ -453,12 +430,8 @@ const Form: React.FC<{
       // Step 2
       city: '',
       propertyType: '',
-      // Step 3 — householdSize required; the two NG optional fields
-      // default to 'unknown' (sentinel) so the form's "Not sure" path
-      // is one click away.
+      // Step 3 — householdSize required.
       householdSize: '',
-      generatorFrequency: 'unknown',
-      fuelBudgetNgn: 'unknown',
       // Step 4
       salutation: '',
       firstName: '',
@@ -524,11 +497,6 @@ const Form: React.FC<{
           propertyType: formData.propertyType,
           // Step 3
           householdSize: formData.householdSize,
-          // NG optional fields. 'unknown' sentinels map to NULL on the
-          // server so admin can render an "unspecified" state without
-          // exposing the raw 'unknown' string.
-          generatorFrequency: formData.generatorFrequency,
-          fuelBudgetNgn: formData.fuelBudgetNgn,
           // Step 4 — contact
           salutation: formData.salutation,
           firstName: formData.firstName,
@@ -556,10 +524,10 @@ const Form: React.FC<{
         // screen calls onClose() (via handleBackToHome), which closes the
         // modal - matches DE site's "show prompt first, then close" flow.
       } else {
-        setSubmitError(data.message || 'Something went wrong. Please try again.');
+        setSubmitError(data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
       }
     } catch {
-      setSubmitError('Network error. Please try again.');
+      setSubmitError('Lỗi kết nối mạng. Vui lòng thử lại.');
     } finally {
       setIsSubmitting(false);
     }
@@ -644,22 +612,22 @@ const Form: React.FC<{
                     <Check className="w-10 h-10 text-green-500" strokeWidth={2} />
                   </motion.div>
                   <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                    Thank you for your enquiry!
+                    Cảm ơn bạn đã gửi yêu cầu!
                   </h3>
                   <p className="text-gray-500 mb-8 max-w-sm">
-                    We'll be in touch within 24 hours with your bespoke solar proposal.
+                    Chúng tôi sẽ liên hệ trong vòng 24 giờ với đề xuất giải pháp điện mặt trời dành riêng cho bạn.
                   </p>
                   {alreadyRegistered && (
                     <div className="mb-6 max-w-sm rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                      This email address is already registered with us. Your details have been
-                      updated. If you haven't heard back yet, please contact our customer service team.
+                      Địa chỉ email này đã đăng ký trước đó. Thông tin của bạn đã được
+                      cập nhật. Nếu chưa nhận được phản hồi, vui lòng liên hệ bộ phận chăm sóc khách hàng.
                     </div>
                   )}
                   <button
                     onClick={handleBackToHome}
                     className="px-6 py-3 rounded-xl bg-[#0F766E] text-white font-semibold hover:bg-[#0B5C56] transition-colors"
                   >
-                    {onClose ? 'Close' : 'Back to homepage'}
+                    {onClose ? 'Đóng' : 'Về trang chủ'}
                   </button>
                 </div>
               ) : (
@@ -678,16 +646,16 @@ const Form: React.FC<{
                     <div className="space-y-5">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
-                          What kind of solutions are you interested in?
+                          Bạn quan tâm đến loại giải pháp nào?
                         </label>
                         <p className="text-sm text-gray-400 mb-4">
-                          Pick the option that best describes your project.
+                          Chọn phương án mô tả đúng nhất nhu cầu của bạn.
                         </p>
                         <div className="grid grid-cols-1 gap-3">
                           {[
-                            { id: 'home', label: 'Home Solar solutions' },
-                            { id: 'business', label: 'Business Solar solutions' },
-                            { id: 'exploring', label: "I'm not sure / Just exploring" },
+                            { id: 'home', label: 'Giải pháp điện mặt trời cho gia đình' },
+                            { id: 'business', label: 'Giải pháp điện mặt trời cho doanh nghiệp' },
+                            { id: 'exploring', label: 'Chưa chắc chắn / Đang tìm hiểu' },
                           ].map(opt => (
                             <button
                               key={opt.id}
@@ -718,18 +686,18 @@ const Form: React.FC<{
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
-                          Which city is your property in?
+                          Công trình của bạn ở tỉnh / thành phố nào?
                         </label>
                         <p className="text-sm text-gray-400 mb-4">
-                          Pick the closest city. We'll use this to estimate solar
-                          yield and route your enquiry to the right team.
+                          Chọn địa điểm gần nhất. Thông tin này giúp chúng tôi ước tính
+                          sản lượng điện mặt trời và chuyển yêu cầu đến đúng đội ngũ.
                         </p>
                         <select
                           value={formData.city}
                           onChange={e => { updateField('city', e.target.value); clearErrors() }}
                           className={`w-full px-4 py-3 border-2 ${errors.city ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all appearance-none bg-white`}
                         >
-                          <option value="">Please select...</option>
+                          <option value="">Vui lòng chọn...</option>
                           {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
                         </select>
                         {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
@@ -737,14 +705,14 @@ const Form: React.FC<{
 
                       <div>
                         <label className="block text-sm font-semibold mb-3">
-                          Which property type best describes your home or business?
+                          Loại công trình nào mô tả đúng nhất?
                         </label>
                         <div className="grid grid-cols-1 gap-3">
                           {[
-                            { id: 'detached-semi', label: 'Detached / Duplex' },
-                            { id: 'terraced-apt', label: 'Terraced / Apartment' },
-                            { id: 'commercial', label: 'Commercial / Shop' },
-                            { id: 'others', label: 'Others' },
+                            { id: 'detached-semi', label: 'Nhà phố / Nhà riêng' },
+                            { id: 'terraced-apt', label: 'Căn hộ / Chung cư' },
+                            { id: 'commercial', label: 'Cửa hàng / Doanh nghiệp' },
+                            { id: 'others', label: 'Khác' },
                           ].map(opt => (
                             <button
                               key={opt.id}
@@ -770,12 +738,12 @@ const Form: React.FC<{
                     </div>
                   )}
 
-                  {/* Step 2 (public + compressed step 1): household + generator + fuel */}
+                  {/* Step 2 (public + compressed step 1): household */}
                   {((!hideAddressAndContact && step === 2) || (hideAddressAndContact && step === 1)) && (
                     <div className="space-y-5">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
-                          How many people live in your household? <span className="text-red-500">*</span>
+                          Gia đình bạn có bao nhiêu người? <span className="text-red-500">*</span>
                         </label>
                         <CardSelect
                           options={HOUSEHOLD_SIZES as CardOption[]}
@@ -786,97 +754,60 @@ const Form: React.FC<{
                         {errors.householdSize && <p className="text-red-500 text-xs mt-2">{errors.householdSize}</p>}
                       </div>
 
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          How often do you use a generator?
-                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional)</span>
-                        </label>
-                        <CardSelect
-                          options={GENERATOR_FREQUENCY as CardOption[]}
-                          selected={formData.generatorFrequency ?? 'unknown'}
-                          onSelect={id => updateField('generatorFrequency', id)}
-                          columns={4}
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold mb-2">
-                          How much do you spend on generator fuel each month?
-                          <span className="font-normal text-gray-400 ml-2 text-xs">(optional)</span>
-                        </label>
-                        <CardSelect
-                          options={FUEL_BUDGET_NGN as CardOption[]}
-                          selected={formData.fuelBudgetNgn ?? 'unknown'}
-                          onSelect={id => updateField('fuelBudgetNgn', id)}
-                          columns={5}
-                        />
-                      </div>
                     </div>
                   )}
 
                   {/* Step 2 (compressed only): Review + Confirm. Shown at the
                        end of the Edit-details flow as the final visible step.
                        Reads back solutionType (seeded via initialData) +
-                       city + propertyType + household + generator + fuel. */}
+                       city + propertyType + household. */}
                   {hideAddressAndContact && step === 2 && (
                     <div className="space-y-6">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                          Review your changes
+                          Xem lại thay đổi
                         </h3>
                         <p className="text-sm text-gray-500">
-                          Confirm the consultation details you want to apply to your plan.
+                          Xác nhận thông tin tư vấn bạn muốn áp dụng cho gói của mình.
                         </p>
                       </div>
 
                       <dl className="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white">
                         <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Solution</dt>
+                          <dt className="text-sm text-gray-500">Giải pháp</dt>
                           <dd className="text-sm font-medium text-gray-800">
                             {formData.solutionType === 'home'
-                              ? 'Home Solar solutions'
+                              ? 'Giải pháp điện mặt trời cho gia đình'
                               : formData.solutionType === 'business'
-                                ? 'Business Solar solutions'
+                                ? 'Giải pháp điện mặt trời cho doanh nghiệp'
                                 : formData.solutionType === 'exploring'
-                                  ? "I'm not sure / Just exploring"
+                                  ? 'Chưa chắc chắn / Đang tìm hiểu'
                                   : '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">City</dt>
+                          <dt className="text-sm text-gray-500">Tỉnh / thành phố</dt>
                           <dd className="text-sm font-medium text-gray-800">
                             {formData.city || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Property type</dt>
+                          <dt className="text-sm text-gray-500">Loại công trình</dt>
                           <dd className="text-sm font-medium text-gray-800">
                             {formData.propertyType || '-'}
                           </dd>
                         </div>
                         <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Household</dt>
+                          <dt className="text-sm text-gray-500">Số người</dt>
                           <dd className="text-sm font-medium text-gray-800">
                             {formData.householdSize || '-'}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Generator use</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {labelFor(formData.generatorFrequency, GENERATOR_FREQUENCY, 'Not specified')}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Monthly fuel budget</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {labelFor(formData.fuelBudgetNgn, FUEL_BUDGET_NGN, 'Not specified')}
                           </dd>
                         </div>
                       </dl>
 
                       <p className="text-xs text-gray-400 leading-relaxed">
-                        By confirming, your plan will be re-calculated using these
-                        details. Contact information is unchanged.
+                        Sau khi xác nhận, gói của bạn sẽ được tính lại dựa trên
+                        các thông tin này. Thông tin liên hệ không thay đổi.
                       </p>
                     </div>
                   )}
@@ -887,18 +818,18 @@ const Form: React.FC<{
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
-                          How can we reach you?
+                          Chúng tôi có thể liên hệ với bạn bằng cách nào?
                         </label>
                         <p className="text-sm text-gray-400 mb-4">
-                          We'll send your personalised quote by email.
+                          Chúng tôi sẽ gửi báo giá dành riêng cho bạn qua email.
                         </p>
                       </div>
 
                       {/* Salutation */}
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 mb-2">Salutation</label>
+                        <label className="block text-xs font-medium text-gray-500 mb-2">Cách xưng hô</label>
                         <div className="flex gap-3">
-                          {['Mr', 'Mrs', 'Ms', 'Mx', 'Other'].map(s => (
+                          {['Anh', 'Chị', 'Ông', 'Bà', 'Khác'].map(s => (
                             <button
                               key={s}
                               type="button"
@@ -919,23 +850,23 @@ const Form: React.FC<{
                       {/* Name */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">First name</label>
+                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Tên</label>
                           <input
                             type="text"
                             value={formData.firstName}
                             onChange={e => { updateField('firstName', e.target.value); clearErrors(); }}
-                            placeholder="Alex"
+                            placeholder="Văn A"
                             className={`w-full px-4 py-3 border-2 ${errors.firstName ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                           />
                           {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Last name</label>
+                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Họ</label>
                           <input
                             type="text"
                             value={formData.lastName}
                             onChange={e => { updateField('lastName', e.target.value); clearErrors(); }}
-                            placeholder="Smith"
+                            placeholder="Nguyễn"
                             className={`w-full px-4 py-3 border-2 ${errors.lastName ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                           />
                           {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
@@ -949,20 +880,20 @@ const Form: React.FC<{
                           type="email"
                           value={formData.email}
                           onChange={e => { updateField('email', e.target.value); clearErrors(); }}
-                          placeholder="alex.smith@example.com"
+                          placeholder="ten@example.com"
                           className={`w-full px-4 py-3 border-2 ${errors.email ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                         />
                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                       </div>
                       <div>
                         <label className="block text-xs font-medium text-gray-500 mb-1.5">
-                          Phone <span className="text-gray-400">(optional)</span>
+                          Số điện thoại <span className="text-gray-400">(không bắt buộc)</span>
                         </label>
                         <input
                           type="tel"
                           value={formData.phone}
                           onChange={e => { updateField('phone', e.target.value); clearErrors(); }}
-                          placeholder="+234 800 000 0000"
+                          placeholder="+84 900 000 000"
                           className={`w-full px-4 py-3 border-2 ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                         />
                         {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
@@ -970,9 +901,9 @@ const Form: React.FC<{
 
                       {/* Privacy */}
                       <p className="text-xs text-gray-400 leading-relaxed">
-                        By submitting, you agree to our{' '}
-                        <a href="/privacy/" className="text-[#0F766E] underline">Privacy Policy</a>.
-                        Your data is used solely to prepare your quote.
+                        Khi gửi thông tin, bạn đồng ý với{' '}
+                        <a href="/privacy/" className="text-[#0F766E] underline">Chính sách bảo mật</a>.
+                        Dữ liệu của bạn chỉ được dùng để chuẩn bị báo giá.
                       </p>
 
                       {submitError && (
@@ -1004,7 +935,7 @@ const Form: React.FC<{
                 className="flex items-center gap-2 px-5 py-2.5 text-gray-500 hover:text-gray-700 font-medium transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" strokeWidth={2} />
-                Back
+                Quay lại
               </button>
             ) : (
               <div />
@@ -1021,7 +952,7 @@ const Form: React.FC<{
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                Continue
+                Tiếp tục
                 <ChevronRight className="w-4 h-4" strokeWidth={2} />
               </button>
             ) : (
@@ -1047,7 +978,7 @@ const Form: React.FC<{
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending...
+                    Đang gửi...
                   </>
                 ) : (
                   <>
@@ -1068,19 +999,19 @@ const Form: React.FC<{
             <span className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
               <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />
             </span>
-            100% no obligation
+            100% không ràng buộc
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
               <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />
             </span>
-            Nigeria Data Protection Regulation compliant
+            Tuân thủ quy định bảo vệ dữ liệu cá nhân
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
               <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />
             </span>
-            Reply within 24 hours
+            Phản hồi trong 24 giờ
           </span>
         </div>
       </div>

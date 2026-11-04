@@ -1,5 +1,5 @@
 /**
- * Solutions page data — Nigeria.
+ * Solutions page data — Vietnam (copy still pending a dedicated VN pass).
  *
  * Source of truth: `content/nigeria/products.md`. Six packages across two
  * customer segments:
@@ -15,7 +15,7 @@
  *     ROI engine — see comment on `priceNgn` below)
  *
  * Marketing surfaces (/, /solutions, dropdown menus, /solutions/[slug])
- * follow the NG rule and never display a price until business supplies
+ * follow the VN rule and never display a price until business supplies
  * approved ₦ figures.
  *
  * Specs here mirror `app/my-plan/_lib/calc.ts` (the PLANS array). Keep
@@ -26,11 +26,11 @@
    Simulated ₦ prices for my-plan ROI engine.
 
    The UK site's per-tier prices (e.g. £5,099 → £9,399) were carried over
-   so my-plan could render quotes. NG has no approved ₦ prices yet, but
+   so my-plan could render quotes. VN has no approved ₫ prices yet, but
    the ROI engine on /my-plan needs a numeric input to function. The
    values below are placeholder / simulated — clearly distinct from any
    business-approved pricing — and MUST be replaced once the business
-   confirms NG package prices.
+   confirms VN package prices.
 
    Round-number estimates roughly tracking the UK ladder in NGN (using
    a notional £1 ≈ ₦1,300 for placeholder purposes). Do not publish
@@ -99,7 +99,7 @@ export interface SolutionCategory {
   title: string
   /** One-line description used in the grid card. */
   short: string
-  /** Optional metric (e.g. "Reduce generator use"). Kept qualitative. */
+  /** Optional metric (e.g. "Reduce grid use"). Kept qualitative. */
   metric?: string
   /** Lucide-style icon key - resolved inside SolutionCategories. */
   icon: 'sun' | 'battery' | 'home' | 'plug'
@@ -359,7 +359,7 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'lite-essential-backup',
     slug: 'lite-essential-backup',
-    eyebrow: 'Essential Backup · Ditch the diesel',
+    eyebrow: 'Essential Backup · Cut grid costs',
     title: 'LITE Essential Backup',
     intro:
       'Built for essential homes, from apartments to starter families. Compact solar and battery for everyday peace of mind.',
@@ -456,9 +456,9 @@ export const solutionDetails: SolutionDetail[] = [
     eyebrow: 'Everyday Home · 24/7 Stable Power',
     title: 'HOME Standard',
     intro:
-      'Built for everyday families who want comfort without the fuel runs. Higher capacity to slash fuel costs and blackouts.',
+      'Built for everyday families who want comfort without the top-up runs. Higher capacity to slash energy costs and blackouts.',
     shortIntro:
-      'Comfort for families. Cut fuel & blackout costs.',
+      'Comfort for families. Cut energy & blackout costs.',
     metric: 'Power everyday living',
     headlineStats: [
       { value: '7.44 kWp', label: 'Solar PV', icon: 'solar' },
@@ -549,9 +549,9 @@ export const solutionDetails: SolutionDetail[] = [
     eyebrow: 'Higher Capacity · Built for Yours',
     title: 'HOME High-spec',
     intro:
-      'Built for larger homes, multi-appliances, and home-based businesses. Ultimate diesel replacement.',
+      'Built for larger homes, multi-appliances, and home-based businesses. Complete home energy independence.',
     shortIntro:
-      'Ultimate diesel replacement for large homes.',
+      'Complete home energy independence for large homes.',
     metric: 'More appliances, more hours',
     headlineStats: [
       { value: '9.92–12.40 kWp', label: 'Solar PV', icon: 'solar' },
@@ -616,10 +616,6 @@ export const solutionDetails: SolutionDetail[] = [
         q: 'Why is the module count a range, not a single number?',
         a: 'The number of 620 W modules is selected at design stage based on available roof area, shading analysis and the load assessment. 16, 18 or 20 modules all fall within the solution.',
       },
-      {
-        q: 'Can I keep my generator as a fallback?',
-        a: 'Whether a generator can be integrated into the system depends on the equipment and installation design. The team can advise on the appropriate topology for your site.',
-      },
     ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
@@ -639,10 +635,10 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'business-entry-3-phase',
     slug: 'business-entry-3-phase',
-    eyebrow: 'Starter Commercial · Cutting Fuel Runs',
+    eyebrow: 'Starter Commercial · Cutting Top-up Runs',
     title: 'BUSINESS Entry 3-Phase',
     intro:
-      'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting fuel runs.',
+      'Built for small shops, clinics, and higher-demand households. Keeps essentials running through outages—while cutting top-up runs.',
     shortIntro:
       'Shops, clinics, offices, restaurants, and small hotels. Keep operations bright, cool, and uninterrupted.',
     metric: 'Three-phase starter',
@@ -709,10 +705,6 @@ export const solutionDetails: SolutionDetail[] = [
         q: 'Can I run all my shop appliances at once?',
         a: 'That depends on the inverter\'s output rating, appliance starting demand, circuit design and available energy. A load assessment is required.',
       },
-      {
-        q: 'Can I keep my generator as a fallback?',
-        a: 'Whether a generator can be integrated into the system depends on the equipment and installation design. The team can advise on the appropriate topology for your site.',
-      },
     ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
@@ -732,7 +724,7 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'business-standard-3-phase',
     slug: 'business-standard-3-phase',
-    eyebrow: 'SMEs & F&B · Slash Diesel Bills',
+    eyebrow: 'SMEs & F&B · Slash Energy Bills',
     title: 'BUSINESS Standard 3-Phase',
     intro:
       'Built for SMEs, F&B, restaurants, and offices. Power daytime loads with reliable backup to stay ahead of outages.',
@@ -802,10 +794,6 @@ export const solutionDetails: SolutionDetail[] = [
         q: 'How long can the battery provide backup?',
         a: 'Runtime depends on usable battery capacity and the connected load. Do not infer runtime from battery capacity alone — confirm with a site assessment.',
       },
-      {
-        q: 'Can I keep my generator as a fallback?',
-        a: 'Whether a generator can be integrated into the system depends on the equipment and installation design.',
-      },
     ],
     loadProfile: {
       caption: '[ Powers all essentials together ]',
@@ -825,10 +813,10 @@ export const solutionDetails: SolutionDetail[] = [
   {
     id: 'business-flagship-3-phase',
     slug: 'business-flagship-3-phase',
-    eyebrow: 'Large Sites · A Step Beyond Diesel',
+    eyebrow: 'Large Sites · A Step Beyond Grid Limits',
     title: 'BUSINESS Flagship 3-Phase',
     intro:
-      'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward ditching diesel.',
+      'Higher capacity for medium supermarkets, hotels, and light-processing. A strong step toward energy independence.',
     shortIntro:
       'Supermarkets, large hotels, factories, warehouses. Industrial-grade energy for maximum yield and savings.',
     metric: 'Substantial energy needs',
@@ -941,7 +929,7 @@ export const whySolavita: WhySolavitaPoint[] = [
   {
     title: 'Local support arrangements',
     description:
-      'TBD — Verified Nigerian installation, customer service and after-sales arrangements.',
+      'TBD — Verified Vietnamese installation, customer service and after-sales arrangements.',
   },
 ]
 
@@ -979,7 +967,7 @@ export interface SolutionFaqItem {
 export const homeSolutionFaqs: SolutionFaqItem[] = [
   {
     q: 'Will this really save me money?',
-    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
+    a: "Yes. You'll use less expensive grid power and cut your daily energy bills. Most families see their monthly bills drop significantly, making it a smart investment.",
   },
   {
     q: 'What happens when the power goes out?',
@@ -998,7 +986,7 @@ export const homeSolutionFaqs: SolutionFaqItem[] = [
 export const businessSolutionFaqs: SolutionFaqItem[] = [
   {
     q: 'Will this really save me money?',
-    a: "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
+    a: "Yes. You'll use less expensive grid power and cut your daily energy bills. Most families see their monthly bills drop significantly, making it a smart investment.",
   },
   {
     q: 'What happens when the power goes out?',

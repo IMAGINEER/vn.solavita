@@ -29,17 +29,17 @@ export default function MonitoringAppPage() {
       <PhoneShowcase />
 
       <CTA
-        eyebrow="Free design · No obligation"
+        eyebrow="Thiết kế miễn phí · Không ràng buộc"
         title={
           <>
-            See the Monitoring App on Your Home.
+            Xem Ứng dụng giám sát trên chính ngôi nhà của bạn.
             <br />
-            <span className="text-gradient">Get a Free Design &amp; Quote.</span>
+            <span className="text-gradient">Nhận thiết kế &amp; báo giá miễn phí.</span>
           </>
         }
-        description="Tell us about your home. Our Nigerian team will design the right Monitoring App-managed system - solar, battery and backup power - and send you a clear, no-obligation quote."
-        secondaryLabel="Talk to our team"
-        secondaryHref="mailto:ng@solavita.com"
+        description="Hãy cho chúng tôi biết về ngôi nhà của bạn. Đội ngũ Solavita Việt Nam sẽ thiết kế hệ thống phù hợp được quản lý qua Ứng dụng giám sát - điện mặt trời, pin lưu trữ và điện dự phòng - và gửi bạn báo giá rõ ràng, không ràng buộc."
+        secondaryLabel="Trao đổi với đội ngũ"
+        secondaryHref="mailto:vn@solavita.com"
       />
 
       <Footer />

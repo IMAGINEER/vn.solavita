@@ -71,7 +71,7 @@ function rawAddress(href: string): string {
  * across a three-column grid.
  *
  * Email cards use the same clipboard + toast fallback as the /contact
- * page so clicking `ng@solavita.com` always gives the user feedback
+ * page so clicking `vn@solavita.com` always gives the user feedback
  * even when the OS has no default mail client registered.
  */
 export default function ContactSupport() {
@@ -134,8 +134,8 @@ export default function ContactSupport() {
     window.location.href = href
     showToast(
       copied
-        ? `${address} copied to clipboard. If no mail app opened, paste it into your email client.`
-        : `Opening ${address} - if no mail app opens, please copy the address manually.`
+        ? `Đã sao chép ${address}. Nếu ứng dụng email không mở, hãy dán địa chỉ vào ứng dụng email của bạn.`
+        : `Đang mở ${address} - nếu ứng dụng email không mở, vui lòng sao chép địa chỉ thủ công.`
     )
   }
 
@@ -156,14 +156,14 @@ export default function ContactSupport() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            NG team ready to help
+            Đội ngũ Việt Nam sẵn sàng hỗ trợ
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Talk to a{' '}
-            <span className="text-gradient">Real Person.</span>
+            Trao đổi với{' '}
+            <span className="text-gradient">một người thật.</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            NG-based service team · No bots · No long hold music.
+            Đội ngũ hỗ trợ tại Việt Nam · Không bot · Không chờ đợi mệt mỏi.
           </p>
         </div>
 

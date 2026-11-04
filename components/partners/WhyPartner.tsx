@@ -64,10 +64,10 @@ export default function WhyPartner() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Why partner
+            Vì sao hợp tác
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Why Partner with{' '}
+            Vì sao nên hợp tác cùng{' '}
             <span className="text-gradient">Solavita</span>?
           </h2>
         </div>
@@ -92,12 +92,13 @@ export default function WhyPartner() {
         {/* Body paragraph + tagline */}
         <div className="max-w-4xl mx-auto text-center mb-10">
           <p className="text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Solavita empowers energy partners with factory-built products. As a
-            partner, you gain local stock access, full-system verified
-            warranty, and exclusive lead-sharing support.
+            Solavita đồng hành cùng các đối tác năng lượng bằng sản phẩm sản
+            xuất tại nhà máy. Khi trở thành đối tác, bạn có quyền tiếp cận tồn
+            kho tại địa phương, bảo hành toàn hệ thống và hỗ trợ chia sẻ khách
+            hàng.
           </p>
           <p className="mt-3 text-lg md:text-xl font-cw-bold text-uk-navy">
-            Build your business, power your region!
+            Phát triển kinh doanh, đồng hành cùng khu vực của bạn!
           </p>
         </div>
 

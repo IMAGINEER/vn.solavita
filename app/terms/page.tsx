@@ -7,10 +7,10 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Terms of Use',
+  title: 'Điều khoản sử dụng',
   path: '/terms',
   description:
-    'Terms of Use governing access to the Solavita website, including content, product information, enquiry forms and online tools.',
+    'Điều khoản sử dụng điều chỉnh việc truy cập trang web Solavita, bao gồm nội dung, thông tin sản phẩm, biểu mẫu yêu cầu tư vấn và các công cụ trực tuyến.',
 })
 
 export default function Page() {
@@ -20,13 +20,13 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/terms',
-            name: 'Solavita Terms of Use',
+            name: 'Điều khoản sử dụng Solavita',
             description:
-              'Terms of Use governing access to the Solavita website, including content, product information, enquiry forms and online tools.',
+              'Điều khoản sử dụng điều chỉnh việc truy cập trang web Solavita, bao gồm nội dung, thông tin sản phẩm, biểu mẫu yêu cầu tư vấn và các công cụ trực tuyến.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Terms of Use', url: '/terms' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Điều khoản sử dụng', url: '/terms' },
           ]),
         ]}
       />

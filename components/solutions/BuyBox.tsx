@@ -37,8 +37,8 @@ const statIcon = (icon: SolutionStat['icon']) =>
  * with the tier the user was looking at.
  */
 export default function BuyBox({ detail }: BuyBoxProps) {
-  const emailSubject = `Enquiry about ${detail.title} (${detail.slug})`
-  const emailHref = `mailto:ng@solavita.com?subject=${encodeURIComponent(emailSubject)}`
+  const emailSubject = `Yêu cầu thông tin về ${detail.title} (${detail.slug})`
+  const emailHref = `mailto:vn@solavita.com?subject=${encodeURIComponent(emailSubject)}`
 
   return (
     <div className="w-full">

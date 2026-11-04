@@ -23,16 +23,17 @@ import { openFormModal } from '@/lib/form-modal'
  * from "View FAQs" to "How to Install →" per `docs/修改建议.docx`
  * §"Support页面修改" (Oct 2026).
  *
- * Content (4 steps + 4 FAQs) is taken verbatim from the same docx
- * section.
+ * Content (4 steps + 4 FAQs) follows the same docx section, localised
+ * for the Vietnam market, with unverified operational claims marked
+ * as TBD.
  *
- * ⚠ The step-3 copy and the first FAQ state a 7-day / 7-working-day
- * installation lead time, and the last FAQ names "Solavita-certified
- * engineers". These are the business's own claims in the brief, so
- * they are published as written. `ng-content-strategy` rule 1 flags
- * unverified installation lead times, so confirm them with the
- * operations team before launch — the per-package `installationTime`
- * field on the solution pages is still a TBD marker.
+ * ⚠ The step-3 copy and the first FAQ previously stated a
+ * 7-day / 7-working-day installation lead time, and the last FAQ
+ * named "Solavita-certified engineers". Those are unverified
+ * operational claims, so they are now published as `TBD — …`
+ * markers. Confirm them with the Vietnam operations team before
+ * launch — the per-package `installationTime` field on the solution
+ * pages is still a TBD marker.
  */
 
 interface Step {
@@ -46,45 +47,45 @@ const STEPS: Step[] = [
   {
     id: 'survey',
     Icon: ClipboardPenLine,
-    title: 'Free Survey',
-    body: 'We check your roof load and energy needs, no cost involved.',
+    title: 'Khảo sát miễn phí',
+    body: 'Chúng tôi kiểm tra tải trọng mái nhà và nhu cầu năng lượng của bạn, hoàn toàn miễn phí.',
   },
   {
     id: 'quote',
     Icon: PencilRuler,
-    title: 'Design & Quote',
-    body: 'We create a tailored solution and send you a quote for approval.',
+    title: 'Thiết kế & báo giá',
+    body: 'Chúng tôi xây dựng giải pháp phù hợp và gửi bạn báo giá để phê duyệt.',
   },
   {
     id: 'installation',
     Icon: HardHat,
-    title: 'Installation',
-    body: 'Our certified team installs panels, inverters and batteries, typically completed within 7 days.',
+    title: 'Lắp đặt',
+    body: 'Đội ngũ của chúng tôi lắp đặt tấm quang năng, bộ biến tần và pin lưu trữ. TBD — Thời gian hoàn thành lắp đặt (chờ xác nhận).',
   },
   {
     id: 'commissioning',
     Icon: ClipboardCheck,
-    title: 'Commissioning',
-    body: 'We test the full system and activate it, so you start saving from day one.',
+    title: 'Nghiệm thu',
+    body: 'Chúng tôi kiểm tra toàn bộ hệ thống và kích hoạt, để bạn bắt đầu tiết kiệm ngay từ ngày đầu tiên.',
   },
 ]
 
 const FAQS: { q: string; a: string }[] = [
   {
-    q: 'How long does installation take?',
-    a: 'Usually 7 working days depending on system size.',
+    q: 'Lắp đặt mất bao lâu?',
+    a: 'TBD — Thời gian lắp đặt chính thức (chờ xác nhận).',
   },
   {
-    q: 'Do I need to prepare anything before installation?',
-    a: 'No. Our team handles roof assessment, permits and setup.',
+    q: 'Tôi có cần chuẩn bị gì trước khi lắp đặt không?',
+    a: 'Không. Đội ngũ của chúng tôi lo khảo sát mái nhà, xin phép và thiết lập.',
   },
   {
-    q: 'Will my power be interrupted during installation?',
-    a: 'No, we install with zero downtime to your home or business.',
+    q: 'Nguồn điện của tôi có bị gián đoạn trong quá trình lắp đặt không?',
+    a: 'Không, chúng tôi lắp đặt mà không làm gián đoạn sinh hoạt của hộ gia đình hay doanh nghiệp.',
   },
   {
-    q: 'Who installs the system?',
-    a: 'All installations are carried out by Solavita-certified engineers.',
+    q: 'Ai là người lắp đặt hệ thống?',
+    a: 'TBD — Thông tin chứng nhận của đơn vị lắp đặt (chờ xác nhận).',
   },
 ]
 
@@ -94,16 +95,16 @@ export default function SupportInstallationPage() {
       <Header logoHref="/" />
 
       <PageHero
-        backgroundImage="/images/banner_ng.webp"
-        eyebrow="INSTALLATION"
-        title={'Get Your *Solavita System'}
-        body="Getting your Solavita system is simple — we guide you through 4 steps, from the first free survey to the moment your system goes live."
-        primaryCta={{ label: 'Get Free Quote', onClick: openFormModal }}
-        secondaryCta={{ label: 'Back to Support', href: '/support' }}
+        backgroundImage="/images/banner_home.webp"
+        eyebrow="LẮP ĐẶT"
+        title={'Sở hữu *hệ thống Solavita'}
+        body="Sở hữu hệ thống Solavita rất đơn giản — chúng tôi đồng hành cùng bạn qua 4 bước, từ buổi khảo sát miễn phí đầu tiên đến khi hệ thống chính thức đi vào hoạt động."
+        primaryCta={{ label: 'Nhận báo giá miễn phí', onClick: openFormModal }}
+        secondaryCta={{ label: 'Quay lại Hỗ trợ', href: '/support' }}
         breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Support', href: '/support' },
-          { label: 'Installation' },
+          { label: 'Trang chủ', href: '/' },
+          { label: 'Hỗ trợ', href: '/support' },
+          { label: 'Lắp đặt' },
         ]}
       />
 
@@ -111,9 +112,9 @@ export default function SupportInstallationPage() {
       <section className="relative py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-10">
-            <SectionEyebrow>THE PROCESS</SectionEyebrow>
+            <SectionEyebrow>QUY TRÌNH</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Get Your <span className="text-gradient">Solavita System</span>
+              Sở hữu <span className="text-gradient">hệ thống Solavita</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -124,7 +125,7 @@ export default function SupportInstallationPage() {
                     <step.Icon className="w-6 h-6" strokeWidth={1.6} />
                   </div>
                   <div className="text-xs font-cw-bold uppercase tracking-wider text-uk-slate">
-                    Step {i + 1}
+                    Bước {i + 1}
                   </div>
                   <h3 className="mt-1 text-lg font-cw-bold text-uk-navy">
                     {step.title}
@@ -151,9 +152,9 @@ export default function SupportInstallationPage() {
       <section className="relative py-16 md:py-20 bg-uk-line/30">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-8">
-            <SectionEyebrow>INSTALLATION FAQS</SectionEyebrow>
+            <SectionEyebrow>CÂU HỎI THƯỜNG GẶP VỀ LẮP ĐẶT</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Installation <span className="text-gradient">Questions</span>
+              Câu hỏi về <span className="text-gradient">lắp đặt</span>
             </h2>
           </div>
           <div className="space-y-3">
@@ -176,7 +177,7 @@ export default function SupportInstallationPage() {
               href="/support#faq-installation"
               className="inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
             >
-              More installation FAQs on Support
+              Xem thêm Câu hỏi thường gặp về lắp đặt
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </Link>
           </div>
@@ -184,15 +185,15 @@ export default function SupportInstallationPage() {
       </section>
 
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            Not a Solavita Customer Yet?
+            Bạn chưa phải khách hàng của Solavita?
             <br />
-            <span className="text-gradient">Start with a Free Design.</span>
+            <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
+        description="Nếu bạn vẫn đang cân nhắc các lựa chọn, đội ngũ của chúng tôi có thể chuẩn bị một thiết kế miễn phí, không ràng buộc, cho thấy tấm quang năng, pin lưu trữ hoặc hệ thống năng lượng trọn nhà sẽ phù hợp với ngôi nhà của bạn như thế nào."
       />
 
       <Footer />

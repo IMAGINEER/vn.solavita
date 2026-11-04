@@ -130,15 +130,15 @@ export default function FAQ() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Common questions
+            Câu hỏi phổ biến
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Frequently Asked{' '}
-            <span className="text-gradient">Questions</span>
+            Câu hỏi thường{' '}
+            <span className="text-gradient">gặp</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Quick answers to the things we get asked most. Can't
-            find what you need? Contact our team below.
+            Những câu trả lời nhanh cho các thắc mắc phổ biến nhất. Không
+            tìm thấy điều bạn cần? Hãy liên hệ đội ngũ của chúng tôi bên dưới.
           </p>
         </div>
 

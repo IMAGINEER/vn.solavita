@@ -12,7 +12,7 @@ import type { Heading } from '@/lib/blog-toc'
 // target and updates the URL hash without a full navigation.
 //
 // The list itself is vertically constrained to the viewport (sticky
-// aside top + "On this page" label + breathing room) and scrolls
+// aside top + "Mục lục" label + breathing room) and scrolls
 // internally. When scroll-spy picks an active item that's outside the
 // visible portion of the TOC, the list auto-scrolls to bring it into
 // view - users always see what's currently highlighted, even on long
@@ -123,9 +123,9 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <nav aria-label="On this page" className="hidden lg:block text-sm">
+    <nav aria-label="Mục lục" className="hidden lg:block text-sm">
       <h3 className="text-xs font-cw-bold uppercase tracking-[0.18em] text-uk-slate mb-3">
-        On this page
+        Mục lục
       </h3>
       <ul
         ref={listRef}

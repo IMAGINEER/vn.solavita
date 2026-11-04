@@ -6,8 +6,7 @@
  * Shape mirrors the 4-step Get-Free-Quote form per `docs/修改建议.docx`:
  *   Step 1 (new)  : `solutionType` — what the user is interested in.
  *   Step 2 (was 1): `city`, `propertyType` — site location + property shape.
- *   Step 3 (new)  : `householdSize` (required) + `generatorFrequency` /
- *                   `fuelBudgetNgn` (optional) — sizing inputs.
+ *   Step 3 (new)  : `householdSize` (required) — sizing input.
  *   Step 4 (was 5): `salutation`, `firstName`, `lastName`, `email`,
  *                   `phone` — contact info. (Address fields were
  *                   dropped; `city` now comes from Step 2.)
@@ -29,14 +28,6 @@ export interface FormData {
   propertyType: string
   /** Step 3 Q1 — household size, required. */
   householdSize: string
-  /**
-   * Step 3 Q2 / Q3 — NG generator usage / monthly fuel budget.
-   * Both optional ('unknown' sentinel) so the form doesn't block
-   * submission. The calc reads them to estimate generator-side
-   * savings; missing values fall back to neutral defaults.
-   */
-  generatorFrequency?: string
-  fuelBudgetNgn?: string
   /** Step 4 — contact info. */
   salutation: string
   firstName: string

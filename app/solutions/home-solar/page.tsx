@@ -10,12 +10,12 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Home Solar Solutions in Nigeria | Solavita',
+  title: 'Home Solar Solutions in Vietnam | Solavita Việt Nam',
   path: '/solutions/home-solar',
   description:
-    'Compare three home-solar solutions for Nigerian households — LITE Essential Backup, HOME Standard, HOME High-spec. Sized for appliances, essential loads, comfort and backup priorities.',
+    'Compare three home-solar solutions for Vietnamese households — LITE Essential Backup, HOME Standard, HOME High-spec. Sized for appliances, essential loads, comfort and backup priorities.',
   ogImage: '/images/og-solutions.jpg',
-  ogImageAlt: 'Home Solar solutions for Nigerian households',
+  ogImageAlt: 'Home Solar solutions for Vietnamese households',
 })
 
 export default function Page() {
@@ -36,9 +36,9 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/solutions/home-solar',
-            name: 'Home Solar Solutions in Nigeria | Solavita',
+            name: 'Home Solar Solutions in Vietnam | Solavita Việt Nam',
             description:
-              'Compare three home-solar solutions for Nigerian households — LITE Essential Backup, HOME Standard, HOME High-spec.',
+              'Compare three home-solar solutions for Vietnamese households — LITE Essential Backup, HOME Standard, HOME High-spec.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },

@@ -18,8 +18,8 @@ const BadgeIcon = ({ className }: { className?: string }) => (
  * Solavita and lists the certifications that apply. The list itself is
  * data-driven from `aboutCertifications` in `lib/data/about.ts` so NG
  * pages render TBDs until business confirms which certifications apply
- * to the Nigerian market (per the NG content strategy: no UK or
- * Nigerian certification may be carried over without verification).
+ * to the Vietnamese market (no other market's certification may be
+ * carried over without verification).
  *
  * The right-hand image is the existing product render used on the
  * homepage /solutions section - reusing it keeps the asset catalogue
@@ -75,20 +75,20 @@ export default function Technology() {
           <div className="tech-copy space-y-6">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              SKYWORTH engineering
+              Kỹ thuật SKYWORTH
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Engineering{' '}
-              <span className="text-gradient">That Lasts Decades</span>
+              Kỹ thuật{' '}
+              <span className="text-gradient">bền vững qua nhiều thập kỷ</span>
             </h2>
 
             <p className="text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
-              Every Solavita system is built on{' '}
-              <TbdText text="Tier-1 components" inline />{' '}
-              engineered by the SKYWORTH Group - the same supply chain
-              that powers millions of households worldwide with TVs,
-              appliances and smart-home systems.
+              Mỗi hệ thống Solavita được xây dựng từ{' '}
+              <TbdText text="linh kiện Tier-1" inline />{' '}
+              do Tập đoàn SKYWORTH thiết kế — cùng chuỗi cung ứng đang phục vụ
+              hàng triệu hộ gia đình trên thế giới với TV, thiết bị gia dụng và
+              hệ thống nhà thông minh.
             </p>
 
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -117,7 +117,7 @@ export default function Technology() {
             <div className="relative rounded-3xl overflow-hidden border border-uk-line bg-uk-teal-soft aspect-[4/5] shadow-sm">
               <img
                 src="/images/electronic.webp"
-                alt="Solavita system detail"
+                alt="Chi tiết hệ thống Solavita"
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover"
               />

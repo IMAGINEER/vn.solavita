@@ -2,17 +2,17 @@
 // the dynamic sitemap/robots feed off these so the brand stays
 // consistent across <title>, OG, Twitter, JSON-LD, and the canonical.
 //
-// NG site — built from `content/nigeria/*` briefs. All business
+// VN site — built from the Vietnam localisation brief. All business
 // facts that haven't been verified (legal entity, address, phone, ...)
 // are surfaced as visible red TBDs in the UI; this file holds the
 // placeholder strings that drive metadata so a single edit cascades
 // across every page.
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ng.solavita.com'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://vn.solavita.com'
 
-export const SITE_NAME = 'Solavita Nigeria'
-export const SITE_LOCALE = 'en_NG'
+export const SITE_NAME = 'Solavita Việt Nam'
+export const SITE_LOCALE = 'vi_VN'
 export const SITE_BRAND_SHORT = 'Solavita'
 /**
  * Legal entity name (Terms page, footer, JSON-LD `legalName`).
@@ -26,14 +26,14 @@ export const SITE_LEGAL_NAME = 'SKYWORTH RENEWABLE ENERGY COMPANY LIMITED'
  * Hong Kong Companies Registry number.
  * Placeholder — supply the actual registration number before launch.
  */
-export const SITE_COMPANY_NUMBER = 'TBD — Verified Hong Kong Companies Registry number'
+export const SITE_COMPANY_NUMBER = 'TBD — Mã số đăng ký doanh nghiệp tại Hồng Kông (chờ xác minh)'
 
 /**
  * Registered office address (Hong Kong).
  * Placeholder — supply the actual registered office before launch.
  */
 export const SITE_REGISTERED_OFFICE =
-  'TBD — Verified Hong Kong registered office address'
+  'TBD — Địa chỉ văn phòng đã đăng ký tại Hồng Kông (chờ xác minh)'
 
 /**
  * Default share image. A purpose-built 1200×630 JPEG brand card — the
@@ -52,9 +52,9 @@ export const OG_IMAGE_WIDTH = 1200
 export const OG_IMAGE_HEIGHT = 630
 
 export const DEFAULT_DESCRIPTION =
-  'Explore solar and battery solutions for Nigerian homes and small businesses. Compare system configurations and find a solution for more reliable power and less generator dependence.'
+  'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. So sánh cấu hình hệ thống và tìm giải pháp giúp nguồn điện ổn định hơn.'
 
-/** Append ` | Solavita Nigeria` consistently. */
+/** Append ` | Solavita Việt Nam` consistently. */
 export function appendSiteTitle(title: string | null | undefined): string {
   const t = (title ?? '').trim()
   if (!t) return SITE_NAME

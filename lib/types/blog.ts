@@ -1,14 +1,14 @@
 // Shared TypeScript types for the blog module.
 //
 // Locale model: every row carries a `locale` column ('it' | 'uk' | 'de'
-// | 'ng') so each app reads and writes only its own bucket. The locale
-// text columns (`name_en`/`name_it`, `description_en`/`description_it`,
+// | 'ng' | 'vn') so each app reads and writes only its own bucket. The
+// locale text columns (`name_en`/`name_it`, `description_en`/`description_it`,
 // `bio_en`/`bio_it`) live alongside it because the project decided not
 // to fully localise the schema.
 //
-// For NG:
-//   - Read  : filter by `locale = 'ng'`
-//   - Write : always set `locale = 'ng'` explicitly
+// For VN:
+//   - Read  : filter by `locale = 'vn'`
+//   - Write : always set `locale = 'vn'` explicitly
 //   - Locale text columns used: `name_en`, `description_en`, `bio_en`
 //
 // The DB columns are lowercase_snake_case; these interfaces mirror them
@@ -17,11 +17,11 @@
 
 export type BlogPostStatus = 'draft' | 'published'
 
-export type BlogLocale = 'it' | 'uk' | 'de' | 'ng'
+export type BlogLocale = 'it' | 'uk' | 'de' | 'ng' | 'vn'
 
 /** Locale this app writes and reads. Centralised so call sites that
- *  hard-code the filter (`locale='ng'`) are grep-able in one place. */
-export const BLOG_LOCALE: BlogLocale = 'ng'
+ *  hard-code the filter (`locale='vn'`) are grep-able in one place. */
+export const BLOG_LOCALE: BlogLocale = 'vn'
 
 export interface BlogCategory {
   id: string

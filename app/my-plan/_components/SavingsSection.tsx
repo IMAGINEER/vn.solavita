@@ -9,7 +9,7 @@ interface SavingsSectionProps {
   metrics: PlanRoi
   /** Region from the consultation - surfaced in the breakdown so the
    *  customer can see their specific yield was applied, not the
-   *  Nigeria national-average fallback. */
+   *  national-average fallback. */
   region?: string
 }
 
@@ -32,23 +32,23 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
 
   const rows: MetricRow[] = [
     {
-      label: 'Annual Net Saving',
+      label: 'Tiết kiệm ròng hằng năm',
       value: formatNGN(metrics.annualNetSavingNgn),
-      sub: 'Grid + generator fuel saved · ideal mode (no opex)',
+      sub: 'Chi phí năng lượng tiết kiệm được · chế độ lý tưởng (không tính chi phí vận hành)',
       highlight: true,
     },
     {
-      label: 'Estimated Payback',
+      label: 'Thời gian hoàn vốn ước tính',
       value:
         metrics.paybackYears === Infinity
           ? '-'
-          : `${metrics.paybackYears.toFixed(1)} years`,
-      sub: 'Years to break even',
+          : `${metrics.paybackYears.toFixed(1)} năm`,
+      sub: 'Số năm để hoàn vốn',
     },
     {
-      label: '30-Year Return',
+      label: 'Lợi ích 30 năm',
       value: formatNGN(metrics.total30YearReturnNgn),
-      sub: 'Net lifetime saving (₦, post-degradation)',
+      sub: 'Tiết kiệm ròng cả vòng đời (₦, sau suy giảm hiệu suất)',
       highlight: metrics.total30YearReturnNgn > 0,
     },
   ]
@@ -56,7 +56,7 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
   return (
     <section className="space-y-3">
       <h2 className="text-xl md:text-2xl font-cw-bold text-uk-navy">
-        Your estimated savings
+        Tiết kiệm ước tính của bạn
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -79,20 +79,17 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
         ))}
       </div>
 
-      {/* Data-source disclosure. The yields, fuel price, and generator
-          efficiency in this calculator are PROVISIONAL test values
-          pending business verification — do NOT represent verified
-          national averages. Kept above the disclosure button so the
-          customer sees the source caveat in the natural reading flow. */}
+      {/* Data-source disclosure. The yields and energy-cost assumptions
+          in this calculator are PROVISIONAL test values pending business
+          verification — they do NOT represent verified national averages.
+          Kept above the disclosure button so the customer sees the source
+          caveat in the natural reading flow. */}
       <p className="mt-3 text-xs text-uk-slate/70 leading-relaxed">
-        <strong className="font-cw-bold text-uk-slate">Provisional test values</strong>
+        <strong className="font-cw-bold text-uk-slate">Giá trị tạm tính</strong>
         {' — '}
-        regional yield, fuel price and generator efficiency are
-        estimates pending business confirmation. Generation is
-        region-adjusted{region ? ` for ${region}` : ' (Nigeria default)'}.
-        ROI is computed against your reported fuel budget where
-        available, and capped at conservative segment-level hard
-        limits where not.
+        sản lượng điện theo khu vực, đơn giá điện hiện tại và hiệu suất hệ thống là các ước tính đang chờ xác nhận từ bộ phận kinh doanh. Sản lượng được điều chỉnh theo khu vực{region ? ` cho ${region}` : ' (mặc định Việt Nam)'}.
+        ROI được tính dựa trên ngân sách năng lượng bạn khai báo khi có, và giới hạn ở mức trần thận trọng theo phân khúc khi không có.
+        TBD — mô hình giá điện theo biểu giá EVN tại Việt Nam (chờ xác nhận)
       </p>
 
       <button
@@ -101,7 +98,7 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
         className="inline-flex items-center gap-1 text-uk-teal hover:text-uk-teal-dark text-sm font-cw-bold transition-colors mt-2"
         aria-expanded={detailedOpen}
       >
-        Key Assumptions
+        Giả định chính
         <ChevronDown
           className={'w-4 h-4 transition-transform duration-200 ' + (detailedOpen ? 'rotate-180' : '')}
           strokeWidth={2}
@@ -111,35 +108,35 @@ export default function SavingsSection({ metrics, region }: SavingsSectionProps)
       {detailedOpen && (
         <div className="rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5 text-sm text-uk-slate leading-relaxed">
           <strong className="block text-uk-navy font-cw-bold mb-2">
-            Key Assumptions
+            Giả định chính
           </strong>
           <div className="space-y-1 tabular-nums">
             <div className="flex justify-between">
-              <span>Annual generation</span>
+              <span>Sản lượng điện hằng năm</span>
               <span>{formatKwh(metrics.annualGenerationKwh)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Self-consumed</span>
+              <span>Tự tiêu thụ</span>
               <span>{formatKwh(metrics.annualSelfConsumedKwh)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Exported</span>
+              <span>Phát lên lưới</span>
               <span>{formatKwh(metrics.annualExportedKwh)}</span>
             </div>
             <div className="flex justify-between border-t border-uk-line pt-2 mt-2 font-cw-bold text-uk-navy">
-              <span>30-year cumulative</span>
+              <span>Tích lũy 30 năm</span>
               <span>{formatNGN(metrics.total30YearSavingNgn)}</span>
             </div>
           </div>
           <p className="mt-3 text-xs text-uk-slate/80">
-            30-year figures use the panel degradation curve (year 1 = 100%,
-            year 10 ≈ 95.7%, year 30 = 85%) at the Nigerian grid tariff
-            (₦/kWh, TBD - verified rate). Generator fuel cost uses
-            PROVISIONAL constants: ₦1,533/L PMS @ 1.85 kWh/L, ₦1,915/L AGO
-            @ 2.95 kWh/L. Real efficiency varies with generator power
-            and load. ROI sensitivity to ±20 % efficiency variation
-            is roughly proportional — add or subtract the same
-            fraction to the generator offset to estimate the range.
+            Số liệu 30 năm áp dụng đường cong suy giảm của tấm pin (năm 1 = 100%,
+            năm 10 ≈ 95,7%, năm 30 = 85%) theo biểu giá điện lưới tại Việt Nam
+            (₦/kWh, đang chờ xác nhận). Chi phí năng lượng hiện tại dựa trên các
+            hằng số tạm tính; hiệu suất thực tế thay đổi tùy theo hệ thống và
+            phụ tải. Độ nhạy của ROI với thay đổi hiệu suất ±20 % gần như tỷ lệ
+            thuận — cộng hoặc trừ cùng tỷ lệ đó vào phần chi phí năng lượng được
+            thay thế để ước tính khoảng dao động.
+            TBD — mô hình giá điện theo biểu giá EVN tại Việt Nam (chờ xác nhận)
           </p>
         </div>
       )}

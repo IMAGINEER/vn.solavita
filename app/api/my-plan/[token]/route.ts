@@ -82,9 +82,9 @@ export async function GET(
         'household_size',
         'electricity_usage',
         'devices',
-        // NG Step-3 extensions - the recommendation engine and ROI
-        // calculation both read these to estimate generator-replacement
-        // value and battery sizing. None are PII; safe to surface.
+        // Legacy Step-3 columns - the recommendation engine and ROI
+        // calculation still read these for battery sizing and for
+        // historical rows. None are PII; safe to surface.
         'generator_frequency',
         'fuel_budget_ngn',
         'backup_needs',
@@ -92,9 +92,9 @@ export async function GET(
     )
     .eq('plan_token', token)
     // All Solavita sites (NG/UK/DE/IT) share the same Supabase project.
-    // Restrict to NG rows so another site's token can't accidentally
+    // Restrict to VN rows so another site's token can't accidentally
     // resolve here.
-    .eq('country', 'ng')
+    .eq('country', 'vn')
     .maybeSingle()
 
   if (error) {

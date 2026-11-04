@@ -16,14 +16,14 @@ declare global {
 }
 
 /**
- * Consent-gated GA4 loader (NG).
+ * Consent-gated GA4 loader (VN).
  *
  * Only fires the gtag.js bootstrap + the page_view hit AFTER the user
  * has accepted "analytics" cookies via the CookieConsent banner.
- * The same pattern satisfies the Nigerian Data Protection Act (NDPR)
- * consent requirement and the stricter UK PECR rule the loader was
- * originally written for — no analytics script is fetched at all until
- * the visitor opts in.
+ * The same pattern satisfies the consent requirement under
+ * Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân, as well as the
+ * stricter opt-in rule the loader was originally written for — no
+ * analytics script is fetched at all until the visitor opts in.
  *
  * Consent propagation:
  *   1. On mount, this loader reads `localStorage.cookie_consent` once
@@ -39,11 +39,12 @@ declare global {
  * Why not `<GoogleAnalytics gaId="..." />` from `@next/third-parties`?
  * That component ships gtag.js unconditionally on first paint, which
  * means users who click "Reject" are still tracked until gtag boots.
- * Under UK PECR that is a breach regardless of whether we subsequently
- * issue `gtag('consent', 'update', {analytics_storage:'denied'})`, and
- * the same "load nothing until consent" rule is what NDPR requires in
- * Nigeria. The only safe pattern is "do not load the script until
- * consent is given".
+ * That is a breach of the prior-consent requirement regardless of
+ * whether we subsequently issue
+ * `gtag('consent', 'update', {analytics_storage:'denied'})`, and
+ * the same "load nothing until consent" rule is what
+ * Nghị định 13/2023/NĐ-CP requires in Vietnam. The only safe pattern
+ * is "do not load the script until consent is given".
  *
  * We DO send a page_view on every SPA-style route change once analytics
  * is on, because Next.js client routing doesn't reload the page - so a

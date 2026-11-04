@@ -27,16 +27,16 @@ export interface ContactLead {
 }
 
 function formatDateTime(iso: string): string {
-  // en-GB: "31 Aug 2026, 14:23". Same locale as LeadsTable.
+  // vi-VN: "31 Th08 2026, 14:23". Same locale as LeadsTable.
   try {
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat('vi-VN', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-      timeZone: 'Africa/Lagos',
+      timeZone: 'Asia/Ho_Chi_Minh',
     }).format(new Date(iso))
   } catch {
     return iso
@@ -47,7 +47,7 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
   if (contacts.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        No contact enquiries yet.
+        Chưa có yêu cầu liên hệ nào.
       </div>
     )
   }
@@ -57,14 +57,14 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Time</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead>Thời gian</TableHead>
+            <TableHead>Họ tên</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead>Subject</TableHead>
-            <TableHead className="max-w-[20rem]">Message</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>Điện thoại</TableHead>
+            <TableHead>Địa điểm</TableHead>
+            <TableHead>Chủ đề</TableHead>
+            <TableHead className="max-w-[20rem]">Nội dung</TableHead>
+            <TableHead>Trạng thái</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,7 +103,7 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
                 </TableCell>
                 <TableCell>
                   <Badge variant={c.status === 'new' ? 'success' : 'outline'}>
-                    {c.status || 'new'}
+                    {c.status === 'new' ? 'Mới' : c.status || 'Mới'}
                   </Badge>
                 </TableCell>
               </TableRow>

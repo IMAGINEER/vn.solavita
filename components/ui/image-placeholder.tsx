@@ -1,8 +1,8 @@
 /**
  * ImagePlaceholder — neutral visual block used for every `IMAGE TBD — …`
- * reference in the Nigeria content briefs.
+ * reference in the Vietnam content briefs.
  *
- * Spec (per NG content strategy):
+ * Spec (per VN content strategy):
  *  - Light neutral background.
  *  - Dashed border.
  *  - Image icon.
@@ -13,7 +13,7 @@
  * Usage:
  *  - The parent MUST provide width, height OR aspectRatio so the
  *    placeholder matches the original image's box.
- *  - Pass `description` exactly as the brief wrote it (e.g. "Nigerian
+ *  - Pass `description` exactly as the brief wrote it (e.g. "Vietnamese
  *    family in a contemporary home with a visible rooftop solar
  *    system"). The component prepends "IMAGE TBD — " so QA and
  *    crawlers see a single, consistent prefix.

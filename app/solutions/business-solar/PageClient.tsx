@@ -30,8 +30,8 @@ export default function BusinessSolarPage() {
     heroProps: {
       eyebrow: 'BUSINESS SOLAR SOLUTIONS',
       title: 'Power Your Business. Stay In Control.',
-      body: 'Slash diesel bills and stay ahead of outages. Solavita’s solar and battery systems deliver reliable, round-the-clock energy — sized for your business, built to keep you moving.',
-      backgroundImage: '/images/nigerian_business_solar_1600x856.webp',
+      body: 'Slash energy bills and stay ahead of outages. Solavita’s solar and battery systems deliver reliable, round-the-clock energy — sized for your business, built to keep you moving.',
+      backgroundImage: '/images/business_solar_1600x856.webp',
       primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
       breadcrumbs: [
         { label: 'Home', href: '/' },
@@ -63,7 +63,7 @@ export default function BusinessSolarPage() {
         highlight: {
           title: 'INDUSTRIAL POWER, SIMPLIFIED.',
           spec: '125kW / 261kWh All-in-One ESS.',
-          body: 'One cabinet that carries a factory, a supermarket or a community mini-grid — with no separate inverter, no container stacking and no on-site fuel logistics.',
+          body: 'One cabinet that carries a factory, a supermarket or a community mini-grid — with no separate inverter, no container stacking and no on-site equipment logistics.',
           href: '/products/all-in-one-ess',
           ctaLabel: 'All-in-One ESS details',
           // 工商业光伏背景图 per `docs/修改建议(2).docx`.
@@ -88,7 +88,7 @@ export default function BusinessSolarPage() {
         </>
       ),
       intro:
-        'Uptime, fuel cost and a cabinet that survives the site — three reasons a commercial system earns its keep.',
+        'Uptime, energy cost and a cabinet that survives the site — three reasons a commercial system earns its keep.',
       items: [
         {
           title: 'Zero Downtime',
@@ -97,10 +97,10 @@ export default function BusinessSolarPage() {
             'Supermarket interior lit and running during a grid outage',
         },
         {
-          title: 'Cut Diesel',
-          body: 'Eliminate fuel costs. Maximize your energy ROI.',
+          title: 'Cut Energy Costs',
+          body: 'Eliminate energy costs. Maximize your energy ROI.',
           imageDescription:
-            'Diesel generator parked beside a commercial solar array',
+            'Commercial rooftop solar and battery array',
         },
         {
           title: 'Built Tough',

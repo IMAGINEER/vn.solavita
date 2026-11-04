@@ -44,7 +44,7 @@ export default function OfferCard({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
             <div>
               <div className="text-xs font-cw-regular text-uk-slate uppercase tracking-wider">
-                System price
+                Giá hệ thống
               </div>
               <div className="mt-1 text-2xl md:text-3xl font-cw-bold text-uk-navy tabular-nums">
                 {formatNGN(systemPriceGbp)}
@@ -55,7 +55,7 @@ export default function OfferCard({
                 focal point of the row. */}
             <div className="rounded-xl bg-white border border-uk-teal/40 px-4 py-3 -my-1 shadow-sm">
               <div className="text-xs font-cw-bold text-uk-emerald uppercase tracking-wider">
-                Your offer
+                Báo giá của bạn
               </div>
               <div className="mt-1 text-3xl md:text-4xl font-cw-bold text-uk-emerald tabular-nums">
                 {formatNGN(metrics.offerPriceGbp)}
@@ -63,7 +63,7 @@ export default function OfferCard({
             </div>
             <div className="sm:col-span-2">
               <div className="text-xs font-cw-regular text-uk-slate uppercase tracking-wider">
-                Offer valid until
+                Báo giá có hiệu lực đến
               </div>
               <div className="mt-1 text-base md:text-lg font-cw-bold text-uk-navy">
                 {formatDateEnGB(metrics.offerValidUntil)}
@@ -76,7 +76,7 @@ export default function OfferCard({
             onClick={onContactExpert}
             className="btn-gradient text-white px-8 py-4 rounded-full font-cw-bold text-base w-full lg:w-auto whitespace-nowrap"
           >
-            Talk to an expert
+            Liên hệ chuyên gia
           </button>
         </>
       )}

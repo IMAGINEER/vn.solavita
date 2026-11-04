@@ -129,8 +129,8 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
     window.location.href = href
     showToast(
       copied
-        ? `${address} copied to clipboard. If no mail app opened, paste it into your email client.`
-        : `Opening ${address} - if no mail app opens, please copy the address manually.`
+        ? `Đã sao chép ${address}. Nếu ứng dụng email không mở, hãy dán địa chỉ này vào trình soạn thư của bạn.`
+        : `Đang mở ${address} - nếu ứng dụng email không mở, vui lòng sao chép địa chỉ thủ công.`
     )
   }
 
@@ -148,15 +148,15 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Choose your channel
+            Chọn kênh liên hệ
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Other Ways to{' '}
-            <span className="text-gradient">Get in Touch</span>
+            Những cách khác để{' '}
+            <span className="text-gradient">kết nối với chúng tôi</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Prefer phone or email? Here are the direct lines into our
-            Nigerian service team.
+            Bạn thích gọi điện hay gửi email hơn? Dưới đây là các kênh liên hệ
+            trực tiếp với đội ngũ dịch vụ Solavita Việt Nam.
           </p>
         </div>
 

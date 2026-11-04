@@ -58,7 +58,7 @@ interface MyPlanClientProps {
  *     derived via `useMemo`. Switching plans re-renders only the
  *     affected children - never the whole tree.
  *
- * The "Choose your plan" card is a 4-plan selector. Solar panels /
+ * The "Choose your plan" card is a 6-plan selector. Solar panels /
  * battery / inverter are NOT independently adjustable: switching plans
  * swaps the whole configuration as a bundle. Self-consumption rate is
  * derived from the active plan (battery=100%, no-battery=35%) and is
@@ -78,12 +78,11 @@ export default function MyPlanClient({
 
   const [selectedPlanId, setSelectedPlanId] = useState<PlanId>(recommendedPlanId)
 
-  // User-tweakable tariff assumptions. Seeded from the NG residential
-  // grid tariff (Band A/B/C - TBD, verified rate pending) and the
-  // current export rate (TBD - Nigeria has no confirmed feed-in
-  // tariff yet). Independent of plan choice - a customer who pays
-  // ₦68/kWh on LITE Essential Backup pays ₦68/kWh on BUSINESS
-  // Flagship 3-Phase too, so the values survive plan switches.
+  // Giả định biểu giá do người dùng điều chỉnh. Khởi tạo từ biểu giá
+  // điện lưới dân dụng (đang chờ xác nhận) và mức giá phát lên lưới
+  // hiện tại (đang chờ xác nhận). Độc lập với lựa chọn gói - người dùng
+  // trả cùng một đơn giá điện lưới cho mọi gói, nên các giá trị này
+  // được giữ nguyên khi chuyển gói.
   const [importPriceGbp, setImportPriceGbp] = useState<number>(DEFAULT_ROI_IMPORT_PRICE_GBP)
   const [exportPriceGbp, setExportPriceGbp] = useState<number>(DEFAULT_ROI_EXPORT_PRICE_GBP)
   // Self-consumption rate is also user-tweakable so a customer can model
@@ -98,20 +97,21 @@ export default function MyPlanClient({
   )
 
   /**
-   * User-tweakable annual fuel budget override (₦/year). When set,
-   * replaces the band/back-derive cap in the calculator. Surfaced
-   * as a slider in `CustomiseCard` "View calculation assumptions"
-   * so "Not sure" users can dial their assumed spend without
-   * re-opening the consultation form. `undefined` = use the
-   * calculator's default (band or back-derive + hard cap).
+   * Ghi đè ngân sách năng lượng hằng năm do người dùng điều chỉnh
+   * (₦/năm). Khi được đặt, giá trị này thay thế mức trần từ khoảng đã
+   * chọn / phép suy ngược trong công cụ tính. Được hiển thị dưới dạng
+   * thanh trượt trong mục "Xem giả định tính toán" của `CustomiseCard`
+   * để người dùng chọn "Không chắc chắn" có thể nhập mức chi phí giả
+   * định mà không cần mở lại biểu mẫu tư vấn. `undefined` = dùng mặc
+   * định của công cụ tính (khoảng đã chọn hoặc suy ngược + mức trần cứng).
    */
   const [userFuelBudgetOverrideNgn, setUserFuelBudgetOverrideNgn] =
     useState<number | undefined>(undefined)
 
   // Single derivation point - every metric comes from this useMemo.
   const plan: Plan = useMemo(() => getPlan(selectedPlanId), [selectedPlanId])
-  // Assumptions: legacy RoiAssumptions object. The NG calculator bakes
-  // its own tariffs internally so the assumptions are not currently
+  // Assumptions: legacy RoiAssumptions object. The calculator bakes its
+  // own tariffs internally so the assumptions are not currently
   // consumed - kept exported to keep the slider UI in the tree without
   // rippling. If user-tweakable tariffs come back, pass `assumptions`
   // into `calculateROI(plan, consultation, assumptions)`.
@@ -185,8 +185,8 @@ export default function MyPlanClient({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'My Plan' },
+              { label: 'Trang chủ', href: '/' },
+              { label: 'Phương án của tôi' },
             ]}
           />
 
@@ -196,7 +196,7 @@ export default function MyPlanClient({
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-3xl lg:text-4xl font-cw-bold text-[#0A1628] mt-6 mb-2"
           >
-            Your Initial Solar Plan
+            Phương án điện mặt trời ban đầu của bạn
           </motion.h1>
 
           <motion.p
@@ -205,7 +205,7 @@ export default function MyPlanClient({
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            A personalised system designed around your home and energy needs.
+            Hệ thống được thiết kế riêng cho ngôi nhà và nhu cầu năng lượng của bạn.
           </motion.p>
 
           <motion.div
@@ -228,13 +228,13 @@ export default function MyPlanClient({
           {/* Your system heading + recommended badge */}
           <div className="mt-12 mb-4 flex flex-wrap items-center gap-3">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Your system
+              Hệ thống của bạn
             </h2>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate">
               <Check className="w-3 h-3 text-uk-emerald" strokeWidth={3} />
               {isSelectedRecommended
-                ? 'Recommended for your home'
-                : 'Showing your customised plan'}
+                ? 'Đề xuất cho nhà bạn'
+                : 'Đang hiển thị phương án tùy chỉnh của bạn'}
             </span>
           </div>
 
@@ -245,33 +245,33 @@ export default function MyPlanClient({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
                 <ProductCard
                   kind="panel"
-                  title="Solar"
+                  title="Điện mặt trời"
                   subtitle={
                     plan.kwpLabel
-                      ? `${plan.kwpLabel} rated PV`
-                      : `${plan.panels} kWp rated PV`
+                      ? `${plan.kwpLabel} công suất PV`
+                      : `${plan.panels} kWp công suất PV`
                   }
                   value={plan.kwpLabel ?? `${plan.panels} kWp`}
                   onChange={focusCustomise}
                 />
                 <ProductCard
                   kind="battery"
-                  title="Battery"
+                  title="Pin lưu trữ"
                   subtitle={
                     plan.batteryKwh > 0
-                      ? `${plan.batteryKwh} kWh storage`
-                      : 'No battery'
+                      ? `${plan.batteryKwh} kWh dung lượng lưu trữ`
+                      : 'Không có pin lưu trữ'
                   }
                   value={plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '-'}
                   onChange={focusCustomise}
                 />
                 <ProductCard
                   kind="inverter"
-                  title="Inverter"
+                  title="Bộ biến tần"
                   subtitle={
                     plan.inverterLabel
-                      ? `${plan.inverterLabel} inverter`
-                      : `${plan.inverterKw} kW inverter`
+                      ? `Bộ biến tần ${plan.inverterLabel}`
+                      : `Bộ biến tần ${plan.inverterKw} kW`
                   }
                   value={plan.inverterLabel ?? `${plan.inverterKw} kW`}
                   onChange={focusCustomise}

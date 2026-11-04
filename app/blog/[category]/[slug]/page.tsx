@@ -49,7 +49,7 @@ export default async function BlogPostPage(props: {
   ]
 
   const publishedDateLabel = post.published_at
-    ? new Date(post.published_at).toLocaleDateString('en-GB', {
+    ? new Date(post.published_at).toLocaleDateString('vi-VN', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -70,7 +70,7 @@ export default async function BlogPostPage(props: {
         dangerouslySetInnerHTML={{
           __html: jsonLdScript(
             breadcrumbJsonLd([
-              { name: 'Home', url: '/' },
+              { name: 'Trang chủ', url: '/' },
               { name: 'Blog', url: '/blog' },
               { name: post.category.name_en, url: `/blog/category/${post.category.slug}` },
               { name: post.title, url: `/blog/${post.category.slug}/${post.slug}` },
@@ -97,7 +97,7 @@ export default async function BlogPostPage(props: {
           coverImageUrl={post.cover_image_url ?? undefined}
           subhead={post.excerpt ?? undefined}
           breadcrumb={[
-            { label: 'Home', href: '/' },
+            { label: 'Trang chủ', href: '/' },
             { label: 'Blog', href: '/blog' },
             {
               label: post.category.name_en,
@@ -119,7 +119,7 @@ export default async function BlogPostPage(props: {
               )}
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="size-4" strokeWidth={1.6} />
-                {post.reading_time_min} min read
+                {post.reading_time_min} phút đọc
               </span>
             </>
           }
@@ -167,15 +167,15 @@ export default async function BlogPostPage(props: {
           old inline teal CTA box. The CTA component opens the
           universal FormModal (hosted in Footer) via openFormModal(). */}
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            Not a Solavita Customer Yet?
+            Bạn chưa phải khách hàng của Solavita?
             <br />
-            <span className="text-gradient">Start with a Free Design.</span>
+            <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
+        description="Nếu bạn vẫn đang cân nhắc, đội ngũ của chúng tôi có thể chuẩn bị một bản thiết kế miễn phí, không ràng buộc, cho thấy tấm pin mặt trời, pin lưu trữ hoặc trọn bộ hệ thống năng lượng cho gia đình sẽ phù hợp với ngôi nhà của bạn như thế nào."
       />
 
       <Footer />

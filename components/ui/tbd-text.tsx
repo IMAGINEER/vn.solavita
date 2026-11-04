@@ -1,9 +1,9 @@
 /**
  * TbdText — every `TBD — [specific missing information]` placeholder on
- * the Nigeria site renders through this component so the colour, weight
+ * the Vietnam site renders through this component so the colour, weight
  * and aria semantics are consistent.
  *
- * Rules (per NG content strategy):
+ * Rules (per VN content strategy):
  *  - Always pass the full string after `TBD — ` as the `text` prop. The
  *    `TBD — ` prefix is added automatically.
  *  - Default colour is red (text-red-600 in both light and dark mode
@@ -15,7 +15,7 @@
  *    inline element that does not break the surrounding line.
  *  - `as` (default 'span') controls the rendered element. Use 'p' or
  *    'div' for paragraph-level TBDs that need their own line.
- *  - Adds `aria-label="To be determined"` and `data-tbd="true"` so
+ *  - Adds `aria-label="Chờ xác nhận"` and `data-tbd="true"` so
  *    QA tooling and crawlers can identify the placeholder.
  */
 
@@ -47,7 +47,7 @@ export default function TbdText({
     <Tag
       className={`text-red-600 font-cw-bold ${className}`.trim()}
       data-tbd="true"
-      aria-label="To be determined"
+      aria-label="Chờ xác nhận"
     >
       TBD — {text}
       {children}

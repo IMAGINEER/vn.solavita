@@ -63,9 +63,10 @@ export interface ConsultationRow {
    * 4-step submissions leave this NULL → empty list. */
   devices: string | null
   /**
-   * NG Step-3 extensions. All three are nullable on the row so pre-2026
-   * registrations read back as `null` (and the calc treats null as
-   * "user skipped the question").
+   * Các trường mở rộng ở bước 3 (tần suất dùng nguồn dự phòng, ngân sách
+   * năng lượng). Cả ba đều có thể null trên hàng dữ liệu nên các đăng ký
+   * cũ đọc về `null` (và phần tính toán coi null là "người dùng đã bỏ qua
+   * câu hỏi").
    */
   generator_frequency: string | null
   fuel_budget_ngn: string | null
@@ -81,13 +82,14 @@ export interface ConsultationRow {
 /** Defensive defaults when the row is missing fields (e.g. legacy rows). */
 const DEFAULT_HOUSEHOLD_SIZE: ConsultationInput['householdSize'] = '3'
 const DEFAULT_USAGE: ConsumptionTier = 'medium'
-/** Fallback region when the consultation row carries no region. The NG
- *  form stopped collecting a region, so this is what most NG plans
- *  show. It is intentionally NOT a Nigerian state: the calculator
- *  treats an unknown region as the national average yield
- *  (`NG_REGION_YIELD_FALLBACK`), and the UI says "region-adjusted
- *  for Nigeria" rather than naming a state we never captured. */
-const DEFAULT_REGION = 'Nigeria'
+/** Khu vực mặc định khi hàng tư vấn không có thông tin khu vực. Biểu mẫu
+ *  đã ngừng thu thập khu vực nên đây là giá trị hầu hết phương án hiển
+ *  thị. Giá trị này cố ý KHÔNG trùng khoá nào trong bảng sản lượng theo
+ *  khu vực: phần tính toán coi khu vực chưa xác định là mức sản lượng
+ *  trung bình quốc gia (`NG_REGION_YIELD_FALLBACK`), và giao diện hiển
+ *  thị đây là khu vực mặc định thay vì nêu tên một địa phương chưa từng
+ *  được thu thập. */
+const DEFAULT_REGION = 'Việt Nam'
 
 /**
  * Build the `ConsultationInput` that feeds `recommendPlan()` + `calculateROI()`.
@@ -106,8 +108,8 @@ export function toConsultationInput(row: ConsultationRow): ConsultationInput {
     electricityUsage: (row.electricity_usage ?? DEFAULT_USAGE) as ConsumptionTier,
     devices: parseDevices(row.devices),
     region: row.region ?? DEFAULT_REGION,
-    // NG Step-3 extensions. Use a single 'unknown' string so the
-    // recommendation/ROI code can branch with a single equality check.
+    // Các trường mở rộng ở bước 3. Dùng một chuỗi 'unknown' duy nhất để
+    // phần gợi ý/ROI chỉ cần một phép so sánh bằng.
     generatorFrequency: (row.generator_frequency ?? 'unknown') as ConsultationInput['generatorFrequency'],
     fuelBudgetNgn: (row.fuel_budget_ngn ?? 'unknown') as ConsultationInput['fuelBudgetNgn'],
     backupNeeds: parseDevices(row.backup_needs),
@@ -119,10 +121,10 @@ export function toConsultationInput(row: ConsultationRow): ConsultationInput {
  * `'5+'` household ID to `bedrooms: 5` (it's the upper bound); other IDs
  * are numeric and parse cleanly.
  *
- * **No PII**: returns only house-type + roof-orientation + bedrooms count.
- * `street` / `houseNumber` / `firstName` / etc. are deliberately omitted -
- * the HomeDetailsCard displays `postcode, city · house type · N bedrooms ·
- · roof orientation`, which is enough context to be useful and zero PII.
+ * **Không chứa PII**: chỉ trả về khu vực, loại nhà, loại mái, số người
+ * và nhu cầu sử dụng. `street` / `houseNumber` / `firstName` / v.v. được
+ * cố ý bỏ qua - HomeDetailsCard hiển thị `khu vực · loại nhà · số người ·
+ * loại mái`, đủ ngữ cảnh để hữu ích mà không có PII.
  */
 export function toHomeDetails(row: ConsultationRow): HomeDetails {
   const sizeRaw = row.household_size ?? DEFAULT_HOUSEHOLD_SIZE
@@ -140,9 +142,9 @@ export function toHomeDetails(row: ConsultationRow): HomeDetails {
     region: row.region ?? DEFAULT_REGION,
     electricityUsage: row.electricity_usage ?? DEFAULT_USAGE,
     devices: parseDevices(row.devices),
-    // NG Step-3 fields - shown on the strip so the user can confirm
-    // their generator / fuel / backup choices without re-opening the
-    // edit modal.
+    // Các trường mở rộng ở bước 3 - hiển thị trên dải thông tin để người
+    // dùng xác nhận lựa chọn nguồn dự phòng / năng lượng mà không cần mở
+    // lại biểu mẫu chỉnh sửa.
     generatorFrequency: row.generator_frequency ?? 'unknown',
     fuelBudgetNgn: row.fuel_budget_ngn ?? 'unknown',
     backupNeeds: parseDevices(row.backup_needs),
@@ -178,10 +180,9 @@ export function toFormPrefill(row: ConsultationRow): Partial<FormData> {
     city: row.city ?? '',
     propertyType: row.house_type ?? '',
     householdSize: row.household_size ?? '',
-    // NG Step-3 extensions - propagate so the Edit-details modal can
-    // re-render the user's previous choices.
-    generatorFrequency: row.generator_frequency ?? 'unknown',
-    fuelBudgetNgn: row.fuel_budget_ngn ?? 'unknown',
+    // Bước 3 của biểu mẫu trên site VN không còn thu thập lựa chọn về máy
+    // phát/ngân sách nhiên liệu, nên hai trường lịch sử này không được
+    // đưa vào dữ liệu điền sẵn.
   }
 }
 

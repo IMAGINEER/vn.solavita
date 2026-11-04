@@ -76,15 +76,15 @@ export default function SupportCategories() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Pick your topic
+            Chọn chủ đề của bạn
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            What Do You Need{' '}
-            <span className="text-gradient">Help with?</span>
+            Bạn cần hỗ trợ về{' '}
+            <span className="text-gradient">điều gì?</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Pick a category to jump straight to the most-asked questions
-            for that area.
+            Chọn một danh mục để đi thẳng đến những câu hỏi thường gặp
+            nhất trong lĩnh vực đó.
           </p>
         </div>
 

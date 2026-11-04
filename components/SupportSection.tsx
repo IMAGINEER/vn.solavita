@@ -13,7 +13,7 @@ import {
   Lock,
   FileText,
 } from 'lucide-react'
-import { ngSupportItems, type NgSupportItem } from '@/lib/data/ng-support'
+import { vnSupportItems, type VnSupportItem } from '@/lib/data/vn-support'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -26,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Lucide icons - theme-neutral via currentColor. Sized to sit inside the
 // `w-10 h-10` icon container.
-const iconFor = (icon: NgSupportItem['icon']) => {
+const iconFor = (icon: VnSupportItem['icon']) => {
   const common = 'w-6 h-6'
   const props = { className: common, strokeWidth: 1.5 } as const
   switch (icon) {
@@ -79,12 +79,12 @@ export default function SupportSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy">
-            We&rsquo;re Here to <span className="text-gradient">Support You</span>
+            Chúng tôi luôn sẵn sàng <span className="text-gradient">hỗ trợ bạn</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {ngSupportItems.map((item) => (
+          {vnSupportItems.map((item) => (
             <div
               key={item.title}
               className="support-card rounded-2xl p-6 bg-white border border-uk-line hover:border-uk-teal/50 hover:shadow-md transition-all flex flex-col items-start"

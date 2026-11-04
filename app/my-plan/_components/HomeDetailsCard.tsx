@@ -15,17 +15,17 @@ interface HomeDetailsCardProps {
 
 /** Map electricity-usage tier IDs to a label for the strip. */
 const USAGE_LABEL: Record<string, string> = {
-  low: 'Low use',
-  medium: 'Medium use',
-  high: 'High use',
-  'very-high': 'Very high use',
+  low: 'Mức dùng thấp',
+  medium: 'Mức dùng trung bình',
+  high: 'Mức dùng cao',
+  'very-high': 'Mức dùng rất cao',
 }
 
 /** Map device IDs to short labels. */
 const DEVICE_LABEL: Record<string, string> = {
-  wallbox: 'EV charger',
-  heatpump: 'Heat pump',
-  ac: 'AC',
+  wallbox: 'Sạc xe điện',
+  heatpump: 'Máy bơm nhiệt',
+  ac: 'Điều hòa',
 }
 
 /**
@@ -34,10 +34,10 @@ const DEVICE_LABEL: Record<string, string> = {
  * the strip reads consistently with the Edit-details modal.
  */
 const HOUSE_TYPE_LABEL: Record<string, string> = {
-  detached: 'Detached house',
-  'semi-detached': 'Duplex / semi-detached',
-  terraced: 'Terraced house',
-  apartment: 'Flat / Apartment',
+  detached: 'Nhà riêng lẻ',
+  'semi-detached': 'Nhà song lập / bán liền kề',
+  terraced: 'Nhà phố liền kề',
+  apartment: 'Căn hộ / chung cư',
 }
 
 /**
@@ -45,10 +45,10 @@ const HOUSE_TYPE_LABEL: Record<string, string> = {
  * ROOF_TYPES array.
  */
 const ROOF_TYPE_LABEL: Record<string, string> = {
-  gable: 'Pitched (gable)',
-  hip: 'Hipped',
-  flat: 'Flat roof',
-  pent: 'Mono-pitched',
+  gable: 'Mái dốc (hai mái)',
+  hip: 'Mái bốn dốc',
+  flat: 'Mái bằng',
+  pent: 'Mái một dốc',
 }
 
 /**
@@ -67,14 +67,13 @@ export default function HomeDetailsCard({ home, onEdit }: HomeDetailsCardProps) 
   const deviceList =
     home.devices.length > 0
       ? home.devices.map((d) => DEVICE_LABEL[d] ?? d).join(', ')
-      : 'No devices'
+      : 'Không có thiết bị'
   const houseTypeLabel = HOUSE_TYPE_LABEL[home.houseType] ?? home.houseType
   const roofLabel = ROOF_TYPE_LABEL[home.roofOrientation] ?? home.roofOrientation
   // People count, not bedroom count. "5+" maps to 5 (the upper bound on
-  // the form's HOUSEHOLD_SIZES picker). Display suffix is "people" to
-  // mirror the form Step 2 label "How many people live in your
-  // household?".
-  const peopleSuffix = home.householdSize === 1 ? 'person' : 'people'
+  // the form's HOUSEHOLD_SIZES picker). Vietnamese does not inflect the
+  // noun, so a single label covers every count.
+  const peopleSuffix = 'người'
 
   return (
     <div className="rounded-2xl p-5 sm:p-6 bg-white border border-uk-line hover:border-uk-teal/40 hover:shadow-md transition-all flex items-start sm:items-center gap-4">
@@ -84,7 +83,7 @@ export default function HomeDetailsCard({ home, onEdit }: HomeDetailsCardProps) 
 
       <div className="flex-1 min-w-0">
         <strong className="block text-base font-cw-bold text-uk-navy">
-          Your home
+          Nhà của bạn
         </strong>
         <p className="mt-1 text-sm text-uk-slate leading-relaxed">
           {home.region} · {houseTypeLabel} · {home.householdSize} {peopleSuffix} · {roofLabel}
@@ -100,7 +99,7 @@ export default function HomeDetailsCard({ home, onEdit }: HomeDetailsCardProps) 
         className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white hover:border-uk-teal hover:text-uk-teal-dark text-uk-navy text-sm font-cw-bold transition-all hover:-translate-y-0.5 hover:shadow-md"
       >
         <Edit className="w-4 h-4" strokeWidth={1.75} />
-        Edit details
+        Chỉnh sửa thông tin
       </button>
     </div>
   )

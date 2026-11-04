@@ -1,12 +1,12 @@
 /**
- * Internal notification email sent to the NG team inbox whenever
+ * Internal notification email sent to the VN team inbox whenever
  * someone submits /contact-us. Includes the full submission so a
  * support agent can reply by hitting Reply-To (the Resend send
  * call sets `to: TEAM_EMAIL`, so the team's mail client will reply
  * to the customer's address which we put in the body).
  */
 
-const TEAM_EMAIL = 'ng@solavita.com'
+const TEAM_EMAIL = 'vn@solavita.com'
 
 function subjectLabel(subject: string): string {
   // contactSubjects uses lowercase ids ('general', 'sales', ...). Capitalise
@@ -31,7 +31,7 @@ export function contactNotificationEmail(data: {
     .join(' ')
 
   return {
-    subject: `[NG Contact] ${subjectLabel(data.subject)} - ${fullName || data.email}`,
+    subject: `[VN Liên hệ] ${subjectLabel(data.subject)} - ${fullName || data.email}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -41,31 +41,31 @@ export function contactNotificationEmail(data: {
 
 <!-- Header -->
 <tr><td style="background: linear-gradient(135deg, #0f766e 0%, #10b981 100%); padding:20px 32px;">
-<h1 style="margin:0; font-size:18px; color:#ffffff; font-weight:700;">New contact enquiry</h1>
-<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">ng.solavita.com/contact-us → ${TEAM_EMAIL}</p>
+<h1 style="margin:0; font-size:18px; color:#ffffff; font-weight:700;">Yêu cầu liên hệ mới</h1>
+<p style="margin:6px 0 0 0; font-size:12px; color:#ccfbf1;">vn.solavita.com/contact-us → ${TEAM_EMAIL}</p>
 </td></tr>
 
 <!-- Body -->
 <tr><td style="padding:24px 32px;">
 
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">
-<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; width:120px; vertical-align:top;">Subject</td><td style="padding:8px 0; font-size:14px; color:#0f172a; font-weight:600;">${subjectLabel(data.subject)}</td></tr>
-<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Name</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${fullName || '-'}</td></tr>
+<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; width:120px; vertical-align:top;">Chủ đề</td><td style="padding:8px 0; font-size:14px; color:#0f172a; font-weight:600;">${subjectLabel(data.subject)}</td></tr>
+<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Họ tên</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${fullName || '-'}</td></tr>
 <tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Email</td><td style="padding:8px 0; font-size:14px; border-top:1px solid #f1f5f9;"><a href="mailto:${data.email}" style="color:#0f766e;">${data.email}</a></td></tr>
-${data.phone ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Phone</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.phone}</td></tr>` : ''}
-${data.postcode || data.city ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Location</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${[data.city, data.postcode].filter(Boolean).join(', ')}</td></tr>` : ''}
-${data.state ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">State</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.state}</td></tr>` : ''}
+${data.phone ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Điện thoại</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.phone}</td></tr>` : ''}
+${data.postcode || data.city ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Khu vực</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${[data.city, data.postcode].filter(Boolean).join(', ')}</td></tr>` : ''}
+${data.state ? `<tr><td style="padding:8px 0; color:#6b7280; font-size:13px; vertical-align:top; border-top:1px solid #f1f5f9;">Tỉnh / thành</td><td style="padding:8px 0; font-size:14px; color:#0f172a; border-top:1px solid #f1f5f9;">${data.state}</td></tr>` : ''}
 </table>
 
 <!-- Message -->
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px 0;">
 <tr><td style="background-color:#f0fdfa; border-left:4px solid #14B8A6; border-radius:8px; padding:16px;">
-<p style="margin:0 0 8px 0; font-size:12px; color:#0f766e; text-transform:uppercase; letter-spacing:1px; font-weight:600;">Message</p>
+<p style="margin:0 0 8px 0; font-size:12px; color:#0f766e; text-transform:uppercase; letter-spacing:1px; font-weight:600;">Nội dung</p>
 <p style="margin:0; font-size:14px; color:#374151; line-height:1.6; white-space:pre-wrap;">${data.message}</p>
 </td></tr>
 </table>
 
-<p style="margin:24px 0 0 0; font-size:12px; color:#6b7280;">Hit Reply to respond directly to ${data.email}.</p>
+<p style="margin:24px 0 0 0; font-size:12px; color:#6b7280;">Chọn Trả lời để phản hồi trực tiếp cho ${data.email}.</p>
 </td></tr>
 
 </table>

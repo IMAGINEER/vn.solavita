@@ -7,7 +7,7 @@ import { partnerNotificationEmail } from '@/lib/emails/partner-notification'
 export const dynamic = 'force-dynamic'
 
 // Local partnerships team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
-const TEAM_EMAIL = 'ng@solavita.com'
+const TEAM_EMAIL = 'vn@solavita.com'
 
 const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as const
 
@@ -15,8 +15,8 @@ const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as cons
 // `lib/data/partners.ts` (also rendered as `<option>` values inside
 // `components/PartnerForm.tsx`). If the UI adds a new track, update
 // this whitelist + `partnerTypes` + `PartnerForm` in the same change.
-// The three NG partner tracks per the latest brief: Core Service
-// Partner, Certified Installer, Lead Partner.
+// The three VN partner tracks: Core Service Partner, Certified
+// Installer, Lead Partner.
 const VALID_TRACKS = [
   'core-service',
   'certified-installer',
@@ -66,10 +66,8 @@ export async function POST(req: Request) {
   }
 
   // ── 3. Map to row ───────────────────────────────────────────────
-  // The `whatsapp` column + the new 3-value `partner_track` CHECK
-  // constraint were applied by
-  // `20261019000000_ng_partner_leads.sql`. Both writes now go
-  // through normally.
+  // The `whatsapp` column + the 3-value `partner_track` CHECK
+  // constraint are applied by `20261104000000_vn_partner_leads.sql`.
   const row = {
     full_name: String(body.fullName),
     whatsapp: body.whatsapp ? String(body.whatsapp) : null,
@@ -82,7 +80,7 @@ export async function POST(req: Request) {
 
   // ── 4. INSERT ───────────────────────────────────────────────────
   const { data, error } = await supabase
-    .from('ng_partner_leads')
+    .from('vn_partner_leads')
     .insert(row)
     .select('id')
     .single()
@@ -90,7 +88,7 @@ export async function POST(req: Request) {
   if (error || !data) {
     console.error('[/api/partner] insert error:', error)
     return NextResponse.json(
-      { success: false, message: 'Something went wrong. Please try again.' },
+      { success: false, message: 'Đã xảy ra lỗi. Vui lòng thử lại.' },
       { status: 500 },
     )
   }
@@ -102,14 +100,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'ng',
+      country: 'vn',
       to: email,
       subject: confirmation.subject,
       html: confirmation.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'partner_confirmation',
       sent_to: email,
       status: emailResult.success ? 'sent' : 'failed',
@@ -120,7 +118,7 @@ export async function POST(req: Request) {
     console.error('[/api/partner] confirmation email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'partner_confirmation',
       sent_to: email,
       status: 'failed',
@@ -140,14 +138,14 @@ export async function POST(req: Request) {
   })
   try {
     const emailResult = await sendEmail({
-      country: 'ng',
+      country: 'vn',
       to: TEAM_EMAIL,
       subject: notification.subject,
       html: notification.html,
     })
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'partner_notification',
       sent_to: TEAM_EMAIL,
       status: emailResult.success ? 'sent' : 'failed',
@@ -158,7 +156,7 @@ export async function POST(req: Request) {
     console.error('[/api/partner] notification email threw:', emailErr)
     await supabase.from('email_logs').insert({
       customer_id: null,
-      country: 'ng',
+      country: 'vn',
       email_type: 'partner_notification',
       sent_to: TEAM_EMAIL,
       status: 'failed',

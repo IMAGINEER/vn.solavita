@@ -7,9 +7,9 @@ export const dynamic = 'force-dynamic'
 export default async function PartnersPage() {
   await requireAdmin()
 
-  // ng_partner_leads is NG-only by table design (no `country` column).
+  // vn_partner_leads is VN-only by table design (no `country` column).
   const { data: rows } = await supabase
-    .from('ng_partner_leads')
+    .from('vn_partner_leads')
     .select(
       'id, full_name, company, email, partner_track, message, ' +
         'status, created_at, updated_at',
@@ -22,10 +22,10 @@ export default async function PartnersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-cw-bold text-uk-navy">
-          NG Partner Enquiries
+          Yêu cầu hợp tác
         </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          Submissions from ng.solavita.com/for-partners. Newest first.
+          Yêu cầu gửi từ vn.solavita.com/for-partners. Mới nhất trước.
         </p>
       </div>
       <PartnersTable partners={partners} />

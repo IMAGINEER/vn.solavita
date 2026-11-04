@@ -8,26 +8,26 @@ import SectionEyebrow from '@/components/ui/section-eyebrow'
 import GetQuoteButton from '@/components/ui/get-quote-button'
 import { openFormModal } from '@/lib/form-modal'
 import {
-  ngResidentialCases,
-  ngCommercialCases,
-} from '@/lib/data/ng-cases'
-import NgCaseCard from '@/components/cases/NgCaseCard'
+  vnResidentialCases,
+  vnCommercialCases,
+} from '@/lib/data/vn-cases'
+import VnCaseCard from '@/components/cases/VnCaseCard'
 
 /**
  * /cases - Case studies index.
  *
  * Rebuilt per `docs/修改建议(2).docx` §"Cases页面" (Oct 2026): the
- * 16 reference installations are now split into two bubble-box
+ * published reference installations are split into two bubble-box
  * categories —
  *
- *   Residential            → 12 installs
- *   Commercial & Industrial →  4 installs
+ *   Hộ gia đình                     → 12 công trình
+ *   Công nghiệp & thương mại       →  4 công trình
  *
  * and every card uses the new format: type badge → capacity → place.
  * The case facts themselves now come from `docs/创维光伏海外案例2.0(1).pptx`
  * (Nov 2026), which supersedes the docx figures.
  *
- * Photos: all 16 cases now carry a photo taken from the case deck
+ * Photos: every published case carries a photo taken from the case deck
  * (`docs/创维光伏海外案例2.0(1).pptx`).
  */
 export default function CasesPage() {
@@ -38,12 +38,12 @@ export default function CasesPage() {
       {/* Hero */}
       <PageHero
         backgroundImage="/images/hero-cases.webp"
-        eyebrow="CASES"
-        title="Solar Solutions in Practice"
-        body="Explore solar installations and system configurations in different scenarios."
+        eyebrow="DỰ ÁN"
+        title="Giải pháp điện mặt trời trong thực tế"
+        body="Khám phá các công trình điện mặt trời và cấu hình hệ thống trong từng bối cảnh sử dụng."
         breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Cases' },
+          { label: 'Trang chủ', href: '/' },
+          { label: 'Dự án' },
         ]}
       />
 
@@ -54,19 +54,19 @@ export default function CasesPage() {
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-10">
-            <SectionEyebrow>RESIDENTIAL</SectionEyebrow>
+            <SectionEyebrow>HỘ GIA ĐÌNH</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Home Systems, <span className="text-gradient">Configured to the Roof</span>
+              Hệ thống cho hộ gia đình, <span className="text-gradient">thiết kế theo từng mái nhà</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-              Reference installations on homes across Asia, Europe and
-              West Africa — showing the array size, the battery stack and
-              the inverter rating each site runs.
+              Các công trình tham chiếu tại châu Á, châu Âu và Tây Phi —
+              thể hiện công suất dàn pin, cấu hình pin lưu trữ và công suất
+              bộ biến tần của từng hệ thống.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ngResidentialCases.map((c) => (
-              <NgCaseCard key={c.slug} c={c} />
+            {vnResidentialCases.map((c) => (
+              <VnCaseCard key={c.slug} c={c} />
             ))}
           </div>
         </div>
@@ -79,18 +79,18 @@ export default function CasesPage() {
       >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-10">
-            <SectionEyebrow>COMMERCIAL &amp; INDUSTRIAL</SectionEyebrow>
+            <SectionEyebrow>CÔNG NGHIỆP &amp; THƯƠNG MẠI</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Business Systems, <span className="text-gradient">Scaled to the Load</span>
+              Hệ thống doanh nghiệp, <span className="text-gradient">mở rộng theo phụ tải</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-              Reference installations for schools, trading cities,
-              commercial rooftops and utility-scale storage.
+              Các công trình tham chiếu cho trường học, khu thương mại,
+              mái công trình thương mại và lưu trữ quy mô lớn.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {ngCommercialCases.map((c) => (
-              <NgCaseCard key={c.slug} c={c} />
+            {vnCommercialCases.map((c) => (
+              <VnCaseCard key={c.slug} c={c} />
             ))}
           </div>
         </div>
@@ -110,15 +110,14 @@ export default function CasesPage() {
           }}
         />
         <div className="relative max-w-3xl mx-auto px-6 text-center">
-          <SectionEyebrow variant="dark">MAKE A DIFFERENCE</SectionEyebrow>
+          <SectionEyebrow variant="dark">BẮT ĐẦU NGAY</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-white leading-tight">
-            Take the Next Step Towards <span className="text-gradient">Reliable Power</span>
+            Bước tiếp theo đến <span className="text-gradient">nguồn điện ổn định</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-white/85 font-cw-light leading-relaxed">
-            Whether for your home or business, Solavita helps you find
-            the right solar and battery storage solution for your energy
-            needs. Tell us what you need, and our team will help you get
-            started.
+            Dù cho gia đình hay doanh nghiệp, Solavita giúp bạn tìm đúng
+            giải pháp điện mặt trời và pin lưu trữ theo nhu cầu. Hãy chia sẻ
+            điều bạn cần, đội ngũ của chúng tôi sẽ đồng hành từ bước đầu tiên.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <GetQuoteButton onClick={openFormModal} />
@@ -126,7 +125,7 @@ export default function CasesPage() {
               href="/solutions/home-solar"
               className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-uk-navy hover:border-uk-teal transition-colors"
             >
-              Explore Solutions
+              Khám phá giải pháp
             </Link>
           </div>
         </div>

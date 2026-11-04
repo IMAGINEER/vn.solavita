@@ -22,7 +22,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = buildIndexMetadata({
   title: 'Blog',
   description:
-    'Guides, product updates and stories from Nigerian solar. Written by Solavita engineers so you can choose with confidence.',
+    'Cẩm nang, cập nhật sản phẩm và câu chuyện về điện mặt trời tại Việt Nam. Được viết bởi đội ngũ kỹ sư Solavita để bạn tự tin lựa chọn.',
 })
 
 export default async function BlogIndexPage(props: {
@@ -33,7 +33,7 @@ export default async function BlogIndexPage(props: {
   const page = Number(sp.page ?? '1') || 1
 
   const [categories, result] = await Promise.all([
-    // Public surface: hide NG categories with no published posts so the
+    // Public surface: hide VN categories with no published posts so the
     // filter chips never surface a dead category page.
     getCategories({ onlyWithPublishedPosts: true }),
     listPublishedPosts({ categorySlug: activeCategory, page, pageSize: 9 }),
@@ -49,24 +49,24 @@ export default async function BlogIndexPage(props: {
         data={[
           blogJsonLd({
             path: '/blog',
-            name: 'Solavita Nigeria Blog',
+            name: 'Blog Solavita Việt Nam',
             description:
-              'Guides, product updates and stories from Nigerian solar. Written by Solavita engineers so you can choose with confidence.',
+              'Cẩm nang, cập nhật sản phẩm và câu chuyện về điện mặt trời tại Việt Nam. Được viết bởi đội ngũ kỹ sư Solavita để bạn tự tin lựa chọn.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
+            { name: 'Trang chủ', url: '/' },
             { name: 'Blog', url: '/blog' },
           ]),
         ]}
       />
       <Header />
       <BlogHero
-        badge={activeCat ? `Category · ${activeCat.name_en}` : 'Solavita Nigeria Blog'}
-        h1={activeCat ? activeCat.name_en : 'Insights & updates'}
-        h1Accent={activeCat ? 'the latest updates' : 'for Nigerian solar'}
+        badge={activeCat ? `Danh mục · ${activeCat.name_en}` : 'Blog Solavita Việt Nam'}
+        h1={activeCat ? activeCat.name_en : 'Góc chia sẻ & cập nhật'}
+        h1Accent={activeCat ? 'những cập nhật mới nhất' : 'về điện mặt trời tại Việt Nam'}
         subhead={
           activeCat?.description_en ??
-          'Plain-English guides on solar panels, battery storage and Nigerian energy regulation. Written by our engineers, never generic.'
+          'Cẩm nang dễ hiểu về tấm pin mặt trời, lưu trữ bằng pin và quy định năng lượng tại Việt Nam. Do đội ngũ kỹ sư của chúng tôi viết, không hề chung chung.'
         }
       />
 
@@ -94,15 +94,15 @@ export default async function BlogIndexPage(props: {
           /support and the category / post pages. The CTA component opens
           the universal FormModal (hosted in Footer) via openFormModal(). */}
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            Not a Solavita Customer Yet?
+            Bạn chưa phải khách hàng của Solavita?
             <br />
-            <span className="text-gradient">Start with a Free Design.</span>
+            <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="If you're still weighing your options, our team can prepare a free, no-obligation design that shows how solar panels, battery storage or a full home energy system would fit your home."
+        description="Nếu bạn vẫn đang cân nhắc, đội ngũ của chúng tôi có thể chuẩn bị một bản thiết kế miễn phí, không ràng buộc, cho thấy tấm pin mặt trời, pin lưu trữ hoặc trọn bộ hệ thống năng lượng cho gia đình sẽ phù hợp với ngôi nhà của bạn như thế nào."
       />
 
       <Footer />
@@ -115,15 +115,15 @@ function EmptyState({ categoryName }: { categoryName?: string | null }) {
     <div className="rounded-2xl border border-dashed border-uk-line bg-[#F7F9FC] dark:bg-sv-darker p-12 text-center">
       <p className="text-uk-slate">
         {categoryName
-          ? `The "${categoryName}" category has no published articles yet.`
-          : 'The blog is on its way — check back soon.'}
+          ? `Danh mục "${categoryName}" chưa có bài viết nào được xuất bản.`
+          : 'Blog đang được hoàn thiện — hãy quay lại sớm nhé.'}
       </p>
       <div className="mt-4">
         <Link
           href="/blog"
           className="inline-flex items-center justify-center h-8 px-3 text-xs font-cw-bold rounded-md border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm transition-colors"
         >
-          All articles
+          Tất cả bài viết
         </Link>
       </div>
     </div>
@@ -156,18 +156,18 @@ function Pagination({
           href={makeHref(page - 1)}
           className="inline-flex items-center justify-center h-8 px-3 text-xs font-cw-bold rounded-md border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm transition-colors"
         >
-          ← Previous
+          ← Trước
         </Link>
       )}
       <span className="text-sm text-uk-slate">
-        Page {page} of {totalPages}
+        Trang {page} / {totalPages}
       </span>
       {page < totalPages && (
         <Link
           href={makeHref(page + 1)}
           className="inline-flex items-center justify-center h-8 px-3 text-xs font-cw-bold rounded-md border border-uk-line bg-white text-uk-navy hover:bg-uk-teal-soft hover:text-uk-teal-dark hover:border-uk-teal/40 shadow-sm transition-colors"
         >
-          Next
+          Sau →
         </Link>
       )}
     </div>

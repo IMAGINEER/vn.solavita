@@ -80,31 +80,31 @@ const PLAN_STATUS_VARIANT: Record<PlanStatus, BadgeVariant> = {
 }
 
 const PLAN_STATUS_LABEL: Record<PlanStatus, string> = {
-  not_sent: 'Plan: not sent',
-  sent_unopened: 'Plan: sent',
-  sent_opened_unconfirmed: 'Plan: opened',
-  sent_opened_confirmed: 'Plan: confirmed',
+  not_sent: 'Gói: chưa gửi',
+  sent_unopened: 'Gói: đã gửi',
+  sent_opened_unconfirmed: 'Gói: đã mở',
+  sent_opened_confirmed: 'Gói: đã xác nhận',
 }
 
 const PLAN_STATUS_TOOLTIP: Record<PlanStatus, string> = {
-  not_sent: 'No email sent yet (or Resend webhook not configured).',
-  sent_unopened: 'Email delivered, /my-plan not yet visited.',
-  sent_opened_unconfirmed: '/my-plan visited, no Talk-to-an-expert click yet.',
-  sent_opened_confirmed: 'Customer clicked Talk to an expert. Follow up.',
+  not_sent: 'Chưa gửi email nào (hoặc webhook Resend chưa được cấu hình).',
+  sent_unopened: 'Email đã gửi, khách chưa vào /my-plan.',
+  sent_opened_unconfirmed: 'Khách đã vào /my-plan, chưa bấm Liên hệ chuyên gia.',
+  sent_opened_confirmed: 'Khách đã bấm Liên hệ chuyên gia. Cần theo dõi tiếp.',
 }
 
 function formatDateTime(iso: string): string {
-  // en-GB short: "31 Aug, 14:23" - drops the year because admin
+  // vi-VN short: "31 Th08, 14:23" - drops the year because admin
   // scans recent leads in the current year; saves ~20px in the
   // narrow Time column. Falls back to the raw ISO if Intl fails.
   try {
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat('vi-VN', {
       day: '2-digit',
       month: 'short',
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-      timeZone: 'Africa/Lagos',
+      timeZone: 'Asia/Ho_Chi_Minh',
     }).format(new Date(iso))
   } catch {
     return iso
@@ -133,9 +133,9 @@ function parseDevices(csv: string | null): Array<string> {
 const DEFAULT_HOUSEHOLD_SIZE: ConsultationInput['householdSize'] = '3'
 const DEFAULT_USAGE: ConsumptionTier = 'medium'
 /** Fallback region for rows with a NULL region column. Matches
- *  `lib/my-plan/adapter.ts` - the NG form no longer collects a
+ *  `lib/my-plan/adapter.ts` - the VN form no longer collects a
  *  region, so most rows land here. */
-const DEFAULT_REGION = 'Nigeria'
+const DEFAULT_REGION = 'Việt Nam'
 
 /** Run the recommendation engine client-side (same call as
  *  MyPlanClient) so the Plan column shows the actual bundle
@@ -150,8 +150,9 @@ function resolvePlanName(l: ConsultationLead): string {
     electricityUsage: (l.electricity_usage ?? DEFAULT_USAGE) as ConsumptionTier,
     devices: parseDevices(l.devices),
     region: l.region ?? DEFAULT_REGION,
-    // NG Step-3 fields - older leads may have NULL here, default to
-    // 'unknown' so the recommendation engine still resolves a plan.
+    // Legacy Step-3 fields from the calculator input type - older
+    // leads may have NULL here, default to 'unknown' so the
+    // recommendation engine still resolves a plan.
     generatorFrequency: 'unknown',
     fuelBudgetNgn: 'unknown',
     backupNeeds: [],
@@ -168,11 +169,11 @@ const HOME_DETAIL_ITEMS: ReadonlyArray<{
   icon: typeof House
   label: string
 }> = [
-  { key: 'house_type',        icon: House,    label: 'Type' },
-  { key: 'roof_type',         icon: Triangle, label: 'Roof' },
-  { key: 'household_size',    icon: Users,    label: 'Household' },
-  { key: 'electricity_usage', icon: Zap,      label: 'Usage' },
-  { key: 'devices',           icon: Plug,     label: 'Devices' },
+  { key: 'house_type',        icon: House,    label: 'Loại nhà' },
+  { key: 'roof_type',         icon: Triangle, label: 'Mái nhà' },
+  { key: 'household_size',    icon: Users,    label: 'Số người' },
+  { key: 'electricity_usage', icon: Zap,      label: 'Mức dùng' },
+  { key: 'devices',           icon: Plug,     label: 'Thiết bị' },
 ]
 
 function HomeDetailsCell({ lead }: { lead: ConsultationLead }) {
@@ -202,7 +203,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
   if (leads.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        No NG leads yet.
+        Chưa có khách hàng tiềm năng nào.
       </div>
     )
   }
@@ -212,13 +213,13 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Time</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead>Thời gian</TableHead>
+            <TableHead>Họ tên</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Region</TableHead>
-            <TableHead>Home Details</TableHead>
-            <TableHead>Plan</TableHead>
+            <TableHead>Điện thoại</TableHead>
+            <TableHead>Khu vực</TableHead>
+            <TableHead>Chi tiết nhà</TableHead>
+            <TableHead>Gói đề xuất</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -234,7 +235,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
                   <div className="flex items-center gap-1.5">
                     <span>{formatDateTime(l.updated_at)}</span>
                     {wasResubmitted(l) && (
-                      <Badge variant="muted" title="Re-submitted (updated_at > created_at)">
+                      <Badge variant="muted" title="Gửi lại (updated_at > created_at)">
                         U
                       </Badge>
                     )}

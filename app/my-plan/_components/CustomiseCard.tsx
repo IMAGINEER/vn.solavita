@@ -34,14 +34,14 @@ interface CustomiseCardProps {
   onExportPriceChange: (value: number) => void
   onSelfConsumptionRateChange: (value: number) => void
   /**
-   * Live ROI metrics. Used to source the current annual fuel cost cap
-   * (`metrics.appliedAnnualFuelCostNgn`) for the fuel-budget slider
-   * so the slider's default value tracks the calculator's
+   * Live ROI metrics. Used to source the current annual energy-budget
+   * cap (`metrics.appliedAnnualFuelCostNgn`) for the energy-budget
+   * slider so the slider's default value tracks the calculator's
    * path-A / path-B choice automatically.
    */
   metrics: PlanRoi
   /**
-   * When defined, replaces the band / back-derive fuel-cost cap. The
+   * When defined, replaces the band / back-derive energy-cost cap. The
    * slider surfaces this; passing `undefined` clears the override and
    * the calculator falls back to the user's reported band or the
    * segment-aware hard cap.
@@ -50,7 +50,7 @@ interface CustomiseCardProps {
 }
 
 /**
- * 4-plan selector + an interactive "View calculation assumptions"
+ * 6-plan selector + an interactive "View calculation assumptions"
  * disclosure.
  *
  * Plan selection is the **only** way to change the system's hardware
@@ -88,12 +88,13 @@ export default function CustomiseCard({
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h2 className="text-xl md:text-2xl font-cw-bold text-uk-navy">
-            Choose your plan
+            Chọn gói của bạn
           </h2>
           <p className="text-sm text-uk-slate mt-1">
-            Pick one of six ready-made plans. Each plan pairs a fixed solar
-            array, battery and inverter - they are bundled together, so the
-            whole configuration switches as one. ROI updates instantly.
+            Chọn một trong sáu gói có sẵn. Mỗi gói kết hợp một hệ thống điện
+            mặt trời, pin lưu trữ và bộ biến tần cố định — các thành phần được
+            đóng gói cùng nhau nên toàn bộ cấu hình thay đổi đồng thời. Tỷ suất
+            hoàn vốn (ROI) cập nhật tức thì.
           </p>
         </div>
       </div>
@@ -117,7 +118,7 @@ export default function CustomiseCard({
               {isRecommended && (
                 <span className="absolute -top-2.5 left-4 inline-flex items-center gap-1 bg-uk-emerald text-white text-[10px] font-cw-bold tracking-wider rounded-full px-2 py-0.5 whitespace-nowrap">
                   <Star className="w-2.5 h-2.5" strokeWidth={3} />
-                  Recommended for your home
+                  Đề xuất cho nhà bạn
                 </span>
               )}
 
@@ -139,19 +140,19 @@ export default function CustomiseCard({
 
               <div className="mt-4 space-y-1 text-sm text-uk-slate tabular-nums">
                 <div className="flex justify-between">
-                  <span>Solar</span>
+                  <span>Điện mặt trời</span>
                   <span className="font-cw-bold text-uk-navy">
                     {plan.kwpLabel ?? `${plan.panels} kWp`}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Battery</span>
+                  <span>Pin lưu trữ</span>
                   <span className="font-cw-bold text-uk-navy">
                     {plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '-'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Inverter</span>
+                  <span>Bộ biến tần</span>
                   <span className="font-cw-bold text-uk-navy">
                     {plan.inverterLabel ?? `${plan.inverterKw} kW`}
                   </span>
@@ -159,7 +160,7 @@ export default function CustomiseCard({
               </div>
 
               <div className="mt-4 pt-3 border-t border-uk-line flex items-baseline justify-between">
-                <span className="text-xs text-uk-slate">Plan price</span>
+                <span className="text-xs text-uk-slate">Giá gói</span>
                 <span className="text-lg font-cw-bold text-uk-teal-dark tabular-nums">
                   {formatNGN(plan.priceNgn)}
                 </span>
@@ -179,7 +180,7 @@ export default function CustomiseCard({
         className="mt-6 inline-flex items-center gap-1 text-uk-teal hover:text-uk-teal-dark text-sm font-cw-bold transition-colors"
         aria-expanded={advancedOpen}
       >
-        View calculation assumptions
+        Xem giả định tính toán
         <ChevronDown
           className={
             'w-4 h-4 transition-transform duration-200 ' +
@@ -192,19 +193,20 @@ export default function CustomiseCard({
       {advancedOpen && (
         <div className="mt-3 rounded-xl bg-uk-teal-soft/40 border border-uk-line p-5 space-y-5">
           <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
-            <strong className="font-cw-bold">Provisional test values</strong> — the
-            grid tariff, fuel price and generator efficiency baked into
-            the calculator are estimates, not verified national averages.
-            Adjust the sliders below to model your actual situation.
+            <strong className="font-cw-bold">Giá trị tạm tính</strong> — biểu giá
+            điện lưới, đơn giá điện hiện tại và hiệu suất hệ thống được
+            tích hợp trong công cụ tính là ước tính, chưa phải mức trung bình
+            quốc gia đã được xác minh. Điều chỉnh thanh trượt bên dưới để mô
+            phỏng tình hình thực tế của bạn.
           </div>
           <p className="text-xs text-uk-slate leading-relaxed">
-            These figures feed the savings and payback shown above. Drag
-            the sliders to match your actual tariff and usage pattern -
-            the savings / payback / 30-year numbers above reflow in real
-            time.
+            Các số liệu này được dùng để tính mức tiết kiệm và thời gian hoàn
+            vốn hiển thị ở trên. Kéo thanh trượt để khớp với biểu giá và mô
+            hình sử dụng thực tế của bạn — các chỉ số tiết kiệm / thời gian
+            hoàn vốn / lợi ích 30 năm sẽ cập nhật theo thời gian thực.
           </p>
 
-          {/* Fuel budget slider — for "Not sure" users (and for fine-tuning
+          {/* Energy budget slider — for "Not sure" users (and for fine-tuning
              band picks). Range 0 – 2× segment hard cap so the user can't
              push the calculator into absurd territory. Default value is
              whatever the calculator currently uses
@@ -225,15 +227,15 @@ export default function CustomiseCard({
                     htmlFor="assumption-fuel-budget"
                     className="font-cw-bold text-uk-navy"
                   >
-                    Annual generator fuel budget
+                    Ngân sách năng lượng hiện tại (mỗi năm)
                     {isOverridden && (
                       <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-uk-teal text-white text-[10px] font-cw-bold tracking-wider">
-                        CUSTOM
+                        TÙY CHỈNH
                       </span>
                     )}
                   </label>
                   <span className="font-cw-bold text-uk-teal-dark tabular-nums">
-                    {formatNGN(sliderValue)} / year
+                    {formatNGN(sliderValue)} / năm
                   </span>
                 </div>
                 <input
@@ -255,7 +257,7 @@ export default function CustomiseCard({
                   <span>
                     {formatNGN(sliderMax)}
                     <span className="ml-1 text-uk-slate/70">
-                      (2× default cap)
+                      (2× mức trần mặc định)
                     </span>
                   </span>
                 </div>
@@ -265,14 +267,15 @@ export default function CustomiseCard({
                     onClick={() => onFuelBudgetOverrideChange(undefined)}
                     className="text-xs text-uk-teal hover:text-uk-teal-dark font-cw-bold underline underline-offset-2"
                   >
-                    Reset to default ({formatNGN(currentCap)} / year)
+                    Đặt lại mặc định ({formatNGN(currentCap)} / năm)
                   </button>
                 )}
                 <p className="text-xs text-uk-slate">
-                  Caps the generator-fuel saving the calculator can claim
-                  per year. Default reflects your consultation choice
-                  (band or back-derive); adjust if you have a better
-                  estimate.
+                  Đặt mức trần cho khoản tiết kiệm chi phí năng lượng mà công
+                  cụ có thể ghi nhận mỗi năm. Giá trị mặc định phản ánh lựa
+                  chọn trong buổi tư vấn của bạn (khoảng ước tính hoặc suy ra
+                  từ mức sử dụng); hãy điều chỉnh nếu bạn có ước tính chính
+                  xác hơn.
                 </p>
               </div>
             )
@@ -287,15 +290,16 @@ export default function CustomiseCard({
                 htmlFor="assumption-import-price"
                 className="font-cw-bold text-uk-navy"
               >
-                Grid import price
+                Đơn giá điện lưới
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 ₦{assumptions.importPriceGbp.toFixed(2)} /kWh
               </span>
             </div>
             <p className="text-xs text-uk-slate">
-              What your distribution company charges per kWh of grid
-              electricity (residential Band A / B / C tariff)
+              Đơn giá bạn trả cho mỗi kWh điện lưới. Biểu giá bán lẻ theo
+              bậc thang của EVN tại Việt Nam vẫn đang chờ xác nhận.
+              TBD — mô hình giá điện theo biểu giá EVN tại Việt Nam (chờ xác nhận)
             </p>
             <input
               id="assumption-import-price"
@@ -307,7 +311,7 @@ export default function CustomiseCard({
               onChange={(e) =>
                 onImportPriceChange(snap(ROI_IMPORT_PRICE_STEP)(parseFloat(e.target.value)))
               }
-              aria-label="Grid import price in naira per kilowatt-hour"
+              aria-label="Đơn giá điện lưới mỗi kilowatt-giờ"
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
@@ -317,24 +321,24 @@ export default function CustomiseCard({
           </div>
 
           {/* Export price slider — what the household earns for each
-              kWh pushed back onto the grid. Nigeria has no confirmed
-              feed-in tariff yet, so this defaults to ₦0. */}
+              kWh pushed back onto the grid. The Vietnamese feed-in
+              tariff is still to be confirmed, so this defaults to ₦0. */}
           <div className="space-y-2">
             <div className="flex items-baseline justify-between gap-3">
               <label
                 htmlFor="assumption-export-price"
                 className="font-cw-bold text-uk-navy"
               >
-                Export price
+                Giá điện phát lên lưới
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 ₦{assumptions.exportPriceGbp.toFixed(2)} /kWh
               </span>
             </div>
             <p className="text-xs text-uk-slate">
-              What you earn per kWh exported back to the grid. Nigeria
-              has no confirmed feed-in tariff yet, so this starts at
-              ₦0 — dial in your own rate if you have one.
+              Khoản bạn nhận được cho mỗi kWh điện phát ngược lên lưới.
+              Mức giá điện phát lên lưới tại Việt Nam đang chờ xác nhận,
+              nên giá trị này bắt đầu từ ₦0 — hãy nhập mức giá của bạn nếu có.
             </p>
             <input
               id="assumption-export-price"
@@ -346,7 +350,7 @@ export default function CustomiseCard({
               onChange={(e) =>
                 onExportPriceChange(snap(ROI_EXPORT_PRICE_STEP)(parseFloat(e.target.value)))
               }
-              aria-label="Export price in naira per kilowatt-hour"
+              aria-label="Giá điện phát lên lưới mỗi kilowatt-giờ"
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">
@@ -365,17 +369,17 @@ export default function CustomiseCard({
                 htmlFor="assumption-self-consumption"
                 className="font-cw-bold text-uk-navy"
               >
-                Self-consumption rate
+                Tỷ lệ tự tiêu thụ
               </label>
               <span className="font-cw-bold text-uk-teal-dark tabular-nums">
                 {Math.round(assumptions.selfConsumptionRate * 100)}%
               </span>
             </div>
             <p className="text-xs text-uk-slate">
-              Share of generation used on-site. With a battery this
-              reaches 100%; without one, typical solar-only homes
-              self-consume around 35%. Drag to match your actual usage
-              pattern.
+              Phần điện năng được sử dụng tại chỗ. Có pin lưu trữ, tỷ lệ
+              này đạt 100%; không có pin, các hộ chỉ dùng điện mặt trời
+              thường tự tiêu thụ khoảng 35%. Kéo để khớp với mô hình sử
+              dụng thực tế của bạn.
             </p>
             <input
               id="assumption-self-consumption"
@@ -389,7 +393,7 @@ export default function CustomiseCard({
                   snap(ROI_SELF_CONSUMPTION_STEP)(parseFloat(e.target.value)),
                 )
               }
-              aria-label="Self-consumption rate as a percentage of generation"
+              aria-label="Tỷ lệ tự tiêu thụ theo phần trăm sản lượng điện"
               className="w-full h-1.5 cursor-pointer accent-uk-teal"
             />
             <div className="flex justify-between text-[10px] text-uk-slate/70 tabular-nums">

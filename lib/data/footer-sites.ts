@@ -28,10 +28,10 @@ export interface FooterSiteGroup {
 }
 
 /** Badge shown on rows whose site is not live yet. */
-export const COMING_SOON_LABEL = 'Coming soon'
+export const COMING_SOON_LABEL = 'Sắp ra mắt'
 
 /** Shown next to the row of the site the visitor is currently on. */
-export const CURRENT_SITE_LABEL = 'Sei qui'
+export const CURRENT_SITE_LABEL = 'Bạn đang ở đây'
 
 /**
  * Build a site entry. `code` is the country code used to look up the
@@ -53,12 +53,12 @@ function site(
 
 /**
  * The site this build is deployed as. Drives the footer trigger
- * (flag + label) and the "Sei qui" marker in the menu.
+ * (flag + label) and the "Bạn đang ở đây" marker in the menu.
  */
 export const currentSite: FooterSite = site(
-  'Nigeria · English',
-  'ng',
-  'https://ng.solavita.com/',
+  'Việt Nam · Tiếng Việt',
+  'vn',
+  'https://vn.solavita.com/',
   true
 )
 
@@ -66,25 +66,25 @@ export const footerSiteGroups: FooterSiteGroup[] = [
   {
     title: 'Solavita',
     sites: [
-      site('Global', 'globe', 'https://www.solavita.com/'),
-      site('Germany', 'de', 'https://de.solavita.com/'),
-      site('Italy', 'it', 'https://it.solavita.com/'),
-      site('United Kingdom', 'gb', 'https://uk.solavita.com/'),
+      site('Toàn cầu', 'globe', 'https://www.solavita.com/'),
+      site('Đức', 'de', 'https://de.solavita.com/'),
+      site('Ý', 'it', 'https://it.solavita.com/'),
+      site('Vương quốc Anh', 'gb', 'https://uk.solavita.com/'),
       site('Nigeria', 'ng', 'https://ng.solavita.com/'),
-      site('Vietnam', 'vn', null),
+      site('Việt Nam', 'vn', 'https://vn.solavita.com/'),
       site('Malaysia', 'my', null),
       site('Indonesia', 'id', null),
-      site('South Africa', 'za', null),
+      site('Nam Phi', 'za', null),
     ],
   },
   {
     title: 'SKYWORTH Solar',
     sites: [
-      site('Global', 'globe', 'https://www.skyworth-pv.com/'),
-      site('Thailand', 'th', 'https://th.skyworth-pv.com/'),
+      site('Toàn cầu', 'globe', 'https://www.skyworth-pv.com/'),
+      site('Thái Lan', 'th', 'https://th.skyworth-pv.com/'),
       site('Brazil', 'br', 'https://br.skyworth-pv.com/'),
-      site('Germany', 'de', 'https://de.skyworth-pv.com/'),
-      site('Italy', 'it', 'https://it.skyworth-pv.com/'),
+      site('Đức', 'de', 'https://de.skyworth-pv.com/'),
+      site('Ý', 'it', 'https://it.skyworth-pv.com/'),
     ],
   },
 ]

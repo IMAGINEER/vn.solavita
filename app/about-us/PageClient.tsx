@@ -12,19 +12,19 @@ import ContactMethods from '@/components/contact/ContactMethods'
 import CTA from '@/components/solutions/CTA'
 
 /**
- * /about-us - Solavita Nigeria brand & company page.
+ * /about-us - Solavita Việt Nam brand & company page.
  *
  * Composition mirrors the UK /about-us page (`UK.solavita/app/about-us`):
  *   AboutHero → WhoWeAre → Mission → Approach → Technology →
  *   GlobalPresence → ContactMethods (clickable={false}) → CTA.
  *
- * All section copy uses `lib/data/about.ts` (NG TBDs) and
- * `lib/data/contact.tsx` (NG TBDs) — the UK trust marks, revenue
- * figures and UK-specific claims are NOT transferred per the NG content
- * strategy. When unverified facts land they fill the same data slots.
+ * All section copy uses `lib/data/about.ts` (VN TBDs) and
+ * `lib/data/contact.tsx` (VN TBDs) — other markets' trust marks,
+ * revenue figures and market-specific claims are NOT transferred.
+ * When unverified facts land they fill the same data slots.
  *
- * The sections are kept as NG-specific components (already localized)
- * rather than being inlined.
+ * The sections are kept as dedicated components rather than being
+ * inlined.
  */
 export default function AboutPage() {
   return (
@@ -46,14 +46,14 @@ export default function AboutPage() {
       <ContactMethods clickable={false} />
 
       <CTA
-        eyebrow="Ready when you are"
+        eyebrow="Sẵn sàng khi bạn cần"
         title={
           <>
-            See What Solavita Can Do{' '}
-            <span className="text-gradient">for Your Home.</span>
+            Xem Solavita có thể làm gì{' '}
+            <span className="text-gradient">cho tổ ấm của bạn.</span>
           </>
         }
-        description="Whether for your home or business, Solavita helps you find the right solar and battery storage solution for your energy needs. Tell us what you need, and our team will help you get started."
+        description="Dù cho gia đình hay doanh nghiệp, Solavita giúp bạn tìm đúng giải pháp điện mặt trời và pin lưu trữ theo nhu cầu. Hãy chia sẻ điều bạn cần, đội ngũ của chúng tôi sẽ đồng hành từ bước đầu tiên."
       />
 
       <Footer />

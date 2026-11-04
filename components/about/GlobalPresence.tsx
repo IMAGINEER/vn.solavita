@@ -54,17 +54,17 @@ export default function GlobalPresence() {
           <div>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Global scale, local base
+              Quy mô toàn cầu, nền tảng địa phương
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-              Local on the Ground.{' '}
-              <span className="text-gradient">Global behind You.</span>
+              Hiện diện tại địa phương.{' '}
+              <span className="text-gradient">Sức mạnh toàn cầu.</span>
             </h2>
             <p className="mt-5 text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
-              Solavita is the local solar brand of the SKYWORTH
-              Group. Your system is sized for local site conditions —
-              backed by the engineering depth and supply-chain scale of a
-              global electronics group.
+              Solavita là thương hiệu điện mặt trời tại Việt Nam của Tập đoàn
+              SKYWORTH. Hệ thống của bạn được tính toán theo điều kiện thực tế
+              tại công trình — với sự hậu thuẫn về kỹ thuật và quy mô chuỗi
+              cung ứng của một tập đoàn điện tử toàn cầu.
             </p>
 
             <div className="mt-8 inline-flex items-center gap-3 px-4 py-3 rounded-xl border border-uk-line bg-white">

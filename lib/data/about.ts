@@ -1,9 +1,9 @@
 /**
- * About Us page data — Nigeria.
+ * About Us page data — Vietnam.
  *
- * Built from `content/nigeria/About Us.md` (the brief is the source of
- * truth). All copy is placeholders / TBDs until business supplies the
- * verified facts. Section-by-section mapping:
+ * Built from the Vietnam business brief. All copy is placeholder / TBD
+ * until business supplies the verified facts. Section-by-section
+ * mapping:
  *   - Section 1 Hero: tagline + body
  *   - Section 2 Why We Exist: lede
  *   - Section 3 Our Approach: 4 cards
@@ -12,7 +12,7 @@
  *   - Section 5 Our Commitment: service coverage / warranty TBD
  *   - Section 6 Local Presence: address / coverage TBD
  *
- * No UK-specific facts, no SKYWORTH-only claims, no fabricated
+ * No other market's facts, no SKYWORTH-only claims, no fabricated
  * corporate history / factory capacity / project counts.
  */
 
@@ -32,22 +32,22 @@ export const aboutStats: AboutStat[] = [
   {
     value: 'TBD',
     unit: '',
-    label: 'TBD — Verified SKYWORTH Nigerian launch date / presence',
+    label: 'TBD — Mốc ra mắt / hiện diện của SKYWORTH tại Việt Nam (chờ xác minh)',
   },
   {
     value: 'TBD',
     unit: '',
-    label: 'TBD — Verified Nigerian installation coverage',
+    label: 'TBD — Phạm vi lắp đặt tại Việt Nam (chờ xác minh)',
   },
   {
     value: 'TBD',
     unit: '',
-    label: 'TBD — Verified global SKYWORTH footprint',
+    label: 'TBD — Quy mô toàn cầu của SKYWORTH (chờ xác minh)',
   },
   {
     value: 'TBD',
     unit: '',
-    label: 'TBD — Verified Solavita household figures',
+    label: 'TBD — Số hộ gia đình sử dụng Solavita (chờ xác minh)',
   },
 ]
 
@@ -58,24 +58,24 @@ export interface AboutApproach {
 
 export const aboutApproach: AboutApproach[] = [
   {
-    title: 'Designed Around Real Energy Needs',
+    title: 'Thiết kế theo nhu cầu sử dụng thực tế',
     description:
-      'We organise our solutions around different power requirements, from essential backup to higher-capacity household and commercial systems.',
+      'Chúng tôi xây dựng giải pháp theo từng mức nhu cầu điện, từ nguồn dự phòng thiết yếu đến hệ thống công suất lớn hơn cho hộ gia đình và doanh nghiệp.',
   },
   {
-    title: 'Clear System Configurations',
+    title: 'Cấu hình hệ thống rõ ràng',
     description:
-      'We explain solar module capacity, inverter ratings and battery storage so customers can compare solutions more confidently.',
+      'Chúng tôi giải thích công suất tấm quang năng, công suất bộ biến tần và dung lượng pin lưu trữ để bạn tự tin so sánh các phương án.',
   },
   {
-    title: 'Technology With a Long-Term Perspective',
+    title: 'Công nghệ hướng đến dài hạn',
     description:
-      'We combine solar generation and battery storage into systems designed to support more flexible energy use.',
+      'Chúng tôi kết hợp sản xuất điện mặt trời và pin lưu trữ thành hệ thống giúp việc sử dụng điện linh hoạt hơn.',
   },
   {
-    title: 'Local Service and Support',
+    title: 'Dịch vụ và hỗ trợ tại địa phương',
     description:
-      'TBD — Verified Nigerian installation, customer service and after-sales arrangements.',
+      'TBD — Phương án lắp đặt, chăm sóc khách hàng và hậu mãi tại Việt Nam (chờ xác minh).',
   },
 ]
 
@@ -86,26 +86,26 @@ export interface AboutCertification {
 
 /**
  * Certification list. Every entry is a TBD placeholder. Do not add
- * MCS / NICEIC / RECC / TUV / CE / 25-year / DARES / Nigerian
+ * MCS / NICEIC / RECC / TUV / CE / 25-year / other markets'
  * regulatory claims until business confirms the certification applies
- * to Solavita Nigeria.
+ * to Solavita Vietnam.
  */
 export const aboutCertifications: AboutCertification[] = [
   {
     label: 'TBD',
-    description: 'TBD — Verified international or Nigerian certification',
+    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
   },
   {
     label: 'TBD',
-    description: 'TBD — Verified international or Nigerian certification',
+    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
   },
   {
     label: 'TBD',
-    description: 'TBD — Verified international or Nigerian certification',
+    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
   },
   {
     label: 'TBD',
-    description: 'TBD — Verified international or Nigerian certification',
+    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
   },
 ]
 
@@ -117,11 +117,11 @@ export interface AboutRegion {
 
 /**
  * Region / office list. Only SKYWORTH Group HQ is verifiable from
- * public sources; every Nigerian entry is a TBD until the local
+ * public sources; every Vietnamese entry is a TBD until the local
  * presence is confirmed.
  */
 export const aboutRegions: AboutRegion[] = [
-  { city: 'TBD', country: 'Nigeria', role: 'TBD — Verified Nigerian office and service locations' },
-  { city: 'TBD', country: 'Nigeria', role: 'TBD — Verified installation coverage areas' },
-  { city: 'Shenzhen', country: 'China', role: 'Group HQ · SKYWORTH R&D' },
+  { city: 'TBD', country: 'Việt Nam', role: 'TBD — Văn phòng và điểm dịch vụ tại Việt Nam (chờ xác minh)' },
+  { city: 'TBD', country: 'Việt Nam', role: 'TBD — Khu vực lắp đặt được hỗ trợ (chờ xác minh)' },
+  { city: 'Thâm Quyến', country: 'Trung Quốc', role: 'Trụ sở tập đoàn · SKYWORTH R&D' },
 ]

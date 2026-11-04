@@ -40,7 +40,7 @@ export default function PlanSummaryAside({
       ) : (
         <>
           <div>
-            <h3 className="text-lg font-cw-bold text-uk-navy">Your plan summary</h3>
+            <h3 className="text-lg font-cw-bold text-uk-navy">Tóm tắt phương án của bạn</h3>
             <p className="mt-1 text-xs text-uk-slate">{plan.subtitle}</p>
           </div>
 
@@ -53,19 +53,19 @@ export default function PlanSummaryAside({
           {/* Configuration rows */}
           <div className="space-y-2">
             <div className="flex justify-between items-baseline text-sm">
-              <span className="text-uk-slate">System size</span>
+              <span className="text-uk-slate">Công suất hệ thống</span>
               <b className="font-cw-bold text-uk-navy tabular-nums">
                 {formatKw(systemKw)}
               </b>
             </div>
             <div className="flex justify-between items-baseline text-sm">
-              <span className="text-uk-slate">Battery capacity</span>
+              <span className="text-uk-slate">Dung lượng pin lưu trữ</span>
               <b className="font-cw-bold text-uk-navy tabular-nums">
                 {plan.batteryKwh > 0 ? `${plan.batteryKwh} kWh` : '-'}
               </b>
             </div>
             <div className="flex justify-between items-baseline text-sm">
-              <span className="text-uk-slate">Inverter</span>
+              <span className="text-uk-slate">Bộ biến tần</span>
               <b className="font-cw-bold text-uk-navy tabular-nums">
                 {plan.inverterKw} kW
               </b>
@@ -76,12 +76,12 @@ export default function PlanSummaryAside({
 
           {/* Investment */}
           <div>
-            <div className="text-xs text-uk-slate">Estimated investment</div>
+            <div className="text-xs text-uk-slate">Chi phí đầu tư ước tính</div>
             <div className="mt-1 text-2xl font-cw-bold text-uk-navy tabular-nums">
               {formatNGN(plan.priceNgn)}
             </div>
             <p className="mt-1 text-[10px] text-uk-slate font-cw-regular">
-              Test-baseline price · Pending verified Nigerian pricing
+              Giá tạm tính · Đang chờ xác nhận giá chính thức tại Việt Nam
             </p>
           </div>
 
@@ -89,13 +89,13 @@ export default function PlanSummaryAside({
 
           {/* Annual saving */}
           <div>
-            <div className="text-xs text-uk-slate">Estimated annual saving</div>
+            <div className="text-xs text-uk-slate">Tiết kiệm ước tính mỗi năm</div>
             <div className="mt-1 text-2xl font-cw-bold text-uk-emerald tabular-nums">
               {formatNGN(metrics.annualNetSavingNgn)}
-              <span className="ml-1 text-sm font-cw-regular text-uk-slate">/ year</span>
+              <span className="ml-1 text-sm font-cw-regular text-uk-slate">/ năm</span>
             </div>
             <p className="mt-1 text-[10px] text-uk-slate font-cw-regular">
-              Grid offset + generator fuel saved · ideal mode (no opex)
+              Chi phí năng lượng tiết kiệm được · chế độ lý tưởng (không tính chi phí vận hành)
             </p>
           </div>
 
@@ -103,14 +103,14 @@ export default function PlanSummaryAside({
 
           {/* Payback */}
           <div>
-            <div className="text-xs text-uk-slate">Estimated payback</div>
+            <div className="text-xs text-uk-slate">Thời gian hoàn vốn ước tính</div>
             <div className="mt-1 text-2xl font-cw-bold text-uk-navy tabular-nums">
               {metrics.paybackYears === Infinity
                 ? '-'
-                : `${metrics.paybackYears.toFixed(1)} years`}
+                : `${metrics.paybackYears.toFixed(1)} năm`}
             </div>
             <p className="mt-1 text-[10px] text-uk-slate font-cw-regular">
-              Provisional test values — pending business verification
+              Giá trị tạm tính — đang chờ xác nhận từ bộ phận kinh doanh
             </p>
           </div>
 
@@ -120,18 +120,18 @@ export default function PlanSummaryAside({
             onClick={onContactExpert}
             className="btn-gradient text-white px-6 py-3 rounded-full font-cw-bold text-sm mt-2"
           >
-            Talk to an expert
+            Liên hệ chuyên gia
           </button>
           <p className="text-xs text-uk-slate text-center -mt-2">
-            Our team will be in touch to discuss your plan.
+            Đội ngũ của chúng tôi sẽ liên hệ để trao đổi về phương án của bạn.
           </p>
 
           <div className="pt-4 border-t border-uk-line flex items-start gap-2 text-xs text-uk-slate leading-relaxed">
             <ShieldCheck className="w-4 h-4 text-uk-teal shrink-0 mt-0.5" strokeWidth={1.75} />
             <span>
-              Your plan is saved and secure.
+              Phương án của bạn đã được lưu an toàn.
               <br />
-              You can come back at any time.
+              Bạn có thể quay lại bất cứ lúc nào.
             </span>
           </div>
         </>

@@ -38,7 +38,7 @@ export function BlogFilters({ categories, activeSlug }: BlogFiltersProps) {
             : 'bg-white text-uk-slate border-uk-line hover:bg-uk-teal-soft hover:text-uk-teal-dark'
         }`}
       >
-        All categories
+        Tất cả danh mục
       </button>
       {categories.map((c) => (
         <button

@@ -10,10 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
  * "Who We Are" - brand-origin block on /about-us. Reuses the layout
  * shape the previous UK page established (eyebrow + headline +
  * description + 4 headline numbers + 2 heritage cards for Solavita
- * and SKYWORTH Group). All copy is NG-shaped: SKYWORTH Group scale
- * is the lead framing, with the long-standing German / European
- * engineering heritage noted only as one supporting fact under
- * SKYWORTH - not as the headline.
+ * and SKYWORTH Group). SKYWORTH Group scale is the lead framing.
  *
  * Per ng-content-strategy rule 1 (no fabrication), every number is a
  * verifiable SKYWORTH Group disclosure or a TBD - never an invented
@@ -84,11 +81,11 @@ export default function WhoWeAre() {
         <div className="text-center mb-12 md:mb-16 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            About Solavita
+            Về Solavita
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            <span className="text-gradient">Global Strength.</span>{' '}
-            Local Roots.
+            <span className="text-gradient">Sức mạnh toàn cầu.</span>{' '}
+            Bản sắc địa phương.
           </h2>
         </div>
 
@@ -110,7 +107,7 @@ export default function WhoWeAre() {
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 pointer-events-none">
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-[10px] font-cw-bold uppercase tracking-wider text-white">
               <span className="w-1.5 h-1.5 rounded-full bg-sv-blue animate-pulse" />
-              Brand film
+              Phim thương hiệu
             </span>
           </div>
         </div>
@@ -129,14 +126,14 @@ export default function WhoWeAre() {
                  future audit; update when the SKYWORTH Group annual
                  report or central bank rate moves materially. */}
               <span className="text-3xl sm:text-4xl font-cw-bold text-uk-teal counter-number">
-                USD 9.8
+                9,8 tỷ
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                bn
+                USD
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              SKYWORTH Group annual revenue (FY2024, GBP→USD @ 1.27)
+              Doanh thu hằng năm của Tập đoàn SKYWORTH (năm tài chính 2024)
             </p>
           </div>
 
@@ -146,11 +143,11 @@ export default function WhoWeAre() {
                 4
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                Million
+                triệu
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              Households worldwide trust SKYWORTH
+              Hộ gia đình trên toàn thế giới tin dùng SKYWORTH
             </p>
           </div>
 
@@ -160,11 +157,11 @@ export default function WhoWeAre() {
                 40+
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                Years
+                năm
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              Of SKYWORTH Group electronics and energy engineering
+              Kinh nghiệm điện tử và kỹ thuật năng lượng của Tập đoàn SKYWORTH
             </p>
           </div>
 
@@ -174,11 +171,11 @@ export default function WhoWeAre() {
                 2
               </span>
               <span className="text-lg font-cw-bold text-uk-slate ml-1">
-                Listed
+                sàn
               </span>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular mt-2">
-              Stock exchanges (HK + Shenzhen)
+              Sàn niêm yết (Hồng Kông và Thâm Quyến)
             </p>
           </div>
         </div>
@@ -204,15 +201,15 @@ export default function WhoWeAre() {
                   Solavita
                 </h3>
                 <p className="text-xs text-uk-slate">
-                  The solar brand of SKYWORTH Group
+                  Thương hiệu điện mặt trời của Tập đoàn SKYWORTH
                 </p>
               </div>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
-              Solavita is the solar and residential energy brand of the
-              SKYWORTH Group — a global electronics manufacturer with
-              decades of engineering and manufacturing experience across
-              consumer electronics, appliances and power systems.
+              Solavita là thương hiệu điện mặt trời và năng lượng cho hộ gia
+              đình của Tập đoàn SKYWORTH — nhà sản xuất điện tử toàn cầu với
+              nhiều thập kỷ kinh nghiệm kỹ thuật và sản xuất trong lĩnh vực
+              điện tử tiêu dùng, gia dụng và hệ thống điện.
             </p>
           </div>
 
@@ -232,16 +229,15 @@ export default function WhoWeAre() {
                   SKYWORTH Global
                 </h3>
                 <p className="text-xs text-uk-slate">
-                  Your partner for decades
+                  Người đồng hành của bạn qua nhiều thập kỷ
                 </p>
               </div>
             </div>
             <p className="text-sm text-uk-slate font-cw-regular leading-relaxed">
-              The SKYWORTH Group is a publicly listed global electronics
-              enterprise — manufacturer of TVs, refrigerators and
-              smart-home systems sold worldwide. With Solavita, the
-              group is bringing this manufacturing depth to local
-              households and small businesses.
+              Tập đoàn SKYWORTH là doanh nghiệp điện tử toàn cầu niêm yết công
+              khai — nhà sản xuất TV, tủ lạnh và hệ thống nhà thông minh bán
+              trên toàn thế giới. Với Solavita, tập đoàn mang năng lực sản xuất
+              này đến gần hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.
             </p>
           </div>
         </div>

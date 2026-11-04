@@ -1,18 +1,20 @@
 /**
- * Monitoring App page data — Nigeria.
+ * Monitoring App page data — Vietnam.
  *
- * Six Monitoring App capabilities as they apply to Nigerian homes and small
- * businesses. All copy is NG-shaped:
- *   - diesel displacement framing (per ng-brand-voice cost / crisis values)
+ * Six Monitoring App capabilities as they apply to Vietnamese homes and small
+ * businesses. All copy is VN-shaped:
+ *   - production / self-consumption framing (no diesel or petrol cost
+ *     comparisons — the app shows how much of your solar you use against
+ *     how much you draw from the grid)
  *   - no UK / EU regulatory hooks (§14a EnWG, EPEX SPOT, Octopus Agile,
  *     Stiebel Eltron, G99, ENA G98) - those were UK-localised from the
- *     earlier DE-source HEMSSection; the NG app is solar + battery +
+ *     earlier DE-source HEMSSection; the VN app is solar + battery +
  *     load orchestration with the inverter, no tariff-arbitrage or
  *     grid-service framing.
  *
  * Demo video URL is intentionally preserved as-is from the source CDN;
- * the user opted to keep the existing asset. Per ng-content-strategy
- * rule 1 (no fabrication) we do not inject a fake NG-specific CDN
+ * the user opted to keep the existing asset. Per vn-content-strategy
+ * rule 1 (no fabrication) we do not inject a fake VN-specific CDN
  * path here until business confirms where the production video lives.
  */
 
@@ -20,58 +22,58 @@ export interface MonitoringAppFeature {
   /** Short emoji-free or emoji icon hint for the card. */
   icon: string
   /** Lucide icon key resolved inside FeaturesGrid. */
-  iconKey: 'sun' | 'battery' | 'plug' | 'flame' | 'coins' | 'shield'
+  iconKey: 'sun' | 'battery' | 'plug' | 'flame' | 'gauge' | 'shield'
   title: string
   description: string
 }
 
 /**
- * Six app capabilities for the NG site, ordered by how a Nigerian
+ * Six app capabilities for the VN site, ordered by how a Vietnamese
  * homeowner experiences them: solar first, battery next, appliance
- * control, climate, household economics, last the backup-ride-through.
+ * control, climate, energy-use insight, last the backup-ride-through.
  */
 export const monitoringAppFeatures: MonitoringAppFeature[] = [
   {
     icon: '☀️',
     iconKey: 'sun',
-    title: 'PV Optimisation',
+    title: 'Tối ưu hóa quang năng',
     description:
-      'Real-time MPPT tracking to draw the maximum energy your panels can produce today.',
+      'Theo dõi MPPT theo thời gian thực để khai thác tối đa sản lượng điện mà tấm quang năng có thể tạo ra trong ngày.',
   },
   {
     icon: '🔋',
     iconKey: 'battery',
-    title: 'Battery Management',
+    title: 'Quản lý pin lưu trữ',
     description:
-      'Schedules charging and discharging around your home loads, prioritising evening and grid-outage windows.',
+      'Lên lịch sạc và xả pin theo phụ tải của ngôi nhà, ưu tiên khung giờ buổi tối và khi lưới điện mất.',
   },
   {
     icon: '🚗',
     iconKey: 'plug',
-    title: 'EV Charge Control',
+    title: 'Kiểm soát sạc xe điện',
     description:
-      'Solar-surplus EV charging and time-of-use scheduling once your vehicle and charger are paired.',
+      'Sạc xe bằng nguồn điện mặt trời dư thừa và lên lịch theo khung giá điện khi xe và bộ sạc đã được kết nối.',
   },
   {
     icon: '🌡️',
     iconKey: 'flame',
-    title: 'Air Conditioner Coordination',
+    title: 'Phối hợp điều hòa',
     description:
-      'Coordinates inverter capacity with AC starting demand so heavy loads do not trip the system.',
+      'Cân đối công suất bộ biến tần với dòng khởi động của điều hòa để tải lớn không làm ngắt hệ thống.',
   },
   {
-    icon: '💰',
-    iconKey: 'coins',
-    title: 'Fuel-cost Tracking',
+    icon: '📊',
+    iconKey: 'gauge',
+    title: 'Theo dõi sản lượng & tiêu thụ',
     description:
-      'Compares your solar generation against your previous diesel / petrol spend so you see the monthly saving.',
+      'So sánh lượng điện tự dùng từ mặt trời với lượng điện nhập từ lưới để bạn thấy rõ hiệu quả sử dụng năng lượng mỗi tháng.',
   },
   {
     icon: '🛡️',
     iconKey: 'shield',
-    title: 'Outage Ride-through',
+    title: 'Duy trì điện khi mất lưới',
     description:
-      'Seamless changeover to battery backup during grid outages - keep lights, fans and connectivity on.',
+      'Chuyển mạch liền mạch sang pin dự phòng khi lưới điện gặp sự cố - giữ đèn, quạt và kết nối mạng luôn hoạt động.',
   },
 ]
 
@@ -79,18 +81,18 @@ export const monitoringAppFeatures: MonitoringAppFeature[] = [
  * Page-intro block: "One brain for SIX SYSTEMS".
  */
 export const monitoringAppIntro = {
-  eyebrow: 'Intelligent control',
-  title: 'One brain for',
-  titleHighlight: 'SIX SYSTEMS',
-  body: 'The Solavita Monitoring App coordinates solar PV, battery storage, air conditioner, household loads and outage backup from one screen.',
+  eyebrow: 'Điều khiển thông minh',
+  title: 'Một bộ não cho',
+  titleHighlight: 'SÁU HỆ THỐNG',
+  body: 'Ứng dụng giám sát Solavita điều phối điện mặt trời, pin lưu trữ, điều hòa, phụ tải trong nhà và điện dự phòng khi mất lưới trên một màn hình duy nhất.',
 }
 
 /**
  * The original UK file carried floating HUD card copy that quoted
  * £-denominated revenue figures and German / GB regulatory framing.
- * Those have been retired for the NG site. Retaining the export shape
+ * Those have been retired for the VN site. Retaining the export shape
  * so callers in components/monitoring-app/* keep typechecking; consumers
- * render the NG-shaped monitoringAppFeatures / monitoringAppIntro above
+ * render the VN-shaped monitoringAppFeatures / monitoringAppIntro above
  * instead.
  */
 
@@ -103,11 +105,11 @@ export interface MonitoringAppVideo {
 
 /**
  * Demo video - URL preserved per the user's explicit instruction to
- * keep the existing asset. Move to `public/videos/monitoring-app-ng-demo.webp`
- * (or the production NG CDN) once business confirms the final host.
+ * keep the existing asset. Move to `public/videos/monitoring-app-vn-demo.mp4`
+ * (or the production VN CDN) once business confirms the final host.
  */
 export const monitoringAppDemoVideo: MonitoringAppVideo = {
   src: 'https://www.solavita.com/Public/Uploads/uploadfile/files/20250815/wangyeshipin22.mp4',
-  caption: 'Monitoring App live demo: dynamic energy orchestration',
+  caption: 'Video demo trực tiếp Ứng dụng giám sát: điều phối năng lượng thông minh',
   duration: '1:42',
 }

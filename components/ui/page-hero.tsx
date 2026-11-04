@@ -323,7 +323,7 @@ export function HeroTbdCard({ eyebrow, body }: HeroTbdCardProps) {
         {eyebrow}
       </div>
       <div className="mt-2 text-sm text-uk-navy font-cw-regular">
-        {body ?? <TbdText text="Verified Nigerian trust signal" />}
+        {body ?? <TbdText text="Tín hiệu tin cậy đã xác minh tại Việt Nam (chờ xác nhận)" />}
       </div>
     </div>
   )

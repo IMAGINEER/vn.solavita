@@ -1,22 +1,23 @@
 /**
- * Locale-aware formatters for `/my-plan` UI.
+ * Các hàm định dạng cho giao diện `/my-plan`.
  *
- * All formatters use `en-NG` so thousands separators + date style match
- * what a Nigerian customer expects. Wrap with `tabular-nums` on the
- * consumer side for stable column widths.
+ * Số tiền tạm thời vẫn dùng ký hiệu ₦ (chờ xác nhận giá bán tại Việt Nam)
+ * nhưng đã chuyển sang bộ phân cách `vi-VN` để cách đọc số khớp với phần
+ * còn lại của site. Ngày dùng định dạng `vi-VN`. Thêm
+ * `tabular-nums` ở phía component để các cột số có độ rộng ổn định.
  *
- * Note: the previous `formatGBP` helper was removed (zero callers, the
- * ROI surface lives elsewhere). If a future feature needs GBP display,
- * re-introduce it explicitly - do not bring it back as a generic helper.
+ * Ghi chú: helper `formatGBP` trước đây đã bị xoá (không còn nơi gọi,
+ * phần ROI nằm ở nơi khác). Nếu sau này cần hiển thị GBP, hãy thêm lại
+ * một cách rõ ràng - đừng biến nó thành helper chung.
  */
 
 export function formatNGN(value: number): string {
   if (!Number.isFinite(value)) return '₦0'
-  return '₦' + Math.round(value).toLocaleString('en-NG')
+  return '₦' + Math.round(value).toLocaleString('vi-VN')
 }
 
 export function formatKwh(value: number): string {
-  return Math.round(value).toLocaleString('en-GB') + ' kWh'
+  return Math.round(value).toLocaleString('vi-VN') + ' kWh'
 }
 
 export function formatKw(value: number): string {
@@ -24,10 +25,10 @@ export function formatKw(value: number): string {
 }
 
 /**
- * UK-style "31 Aug 2026" date. Falls back gracefully if `Intl` is unavailable.
+ * Ngày theo kiểu "31/08/2026". Tự xử lý an toàn nếu `Intl` không khả dụng.
  */
 export function formatDateEnGB(date: Date): string {
-  return date.toLocaleDateString('en-GB', {
+  return date.toLocaleDateString('vi-VN', {
     day: '2-digit',
     month: 'short',
     year: 'numeric',

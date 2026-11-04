@@ -22,13 +22,13 @@ export async function GET() {
   try {
     const cats = await getCategories()
     // Counts: a single grouped query is cheaper than N+1. The locale
-    // filter mirrors the data layer so the count only reflects NG posts
+    // filter mirrors the data layer so the count only reflects VN posts
     // — without it, an IT or UK post in the same category id would
-    // inflate the NG count.
+    // inflate the VN count.
     const { data: countRows, error: cErr } = await supabase
       .from('blog_posts')
       .select('category_id')
-      .eq('locale', 'ng')
+      .eq('locale', 'vn')
       .eq('status', 'published')
     if (cErr) throw new Error(cErr.message)
     const counts = new Map<string, number>()

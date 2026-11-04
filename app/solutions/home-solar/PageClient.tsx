@@ -25,8 +25,8 @@ export default function HomeSolarPage() {
     heroProps: {
       eyebrow: 'HOME SOLAR SOLUTIONS',
       title: 'Power Your Home. Stay In Control.',
-      body: 'Fewer blackouts, lower fuel runs. From essential backup to full-home control, Solavita delivers clean, dependable energy — so you can worry less and live more.',
-      backgroundImage: '/images/nigerian_home_1600x856.webp',
+      body: 'Fewer blackouts, fewer top-up runs. From essential backup to full-home control, Solavita delivers clean, dependable energy — so you can worry less and live more.',
+      backgroundImage: '/images/home_solar_1600x856.webp',
       primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
       breadcrumbs: [
         { label: 'Home', href: '/' },
@@ -34,8 +34,8 @@ export default function HomeSolarPage() {
       ],
     },
     contextCopy: {
-      heading: 'Cut your fuel bill, own your power, stay lit through any outage',
-      body: 'A Solavita home-solar solution addresses all three: lower monthly fuel costs, energy independence, and reliable power through any power crisis. The three solutions below are sized for different household sizes and backup priorities - from a compact essential-backup system to a higher-capacity configuration for larger residences. Final system suitability is confirmed by a proper load assessment and site evaluation.',
+      heading: 'Cut your energy bill, own your power, stay lit through any outage',
+      body: 'A Solavita home-solar solution addresses all three: lower monthly energy costs, energy independence, and reliable power through any power crisis. The three solutions below are sized for different household sizes and backup priorities - from a compact essential-backup system to a higher-capacity configuration for larger residences. Final system suitability is confirmed by a proper load assessment and site evaluation.',
     },
     solutions: homeSolutions,
     tailoredCta: {
@@ -58,8 +58,8 @@ export default function HomeSolarPage() {
         'Generation, storage and control have to work as one system. Here is what each of them does.',
       items: [
         {
-          title: 'DIESEL, STEP DOWN.',
-          body: 'Solar by day, battery by night. Generator as backup.',
+          title: 'ENERGY COSTS, STEP DOWN.',
+          body: 'Solar by day, battery by night. Grid as backup.',
           // The docx marks this row "需要一张背景图" — no image supplied
           // yet, so the neutral placeholder is used until one arrives.
           imageDescription:

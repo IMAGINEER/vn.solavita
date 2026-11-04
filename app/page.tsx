@@ -8,35 +8,35 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Solar & Battery Systems for Nigerian Homes',
+  title: 'Điện mặt trời & pin lưu trữ cho hộ gia đình Việt Nam',
   path: '/',
   description:
-    'Explore solar and battery solutions for Nigerian homes and small businesses. Compare home-solar and business-solar solutions designed for more reliable power and less generator dependence.',
+    'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. So sánh cấu hình hệ thống và tìm giải pháp giúp nguồn điện ổn định hơn.',
   ogImage: '/images/og-home.jpg',
   ogImageAlt:
-    'Solavita Nigeria - solar panels and battery storage for Nigerian homes and small businesses',
+    'Solavita Việt Nam - tấm quang năng và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ',
 })
 
 const HOME_FAQS = [
   {
-    question: 'Will this really save me money?',
+    question: 'Hệ thống điện mặt trời có thực sự giúp tiết kiệm không?',
     answer:
-      "Yes. You'll use less expensive grid power and buy far less diesel for your generator. Most families see their monthly bills drop significantly, making it a smart investment.",
+      'Có. Bạn sẽ dùng ít điện lưới hơn vào giờ cao điểm và tận dụng nguồn điện tự sản xuất vào ban ngày. Phần lớn hộ gia đình thấy hoá đơn điện giảm rõ rệt qua từng tháng.',
   },
   {
-    question: 'What happens when the power goes out?',
+    question: 'Điều gì xảy ra khi mất điện lưới?',
     answer:
-      'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
+      'Đèn, tủ lạnh và Wi-Fi của bạn vẫn hoạt động. Hệ thống tự động chuyển sang pin lưu trữ gần như tức thì, giúp gia đình giữ sinh hoạt ổn định cả ngày lẫn đêm.',
   },
   {
-    question: 'How long will the battery last?',
+    question: 'Pin lưu trữ dùng được bao lâu?',
     answer:
-      "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
+      'Pin được thiết kế để vận hành bền bỉ. Với bảo hành 5 năm và 6.000 chu kỳ sạc xả, pin có thể đồng hành cùng gia đình bạn hơn 10 năm, kể cả khi sử dụng hằng ngày.',
   },
   {
-    question: 'Is it hard to maintain?',
+    question: 'Hệ thống có khó bảo trì không?',
     answer:
-      'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
+      'Không. Bạn chỉ cần giữ tấm quang năng sạch. Chúng tôi giám sát hệ thống từ xa và đội ngũ kỹ thuật luôn sẵn sàng hỗ trợ khi bạn cần.',
   },
 ]
 
@@ -47,18 +47,18 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/',
-            name: 'Solavita Nigeria - Solar & Battery Systems for Nigerian Homes',
+            name: 'Solavita Việt Nam - Điện mặt trời & pin lưu trữ cho hộ gia đình',
             description:
-              'Explore solar and battery solutions for Nigerian homes and small businesses.',
+              'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
           }),
           faqPageJsonLd({
             path: '/#faq',
-            name: 'Solavita Nigeria - Frequently Asked Questions',
+            name: 'Solavita Việt Nam - Câu hỏi thường gặp',
             description:
-              'Common questions about solar and battery solutions, generators, air conditioners, battery runtime, pricing and installation coverage in Nigeria.',
+              'Những câu hỏi thường gặp về điện mặt trời và pin lưu trữ: chi phí, thời gian hoạt động của pin, bảo trì và phạm vi lắp đặt tại Việt Nam.',
             faqs: HOME_FAQS,
           }),
-          breadcrumbJsonLd([{ name: 'Home', url: '/' }]),
+          breadcrumbJsonLd([{ name: 'Trang chủ', url: '/' }]),
         ]}
       />
       <Home />

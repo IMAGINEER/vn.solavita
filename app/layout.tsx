@@ -15,16 +15,17 @@ export const metadata: Metadata = {
   // truth - change SITE_URL, this follows.
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Solar & Battery Systems for Nigerian Homes',
-    template: '%s | Solavita Nigeria',
+    default: 'Hệ thống điện mặt trời & pin lưu trữ cho gia đình Việt Nam',
+    template: '%s | Solavita Việt Nam',
   },
   description:
-    'Explore solar and battery solutions for Nigerian homes and small businesses. Compare system configurations and find a solution for more reliable power and less generator dependence.',
+    'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. So sánh cấu hình hệ thống và tìm giải pháp giúp nguồn điện ổn định hơn.',
   keywords:
-    'solar Nigeria, solar panels Nigeria, battery storage Nigeria, solar Lagos, solar Abuja, generator backup, off-grid solar, three-phase solar, Solavita, SKYWORTH, renewable energy Nigeria',
+    'điện mặt trời Việt Nam, pin lưu trữ điện, điện mặt trời hộ gia đình, điện mặt trời doanh nghiệp, Solavita, SKYWORTH, năng lượng tái tạo Việt Nam',
   robots: { index: true, follow: true },
   alternates: {
     languages: {
+      'vi-VN': 'https://vn.solavita.com',
       'en-GB': 'https://solavita.uk',
       'de-DE': 'https://solavita.de',
     },
@@ -36,20 +37,20 @@ export const metadata: Metadata = {
   //
   // Cross-domain alternates for the SKYWORTH Group family of sites.
   // Google treats these as `hreflang`-style language alternates that
-  // associate regional sites for the same brand. Only the en-GB (`uk`)
-  // and de-DE (`de`) sibling sites are declared here - any future
-  // `ng.fr` / `ng.za` etc. would extend this list, not replace it.
+  // associate regional sites for the same brand. The vi-VN entry points
+  // at this site; the en-GB (`uk`) and de-DE (`de`) sibling sites are
+  // also declared. Any future country site extends this list.
   //
   // Site-wide OG defaults. Page-level `buildPageMetadata()` overrides
   // these with the page's hero asset. Twitter card is `summary_large_image`
   // so WhatsApp / LinkedIn / X show the full hero instead of a small icon.
   openGraph: {
-    title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
+    title: 'Solavita Việt Nam - Điện mặt trời & pin lưu trữ',
     description:
-      'Solar and battery solutions for Nigerian homes and small businesses.',
+      'Giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
     url: absoluteUrl('/'),
-    siteName: 'Solavita Nigeria',
-    locale: 'en_NG',
+    siteName: 'Solavita Việt Nam',
+    locale: 'vi_VN',
     type: 'website',
     images: [
       {
@@ -60,15 +61,15 @@ export const metadata: Metadata = {
         // lib/seo/site.ts.
         width: 1200,
         height: 630,
-        alt: 'Solavita Nigeria - Cut Diesel. Own Your Power. Solar + battery systems for Nigerian homes and businesses',
+        alt: 'Solavita Việt Nam - Hệ thống điện mặt trời và pin lưu trữ cho gia đình và doanh nghiệp Việt Nam',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Solavita Nigeria - Cut Diesel. Own Your Power.',
+    title: 'Solavita Việt Nam - Điện mặt trời & pin lưu trữ',
     description:
-      'Solar and battery solutions for Nigerian homes and small businesses.',
+      'Giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
     images: [`${SITE_URL}/images/og-default.jpg`],
   },
 }
@@ -89,7 +90,7 @@ export default function RootLayout({
     //
     // `suppressHydrationWarning` on <html> is needed because the inline
     // script below may swap the class before React hydrates.
-    <html lang="en" className="light-mode" suppressHydrationWarning>
+    <html lang="vi" className="light-mode" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/favicon.ico" />
         <link rel="apple-touch-icon" href="/images/favicon.ico" />

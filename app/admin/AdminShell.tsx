@@ -14,16 +14,16 @@ import {
 import type { AdminUser } from '@/lib/auth-types'
 import { cn } from '@/lib/utils'
 
-// NG admin shell - top-bar nav (no Sidebar, simpler than DE's full
+// VN admin shell - top-bar nav (no Sidebar, simpler than the full
 // shadcn Sidebar). Active state is reflected on the current route.
 // When unauthenticated (login page), renders children with no chrome
 // so /admin/login is a clean centered card.
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { label: 'Leads', href: '/admin/leads', icon: Inbox },
-  { label: 'Contacts', href: '/admin/contacts', icon: Mail },
-  { label: 'Partners', href: '/admin/partners', icon: Briefcase },
+  { label: 'Tổng quan', href: '/admin', icon: LayoutDashboard },
+  { label: 'Khách hàng tiềm năng', href: '/admin/leads', icon: Inbox },
+  { label: 'Liên hệ', href: '/admin/contacts', icon: Mail },
+  { label: 'Đối tác', href: '/admin/partners', icon: Briefcase },
   { label: 'Blog', href: '/admin/blog', icon: Newspaper },
 ] as const
 
@@ -65,7 +65,7 @@ export function AdminShell({
               <span className="inline-flex size-7 items-center justify-center rounded-md bg-uk-teal-dark text-white text-sm">
                 S
               </span>
-              <span className="text-sm">Solavita Admin</span>
+              <span className="text-sm">Quản trị Solavita</span>
             </Link>
             <nav className="hidden sm:flex items-center gap-1">
               {NAV_ITEMS.map((item) => {
@@ -99,17 +99,17 @@ export function AdminShell({
                 {user.username}
               </div>
               <div className="text-[10px] text-uk-slate uppercase tracking-wider">
-                {user.role}
+                {user.role === 'admin' ? 'Quản trị viên' : user.role}
               </div>
             </div>
             <button
               type="button"
               onClick={logout}
               className="inline-flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-cw-bold text-uk-slate hover:bg-uk-teal-soft/60 hover:text-uk-teal-dark transition-colors"
-              title="Sign out"
+              title="Đăng xuất"
             >
               <LogOut className="size-4" />
-              <span className="hidden sm:inline">Sign out</span>
+              <span className="hidden sm:inline">Đăng xuất</span>
             </button>
           </div>
         </div>

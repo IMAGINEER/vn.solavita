@@ -90,13 +90,13 @@ export default function CookieConsent() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-1 text-center md:text-left">
             <p className="text-sm text-uk-navy font-cw-regular leading-relaxed">
-              Your privacy is important to us. When you visit our website, you agree to the use of all cookies.{' '}
+              Quyền riêng tư của Bạn rất quan trọng đối với chúng tôi. Khi truy cập trang web của chúng tôi, Bạn đồng ý với việc sử dụng tất cả cookie.{' '}
               <a
                 href="/cookies/"
                 rel="noopener noreferrer"
                 className="text-uk-teal hover:text-uk-teal-dark transition-colors"
               >
-                Read our Cookie Policy.
+                Đọc Chính sách cookie của chúng tôi.
               </a>
             </p>
           </div>
@@ -105,13 +105,13 @@ export default function CookieConsent() {
               onClick={handleReject}
               className="px-5 py-2.5 rounded-full text-sm font-cw-bold text-uk-slate border border-uk-line hover:bg-uk-teal-soft transition-all"
             >
-              Reject
+              Từ chối
             </button>
             <button
               onClick={handleAccept}
               className="px-5 py-2.5 rounded-full text-sm font-cw-bold text-white bg-uk-teal hover:bg-uk-teal-dark transition-all"
             >
-              Accept
+              Chấp nhận
             </button>
           </div>
         </div>

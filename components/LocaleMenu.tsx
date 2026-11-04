@@ -15,8 +15,8 @@ import {
  * replaces the old static "flag + label" block.
  *
  * Lists every Solavita and SKYWORTH Solar site. Sites that are not
- * live yet render as disabled rows badged "Coming soon"; the site the
- * visitor is on is badged "Sei qui".
+ * live yet render as disabled rows badged "Sắp ra mắt"; the site the
+ * visitor is on is badged "Bạn đang ở đây".
  *
  * Flags are local SVGs (`public/images/flags/`) so the menu never
  * depends on assets hosted on another property.
@@ -55,7 +55,7 @@ export default function LocaleMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="true"
         aria-expanded={open}
-        aria-label={`Choose your site — currently ${currentSite.label}`}
+        aria-label={`Chọn quốc gia / ngôn ngữ — hiện tại ${currentSite.label}`}
         className="flex items-center gap-2 text-white/60 text-xs font-cw-regular hover:text-white transition-colors cursor-pointer"
       >
         <FlagIcon site={currentSite} />

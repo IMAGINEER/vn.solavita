@@ -15,8 +15,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 /**
  * PartnerForm — single-page partner enquiry form.
  *
- * Posts to `/api/partner`, which inserts into Supabase's `ng_partner_leads`
- * table and emails the Nigerian partner contact (see `TEAM_EMAIL` in
+ * Posts to `/api/partner`, which inserts into Supabase's `vn_partner_leads`
+ * table and emails the Vietnam partner contact (see `TEAM_EMAIL` in
  * `app/api/partner/route.ts`).
  *
  * Why a dedicated component (and not a re-use of the consultation
@@ -26,7 +26,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  * - The partner submission route and the consultation route have
  *   different Supabase tables and different transactional emails. Two
  *   dedicated submission paths avoids accidentally writing a partner
- *   lead to `ng_consultations` (or vice versa).
+ *   lead to `consultation_leads` (or vice versa).
  *
  * Field contract is shared with `app/api/partner/route.ts`:
  *   { fullName, company, email, partnerTrack, message }
@@ -46,7 +46,7 @@ export interface PartnerFormProps {
 export default function PartnerForm({
   onClose,
   defaultTrack,
-  submitButtonLabel = 'Submit enquiry',
+  submitButtonLabel = 'Gửi yêu cầu',
   submitEndpoint = '/api/partner',
 }: PartnerFormProps) {
   const [form, setForm] = useState({
@@ -74,14 +74,14 @@ export default function PartnerForm({
 
   const validate = (): boolean => {
     const next: { [k: string]: string } = {}
-    if (!form.fullName.trim()) next.fullName = 'Please enter your full name.'
-    if (!form.company.trim()) next.company = 'Please enter your company name.'
+    if (!form.fullName.trim()) next.fullName = 'Vui lòng nhập họ tên.'
+    if (!form.company.trim()) next.company = 'Vui lòng nhập tên công ty.'
     if (!form.email.trim()) {
-      next.email = 'Please enter your email address.'
+      next.email = 'Vui lòng nhập địa chỉ email.'
     } else if (!EMAIL_RE.test(form.email.trim())) {
-      next.email = 'Please enter a valid email address.'
+      next.email = 'Vui lòng nhập địa chỉ email hợp lệ.'
     }
-    if (!form.partnerTrack) next.partnerTrack = 'Please choose a partner track.'
+    if (!form.partnerTrack) next.partnerTrack = 'Vui lòng chọn hình thức hợp tác.'
     setErrors(next)
     return Object.keys(next).length === 0
   }
@@ -108,10 +108,10 @@ export default function PartnerForm({
       if (data.success) {
         setIsSubmitted(true)
       } else {
-        setSubmitError(data.message || 'Something went wrong. Please try again.')
+        setSubmitError(data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.')
       }
     } catch {
-      setSubmitError('Network error. Please try again.')
+      setSubmitError('Lỗi kết nối mạng. Vui lòng thử lại.')
     } finally {
       setIsSubmitting(false)
     }
@@ -143,18 +143,19 @@ export default function PartnerForm({
                 <Check className="w-10 h-10 text-green-500" strokeWidth={2} />
               </motion.div>
               <h3 className="text-2xl font-bold text-uk-navy mb-3">
-                Thank you for your enquiry.
+                Cảm ơn bạn đã gửi yêu cầu.
               </h3>
               <p className="text-uk-slate mb-8 max-w-md">
-                We&apos;ll get back within two working days with the next
-                steps — including which partner track fits your business best.
+                Chúng tôi sẽ phản hồi trong vòng hai ngày làm việc với các bước
+                tiếp theo — bao gồm hình thức hợp tác phù hợp nhất với doanh
+                nghiệp của bạn.
               </p>
               <button
                 type="button"
                 onClick={onClose}
                 className="px-6 py-3 rounded-xl bg-uk-teal text-white font-semibold hover:bg-uk-teal-dark transition-colors"
               >
-                Close
+                Đóng
               </button>
             </div>
           ) : (
@@ -162,28 +163,28 @@ export default function PartnerForm({
               {/* Header */}
               <div className="mb-2">
                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-uk-line bg-white text-[10px] font-cw-bold tracking-wider uppercase text-uk-slate">
-                  Become a Solavita partner
+                  Trở thành đối tác Solavita
                 </span>
                 <h2 className="mt-3 text-2xl md:text-3xl font-cw-bold text-uk-navy leading-tight">
-                  Tell us about your business.
+                  Giới thiệu về doanh nghiệp của bạn.
                 </h2>
                 <p className="mt-2 text-sm text-uk-slate font-cw-regular leading-relaxed">
-                  We&apos;ll get back within two working days with next
-                  steps — including which partner track fits your business
-                  best.
+                  Chúng tôi sẽ phản hồi trong vòng hai ngày làm việc với các
+                  bước tiếp theo — bao gồm hình thức hợp tác phù hợp nhất với
+                  doanh nghiệp của bạn.
                 </p>
               </div>
 
               {/* Full name */}
               <label className="block">
                 <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                  Full name
+                  Họ và tên
                 </span>
                 <input
                   type="text"
                   name="fullName"
                   required
-                  placeholder="Jane Smith"
+                  placeholder="Nguyễn Văn A"
                   value={form.fullName}
                   onChange={(e) => update('fullName', e.target.value)}
                   className={`w-full px-4 py-3 rounded-xl border ${
@@ -198,13 +199,13 @@ export default function PartnerForm({
               {/* Company */}
               <label className="block">
                 <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                  Company
+                  Công ty
                 </span>
                 <input
                   type="text"
                   name="company"
                   required
-                  placeholder="Acme Solar Ltd"
+                  placeholder="Công ty TNHH Năng lượng ABC"
                   value={form.company}
                   onChange={(e) => update('company', e.target.value)}
                   className={`w-full px-4 py-3 rounded-xl border ${
@@ -219,13 +220,13 @@ export default function PartnerForm({
               {/* Work email */}
               <label className="block">
                 <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                  Work email
+                  Email công việc
                 </span>
                 <input
                   type="email"
                   name="email"
                   required
-                  placeholder="jane@acme.co"
+                  placeholder="email@congty.vn"
                   value={form.email}
                   onChange={(e) => update('email', e.target.value)}
                   className={`w-full px-4 py-3 rounded-xl border ${
@@ -240,7 +241,7 @@ export default function PartnerForm({
               {/* Partner track */}
               <label className="block">
                 <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                  Partner track
+                  Hình thức hợp tác
                 </span>
                 <select
                   name="partnerTrack"
@@ -266,12 +267,12 @@ export default function PartnerForm({
               {/* Message */}
               <label className="block">
                 <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                  Tell us a bit about your business
+                  Giới thiệu ngắn về doanh nghiệp
                 </span>
                 <textarea
                   name="message"
                   rows={4}
-                  placeholder="Region, size, current focus…"
+                  placeholder="Khu vực, quy mô, lĩnh vực hoạt động…"
                   value={form.message}
                   onChange={(e) => update('message', e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal"
@@ -281,12 +282,12 @@ export default function PartnerForm({
               {/* Footer */}
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between pt-2 border-t border-uk-line/50">
                 <p className="text-xs text-uk-slate">
-                  Or email us directly:{' '}
+                  Hoặc gửi email trực tiếp:{' '}
                   <a
-                    href="mailto:ng@solavita.com"
+                    href="mailto:vn@solavita.com"
                     className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
                   >
-                    ng@solavita.com
+                    vn@solavita.com
                   </a>
                 </p>
                 <button
@@ -297,7 +298,7 @@ export default function PartnerForm({
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Sending…
+                      Đang gửi…
                     </>
                   ) : (
                     submitButtonLabel
@@ -313,12 +314,11 @@ export default function PartnerForm({
 
               {/* Privacy */}
               <p className="text-xs text-uk-slate/80 leading-relaxed pt-2">
-                By submitting, you agree to our{' '}
+                Khi gửi thông tin, bạn đồng ý với{' '}
                 <a href="/privacy/" className="text-uk-teal-dark underline">
-                  Privacy Policy
+                  Chính sách bảo mật
                 </a>
-                . Your data is used solely to evaluate your partnership
-                enquiry.
+                . Dữ liệu chỉ được dùng để xem xét yêu cầu hợp tác của bạn.
               </p>
             </form>
           )}

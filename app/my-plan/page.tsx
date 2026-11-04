@@ -80,7 +80,7 @@ export default function MyPlanPage({
           hideAddressAndContact
           submitEndpoint="/api/consultation/update"
           submitPayload={(d) => buildUpdatePayload(identifier, d)}
-          submitButtonLabel="Confirm edition"
+          submitButtonLabel="Xác nhận chỉnh sửa"
           onSubmitSuccess={reloadPage}
         />
       </>
@@ -97,7 +97,7 @@ export default function MyPlanPage({
         hideAddressAndContact
         submitEndpoint="/api/consultation/update"
         submitPayload={(d) => buildUpdatePayload(identifier, d)}
-        submitButtonLabel="Confirm edition"
+        submitButtonLabel="Xác nhận chỉnh sửa"
         onSubmitSuccess={reloadPage}
       />
     </>
@@ -120,8 +120,6 @@ function buildUpdatePayload(
     city: formData.city ?? '',
     propertyType: formData.propertyType ?? '',
     householdSize: formData.householdSize ?? '',
-    generatorFrequency: formData.generatorFrequency ?? 'unknown',
-    fuelBudgetNgn: formData.fuelBudgetNgn ?? 'unknown',
   }
 }
 

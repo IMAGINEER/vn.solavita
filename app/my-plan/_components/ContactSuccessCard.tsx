@@ -33,10 +33,10 @@ export default function ContactSuccessCard({ onBackToPlan }: ContactSuccessCardP
         />
       </div>
       <h3 className="text-lg font-cw-bold text-uk-navy leading-snug">
-        Got it — we'll be in touch within 1 business day
+        Đã ghi nhận — chúng tôi sẽ liên hệ trong vòng 1 ngày làm việc
       </h3>
       <p className="mt-1 text-sm text-uk-slate leading-relaxed">
-        Our team will review your plan and reach out to discuss the next steps.
+        Đội ngũ của chúng tôi sẽ xem xét phương án của bạn và liên hệ để trao đổi các bước tiếp theo.
       </p>
       {onBackToPlan && (
         <button
@@ -44,7 +44,7 @@ export default function ContactSuccessCard({ onBackToPlan }: ContactSuccessCardP
           onClick={onBackToPlan}
           className="mt-3 text-sm font-cw-bold text-uk-teal-dark hover:underline"
         >
-          ← Back to plan
+          ← Quay lại phương án
         </button>
       )}
     </div>

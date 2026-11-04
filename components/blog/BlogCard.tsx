@@ -70,7 +70,7 @@ export function BlogCard({ post, href }: BlogCardProps) {
           <span className="text-xs">{post.author.display_name}</span>
           <span className="inline-flex items-center gap-1 text-xs tabular-nums">
             <Clock className="size-3.5" strokeWidth={1.6} />
-            {post.reading_time_min} min read
+            {post.reading_time_min} phút đọc
           </span>
         </div>
       </div>

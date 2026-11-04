@@ -9,7 +9,7 @@ import { monitoringAppIntro } from '@/lib/data/monitoring-app'
  *
  * Mirrors the visual rhythm of `<SolutionsHero>` (full-bleed, eyebrow
  * pill + heading + body, soft surface that flows into the next white
- * section). Uses `banner_uk.webp` with a left-to-right LIGHT overlay
+ * section). Uses `hero-monitoring-app.webp` with a left-to-right LIGHT overlay
  * so the navy headline stays legible while the page stays in the same
  * teal-leaning palette as `/solutions`.
  */
@@ -31,8 +31,8 @@ export default function MonitoringAppHero() {
         <Breadcrumb
           theme="light"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Monitoring App' },
+            { label: 'Trang chủ', href: '/' },
+            { label: 'Ứng dụng giám sát' },
           ]}
         />
 

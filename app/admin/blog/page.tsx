@@ -48,12 +48,12 @@ export default async function AdminBlogPage(props: {
         <div>
           <h1 className="text-2xl font-cw-bold text-uk-navy">Blog</h1>
           <p className="mt-1 text-sm text-uk-slate">
-            Articles, guides and news published on the site. {result.total} total.
+            Bài viết, cẩm nang và tin tức đã xuất bản trên website. Tổng cộng {result.total}.
           </p>
         </div>
         <ButtonLink href="/admin/blog/new">
           <Plus className="size-4" />
-          New post
+          Bài viết mới
         </ButtonLink>
       </div>
 

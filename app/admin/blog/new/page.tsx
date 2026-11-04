@@ -25,13 +25,13 @@ export default async function NewBlogPostPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-cw-bold text-uk-navy">New post</h1>
+          <h1 className="text-2xl font-cw-bold text-uk-navy">Bài viết mới</h1>
           <p className="mt-1 text-sm text-uk-slate">
-            Write the content in markdown. Save as draft or publish immediately.
+            Viết nội dung bằng markdown. Lưu thành bản nháp hoặc xuất bản ngay.
           </p>
         </div>
         <ButtonLink href="/admin/blog" variant="ghost">
-          ← Back to list
+          ← Quay lại danh sách
         </ButtonLink>
       </div>
 

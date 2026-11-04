@@ -47,11 +47,11 @@ export default function Mission() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Our mission
+            Sứ mệnh của chúng tôi
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Reliable Power{' '}
-            <span className="text-gradient">for Every Home.</span>
+            Nguồn điện ổn định{' '}
+            <span className="text-gradient">cho mọi gia đình.</span>
           </h2>
         </div>
 
@@ -60,11 +60,11 @@ export default function Mission() {
             <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-5">
               <Compass className="w-6 h-6" strokeWidth={1.6} />
             </div>
-            <h3 className="text-2xl font-cw-bold text-uk-navy">Mission</h3>
+            <h3 className="text-2xl font-cw-bold text-uk-navy">Sứ mệnh</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
-              To give every home a stable, clean alternative to fuel
-              generators — solar panels and battery storage sized to the
-              appliances and backup priorities of each household.
+              Mang đến cho mỗi gia đình một nguồn điện ổn định và sạch —
+              hệ thống tấm quang năng và pin lưu trữ được tính toán theo
+              thiết bị sử dụng và nhu cầu dự phòng của từng hộ.
             </p>
           </div>
 
@@ -72,12 +72,11 @@ export default function Mission() {
             <div className="w-12 h-12 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark mb-5">
               <Sparkles className="w-6 h-6" strokeWidth={1.6} />
             </div>
-            <h3 className="text-2xl font-cw-bold text-uk-navy">Vision</h3>
+            <h3 className="text-2xl font-cw-bold text-uk-navy">Tầm nhìn</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
-              A future where every home generates, stores and manages
-              its own clean energy — reducing reliance on petrol and
-              diesel generators, with Solavita as a long-term local
-              partner.
+              Một tương lai nơi mỗi gia đình tự sản xuất, lưu trữ và quản lý
+              nguồn năng lượng sạch của mình — với Solavita là người đồng hành
+              dài lâu tại địa phương.
             </p>
           </div>
         </div>

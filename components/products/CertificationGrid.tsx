@@ -10,7 +10,7 @@ import type {
  *
  * Every standard the manufacturer publishes is shown as an icon tile
  * instead of a plain bullet list: the mark on top, the standard number
- * underneath, and a one-line plain-English note.
+ * underneath, and a one-line Vietnamese note.
  *
  * Two marks are real artwork the manufacturer supplied
  * (`/images/TUV.png`, `/images/CE.png`). We hold no official artwork for
@@ -36,12 +36,12 @@ const REAL_MARKS: Partial<
 > = {
   tuv: {
     src: '/images/TUV.png',
-    alt: 'TÜV SÜD certified',
+    alt: 'Được chứng nhận TÜV SÜD',
     className: 'h-8 w-auto',
   },
   ce: {
     src: '/images/CE.png',
-    alt: 'CE marked',
+    alt: 'Dấu CE',
     className: 'h-6 w-auto',
   },
 }

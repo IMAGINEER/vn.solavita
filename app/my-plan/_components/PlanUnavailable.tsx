@@ -38,8 +38,8 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'My Plan' },
+              { label: 'Trang chủ', href: '/' },
+              { label: 'Phương án của tôi' },
             ]}
           />
 
@@ -49,7 +49,7 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-3xl lg:text-4xl font-cw-bold text-[#0A1628] mt-6 mb-2"
           >
-            {isError ? 'We hit a snag loading your plan' : 'Plan unavailable'}
+            {isError ? 'Đã xảy ra sự cố khi tải phương án của bạn' : 'Phương án không khả dụng'}
           </motion.h1>
 
           <motion.p
@@ -59,8 +59,8 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
             className="text-sm text-[#4A5568] mb-4"
           >
             {isError
-              ? 'A network or server issue stopped the load. Please try again in a moment.'
-              : 'The link you followed may have expired or is invalid.'}
+              ? 'Đã xảy ra sự cố mạng hoặc máy chủ khi tải. Vui lòng thử lại sau giây lát.'
+              : 'Liên kết bạn truy cập có thể đã hết hạn hoặc không hợp lệ.'}
           </motion.p>
 
           <motion.div
@@ -85,14 +85,14 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
 
           <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy mb-4">
             {isError
-              ? 'Please try again'
-              : "We can't load this plan"}
+              ? 'Vui lòng thử lại'
+              : 'Chúng tôi không thể tải phương án này'}
           </h2>
 
           <p className="text-base text-uk-slate leading-relaxed mb-8">
             {isError
-              ? 'If the problem keeps happening, request a new personalised plan below.'
-              : 'Please use the link from your email confirmation, or request a new personalised plan - it only takes a minute.'}
+              ? 'Nếu tình trạng này tiếp diễn, hãy yêu cầu một phương án cá nhân hóa mới bên dưới.'
+              : 'Vui lòng dùng liên kết trong email xác nhận của bạn, hoặc yêu cầu một phương án cá nhân hóa mới — chỉ mất khoảng một phút.'}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -103,7 +103,7 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-uk-line bg-white hover:border-uk-teal hover:text-uk-teal-dark text-uk-navy text-sm font-cw-bold transition-all hover:-translate-y-0.5 hover:shadow-md"
               >
                 <RefreshCw className="w-4 h-4" strokeWidth={1.75} />
-                Try again
+                Thử lại
               </button>
             )}
             <button
@@ -111,7 +111,7 @@ export default function PlanUnavailable({ onRetry }: PlanUnavailableProps = {}) 
               onClick={openFormModal}
               className="btn-gradient text-white px-8 py-4 rounded-full font-cw-bold text-base"
             >
-              Request a new plan
+              Yêu cầu phương án mới
             </button>
           </div>
         </motion.div>

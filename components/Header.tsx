@@ -79,50 +79,50 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
   solutions: {
     entries: [
       {
-        label: 'For Home',
+        label: 'Cho hộ gia đình',
         href: '/solutions/home-solar/',
         description:
-          'HOME series — three packaged solar and battery solutions for households.',
+          'Dòng HOME — ba gói giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình.',
       },
       {
-        label: 'For Business',
+        label: 'Cho doanh nghiệp',
         href: '/solutions/business-solar/',
         description:
-          'BUSINESS series — three packaged three-phase solutions for shops, SMEs and larger sites.',
+          'Dòng BUSINESS — ba gói giải pháp ba pha cho cửa hàng, doanh nghiệp vừa và nhỏ và công trình lớn hơn.',
       },
     ],
     quickCta: {
-      label: 'Download Monitoring App',
+      label: 'Tải ứng dụng giám sát',
       href: '/monitoring-app/',
       description:
-        'Track generation, battery and load from your phone — iOS and Android.',
+        'Theo dõi sản lượng, pin và phụ tải ngay trên điện thoại — iOS và Android.',
     },
   },
   products: {
     entries: [
       {
-        label: 'Module',
+        label: 'Tấm quang năng',
         href: '/products/module/',
         description:
-          '620–640 W TOPCon module — up to 23.7% efficiency, bifacial yield, 30-year performance warranty.',
+          'Tấm pin TOPCon 620–640 W — hiệu suất lên đến 23,7%, sản lượng hai mặt, bảo hành hiệu suất 30 năm.',
       },
       {
-        label: 'Inverter',
+        label: 'Bộ biến tần',
         href: '/products/inverter/',
         description:
-          'Hybrid and off-grid inverters from 3 kW to 20 kW, single and three phase.',
+          'Biến tần hybrid và off-grid từ 3 kW đến 20 kW, một pha và ba pha.',
       },
       {
-        label: 'Battery',
+        label: 'Pin lưu trữ',
         href: '/products/battery/',
         description:
-          'Modular LiFePO₄ storage — 5.12–16.08 kWh blocks, stackable to 16 units.',
+          'Pin LiFePO₄ dạng mô-đun — khối 5,12–16,08 kWh, ghép tối đa 16 đơn vị.',
       },
       {
-        label: 'All-in-One ESS',
+        label: 'ESS tất cả trong một',
         href: '/products/all-in-one-ess/',
         description:
-          'The 125 kW / 261 kWh C&I energy storage cabinet — one box for a whole site.',
+          'Tủ lưu trữ năng lượng C&I 125 kW / 261 kWh — một thiết bị cho toàn bộ công trình.',
       },
     ],
   },
@@ -132,16 +132,16 @@ const DEFAULT_NAV: HeaderNavItem[] = [
   // "Solutions" and "Products" are hover-dropdowns. Solutions still
   // navigates to its landing page when the label is clicked; Products
   // has no landing page, so its label only opens the menu.
-  { label: 'Solutions', href: '/solutions/home-solar/', dropdown: 'solutions' },
-  { label: 'Products', dropdown: 'products' },
-  { label: 'Cases', href: '/cases/' },
-  { label: 'About Us', href: '/about-us/' },
-  { label: 'Support', href: '/support/' },
-  { label: 'For Partners', href: '/for-partners/' },
+  { label: 'Giải pháp', href: '/solutions/home-solar/', dropdown: 'solutions' },
+  { label: 'Sản phẩm', dropdown: 'products' },
+  { label: 'Dự án', href: '/cases/' },
+  { label: 'Về chúng tôi', href: '/about-us/' },
+  { label: 'Hỗ trợ', href: '/support/' },
+  { label: 'Dành cho đối tác', href: '/for-partners/' },
 ]
 
 const DEFAULT_CTA: HeaderCTA = {
-  label: 'Contact Us',
+  label: 'Liên hệ',
   href: '/contact-us/',
 }
 
@@ -219,7 +219,7 @@ export default function Header({
             <button
               onClick={onBack}
               className="lg:hidden p-2 text-uk-navy"
-              aria-label="Back"
+              aria-label="Quay lại"
             >
               <ChevronLeft size={24} strokeWidth={2} />
             </button>
@@ -571,7 +571,7 @@ function NavDropdown({
             }}
             className="btn-gradient w-full mt-1 px-5 py-3 rounded-lg text-sm font-cw-bold text-white cursor-pointer"
           >
-            Get Free Quote →
+            Nhận báo giá miễn phí →
           </button>
         </div>
       </div>

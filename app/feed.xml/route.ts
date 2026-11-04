@@ -1,7 +1,7 @@
 /**
  * RSS 2.0 feed at /feed.xml.
  *
- * Source: published NG blog posts (same source as the dynamic sitemap
+ * Source: published VN blog posts (same source as the dynamic sitemap
  * branch - `listAllPublishedForSitemap` under the hood, but reused so a
  * publish / unpublish flips both signals at once).
  *
@@ -19,10 +19,10 @@ import { SITE_URL, absoluteUrl } from '@/lib/seo/site'
 
 export const dynamic = 'force-dynamic'
 
-const SITE_TITLE = 'Solavita Nigeria Blog'
+const SITE_TITLE = 'Blog Solavita Việt Nam'
 const SITE_DESCRIPTION =
-  'Guides, product updates and stories from Nigerian solar. Written by Solavita engineers so you can choose with confidence.'
-const FEED_LANG = 'en-NG'
+  'Hướng dẫn, cập nhật sản phẩm và câu chuyện từ đội ngũ Solavita Việt Nam. Nội dung do kỹ sư Solavita biên soạn để bạn tự tin lựa chọn.'
+const FEED_LANG = 'vi-VN'
 
 function escapeXml(input: string): string {
   return input

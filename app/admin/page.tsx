@@ -8,21 +8,21 @@ export const dynamic = 'force-dynamic'
 export default async function AdminDashboardPage() {
   const user = await requireAdmin()
 
-  // Single source of truth: count NG leads (country = 'ng') to surface on
+  // Single source of truth: count VN leads (country = 'vn') to surface on
   // the dashboard. Cheap query - keeps the index on country busy.
   const { count: leadCount } = await supabase
     .from('consultation_leads')
     .select('id', { count: 'exact', head: true })
-    .eq('country', 'ng')
+    .eq('country', 'vn')
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-cw-bold text-uk-navy">
-          Welcome back, {user.username}
+          Xin chào, {user.username}
         </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          NG back-office - quick links to the consultation pipeline.
+          Bảng điều khiển Solavita Việt Nam - liên kết nhanh tới quy trình tư vấn.
         </p>
       </div>
 
@@ -38,7 +38,7 @@ export default async function AdminDashboardPage() {
             {leadCount ?? 0}
           </div>
           <div className="text-xs font-cw-bold text-uk-slate uppercase tracking-wider mt-1">
-            NG consultation leads
+            Yêu cầu tư vấn
           </div>
         </Link>
       </div>

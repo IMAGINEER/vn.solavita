@@ -28,14 +28,14 @@ export default function DownloadSection() {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <SectionEyebrow>DOWNLOADS</SectionEyebrow>
+          <SectionEyebrow>TÀI LIỆU TẢI VỀ</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Product Specs, Manuals and{' '}
-            <span className="text-gradient">Downloads</span>
+            Thông số sản phẩm, hướng dẫn sử dụng và{' '}
+            <span className="text-gradient">tài liệu tải về</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Datasheets, manuals and warranty documents for every
-            Solavita component.
+            Bảng thông số kỹ thuật, hướng dẫn sử dụng và tài liệu bảo hành
+            cho mọi linh kiện Solavita.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function DownloadSection() {
                 </h3>
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-cw-bold text-uk-teal group-hover:text-uk-teal-dark transition-colors">
                   <Download className="w-4 h-4" strokeWidth={2} />
-                  Download
+                  Tải về
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
                 </span>
               </div>

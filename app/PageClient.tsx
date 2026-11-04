@@ -4,19 +4,11 @@ import Link from 'next/link'
 import {
   ArrowRight,
   Sun,
-  BatteryCharging,
   Wrench,
-  Sparkles,
-  Compass,
   Factory,
-  Handshake,
-  Users,
   XCircle,
   CheckCircle2,
-  Shield,
-  Phone,
   Ruler,
-  Headphones,
   ClipboardPenLine,
   ClipboardCheck,
 } from 'lucide-react'
@@ -26,21 +18,25 @@ import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
-import TbdText from '@/components/ui/tbd-text'
 import ImagePlaceholder from '@/components/ui/image-placeholder'
 import GetQuoteButton from '@/components/ui/get-quote-button'
-import { featuredNgCases } from '@/lib/data/ng-cases'
-import NgCaseCard from '@/components/cases/NgCaseCard'
+import { featuredVnCases } from '@/lib/data/vn-cases'
+import VnCaseCard from '@/components/cases/VnCaseCard'
 import { openFormModal } from '@/lib/form-modal'
 
 /* ═══════════════════════════════════════════════════════════════════════
    Home — page flow
      1. Hero
-     2. Scenario entry cards (For Home / For Business)
-     3. COST COMPARISON — Solar vs. Diesel (visual)
+     2. Scenario entry cards (Cho hộ gia đình / Cho doanh nghiệp)
+     3. GRID VS. SOLAR — See the Difference (visual)
      4. YOUR SOLAR JOURNEY — From Consultation to Clean Power
-     5. CUSTOMER STORIES — Real Homes and Businesses, Real Results
+     5. CUSTOMER STORIES — Real Projects, Real Energy Needs
      6. Final CTA — Take the Next Step Towards Reliable Power
+
+   The diesel-generator comparison section that shipped with the original NG template
+   has been removed for the VN site (no diesel messaging). Section 3 now
+   compares a grid-only supply against solar + storage, keeping the same
+   two-column layout without any diesel content.
 
    The "WHY SOLAVITA — From Local Warehouse to Your Doorstep" section
    was removed per `docs/修改建议.docx` §3 (Oct 2026).
@@ -53,16 +49,16 @@ export default function Home() {
 
       <Section1Hero />
       <Section2EntryCards />
-      <Section3SolarVsDiesel />
+      <Section3GridVsSolar />
       <Section5ConsultationToCleanPower />
       <Section7CustomerStories />
       <Section9FinalCta />
 
       {/* The trust-mark strip (formerly TrustBar) has been removed:
           it carried TÜV / CE / MCS / NICEIC / RECC / 25-year warranty
-          marks that are unverified for Nigeria (NG content strategy
-          rule 2). Re-introduce a NG-specific strip only once business
-          confirms which approvals actually apply. */}
+          marks that are unverified for Vietnam. Re-introduce a
+          VN-specific strip only once business confirms which approvals
+          actually apply. */}
       <Footer />
       <FloatingButtons />
     </main>
@@ -72,26 +68,25 @@ export default function Home() {
 /* ──────────────────────────────────────────────────────────────────────
    Section 1 — Hero
    New H1 + body built on the three core values (cost / independence
-   / crisis). The brand line "Cut Diesel. Own Your Power." is folded
-   into the H1 ("More Reliable Way to Power") and reinforced by the
-   trust-pill strip.
+   / stability).
    ────────────────────────────────────────────────────────────────────── */
 
 function Section1Hero() {
   return (
     <PageHero
-      backgroundImage="/images/banner_ng.webp"
-      eyebrow="SOLAR POWER FOR HOMES"
-      title={'Ditch The Generator.* Power\n*Your Life.'}
+      backgroundImage="/images/banner_home.webp"
+      eyebrow="ĐIỆN MẶT TRỜI CHO HỘ GIA ĐÌNH"
+      title={'Chủ động nguồn điện.\n*Chủ động cuộc sống.'}
       body={
         <>
-          Slash fuel costs and blackouts with 24/7 solar and battery.
+          Giảm chi phí điện và lo lắng mất điện với hệ thống điện mặt trời
+          kèm pin lưu trữ vận hành 24/7.
           <br />
-          From Solavita factory to your home, business, or community.
+          Từ nhà máy Solavita đến gia đình, doanh nghiệp và cộng đồng của bạn.
         </>
       }
-      primaryCta={{ label: 'Get Free Quote', onClick: openFormModal }}
-      secondaryCta={{ label: 'Explore Solutions', href: '/solutions/home-solar' }}
+      primaryCta={{ label: 'Nhận báo giá miễn phí', onClick: openFormModal }}
+      secondaryCta={{ label: 'Khám phá giải pháp', href: '/solutions/home-solar' }}
     />
   )
 }
@@ -108,29 +103,29 @@ function Section2EntryCards() {
     <section className="relative py-16 md:py-20 bg-gradient-to-br from-uk-teal/5 to-uk-emerald/15">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <SectionEyebrow>SOLUTIONS</SectionEyebrow>
+          <SectionEyebrow>GIẢI PHÁP</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Solar Solutions for Every <span className="text-gradient">Home and Business</span>
+            Giải pháp điện mặt trời cho <span className="text-gradient">mọi gia đình và doanh nghiệp</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ScenarioPanel
             href="/solutions/home-solar"
-            title="For Residential"
-            subTitle="Powering homes"
-            body="Keep lights on and appliances running during outages. From essential backup to full energy independence, designed for homes."
-            imageDescription="A modern home with a rooftop solar system and battery storage"
+            title="Cho hộ gia đình"
+            subTitle="Điện ổn định cho tổ ấm"
+            body="Giữ đèn sáng và thiết bị hoạt động khi mất điện. Từ nguồn dự phòng thiết yếu đến chủ động hoàn toàn nguồn điện, thiết kế riêng cho hộ gia đình."
+            imageDescription="Một ngôi nhà hiện đại với hệ thống điện mặt trời trên mái và pin lưu trữ"
             imageSrc="/images/home_cap.webp"
-            cta="Explore Home Solutions"
+            cta="Xem giải pháp cho hộ gia đình"
           />
           <ScenarioPanel
             href="/solutions/business-solar"
-            title="For Commercial & Industrial"
-            subTitle="Powering businesses"
-            body="Protect your business from grid failures with robust three-phase systems. Save on fuel and power critical equipment 24/7."
-            imageDescription="Solavita local warehouse and service depot with a rooftop solar array"
-            imageSrc="/images/ng-warehouse.webp"
-            cta="Explore Business Solutions"
+            title="Cho doanh nghiệp"
+            subTitle="Vận hành liền mạch mỗi ngày"
+            body="Bảo vệ hoạt động kinh doanh khỏi sự cố lưới điện bằng hệ thống ba pha vững chắc. Tiết kiệm chi phí điện và duy trì thiết bị quan trọng 24/7."
+            imageDescription="Kho hàng và trung tâm dịch vụ Solavita với dàn pin mặt trời trên mái"
+            imageSrc="/images/warehouse_local.webp"
+            cta="Xem giải pháp cho doanh nghiệp"
           />
         </div>
       </div>
@@ -195,54 +190,55 @@ function ScenarioPanel({
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   Section 3 — Solar vs. Diesel: See the Difference
-   The cost-comparison narrative. Red X for diesel pain, green check
-   for solar upside. Mirrors the image's two-column treatment.
+   Section 3 — Grid vs. Solar: See the Difference
+   The cost-comparison narrative. Red X for grid-only pain, green check
+   for solar upside. Same two-column treatment as the original template, with
+   every diesel / generator reference removed.
    ────────────────────────────────────────────────────────────────────── */
 
-function Section3SolarVsDiesel() {
+function Section3GridVsSolar() {
   return (
     <section className="relative py-16 md:py-20 bg-uk-line/30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <SectionEyebrow>ENERGY COMPARISON</SectionEyebrow>
+          <SectionEyebrow>SO SÁNH NGUỒN ĐIỆN</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Solar vs. Diesel: <span className="text-gradient">See the Difference</span>
+            Chỉ dùng lưới điện hay <span className="text-gradient">điện mặt trời + lưu trữ?</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-            Every litre burned adds up. Every ray of sunshine
-            changes the equation.
+            Mỗi tháng trôi qua là một hoá đơn nữa. Mỗi giờ nắng là một
+            khoản tiết kiệm thêm.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 items-stretch">
-          {/* Diesel side - red X */}
+          {/* Grid-only side - red X */}
           <div className="rounded-2xl border border-red-300 dark:border-red-800/40 bg-red-50 dark:bg-red-950/30 p-6 lg:p-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
                 <Factory className="w-5 h-5" strokeWidth={1.6} />
               </div>
               <h3 className="text-xl font-cw-bold text-uk-navy">
-                Diesel generator
+                Phụ thuộc hoàn toàn vào lưới điện
               </h3>
             </div>
             <div className="aspect-[16/9] rounded-xl overflow-hidden bg-uk-line/30 dark:bg-slate-800 mb-5">
               <img
-                src="/images/diesel_backup.webp"
-                alt="A small diesel generator running outdoors during a power outage at a home or business"
+                src="/images/outage_home.webp"
+                alt="Hộ gia đình mất điện khi lưới điện gặp sự cố"
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
             <p className="text-sm font-cw-bold text-uk-navy mb-4">
-              Fuel bills, noise, and constant worries — diesel drains
-              more than power.
+              Giá điện tăng, mất điện đột ngột và những lo lắng không
+              hồi kết — bạn không tự quyết định được nguồn điện của mình.
             </p>
             <ul className="space-y-2 text-sm">
-              <CompareXRow text="Volatile fuel prices & daily refueling" />
-              <CompareXRow text="Frequent breakdowns & high upkeep" />
-              <CompareXRow text="Loud, smoky, and disruptive" />
-              <CompareXRow text="Fuel theft & startup failures" />
+              <CompareXRow text="Hoá đơn điện tăng theo biểu giá bán lẻ" />
+              <CompareXRow text="Mất điện làm gián đoạn sinh hoạt và kinh doanh" />
+              <CompareXRow text="Thiết bị điện tử chịu rủi ro khi điện chập chờn" />
+              <CompareXRow text="Không tận dụng được nguồn nắng tại chỗ" />
             </ul>
           </div>
 
@@ -265,25 +261,25 @@ function Section3SolarVsDiesel() {
                 <Sun className="w-5 h-5" strokeWidth={1.6} />
               </div>
               <h3 className="text-xl font-cw-bold text-uk-navy">
-                Solavita solar + storage
+                Solavita điện mặt trời + lưu trữ
               </h3>
             </div>
             <div className="aspect-[16/9] rounded-xl overflow-hidden bg-uk-emerald/10 mb-5">
               <img
                 src="/images/solar_advantages.webp"
-                alt="A Solavita solar panel and battery system installed at a home, generating clean power"
+                alt="Hệ thống điện mặt trời và pin lưu trữ Solavita lắp đặt tại một hộ gia đình, tạo ra điện sạch"
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
             <p className="text-sm font-cw-bold text-uk-navy mb-4">
-              Clean, quiet power that puts you in control.
+              Nguồn điện sạch, êm ái và do bạn chủ động.
             </p>
             <ul className="space-y-2 text-sm">
-              <CompareCheckRow text="Slash long-term energy bills" />
-              <CompareCheckRow text="Low maintenance, high durability" />
-              <CompareCheckRow text="Clean, quiet and fume-free" />
-              <CompareCheckRow text="24/7 stable power, built for yours" />
+              <CompareCheckRow text="Cắt giảm chi phí điện dài hạn" />
+              <CompareCheckRow text="Ít bảo trì, tuổi thọ cao" />
+              <CompareCheckRow text="Sạch, yên tĩnh, không khí thải" />
+              <CompareCheckRow text="Điện ổn định 24/7, thiết kế theo nhu cầu" />
             </ul>
           </div>
         </div>
@@ -324,39 +320,39 @@ function Section5ConsultationToCleanPower() {
     <section className="relative py-16 md:py-20 bg-sv-blue/10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <SectionEyebrow>PROCESS</SectionEyebrow>
+          <SectionEyebrow>QUY TRÌNH</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            From Consultation to <span className="text-gradient">Clean Power</span>
+            Từ tư vấn đến <span className="text-gradient">nguồn điện sạch</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            A simple and transparent process to get your solar system
-            up and running.
+            Quy trình đơn giản, minh bạch để đưa hệ thống điện mặt trời của
+            bạn vào vận hành.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StepCard
             step="1"
             icon={ClipboardPenLine}
-            title="Site Assessment"
-            body="Evaluate your site, energy needs & goals."
+            title="Khảo sát tại nhà"
+            body="Đánh giá vị trí lắp đặt, nhu cầu và mục tiêu sử dụng điện."
           />
           <StepCard
             step="2"
             icon={Ruler}
-            title="Professional Installation"
-            body="Expert setup of panels, storage & gear."
+            title="Lắp đặt chuyên nghiệp"
+            body="Thi công tấm quang năng, pin lưu trữ và thiết bị bởi đội ngũ kỹ thuật."
           />
           <StepCard
             step="3"
             icon={Wrench}
-            title="System Activation"
-            body="Test the system & activate monitoring."
+            title="Nghiệm thu & kích hoạt"
+            body="Kiểm tra hệ thống và kích hoạt tính năng giám sát."
           />
           <StepCard
             step="4"
             icon={ClipboardCheck}
-            title="Go Green"
-            body="Start enjoying clean, sustainable energy."
+            title="Tận hưởng điện sạch"
+            body="Bắt đầu sử dụng nguồn điện sạch, bền vững mỗi ngày."
           />
         </div>
         <div className="mt-10 text-center">
@@ -385,11 +381,6 @@ function StepCard({
     // exactly on the card's top border.
     <div className="relative">
       <div className="rounded-2xl border border-uk-line bg-white p-10 h-full flex flex-col">
-        {/* Step number position uses calc() so the badge's vertical
-            offset is always 50% of its own height (2.5rem * 0.5 =
-            20 px), regardless of the badge's size. left-1/2 +
-            -translate-x-1/2 keeps it horizontally centred. pt-20
-            gives the title room below the badge. */}
         <div
           className="absolute left-1/2 -translate-x-1/2 z-10"
           style={{ top: 'calc(-0.5 * 2.5rem)' }}
@@ -413,11 +404,11 @@ function StepCard({
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   Section 7 — Real Homes and Businesses, Real Results
-   Four featured installs in the new card format defined by
+   Section 7 — Real Projects. Real Energy Needs.
+   Featured installs in the card format defined by
    `docs/修改建议(2).docx` §"首页修改" §2:
-     [type badge] → [capacity] → [place, country]
-   The full 16-case list lives on /cases.
+     [type badge] → [capacity] → [country, place]
+   The full case list lives on /cases.
    ────────────────────────────────────────────────────────────────────── */
 
 function Section7CustomerStories() {
@@ -425,19 +416,19 @@ function Section7CustomerStories() {
     <section className="relative py-16 md:py-20 bg-uk-line/30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <SectionEyebrow>CASES</SectionEyebrow>
+          <SectionEyebrow>DỰ ÁN</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Real Projects. <span className="text-gradient">Real Energy Needs.</span>
+            Dự án thực tế. <span className="text-gradient">Nhu cầu thực tế.</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-            Discover how Solavita solar and battery solutions are
-            applied in homes and businesses, and see the systems behind
-            each project.
+            Khám phá cách các giải pháp điện mặt trời và pin lưu trữ Solavita
+            được ứng dụng cho hộ gia đình và doanh nghiệp, cùng cấu hình hệ
+            thống của từng dự án.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredNgCases.map((c) => (
-            <NgCaseCard key={c.slug} c={c} />
+          {featuredVnCases.map((c) => (
+            <VnCaseCard key={c.slug} c={c} />
           ))}
         </div>
       </div>
@@ -466,28 +457,21 @@ function Section9FinalCta() {
         }}
       />
       <div className="relative max-w-3xl mx-auto px-6 text-center">
-        {/* Eyebrow uses the standard SectionEyebrow dark variant so
-            it matches every other section's eyebrow shape, just
-            styled for a dark background. */}
-        <SectionEyebrow variant="dark">Ready to start</SectionEyebrow>
+        <SectionEyebrow variant="dark">Sẵn sàng bắt đầu</SectionEyebrow>
         <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-white leading-tight">
-          Take the Next Step Towards <span className="text-gradient">Reliable Power</span>
+          Bước tiếp theo đến <span className="text-gradient">nguồn điện ổn định</span>
         </h2>
         <div className="mt-4 text-base md:text-lg text-white/85 font-cw-light leading-relaxed space-y-2 max-w-2xl mx-auto">
-          <p>No more midnight fuel runs. No more unexpected blackouts.</p>
-          <p>Just clean, quiet power — ready when you are.</p>
+          <p>Không còn lo mất điện giữa đêm. Không còn hoá đơn tăng bất ngờ.</p>
+          <p>Chỉ còn nguồn điện sạch, êm ái — sẵn sàng khi bạn cần.</p>
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <GetQuoteButton onClick={openFormModal} />
-          {/* Secondary CTA - white background, dark text so it is
-              visible against the dark hero image. Hover flips the
-              background to teal; the label stays navy, because white
-              on #14B8A6 only reaches ~2.4:1 contrast. */}
           <Link
             href="/solutions/home-solar"
             className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-uk-navy hover:border-uk-teal transition-colors"
           >
-            Explore Solutions
+            Khám phá giải pháp
           </Link>
         </div>
       </div>

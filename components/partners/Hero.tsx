@@ -8,12 +8,11 @@ import Breadcrumb from '@/components/Breadcrumb'
  * rest of the inner-page heroes so the navigation feels unified. Copy
  * makes the B2B nature of the page clear from the first line.
  *
- * Hero copy localizes the UK base text for NG: the three NG partner
- * tracks (installer, referral, community) replace the three UK ones,
- * and the supplier-group framing refers to SKYWORTH's group
- * supply-chain scale rather than UK-specific infrastructure. The
- * previous "distribution" / Distributor track has been removed from
- * the NG partner programme.
+ * Hero copy localizes the base text for Vietnam: the three VN partner
+ * tracks (Đối tác dịch vụ chính / Đơn vị lắp đặt được chứng nhận /
+ * Đối tác giới thiệu khách hàng), and the supplier-group framing refers
+ * to SKYWORTH's group supply-chain scale rather than any market-specific
+ * infrastructure.
  */
 export default function PartnersHero() {
   return (
@@ -33,8 +32,8 @@ export default function PartnersHero() {
         <Breadcrumb
           theme="light"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'For Partners' },
+            { label: 'Trang chủ', href: '/' },
+            { label: 'Dành cho đối tác' },
           ]}
         />
 
@@ -46,7 +45,7 @@ export default function PartnersHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            For partners . B2B
+            Dành cho đối tác · B2B
           </span>
         </motion.span>
 
@@ -56,8 +55,8 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl"
         >
-          Power the Energy Shift.{' '}
-          <span className="text-gradient">Build What's Next.</span>
+          Đồng hành cùng chuyển dịch năng lượng.{' '}
+          <span className="text-gradient">Kiến tạo tương lai.</span>
         </motion.h1>
 
         <motion.p
@@ -66,10 +65,10 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Become a Solavita partner — Core Service, Certified Installer,
-          or Lead Partner. Benefit from local engineering support, group
-          supply-chain scale, and a partner programme built around
-          long-term relationships.
+          Trở thành đối tác Solavita — Đối tác dịch vụ chính, Đơn vị lắp đặt
+          được chứng nhận hoặc Đối tác giới thiệu khách hàng. Tận hưởng hỗ trợ
+          kỹ thuật tại địa phương, quy mô chuỗi cung ứng của tập đoàn và một
+          chương trình hợp tác xây dựng trên quan hệ dài lâu.
         </motion.p>
       </div>
     </section>

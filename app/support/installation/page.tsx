@@ -5,31 +5,31 @@ import JsonLd from '@/components/seo/JsonLd'
 import { webPageJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'How to Install — Solar & Battery Installation Process | Solavita',
+  title: 'Cách lắp đặt — Quy trình lắp đặt điện mặt trời & pin lưu trữ',
   path: '/support/installation',
   description:
-    'How your Solavita system gets installed: a free survey, a tailored design and quote, installation by our team, and full commissioning — plus answers to common installation questions.',
+    'Quy trình lắp đặt hệ thống Solavita: khảo sát miễn phí, thiết kế và báo giá riêng, đội ngũ lắp đặt và nghiệm thu đầy đủ — kèm giải đáp các câu hỏi thường gặp về lắp đặt.',
   ogImage: '/images/og-solutions.jpg',
-  ogImageAlt: 'Solavita solar and battery installation',
+  ogImageAlt: 'Lắp đặt điện mặt trời và pin lưu trữ của Solavita',
 })
 
 const FAQS: { question: string; answer: string }[] = [
   {
-    question: 'How long does installation take?',
-    answer: 'Usually 7 working days depending on system size.',
+    question: 'Lắp đặt mất bao lâu?',
+    answer: 'TBD — Thời gian lắp đặt chính thức (chờ xác nhận).',
   },
   {
-    question: 'Do I need to prepare anything before installation?',
-    answer: 'No. Our team handles roof assessment, permits and setup.',
+    question: 'Tôi có cần chuẩn bị gì trước khi lắp đặt không?',
+    answer: 'Không. Đội ngũ của chúng tôi lo khảo sát mái nhà, xin phép và thiết lập.',
   },
   {
-    question: 'Will my power be interrupted during installation?',
-    answer: 'No, we install with zero downtime to your home or business.',
+    question: 'Nguồn điện của tôi có bị gián đoạn trong quá trình lắp đặt không?',
+    answer: 'Không, chúng tôi lắp đặt mà không làm gián đoạn sinh hoạt của hộ gia đình hay doanh nghiệp.',
   },
   {
-    question: 'Who installs the system?',
+    question: 'Ai là người lắp đặt hệ thống?',
     answer:
-      'All installations are carried out by Solavita-certified engineers.',
+      'TBD — Thông tin chứng nhận của đơn vị lắp đặt (chờ xác nhận).',
   },
 ]
 
@@ -40,20 +40,20 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/support/installation',
-            name: 'How to Install | Solavita',
+            name: 'Cách lắp đặt | Solavita',
             description:
-              'The 4-step Solavita installation process for solar and battery systems.',
+              'Quy trình lắp đặt 4 bước của Solavita cho hệ thống điện mặt trời và pin lưu trữ.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'Support', url: '/support' },
-            { name: 'Installation', url: '/support/installation' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Hỗ trợ', url: '/support' },
+            { name: 'Lắp đặt', url: '/support/installation' },
           ]),
           faqPageJsonLd({
             path: '/support/installation',
-            name: 'Solavita Installation FAQs',
+            name: 'Câu hỏi thường gặp về lắp đặt Solavita',
             description:
-              'Common questions about the Solavita solar and battery installation process.',
+              'Các câu hỏi phổ biến về quy trình lắp đặt điện mặt trời và pin lưu trữ của Solavita.',
             faqs: FAQS,
           }),
         ]}

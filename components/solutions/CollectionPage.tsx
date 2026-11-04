@@ -42,14 +42,14 @@ import type {
 import { openFormModal } from '@/lib/form-modal'
 
 /**
- * CollectionPage — the shared layout for the two NG solution
+ * CollectionPage — the shared layout for the two VN solution
  * collection pages (`/solutions/home-solar` and
  * `/solutions/business-solar`). Per `content/nigeria/solutions.md`
  * (the collection-pages brief, supersedes the original single
  * `/solutions` overview).
  *
  * Layout (top → bottom):
- *   Header → Hero → Solar-vs-Diesel math → 3 solution cards → Tailored CTA
+ *   Header → Hero → 3 solution cards → Tailored CTA
  *   → FAQ → Trust bar → Footer.
  *
  * Both the comparison table ("COMPARE") and the tech-explainers grid
@@ -57,11 +57,11 @@ import { openFormModal } from '@/lib/form-modal'
  * the per-tier detail pages under `/solutions/[slug]` carry that
  * technical detail.
  *
- * The "Solar-vs-Diesel math" section is the core Nigerian narrative
+ * The "grid-cost reduction" narrative is the core story
  * (replaces the previous "OVERVIEW" context block per the user's
- * directive). It does not promise specific savings, payback or
- * generator elimination - the only TBD-bound numbers are the
- * local fuel price and the verified savings methodology.
+ * directive). It does not promise specific savings or payback -
+ * the only TBD-bound numbers are the local tariff and the verified
+ * savings methodology.
  */
 
 export interface CollectionHeroProps {
@@ -215,7 +215,7 @@ export default function CollectionPage(props: CollectionPageProps) {
 
       {/* The trust-mark strip (formerly TrustBar) has been removed:
           it carried TÜV / CE / MCS / NICEIC / RECC / 25-year warranty
-          marks that are unverified for Nigeria (NG content strategy
+          marks that are unverified for Vietnam (VN content strategy
           rule 2). Re-introduce a NG-specific strip only once business
           confirms which approvals actually apply. */}
       <Footer />
@@ -727,7 +727,7 @@ const LOAD_APPLIANCE_ICONS: Record<LoadApplianceIconKey, LucideIcon> = {
 /* ──────────────────────────────────────────────────────────────────────
    Components in Detail — 4-tab product deep-dive. Pattern ported
    from the UK `solutions/ProductDetails.tsx` and re-skinned for the
-   NG light theme (uk-teal / uk-emerald / uk-navy / uk-slate tokens).
+   VN light theme (uk-teal / uk-emerald / uk-navy / uk-slate tokens).
    Tabs: PV Modules / Inverters / Battery Storage / Mounting
    System. Each tab surfaces title, subtitle, description, spec
    table, highlights, and a 4-second auto-rotating image carousel
@@ -832,7 +832,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
       'Three-phase hybrid from 5 kW to 20 kW with up to 40 kW PV input',
       'Backup switching in under 4 ms (single-phase) and under 10 ms (three-phase)',
       'AI-driven AFCI and Type II SPD protection, in IP66 enclosures',
-      'Dedicated 6 kW off-grid unit for pure backup, with generator peak-shaving',
+      'Dedicated 6 kW off-grid unit for pure backup, with load balancing',
     ],
     images: [
       '/images/products/inverter/swh-single-phase-1.webp',
@@ -943,7 +943,7 @@ function ProductSection() {
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header — same eyebrow/heading pattern as the rest
             of the page. "Components in Detail" matches the UK product
-            page; the lead sentence echoes the NG product message
+            page; the lead sentence echoes the VN product message
             (single-source supply, kit-level integration). */}
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">

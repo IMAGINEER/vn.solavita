@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react'
 import { Moon, Sun, ArrowUp } from 'lucide-react'
 
 /**
- * Floating action buttons - NG homepage.
+ * Floating action buttons - VN homepage.
  *
  * Original-style structure preserved: theme toggle (dark ↔ light), back-to-top.
- * Language switcher removed - NG homepage is English-only and the
+ * Language switcher removed - the VN homepage uses the footer locale menu and the
  * balkonkraftwerk paths it gated against don't exist here
  * (lib/bk-lang.ts is also dead in NG).
  *
@@ -64,8 +64,8 @@ export default function FloatingButtons() {
       <button
         onClick={toggleTheme}
         className={`floating-btn ${isLightMode ? 'light-btn' : 'dark-btn'}`}
-        title={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-        aria-label={isLightMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+        title={isLightMode ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng'}
+        aria-label={isLightMode ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng'}
       >
         {isLightMode ? (
           <Moon size={20} strokeWidth={2} />
@@ -78,8 +78,8 @@ export default function FloatingButtons() {
       <button
         onClick={scrollToTop}
         className="floating-btn back-to-top"
-        title="Back to Top"
-        aria-label="Back to Top"
+        title="Lên đầu trang"
+        aria-label="Lên đầu trang"
       >
         <ArrowUp size={20} strokeWidth={2} />
       </button>

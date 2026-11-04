@@ -67,9 +67,9 @@ export function PostsTable({
   const handleDelete = async (post: BlogPostSummary) => {
     setDeleteError(null)
     const ok = window.confirm(
-      `Permanently delete "${post.title}"?\n\n` +
-        `This removes the post, its tag links, and revision history. ` +
-        `It cannot be undone.`,
+      `Xoá vĩnh viễn "${post.title}"?\n\n` +
+        `Bài viết, liên kết thẻ và lịch sử chỉnh sửa sẽ bị xoá. ` +
+        `Không thể hoàn tác.`,
     )
     if (!ok) return
     setDeletingId(post.id)
@@ -79,12 +79,12 @@ export function PostsTable({
       })
       const json = (await res.json()) as { success: boolean; error?: string }
       if (!res.ok || !json.success) {
-        setDeleteError(json.error ?? 'Deletion failed')
+        setDeleteError(json.error ?? 'Xoá thất bại')
         return
       }
       router.refresh()
     } catch (err) {
-      setDeleteError(err instanceof Error ? err.message : 'Network error')
+      setDeleteError(err instanceof Error ? err.message : 'Lỗi kết nối mạng')
     } finally {
       setDeletingId(null)
     }
@@ -105,12 +105,12 @@ export function PostsTable({
             <Input
               name="search"
               defaultValue={initialSearch}
-              placeholder="Search by title…"
+              placeholder="Tìm theo tiêu đề…"
               className="pl-8 w-64"
             />
           </div>
           <Button type="submit" variant="outline" size="sm">
-            Search
+            Tìm kiếm
           </Button>
         </form>
 
@@ -126,7 +126,7 @@ export function PostsTable({
                   : 'bg-white border border-uk-line text-uk-slate hover:bg-uk-teal-soft'
               }`}
             >
-              {s === 'all' ? 'All' : s === 'draft' ? 'Drafts' : 'Published'}
+              {s === 'all' ? 'Tất cả' : s === 'draft' ? 'Bản nháp' : 'Đã xuất bản'}
             </button>
           ))}
         </div>
@@ -137,19 +137,19 @@ export function PostsTable({
           <thead className="bg-uk-teal-soft/50 text-uk-slate">
             <tr>
               <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">
-                Title
+                Tiêu đề
               </th>
               <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">
-                Category
+                Danh mục
               </th>
               <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">
-                Author
+                Tác giả
               </th>
               <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">
-                Status
+                Trạng thái
               </th>
               <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">
-                Date
+                Ngày
               </th>
               <th className="text-right font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5 w-28" />
             </tr>
@@ -158,7 +158,7 @@ export function PostsTable({
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={6} className="text-center text-uk-slate py-12 px-4">
-                  No posts match the filters.
+                  Không có bài viết nào phù hợp với bộ lọc.
                 </td>
               </tr>
             ) : (
@@ -178,15 +178,15 @@ export function PostsTable({
                   </td>
                   <td className="px-4 py-3">
                     {p.status === 'published' ? (
-                      <Badge variant="success">Published</Badge>
+                      <Badge variant="success">Đã xuất bản</Badge>
                     ) : (
-                      <Badge variant="muted">Draft</Badge>
+                      <Badge variant="muted">Bản nháp</Badge>
                     )}
                   </td>
                   <td className="px-4 py-3 text-uk-slate text-xs tabular-nums">
                     {p.published_at
-                      ? new Date(p.published_at).toLocaleDateString('en-GB')
-                      : new Date(p.updated_at).toLocaleDateString('en-GB')}
+                      ? new Date(p.published_at).toLocaleDateString('vi-VN')
+                      : new Date(p.updated_at).toLocaleDateString('vi-VN')}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="inline-flex items-center gap-0.5">
@@ -194,7 +194,7 @@ export function PostsTable({
                         href={`/admin/blog/${p.id}`}
                         variant="ghost"
                         size="icon"
-                        aria-label="Edit"
+                        aria-label="Chỉnh sửa"
                       >
                         <Pencil className="size-4" />
                       </ButtonLink>
@@ -202,7 +202,7 @@ export function PostsTable({
                         type="button"
                         variant="ghost"
                         size="icon"
-                        aria-label={`Delete ${p.title}`}
+                        aria-label={`Xoá ${p.title}`}
                         disabled={deletingId === p.id}
                         onClick={() => handleDelete(p)}
                         className="text-red-700 hover:bg-red-50 hover:text-red-700"
@@ -224,7 +224,7 @@ export function PostsTable({
 
       <div className="flex items-center justify-between text-xs text-uk-slate">
         <div>
-          Showing {(page - 1) * pageSize + (rows.length > 0 ? 1 : 0)}-{(page - 1) * pageSize + rows.length} of {total}
+          Hiển thị {(page - 1) * pageSize + (rows.length > 0 ? 1 : 0)}-{(page - 1) * pageSize + rows.length} trong {total}
         </div>
         {totalPages > 1 && (
           <div className="flex items-center gap-2">
@@ -234,10 +234,10 @@ export function PostsTable({
               disabled={page <= 1}
               onClick={() => updateQuery({ page: page - 1 })}
             >
-              ← Previous
+              ← Trước
             </Button>
             <span>
-              Page {page} of {totalPages}
+              Trang {page} / {totalPages}
             </span>
             <Button
               variant="outline"
@@ -245,7 +245,7 @@ export function PostsTable({
               disabled={page >= totalPages}
               onClick={() => updateQuery({ page: page + 1 })}
             >
-              Next
+              Sau →
             </Button>
           </div>
         )}

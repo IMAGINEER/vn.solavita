@@ -27,14 +27,14 @@ export default function AdminLoginPage() {
       })
       const j = await res.json()
       if (!res.ok || !j.success) {
-        setError(translate(j.error) || `Login failed (${res.status})`)
+        setError(translate(j.error) || `Đăng nhập thất bại (${res.status})`)
         setBusy(false)
         return
       }
       router.push(next)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Network error')
+      setError(err instanceof Error ? err.message : 'Lỗi kết nối mạng')
       setBusy(false)
     }
   }
@@ -48,15 +48,15 @@ export default function AdminLoginPage() {
           </div>
           <div>
             <div className="font-cw-bold text-uk-navy text-base">
-              Solavita Nigeria
+              Solavita Việt Nam
             </div>
-            <div className="text-xs text-uk-slate">Admin sign in</div>
+            <div className="text-xs text-uk-slate">Đăng nhập quản trị</div>
           </div>
         </div>
 
         <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="username">Tên đăng nhập</Label>
             <Input
               id="username"
               name="username"
@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Mật khẩu</Label>
             <Input
               id="password"
               name="password"
@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
           )}
 
           <Button type="submit" disabled={busy} className="w-full" size="lg">
-            {busy ? 'Signing in...' : 'Sign in'}
+            {busy ? 'Đang đăng nhập...' : 'Đăng nhập'}
           </Button>
         </form>
       </div>
@@ -99,14 +99,14 @@ export default function AdminLoginPage() {
 function translate(code: string | undefined): string | null {
   switch (code) {
     case 'invalid_credentials':
-      return 'Invalid username or password.'
+      return 'Tên đăng nhập hoặc mật khẩu không đúng.'
     case 'account_disabled':
-      return 'This account has been disabled.'
+      return 'Tài khoản này đã bị vô hiệu hoá.'
     case 'username_and_password_required':
-      return 'Please enter both a username and a password.'
+      return 'Vui lòng nhập cả tên đăng nhập và mật khẩu.'
     case 'invalid_json':
-      return 'Something went wrong - please try again.'
+      return 'Đã có lỗi xảy ra - vui lòng thử lại.'
     default:
-      return code ? `Login failed: ${code}` : null
+      return code ? `Đăng nhập thất bại: ${code}` : null
   }
 }
