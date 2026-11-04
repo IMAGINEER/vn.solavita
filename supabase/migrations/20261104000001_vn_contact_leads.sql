@@ -47,14 +47,19 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON public.vn_contact_leads TO service_role;
 -- No anon/authenticated policies — service-role only (server-side writes
 -- from the public /contact-us form; admin reads via service_role client).
 
--- updated_at trigger (function re-declared as OR REPLACE so this file
--- is self-contained if the partner migration hasn't run first).
+-- updated_at trigger. `public.set_updated_at()` is SHARED with other
+-- locale tables on this database and is already defined there with a
+-- `to_jsonb(new) ? 'updated_at'` guard, so this file re-declares it with
+-- the SAME guarded body — an unguarded replacement would break triggers
+-- on tables that have no `updated_at` column.
 CREATE OR REPLACE FUNCTION public.set_updated_at()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  NEW.updated_at = now();
+  IF to_jsonb(NEW) ? 'updated_at' THEN
+    NEW.updated_at := now();
+  END IF;
   RETURN NEW;
 END;
 $$;
