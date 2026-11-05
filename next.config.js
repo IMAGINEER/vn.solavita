@@ -25,6 +25,17 @@ const nextConfig = {
         destination: '/monitoring-app/',
         permanent: true,
       },
+      // The residential solution page used to live at /solutions/home-solar.
+      // It is now branded SolaHome (2026-11-05), so old links, bookmarks
+      // and the previously-published sitemap entry are sent to the new
+      // URL. `app/solutions/home-solar/page.tsx` mirrors this redirect
+      // as a fallback for anyone who reaches the route before this
+      // config is applied.
+      {
+        source: '/solutions/home-solar',
+        destination: '/solutions/solahome/',
+        permanent: true,
+      },
     ]
   },
 }
