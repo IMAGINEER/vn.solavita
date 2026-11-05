@@ -24,7 +24,7 @@ export const metadata = buildPageMetadata({
   title: TITLE,
   path: PATH,
   description: DESCRIPTION,
-  ogImage: '/images/og-solutions.jpg',
+  ogImage: '/images/og-solamate.jpg',
   ogImageAlt: 'SolaMate — điện mặt trời ban công cho căn hộ Việt Nam',
 })
 
@@ -43,7 +43,7 @@ export default function Page() {
       `Tiết kiệm ước tính: ${p.monthlySaving}`,
       `Ban công: ${p.models.balcony} · Che nắng: ${p.models.awning} · Mặt đất: ${p.models.ground}`,
     ],
-    imagePath: '/images/product-module-2.webp',
+    imagePath: '/images/solamate/hero.webp',
     imageAlt: 'Tấm pin mặt trời màu đen của SolaMate lắp trên khung kiến trúc',
   }))
 

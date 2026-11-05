@@ -20,6 +20,7 @@ import Footer from '@/components/Footer'
 import { openFormModal } from '@/lib/form-modal'
 import {
   solaHomeBackups,
+  solaHomeCases,
   solaHomeCertifications,
   solaHomeEconomics,
   solaHomeFaqs,
@@ -60,7 +61,7 @@ export default function SolaHomePage() {
     <>
       <Header logoHref="/" />
       <PageHero
-        backgroundImage="/images/home_cap.webp"
+        backgroundImage="/images/solahome/hero.webp"
         eyebrow="SolaHome · Biệt thự & nhà phố"
         title={'Mái nhà của bạn là một nhà máy điện\nchưa được khai thác.*'}
         body="SolaHome lắp điện mặt trời trực tiếp trên mái nhà, kết hợp biến tần hybrid và pin lưu trữ để cấp điện liên tục 24/7. Hai kiểu lắp — SolaRoof trên mái, SolaLoft trên khung kiến trúc — và bốn gói công suất cho mọi quy mô ngôi nhà."
@@ -108,62 +109,72 @@ export default function SolaHomePage() {
             {solaHomeMounts.map((m) => (
               <article
                 key={m.id}
-                className="flex flex-col rounded-3xl border border-uk-line bg-white p-8"
+                className="flex flex-col overflow-hidden rounded-3xl border border-uk-line bg-white"
               >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-uk-teal-soft text-uk-teal-dark">
-                    {m.id === 'solaroof' ? (
-                      <Home className="h-6 w-6" strokeWidth={1.8} />
-                    ) : (
-                      <Layers className="h-6 w-6" strokeWidth={1.8} />
-                    )}
-                  </span>
-                  <h3 className="text-2xl font-cw-bold text-uk-navy">
-                    {m.name}
-                  </h3>
+                <img
+                  src={m.imagePath}
+                  alt={m.imageAlt}
+                  className="h-64 w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="flex flex-1 flex-col p-8">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-uk-teal-soft text-uk-teal-dark">
+                      {m.id === 'solaroof' ? (
+                        <Home className="h-6 w-6" strokeWidth={1.8} />
+                      ) : (
+                        <Layers className="h-6 w-6" strokeWidth={1.8} />
+                      )}
+                    </span>
+                    <h3 className="text-2xl font-cw-bold text-uk-navy">
+                      {m.name}
+                    </h3>
+                  </div>
+
+                  <p className="mt-5 font-cw-bold text-uk-teal-dark">
+                    {m.headline}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-uk-slate">
+                    {m.body}
+                  </p>
+
+                  <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                    {m.benefits.map((b) => (
+                      <li
+                        key={b.title}
+                        className="rounded-xl bg-sv-light p-4"
+                      >
+                        <p className="text-sm font-cw-bold text-uk-navy">
+                          {b.title}
+                        </p>
+                        <p className="mt-1 text-xs leading-relaxed text-uk-slate">
+                          {b.body}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <dl className="mt-6 divide-y divide-uk-line border-t border-uk-line">
+                    {m.specs.map((s) => (
+                      <div
+                        key={s.label}
+                        className="flex flex-wrap items-baseline justify-between gap-2 py-2.5"
+                      >
+                        <dt className="text-xs text-uk-slate">{s.label}</dt>
+                        <dd className="text-xs font-cw-bold text-uk-navy">
+                          {s.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <p className="mt-6 rounded-xl border border-uk-line px-4 py-3 text-xs leading-relaxed text-uk-slate">
+                    <span className="font-cw-bold text-uk-navy">
+                      Phù hợp với:{' '}
+                    </span>
+                    {m.bestFor}
+                  </p>
                 </div>
-
-                <p className="mt-5 font-cw-bold text-uk-teal-dark">
-                  {m.headline}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-uk-slate">
-                  {m.body}
-                </p>
-
-                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {m.benefits.map((b) => (
-                    <li
-                      key={b.title}
-                      className="rounded-xl bg-sv-light p-4"
-                    >
-                      <p className="text-sm font-cw-bold text-uk-navy">
-                        {b.title}
-                      </p>
-                      <p className="mt-1 text-xs leading-relaxed text-uk-slate">
-                        {b.body}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-
-                <dl className="mt-6 divide-y divide-uk-line border-t border-uk-line">
-                  {m.specs.map((s) => (
-                    <div
-                      key={s.label}
-                      className="flex flex-wrap items-baseline justify-between gap-2 py-2.5"
-                    >
-                      <dt className="text-xs text-uk-slate">{s.label}</dt>
-                      <dd className="text-xs font-cw-bold text-uk-navy">
-                        {s.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-
-                <p className="mt-6 rounded-xl border border-uk-line px-4 py-3 text-xs leading-relaxed text-uk-slate">
-                  <span className="font-cw-bold text-uk-navy">Phù hợp với: </span>
-                  {m.bestFor}
-                </p>
               </article>
             ))}
           </div>
@@ -502,7 +513,54 @@ export default function SolaHomePage() {
         </div>
       </section>
 
-      {/* ⑨ Certifications + warranty */}
+      {/* ⑨ Real VN installations */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <SectionEyebrow>DỰ ÁN THỰC TẾ</SectionEyebrow>
+            <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
+              Những mái nhà đã thay đổi
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-uk-slate">
+              Kết quả từ các hộ gia đình đã lắp đặt tại Việt Nam — công suất,
+              địa điểm và mức giảm hóa đơn đều theo dữ liệu đã công bố.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {solaHomeCases.map((c) => (
+              <figure
+                key={c.id}
+                className="overflow-hidden rounded-2xl border border-uk-line bg-white"
+              >
+                <img
+                  src={c.imagePath}
+                  alt={c.imageAlt}
+                  className="h-48 w-full object-cover"
+                  loading="lazy"
+                />
+                <figcaption className="p-6">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-lg font-cw-bold text-uk-navy">
+                      {c.capacity}
+                    </span>
+                    <span className="font-cw-bold text-uk-teal-dark">
+                      {c.billReduction}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-uk-slate">{c.location}</p>
+                  <p className="mt-3 text-sm font-cw-bold text-uk-navy">
+                    Tiết kiệm {c.monthlySaving}
+                  </p>
+                  <p className="mt-1 text-xs text-uk-slate">{c.owner}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ⑩ Certifications + warranty */}
       <section className="bg-sv-light py-16 md:py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">

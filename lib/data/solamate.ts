@@ -101,6 +101,12 @@ export interface SolaMateScenario {
   name: string
   /** Where it fits. */
   fits: string
+  /** Installation photo from the official VN product page. */
+  imagePath: string
+  imageAlt: string
+  /** Product cut-out of the bracket itself. */
+  renderPath: string
+  renderAlt: string
   bullets: string[]
 }
 
@@ -110,6 +116,11 @@ export const solaMateScenarios: SolaMateScenario[] = [
     suffix: '-R',
     name: 'Ban công',
     fits: 'Chung cư, nhà phố và ban công có lan can.',
+    imagePath: '/images/solamate/scene-balcony.webp',
+    imageAlt:
+      'Tấm pin SolaMate kẹp vào lan can ban công của một căn hộ',
+    renderPath: '/images/solamate/render-balcony.webp',
+    renderAlt: 'Bộ khung kẹp lan can bằng thép không gỉ của SolaMate',
     bullets: [
       'Ngàm kẹp kép bằng thép không gỉ, kẹp vào lan can',
       'Thiết kế chống rơi — gió lớn vẫn giữ chắc',
@@ -122,6 +133,11 @@ export const solaMateScenarios: SolaMateScenario[] = [
     suffix: '-S',
     name: 'Che nắng',
     fits: 'Cửa sổ, hiên nhà và mặt tiền cửa hàng.',
+    imagePath: '/images/solamate/scene-awning.webp',
+    imageAlt:
+      'Tấm pin SolaMate dùng làm mái che nắng trước cửa sổ và hiên nhà',
+    renderPath: '/images/solamate/render-awning.webp',
+    renderAlt: 'Khung che nắng tam giác của SolaMate',
     bullets: [
       'Vừa che nắng, che mưa, vừa phát điện',
       'Khung tam giác chịu gió bão cấp 12',
@@ -134,6 +150,11 @@ export const solaMateScenarios: SolaMateScenario[] = [
     suffix: '-G',
     name: 'Mặt đất',
     fits: 'Sân thượng, sân vườn và các bãi đỗ xe.',
+    imagePath: '/images/solamate/scene-ground.webp',
+    imageAlt:
+      'Hệ SolaMate đặt trên mặt đất bên bờ hồ bơi, có thể di chuyển theo',
+    renderPath: '/images/solamate/render-ground.webp',
+    renderAlt: 'Chân đế đặt mặt đất của SolaMate',
     bullets: [
       'Chân đế chịu thời tiết, đặt trực tiếp xuống nền',
       'Có thể mang theo khi cắm trại, dã ngoại',
@@ -199,11 +220,31 @@ export const solaMateSpecs: { label: string; value: string }[] = [
 ]
 
 /** Certifications published on the source page. */
-export const solaMateCertifications: string[] = [
-  'TÜV Rheinland',
-  'CE',
-  'Red Dot Design',
-  'EVN Approved',
+export const solaMateCertifications: {
+  name: string
+  imagePath: string
+  imageAlt: string
+}[] = [
+  {
+    name: 'TÜV Rheinland',
+    imagePath: '/images/solamate/cert-tuv-rheinland.png',
+    imageAlt: 'Chứng nhận TÜV Rheinland',
+  },
+  {
+    name: 'CE',
+    imagePath: '/images/solamate/cert-ce.jpg',
+    imageAlt: 'Chứng nhận CE',
+  },
+  {
+    name: 'Red Dot Design',
+    imagePath: '/images/solamate/cert-reddot.jpg',
+    imageAlt: 'Giải thưởng Red Dot Design',
+  },
+  {
+    name: 'EVN Approved',
+    imagePath: '/images/solamate/cert-evn.jpg',
+    imageAlt: 'Chứng nhận EVN Approved',
+  },
 ]
 
 /** Payback assumptions published with the ROI block. */

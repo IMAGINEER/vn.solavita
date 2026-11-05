@@ -63,7 +63,7 @@ export default function SolaMatePage() {
     <>
       <Header logoHref="/" />
       <PageHero
-        backgroundImage="/images/product-module-2.webp"
+        backgroundImage="/images/solamate/hero.webp"
         eyebrow="SolaMate · Trạm điện ban công"
         title={'15 phút lắp đặt.\n30 năm dùng điện miễn phí.*'}
         body="SolaMate là trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng. Không đào lắp, không xin phép điện lưới — chỉ cần 15 phút lắp ráp và cắm vào ổ điện trong nhà."
@@ -153,31 +153,52 @@ export default function SolaMatePage() {
               return (
                 <article
                   key={s.id}
-                  className="flex flex-col rounded-2xl border border-uk-line bg-white p-7 transition-shadow hover:shadow-[0_18px_40px_-24px_rgba(15,118,110,0.45)]"
+                  className="flex flex-col overflow-hidden rounded-2xl border border-uk-line bg-white transition-shadow hover:shadow-[0_18px_40px_-24px_rgba(15,118,110,0.45)]"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-uk-teal-soft text-uk-teal-dark">
-                    <Icon className="h-6 w-6" strokeWidth={1.8} />
-                  </span>
-                  <h3 className="mt-5 text-xl font-cw-bold text-uk-navy">
-                    {s.name}
-                  </h3>
-                  <p className="mt-1 font-cw-bold text-uk-teal-dark text-xs tracking-wider uppercase">
-                    Model {s.suffix}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-uk-slate">
-                    {s.fits}
-                  </p>
-                  <ul className="mt-5 space-y-2.5">
-                    {s.bullets.map((b) => (
-                      <li key={b} className="flex gap-2.5 text-sm text-uk-navy">
-                        <Check
-                          className="mt-0.5 h-4 w-4 flex-shrink-0 text-uk-teal-dark"
-                          strokeWidth={2.5}
-                        />
-                        <span className="leading-relaxed">{b}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <img
+                    src={s.imagePath}
+                    alt={s.imageAlt}
+                    className="h-56 w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="flex flex-1 flex-col p-7">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-uk-teal-soft text-uk-teal-dark">
+                        <Icon className="h-5 w-5" strokeWidth={1.8} />
+                      </span>
+                      <div>
+                        <h3 className="text-xl font-cw-bold text-uk-navy">
+                          {s.name}
+                        </h3>
+                        <p className="font-cw-bold text-uk-teal-dark text-xs tracking-wider uppercase">
+                          Model {s.suffix}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-uk-slate">
+                      {s.fits}
+                    </p>
+                    <ul className="mt-5 space-y-2.5">
+                      {s.bullets.map((b) => (
+                        <li
+                          key={b}
+                          className="flex gap-2.5 text-sm text-uk-navy"
+                        >
+                          <Check
+                            className="mt-0.5 h-4 w-4 flex-shrink-0 text-uk-teal-dark"
+                            strokeWidth={2.5}
+                          />
+                          <span className="leading-relaxed">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <img
+                      src={s.renderPath}
+                      alt={s.renderAlt}
+                      className="mt-6 h-28 w-full self-center object-contain"
+                      loading="lazy"
+                    />
+                  </div>
                 </article>
               )
             })}
@@ -324,33 +345,41 @@ export default function SolaMatePage() {
       {/* ⑥ Install flow */}
       <section className="bg-white py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <SectionEyebrow>QUY TRÌNH LẮP ĐẶT</SectionEyebrow>
-            <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
-              15 phút, năm bước
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-uk-slate">
-              Bộ giá đỡ lắp ráp sẵn từ nhà máy — bạn chỉ cần treo lên, cắm
-              vào và tải ứng dụng.
-            </p>
-          </div>
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center">
+            <div>
+              <SectionEyebrow>QUY TRÌNH LẮP ĐẶT</SectionEyebrow>
+              <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
+                15 phút, năm bước
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-uk-slate">
+                Bộ giá đỡ lắp ráp sẵn từ nhà máy — bạn chỉ cần treo lên, cắm
+                vào và tải ứng dụng.
+              </p>
+              <img
+                src="/images/solamate/scene-install.webp"
+                alt="Tấm pin SolaMate kẹp vào lan can bằng bộ khung thép không gỉ"
+                className="mt-8 w-full rounded-2xl border border-uk-line object-cover"
+                loading="lazy"
+              />
+            </div>
 
-          <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {solaMateInstallSteps.map((s) => (
-              <li
-                key={s.index}
-                className="rounded-2xl border border-uk-line bg-sv-light p-6"
-              >
-                <span className="font-cw-bold text-2xl text-uk-teal">
-                  {s.index}
-                </span>
-                <h3 className="mt-3 font-cw-bold text-uk-navy">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-uk-slate">
-                  {s.body}
-                </p>
-              </li>
-            ))}
-          </ol>
+            <ol className="grid gap-4 sm:grid-cols-2">
+              {solaMateInstallSteps.map((s) => (
+                <li
+                  key={s.index}
+                  className="rounded-2xl border border-uk-line bg-sv-light p-6"
+                >
+                  <span className="font-cw-bold text-2xl text-uk-teal">
+                    {s.index}
+                  </span>
+                  <h3 className="mt-3 font-cw-bold text-uk-navy">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-uk-slate">
+                    {s.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 
@@ -387,7 +416,13 @@ export default function SolaMatePage() {
             </div>
 
             <div className="rounded-2xl border border-uk-line bg-white p-7">
-              <h3 className="font-cw-bold text-uk-navy">
+              <img
+                src="/images/solamate/feature-microinverter.webp"
+                alt="Bộ micro-inverter của SolaMate kèm cảm biến dòng điện"
+                className="mx-auto h-48 w-auto object-contain"
+                loading="lazy"
+              />
+              <h3 className="mt-5 font-cw-bold text-uk-navy">
                 Thông số kỹ thuật chung
               </h3>
               <dl className="mt-5 divide-y divide-uk-line">
@@ -403,6 +438,12 @@ export default function SolaMatePage() {
                   </div>
                 ))}
               </dl>
+              <img
+                src="/images/solamate/feature-adjustable.webp"
+                alt="Sơ đồ các góc nghiêng có thể điều chỉnh của SolaMate"
+                className="mt-6 h-40 w-auto object-contain"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
@@ -482,7 +523,13 @@ export default function SolaMatePage() {
               </a>
             </div>
             <div className="rounded-2xl border border-uk-line bg-white p-7">
-              <ul className="space-y-3">
+              <img
+                src="/images/solamate/feature-app.webp"
+                alt="Màn hình ứng dụng SKYWORTH Smart App theo dõi sản lượng điện mặt trời"
+                className="mx-auto h-48 w-auto object-contain"
+                loading="lazy"
+              />
+              <ul className="mt-6 space-y-3">
                 {[
                   'Sản lượng điện theo giờ, theo ngày',
                   'Trạng thái micro-inverter và kết nối Wi-Fi',
@@ -509,15 +556,28 @@ export default function SolaMatePage() {
           <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
             Đạt tiêu chuẩn quốc tế — yên tâm sử dụng dài hạn
           </h2>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             {solaMateCertifications.map((c) => (
               <span
-                key={c}
-                className="rounded-full border border-uk-line bg-sv-light px-5 py-2.5 text-sm font-cw-bold text-uk-navy"
+                key={c.name}
+                className="flex h-24 w-40 items-center justify-center rounded-2xl border border-uk-line bg-white p-4"
               >
-                {c}
+                <img
+                  src={c.imagePath}
+                  alt={c.imageAlt}
+                  className="max-h-full max-w-full object-contain"
+                  loading="lazy"
+                />
               </span>
             ))}
+            <span className="flex h-24 w-40 items-center justify-center rounded-2xl border border-uk-line bg-white p-4">
+              <img
+                src="/images/solamate/badge-warranty-30.jpg"
+                alt="Bảo hành hiệu suất 30 năm cho tấm pin SolaMate"
+                className="max-h-full max-w-full object-contain"
+                loading="lazy"
+              />
+            </span>
           </div>
           <p className="mt-8 text-sm leading-relaxed text-uk-slate">
             Bảo hành 10 năm cho micro-inverter, 30 năm hiệu suất cho tấm pin,

@@ -36,6 +36,9 @@ export interface SolaHomeMount {
   bestFor: string
   /** Published technical highlights. */
   specs: { label: string; value: string }[]
+  /** Installation photo. */
+  imagePath: string
+  imageAlt: string
 }
 
 export const solaHomeMounts: SolaHomeMount[] = [
@@ -58,6 +61,9 @@ export const solaHomeMounts: SolaHomeMount[] = [
       { label: 'Pin lưu trữ', value: 'LiFePO₄ 5–20 kWh, xếp chồng & mở rộng linh hoạt' },
       { label: 'Vệ dự phòng', value: 'Mất lưới tự chuyển sang pin, giữ tủ lạnh, đèn, quạt' },
     ],
+    imagePath: '/images/solahome/scene-solaroof-villa.webp',
+    imageAlt:
+      'Biệt thự lắp tấm pin SolaHome trực tiếp trên mái nghiêng, giữ nguyên cấu trúc mái',
   },
   {
     id: 'solaloft',
@@ -79,6 +85,58 @@ export const solaHomeMounts: SolaHomeMount[] = [
       { label: 'Pin tích hợp', value: 'LiFePO₄ 10–20 kWh tích hợp dưới khung' },
       { label: 'Sẵn sàng cho xe điện', value: 'Chuẩn bị bộ sạc AC' },
     ],
+    imagePath: '/images/solahome/scene-solaloft-canopy.webp',
+    imageAlt:
+      'Dàn khung thép SolaLoft cao tầng trên mái biệt thự, kết hợp vườn trên cao',
+  },
+]
+
+/**
+ * Real VN installations published on the official SolaHome Pro page.
+ * Each entry states only what the source publishes: capacity, city,
+ * district, bill reduction and monthly saving.
+ */
+export interface SolaHomeCase {
+  id: string
+  capacity: string
+  location: string
+  owner: string
+  billReduction: string
+  monthlySaving: string
+  imagePath: string
+  imageAlt: string
+}
+
+export const solaHomeCases: SolaHomeCase[] = [
+  {
+    id: 'binh-duong',
+    capacity: '5 kWp',
+    location: 'Bình Dương · Thủ Dầu Một',
+    owner: 'Anh Minh',
+    billReduction: '−79%',
+    monthlySaving: '2,5 triệu đồng/tháng',
+    imagePath: '/images/solahome/case-binhduong.webp',
+    imageAlt: 'Hệ điện mặt trời 5 kWp trên mái bằng tại Bình Dương',
+  },
+  {
+    id: 'dong-nai',
+    capacity: '10 kWp',
+    location: 'Đồng Nai · Biên Hòa',
+    owner: 'Chị Lan',
+    billReduction: '−82%',
+    monthlySaving: '4,5 triệu đồng/tháng',
+    imagePath: '/images/solahome/case-dongnai.webp',
+    imageAlt: 'Hệ điện mặt trời 10 kWp tại Đồng Nai',
+  },
+  {
+    id: 'ho-chi-minh',
+    capacity: '20 kWp',
+    location: 'TP. Hồ Chí Minh · Quận 9',
+    owner: 'Anh Tuấn',
+    billReduction: '−72%',
+    monthlySaving: '2 triệu đồng/tháng',
+    imagePath: '/images/solahome/case-hcm.webp',
+    imageAlt: 'Hệ điện mặt trời 20 kWp tại Quận 9, TP. Hồ Chí Minh',
   },
 ]
 

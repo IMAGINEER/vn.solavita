@@ -21,7 +21,7 @@ export const metadata = buildPageMetadata({
   title: TITLE,
   path: PATH,
   description: DESCRIPTION,
-  ogImage: '/images/og-solutions.jpg',
+  ogImage: '/images/og-solahome.jpg',
   ogImageAlt: 'SolaHome — hệ điện mặt trời mái nhà cho biệt thự Việt Nam',
 })
 
@@ -39,7 +39,7 @@ export default function Page() {
       `Giá SolaLoft: ${p.priceLoft}`,
       `Phù hợp với: ${p.fits}`,
     ],
-    imagePath: '/images/home_cap.webp',
+    imagePath: '/images/solahome/hero.webp',
     imageAlt: 'Biệt thự có hệ điện mặt trời SolaHome lắp trên mái nhà',
   }))
 
