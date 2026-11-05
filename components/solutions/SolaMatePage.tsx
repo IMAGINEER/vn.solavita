@@ -209,15 +209,23 @@ export default function SolaMatePage() {
       {/* ④ Packages */}
       <section id="goi" className="bg-white py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <SectionEyebrow>CHỌN CÔNG SUẤT</SectionEyebrow>
-            <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
-              Hai gói, một cách lắp
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-uk-slate">
-              Cả hai gói đều đi kèm micro-inverter, bộ khung lắp ráp sẵn và thiết
-              bị Zero-export. Chọn theo mức điện gia đình bạn dùng mỗi ngày.
-            </p>
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div className="max-w-3xl">
+              <SectionEyebrow>CHỌN CÔNG SUẤT</SectionEyebrow>
+              <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
+                Hai gói, một cách lắp
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-uk-slate">
+                Cả hai gói đều đi kèm micro-inverter, bộ khung lắp ráp sẵn và thiết
+                bị Zero-export. Chọn theo mức điện gia đình bạn dùng mỗi ngày.
+              </p>
+            </div>
+            <img
+              src="/images/solamate/feature-detail.webp"
+              alt="Khung tấm pin màu đen của SolaMate"
+              className="hidden h-44 w-auto object-contain lg:block"
+              loading="lazy"
+            />
           </div>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
