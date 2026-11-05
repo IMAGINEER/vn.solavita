@@ -7,9 +7,9 @@
  */
 
 const TRACK_LABEL: Record<string, string> = {
-  'core-service': 'Đối tác dịch vụ chính',
-  'certified-installer': 'Đơn vị lắp đặt được chứng nhận',
-  'lead-partner': 'Đối tác giới thiệu khách hàng',
+  'core-service': 'Đại lý kinh doanh',
+  'certified-installer': 'Đối tác lắp đặt',
+  'lead-partner': 'Đối tác kinh doanh',
 }
 
 function trackLabel(track: string): string {
@@ -19,12 +19,17 @@ function trackLabel(track: string): string {
 export function partnerConfirmationEmail(data: {
   fullName?: string
   partnerTrack: string
+  /** Optional campaign tag, e.g. 'gold-partner'. */
+  campaign?: string | null
 }) {
   const name = data.fullName?.trim() || 'Quý khách'
   const track = trackLabel(data.partnerTrack)
+  const isGoldPartner = data.campaign === 'gold-partner'
 
   return {
-    subject: 'Solavita Việt Nam đã nhận yêu cầu hợp tác của bạn',
+    subject: isGoldPartner
+      ? 'Solavita Việt Nam đã nhận đăng ký Chương trình Đối tác Vàng của bạn'
+      : 'Solavita Việt Nam đã nhận yêu cầu hợp tác của bạn',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -40,14 +45,26 @@ export function partnerConfirmationEmail(data: {
 <!-- Body -->
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Kính chào ${name},</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 16px 0;">Cảm ơn bạn đã quan tâm đến chương trình đối tác của Solavita.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 16px 0;">${
+  isGoldPartner
+    ? 'Cảm ơn bạn đã đăng ký Chương trình Đối tác Vàng của Solavita.'
+    : 'Cảm ơn bạn đã quan tâm đến chương trình đối tác của Solavita.'
+}</p>
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Chúng tôi đã nhận được thông tin của bạn. Đội ngũ hợp tác của Solavita Việt Nam sẽ xem xét hồ sơ và liên hệ sớm để trao đổi các bước tiếp theo, bao gồm hình thức hợp tác phù hợp nhất với doanh nghiệp của bạn.</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Nếu cần trao đổi ngay, bạn có thể liên hệ qua <a href="https://wa.me/8618500875025" style="color:#0f766e;">WhatsApp</a> hoặc email <a href="mailto:vn@solavita.com" style="color:#0f766e;">vn@solavita.com</a>.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Nếu cần trao đổi ngay, bạn có thể liên hệ qua <a href="https://wa.me/8618500875025" style="color:#0f766e;">WhatsApp</a> hoặc email <a href="mailto:vn@solavita.com" style="color:#0f766e;">vn@solavita.com</a>.${
+  isGoldPartner
+    ? ' <strong>Hotline đối tác: <a href="tel:0939738000" style="color:#0f766e;">0939738000</a></strong>'
+    : ''
+}</p>
 
 <!-- Info box -->
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px 0;">
 <tr><td style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:20px;">
-<p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Hình thức bạn đã đăng ký</p>
+${
+  isGoldPartner
+    ? '<p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Chương trình bạn đã đăng ký</p><p style="margin:0 0 12px 0; font-size:14px; color:#374151; font-weight:600;">Chương trình Đối tác Vàng — Liên kết giới thiệu khách hàng</p>'
+    : '<p style="margin:0 0 8px 0; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:1px;">Hình thức bạn đã đăng ký</p>'
+}
 <p style="margin:0; font-size:14px; color:#374151;">${track}</p>
 </td></tr>
 </table>

@@ -32,6 +32,7 @@ export default function PartnerCTA() {
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+  const [track, setTrack] = useState<string>('core-service')
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -73,7 +74,6 @@ export default function PartnerCTA() {
     const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const nextErrors: Record<string, string> = {}
     if (!payload.fullName) nextErrors.name = 'Vui lòng nhập họ tên.'
-    if (!payload.company) nextErrors.company = 'Vui lòng nhập tên doanh nghiệp hoặc công ty.'
     if (!payload.email) {
       nextErrors.email = 'Vui lòng nhập địa chỉ email.'
     } else if (!EMAIL_RE.test(payload.email)) {
@@ -81,6 +81,13 @@ export default function PartnerCTA() {
     }
     if (!payload.partnerTrack) {
       nextErrors.track = 'Vui lòng chọn hình thức hợp tác.'
+    }
+    // A registered business name is only meaningful for the two
+    // commercial tracks. The referral track (Đối tác kinh doanh) also
+    // accepts individuals, and /api/partner falls back to the
+    // applicant's name when the field is left blank.
+    if (!payload.company && payload.partnerTrack !== 'lead-partner') {
+      nextErrors.company = 'Vui lòng nhập tên doanh nghiệp hoặc công ty.'
     }
     if (Object.keys(nextErrors).length > 0) {
       setFieldErrors(nextErrors)
@@ -251,11 +258,16 @@ export default function PartnerCTA() {
                 <label className="block">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
                     Business / Company
+                    {track === 'lead-partner' && (
+                      <span className="ml-2 font-cw-regular normal-case tracking-normal text-uk-slate/70">
+                        (không bắt buộc nếu bạn là cá nhân)
+                      </span>
+                    )}
                   </span>
                   <input
                     type="text"
                     name="company"
-                    required
+                    required={track !== 'lead-partner'}
                     placeholder="Công ty TNHH Năng lượng ABC"
                     className={`w-full px-4 py-3 rounded-xl border ${
                       fieldErrors.company ? 'border-red-500' : 'border-uk-line'
@@ -272,7 +284,8 @@ export default function PartnerCTA() {
                   </span>
                   <select
                     name="track"
-                    defaultValue="core-service"
+                    value={track}
+                    onChange={(e) => setTrack(e.target.value)}
                     className={`w-full px-4 py-3 rounded-xl border ${
                       fieldErrors.track ? 'border-red-500' : 'border-uk-line'
                     } bg-white text-uk-navy focus:outline-none focus:border-uk-teal`}

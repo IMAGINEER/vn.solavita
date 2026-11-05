@@ -4,7 +4,11 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ImagePlaceholder from '@/components/ui/image-placeholder'
-import { partnerBenefits, partnerStats } from '@/lib/data/partners'
+import {
+  partnerBenefits,
+  partnerGroupFacts,
+  partnerStats,
+} from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -93,13 +97,39 @@ export default function WhyPartner() {
         <div className="max-w-4xl mx-auto text-center mb-10">
           <p className="text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
             Solavita đồng hành cùng các đối tác năng lượng bằng sản phẩm sản
-            xuất tại nhà máy. Khi trở thành đối tác, bạn có quyền tiếp cận tồn
-            kho tại địa phương, bảo hành toàn hệ thống và hỗ trợ chia sẻ khách
-            hàng.
+            xuất tại nhà máy, với mô hình giải pháp trọn gói: chuỗi cung ứng,
+            tài chính, logistics và vận hành — bảo trì đều thuộc về phía
+            Solavita. Khi trở thành đối tác, bạn có quyền tiếp cận tồn kho tại
+            địa phương, bảo hành toàn hệ thống và hỗ trợ chia sẻ khách hàng.
           </p>
           <p className="mt-3 text-lg md:text-xl font-cw-bold text-uk-navy">
             Phát triển kinh doanh, đồng hành cùng khu vực của bạn!
           </p>
+        </div>
+
+        {/* SKYWORTH group credibility strip — the numbers printed on
+            page 1 of the VN recruitment brochure. A partner's first
+            question is "who stands behind the warranty?", so the
+            group's scale answers it before the feature cards do. */}
+        <div className="mb-10 md:mb-14">
+          <p className="text-center text-xs font-cw-bold uppercase tracking-wider text-uk-slate mb-5">
+            Solavita là thương hiệu điện mặt trời thuộc Tập đoàn SKYWORTH
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            {partnerGroupFacts.map((f) => (
+              <div
+                key={f.caption}
+                className="why-partner-card rounded-xl border border-uk-line bg-white px-4 py-5 text-center"
+              >
+                <div className="text-xl md:text-2xl font-cw-bold text-uk-navy leading-tight">
+                  {f.value}
+                </div>
+                <div className="mt-1.5 text-xs text-uk-slate font-cw-regular leading-snug">
+                  {f.caption}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* 3 highlight cards — image with overlay pill + caption */}

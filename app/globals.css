@@ -1206,3 +1206,51 @@ section#who-we-are .brand-film-card {
 .dark .hrp-tag span {
   color: #cbd5e1;
 }
+
+/* ────────────────────────────────────────────────────────────────
+   /for-partners · dark panels.
+
+   Three blocks are deliberately dark: the gold-accented
+   "Chương trình Đối tác Vàng" campaign panel (a capped, time-boxed
+   recruitment push that should read as its own event), the teaser
+   card that links to it from /for-partners, and the training /
+   support card.
+
+   The project-wide light-mode / dark-mode flips for
+   `[class*="bg-white"]` and `[class*="border-white"]` assume those
+   utilities sit on a light surface — left alone they would flatten
+   every translucent white surface in these panels into a solid white
+   card (white-on-white text) and turn the hairline borders grey.
+   These scoped overrides restore the intended values in both modes.
+
+   The campaign sign-up form is NOT in this list: it lives on a light
+   section with white inputs, matching every other form on the site.
+   ──────────────────────────────────────────────────────────────── */
+.light-mode section#doi-tac-vang [class*="bg-white/\[0\.03\]"],
+.dark section#doi-tac-vang [class*="bg-white/\[0\.03\]"],
+.light-mode section#partner-training [class*="bg-white/\[0\.03\]"],
+.dark section#partner-training [class*="bg-white/\[0\.03\]"] {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+.light-mode section#doi-tac-vang [class*="bg-white/\[0\.04\]"],
+.dark section#doi-tac-vang [class*="bg-white/\[0\.04\]"],
+.light-mode section#partner-training [class*="bg-white/\[0\.04\]"],
+.dark section#partner-training [class*="bg-white/\[0\.04\]"],
+.light-mode section#gold-teaser [class*="bg-white/\[0\.04\]"],
+.dark section#gold-teaser [class*="bg-white/\[0\.04\]"] {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+.light-mode section#doi-tac-vang [class*="bg-white/10"],
+.dark section#doi-tac-vang [class*="bg-white/10"],
+.light-mode section#partner-training [class*="bg-white/10"],
+.dark section#partner-training [class*="bg-white/10"] {
+  background-color: rgba(255, 255, 255, 0.10) !important;
+}
+.light-mode section#doi-tac-vang [class*="border-white/10"],
+.dark section#doi-tac-vang [class*="border-white/10"],
+.light-mode section#partner-training [class*="border-white/10"],
+.dark section#partner-training [class*="border-white/10"],
+.light-mode section#gold-teaser [class*="border-white/10"],
+.dark section#gold-teaser [class*="border-white/10"] {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}

@@ -9,19 +9,37 @@ export const dynamic = 'force-dynamic'
 // Local partnerships team inbox - keep in sync with /components/Footer.tsx + ContactMethods.tsx.
 const TEAM_EMAIL = 'vn@solavita.com'
 
-const REQUIRED_FIELDS = ['fullName', 'company', 'email', 'partnerTrack'] as const
+// `company` is deliberately NOT in this list: the VN programme targets
+// individuals as much as businesses ("Cá nhân có sẵn nguồn khách hàng
+// tiềm năng" — Đối tác Vàng standee), and requiring a registered
+// business name puts most of the target audience off. It is still
+// mandatory for the two commercial tracks — see the check below.
+const REQUIRED_FIELDS = ['fullName', 'email', 'partnerTrack'] as const
 
 // Mirrors the `id` values of `partnerTypes` in
 // `lib/data/partners.ts` (also rendered as `<option>` values inside
 // `components/PartnerForm.tsx`). If the UI adds a new track, update
 // this whitelist + `partnerTypes` + `PartnerForm` in the same change.
-// The three VN partner tracks: Core Service Partner, Certified
-// Installer, Lead Partner.
+// The three VN partner tracks: Đại lý kinh doanh, Đối tác lắp đặt,
+// Đối tác kinh doanh.
 const VALID_TRACKS = [
   'core-service',
   'certified-installer',
   'lead-partner',
 ] as const
+
+/**
+ * Optional campaign tag. `gold-partner` is the "Chương trình Đối tác
+ * Vàng" intake (standee 20/09/2026) — a capped, bonus-incentivised
+ * variant of the referral track. The tag is stored as a prefix on the
+ * lead's message so campaign applications can be filtered out of the
+ * generic partner enquiries without a schema change.
+ */
+const CAMPAIGNS = ['gold-partner'] as const
+
+const CAMPAIGN_LABEL: Record<string, string> = {
+  'gold-partner': 'Chương trình Đối tác Vàng',
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -65,16 +83,41 @@ export async function POST(req: Request) {
     )
   }
 
+  // `company` is NOT NULL in the table but is only meaningful for the
+  // two commercial tracks. Individual referral partners fall back to
+  // their own name so the row still carries something searchable.
+  const company = String(body.company ?? '').trim()
+  if (!company && partnerTrack !== 'lead-partner') {
+    return NextResponse.json(
+      { success: false, message: 'Company is required' },
+      { status: 400 },
+    )
+  }
+
+  // Optional campaign tag — see CAMPAIGNS above.
+  const campaign = body.campaign ? String(body.campaign).trim() : ''
+  if (campaign && !CAMPAIGNS.includes(campaign as (typeof CAMPAIGNS)[number])) {
+    return NextResponse.json(
+      { success: false, message: 'Invalid campaign' },
+      { status: 400 },
+    )
+  }
+
   // ── 3. Map to row ───────────────────────────────────────────────
   // The `whatsapp` column + the 3-value `partner_track` CHECK
   // constraint are applied by `20261104000000_vn_partner_leads.sql`.
+  const rawMessage = body.message ? String(body.message).trim() : ''
+  const message = campaign
+    ? `[${CAMPAIGN_LABEL[campaign]}] ${rawMessage}`.trim()
+    : rawMessage || null
+
   const row = {
     full_name: String(body.fullName),
     whatsapp: body.whatsapp ? String(body.whatsapp) : null,
-    company: String(body.company),
+    company: company || String(body.fullName),
     email,
     partner_track: partnerTrack,
-    message: body.message ? String(body.message) : null,
+    message,
     updated_at: new Date().toISOString(),
   }
 
@@ -97,6 +140,7 @@ export async function POST(req: Request) {
   const confirmation = partnerConfirmationEmail({
     fullName: row.full_name,
     partnerTrack: row.partner_track,
+    campaign: campaign || null,
   })
   try {
     const emailResult = await sendEmail({
@@ -135,6 +179,7 @@ export async function POST(req: Request) {
     partnerTrack: row.partner_track,
     whatsapp: row.whatsapp,
     message: row.message,
+    campaign: campaign || null,
   })
   try {
     const emailResult = await sendEmail({

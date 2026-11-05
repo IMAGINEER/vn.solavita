@@ -3,7 +3,8 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { partnerProcess } from '@/lib/data/partners'
+import { Check } from 'lucide-react'
+import { partnerBarriers, partnerProcess } from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -50,9 +51,12 @@ export default function PartnershipProcess() {
             Quy trình hợp tác
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Từ trao đổi đầu tiên đến{' '}
-            <span className="text-gradient">công trình đầu tiên</span>
+            4 bước hợp tác{' '}
+            <span className="text-gradient">đơn giản và dễ dàng</span>
           </h2>
+          <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
+            Bạn chỉ cần giới thiệu khách hàng — phần còn lại là của tổng bộ.
+          </p>
         </div>
 
         {/* Connector line - visible on md+ only; a simple gradient bar
@@ -81,6 +85,34 @@ export default function PartnershipProcess() {
                     {s.description}
                   </p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Zero-barrier strip — the four statements the brochure makes
+            under "Mô hình hợp tác". They are the four reasons a
+            prospect decides whether to apply at all, so they sit
+            directly under the process that follows from them. */}
+        <div className="mt-12 md:mt-16 rounded-3xl border border-uk-line bg-sv-light px-6 md:px-10 py-8 md:py-10">
+          <p className="text-center text-xs font-cw-bold uppercase tracking-wider text-uk-slate mb-6">
+            Bạn không cần
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {partnerBarriers.map((barrier) => (
+              <div
+                key={barrier}
+                className="process-step flex items-center gap-2.5 text-center lg:text-left"
+              >
+                <span className="w-6 h-6 rounded-full bg-uk-emerald/10 flex items-center justify-center flex-shrink-0">
+                  <Check
+                    className="w-3.5 h-3.5 text-uk-emerald"
+                    strokeWidth={3}
+                  />
+                </span>
+                <span className="text-sm md:text-base font-cw-bold text-uk-navy">
+                  {barrier}
+                </span>
               </div>
             ))}
           </div>

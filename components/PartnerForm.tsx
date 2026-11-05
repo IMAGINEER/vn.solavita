@@ -75,7 +75,12 @@ export default function PartnerForm({
   const validate = (): boolean => {
     const next: { [k: string]: string } = {}
     if (!form.fullName.trim()) next.fullName = 'Vui lòng nhập họ tên.'
-    if (!form.company.trim()) next.company = 'Vui lòng nhập tên công ty.'
+    // A registered business name is only meaningful for the two
+    // commercial tracks; the referral track (Đối tác kinh doanh) also
+    // accepts individuals and /api/partner falls back to the name.
+    if (!form.company.trim() && form.partnerTrack !== 'lead-partner') {
+      next.company = 'Vui lòng nhập tên công ty.'
+    }
     if (!form.email.trim()) {
       next.email = 'Vui lòng nhập địa chỉ email.'
     } else if (!EMAIL_RE.test(form.email.trim())) {
@@ -200,11 +205,16 @@ export default function PartnerForm({
               <label className="block">
                 <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
                   Công ty
+                  {form.partnerTrack === 'lead-partner' && (
+                    <span className="ml-2 font-cw-regular normal-case tracking-normal text-uk-slate/70">
+                      (không bắt buộc nếu bạn là cá nhân)
+                    </span>
+                  )}
                 </span>
                 <input
                   type="text"
                   name="company"
-                  required
+                  required={form.partnerTrack !== 'lead-partner'}
                   placeholder="Công ty TNHH Năng lượng ABC"
                   value={form.company}
                   onChange={(e) => update('company', e.target.value)}

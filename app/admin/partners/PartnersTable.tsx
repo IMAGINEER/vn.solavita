@@ -43,11 +43,18 @@ function formatDateTime(iso: string): string {
 const TRACK_VARIANT: Record<string, BadgeVariant> = {
   installer: 'success',
   business: 'muted',
+  'core-service': 'success',
+  'certified-installer': 'success',
+  'lead-partner': 'muted',
 }
 
 const TRACK_LABEL: Record<string, string> = {
   installer: 'Đơn vị lắp đặt',
   business: 'Năng lượng / Doanh nghiệp',
+  // VN tracks — titles match `lib/data/partners.ts`.
+  'core-service': 'Đại lý kinh doanh',
+  'certified-installer': 'Đối tác lắp đặt',
+  'lead-partner': 'Đối tác kinh doanh',
 }
 
 export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
