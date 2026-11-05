@@ -86,16 +86,16 @@ function Section1Hero() {
         </>
       }
       primaryCta={{ label: 'Nhận báo giá miễn phí', onClick: openFormModal }}
-      secondaryCta={{ label: 'Khám phá giải pháp', href: '/solutions/home-solar' }}
+      secondaryCta={{ label: 'Khám phá giải pháp', href: '/solutions/solahome' }}
     />
   )
 }
 
 /* ──────────────────────────────────────────────────────────────────────
    Section 2 — Quick entry cards
-   Two image-led cards pointing to the two collection pages. No icon,
-   no eyebrow on the card itself - the SectionEyebrow above groups
-   them.
+   Three image-led cards pointing to the three solution pages
+   (SolaMate / SolaHome / small business). No icon, no eyebrow on the
+   card itself - the SectionEyebrow above groups them.
    ────────────────────────────────────────────────────────────────────── */
 
 function Section2EntryCards() {
@@ -108,15 +108,24 @@ function Section2EntryCards() {
             Giải pháp điện mặt trời cho <span className="text-gradient">mọi gia đình và doanh nghiệp</span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ScenarioPanel
-            href="/solutions/home-solar"
-            title="Cho hộ gia đình"
+            href="/solutions/solamate"
+            title="SolaMate — ban công"
+            subTitle="Lắp trong 15 phút, không cần xin phép"
+            body="Trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng. Ba kiểu lắp — ban công, che nắng, mặt đất — với thiết bị Zero-export mọi model."
+            imageDescription="Tấm pin mặt trời màu đen lắp trên khung kiến trúc hiện đại"
+            imageSrc="/images/product-module-2.webp"
+            cta="Xem giải pháp SolaMate"
+          />
+          <ScenarioPanel
+            href="/solutions/solahome"
+            title="SolaHome — mái nhà"
             subTitle="Điện ổn định cho tổ ấm"
             body="Giữ đèn sáng và thiết bị hoạt động khi mất điện. Từ nguồn dự phòng thiết yếu đến chủ động hoàn toàn nguồn điện, thiết kế riêng cho hộ gia đình."
             imageDescription="Một ngôi nhà hiện đại với hệ thống điện mặt trời trên mái và pin lưu trữ"
             imageSrc="/images/home_cap.webp"
-            cta="Xem giải pháp cho hộ gia đình"
+            cta="Xem giải pháp SolaHome"
           />
           <ScenarioPanel
             href="/solutions/business-solar"
@@ -468,7 +477,7 @@ function Section9FinalCta() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <GetQuoteButton onClick={openFormModal} />
           <Link
-            href="/solutions/home-solar"
+            href="/solutions/solahome"
             className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-uk-navy hover:border-uk-teal transition-colors"
           >
             Khám phá giải pháp

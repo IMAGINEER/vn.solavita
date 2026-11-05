@@ -43,7 +43,7 @@ export function contactConfirmationEmail(data: {
 </table>
 
 <p style="font-size:14px; color:#374151; line-height:1.6; margin:0 0 8px 0;">Trong lúc chờ, bạn có thể tham khảo:</p>
-<p style="margin:0; font-size:14px;"><a href="https://vn.solavita.com/solutions/home-solar/" style="color:#0f766e;">Giải pháp điện mặt trời</a> &nbsp;·&nbsp; <a href="https://vn.solavita.com/cases" style="color:#0f766e;">Dự án thực tế</a></p>
+<p style="margin:0; font-size:14px;"><a href="https://vn.solavita.com/solutions/solahome/" style="color:#0f766e;">Giải pháp điện mặt trời</a> &nbsp;·&nbsp; <a href="https://vn.solavita.com/cases" style="color:#0f766e;">Dự án thực tế</a></p>
 </td></tr>
 
 <!-- Footer -->

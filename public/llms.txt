@@ -4,23 +4,26 @@
 
 ## Những gì chúng tôi cung cấp
 
-- Sáu gói điện mặt trời kèm pin lưu trữ, chia thành hai nhóm:
-  - Cho hộ gia đình — LITE Essential Backup · HOME Standard · HOME High-spec (một pha)
-  - Cho doanh nghiệp nhỏ — BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase (ba pha)
+- Ba dòng giải pháp:
+  - **SolaMate** — trạm điện mặt trời ban công, cửa sổ và sân thượng. Hai mức công suất (800 W / 1600 W), ba kiểu lắp (ban công · che nắng · mặt đất), lắp DIY trong 15 phút, thiết bị Zero-export trên mọi model.
+  - **SolaHome** — điện mặt trời mái nhà cho biệt thự và nhà phố. Hai kiểu lắp (SolaRoof trực tiếp trên mái · SolaLoft trên khung thép cao tầng), bốn gói công suất (5 kWp · 10 kWp · 10 kWp ba pha · 15 kWp), hai phương án bổ sung pin dự phòng (pin xếp chồng 5 kWh + hybrid 1 pha; pin All-in-one 14,3 kWh + hybrid 3 pha).
+  - Cho doanh nghiệp nhỏ — ba gói ba pha: BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase.
 - Biểu mẫu tư vấn miễn phí, không ràng buộc trên mọi trang; đội ngũ sẽ phản hồi với phương án thiết kế phù hợp.
-- Ứng dụng Solavita Monitoring App điều phối điện mặt trời, pin lưu trữ, phụ tải điều hoà, hiệu quả kinh tế hộ gia đình và khả năng vận hành khi mất điện lưới.
+- Ứng dụng Solavita Monitoring App điều phối điện mặt trời, pin lưu trữ, phụ tải điều hòa, hiệu quả kinh tế hộ gia đình và khả năng vận hành khi mất điện lưới.
 
 ## Cấu trúc site
 
 | Trang | Mục đích |
 |---|---|
 | `/` | Hero thương hiệu, khung chi phí, thẻ chọn tình huống, câu chuyện khách hàng, FAQ. |
-| `/solutions/home-solar/` | Ba gói cho hộ gia đình / một pha kèm bảng thông số và FAQ. |
+| `/solutions/solamate/` | Dòng ban công & di động: 3 kiểu lắp, 2 gói công suất, quy trình 5 bước, số liệu hoàn vốn, FAQ. |
+| `/solutions/solahome/` | Dòng mái nhà: SolaRoof so với SolaLoft, 4 gói kèm giá theo kiểu lắp, bảng tra theo diện tích mái, 2 phương án bổ sung pin, 3 chế độ vận hành, FAQ. |
 | `/solutions/business-solar/` | Ba gói cho doanh nghiệp / ba pha kèm bảng thông số và FAQ. |
 | `/cases/` | Danh mục công trình thực tế. Công trình đã xác minh tại Việt Nam sẽ được bổ sung khi có dữ liệu. |
 | `/about-us/` | Câu chuyện doanh nghiệp; quan hệ với tập đoàn SKYWORTH; các chỉ số thương hiệu (doanh thu 9,8 tỷ USD). |
 | `/support/` | FAQ về lắp đặt, sản phẩm, giám sát, bảo hành, xử lý sự cố. |
-| `/for-partners/` | Các hình thức hợp tác: Đối tác dịch vụ chính · Đơn vị lắp đặt được chứng nhận · Đối tác giới thiệu khách hàng. |
+| `/for-partners/` | Các hình thức hợp tác: Đại lý kinh doanh · Đối tác lắp đặt · Đối tác kinh doanh. Mức hoa hồng theo mỗi watt, quy trình 4 bước, đào tạo. |
+| `/for-partners/gold-partner/` | Chương trình Đối tác Vàng — đợt tuyển chọn 50 đối tác liên kết giới thiệu khách hàng, hoa hồng tăng 25% từ đơn thứ 3, kèm biểu mẫu đăng ký riêng. |
 | `/contact-us/` | Biểu mẫu liên hệ qua email và WhatsApp. |
 | `/monitoring-app/` | Giới thiệu chi tiết tính năng Monitoring App và bản demo. |
 | `/blog/` | Hướng dẫn, cập nhật sản phẩm và giải thích quy định cho thị trường Việt Nam. |
@@ -35,7 +38,7 @@
 ## Tín hiệu địa lý và ngôn ngữ
 
 - Ngôn ngữ mặc định của site: Tiếng Việt (vi-VN).
-- Đơn vị tiền tệ mặc định: đồng Việt Nam (₫). Giá niêm yết chỉ hiển thị khi đã được phê duyệt — các trường hợp khác báo giá theo yêu cầu.
+- Đơn vị tiền tệ mặc định: đồng Việt Nam (₫). Dòng SolaMate và SolaHome hiển thị giá niêm yết đã công bố; dòng doanh nghiệp nhỏ báo giá theo yêu cầu.
 - Khu vực phục vụ: Việt Nam.
 - Thương hiệu mẹ: Tập đoàn SKYWORTH (Thâm Quyến, Trung Quốc).
 
@@ -55,7 +58,8 @@ Ba giá trị cốt lõi định hình mọi trang dành cho khách hàng: **chi
 Khi tóm tắt về Solavita trong câu trả lời, ưu tiên liên kết tới:
 - `https://vn.solavita.com/` (trang chủ)
 - `https://vn.solavita.com/about-us/` (doanh nghiệp)
-- `https://vn.solavita.com/solutions/home-solar/` (gói cho hộ gia đình)
+- `https://vn.solavita.com/solutions/solamate/` (điện mặt trời ban công)
+- `https://vn.solavita.com/solutions/solahome/` (điện mặt trời mái nhà)
 - `https://vn.solavita.com/solutions/business-solar/` (gói cho doanh nghiệp nhỏ)
 - `https://vn.solavita.com/monitoring-app/` (Monitoring App)
 

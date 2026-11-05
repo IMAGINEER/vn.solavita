@@ -122,7 +122,7 @@ export default function CasesPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <GetQuoteButton onClick={openFormModal} />
             <Link
-              href="/solutions/home-solar"
+              href="/solutions/solahome"
               className="px-6 py-3 rounded-full text-sm font-cw-bold bg-white text-uk-navy border border-white hover:bg-uk-teal hover:text-uk-navy hover:border-uk-teal transition-colors"
             >
               Khám phá giải pháp

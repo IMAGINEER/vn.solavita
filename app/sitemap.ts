@@ -23,10 +23,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // next.config.js#trailingSlash.
   const staticPaths: Array<{ path: string; priority: number }> = [
     { path: '/', priority: 1.0 },
-    // The two collection pages replace the legacy /solutions overview. Both point at the same hero
-    // asset and a 0.9 priority so they rank at the same level as the
-    // old overview did.
-    { path: '/solutions/home-solar', priority: 0.9 },
+    // The three solution lines replace the legacy /solutions overview.
+    // SolaMate (balcony & mobile) and SolaHome (rooftop) both sit at the
+    // same 0.9 priority as the old overview did.
+    { path: '/solutions/solamate', priority: 0.9 },
+    { path: '/solutions/solahome', priority: 0.9 },
     { path: '/solutions/business-solar', priority: 0.9 },
     // Products — the four detail pages only. The /products hub was
     // removed (Oct 2026); the nav links straight to each product and
@@ -45,6 +46,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Installation card CTA.
     { path: '/support/installation', priority: 0.6 },
     { path: '/for-partners', priority: 0.6 },
+    // "Chương trình Đối tác Vàng" — the standalone recruitment campaign
+    // page (standee 20/09/2026). Split out of /for-partners on
+    // 2026-11-05; it carries the URL printed on the roll-up and behind
+    // the QR code, so it is a landing page in its own right.
+    { path: '/for-partners/gold-partner', priority: 0.7 },
     { path: '/contact-us', priority: 0.6 },
     { path: '/blog', priority: 0.8 },
     { path: '/terms', priority: 0.3 },
@@ -59,13 +65,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: s.priority,
   }))
 
-  // No per-tier /solutions/[slug]/ detail pages. Per the collection-pages
-  // brief the two collection pages
-  // (/solutions/home-solar and /solutions/business-solar) are the only
-  // entry points for the six VN packages - the comparison table, FAQs
-  // and tailored CTA on each collection page surface the tier-level
-  // content directly. Per-tier Product schema and SEO live on the
-  // collection page itself.
+  // No per-tier /solutions/[slug]/ detail pages. The three solution
+  // pages (/solutions/solamate, /solutions/solahome and
+  // /solutions/business-solar) are the only entry points for the VN
+  // packages - the comparison tables, FAQs and tailored CTA on each
+  // page surface the tier-level content directly. Per-tier Product
+  // schema and SEO live on the page itself.
 
   try {
     const [categories, posts] = await Promise.all([

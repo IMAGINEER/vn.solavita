@@ -42,11 +42,14 @@ import type {
 import { openFormModal } from '@/lib/form-modal'
 
 /**
- * CollectionPage — the shared layout for the two VN solution
- * collection pages (`/solutions/home-solar` and
- * `/solutions/business-solar`). Per `content/nigeria/solutions.md`
- * (the collection-pages brief, supersedes the original single
- * `/solutions` overview).
+ * CollectionPage — the shared layout for the small-business solution
+ * collection page (`/solutions/business-solar`). Per
+ * `content/nigeria/solutions.md` (the collection-pages brief,
+ * supersedes the original single `/solutions` overview).
+ *
+ * The residential lines no longer use this layout: SolaMate
+ * (`/solutions/solamate`) and SolaHome (`/solutions/solahome`) have
+ * their own page components.
  *
  * Layout (top → bottom):
  *   Header → Hero → 3 solution cards → Tailored CTA

@@ -120,14 +120,14 @@ export default function Footer({
   // ─── Link sets (Vietnam) ────────────────────────────────────────────────
 
   const defaultProductLinks: FooterLink[] = [
-    // The collection-pages brief calls for two top-level scenario links
-    // (Home / Business).
-    // The detailed package comparison, tech explainers, FAQs and CTAs
-    // live on the dedicated `/solutions/home-solar` and
+    // Three top-level solution lines (Nov 2026 restructure). The
+    // detailed package comparison, tech explainers, FAQs and CTAs live
+    // on the dedicated `/solutions/solamate`, `/solutions/solahome` and
     // `/solutions/business-solar` pages — there are no per-tier
     // landing pages. Mirrors the Header dropdown.
-    { label: 'Cho hộ gia đình', href: '/solutions/home-solar/' },
-    { label: 'Cho doanh nghiệp', href: '/solutions/business-solar/' },
+    { label: 'SolaMate — ban công & di động', href: '/solutions/solamate/' },
+    { label: 'SolaHome — mái nhà & khuôn viên', href: '/solutions/solahome/' },
+    { label: 'Cho doanh nghiệp nhỏ', href: '/solutions/business-solar/' },
   ]
 
   const defaultCompanyLinks: FooterLink[] = [

@@ -215,7 +215,8 @@ export function aboutPageJsonLd(opts: {
     mainEntity: { '@id': ORG_ID },
     significantLink: [
       absoluteUrl('/'),
-      absoluteUrl('/solutions/home-solar/'),
+      absoluteUrl('/solutions/solamate/'),
+      absoluteUrl('/solutions/solahome/'),
       absoluteUrl('/solutions/business-solar/'),
     ],
   })
@@ -280,10 +281,10 @@ export function collectionPageJsonLd(opts: {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
-   Service - emitted as a `Service` ItemList on the two collection
-   pages (`/solutions/home-solar`, `/solutions/business-solar`). `path`
-   is required so the `@id` always anchors to a live page instead of
-   the removed `/solutions` overview.
+   Service - emitted as a `Service` ItemList on the three solution
+   pages (`/solutions/solamate`, `/solutions/solahome`,
+   `/solutions/business-solar`). `path` is required so the `@id` always
+   anchors to a live page instead of the removed `/solutions` overview.
 
    We use `Service` (not `Product`) because each tier is a delivered
    installation package (panels + battery + install + warranty), not a
@@ -614,7 +615,7 @@ export function partnerProgramJsonLd() {
       url,
       name: 'Dành cho đối tác · Solavita Việt Nam',
       description:
-        'Chương trình hợp tác dành cho đơn vị lắp đặt, đối tác giới thiệu khách hàng và cộng đồng tại Việt Nam.',
+        'Chương trình hợp tác dành cho Đại lý kinh doanh, Đối tác lắp đặt và Đối tác kinh doanh tại Việt Nam — hoa hồng theo mỗi watt, không vốn đầu tư, không tồn kho.',
       inLanguage: SITE_LOCALE,
       isPartOf: { '@id': SITE_ID },
       publisher: { '@id': ORG_ID },
@@ -622,8 +623,48 @@ export function partnerProgramJsonLd() {
         '@type': 'Service',
         name: 'Chương trình đối tác Solavita Việt Nam',
         serviceType: 'Hợp tác B2B',
+        description:
+          'Ba hình thức hợp tác: Đại lý kinh doanh (950 đồng/W), Đối tác kinh doanh (760 đồng/W) và Đối tác lắp đặt. Trả 50% khi giao hàng và 50% khi thanh toán số dư còn lại.',
         provider: { '@id': ORG_ID },
         areaServed: { '@type': 'Country', name: 'Vietnam' },
+      },
+      about: { '@id': ORG_ID },
+    },
+    url,
+  )
+}
+
+/**
+ * Structured data for the standalone "Chương trình Đối tác Vàng"
+ * campaign page (`/for-partners/gold-partner/`).
+ *
+ * The campaign is a capped recruitment programme with a stepped
+ * commission, so it is described as an `Offer` inside the partner
+ * programme `Service` — the numbers below are the ones printed on the
+ * standee and in the recruitment brochure.
+ */
+export function goldPartnerProgramJsonLd() {
+  const url = absoluteUrl('/for-partners/gold-partner/')
+  return withContext(
+    {
+      '@type': 'WebPage',
+      '@id': url,
+      url,
+      name: 'Chương trình Đối tác Vàng — Liên kết giới thiệu khách hàng',
+      description:
+        'Đợt tuyển chọn 50 đối tác của Solavita Việt Nam: giới thiệu khách hàng, nhận hoa hồng theo mỗi watt, không vốn đầu tư và không tồn kho.',
+      inLanguage: SITE_LOCALE,
+      isPartOf: { '@id': SITE_ID },
+      publisher: { '@id': ORG_ID },
+      mainEntity: {
+        '@type': 'Offer',
+        name: 'Chương trình Đối tác Vàng',
+        description:
+          'Tuyển chọn 50 đối tác liên kết giới thiệu khách hàng. Hoa hồng 7,6 triệu đồng mỗi đơn hàng, tăng 25% từ đơn hàng thứ 3.',
+        provider: { '@id': ORG_ID },
+        areaServed: { '@type': 'Country', name: 'Vietnam' },
+        eligibleCustomerType: 'Cá nhân và doanh nghiệp tại Việt Nam',
+        availability: 'https://schema.org/LimitedAvailability',
       },
       about: { '@id': ORG_ID },
     },

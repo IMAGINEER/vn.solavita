@@ -53,7 +53,7 @@ export default function NotFound() {
 
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-left">
             {[
-              { label: 'Giải pháp', href: '/solutions/home-solar' },
+              { label: 'Giải pháp', href: '/solutions/solahome' },
               { label: 'Dự án tiêu biểu', href: '/cases' },
               { label: 'Về Solavita', href: '/about-us' },
               { label: 'Blog', href: '/blog' },

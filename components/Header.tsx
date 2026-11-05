@@ -63,9 +63,10 @@ interface NavDropdownGroup {
 
 /**
  * The two dropdown groups, per the IA table in `docs/修改建议.docx`
- * (Oct 2026):
+ * (Oct 2026), extended in Nov 2026 with the product-line restructure:
  *
- *   Solutions  → For Home / For Business
+ *   Solutions  → SolaMate (balcony & mobile) / SolaHome (rooftop) /
+ *                Small business
  *   Products   → Module / Inverter / Battery / All-in-One ESS
  *
  * Each Products entry goes straight to its own detail page — there is
@@ -79,16 +80,22 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
   solutions: {
     entries: [
       {
-        label: 'Cho hộ gia đình',
-        href: '/solutions/home-solar/',
+        label: 'SolaMate — ban công & di động',
+        href: '/solutions/solamate/',
         description:
-          'Dòng HOME — ba gói giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình.',
+          'Điện mặt trời ban công, cửa sổ và sân thượng — lắp trong 15 phút, không cần xin phép điện lưới.',
       },
       {
-        label: 'Cho doanh nghiệp',
+        label: 'SolaHome — mái nhà & khuôn viên',
+        href: '/solutions/solahome/',
+        description:
+          'Điện mặt trời mái nhà cho biệt thự và nhà phố — hai kiểu lắp SolaRoof / SolaLoft, bốn gói công suất.',
+      },
+      {
+        label: 'Cho doanh nghiệp nhỏ',
         href: '/solutions/business-solar/',
         description:
-          'Dòng BUSINESS — ba gói giải pháp ba pha cho cửa hàng, doanh nghiệp vừa và nhỏ và công trình lớn hơn.',
+          'Giải pháp điện mặt trời ba pha cho cửa hàng, doanh nghiệp vừa và nhỏ và công trình lớn hơn.',
       },
     ],
     quickCta: {
@@ -130,9 +137,10 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
 
 const DEFAULT_NAV: HeaderNavItem[] = [
   // "Solutions" and "Products" are hover-dropdowns. Solutions still
-  // navigates to its landing page when the label is clicked; Products
-  // has no landing page, so its label only opens the menu.
-  { label: 'Giải pháp', href: '/solutions/home-solar/', dropdown: 'solutions' },
+  // navigates to its landing page when the label is clicked (SolaHome —
+  // the residential line); Products has no landing page, so its label
+  // only opens the menu.
+  { label: 'Giải pháp', href: '/solutions/solahome/', dropdown: 'solutions' },
   { label: 'Sản phẩm', dropdown: 'products' },
   { label: 'Dự án', href: '/cases/' },
   { label: 'Về chúng tôi', href: '/about-us/' },

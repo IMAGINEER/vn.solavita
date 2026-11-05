@@ -18,15 +18,29 @@ export interface FaqItem {
   a: string
 }
 
-export default function FaqSection({ faqs }: { faqs: FaqItem[] }) {
+export default function FaqSection({
+  faqs,
+  eyebrow = 'FAQ',
+  title,
+}: {
+  faqs: FaqItem[]
+  /** Eyebrow above the heading. Default "FAQ". */
+  eyebrow?: string
+  /** Heading. Defaults to the original English wording. */
+  title?: React.ReactNode
+}) {
   const [openIdx, setOpenIdx] = useState<number | null>(0)
   return (
     <section id="faq" className="relative py-16 md:py-20 bg-white">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-8">
-          <SectionEyebrow>FAQ</SectionEyebrow>
+          <SectionEyebrow>{eyebrow}</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Frequently Asked <span className="text-gradient">Questions</span>
+            {title ?? (
+              <>
+                Frequently Asked <span className="text-gradient">Questions</span>
+              </>
+            )}
           </h2>
         </div>
         <div className="space-y-3">
