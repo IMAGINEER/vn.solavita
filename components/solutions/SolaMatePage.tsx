@@ -16,6 +16,8 @@ import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import CTA from '@/components/solutions/CTA'
 import FaqSection from '@/components/solutions/FaqSection'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { openFormModal } from '@/lib/form-modal'
 import {
   solaMateCertifications,
@@ -59,6 +61,7 @@ const SCENARIO_ICONS = {
 export default function SolaMatePage() {
   return (
     <>
+      <Header logoHref="/" />
       <PageHero
         backgroundImage="/images/product-module-2.webp"
         eyebrow="SolaMate · Trạm điện ban công"
@@ -545,6 +548,7 @@ export default function SolaMatePage() {
         secondaryLabel="Nhắn Zalo ngay"
         secondaryHref="https://wa.me/8618500875025"
       />
+      <Footer />
     </>
   )
 }

@@ -15,6 +15,8 @@ import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import CTA from '@/components/solutions/CTA'
 import FaqSection from '@/components/solutions/FaqSection'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { openFormModal } from '@/lib/form-modal'
 import {
   solaHomeBackups,
@@ -56,6 +58,7 @@ import {
 export default function SolaHomePage() {
   return (
     <>
+      <Header logoHref="/" />
       <PageHero
         backgroundImage="/images/home_cap.webp"
         eyebrow="SolaHome · Biệt thự & nhà phố"
@@ -557,6 +560,7 @@ export default function SolaHomePage() {
         secondaryLabel="Xem sản phẩm"
         secondaryHref="/products/module/"
       />
+      <Footer />
     </>
   )
 }
