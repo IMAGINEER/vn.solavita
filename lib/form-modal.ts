@@ -37,7 +37,19 @@ export function openFormModal(): void
 export function openFormModal(prefill: Partial<FormData>): void
 export function openFormModal(prefill?: Partial<FormData>): void {
   if (typeof window === 'undefined') return
-  const detail: FormModalOpenDetail = prefill ? { initialData: prefill } : {}
+
+  // `onClick={openFormModal}` is a common call shape, which means the
+  // React SyntheticEvent can arrive in `prefill`. Treat anything that
+  // looks like an event as "no prefill" so we never spread DOM event
+  // internals into the form's initial state.
+  const looksLikeEvent =
+    !!prefill &&
+    typeof prefill === 'object' &&
+    ('nativeEvent' in prefill ||
+      ('target' in prefill && 'currentTarget' in prefill))
+
+  const detail: FormModalOpenDetail =
+    prefill && !looksLikeEvent ? { initialData: prefill } : {}
   window.dispatchEvent(
     new CustomEvent(FORM_MODAL_OPEN_EVENT, { detail }),
   )

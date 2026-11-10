@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Inbox } from 'lucide-react'
 import { requireAdmin } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
+import { DataErrorNotice } from './DataErrorNotice'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,10 +11,19 @@ export default async function AdminDashboardPage() {
 
   // Single source of truth: count VN leads (country = 'vn') to surface on
   // the dashboard. Cheap query - keeps the index on country busy.
-  const { count: leadCount } = await supabase
+  //
+  // NOTE: this query only touches `id`, while /admin/leads selects the
+  // full column list. A column that is missing in the database therefore
+  // breaks the list page but leaves this counter working - the two pages
+  // can legitimately disagree. Both now surface their own query error.
+  const { count: leadCount, error: countError } = await supabase
     .from('consultation_leads')
     .select('id', { count: 'exact', head: true })
     .eq('country', 'vn')
+
+  if (countError) {
+    console.error('[/admin] lead count query failed:', countError)
+  }
 
   return (
     <div className="space-y-6">
@@ -25,6 +35,10 @@ export default async function AdminDashboardPage() {
           Bảng điều khiển Solavita Việt Nam - liên kết nhanh tới quy trình tư vấn.
         </p>
       </div>
+
+      {countError ? (
+        <DataErrorNotice scope="số lượng yêu cầu tư vấn" error={countError} />
+      ) : null}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Link

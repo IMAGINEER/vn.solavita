@@ -117,7 +117,7 @@ export default function GoldMedalSignup() {
           Đăng ký ngay
         </span>
         <h2 className="text-2xl md:text-3xl font-cw-bold text-uk-navy leading-tight">
-          Cơ hội không đợi một ai
+          Cơ hội <span className="text-gradient">không đợi một ai</span>
         </h2>
         <p className="mt-3 text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
           Điền thông tin, đội ngũ đối tác Solavita Việt Nam sẽ liên hệ với bạn
@@ -272,7 +272,7 @@ export default function GoldMedalSignup() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="px-8 py-4 rounded-full font-cw-bold text-base w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white transition-transform hover:scale-[1.02] disabled:opacity-70"
+                className="px-8 py-4 rounded-full font-cw-bold text-base w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[#0A1628] transition-transform hover:scale-[1.02] disabled:opacity-70"
                 style={{ background: 'linear-gradient(100deg, #D19B2C 0%, #E8B44A 100%)' }}
               >
                 {status === 'submitting' ? (

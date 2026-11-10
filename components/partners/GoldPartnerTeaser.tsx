@@ -41,7 +41,7 @@ export default function GoldPartnerTeaser() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="gold-teaser" className="relative bg-sv-light">
+    <section ref={sectionRef} id="gold-teaser" className="relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-14">
         <div className="gold-teaser relative overflow-hidden rounded-3xl border border-[#E8B44A]/30 bg-gradient-to-br from-[#0A1628] via-[#12203A] to-[#0A1628] p-7 md:p-10">
           {/* Gold glow */}
@@ -57,7 +57,8 @@ export default function GoldPartnerTeaser() {
               </span>
 
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-cw-bold text-white leading-tight">
-                {goldMedalProgram.subtitle}
+                {goldMedalProgram.subtitleLead}{' '}
+                <span className="text-[#F5D48A]">{goldMedalProgram.subtitleHighlight}</span>
               </h2>
 
               <p className="mt-3 text-sm md:text-base text-white/70 font-cw-regular leading-relaxed max-w-2xl">
@@ -83,7 +84,7 @@ export default function GoldPartnerTeaser() {
                 </Link>
                 <a
                   href={`tel:${PARTNER_HOTLINE}`}
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-white/20 font-cw-bold text-base text-white hover:bg-white/10 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-white/20 font-cw-bold text-base text-white hover:border-white/40 hover:bg-[#14243f] transition-colors"
                 >
                   Gọi ngay {PARTNER_HOTLINE}
                 </a>

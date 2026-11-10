@@ -89,13 +89,11 @@ export function organizationJsonLd() {
         '@type': 'ImageObject',
         url: absoluteUrl('/images/a1logo02.svg'),
       },
-      // Vietnam registered office. Fields TBD until the legal entity
-      // is confirmed and a real registered address is supplied.
+      // Vietnam has no published office address yet, so the structured
+      // data carries the country only — a placeholder street address
+      // would be invalid for every consumer of the schema.
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'TBD — Địa chỉ văn phòng tại Việt Nam (chờ xác minh)',
-        addressLocality: 'TBD — Thành phố tại Việt Nam (chờ xác minh)',
-        postalCode: 'TBD — Mã bưu chính tại Việt Nam (chờ xác minh)',
         addressCountry: 'VN',
       },
       // Contact point: VN email is verified; the VN phone number is TBD
@@ -119,11 +117,11 @@ export function organizationJsonLd() {
         name: 'SKYWORTH Group',
         url: 'https://www.skyworth-pv.com',
       },
-      // Headquarters placeholder - only the country is real until
-      // business confirms the city.
+      // Headquarters — the market is known, the office city is not
+      // published yet, so only the country is declared.
       location: {
         '@type': 'Place',
-        name: 'TBD — Thành phố văn phòng tại Việt Nam (chờ xác minh)',
+        name: 'Việt Nam',
         address: {
           '@type': 'PostalAddress',
           addressCountry: 'VN',
@@ -478,8 +476,8 @@ export function categoryJsonLd(category: BlogCategory) {
 /* ────────────────────────────────────────────────────────────────────────
    LocalBusiness - emitted alongside `ContactPage` on `/contact-us/`.
 
-   Vietnam: registered office + contact details are TBD until business
-   supplies verified facts. Country is set to VN; `areaServed` is
+   Vietnam: no office address is published yet, so the schema declares
+   the country only. Country is set to VN; `areaServed` is
    Vietnam. `priceRange` is the schema.org token format — kept generic
    ("₫₫" = mid-range) only as a styling hint, not a price claim.
    ──────────────────────────────────────────────────────────────────────── */
@@ -497,11 +495,11 @@ export function localBusinessJsonLd() {
       // until business confirms the real VN number.
       image: absoluteUrl(DEFAULT_OG_IMAGE),
       priceRange: '₫₫',
+      // No street address is published for Vietnam yet — only the
+      // country is declared, so the schema never points at an address
+      // that does not exist.
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'TBD — Địa chỉ văn phòng tại Việt Nam (chờ xác minh)',
-        addressLocality: 'TBD — Thành phố tại Việt Nam (chờ xác minh)',
-        postalCode: 'TBD — Mã bưu chính tại Việt Nam (chờ xác minh)',
         addressCountry: 'VN',
       },
       areaServed: { '@type': 'Country', name: 'Vietnam' },

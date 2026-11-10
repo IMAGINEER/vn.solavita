@@ -6,10 +6,10 @@
  * registrations and full re-submits from the homepage form).
  *
  * Differences vs the full endpoint:
- *   - **No PII in the payload.** The Edit-details modal hides Step 1
- *     (solutionType — already chosen at registration) and Step 4
- *     (Contact Info) and never surfaces personal data to the client,
- *     so the body here is just the Step-2 + Step-3 fields.
+ *   - **No PII in the payload.** The Edit-details modal hides the
+ *     solution step (already chosen at registration) and the contact
+ *     step and never surfaces personal data to the client, so the body
+ *     here is just the site / property / household / roof answers.
  *   - **Identified by `plan_token`** instead of email dedup. The page
  *     already has the token in the URL.
  *   - **UPDATE only**, never INSERT. If the token is unknown (e.g. user
@@ -34,13 +34,15 @@ export async function POST(request: Request) {
     const body = await request.json()
     const {
       planToken,
-      // Step 2 (replaces the old Step-1 region / houseType + Step-0
-      // roofType). city is now the only required field; propertyType
-      // is required by the form so it stays required here.
+      // Step 2 — site + property type.
       city,
       propertyType,
-      // Step 3 — householdSize required.
+      // Step 3 — household size + monthly usage + daytime ratio.
       householdSize,
+      electricityUsage,
+      daytimeRatio,
+      // Step 4 — roof type.
+      roofType,
     } = body
 
     // Validate the bearer. UUID-only - same regex the lookup route uses
@@ -52,12 +54,14 @@ export async function POST(request: Request) {
       )
     }
 
-    // Validate the 3 editable required fields: city + propertyType +
-    // householdSize.
+    // Validate the editable required fields: city + propertyType +
+    // householdSize + roofType. Usage / daytime ratio are optional on
+    // the wire (legacy rows may not have them yet).
     const missing: string[] = []
     if (!city) missing.push('city')
     if (!propertyType) missing.push('propertyType')
     if (!householdSize) missing.push('householdSize')
+    if (!roofType) missing.push('roofType')
     if (missing.length) {
       return NextResponse.json(
         {
@@ -98,14 +102,16 @@ export async function POST(request: Request) {
     // the client might sneak in. The full endpoint at /api/consultation
     // owns name/email/phone/address; we don't.
     //
-    // Fields that were dropped from the 4-step form (roof_type,
-    // electricity_usage, devices, backup_needs, region, address)
-    // are no longer written — leaving them untouched on UPDATE so
-    // historical values from old-form submissions stay intact.
+    // Fields still not collected (devices, backup_needs, region,
+    // address) are left untouched on UPDATE so historical values from
+    // old-form submissions stay intact.
     const updatePayload = {
       city,
       house_type: propertyType,
       household_size: householdSize,
+      electricity_usage: electricityUsage || null,
+      daytime_usage_ratio: daytimeRatio || null,
+      roof_type: roofType,
       // Generator/fuel fields are no longer collected on the VN site;
       // keep them NULL so historical rows from other country sites stay put.
       generator_frequency: null,

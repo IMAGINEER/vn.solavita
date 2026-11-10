@@ -1,5 +1,6 @@
 import { requireAdmin } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
+import { DataErrorNotice } from '../DataErrorNotice'
 import { PartnersTable, type PartnerLead } from './PartnersTable'
 
 export const dynamic = 'force-dynamic'
@@ -8,13 +9,17 @@ export default async function PartnersPage() {
   await requireAdmin()
 
   // vn_partner_leads is VN-only by table design (no `country` column).
-  const { data: rows } = await supabase
+  const { data: rows, error } = await supabase
     .from('vn_partner_leads')
     .select(
       'id, full_name, company, email, partner_track, message, ' +
         'status, created_at, updated_at',
     )
     .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('[/admin/partners] vn_partner_leads query failed:', error)
+  }
 
   const partners = (rows || []) as unknown as PartnerLead[]
 
@@ -28,7 +33,11 @@ export default async function PartnersPage() {
           Yêu cầu gửi từ vn.solavita.com/for-partners. Mới nhất trước.
         </p>
       </div>
-      <PartnersTable partners={partners} />
+      {error ? (
+        <DataErrorNotice scope="yêu cầu hợp tác" error={error} />
+      ) : (
+        <PartnersTable partners={partners} />
+      )}
     </div>
   )
 }

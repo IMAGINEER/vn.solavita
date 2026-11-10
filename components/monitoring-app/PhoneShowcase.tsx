@@ -3,6 +3,8 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowRight } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger)
  *   │        Solavita Monitoring App          │  ← eyebrow pill
  *   │      Energy Dashboard              │  ← heading
  *   │  Live flows across every device…   │  ← body copy
+ *   │   [ Learn about the app → ]        │  ← optional internal link
  *   │                                    │
  *   │            ┌──────┐                │
  *   │            │phone │                │  ← centered phone
@@ -26,8 +29,25 @@ gsap.registerPlugin(ScrollTrigger)
  * light frame would clash. Download buttons sit directly below
  * the phone so the reader can install the app the moment they
  * decide it fits.
+ *
+ * Reused verbatim on the homepage (after QUY TRÌNH). `className` lets
+ * the caller override the section background — the homepage passes a
+ * white band so it does not merge with the `bg-sv-blue/10` process
+ * section directly above it.
  */
-export default function PhoneShowcase() {
+export default function PhoneShowcase({
+  className,
+  internalLink,
+}: {
+  className?: string
+  /**
+   * Optional internal link rendered under the intro copy and above the
+   * phone. Pages that embed this block (homepage, /solutions/solamate)
+   * pass a link to /monitoring-app; the /monitoring-app page itself
+   * omits it so the block never links to where it already lives.
+   */
+  internalLink?: { href: string; label: string }
+} = {}) {
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -51,7 +71,10 @@ export default function PhoneShowcase() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 md:py-24 bg-sv-blue/10 overflow-hidden"
+      className={cn(
+        'relative py-16 md:py-24 bg-sv-blue/10 overflow-hidden',
+        className
+      )}
     >
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title block — restored per product brief */}
@@ -67,13 +90,22 @@ export default function PhoneShowcase() {
             Theo dõi dòng năng lượng trực tiếp trong ngôi nhà của bạn —
             điện mặt trời, pin lưu trữ, điều hòa và lưới điện — trên một màn hình duy nhất.
           </p>
+          {/* Internal link — sits between the intro copy and the phone,
+              so the copy → link → phone order reads top to bottom. */}
+          {internalLink && (
+            <a
+              href={internalLink.href}
+              className="mt-6 inline-flex items-center gap-2 font-cw-bold text-uk-teal-dark underline underline-offset-4 transition-colors hover:text-uk-teal"
+            >
+              {internalLink.label}
+              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            </a>
+          )}
         </div>
 
         {/* Centered phone */}
         <div className="mx-auto max-w-[260px]">
           <div className="relative rounded-[2.5rem] border-[6px] border-uk-navy/80 bg-sv-navy overflow-hidden shadow-2xl">
-            {/* Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-sv-dark rounded-b-2xl z-10" />
             <img
               alt="Ứng dụng giám sát Solavita – Bảng điều khiển năng lượng"
               loading="lazy"

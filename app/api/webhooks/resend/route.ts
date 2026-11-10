@@ -24,10 +24,16 @@
  *
  * **Setup** (one-time, after deploy):
  *   1. Resend dashboard → Webhooks → Add endpoint
- *      URL:    https://uk.solavita.com/api/webhooks/resend
+ *      URL:    https://vn.solavita.com/api/webhooks/resend
  *      Events: email.delivered, email.opened
  *   2. Copy the signing secret → Netlify env RESEND_WEBHOOK_SECRET
  *   Without these, all leads stay "Plan: not sent" forever.
+ *
+ *   NOTE: the Resend account is shared with the sibling country sites.
+ *   This endpoint only stamps rows with `country = 'vn'`, so it never
+ *   writes to another site's leads - but a sibling site's endpoint
+ *   may still be the one registered for the whole account. Check that
+ *   the endpoint registered for the VN sends points at vn.solavita.com.
  */
 
 import { NextResponse } from 'next/server'
@@ -90,8 +96,13 @@ async function applyPatch(
 ): Promise<{ matched: boolean; updated: boolean }> {
   const { data: row, error: readErr } = await supabase
     .from('consultation_leads')
-    .select('plan_sent_at, plan_first_opened_at, plan_last_opened_at')
+    .select('id, plan_sent_at, plan_first_opened_at, plan_last_opened_at')
     .eq('plan_provider_id', emailId)
+    // Country scope: this site writes only VN rows, and the Resend
+    // account is shared with the sibling country sites. Without the
+    // filter, an event for a UK/DE send that lands on THIS endpoint
+    // would stamp timestamps onto another site's lead row.
+    .eq('country', 'vn')
     .maybeSingle()
 
   if (readErr) {
@@ -100,8 +111,9 @@ async function applyPatch(
   }
   if (!row) {
     // Either the email was fired before we started writing
-    // plan_provider_id (old consultations) or the id is bogus. Either
-    // way, nothing to update. Return matched=false so the caller can log.
+    // plan_provider_id (old consultations), the id is bogus, or the
+    // row belongs to another country site. Either way, nothing to
+    // update. Return matched=false so the caller can log.
     return { matched: false, updated: false }
   }
 
@@ -115,10 +127,13 @@ async function applyPatch(
     merged.plan_first_opened_at = row.plan_first_opened_at
   }
 
+  // Update the exact row we read (id), not "every row sharing this
+  // provider id" - the id is unique per row, country included.
   const { error: updateErr } = await supabase
     .from('consultation_leads')
     .update(merged)
-    .eq('plan_provider_id', emailId)
+    .eq('id', row.id)
+    .eq('country', 'vn')
 
   if (updateErr) {
     console.error('[/api/webhooks/resend] update error:', updateErr)

@@ -31,7 +31,9 @@ import TbdText from '@/components/ui/tbd-text'
  *     legible while the image shows through on the right.
  *   - Eyebrow pill (white border, white/10 backdrop) with a green
  *     pulsing dot and the eyebrow text.
- *   - Large white H1 with an optional `text-gradient` highlight.
+ *   - Large H1 in the brand gradient (`text-gradient` on the heading
+ *     itself, so the whole title — not just a highlighted phrase —
+ *     carries the theme ramp).
  *   - Subhead at `text-white/85`.
  *   - One or two CTAs (primary = gradient; secondary = outlined).
  *   - Optional breadcrumb (inner pages only).
@@ -40,9 +42,8 @@ import TbdText from '@/components/ui/tbd-text'
  *
  * Notes:
  *   - The H1 is a multi-line string in the form `"Line A\nLine B"`.
- *     A `*` at the end of a line wraps that line in
- *     `<span class="text-gradient">`. The home hero uses this for
- *     "Cut Diesel.*\nOwn Your Power.*".
+ *     Legacy `*` markers are stripped when rendering — the whole
+ *     heading is gradient now.
  *   - The CTA accepts either an `onClick` (for `openFormModal`) or
  *     an `href` (for static links to /solutions, /contact-us, ...).
  */
@@ -81,6 +82,21 @@ export interface PageHeroProps {
    *     other marketing page.
    */
   variant?: 'home' | 'inner'
+  /**
+   * CSS background for the scrim over the photo. Defaults to the
+   * left-to-right navy gradient that keeps the copy column legible.
+   * Pass a custom one when the photo is bright on the left (e.g. the
+   * SolaMate balcony shot, whose left third is a white facade) and
+   * the copy needs a heavier, differently-shaped mask.
+   */
+  overlay?: string
+  /**
+   * Tighter vertical rhythm between title, body, CTAs and the children
+   * slot. The solution-page heroes use it so the whole first screen —
+   * title, promise, two CTAs and the three selling points — reads
+   * without scrolling.
+   */
+  compact?: boolean
 }
 
 export default function PageHero({
@@ -93,6 +109,8 @@ export default function PageHero({
   breadcrumbs,
   children,
   variant = 'inner',
+  overlay,
+  compact = false,
 }: PageHeroProps) {
   // Outer section sizing differs per variant — see JSDoc above. The
   // two class strings mirror the UK originals: home → HeroSection
@@ -102,6 +120,13 @@ export default function PageHero({
     variant === 'home'
       ? 'hero-banner relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden bg-cover bg-center'
       : 'hero-banner relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-cover bg-center'
+
+  // Default scrim: darkest behind the copy column, fading out toward
+  // the right so the image shows through. Mirrors the UK HeroSection
+  // treatment. Pages with a bright photo on the left can pass their own.
+  const scrim =
+    overlay ??
+    'linear-gradient(to right, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.65) 35%, rgba(15,23,42,0.25) 60%, rgba(15,23,42,0) 80%)'
 
   return (
     <section
@@ -113,10 +138,7 @@ export default function PageHero({
          UK HeroSection treatment. */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'linear-gradient(to right, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.65) 35%, rgba(15,23,42,0.25) 60%, rgba(15,23,42,0) 80%)',
-        }}
+        style={{ background: scrim }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -141,7 +163,7 @@ export default function PageHero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 max-w-3xl capitalize"
         >
           {renderTitle(title)}
         </motion.h1>
@@ -151,7 +173,9 @@ export default function PageHero({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
-            className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
+            className={`text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed ${
+              compact ? 'mt-4' : 'mt-5'
+            }`}
           >
             {body}
           </motion.p>
@@ -162,14 +186,16 @@ export default function PageHero({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.25 }}
-            className="flex flex-col sm:flex-row gap-4 mt-8"
+            className={`flex flex-col sm:flex-row gap-4 ${
+              compact ? 'mt-6' : 'mt-8'
+            }`}
           >
             {primaryCta && <HeroCta cta={primaryCta} variant="primary" />}
             {secondaryCta && <HeroCta cta={secondaryCta} variant="secondary" />}
           </motion.div>
         )}
 
-        {children && <div className="mt-8">{children}</div>}
+        {children && <div className={compact ? 'mt-6' : 'mt-8'}>{children}</div>}
       </div>
     </section>
   )
@@ -179,7 +205,7 @@ function HeroCta({ cta, variant }: { cta: PageHeroCta; variant: 'primary' | 'sec
   const cls =
     variant === 'primary'
       ? 'group btn-gradient text-white px-8 py-4 rounded-full font-cw-bold text-center text-base cursor-pointer inline-flex items-center justify-center gap-2 leading-none'
-      : 'px-8 py-4 rounded-full border-2 border-uk-line bg-uk-navy font-cw-regular text-center text-base hover:bg-white hover:text-uk-navy transition-colors'
+      : 'px-8 py-4 rounded-full border-2 border-white/70 bg-transparent text-white font-cw-regular text-center text-base hover:bg-white/10 hover:border-white transition-colors'
   const inner = (
     <>
       <span>{cta.label}</span>
@@ -233,45 +259,18 @@ function HeroCta({ cta, variant }: { cta: PageHeroCta; variant: 'primary' | 'sec
  * class="block"> lines.
  */
 function renderTitle(raw: string) {
+  // The H1 itself carries `.text-gradient`, so the whole title — every
+  // line — is painted with the brand ramp. Legacy `*` markers (which
+  // used to switch individual words between plain white and gradient)
+  // are stripped here so old title strings keep rendering cleanly.
   const lines = raw.split('\n')
   return (
     <>
-      {lines.map((line, idx) => {
-        // Mode 1: whole-line gradient when the line ends with '*' AND
-        // contains no other '*' (so there's no inline toggle to mix in).
-        const trimmed = line.trimEnd()
-        const onlyTrailingStar =
-          trimmed.endsWith('*') && trimmed.indexOf('*') === trimmed.length - 1
-        if (onlyTrailingStar) {
-          const text = trimmed.slice(0, -1)
-          return (
-            <span key={idx} className="block">
-              <span className="text-gradient">{text}</span>
-            </span>
-          )
-        }
-        // Mode 2: inline `*` toggle. State starts as "gradient" unless
-        // the line begins with `*` (which is a toggle-on-the-way-down).
-        let state: 'plain' | 'gradient' = trimmed.startsWith('*')
-          ? 'plain'
-          : 'gradient'
-        const segments = line.split('*')
-        return (
-          <span key={idx} className="block">
-            {segments.map((seg, i) => {
-              const rendered =
-                state === 'gradient' ? (
-                  <span className="text-gradient">{seg}</span>
-                ) : (
-                  <span>{seg}</span>
-                )
-              // Flip the state for the next segment.
-              state = state === 'gradient' ? 'plain' : 'gradient'
-              return <span key={i}>{rendered}</span>
-            })}
-          </span>
-        )
-      })}
+      {lines.map((line, idx) => (
+        <span key={idx} className="block">
+          {line.replace(/\*/g, '')}
+        </span>
+      ))}
     </>
   )
 }

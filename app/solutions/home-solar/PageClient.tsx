@@ -27,7 +27,10 @@ export default function HomeSolarPage() {
       title: 'Power Your Home. Stay In Control.',
       body: 'Fewer blackouts, fewer top-up runs. From essential backup to full-home control, Solavita delivers clean, dependable energy — so you can worry less and live more.',
       backgroundImage: '/images/home_solar_1600x856.webp',
-      primaryCta: { label: 'Get Free Quote', onClick: openFormModal },
+      primaryCta: {
+        label: 'Get Free Quote',
+        onClick: () => openFormModal({ solutionType: 'home' }),
+      },
       breadcrumbs: [
         { label: 'Home', href: '/' },
         { label: 'For Home' },
@@ -42,7 +45,10 @@ export default function HomeSolarPage() {
       eyebrow: "DON'T SEE YOUR FIT?",
       title: <>Let's Tailor <span className="text-gradient">a Solution.</span></>,
       body: 'If your appliances, roof layout or backup requirements sit outside the three packages above, request a tailored recommendation. A Solavita representative will follow up with a configuration that matches your home.',
-      primaryCta: { label: 'Request a Tailored Quote', href: '/contact-us' },
+      primaryCta: {
+        label: 'Request a Tailored Quote',
+        onClick: () => openFormModal({ solutionType: 'home' }),
+      },
     },
     // ②优势-品牌赋能 — "VITAL ENERGY. VITAL TRUST."
     showBrandAdvantage: true,

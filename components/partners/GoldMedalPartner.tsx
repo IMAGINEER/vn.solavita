@@ -25,6 +25,7 @@ import {
   PARTNER_CONTACT,
   PARTNER_HOTLINE,
 } from '@/lib/data/partners'
+import Breadcrumb from '@/components/Breadcrumb'
 import GoldMedalSignup from './GoldMedalSignup'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -56,7 +57,17 @@ const perkIcons = {
  * you should already have → four core advantages → how a customer
  * order travels → what is included → registration.
  */
-export default function GoldMedalPartner() {
+export default function GoldMedalPartner({
+  showBreadcrumb = true,
+}: {
+  /**
+   * The breadcrumb belongs to the hero, not to a strip of its own — but
+   * it is dropped on campaign URLs that carry tracking parameters
+   * (?lp=fb, ?utm_…), because those land straight from an advert and
+   * the trail tells the visitor nothing.
+   */
+  showBreadcrumb?: boolean
+}) {
   const sectionRef = useRef<HTMLElement>(null)
   const formRef = useRef<HTMLElement>(null)
 
@@ -111,7 +122,7 @@ export default function GoldMedalPartner() {
       <section
         ref={sectionRef}
         id="doi-tac-vang"
-        className="relative py-16 md:py-24 overflow-hidden bg-[#0A1628]"
+        className="relative overflow-hidden bg-[#0A1628] pt-24 pb-16 md:pt-28 md:pb-24 lg:pt-32"
       >
       {/* Gold glows */}
       <div className="absolute inset-0 pointer-events-none">
@@ -120,6 +131,20 @@ export default function GoldMedalPartner() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb — inside the hero, not on a strip of its own. */}
+        {showBreadcrumb && (
+          <div className="mb-8 lg:mb-10">
+            <Breadcrumb
+              theme="light"
+              items={[
+                { label: 'Trang chủ', href: '/' },
+                { label: 'Dành cho đối tác', href: '/for-partners/' },
+                { label: 'Chương trình Đối tác Vàng' },
+              ]}
+            />
+          </div>
+        )}
+
         {/* ── Header ───────────────────────────────────────────── */}
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E8B44A]/30 bg-[#E8B44A]/10 text-xs font-cw-bold uppercase tracking-wider text-[#F5D48A] mb-4">
@@ -127,10 +152,10 @@ export default function GoldMedalPartner() {
             {goldMedalProgram.name}
           </span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-white leading-tight">
-            Tuyển chọn đối tác —{' '}
-            <span style={{ color: GOLD }}>Liên kết giới thiệu khách hàng</span>
-          </h2>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-white leading-tight">
+            {goldMedalProgram.subtitleLead}{' '}
+            <span style={{ color: GOLD }}>{goldMedalProgram.subtitleHighlight}</span>
+          </h1>
 
           {/* Four-word rhythm printed at the top of the standee */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm md:text-base font-cw-bold">

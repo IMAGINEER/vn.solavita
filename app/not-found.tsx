@@ -28,7 +28,7 @@ export default function NotFound() {
             404
           </p>
           <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-cw-bold text-uk-navy leading-tight">
-            Không tìm thấy trang
+            Không tìm thấy <span className="text-gradient">trang</span>
           </h1>
           <p className="mt-6 text-base md:text-lg font-cw-regular text-uk-slate leading-relaxed">
             Trang Bạn đang tìm kiếm có thể đã được di chuyển, ngừng sử dụng hoặc

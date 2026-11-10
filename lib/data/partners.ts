@@ -393,6 +393,14 @@ export interface GoldMedalProgram {
   name: string
   /** Sub-heading under the campaign name. */
   subtitle: string
+  /**
+   * Two-tone heading split for the campaign panel / page: the white
+   * lead-in and the gold-highlighted tail. Together they read as
+   * `subtitle` — kept as one string so the body copy can use the full
+   * sentence without re-joining two halves.
+   */
+  subtitleLead: string
+  subtitleHighlight: string
   /** Four-word rhythm printed at the top of the standee. */
   pillars: string[]
   /** Number of partner slots the intake is capped at. */
@@ -422,6 +430,8 @@ export interface GoldMedalProgram {
 export const goldMedalProgram: GoldMedalProgram = {
   name: 'Chương trình Đối tác Vàng',
   subtitle: 'Tuyển chọn đối tác — Liên kết giới thiệu khách hàng',
+  subtitleLead: 'Tuyển chọn đối tác —',
+  subtitleHighlight: 'Liên kết giới thiệu khách hàng',
   pillars: ['Kết nối', 'Đồng hành', 'Thu lợi', 'Trả góp'],
   slots: 50,
   stats: [

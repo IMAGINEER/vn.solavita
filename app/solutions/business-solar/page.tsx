@@ -2,20 +2,34 @@ import BusinessSolarPage from './PageClient'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import JsonLd from '@/components/seo/JsonLd'
 import { solutionDetails } from '@/lib/data/solutions'
+import { cniFaqs } from '@/lib/data/cni'
 import {
   webPageJsonLd,
   breadcrumbJsonLd,
   serviceListJsonLd,
   serviceJsonLd,
+  faqPageJsonLd,
 } from '@/lib/seo/jsonld'
 
+/**
+ * /solutions/business-solar — the Commercial & Industrial page.
+ *
+ * The metadata and the structured data were rewritten with the page
+ * (Nov 2026): the old description still advertised "three business-solar
+ * solutions for Vietnamese small businesses", which is no longer what
+ * the page is. The schema now describes the three published business
+ * configurations plus the FAQ set rendered on the page.
+ */
+
 export const metadata = buildPageMetadata({
-  title: 'Business Solar Solutions in Vietnam | Solavita Việt Nam',
+  title:
+    'Commercial & Industrial Solar Solutions in Vietnam | Solavita Việt Nam',
   path: '/solutions/business-solar',
   description:
-    'Compare three business-solar solutions for Vietnamese small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase. Sized for equipment loads, operating hours and critical-load priorities.',
+    'Solar and energy storage systems sized for factories, hotels, retail and processing plants in Vietnam — system configurations, industry scenarios, delivery capability and a savings estimator built on your own electricity bill.',
   ogImage: '/images/og-solutions.jpg',
-  ogImageAlt: 'Business Solar solutions for Vietnamese small businesses',
+  ogImageAlt:
+    'Commercial and industrial solar and energy storage solutions for Vietnamese businesses',
 })
 
 export default function Page() {
@@ -38,9 +52,10 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/solutions/business-solar',
-            name: 'Business Solar Solutions in Vietnam | Solavita Việt Nam',
+            name:
+              'Commercial & Industrial Solar Solutions in Vietnam | Solavita Việt Nam',
             description:
-              'Compare three business-solar solutions for Vietnamese small businesses — BUSINESS Entry 3-Phase, BUSINESS Standard 3-Phase, BUSINESS Flagship 3-Phase.',
+              'Solar and energy storage systems sized for factories, hotels, retail and processing plants in Vietnam — system configurations, industry scenarios, delivery capability and a savings estimator.',
           }),
           breadcrumbJsonLd([
             { name: 'Home', url: '/' },
@@ -50,6 +65,16 @@ export default function Page() {
           ...serviceSpecs.map((s) =>
             serviceJsonLd(s, '/solutions/business-solar'),
           ),
+          faqPageJsonLd({
+            path: '/solutions/business-solar',
+            name: 'Business solar questions — Solavita Việt Nam',
+            description:
+              'How a Solavita commercial and industrial solar system is sized, what it can cover and how it is delivered.',
+            faqs: cniFaqs.map((f) => ({
+              question: f.q,
+              answer: f.a,
+            })),
+          }),
         ]}
       />
       <BusinessSolarPage />

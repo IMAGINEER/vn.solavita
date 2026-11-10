@@ -15,6 +15,7 @@ import {
   Users,
   Zap,
   Plug,
+  Building2,
   ExternalLink,
 } from 'lucide-react'
 import {
@@ -41,6 +42,11 @@ export interface ConsultationLead {
   household_size: string | null
   electricity_usage: string | null
   devices: string | null
+  /**
+   * Business (C&I) profile attached from the business-solar assessment
+   * or the savings estimator — free text. NULL for home leads.
+   */
+  business_profile: string | null
   plan_token: string | null
   country: string | null
   created_at: string
@@ -178,7 +184,7 @@ const HOME_DETAIL_ITEMS: ReadonlyArray<{
 
 function HomeDetailsCell({ lead }: { lead: ConsultationLead }) {
   const present = HOME_DETAIL_ITEMS.filter((item) => lead[item.key])
-  if (present.length === 0) {
+  if (present.length === 0 && !lead.business_profile) {
     return <span className="text-uk-slate">-</span>
   }
   return (
@@ -195,6 +201,25 @@ function HomeDetailsCell({ lead }: { lead: ConsultationLead }) {
           <span className="text-uk-navy">{lead[key] as string}</span>
         </li>
       ))}
+      {/* Business (C&I) profile from /solutions/business-solar — the
+          energy profile the visitor filled in before the enquiry. */}
+      {lead.business_profile && (
+        <li className="flex items-start gap-2 text-sm leading-tight">
+          <span
+            title="Hồ sơ doanh nghiệp"
+            className="inline-flex shrink-0 cursor-default mt-0.5"
+          >
+            <Building2
+              className="size-3.5 text-uk-slate shrink-0"
+              strokeWidth={1.75}
+              aria-hidden
+            />
+          </span>
+          <span className="text-uk-navy break-words">
+            {lead.business_profile}
+          </span>
+        </li>
+      )}
     </ul>
   )
 }

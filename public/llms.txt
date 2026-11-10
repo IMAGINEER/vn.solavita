@@ -5,8 +5,8 @@
 ## Những gì chúng tôi cung cấp
 
 - Ba dòng giải pháp:
-  - **SolaMate** — trạm điện mặt trời ban công, cửa sổ và sân thượng. Hai mức công suất (800 W / 1600 W), ba kiểu lắp (ban công · che nắng · mặt đất), lắp DIY trong 15 phút, thiết bị Zero-export trên mọi model.
-  - **SolaHome** — điện mặt trời mái nhà cho biệt thự và nhà phố. Hai kiểu lắp (SolaRoof trực tiếp trên mái · SolaLoft trên khung thép cao tầng), bốn gói công suất (5 kWp · 10 kWp · 10 kWp ba pha · 15 kWp), hai phương án bổ sung pin dự phòng (pin xếp chồng 5 kWh + hybrid 1 pha; pin All-in-one 14,3 kWh + hybrid 3 pha).
+  - **SolaMate** — trạm điện mặt trời ban công, cửa sổ và sân thượng. Hai mức công suất (800 W / 1600 W), ba kiểu lắp (ban công · che nắng · mặt đất), lắp DIY trong 60 phút, thiết bị Zero-export trên mọi model.
+  - **SolaHome** — điện mặt trời mái nhà cho biệt thự và nhà phố. Chọn cách lắp theo loại mái (ngói · tôn · bằng → SolaRoof hoặc SolaLoft), chọn gói 5 kWp / 10 kWp / 10 kWp ba pha / 15 kWp theo hóa đơn điện và diện tích mái, pin lưu trữ tùy chọn (xếp chồng 5 kWh + hybrid 1 pha; All-in-one 14,3 kWh + hybrid 3 pha). Giá báo theo cấu hình sau khảo sát.
   - Cho doanh nghiệp nhỏ — ba gói ba pha: BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase.
 - Biểu mẫu tư vấn miễn phí, không ràng buộc trên mọi trang; đội ngũ sẽ phản hồi với phương án thiết kế phù hợp.
 - Ứng dụng Solavita Monitoring App điều phối điện mặt trời, pin lưu trữ, phụ tải điều hòa, hiệu quả kinh tế hộ gia đình và khả năng vận hành khi mất điện lưới.
@@ -17,7 +17,7 @@
 |---|---|
 | `/` | Hero thương hiệu, khung chi phí, thẻ chọn tình huống, câu chuyện khách hàng, FAQ. |
 | `/solutions/solamate/` | Dòng ban công & di động: 3 kiểu lắp, 2 gói công suất, quy trình 5 bước, số liệu hoàn vốn, FAQ. |
-| `/solutions/solahome/` | Dòng mái nhà: SolaRoof so với SolaLoft, 4 gói kèm giá theo kiểu lắp, bảng tra theo diện tích mái, 2 phương án bổ sung pin, 3 chế độ vận hành, FAQ. |
+| `/solutions/solahome/` | Dòng mái nhà: ước tính gói theo hóa đơn và diện tích mái, chọn cách lắp theo loại mái (SolaRoof / SolaLoft), mô phỏng dòng điện ngày / đêm / mất lưới, kinh tế hoàn vốn, dự án thực tế, quy trình lắp đặt & hậu mãi, FAQ. |
 | `/solutions/business-solar/` | Ba gói cho doanh nghiệp / ba pha kèm bảng thông số và FAQ. |
 | `/cases/` | Danh mục công trình thực tế. Công trình đã xác minh tại Việt Nam sẽ được bổ sung khi có dữ liệu. |
 | `/about-us/` | Câu chuyện doanh nghiệp; quan hệ với tập đoàn SKYWORTH; các chỉ số thương hiệu (doanh thu 9,8 tỷ USD). |
@@ -38,7 +38,7 @@
 ## Tín hiệu địa lý và ngôn ngữ
 
 - Ngôn ngữ mặc định của site: Tiếng Việt (vi-VN).
-- Đơn vị tiền tệ mặc định: đồng Việt Nam (₫). Dòng SolaMate và SolaHome hiển thị giá niêm yết đã công bố; dòng doanh nghiệp nhỏ báo giá theo yêu cầu.
+- Đơn vị tiền tệ mặc định: đồng Việt Nam (₫). Giá bán của cả ba dòng sản phẩm đều báo theo cấu hình sau khảo sát — website không niêm yết giá cố định.
 - Khu vực phục vụ: Việt Nam.
 - Thương hiệu mẹ: Tập đoàn SKYWORTH (Thâm Quyến, Trung Quốc).
 

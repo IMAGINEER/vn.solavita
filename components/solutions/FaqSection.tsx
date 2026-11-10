@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
+import { cn } from '@/lib/utils'
 
 /**
  * FaqSection — the accordion used at the bottom of the solution
@@ -22,16 +23,23 @@ export default function FaqSection({
   faqs,
   eyebrow = 'FAQ',
   title,
+  className,
 }: {
   faqs: FaqItem[]
   /** Eyebrow above the heading. Default "FAQ". */
   eyebrow?: string
   /** Heading. Defaults to the original English wording. */
   title?: React.ReactNode
+  /** Section background override — the default is white, but a page
+   *  that needs the FAQ band to read as grey passes `bg-sv-light`. */
+  className?: string
 }) {
   const [openIdx, setOpenIdx] = useState<number | null>(0)
   return (
-    <section id="faq" className="relative py-16 md:py-20 bg-white">
+    <section
+      id="faq"
+      className={cn('relative py-16 md:py-20 bg-white', className)}
+    >
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-8">
           <SectionEyebrow>{eyebrow}</SectionEyebrow>

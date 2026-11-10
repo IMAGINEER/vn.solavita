@@ -81,6 +81,7 @@ export async function GET(
         'roof_type',
         'household_size',
         'electricity_usage',
+        'daytime_usage_ratio',
         'devices',
         // Legacy Step-3 columns - the recommendation engine and ROI
         // calculation still read these for battery sizing and for

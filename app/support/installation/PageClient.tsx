@@ -97,7 +97,7 @@ export default function SupportInstallationPage() {
       <PageHero
         backgroundImage="/images/banner_home.webp"
         eyebrow="LẮP ĐẶT"
-        title={'Sở hữu *hệ thống Solavita'}
+        title={'Sở hữu hệ thống Solavita'}
         body="Sở hữu hệ thống Solavita rất đơn giản — chúng tôi đồng hành cùng bạn qua 4 bước, từ buổi khảo sát miễn phí đầu tiên đến khi hệ thống chính thức đi vào hoạt động."
         primaryCta={{ label: 'Nhận báo giá miễn phí', onClick: openFormModal }}
         secondaryCta={{ label: 'Quay lại Hỗ trợ', href: '/support' }}

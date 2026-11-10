@@ -105,7 +105,7 @@ export default function MyPlanPage({
 }
 
 /**
- * Build the slim 6-field body for /api/consultation/update. The endpoint
+ * Build the slim, no-PII body for /api/consultation/update. The endpoint
  * identifies the row by `plan_token`; the form never sends PII.
  *
  * `planToken` is the `identifier` resolved from the URL on this page
@@ -120,6 +120,9 @@ function buildUpdatePayload(
     city: formData.city ?? '',
     propertyType: formData.propertyType ?? '',
     householdSize: formData.householdSize ?? '',
+    electricityUsage: formData.electricityUsage ?? '',
+    daytimeRatio: formData.daytimeRatio ?? '',
+    roofType: formData.roofType ?? '',
   }
 }
 

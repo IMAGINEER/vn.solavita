@@ -162,7 +162,7 @@ export default function ContactForm() {
                 Gửi tin nhắn cho chúng tôi
               </span>
               <h2 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy leading-tight">
-                Gửi tin nhắn cho chúng tôi.
+                Gửi tin nhắn <span className="text-gradient">cho chúng tôi.</span>
               </h2>
               <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular leading-relaxed">
                 Hãy cho chúng tôi biết điều bạn muốn trao đổi — chúng tôi sẽ

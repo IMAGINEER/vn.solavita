@@ -244,8 +244,10 @@ export interface HomeDetails {
   roofOrientation: string
   /** Region. */
   region: string
-  /** Annual electricity-use tier ID. */
+  /** Electricity-use tier ID (from the monthly-consumption question). */
   electricityUsage: string
+  /** Share of electricity used during daylight. */
+  daytimeRatio: string
   /** Heavy devices selected. */
   devices: string[]
   /** Các trường mở rộng ở bước 3 được hiển thị trên dải thông tin. */

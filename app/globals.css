@@ -182,7 +182,15 @@ body {
   pointer-events: none;
 }
 
-/* Button gradient animation */
+/* Button gradient animation
+   ────────────────────────────────────────────────────────────────
+   Restored to the bright brand ramp (#00B9EE → #2CE250) per the
+   design owner's call. Note for whoever restyles this next: white
+   label text on the green end of this ramp measures ~1.7:1, so if
+   legibility complaints come back, switch the label colour to
+   `#0A1628` rather than darkening the gradient — that keeps the
+   bright look and reaches 7.9–10.4:1.
+   ──────────────────────────────────────────────────────────────── */
 .btn-gradient {
   background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
   background-size: 200% 200%;
@@ -193,6 +201,13 @@ body {
   background-position: 100% 0;
   transform: translateY(-2px);
   box-shadow: 0 10px 40px rgba(0, 185, 238, 0.3);
+}
+
+/* Solid-surface variant of the deep brand ramp, for elements that
+   need the gradient as a background utility rather than a button
+   (tab switches, swatches) without inheriting the button hover. */
+.bg-sv-gradient-strong {
+  background-image: linear-gradient(100deg, #007A9E 0%, #1A8A30 100%);
 }
 
 /* Glass effect */
@@ -404,13 +419,6 @@ html.lenis {
 
 /* Gradient buttons keep white text in light mode */
 
-.light-mode .text-gradient {
-  background: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* ProductSelector light mode */
 .light-mode section#products {
   background: linear-gradient(100deg, rgba(19, 182, 232, 0.08) 0%, rgba(110, 222, 100, 0.08) 100%) !important;
@@ -478,6 +486,125 @@ html.lenis {
 .light-mode section.hero-banner [class*="bg-white\/10"],
 .light-mode section.hero-banner [class*="bg-white\/20"] {
   background-color: rgb(255 255 255 / 0.1) !important;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SolaHome hero — the bill-estimator card as a white translucent
+   frosted pane over the photo. The image reads through the blur, the
+   inset edge highlight and the soft drop shadow give the glass its
+   depth; the input is a recessed well rather than a second white
+   sheet, so the whole card reads as one continuous object.
+
+   Written as real classes rather than Tailwind utilities on purpose.
+   The project-wide `.light-mode [class*="bg-white…"]` and `.dark
+   [class*="bg-white…"]` overrides are `!important` attribute
+   selectors, so a `bg-white/NN` utility inside this card would be
+   flattened back to an opaque surface. For the same reason the copy
+   uses dedicated `sv-muted` / `sv-teal-chip` classes instead of
+   `text-uk-navy/70` and friends — the generic dark-mode rules would
+   otherwise repaint every weight the same white.
+
+   Dark mode swaps the pane for a dark glass and the copy for the
+   pale brand colours, so it stays legible either way.
+   ──────────────────────────────────────────────────────────────── */
+.sv-glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 24px 60px -24px rgba(15, 23, 42, 0.55);
+}
+.dark .sv-glass-card {
+  background-color: rgba(10, 22, 40, 0.55);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 60px -24px rgba(2, 6, 23, 0.7);
+}
+/* The input well — milled into the glass, not laid on top of it. */
+.sv-glass-field {
+  background-color: rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.sv-glass-field:focus-within {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: var(--color-uk-teal);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.22);
+}
+.dark .sv-glass-field {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.dark .sv-glass-field:focus-within {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+/* The result panel — a second, quieter layer of the same glass. */
+.sv-glass-panel {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+.dark .sv-glass-panel {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+/* The quick-pick chips. The hover state lives here rather than in a
+   `hover:` utility, because these rules sit outside Tailwind's
+   utilities layer and would otherwise win over it. */
+.sv-glass-chip {
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--color-uk-navy);
+}
+.sv-glass-chip:hover {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-color: var(--color-uk-teal);
+  color: var(--color-uk-teal-dark);
+}
+.dark .sv-glass-chip {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+}
+.dark .sv-glass-chip:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-color: var(--color-uk-teal);
+  color: var(--color-uk-teal-soft);
+}
+/* The accent chip — the deep teal needs a pale ground to stay
+   readable on the mid-tone glass. */
+.sv-teal-chip {
+  background-color: rgba(204, 251, 241, 0.92);
+  color: var(--color-uk-teal-dark);
+}
+.dark .sv-teal-chip {
+  background-color: rgba(20, 184, 166, 0.22);
+  color: var(--color-uk-teal-soft);
+}
+/* A teal label that stays legible on either version of the glass. */
+.sv-glass-accent {
+  color: var(--color-uk-teal-dark);
+}
+.dark .sv-glass-accent {
+  color: var(--color-uk-teal-soft);
+}
+/* Secondary copy keeps its hierarchy in both modes. */
+.sv-muted {
+  color: rgba(15, 23, 42, 0.72) !important;
+}
+.dark .sv-muted {
+  color: rgba(203, 213, 225, 0.82) !important;
+}
+/* The input must not paint its own surface — the well behind it
+   provides the fill. */
+.light-mode .sv-glass-card input,
+.dark .sv-glass-card input {
+  background-color: transparent !important;
 }
 
 /* ────────────────────────────────────────────────────────────────
@@ -1253,4 +1380,60 @@ section#who-we-are .brand-film-card {
 .light-mode section#gold-teaser [class*="border-white/10"],
 .dark section#gold-teaser [class*="border-white/10"] {
   border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   SolaMate payback chart — the HOÀN VỒN curve on /solutions/solamate.
+
+   One hue (the brand teal), with a separately chosen step per surface:
+   the light step passes the dataviz palette checks on white, the dark
+   step is picked for the dark surface rather than flipped from the
+   light one. The surface variable doubles as the 2px marker ring.
+   ──────────────────────────────────────────────────────────────────────── */
+.solamate-chart {
+  --chart-line: #14B8A6;
+  --chart-fill: #14B8A6;
+  --chart-grid: #E2E8F0;
+  --chart-axis: #64748B;
+  --chart-surface: #FFFFFF;
+  --chart-threshold: #94A3B8;
+}
+.dark .solamate-chart {
+  --chart-line: #0EA47A;
+  --chart-fill: #0EA47A;
+  --chart-grid: rgba(255, 255, 255, 0.12);
+  --chart-axis: #94A3B8;
+  --chart-surface: #0F172A;
+  --chart-threshold: #64748B;
+}
+
+/* Chart ink — the site's dark-mode overrides only rewrite `text-*`
+   utilities, so the SVG's own fills need their own tokens. */
+.solamate-chart {
+  --chart-label: #0F172A;
+}
+.dark .solamate-chart {
+  --chart-label: #F1F5F9;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   /solutions/solahome · energy-flow simulator.
+   The active path is drawn as moving dots; the same information is
+   repeated in the copy beside the diagram, so the animation is never
+   the only carrier of meaning. Reduced-motion turns it into a still
+   dashed line.
+   ──────────────────────────────────────────────────────────────── */
+@keyframes solar-flow {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+.solar-flow-active {
+  animation: solar-flow 1.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .solar-flow-active {
+    animation: none;
+    stroke-dasharray: 6 6;
+  }
 }

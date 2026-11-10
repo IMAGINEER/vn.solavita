@@ -12,7 +12,7 @@
  * **Why no auth?** The plan_token is already in the customer's email and
  * in their URL bar. Confirming it doesn't grant access to anything - the
  * /api/my-plan/[token] endpoint is the only read path and that already
- * filters to `country = 'uk'`. If we later add a portal login, narrow
+ * filters to `country = 'vn'`. If we later add a portal login, narrow
  * this to `where email = auth.email()`.
  */
 
@@ -41,6 +41,27 @@ export async function POST(req: Request) {
     // graph when this endpoint isn't reached (it shares the same
     // init-lazy pattern as lib/emails/send.ts).
     const { supabase } = await import('@/lib/supabase')
+
+    // Country guard: the RPC updates by plan_token only. This project
+    // is shared with the sibling country sites, so a token belonging to
+    // another site must never be stamped by this endpoint. Resolve the
+    // token to a VN row first; anything else is ignored (and still
+    // answered with 200 so nothing leaks).
+    const { data: row, error: lookupError } = await supabase
+      .from('consultation_leads')
+      .select('id')
+      .eq('plan_token', rawToken)
+      .eq('country', 'vn')
+      .maybeSingle()
+
+    if (lookupError) {
+      console.error('[/api/track/my-plan-confirm] lookup error:', lookupError)
+      return NextResponse.json({ ok: true })
+    }
+    if (!row) {
+      return NextResponse.json({ ok: true })
+    }
+
     const { error } = await supabase.rpc('record_my_plan_confirm', {
       p_token: rawToken,
     })

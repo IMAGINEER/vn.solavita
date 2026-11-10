@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, ChevronLeft, ChevronRight, Loader2, BadgeCheck, Lightbulb, Zap, Plug, Factory, HelpCircle } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Loader2, BadgeCheck } from 'lucide-react';
 import type { FormData } from '@/lib/form-types';
 
 // ============ PERSON ICONS ============
@@ -16,34 +16,224 @@ const PersonIcon = ({ count }: { count: number }) => (
   </div>
 );
 
-// ============ DEVICE ICONS ============
-const WallboxIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
-    <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" strokeWidth="2"/>
-    <circle cx="20" cy="20" r="6" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M18 18L20 20L22 18" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M20 26V32" stroke="currentColor" strokeWidth="2"/>
-  </svg>
-);
+/* ──────────────────────────────────────────────────────────────────────
+   Option pictograms.
 
-const HeatPumpIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
-    <rect x="6" y="10" width="28" height="22" rx="2" stroke="currentColor" strokeWidth="2"/>
-    <circle cx="20" cy="21" r="7" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M16 21H24M20 17V25" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M10 10V7M30 10V7" stroke="currentColor" strokeWidth="1.5"/>
-  </svg>
-);
+   Every answer card carries one of these. They follow the same drawing
+   system as the DE site's consultation form (components/Form.tsx there):
+   an 80×80 box of flat line art — 2px outlines, 1.5px interior detail,
+   1px/opacity-.6 hints — rendered at 64px (`w-16 h-16`) inside the card.
+   Drawing them on the 80 grid and rendering them large is what makes the
+   shapes read as architecture instead of cramped glyphs; the earlier
+   40×40 / 32px set lost its detail at the size the cards actually use.
 
-const ACIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
-    <rect x="6" y="12" width="28" height="16" rx="3" stroke="currentColor" strokeWidth="2"/>
-    <path d="M10 28C10 32 12 34 14 34" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M20 28C20 32 20 34 20 34" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M30 28C30 32 28 34 26 34" stroke="currentColor" strokeWidth="1.5"/>
-    <line x1="10" y1="24" x2="30" y2="24" stroke="currentColor" strokeWidth="1"/>
+   The frame forwards `className` so CardSelect owns the size.
+   ────────────────────────────────────────────────────────────────────── */
+
+type OptionIconProps = React.SVGProps<SVGSVGElement>
+
+const LineIcon = ({ children, ...rest }: OptionIconProps) => (
+  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+    {children}
   </svg>
-);
+)
+
+/* Step 1 — solution type. */
+
+/** Detached house with an array on the roof pitch. */
+const HomeSolarIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M40 12L9 37v29h62V37L40 12Z" stroke="currentColor" strokeWidth="2" />
+    <path d="M40 12L5 40M40 12l35 28" stroke="currentColor" strokeWidth="2" />
+    <rect x="17" y="25" width="12" height="7" stroke="currentColor" strokeWidth="1" opacity=".65" transform="rotate(-39 23 28.5)" />
+    <rect x="26" y="18" width="12" height="7" stroke="currentColor" strokeWidth="1" opacity=".65" transform="rotate(-39 32 21.5)" />
+    <rect x="34" y="46" width="14" height="20" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="19" y="42" width="11" height="9" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="52" y="42" width="11" height="9" stroke="currentColor" strokeWidth="1.5" />
+  </LineIcon>
+)
+
+/** Solar module mounted on a balcony railing. */
+const BalconySolarIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M18 44L52 26l12 10-34 18z" stroke="currentColor" strokeWidth="2" />
+    <path d="M35 35l12 10M24 49l34-18" stroke="currentColor" strokeWidth="1" opacity=".65" />
+    <path d="M8 56h64M8 68h64" stroke="currentColor" strokeWidth="2" />
+    <path d="M16 56v12M27 56v12M38 56v12M49 56v12M60 56v12" stroke="currentColor" strokeWidth="1.5" />
+  </LineIcon>
+)
+
+/** Commercial building with a rooftop array. */
+const BusinessSolarIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <rect x="10" y="34" width="20" height="30" stroke="currentColor" strokeWidth="2" />
+    <rect x="30" y="24" width="26" height="40" stroke="currentColor" strokeWidth="2" />
+    <rect x="56" y="42" width="14" height="22" stroke="currentColor" strokeWidth="2" />
+    <path d="M6 64h68" stroke="currentColor" strokeWidth="2" />
+    <path d="M33 20v-4h8v4M45 20v-4h8v4" stroke="currentColor" strokeWidth="1" opacity=".65" />
+    <path d="M15 40h4M21 40h4M15 48h4M21 48h4M15 56h4M21 56h4" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M35 30h6M45 30h6M35 40h6M45 40h6M35 50h6M45 50h6" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M61 48h4M61 56h4" stroke="currentColor" strokeWidth="1.5" />
+  </LineIcon>
+)
+
+/** Unknown / still exploring / "other". */
+const QuestionIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <circle cx="40" cy="40" r="27" stroke="currentColor" strokeWidth="2" />
+    <path d="M30.3 30a10 10 0 0119.4 3.3c0 6.7-10 10-10 10" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+    <circle cx="40" cy="56.7" r="3" fill="currentColor" />
+  </LineIcon>
+)
+
+/* Step 2 — property type. */
+
+/** Townhouse / detached home on a street. */
+const TownhouseIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M12 36L40 16l28 20" stroke="currentColor" strokeWidth="2" />
+    <path d="M18 33v31h44V33" stroke="currentColor" strokeWidth="2" />
+    <path d="M8 64h64" stroke="currentColor" strokeWidth="2" />
+    <rect x="34" y="48" width="12" height="16" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="23" y="40" width="9" height="8" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="48" y="40" width="9" height="8" stroke="currentColor" strokeWidth="1.5" />
+  </LineIcon>
+)
+
+/** Apartment tower. */
+const ApartmentIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <rect x="22" y="12" width="36" height="52" stroke="currentColor" strokeWidth="2" />
+    <rect x="27" y="19" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="46" y="19" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="27" y="31" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="46" y="31" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="27" y="43" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="46" y="43" width="7" height="7" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="35" y="54" width="10" height="10" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M14 64h52" stroke="currentColor" strokeWidth="2" />
+  </LineIcon>
+)
+
+/** Shop / small business with an awning. */
+const StorefrontIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M14 30L20 18h40l6 12" stroke="currentColor" strokeWidth="2" />
+    <path d="M20 18v12M30 18v12M40 18v12M50 18v12M60 18v12" stroke="currentColor" strokeWidth="1" opacity=".5" />
+    <path d="M14 30h52" stroke="currentColor" strokeWidth="2" />
+    <path d="M16 30v34h48V30" stroke="currentColor" strokeWidth="2" />
+    <rect x="34" y="48" width="12" height="16" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="22" y="38" width="10" height="8" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="48" y="38" width="10" height="8" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M10 64h60" stroke="currentColor" strokeWidth="2" />
+  </LineIcon>
+)
+
+/* Step 3 — monthly consumption + daytime share. */
+
+/**
+ * Battery filled to `level` quarters. A framed body gives the fill a
+ * meaning ("how much electricity") that bare bars don't, and the four
+ * steps stay distinguishable at card size.
+ */
+const UsageBarsIcon = ({ level, ...p }: { level: 1 | 2 | 3 | 4 } & OptionIconProps) => (
+  <LineIcon {...p}>
+    <rect x="10" y="26" width="52" height="30" rx="4" stroke="currentColor" strokeWidth="2" />
+    <rect x="64" y="36" width="7" height="10" rx="2" stroke="currentColor" strokeWidth="2" />
+    {[0, 1, 2, 3].map((i) => (
+      <rect
+        key={i}
+        x={16 + i * 11}
+        y="31"
+        width="8"
+        height="20"
+        rx="1.5"
+        fill={level > i ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity={level > i ? 1 : 0.28}
+      />
+    ))}
+  </LineIcon>
+)
+
+const UsageLowIcon = (p: OptionIconProps) => <UsageBarsIcon level={1} {...p} />
+const UsageMediumIcon = (p: OptionIconProps) => <UsageBarsIcon level={2} {...p} />
+const UsageHighIcon = (p: OptionIconProps) => <UsageBarsIcon level={3} {...p} />
+const UsageVeryHighIcon = (p: OptionIconProps) => <UsageBarsIcon level={4} {...p} />
+
+/** Crescent moon — demand happens after dark. */
+const MoonIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M40 10a20 20 0 0030 30 30 30 0 11-30-30Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+  </LineIcon>
+)
+
+/** Sun on the horizon — a little daytime use. */
+const SunriseIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M40 32V22M29.6 44.4L22 36.8M50.4 44.4L58 36.8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <path d="M24 54a16 16 0 0132 0" stroke="currentColor" strokeWidth="2" />
+    <path d="M10 54h60" stroke="currentColor" strokeWidth="2" />
+    <path d="M18 64h44" stroke="currentColor" strokeWidth="1.5" opacity=".4" />
+  </LineIcon>
+)
+
+/** Full sun — roughly half the use is during daylight. */
+const SunIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <circle cx="40" cy="40" r="14" stroke="currentColor" strokeWidth="2" />
+    <path d="M40 12v8M40 60v8M12 40h8M60 40h8M18 18l6 6M56 56l6 6M62 18l-6 6M24 56l-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  </LineIcon>
+)
+
+/** Strong sun — most use happens while the array is producing. */
+const BrightSunIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <circle cx="40" cy="40" r="17" stroke="currentColor" strokeWidth="2.5" />
+    <circle cx="40" cy="40" r="6" fill="currentColor" opacity=".55" />
+    <path d="M40 8v6M40 66v6M8 40h6M66 40h6M17.4 17.4l4.2 4.2M58.4 58.4l4.2 4.2M62.6 17.4l-4.2 4.2M21.6 58.4l-4.2 4.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  </LineIcon>
+)
+
+/* Step 4 — roof type. */
+
+/** Flat concrete roof with a low parapet and panels. */
+const FlatRoofIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <rect x="12" y="34" width="56" height="5" stroke="currentColor" strokeWidth="2" />
+    <rect x="12" y="39" width="56" height="25" stroke="currentColor" strokeWidth="2" />
+    <path d="M20 34v-8h11v8M36 34v-8h11v8M52 34v-8h11v8" stroke="currentColor" strokeWidth="1" opacity=".65" />
+  </LineIcon>
+)
+
+/** Pitched tile roof — courses run parallel to the eave. */
+const TileRoofIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M8 38L40 14l32 24" stroke="currentColor" strokeWidth="2" />
+    <path d="M14 33h52M20 28h40M27 23h26" stroke="currentColor" strokeWidth="1.2" opacity=".55" />
+    <rect x="12" y="38" width="56" height="26" stroke="currentColor" strokeWidth="2" />
+  </LineIcon>
+)
+
+/** Corrugated metal roof — seams run down the pitch. */
+const MetalRoofIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M8 38L40 14l32 24" stroke="currentColor" strokeWidth="2" />
+    <path d="M16 38V32M24 38V26M32 38V20M40 38V14M48 38V20M56 38V26M64 38V32" stroke="currentColor" strokeWidth="1" opacity=".6" />
+    <rect x="12" y="38" width="56" height="26" stroke="currentColor" strokeWidth="2" />
+  </LineIcon>
+)
+
+/** Balcony — railing on a slab, with nothing overhead. */
+const NoRoofIcon = (p: OptionIconProps) => (
+  <LineIcon {...p}>
+    <path d="M12 28h56M12 60h56" stroke="currentColor" strokeWidth="2" />
+    <path d="M12 28v32M68 28v32" stroke="currentColor" strokeWidth="2" />
+    <path d="M20 28v32M28 28v32M36 28v32M44 28v32M52 28v32M60 28v32" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M6 66h68" stroke="currentColor" strokeWidth="2" />
+  </LineIcon>
+)
 
 // ============ FORM DATA ============
 
@@ -65,6 +255,27 @@ const REGIONS = [
   'Tỉnh / thành khác',
 ];
 
+/* ──────────────────────────────────────────────────────────────────────
+   Step 1 — solution type. `balcony` is the SolaMate line; it maps to the
+   `solution_type` CHECK value added on 2026-11-06.
+   ────────────────────────────────────────────────────────────────────── */
+
+const SOLUTION_TYPES = [
+  { id: 'balcony', label: 'Điện mặt trời ban công', icon: BalconySolarIcon },
+  { id: 'home', label: 'Điện mặt trời cho gia đình', icon: HomeSolarIcon },
+  { id: 'business', label: 'Điện mặt trời cho doanh nghiệp', icon: BusinessSolarIcon },
+  { id: 'exploring', label: 'Chưa chắc chắn / Đang tìm hiểu', icon: QuestionIcon },
+];
+
+/* Step 2 — property type. */
+const PROPERTY_TYPES = [
+  { id: 'detached-semi', label: 'Nhà phố / Nhà riêng', icon: TownhouseIcon },
+  { id: 'terraced-apt', label: 'Căn hộ / Chung cư', icon: ApartmentIcon },
+  { id: 'commercial', label: 'Cửa hàng / Doanh nghiệp', icon: StorefrontIcon },
+  { id: 'others', label: 'Khác', icon: QuestionIcon },
+];
+
+/* Step 3 — household size. */
 const HOUSEHOLD_SIZES = [
   { id: '1', label: '1 người', count: 1 },
   { id: '2', label: '2 người', count: 2 },
@@ -73,86 +284,53 @@ const HOUSEHOLD_SIZES = [
   { id: '5+', label: '5+ người', count: 5 },
 ];
 
+/**
+ * Step 3 — monthly electricity consumption.
+ *
+ * The IDs are the legacy `ConsumptionTier` values (`low` … `unknown`) so
+ * the /my-plan sizing engine keeps working unchanged. The labels are now
+ * monthly kWh bands, which is what the customer can actually read off
+ * their EVN bill. Band midpoints roughly line up with the yearly figures
+ * in `USAGE_KWH_PER_YEAR`.
+ */
 const ELECTRICITY_USAGE = [
-  { id: 'low', label: 'Thấp', description: '< 3.000 kWh/năm', icon: Lightbulb },
-  { id: 'medium', label: 'Trung bình', description: '3.000–5.000 kWh/năm', icon: Zap },
-  { id: 'high', label: 'Cao', description: '5.000–8.000 kWh/năm', icon: Plug },
-  { id: 'very-high', label: 'Rất cao', description: '> 8.000 kWh/năm', icon: Factory },
-  // Sentinel id for the "I don't know" answer. The server collapses this to
-  // NULL on write so /admin/leads can render the row without a Usage line.
-  { id: 'unknown', label: 'Chưa rõ', description: 'Bỏ qua và để chúng tôi tư vấn', icon: HelpCircle },
+  { id: 'low', label: '< 200 kWh/tháng', description: 'Mức dùng thấp', icon: UsageLowIcon },
+  { id: 'medium', label: '200 – 400 kWh/tháng', description: 'Mức dùng trung bình', icon: UsageMediumIcon },
+  { id: 'high', label: '400 – 700 kWh/tháng', description: 'Mức dùng cao', icon: UsageHighIcon },
+  { id: 'very-high', label: 'Trên 700 kWh/tháng', description: 'Mức dùng rất cao', icon: UsageVeryHighIcon },
+  // Sentinel id for the "I don't know" answer. Stored as its own value;
+  // the sizing engine already maps `unknown` to a neutral tier.
+  { id: 'unknown', label: 'Chưa rõ', description: 'Để Solavita tư vấn', icon: QuestionIcon },
 ];
 
-const DEVICES = [
-  { id: 'wallbox', label: 'Trạm sạc / xe điện', icon: WallboxIcon },
-  { id: 'heatpump', label: 'Máy bơm nhiệt', icon: HeatPumpIcon },
-  { id: 'ac', label: 'Điều hòa', icon: ACIcon },
+/* Step 3 — share of electricity used during daylight. */
+const DAYTIME_RATIOS = [
+  { id: 'under-30', label: 'Dưới 30%', description: 'Chủ yếu dùng buổi tối', icon: MoonIcon },
+  { id: '30-50', label: '30 – 50%', description: 'Ban ngày dùng vừa phải', icon: SunriseIcon },
+  { id: '50-70', label: '50 – 70%', description: 'Phần lớn dùng ban ngày', icon: SunIcon },
+  { id: 'over-70', label: 'Trên 70%', description: 'Gần như cả ngày', icon: BrightSunIcon },
+  { id: 'unknown', label: 'Chưa rõ', description: 'Để Solavita tư vấn', icon: QuestionIcon },
 ];
 
-/* ──────────────────────────────────────────────────────────────────────
-   VN Step-3 backup needs.
-
-   BACKUP_NEEDS: which circuits they want backup for. Heavy items
-   (air conditioning, water pump) push battery sizing; lights/fans/
-   fridge are the baseline and don't. Optional and non-blocking.
-   ────────────────────────────────────────────────────────────────────── */
-
-const LightsIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
-    <path d="M20 6C13 6 8 11 8 18c0 4 2 7 5 9v3a2 2 0 002 2h10a2 2 0 002-2v-3c3-2 5-5 5-9 0-7-5-12-12-12z" stroke="currentColor" strokeWidth="2"/>
-    <path d="M15 36h10M17 40h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-)
-const FridgeIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
-    <rect x="11" y="6" width="18" height="28" rx="2" stroke="currentColor" strokeWidth="2"/>
-    <line x1="11" y1="14" x2="29" y2="14" stroke="currentColor" strokeWidth="2"/>
-    <line x1="15" y1="10" x2="15" y2="12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-    <line x1="15" y1="20" x2="15" y2="26" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-  </svg>
-)
-const PumpIcon = () => (
-  <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8">
-    <circle cx="14" cy="20" r="8" stroke="currentColor" strokeWidth="2"/>
-    <path d="M22 20h12M30 16v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-)
-
-const BACKUP_NEEDS = [
-  { id: 'lights', label: 'Đèn, quạt và TV', icon: LightsIcon },
-  { id: 'fridge', label: 'Tủ lạnh và thiết bị thiết yếu', icon: FridgeIcon },
-  { id: 'ac', label: 'Điều hòa', icon: ACIcon },
-  { id: 'pump', label: 'Máy bơm nước và tải nặng khác', icon: PumpIcon },
-]
-
-/** Lookup a human label for a single-select id, with a fallback. */
-function labelFor(
-  id: string | undefined,
-  options: ReadonlyArray<{ id: string; label: string }>,
-  fallback = 'Chưa rõ',
-): string {
-  if (!id) return fallback
-  if (id === 'unknown') return 'Chưa rõ'
-  return options.find((o) => o.id === id)?.label ?? fallback
-}
-
-/** Join human labels for a multi-select id list. */
-function labelsForIds(
-  ids: string[] | undefined,
-  options: ReadonlyArray<{ id: string; label: string }>,
-): string {
-  if (!ids || ids.length === 0) return ''
-  return ids
-    .map((id) => options.find((o) => o.id === id)?.label)
-    .filter(Boolean)
-    .join(', ')
-}
+/* Step 4 — roof type. `none` covers balcony installs, which have no roof. */
+const ROOF_TYPES = [
+  { id: 'flat', label: 'Mái bằng bê tông', icon: FlatRoofIcon },
+  { id: 'tile', label: 'Mái ngói', icon: TileRoofIcon },
+  { id: 'metal', label: 'Mái tôn / kim loại', icon: MetalRoofIcon },
+  { id: 'none', label: 'Ban công, không có mái', icon: NoRoofIcon },
+  { id: 'other', label: 'Loại khác', icon: QuestionIcon },
+];
 
 // ============ STEP COMPONENT ============
-// 4-step form per docs/修改建议.docx. The Compressed Edit-details
-// view (hideAddressAndContact) shows only 3 of these as data steps
-// plus 1 review — see VISIBLE_TOTAL_STEPS inside the component.
-const TOTAL_STEPS = 4
+// 5-step public form:
+//   1. solution type   (balcony / home / business / exploring)
+//   2. city + property type
+//   3. household size + monthly usage + daytime ratio
+//   4. roof type
+//   5. contact info
+// The compressed Edit-details view (hideAddressAndContact) hides
+// steps 1 and 5 and appends a review step, so it shows 4 dots.
+const TOTAL_STEPS = 5
 
 const StepIndicator = ({ current, total }: { current: number; total: number }) => (
   <div className="flex items-center justify-center gap-2 mb-8">
@@ -183,7 +361,7 @@ const StepIndicator = ({ current, total }: { current: number; total: number }) =
 interface CardOption {
   id: string;
   label: string;
-  icon?: React.ComponentType;
+  icon?: React.ComponentType<OptionIconProps>;
   description?: string;
   emoji?: string;
   count?: number;
@@ -216,7 +394,7 @@ const CardSelect = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onSelect(opt.id)}
-          className={`relative p-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1.5 min-h-[80px] ${
+          className={`relative p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[120px] ${
             isSelected
               ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E] shadow-md'
               : 'border-gray-200 bg-white hover:border-[#0F766E]/40 hover:bg-gray-50 text-gray-600'
@@ -226,16 +404,16 @@ const CardSelect = ({
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
+              className="absolute top-2 right-2 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
             >
               <Check className="w-3 h-3 text-white" strokeWidth={3} />
             </motion.div>
           )}
-          {Icon && <Icon />}
+          {Icon && <Icon className="w-16 h-16" aria-hidden="true" />}
           {opt.emoji && <span className="text-2xl">{opt.emoji}</span>}
           {opt.count !== undefined && <PersonIcon count={opt.count} />}
           <span className="text-sm font-medium text-center leading-tight">{opt.label}</span>
-          {opt.description && <span className="text-[11px] text-gray-400 leading-tight text-center">{opt.description}</span>}
+          {opt.description && <span className="text-xs text-gray-400 leading-tight text-center">{opt.description}</span>}
         </motion.button>
       );
     })}
@@ -248,7 +426,7 @@ const MultiCardSelect = ({
   selected,
   onToggle,
 }: {
-  options: { id: string; label: string; icon: React.ComponentType }[];
+  options: { id: string; label: string; icon: React.ComponentType<OptionIconProps> }[];
   selected: string[];
   onToggle: (id: string) => void;
 }) => (
@@ -263,7 +441,7 @@ const MultiCardSelect = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onToggle(opt.id)}
-          className={`relative p-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1.5 min-h-[80px] ${
+          className={`relative p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2 min-h-[120px] ${
             isSelected
               ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E] shadow-md'
               : 'border-gray-200 bg-white hover:border-[#0F766E]/40 hover:bg-gray-50 text-gray-600'
@@ -273,16 +451,24 @@ const MultiCardSelect = ({
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute top-1.5 right-1.5 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
+              className="absolute top-2 right-2 w-5 h-5 bg-[#0F766E] rounded-full flex items-center justify-center"
             >
               <Check className="w-3 h-3 text-white" strokeWidth={3} />
             </motion.div>
           )}
-          <Icon />
+          <Icon className="w-16 h-16" aria-hidden="true" />
           <span className="text-sm font-medium text-center leading-tight">{opt.label}</span>
         </motion.button>
       );
     })}
+  </div>
+);
+
+// ============ REVIEW ROW ============
+const ReviewRow = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex items-center justify-between gap-4 px-4 py-3">
+    <dt className="text-sm text-gray-500">{label}</dt>
+    <dd className="text-sm font-medium text-gray-800 text-right">{value}</dd>
   </div>
 );
 
@@ -293,30 +479,26 @@ const Form: React.FC<{
   onClose?: () => void
   initialData?: Partial<FormData>
   /**
-   * When true, the form renders only Steps 0/1/2 (region, house/roof
-   * type, household/usage/devices) - Steps 3 (Address) and 4 (Contact
-   * Info) are skipped entirely. The Submit button shows on the last
-   * visible step instead of on Step 4. The StepIndicator is recomputed
-   * so it shows 3 dots, not 5.
+   * When true, the form hides the solution step (already chosen at
+   * registration) and the contact step (PII), so only city/property,
+   * household/usage/daytime and roof render, followed by a review.
+   * The Submit button shows on that review step. The StepIndicator is
+   * recomputed so it shows 4 dots, not 5.
    *
-   * Used by /my-plan "Edit details" - those steps carry PII which we
-   * deliberately don't prefill from the DB. The user can still submit
-   * the form; if they want to update address/contact, they re-enter
-   * those fields from scratch on the homepage later (the homepage form
-   * still has all 5 steps).
+   * Used by /my-plan "Edit details".
    */
   hideAddressAndContact?: boolean
   /**
    * Override the submit endpoint. Default `/api/consultation` (full
    * register-or-update with all 5 steps). For /my-plan's Edit-details
-   * modal we use `/api/consultation/update`, which only accepts the
-   * 6 Steps-0/1/2 fields and identifies the row by `plan_token`.
+   * modal we use `/api/consultation/update`, which accepts the
+   * non-PII fields and identifies the row by `plan_token`.
    */
   submitEndpoint?: string
   /**
-   * Build the request body. Default sends the full FormData (all 14
-   * fields) so the existing /api/consultation contract is unchanged.
-   * Override for endpoints that expect a slimmer payload.
+   * Build the request body. Default sends the full FormData so the
+   * existing /api/consultation contract is unchanged. Override for
+   * endpoints that expect a slimmer payload.
    */
   submitPayload?: (formData: FormData) => unknown
   /** Visible label on the final Submit button. Default 'Submit'. */
@@ -337,13 +519,16 @@ const Form: React.FC<{
   onSubmitSuccess,
 }) => {
   // Compressed Edit-details view (hideAddressAndContact = true): the
-  // public form's Step 0 (solutionType — already chosen at
-  // registration) and Step 3 (contact info — PII, never surfaced) are
-  // hidden. 2 data steps + 1 review step = 3 visible steps. The
-  // render block below remaps the `step` index 0/1/2 to public form
-  // steps 1/2/review so the form reuses the same step-content
-  // components.
-  const VISIBLE_TOTAL_STEPS = hideAddressAndContact ? 3 : TOTAL_STEPS
+  // public form's step 0 (solutionType — already chosen at
+  // registration) and step 4 (contact info — PII, never surfaced) are
+  // hidden. That leaves 3 data steps (city/property, household/usage,
+  // roof) + 1 review step = 4 visible steps.
+  //
+  // `step` is the VISIBLE index. `publicStep` maps it back onto the
+  // public form's numbering so the same step-content blocks render.
+  // The compressed view's last visible step is the review, which has
+  // no public-step equivalent (-1).
+  const VISIBLE_TOTAL_STEPS = hideAddressAndContact ? 4 : TOTAL_STEPS
   const VISIBLE_LAST_STEP = VISIBLE_TOTAL_STEPS - 1
   const [step, setStep] = useState(0);
   // Defensive clamp: if the prop flips after mount (it doesn't in
@@ -352,6 +537,10 @@ const Form: React.FC<{
   useEffect(() => {
     setStep((s) => (s > VISIBLE_LAST_STEP ? VISIBLE_LAST_STEP : s))
   }, [VISIBLE_LAST_STEP])
+  const publicStep =
+    hideAddressAndContact && step === VISIBLE_LAST_STEP
+      ? -1
+      : step + (hideAddressAndContact ? 1 : 0)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -372,12 +561,11 @@ const Form: React.FC<{
   const validateStep = (): boolean => {
     const newErrors: { [key: string]: string } = {};
 
-    // 4-step form per docs/修改建议.docx. The Compressed Edit-details
-    // view (hideAddressAndContact) reuses the same step array but
-    // skips Step 0 (solutionType) and Step 3 (contact) — see
-    // VISIBLE_TOTAL_STEPS / VISIBLE_LAST_STEP at the top of the
-    // component. The check below is shared.
-    switch (step) {
+    // Public-form step numbering (see `publicStep`). The compressed
+    // Edit-details view reuses the same checks but skips step 0
+    // (solutionType) and step 4 (contact) — see VISIBLE_TOTAL_STEPS /
+    // VISIBLE_LAST_STEP at the top of the component.
+    switch (publicStep) {
       case 0:
         // Step 1 — solutionType
         if (!formData.solutionType)
@@ -392,12 +580,23 @@ const Form: React.FC<{
           newErrors.propertyType = 'Vui lòng chọn loại công trình.'
         break;
       case 2:
-        // Step 3 — householdSize required
+        // Step 3 — householdSize + usage + daytime ratio
         if (!formData.householdSize)
           newErrors.householdSize = 'Vui lòng chọn số người trong hộ gia đình.'
+        if (!formData.electricityUsage)
+          newErrors.electricityUsage =
+            'Vui lòng chọn mức điện năng tiêu thụ hằng tháng.'
+        if (!formData.daytimeRatio)
+          newErrors.daytimeRatio =
+            'Vui lòng chọn tỷ lệ điện dùng vào ban ngày.'
         break;
       case 3:
-        // Step 4 — contact info
+        // Step 4 — roofType
+        if (!formData.roofType)
+          newErrors.roofType = 'Vui lòng chọn loại mái của công trình.'
+        break;
+      case 4:
+        // Step 5 — contact info
         if (!formData.salutation) newErrors.salutation = 'Vui lòng chọn cách xưng hô.'
         if (!formData.firstName) newErrors.firstName = 'Vui lòng nhập tên.'
         if (!formData.lastName) newErrors.lastName = 'Vui lòng nhập họ.'
@@ -430,9 +629,13 @@ const Form: React.FC<{
       // Step 2
       city: '',
       propertyType: '',
-      // Step 3 — householdSize required.
+      // Step 3 — household size + usage + daytime ratio, all required.
       householdSize: '',
-      // Step 4
+      electricityUsage: '',
+      daytimeRatio: '',
+      // Step 4 — roof type, required.
+      roofType: '',
+      // Step 5
       salutation: '',
       firstName: '',
       lastName: '',
@@ -447,17 +650,21 @@ const Form: React.FC<{
   };
 
   const canProceed = (): boolean => {
-    // Compressed (hideAddressAndContact) view: 3 visible steps - 0
-    // and 1 are data entry (skipping the Step-0 solutionType and the
-    // Step-3 contact step the public form carries), 2 is the Review
-    // step. The Review step is always proceed-able; data correctness
-    // was validated on the previous steps.
-    if (hideAddressAndContact && step === 2) return true
-    switch (step) {
+    // Compressed (hideAddressAndContact) view: the last visible step is
+    // the Review step. It's always proceed-able; data correctness was
+    // validated on the previous steps.
+    if (publicStep === -1) return true
+    switch (publicStep) {
       case 0: return !!formData.solutionType;
       case 1: return !!formData.city && !!formData.propertyType;
-      case 2: return !!formData.householdSize;
-      case 3:
+      case 2:
+        return (
+          !!formData.householdSize &&
+          !!formData.electricityUsage &&
+          !!formData.daytimeRatio
+        );
+      case 3: return !!formData.roofType;
+      case 4:
         return (
           !!formData.salutation &&
           !!formData.firstName &&
@@ -485,8 +692,7 @@ const Form: React.FC<{
     // Default payload = full FormData (used by the homepage flow's
     // /api/consultation). When the host supplies a `submitPayload`
     // builder, we use that instead - /my-plan does this to send a
-    // slim 5-field body (Step 2 + Step 3, no PII) to
-    // /api/consultation/update.
+    // slim, no-PII body to /api/consultation/update.
     const body = submitPayload
       ? submitPayload(formData)
       : {
@@ -497,12 +703,21 @@ const Form: React.FC<{
           propertyType: formData.propertyType,
           // Step 3
           householdSize: formData.householdSize,
-          // Step 4 — contact
+          electricityUsage: formData.electricityUsage,
+          daytimeRatio: formData.daytimeRatio,
+          // Step 4 — roof type
+          roofType: formData.roofType,
+          // Step 5 — contact
           salutation: formData.salutation,
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone,
+          // Optional context tag seeded by the caller (e.g. the C&I
+          // energy profile from /solutions/business-solar). Stored in
+          // the lead's `business_profile` column so sales sees what
+          // the visitor already told us.
+          interestedProduct: formData.interestedProduct,
         };
 
     try {
@@ -632,48 +847,36 @@ const Form: React.FC<{
                 </div>
               ) : (
                 <>
-                  {/* ─── 4-step form per docs/修改建议.docx ──────────────────
-                     In the compressed Edit-details view (hideAddressAndContact),
-                     Step 0 (solutionType - already chosen at registration)
-                     and Step 3 (contact - PII) are hidden. The render block
-                     below uses `step` as the visible-step counter (0..N-1)
-                     and remaps internally to the matching public-form
-                     content. The compressed view's last visible step is a
-                     Review summary, NOT the public form's contact step. */}
+                  {/* ─── Step map ─────────────────────────────────────────
+                     Public form: 5 visible steps.
+                       0 solution · 1 site/property · 2 household + usage
+                       + daytime · 3 roof · 4 contact.
+
+                     Compressed Edit-details view: `publicStep` maps visible
+                     step 0..2 to public 1..3 and the last visible step to
+                     the review screen (-1). Steps 0 and 4 never render
+                     there — the solution was chosen at registration and
+                     the contact block is PII. */}
 
                   {/* Step 0 (public only): solutionType */}
                   {!hideAddressAndContact && step === 0 && (
                     <div className="space-y-5">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
-                          Bạn quan tâm đến loại giải pháp nào?
+                          Bạn quan tâm đến loại giải pháp nào? <span className="text-red-500">*</span>
                         </label>
                         <p className="text-sm text-gray-400 mb-4">
                           Chọn phương án mô tả đúng nhất nhu cầu của bạn.
                         </p>
-                        <div className="grid grid-cols-1 gap-3">
-                          {[
-                            { id: 'home', label: 'Giải pháp điện mặt trời cho gia đình' },
-                            { id: 'business', label: 'Giải pháp điện mặt trời cho doanh nghiệp' },
-                            { id: 'exploring', label: 'Chưa chắc chắn / Đang tìm hiểu' },
-                          ].map(opt => (
-                            <button
-                              key={opt.id}
-                              type="button"
-                              onClick={() => {
-                                updateField('solutionType', opt.id as 'home' | 'business' | 'exploring')
-                                clearErrors()
-                              }}
-                              className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                                formData.solutionType === opt.id
-                                  ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E]'
-                                  : 'border-gray-200 text-gray-700 hover:border-[#0F766E]/40'
-                              }`}
-                            >
-                              <span className="font-medium">{opt.label}</span>
-                            </button>
-                          ))}
-                        </div>
+                        <CardSelect
+                          options={SOLUTION_TYPES as CardOption[]}
+                          selected={formData.solutionType}
+                          onSelect={id => {
+                            updateField('solutionType', id as FormData['solutionType'])
+                            clearErrors()
+                          }}
+                          columns={2}
+                        />
                         {errors.solutionType && (
                           <p className="text-red-500 text-xs mt-2">{errors.solutionType}</p>
                         )}
@@ -681,8 +884,8 @@ const Form: React.FC<{
                     </div>
                   )}
 
-                  {/* Step 1 (public + compressed step 0): city + propertyType */}
-                  {((!hideAddressAndContact && step === 1) || (hideAddressAndContact && step === 0)) && (
+                  {/* Step 1 (public) / Step 0 (compressed): city + propertyType */}
+                  {publicStep === 1 && (
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
@@ -705,32 +908,14 @@ const Form: React.FC<{
 
                       <div>
                         <label className="block text-sm font-semibold mb-3">
-                          Loại công trình nào mô tả đúng nhất?
+                          Loại công trình nào mô tả đúng nhất? <span className="text-red-500">*</span>
                         </label>
-                        <div className="grid grid-cols-1 gap-3">
-                          {[
-                            { id: 'detached-semi', label: 'Nhà phố / Nhà riêng' },
-                            { id: 'terraced-apt', label: 'Căn hộ / Chung cư' },
-                            { id: 'commercial', label: 'Cửa hàng / Doanh nghiệp' },
-                            { id: 'others', label: 'Khác' },
-                          ].map(opt => (
-                            <button
-                              key={opt.id}
-                              type="button"
-                              onClick={() => {
-                                updateField('propertyType', opt.id)
-                                clearErrors()
-                              }}
-                              className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                                formData.propertyType === opt.id
-                                  ? 'border-[#0F766E] bg-[#0F766E]/5 text-[#0F766E]'
-                                  : 'border-gray-200 text-gray-700 hover:border-[#0F766E]/40'
-                              }`}
-                            >
-                              <span className="font-medium">{opt.label}</span>
-                            </button>
-                          ))}
-                        </div>
+                        <CardSelect
+                          options={PROPERTY_TYPES as CardOption[]}
+                          selected={formData.propertyType}
+                          onSelect={id => { updateField('propertyType', id); clearErrors() }}
+                          columns={2}
+                        />
                         {errors.propertyType && (
                           <p className="text-red-500 text-xs mt-2">{errors.propertyType}</p>
                         )}
@@ -738,9 +923,9 @@ const Form: React.FC<{
                     </div>
                   )}
 
-                  {/* Step 2 (public + compressed step 1): household */}
-                  {((!hideAddressAndContact && step === 2) || (hideAddressAndContact && step === 1)) && (
-                    <div className="space-y-5">
+                  {/* Step 2 (public) / Step 1 (compressed): household + usage + daytime */}
+                  {publicStep === 2 && (
+                    <div className="space-y-7">
                       <div>
                         <label className="block text-sm font-semibold mb-2">
                           Gia đình bạn có bao nhiêu người? <span className="text-red-500">*</span>
@@ -754,14 +939,66 @@ const Form: React.FC<{
                         {errors.householdSize && <p className="text-red-500 text-xs mt-2">{errors.householdSize}</p>}
                       </div>
 
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          Một tháng gia đình bạn dùng khoảng bao nhiêu điện? <span className="text-red-500">*</span>
+                        </label>
+                        <p className="text-sm text-gray-400 mb-4">
+                          Số kWh ghi trên hoá đơn tiền điện hằng tháng.
+                        </p>
+                        <CardSelect
+                          options={ELECTRICITY_USAGE as CardOption[]}
+                          selected={formData.electricityUsage}
+                          onSelect={id => { updateField('electricityUsage', id); clearErrors() }}
+                          columns={3}
+                        />
+                        {errors.electricityUsage && <p className="text-red-500 text-xs mt-2">{errors.electricityUsage}</p>}
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          Bao nhiêu phần trăm điện năng được dùng vào ban ngày? <span className="text-red-500">*</span>
+                        </label>
+                        <p className="text-sm text-gray-400 mb-4">
+                          Tỷ lệ điện dùng trong khoảng 6 giờ sáng – 6 giờ chiều.
+                        </p>
+                        <CardSelect
+                          options={DAYTIME_RATIOS as CardOption[]}
+                          selected={formData.daytimeRatio}
+                          onSelect={id => { updateField('daytimeRatio', id); clearErrors() }}
+                          columns={3}
+                        />
+                        {errors.daytimeRatio && <p className="text-red-500 text-xs mt-2">{errors.daytimeRatio}</p>}
+                      </div>
                     </div>
                   )}
 
-                  {/* Step 2 (compressed only): Review + Confirm. Shown at the
-                       end of the Edit-details flow as the final visible step.
-                       Reads back solutionType (seeded via initialData) +
-                       city + propertyType + household. */}
-                  {hideAddressAndContact && step === 2 && (
+                  {/* Step 3 (public) / Step 2 (compressed): roof type */}
+                  {publicStep === 3 && (
+                    <div className="space-y-5">
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          Công trình có loại mái nào? <span className="text-red-500">*</span>
+                        </label>
+                        <p className="text-sm text-gray-400 mb-4">
+                          Chọn loại mái nơi dự kiến lắp đặt tấm quang năng.
+                        </p>
+                        <CardSelect
+                          options={ROOF_TYPES as CardOption[]}
+                          selected={formData.roofType}
+                          onSelect={id => { updateField('roofType', id); clearErrors() }}
+                          columns={2}
+                        />
+                        {errors.roofType && <p className="text-red-500 text-xs mt-2">{errors.roofType}</p>}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Review (compressed only): final visible step of the
+                       Edit-details flow. Reads back the non-PII answers
+                       seeded via initialData / edited on the previous
+                       steps. */}
+                  {publicStep === -1 && (
                     <div className="space-y-6">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -773,36 +1010,41 @@ const Form: React.FC<{
                       </div>
 
                       <dl className="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white">
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Giải pháp</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {formData.solutionType === 'home'
-                              ? 'Giải pháp điện mặt trời cho gia đình'
-                              : formData.solutionType === 'business'
-                                ? 'Giải pháp điện mặt trời cho doanh nghiệp'
-                                : formData.solutionType === 'exploring'
-                                  ? 'Chưa chắc chắn / Đang tìm hiểu'
-                                  : '-'}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Tỉnh / thành phố</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {formData.city || '-'}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Loại công trình</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {formData.propertyType || '-'}
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between px-4 py-3">
-                          <dt className="text-sm text-gray-500">Số người</dt>
-                          <dd className="text-sm font-medium text-gray-800">
-                            {formData.householdSize || '-'}
-                          </dd>
-                        </div>
+                        <ReviewRow
+                          label="Giải pháp"
+                          value={
+                            SOLUTION_TYPES.find(o => o.id === formData.solutionType)?.label ?? '-'
+                          }
+                        />
+                        <ReviewRow label="Tỉnh / thành phố" value={formData.city || '-'} />
+                        <ReviewRow
+                          label="Loại công trình"
+                          value={
+                            PROPERTY_TYPES.find(o => o.id === formData.propertyType)?.label ?? '-'
+                          }
+                        />
+                        <ReviewRow
+                          label="Số người"
+                          value={
+                            HOUSEHOLD_SIZES.find(o => o.id === formData.householdSize)?.label ?? '-'
+                          }
+                        />
+                        <ReviewRow
+                          label="Điện dùng hằng tháng"
+                          value={
+                            ELECTRICITY_USAGE.find(o => o.id === formData.electricityUsage)?.label ?? '-'
+                          }
+                        />
+                        <ReviewRow
+                          label="Tỷ lệ dùng ban ngày"
+                          value={
+                            DAYTIME_RATIOS.find(o => o.id === formData.daytimeRatio)?.label ?? '-'
+                          }
+                        />
+                        <ReviewRow
+                          label="Loại mái"
+                          value={ROOF_TYPES.find(o => o.id === formData.roofType)?.label ?? '-'}
+                        />
                       </dl>
 
                       <p className="text-xs text-gray-400 leading-relaxed">
@@ -812,9 +1054,9 @@ const Form: React.FC<{
                     </div>
                   )}
 
-                  {/* Step 3 (public only): Contact Info. PII — never rendered in
+                  {/* Step 4 (public only): Contact Info. PII — never rendered in
                        the Edit-details compressed view. */}
-                  {!hideAddressAndContact && step === 3 && (
+                  {publicStep === 4 && (
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold mb-2">

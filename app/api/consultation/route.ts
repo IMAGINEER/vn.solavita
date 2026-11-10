@@ -21,23 +21,32 @@ export async function POST(request: Request) {
       solutionType,
       // Step 2
       city, propertyType,
-      // Step 3
+      // Step 3 — household size + monthly usage + daytime ratio
       householdSize,
-      // Step 4
+      electricityUsage,
+      daytimeRatio,
+      // Step 4 — roof type
+      roofType,
+      // Step 5
       salutation, firstName, lastName, email, phone,
+      // Optional context tag seeded by the caller — e.g. the C&I
+      // energy profile from /solutions/business-solar. Stored in
+      // `business_profile` (see migration
+      // 20261110000000_vn_consultation_business_profile.sql).
+      interestedProduct,
     } = body
 
-    // Basic server-side validation. The form has been reshaped to
-    // 4 steps per docs/修改建议.docx; the previous 5-step fields
-    // (region/roofType/electricityUsage/devices/backupNeeds/address)
-    // are gone. Postal code / street were Step 4 before; `city` now
-    // comes from Step 2 Q1 so we no longer require a separate
-    // postal_code.
+    // Basic server-side validation. The VN form has 5 steps:
+    // solution → site/property → household+usage → roof → contact.
+    // `electricityUsage` and `daytimeRatio` are required by the client
+    // but tolerated as missing here so older clients / the /my-plan
+    // update route never 400 on a partial body.
     if (
       !solutionType ||
       !city ||
       !propertyType ||
       !householdSize ||
+      !roofType ||
       !salutation ||
       !firstName ||
       !lastName ||
@@ -58,9 +67,15 @@ export async function POST(request: Request) {
     }
 
     // Validate solutionType against the DB CHECK constraint values
-    // ('home' | 'business' | 'exploring'). Reject anything else so
-    // a tampered client can't write a junk value to a shared table.
-    const allowedSolutionTypes = new Set(['home', 'business', 'exploring'])
+    // ('home' | 'balcony' | 'business' | 'exploring' — the balcony
+    // value was added on 2026-11-06). Reject anything else so a
+    // tampered client can't write a junk value to a shared table.
+    const allowedSolutionTypes = new Set([
+      'home',
+      'balcony',
+      'business',
+      'exploring',
+    ])
     if (!allowedSolutionTypes.has(solutionType)) {
       return NextResponse.json(
         { success: false, message: 'Invalid solution type' },
@@ -79,23 +94,36 @@ export async function POST(request: Request) {
       city,
       region: null,
       house_type: propertyType,
-      // Step 3 — only householdSize is required. Old fields (roofType,
-      // electricityUsage, devices, backupNeeds, generator/fuel) are no
-      // longer collected by the public form; we keep the column writes
-      // NULL so old rows are untouched on UPDATE.
+      // Step 3 — household size + monthly usage band + daytime ratio.
+      // `electricity_usage` reuses the legacy tier IDs so /my-plan's
+      // sizing engine keeps working. `daytime_usage_ratio` is the new
+      // VN-only column (2026-11-06).
       household_size: householdSize,
-      roof_type: null,
-      electricity_usage: null,
+      electricity_usage: electricityUsage || null,
+      daytime_usage_ratio: daytimeRatio || null,
+      // Step 4 — roof type.
+      roof_type: roofType || null,
+      // Not collected by the VN form any more; keep NULL so historical
+      // rows from other country sites are untouched on UPDATE.
       devices: null,
       backup_needs: null,
       generator_frequency: null,
       fuel_budget_ngn: null,
-      // Step 4
+      // Step 5
       salutation,
       first_name: firstName,
       last_name: lastName,
       email,
       phone: phone || null,
+      // Business (C&I) profile from the business-solar assessment /
+      // savings estimator. NULL for every home lead.
+      //
+      // Written only when the visitor actually filled a profile in, so
+      // a deployment that has not applied
+      // 20261110000000_vn_consultation_business_profile.sql yet still
+      // accepts every home lead — the column is simply left out of the
+      // INSERT for those rows.
+      ...(interestedProduct ? { business_profile: interestedProduct } : {}),
       // Address fields are no longer collected (Step 2 captures the
       // city). Keep the columns NULL so existing admin tooling that
       // reads them still works.

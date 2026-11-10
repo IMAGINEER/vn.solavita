@@ -2,11 +2,13 @@
  * Contact Us page data — Vietnam.
  *
  *   - 5 selectable enquiry categories (Section 2)
- *   - All contact channels (phone, email, address, hours) are TBD until
- *     business supplies verified Vietnamese contact details
+ *   - Two published contact channels: the Vietnam email address and
+ *     the WhatsApp handoff line.
  *
- * Every TBD is surfaced in red on the website through the
- * `components/ui/tbd-text.tsx` component.
+ * There is deliberately NO office channel: Vietnam has no published
+ * office address yet, and the page must not point at an address that
+ * does not exist. Add the office row (and a matching row in
+ * `lib/data/about.ts`) in one pass once the address is confirmed.
  */
 
 import type { ReactNode } from 'react'
@@ -81,15 +83,8 @@ export const contactChannels: ContactChannel[] = [
     value: 'WhatsApp',
     href: 'https://wa.me/8618500875025',
     description:
-      'TBD — Giờ làm việc và khung giờ hỗ trợ WhatsApp tại Việt Nam (chờ xác nhận).',
+      'Trao đổi trực tiếp với đội ngũ Solavita Việt Nam trên WhatsApp.',
     icon: 'phone',
-  },
-  {
-    label: 'Văn phòng',
-    value: 'TBD — Địa chỉ văn phòng tại Việt Nam (chờ xác nhận)',
-    href: 'https://maps.google.com/',
-    description: 'TBD — Văn phòng đăng ký và khu vực phục vụ (chờ xác nhận).',
-    icon: 'map-pin',
   },
 ]
 

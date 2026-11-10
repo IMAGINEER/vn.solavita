@@ -229,7 +229,7 @@ export default function ProductDetails() {
               onClick={() => setActiveTab(id)}
               className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-cw-bold transition-all duration-300
                 ${activeTab === id
-                  ? 'bg-sv-gradient text-white shadow-lg shadow-sv-blue/20'
+                  ? 'bg-sv-gradient-strong text-white shadow-lg shadow-[#007A9E]/25'
                   : 'bg-white/5 text-sv-gray-light border border-white/10 hover:bg-white/10 hover:text-white'
                 }
               `}

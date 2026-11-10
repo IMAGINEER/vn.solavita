@@ -55,10 +55,13 @@ export interface ConsultationRow {
    * route writes them straight through.
    */
   household_size: string | null
-  /** One of `'low' / 'medium' / 'high' / 'very-high'`. Carried over from
-   * the old 5-step form. New 4-step form submissions leave this NULL
-   * and `toConsultationInput` falls back to a neutral `medium` tier. */
+  /** One of `'low' / 'medium' / 'high' / 'very-high' / 'unknown'` —
+   * the monthly-consumption band question in step 3. */
   electricity_usage: string | null
+  /** Share of electricity used during daylight. `'under-30' | '30-50'
+   *  | '50-70' | 'over-70' | 'unknown'`. VN-only column added
+   *  2026-11-06; NULL for other country sites and older VN rows. */
+  daytime_usage_ratio: string | null
   /** CSV: `'wallbox, heatpump'`. Carried over from the old form; new
    * 4-step submissions leave this NULL → empty list. */
   devices: string | null
@@ -141,6 +144,7 @@ export function toHomeDetails(row: ConsultationRow): HomeDetails {
     roofOrientation: row.roof_type ?? '',
     region: row.region ?? DEFAULT_REGION,
     electricityUsage: row.electricity_usage ?? DEFAULT_USAGE,
+    daytimeRatio: row.daytime_usage_ratio ?? '',
     devices: parseDevices(row.devices),
     // Các trường mở rộng ở bước 3 - hiển thị trên dải thông tin để người
     // dùng xác nhận lựa chọn nguồn dự phòng / năng lượng mà không cần mở
@@ -155,24 +159,18 @@ export function toHomeDetails(row: ConsultationRow): HomeDetails {
  * Build the `Partial<FormData>` used by `<FormModal initialData={...}>` when
  * the user clicks "Edit details" on /my-plan.
  *
- * The form has 5 steps:
- *   Step 0 - Region + House Type        (prefilled)
- *   Step 1 - Roof Type                  (prefilled)
- *   Step 2 - Household + Usage + Devices (prefilled)
- *   Step 3 - Address                    (HIDDEN - user re-enters if they want)
- *   Step 4 - Contact Info               (HIDDEN - user re-enters if they want)
+ * The modal opens with `hideAddressAndContact`, which renders the
+ * non-PII steps only:
+ *   Solution            (not rendered - already chosen at registration)
+ *   Site + property     (prefilled)
+ *   Household + usage   (prefilled)
+ *   Roof type           (prefilled)
+ *   Contact info        (not rendered - PII)
+ *   Review              (built from the fields above)
  *
- * The DB row holds all five steps' worth of data, but steps 3 and 4 carry
- * PII (street / house number / postal code / city + name / email / phone).
- * We deliberately omit those from the response so they never travel over
- * the wire to the client. Sections 4 and 5 are "hidden" in the user's
- * eyes - the form steps simply don't render those blocks at all when
- * opened from `/my-plan`. Steps 0/1/2 still prefill so the user doesn't
- * have to re-enter the non-PII consultation choices.
- *
- * Step 3 / Step 4 edits, if the user wants them, are typed fresh on the
- * modal - they go through the normal `/api/consultation` UPDATE path and
- * behave identically to the homepage form submission.
+ * The DB row holds the PII columns (street / house number / postal code
+ * / city + name / email / phone) but we deliberately omit them from the
+ * response so they never travel over the wire to the client.
  */
 export function toFormPrefill(row: ConsultationRow): Partial<FormData> {
   return {
@@ -180,9 +178,11 @@ export function toFormPrefill(row: ConsultationRow): Partial<FormData> {
     city: row.city ?? '',
     propertyType: row.house_type ?? '',
     householdSize: row.household_size ?? '',
-    // Bước 3 của biểu mẫu trên site VN không còn thu thập lựa chọn về máy
-    // phát/ngân sách nhiên liệu, nên hai trường lịch sử này không được
-    // đưa vào dữ liệu điền sẵn.
+    electricityUsage: row.electricity_usage ?? '',
+    daytimeRatio: row.daytime_usage_ratio ?? '',
+    roofType: row.roof_type ?? '',
+    // Máy phát / ngân sách nhiên liệu không được thu thập trên site VN,
+    // nên hai trường lịch sử này không có trong dữ liệu điền sẵn.
   }
 }
 

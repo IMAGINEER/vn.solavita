@@ -160,7 +160,11 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          className={`grid grid-cols-1 gap-6 ${
+            contactChannels.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'
+          }`}
+        >
           {contactChannels.map((c) => {
             const cardClass =
               'contact-method-card rounded-2xl p-6 lg:p-8 bg-white border border-uk-line flex flex-col items-start text-left ' +

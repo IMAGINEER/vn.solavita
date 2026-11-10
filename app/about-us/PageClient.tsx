@@ -8,20 +8,25 @@ import Mission from '@/components/about/Mission'
 import Approach from '@/components/about/Approach'
 import Technology from '@/components/about/Technology'
 import GlobalPresence from '@/components/about/GlobalPresence'
-import ContactMethods from '@/components/contact/ContactMethods'
 import CTA from '@/components/solutions/CTA'
 
 /**
  * /about-us - Solavita Việt Nam brand & company page.
  *
- * Composition mirrors the UK /about-us page (`UK.solavita/app/about-us`):
+ * Composition mirrors the Italian market's about-us page
+ * (`IT.solavita/components/about`):
  *   AboutHero → WhoWeAre → Mission → Approach → Technology →
- *   GlobalPresence → ContactMethods (clickable={false}) → CTA.
+ *   GlobalPresence → CTA.
  *
- * All section copy uses `lib/data/about.ts` (VN TBDs) and
- * `lib/data/contact.tsx` (VN TBDs) — other markets' trust marks,
+ * The Italian page has no contact-method block here either: the
+ * contact channels live on /contact-us, and the office card is only
+ * published once a verified Vietnamese office address exists.
+ *
+ * All section copy comes from `lib/data/about.ts`, which only states
+ * facts the group publishes (SKYWORTH Group disclosures, the product
+ * certifications already listed on the product pages, and the Hong
+ * Kong legal entity named in the footer). Other markets' trust marks,
  * revenue figures and market-specific claims are NOT transferred.
- * When unverified facts land they fill the same data slots.
  *
  * The sections are kept as dedicated components rather than being
  * inlined.
@@ -42,8 +47,6 @@ export default function AboutPage() {
       <Technology />
 
       <GlobalPresence />
-
-      <ContactMethods clickable={false} />
 
       <CTA
         eyebrow="Sẵn sàng khi bạn cần"

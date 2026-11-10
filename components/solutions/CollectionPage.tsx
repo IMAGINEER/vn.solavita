@@ -75,6 +75,14 @@ export interface CollectionHeroProps {
   primaryCta?: { label: string; onClick?: () => void; href?: string }
   secondaryCta?: { label: string; onClick?: () => void; href?: string }
   breadcrumbs?: { label: string; href?: string }[]
+  /**
+   * Optional CSS background for the scrim over the hero photo. Use it
+   * when the photo is bright behind the copy column and the default
+   * left-to-right navy gradient is not enough to keep the text
+   * legible — see the business page, whose retail-building shot has a
+   * white facade and pale pavement on the left.
+   */
+  overlay?: string
 }
 
 export interface CollectionContextCopy {
@@ -173,6 +181,7 @@ export default function CollectionPage(props: CollectionPageProps) {
         primaryCta={props.heroProps.primaryCta}
         secondaryCta={props.heroProps.secondaryCta}
         breadcrumbs={props.heroProps.breadcrumbs}
+        overlay={props.heroProps.overlay}
       />
 
       {/* ① 套餐 cards (grouped into categories on the business page) */}

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import Breadcrumb from '@/components/Breadcrumb'
 import GoldMedalPartner from '@/components/partners/GoldMedalPartner'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import JsonLd from '@/components/seo/JsonLd'
@@ -39,7 +38,18 @@ export const metadata: Metadata = buildPageMetadata({
  * `partnerTrack: 'lead-partner'` + `campaign: 'gold-partner'` → the
  * `vn_partner_leads` table.
  */
-export default function GoldPartnerPage() {
+export default async function GoldPartnerPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const params = await searchParams
+
+  // A campaign URL that carries tracking parameters (?lp=fb, ?utm_…)
+  // arrives straight from an advert. The visitor never came from the
+  // partner page, so the trail is noise — the breadcrumb is dropped.
+  const showBreadcrumb = Object.keys(params).length === 0
+
   return (
     <>
       <JsonLd
@@ -59,24 +69,16 @@ export default function GoldPartnerPage() {
         ]}
       />
       <main className="min-h-screen bg-[#F7F9FC]">
-        <Header logoHref="/" />
+        {/* The campaign runs the Solavita | SKYWORTH lockup. `logoSrc`
+            is an existing Header prop, so no shared component changes
+            and no other page is affected. */}
+        <Header
+          logoHref="/"
+          logoSrc="/images/LOGOlan-skyworth.svg"
+          logoAlt="Solavita — SKYWORTH"
+        />
 
-        {/* Breadcrumb sits on the dark campaign panel, so it uses the
-            light theme rather than the default one. */}
-        <div className="relative bg-[#0A1628]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-            <Breadcrumb
-              theme="light"
-              items={[
-                { label: 'Trang chủ', href: '/' },
-                { label: 'Dành cho đối tác', href: '/for-partners/' },
-                { label: 'Chương trình Đối tác Vàng' },
-              ]}
-            />
-          </div>
-        </div>
-
-        <GoldMedalPartner />
+        <GoldMedalPartner showBreadcrumb={showBreadcrumb} />
 
         <Footer variant="light" />
       </main>

@@ -1,19 +1,21 @@
 /**
  * About Us page data — Vietnam.
  *
- * Built from the Vietnam business brief. All copy is placeholder / TBD
- * until business supplies the verified facts. Section-by-section
- * mapping:
- *   - Section 1 Hero: tagline + body
- *   - Section 2 Why We Exist: lede
- *   - Section 3 Our Approach: 4 cards
- *   - Section 4 Our Brand: SKYWORTH association + verified corporate
- *     facts TBD
- *   - Section 5 Our Commitment: service coverage / warranty TBD
- *   - Section 6 Local Presence: address / coverage TBD
+ * Structure mirrors the Italian market's about-us page
+ * (`IT.solavita/components/about`): hero → who we are → mission →
+ * approach → technology → global presence → CTA. The sections are the
+ * same ones the Vietnamese site already shipped; only the copy and the
+ * data behind it are formalised here.
  *
- * No other market's facts, no SKYWORTH-only claims, no fabricated
- * corporate history / factory capacity / project counts.
+ * Every fact below is either (a) a SKYWORTH Group disclosure already
+ * published on this site, (b) a product certification already listed on
+ * the Vietnamese product pages, or (c) a legal-entity fact already
+ * printed in the footer. No market-specific number is invented.
+ *
+ * Vietnam has no published office address yet, so the "global presence"
+ * list names the market and the group entities but never a street
+ * address. Add an office row back in the same pass that supplies the
+ * address — and the matching office channel in `lib/data/contact.tsx`.
  */
 
 export interface AboutStat {
@@ -23,31 +25,32 @@ export interface AboutStat {
 }
 
 /**
- * Stats block on the About page. Until verified corporate facts are
- * supplied, every entry is a TBD placeholder; the consumer renders
- * them with a `TbdText` so the page can be reviewed without
- * fabricating numbers.
+ * Stats block on the About page. These mirror the tiles rendered by
+ * `components/about/WhoWeAre.tsx` so the data file and the section
+ * never drift apart.
  */
 export const aboutStats: AboutStat[] = [
   {
-    value: 'TBD',
-    unit: '',
-    label: 'TBD — Mốc ra mắt / hiện diện của SKYWORTH tại Việt Nam (chờ xác minh)',
+    value: '9,8 tỷ',
+    unit: 'USD',
+    label:
+      'Doanh thu hằng năm của Tập đoàn SKYWORTH (năm tài chính 2024)',
   },
   {
-    value: 'TBD',
-    unit: '',
-    label: 'TBD — Phạm vi lắp đặt tại Việt Nam (chờ xác minh)',
+    value: '4',
+    unit: 'triệu',
+    label: 'Hộ gia đình trên toàn thế giới tin dùng SKYWORTH',
   },
   {
-    value: 'TBD',
-    unit: '',
-    label: 'TBD — Quy mô toàn cầu của SKYWORTH (chờ xác minh)',
+    value: '40+',
+    unit: 'năm',
+    label:
+      'Kinh nghiệm điện tử và kỹ thuật năng lượng của Tập đoàn SKYWORTH',
   },
   {
-    value: 'TBD',
-    unit: '',
-    label: 'TBD — Số hộ gia đình sử dụng Solavita (chờ xác minh)',
+    value: '2',
+    unit: 'sàn',
+    label: 'Sàn niêm yết (Hồng Kông và Thâm Quyến)',
   },
 ]
 
@@ -75,7 +78,7 @@ export const aboutApproach: AboutApproach[] = [
   {
     title: 'Dịch vụ và hỗ trợ tại địa phương',
     description:
-      'TBD — Phương án lắp đặt, chăm sóc khách hàng và hậu mãi tại Việt Nam (chờ xác minh).',
+      'Đội ngũ Solavita Việt Nam đồng hành cùng bạn trên suốt vòng đời hệ thống: từ khảo sát hiện trường, lắp đặt và đấu nối cho đến theo dõi vận hành, bảo hành và hỗ trợ kỹ thuật.',
   },
 ]
 
@@ -85,43 +88,63 @@ export interface AboutCertification {
 }
 
 /**
- * Certification list. Every entry is a TBD placeholder. Do not add
- * MCS / NICEIC / RECC / TUV / CE / 25-year / other markets'
- * regulatory claims until business confirms the certification applies
- * to Solavita Vietnam.
+ * Certification list. Every entry is a certification the Solavita
+ * products already carry on the Vietnamese product pages
+ * (`lib/data/products.ts`, `lib/data/solamate.ts`, `lib/data/solahome.ts`)
+ * — module and inverter standards, group management systems and the
+ * TÜV / CE marks printed on the product imagery. No market-specific
+ * grid-connection or incentive scheme is claimed.
  */
 export const aboutCertifications: AboutCertification[] = [
   {
-    label: 'TBD',
-    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
+    label: 'IEC 61215 · IEC 61730',
+    description:
+      'Tiêu chuẩn thiết kế, an toàn điện và hiệu suất cho tấm quang năng Solavita.',
   },
   {
-    label: 'TBD',
-    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
+    label: 'ISO 9001 · ISO 14001',
+    description:
+      'Hệ thống quản lý chất lượng và hệ thống quản lý môi trường tại nhà sản xuất.',
   },
   {
-    label: 'TBD',
-    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
+    label: 'TÜV · CE',
+    description:
+      'Tấm quang năng và khung thép được TÜV giám sát chất lượng; thiết bị mang dấu chứng nhận CE.',
   },
   {
-    label: 'TBD',
-    description: 'TBD — Chứng nhận quốc tế hoặc tại Việt Nam (chờ xác minh)',
+    label: 'RoHS · IEC 62109',
+    description:
+      'Giới hạn vật chất nguy hại và an toàn bộ biến tần nối lưới.',
   },
 ]
 
 export interface AboutRegion {
   city: string
+  /** Optional: shown next to the city when the two differ. */
   country: string
   role: string
 }
 
 /**
- * Region / office list. Only SKYWORTH Group HQ is verifiable from
- * public sources; every Vietnamese entry is a TBD until the local
- * presence is confirmed.
+ * Region / presence list. Vietnam appears as a market (no office
+ * address has been published yet), Hong Kong as the registered office
+ * of the group entity named in the footer, and Shenzhen as the group
+ * HQ. No street address is rendered anywhere on the page.
  */
 export const aboutRegions: AboutRegion[] = [
-  { city: 'TBD', country: 'Việt Nam', role: 'TBD — Văn phòng và điểm dịch vụ tại Việt Nam (chờ xác minh)' },
-  { city: 'TBD', country: 'Việt Nam', role: 'TBD — Khu vực lắp đặt được hỗ trợ (chờ xác minh)' },
-  { city: 'Thâm Quyến', country: 'Trung Quốc', role: 'Trụ sở tập đoàn · SKYWORTH R&D' },
+  {
+    city: 'Việt Nam',
+    country: '',
+    role: 'Thị trường Solavita Việt Nam · Tư vấn, lắp đặt và hậu mãi',
+  },
+  {
+    city: 'Hồng Kông',
+    country: '',
+    role: 'Văn phòng đăng ký · SKYWORTH RENEWABLE ENERGY COMPANY LIMITED',
+  },
+  {
+    city: 'Thâm Quyến',
+    country: 'Trung Quốc',
+    role: 'Trụ sở tập đoàn · R&D của SKYWORTH',
+  },
 ]

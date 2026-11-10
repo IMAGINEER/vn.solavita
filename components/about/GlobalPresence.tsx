@@ -95,9 +95,11 @@ export default function GlobalPresence() {
                 <div className="flex-1 min-w-0">
                   <div className="text-base font-cw-bold text-uk-navy">
                     {r.city}
-                    <span className="ml-2 text-xs font-cw-regular text-uk-slate">
-                      {r.country}
-                    </span>
+                    {r.country && (
+                      <span className="ml-2 text-xs font-cw-regular text-uk-slate">
+                        {r.country}
+                      </span>
+                    )}
                   </div>
                   <div className="text-sm text-uk-slate mt-0.5">{r.role}</div>
                 </div>

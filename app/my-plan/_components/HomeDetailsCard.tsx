@@ -21,6 +21,14 @@ const USAGE_LABEL: Record<string, string> = {
   'very-high': 'Mức dùng rất cao',
 }
 
+/** Map daytime-ratio IDs to a label for the strip. */
+const DAYTIME_LABEL: Record<string, string> = {
+  'under-30': 'dưới 30% ban ngày',
+  '30-50': '30–50% ban ngày',
+  '50-70': '50–70% ban ngày',
+  'over-70': 'trên 70% ban ngày',
+}
+
 /** Map device IDs to short labels. */
 const DEVICE_LABEL: Record<string, string> = {
   wallbox: 'Sạc xe điện',
@@ -49,6 +57,10 @@ const ROOF_TYPE_LABEL: Record<string, string> = {
   hip: 'Mái bốn dốc',
   flat: 'Mái bằng',
   pent: 'Mái một dốc',
+  tile: 'Mái ngói',
+  metal: 'Mái tôn / kim loại',
+  none: 'Ban công, không có mái',
+  other: 'Loại mái khác',
 }
 
 /**
@@ -64,6 +76,9 @@ const ROOF_TYPE_LABEL: Record<string, string> = {
  */
 export default function HomeDetailsCard({ home, onEdit }: HomeDetailsCardProps) {
   const usageLabel = USAGE_LABEL[home.electricityUsage] ?? home.electricityUsage
+  const daytimeLabel = home.daytimeRatio
+    ? DAYTIME_LABEL[home.daytimeRatio] ?? home.daytimeRatio
+    : ''
   const deviceList =
     home.devices.length > 0
       ? home.devices.map((d) => DEVICE_LABEL[d] ?? d).join(', ')
@@ -89,7 +104,9 @@ export default function HomeDetailsCard({ home, onEdit }: HomeDetailsCardProps) 
           {home.region} · {houseTypeLabel} · {home.householdSize} {peopleSuffix} · {roofLabel}
         </p>
         <p className="mt-1 text-sm text-uk-slate leading-relaxed">
-          {usageLabel} · {deviceList}
+          {usageLabel}
+          {daytimeLabel ? ` · ${daytimeLabel}` : ''}
+          {home.devices.length > 0 ? ` · ${deviceList}` : ''}
         </p>
       </div>
 

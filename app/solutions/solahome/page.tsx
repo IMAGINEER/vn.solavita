@@ -15,7 +15,7 @@ const PATH = '/solutions/solahome'
 const TITLE = 'SolaHome — Điện mặt trời mái nhà cho biệt thự & nhà phố'
 
 const DESCRIPTION =
-  'SolaHome lắp điện mặt trời trực tiếp trên mái nhà với biến tần hybrid và pin lưu trữ: hai kiểu lắp SolaRoof và SolaLoft, bốn gói 5 / 10 / 10 ba pha / 15 kWp, hai phương án bổ sung pin dự phòng.'
+  'SolaHome — điện mặt trời cho biệt thự và nhà phố: chọn cách lắp theo mái ngói, mái tôn hay mái bằng; chọn gói 5 / 10 / 15 kWp theo hóa đơn điện và diện tích mái; pin lưu trữ tùy chọn. Báo giá theo cấu hình sau khảo sát.'
 
 export const metadata = buildPageMetadata({
   title: TITLE,
@@ -33,10 +33,9 @@ export default function Page() {
     intro: p.summary,
     bullets: [
       `Diện tích mái: ${p.roofArea}`,
-      `Công suất DC: ${p.dcRange}`,
+      `Tấm pin: ${p.panels}`,
+      `Sản lượng tham chiếu: ${p.dailyOutput}`,
       `Biến tần hybrid: ${p.inverter}`,
-      `Giá SolaRoof: ${p.priceRoof}`,
-      `Giá SolaLoft: ${p.priceLoft}`,
       `Phù hợp với: ${p.fits}`,
     ],
     imagePath: '/images/solahome/hero.webp',

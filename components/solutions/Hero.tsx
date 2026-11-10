@@ -46,11 +46,11 @@ export default function SolutionsHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-white mt-5 max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 max-w-3xl capitalize"
         >
           One HOME. One SYSTEM.
           <br />
-          <span className="text-gradient">Every source of energy.</span>
+          Every source of energy.
         </motion.h1>
 
         <motion.p

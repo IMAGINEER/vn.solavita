@@ -18,7 +18,7 @@ const PATH = '/solutions/solamate'
 const TITLE = 'SolaMate — Điện mặt trời ban công cho căn hộ tại Việt Nam'
 
 const DESCRIPTION =
-  'SolaMate là trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng: lắp trong 15 phút, không cần xin phép điện lưới, có Zero-export trên mọi model. Hai mức công suất 800 W và 1600 W.'
+  'SolaMate là trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng: lắp trong 60 phút, không cần xin phép điện lưới, có Zero-export trên mọi model. Hai mức công suất 800 W và 1600 W.'
 
 export const metadata = buildPageMetadata({
   title: TITLE,
@@ -37,11 +37,11 @@ export default function Page() {
     title: p.name,
     intro: p.summary,
     bullets: [
-      `Cấu hình: ${p.panels}, công suất hệ thống ${p.systemPower}`,
+      `Cấu hình: ${p.modules}, công suất hệ thống ${p.systemPower}`,
       `Micro-inverter: ${p.inverter}`,
-      `Sản lượng trung bình: ${p.dailyOutput}`,
-      `Tiết kiệm ước tính: ${p.monthlySaving}`,
-      `Ban công: ${p.models.balcony} · Che nắng: ${p.models.awning} · Mặt đất: ${p.models.ground}`,
+      `Sản lượng trung bình: ${p.dailyOutput.value} ${p.dailyOutput.unit}`,
+      `Tiết kiệm ước tính: ${p.monthlySaving.value} ${p.monthlySaving.unit}`,
+      'Ba kiểu lắp: lan can, mái che, cắm đất',
     ],
     imagePath: '/images/solamate/hero.webp',
     imageAlt: 'Tấm pin mặt trời màu đen của SolaMate lắp trên khung kiến trúc',

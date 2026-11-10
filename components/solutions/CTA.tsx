@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { openFormModal } from '@/lib/form-modal'
+import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -26,6 +27,9 @@ interface CTAProps {
   /** Optional secondary link label + href. */
   secondaryLabel?: string
   secondaryHref?: string
+  /** Section background override — the default is the soft grey band;
+   *  a page that needs a white band passes `bg-white`. */
+  className?: string
 }
 
 /**
@@ -46,6 +50,7 @@ export default function CTA({
   primaryHref,
   secondaryLabel,
   secondaryHref,
+  className,
 }: CTAProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -72,7 +77,13 @@ export default function CTA({
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden">
+    <section
+      ref={sectionRef}
+      className={cn(
+        'relative py-16 md:py-24 bg-sv-light dark:bg-sv-darker overflow-hidden',
+        className
+      )}
+    >
       {/* Soft accent - matches FreeDesignQuoteSection so all CTAs feel
          like one family. */}
       <div className="absolute inset-0 pointer-events-none">

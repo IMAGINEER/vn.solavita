@@ -83,7 +83,7 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
         label: 'SolaMate — ban công & di động',
         href: '/solutions/solamate/',
         description:
-          'Điện mặt trời ban công, cửa sổ và sân thượng — lắp trong 15 phút, không cần xin phép điện lưới.',
+          'Điện mặt trời ban công, cửa sổ và sân thượng — lắp trong 60 phút, không cần xin phép điện lưới.',
       },
       {
         label: 'SolaHome — mái nhà & khuôn viên',

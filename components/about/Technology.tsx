@@ -5,7 +5,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BadgeCheck } from 'lucide-react'
 import { aboutCertifications } from '@/lib/data/about'
-import TbdText from '@/components/ui/tbd-text'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,10 +15,9 @@ const BadgeIcon = ({ className }: { className?: string }) => (
 /**
  * Technology / Expertise - explains the engineering credentials behind
  * Solavita and lists the certifications that apply. The list itself is
- * data-driven from `aboutCertifications` in `lib/data/about.ts` so NG
- * pages render TBDs until business confirms which certifications apply
- * to the Vietnamese market (no other market's certification may be
- * carried over without verification).
+ * data-driven from `aboutCertifications` in `lib/data/about.ts`, which
+ * carries the same standards already published on the Vietnamese
+ * product pages (IEC 61215 / 61730, ISO 9001 / 14001, TÜV, CE, RoHS).
  *
  * The right-hand image is the existing product render used on the
  * homepage /solutions section - reusing it keeps the asset catalogue
@@ -84,11 +82,10 @@ export default function Technology() {
             </h2>
 
             <p className="text-lg text-uk-slate font-cw-regular leading-relaxed max-w-xl">
-              Mỗi hệ thống Solavita được xây dựng từ{' '}
-              <TbdText text="linh kiện Tier-1" inline />{' '}
-              do Tập đoàn SKYWORTH thiết kế — cùng chuỗi cung ứng đang phục vụ
-              hàng triệu hộ gia đình trên thế giới với TV, thiết bị gia dụng và
-              hệ thống nhà thông minh.
+              Mỗi hệ thống Solavita được xây dựng từ linh kiện do Tập đoàn
+              SKYWORTH thiết kế — cùng chuỗi cung ứng đang phục vụ hàng triệu hộ
+              gia đình trên thế giới với TV, thiết bị gia dụng và hệ thống nhà
+              thông minh.
             </p>
 
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
