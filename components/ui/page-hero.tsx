@@ -159,11 +159,19 @@ export default function PageHero({
           <span className="text-xs font-cw-regular text-white/90">{eyebrow}</span>
         </motion.span>
 
+        {/* `py-[0.15em]` is not decoration: `.text-gradient` paints the
+            headline only inside the element's box (background-clip:
+            text), so Vietnamese diacritics (ấ, ằ, ữ …) and the
+            descenders of g/q that reach past a `leading-tight` line box
+            would be left unpainted — transparent, which reads as the
+            letters being sliced top and bottom. The padding widens the
+            painted area so the full glyphs stay visible. Same treatment
+            as the products/module H1 (ProductDetail.tsx). */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl capitalize"
         >
           {renderTitle(title)}
         </motion.h1>

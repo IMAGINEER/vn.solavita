@@ -234,7 +234,7 @@ export default function SolaMatePage() {
                     fades in over it. On touch/narrow viewports (< xl) the
                     strip falls back to the inline copy in the card body —
                     it is never hover-only. */}
-                <div className="relative shrink-0 overflow-hidden bg-white px-6 pt-7">
+                <div className="relative shrink-0 overflow-hidden bg-white px-6 pb-6">
                   <img
                     src={p.imagePath}
                     alt={p.imageAlt}
@@ -279,7 +279,7 @@ export default function SolaMatePage() {
                     with the image at half width there is white behind the
                     copy, so white type would vanish — the headline now
                     runs in the card's navy/teal on white. */}
-                <div className="shrink-0 px-8 pt-6">
+                <div className="shrink-0 border-t border-uk-line bg-sv-light px-8 pt-6 pb-6">
                   {p.badge && (
                     <span className="text-[11px] font-cw-bold tracking-[0.18em] text-uk-teal-dark uppercase">
                       {p.badge}
@@ -306,16 +306,16 @@ export default function SolaMatePage() {
                   </p>
                 </div>
 
-                <div className="flex flex-1 flex-col px-8 pt-6 pb-8">
+                <div className="flex flex-1 flex-col border-t border-uk-line px-8 pt-6 pb-8">
                   {/* 3 + 4 — module count and inverter */}
-                  <dl className="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
-                    <div>
+                  <dl className="grid grid-cols-2 divide-x divide-uk-line gap-y-4 text-sm">
+                    <div className="pr-4">
                       <dt className="text-xs text-uk-slate">Số module PV</dt>
                       <dd className="mt-1 font-cw-bold text-uk-navy">
                         {p.modules}
                       </dd>
                     </div>
-                    <div>
+                    <div className="pl-4">
                       <dt className="text-xs text-uk-slate">Micro-inverter</dt>
                       <dd className="mt-1 font-cw-bold text-uk-navy">
                         {p.inverter}
@@ -324,12 +324,12 @@ export default function SolaMatePage() {
                   </dl>
 
                   {/* 5 + 6 — the two numbers that sell the package */}
-                  <div className="mt-6 grid grid-cols-2 gap-4 rounded-2xl bg-uk-teal-soft/60 p-5">
-                    <div>
+                  <div className="mt-6 grid grid-cols-2 divide-x divide-uk-teal/20 rounded-2xl bg-uk-teal-soft/60 p-5">
+                    <div className="min-w-0 pr-4">
                       <div className="text-xs text-uk-slate">
                         Sản lượng trung bình
                       </div>
-                      <div className="mt-1.5 flex items-baseline gap-1">
+                      <div className="mt-1.5 flex flex-wrap items-baseline gap-1">
                         <span className="text-2xl font-cw-bold text-uk-teal-dark md:text-3xl">
                           {p.dailyOutput.value}
                         </span>
@@ -338,11 +338,11 @@ export default function SolaMatePage() {
                         </span>
                       </div>
                     </div>
-                    <div>
+                    <div className="min-w-0 pl-4">
                       <div className="text-xs text-uk-slate">
                         Tiết kiệm mỗi tháng
                       </div>
-                      <div className="mt-1.5 flex items-baseline gap-1">
+                      <div className="mt-1.5 flex flex-wrap items-baseline gap-1">
                         <span className="text-2xl font-cw-bold text-uk-teal-dark md:text-3xl">
                           {p.monthlySaving.value}
                         </span>
@@ -370,7 +370,7 @@ export default function SolaMatePage() {
                   {/* CTA — the wrapper's `mt-auto` pins both buttons to the
                       bottom edge so the two cards line up even when the
                       spec rows wrap differently. */}
-                  <div className="mt-auto pt-7">
+                  <div className="mt-auto pt-5">
                     <button
                       type="button"
                       onClick={() => openFormModal({ solutionType: 'balcony' })}
