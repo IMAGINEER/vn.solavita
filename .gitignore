@@ -29,6 +29,12 @@ CLAUDE.md
 # committed and never deployed to Netlify.
 docs/
 
+# Temporary PPTX/DOCX extraction scratch (unzipped slides + media).
+# Regenerated on demand by scripts/extract.js; never shipped. It was
+# accidentally committed once (~55 MB, 159 files) and made every push
+# slow enough to time out.
+.tmp-deck/
+
 # Supabase CLI temp artifacts (version stamps, cached project state)
 supabase/.temp/
 
