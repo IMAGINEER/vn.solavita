@@ -43,7 +43,18 @@ export default function GoldPartnerTeaser() {
   return (
     <section ref={sectionRef} id="gold-teaser" className="relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-14">
-        <div className="gold-teaser relative overflow-hidden rounded-3xl border border-[#E8B44A]/30 bg-gradient-to-br from-[#0A1628] via-[#12203A] to-[#0A1628] p-7 md:p-10">
+        <div className="gold-teaser relative overflow-hidden rounded-3xl border border-[#E8B44A]/30 p-7 md:p-10">
+          {/* Campaign artwork — the blue brand scene with the SKYWORTH
+              team, the coins and the rising arrow. A dark wash on top
+              keeps the white and gold type legible over it. */}
+          <img
+            src="/images/partner/gold-card-bg.webp"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover object-right"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/95 via-[#0A1628]/88 to-[#0A1628]/72" />
+
           {/* Gold glow */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute -top-24 -right-16 w-[420px] h-[420px] rounded-full bg-[#E8B44A]/10 blur-[130px]" />

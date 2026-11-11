@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { Check, Loader2, Phone, Send } from 'lucide-react'
+import { Check, Loader2, Phone } from 'lucide-react'
 import { PARTNER_HOTLINE } from '@/lib/data/partners'
 
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
@@ -110,60 +110,75 @@ export default function GoldMedalSignup() {
   }
 
   return (
-    <div className="rounded-3xl border border-uk-line bg-white p-7 md:p-10 shadow-sm">
-      <div className="text-center mb-8 max-w-2xl mx-auto">
-        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E8B44A]/40 bg-[#E8B44A]/10 text-xs font-cw-bold uppercase tracking-wider text-[#A9761A] mb-3">
-          <Send className="w-3.5 h-3.5" strokeWidth={1.8} />
-          Đăng ký ngay
-        </span>
-        <h2 className="text-2xl md:text-3xl font-cw-bold text-uk-navy leading-tight">
-          Cơ hội <span className="text-gradient">không đợi một ai</span>
-        </h2>
-        <p className="mt-3 text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
-          Điền thông tin, đội ngũ đối tác Solavita Việt Nam sẽ liên hệ với bạn
-          để trao đổi hình thức hợp tác phù hợp nhất.
-        </p>
-      </div>
+    <div className="overflow-hidden rounded-3xl border border-uk-line bg-white shadow-sm">
+      <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
+        {/* Left — the promise, over the roof the commission pays for. */}
+        <div className="relative overflow-hidden bg-[#EAF4FB] p-7 md:p-10">
+          {/* Shown complete at the panel's foot; the headline floats
+              over the sky. */}
+          <img
+            src="/images/partner/card-vibe-2.webp"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute inset-x-0 bottom-0 w-full h-auto"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#EAF4FB] via-[#EAF4FB]/92 to-[#EAF4FB]/20" />
 
-      <AnimatePresence mode="wait">
-        {status === 'success' ? (
-          <motion.div
-            key="success"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="flex flex-col items-center text-center py-6 max-w-xl mx-auto"
-          >
-            <span className="w-16 h-16 rounded-full bg-uk-emerald/10 flex items-center justify-center text-uk-emerald mb-5">
-              <Check className="w-8 h-8" strokeWidth={2.5} />
-            </span>
-            <h3 className="text-2xl font-cw-bold text-uk-navy">
-              Chúng tôi đã nhận được đăng ký của bạn
-            </h3>
-            <p className="mt-3 text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
-              Bạn sẽ nhận được email xác nhận kèm hướng dẫn chi tiết. Nếu muốn
-              trao đổi ngay, hãy gọi HOTLINE đối tác:{' '}
-              <a
-                href={`tel:${PARTNER_HOTLINE}`}
-                className="inline-flex items-center gap-1.5 font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
-              >
-                <Phone className="w-4 h-4" strokeWidth={2} />
-                {PARTNER_HOTLINE}
-              </a>
+          <div className="relative">
+            <h2 className="text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
+              Cơ hội <span className="text-gradient">không đợi</span>
+              <br />
+              <span className="text-gradient">một ai</span>
+            </h2>
+            <p className="mt-4 text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
+              Điền thông tin, đội ngũ đối tác Solavita Việt Nam sẽ liên hệ với
+              bạn để trao đổi hình thức hợp tác phù hợp nhất.
             </p>
-          </motion.div>
-        ) : (
-          <motion.form
-            key="form"
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            noValidate
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto"
-          >
+          </div>
+        </div>
+
+        {/* Right — the form */}
+        <div className="p-7 md:p-10">
+          <AnimatePresence mode="wait">
+            {status === 'success' ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="flex flex-col items-center text-center py-6"
+              >
+                <span className="w-16 h-16 rounded-full bg-uk-emerald/10 flex items-center justify-center text-uk-emerald mb-5">
+                  <Check className="w-8 h-8" strokeWidth={2.5} />
+                </span>
+                <h3 className="text-2xl font-cw-bold text-uk-navy">
+                  Chúng tôi đã nhận được đăng ký của bạn
+                </h3>
+                <p className="mt-3 text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
+                  Bạn sẽ nhận được email xác nhận kèm hướng dẫn chi tiết. Nếu
+                  muốn trao đổi ngay, hãy gọi HOTLINE đối tác:{' '}
+                  <a
+                    href={`tel:${PARTNER_HOTLINE}`}
+                    className="inline-flex items-center gap-1.5 font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
+                  >
+                    <Phone className="w-4 w-4" strokeWidth={2} />
+                    {PARTNER_HOTLINE}
+                  </a>
+                </p>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                noValidate
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              >
             <label className="block">
               <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
                 Họ tên <span className="text-uk-teal-dark">*</span>
@@ -286,8 +301,10 @@ export default function GoldMedalSignup() {
               </button>
             </div>
           </motion.form>
-        )}
-      </AnimatePresence>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   )
 }

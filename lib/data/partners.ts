@@ -255,6 +255,24 @@ export interface PartnerCommissionTrack {
  * standee, and 5 khách hàng × 9,5 triệu = 47,5 triệu/tháng and
  * × 12 = 570 triệu/năm. The two documents therefore agree.
  */
+/**
+ * The commission track the "Chương trình Đối tác Vàng" campaign runs on.
+ *
+ * The general `/for-partners/` page explains the commission *model*
+ * without the numbers; the campaign page is where the rate basis is
+ * published, next to the 7,6 / 9,5 triệu figures on the standee.
+ */
+export const goldMedalCommissionTrack: PartnerCommissionTrack = {
+  id: 'business-partner',
+  title: 'Đối tác kinh doanh',
+  basePerWatt: 760,
+  tiers: [
+    { orders: 3, bonusPerWatt: 190 },
+    { orders: 5, bonusPerWatt: 380 },
+  ],
+  surveyBonusPerWatt: 190,
+}
+
 export const partnerCommissionTracks: PartnerCommissionTrack[] = [
   {
     id: 'dealer',
@@ -266,16 +284,7 @@ export const partnerCommissionTracks: PartnerCommissionTrack[] = [
     ],
     surveyBonusPerWatt: 190,
   },
-  {
-    id: 'business-partner',
-    title: 'Đối tác kinh doanh',
-    basePerWatt: 760,
-    tiers: [
-      { orders: 3, bonusPerWatt: 190 },
-      { orders: 5, bonusPerWatt: 380 },
-    ],
-    surveyBonusPerWatt: 190,
-  },
+  goldMedalCommissionTrack,
 ]
 
 /** Payout schedule printed on the brochure. */

@@ -99,9 +99,18 @@ export default function PartnerTraining() {
           })}
         </div>
 
-        {/* Support card */}
-        <div className="training-card rounded-3xl border border-uk-line bg-gradient-to-br from-uk-navy to-[#14243f] p-7 md:p-9">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
+        {/* Support card — SKYWORTH brand artwork behind a dark wash, so
+            the white copy stays legible over the photo. */}
+        <div className="training-card relative overflow-hidden rounded-3xl border border-uk-line p-7 md:p-9">
+          <img
+            src="/images/partner/skyworth-card-bg.webp"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover object-right"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/95 via-[#0A1628]/88 to-[#0A1628]/70" />
+
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
             <div className="md:col-span-2">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/10 text-xs font-cw-bold uppercase tracking-wider text-white/85 mb-4">
                 <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.8} />
@@ -117,7 +126,7 @@ export default function PartnerTraining() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+            <div className="rounded-2xl border border-white/10 bg-[#0A1628]/55 p-6">
               <h4 className="text-sm font-cw-bold uppercase tracking-wider text-white/85 mb-4">
                 Liên hệ nhanh
               </h4>

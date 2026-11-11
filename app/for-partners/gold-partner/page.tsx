@@ -78,6 +78,10 @@ export default async function GoldPartnerPage({
           logoAlt="Solavita — SKYWORTH"
         />
 
+        {/* White band behind the transparent header: the page opens on
+            a photo hero, so the navy nav links need a light backdrop. */}
+        <div className="h-[72px] bg-white" aria-hidden="true" />
+
         <GoldMedalPartner showBreadcrumb={showBreadcrumb} />
 
         <Footer variant="light" />

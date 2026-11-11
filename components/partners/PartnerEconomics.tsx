@@ -1,29 +1,35 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Banknote, Check, Coins, Percent, Wallet } from 'lucide-react'
-import TbdText from '@/components/ui/tbd-text'
 import {
-  partnerCommissionTracks,
-  partnerPayoutTerms,
-  PARTNER_REFERENCE_SYSTEM_KW,
-} from '@/lib/data/partners'
+  Banknote,
+  Check,
+  Coins,
+  Gauge,
+  Percent,
+  TrendingUp,
+  Wallet,
+} from 'lucide-react'
+import TbdText from '@/components/ui/tbd-text'
+import { partnerPayoutTerms } from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const formatVnd = (n: number) => n.toLocaleString('vi-VN')
-
 /**
- * "Hoa hồng theo mỗi watt" — the commission table printed on page 3 of
- * the VN partner recruitment brochure ("Thu hút khách hàng, kiếm tiền
- * dễ dàng").
+ * "Mức hoa hồng" — how the partner commission works.
  *
- * The brochure quotes two commercial tracks, each with a base rate per
- * watt, monthly-order thresholds that add a per-watt bonus, an extra
- * bonus for running the site survey yourself, and a 50/50 split between
- * delivery and the final balance payment.
+ * This page is the *overview*: it explains the model (commission per
+ * watt of the system actually signed, more orders in a month means a
+ * higher per-watt rate, an extra bonus when you run the survey
+ * yourself, and the 50/50 payout split) without publishing the rates.
+ *
+ * The concrete numbers — the per-watt rates, the order-volume tiers,
+ * the +25% ramp from the third order and the income ladder — belong to
+ * the "Chương trình Đối tác Vàng" campaign page, which is where the
+ * recruitment push happens. This card links there.
  *
  * The installer track is deliberately shown without a number: the
  * brochure puts installers under the "Energy Partner Solavita" arm
@@ -79,78 +85,65 @@ export default function PartnerEconomics() {
           </p>
         </div>
 
-        {/* Commercial tracks */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {partnerCommissionTracks.map((track) => (
-            <div
-              key={track.id}
-              className="economics-card rounded-3xl bg-white border border-uk-line shadow-sm p-7 md:p-9"
-            >
-              <div className="flex items-start justify-between gap-4 mb-6">
-                <div>
-                  <h3 className="text-2xl font-cw-bold text-uk-navy">
-                    {track.title}
-                  </h3>
-                  <p className="mt-1.5 text-sm text-uk-slate font-cw-regular">
-                    Hoa hồng cơ bản trên mỗi watt
-                  </p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <div className="text-3xl md:text-4xl font-cw-bold text-uk-teal-dark leading-none">
-                    {formatVnd(track.basePerWatt)}
-                  </div>
-                  <div className="mt-1 text-xs font-cw-bold uppercase tracking-wider text-uk-slate">
-                    đồng / W
-                  </div>
-                </div>
-              </div>
-
-              <dl className="space-y-3.5">
-                {track.tiers.map((tier) => (
-                  <div
-                    key={tier.orders}
-                    className="flex items-center justify-between gap-4 py-3 border-b border-uk-line/60 last:border-0"
-                  >
-                    <dt className="flex items-center gap-2.5 text-sm text-uk-navy font-cw-regular">
-                      <Percent
-                        className="w-4 h-4 text-uk-emerald flex-shrink-0"
-                        strokeWidth={2}
-                      />
-                      Giao {tier.orders} đơn / tháng
-                    </dt>
-                    <dd className="text-sm font-cw-bold text-uk-teal-dark whitespace-nowrap">
-                      +{formatVnd(tier.bonusPerWatt)} đồng / W
-                    </dd>
-                  </div>
-                ))}
-                <div className="flex items-center justify-between gap-4 py-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* The model */}
+          <div className="economics-card rounded-3xl bg-white border border-uk-line shadow-sm p-7 md:p-9">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-10 h-10 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark">
+                <Percent className="w-5 h-5" strokeWidth={1.8} />
+              </span>
+              <h3 className="text-xl font-cw-bold text-uk-navy">
+                Hoa hồng theo mỗi watt
+              </h3>
+            </div>
+            <dl className="space-y-3.5">
+              {[
+                {
+                  icon: Gauge,
+                  k: 'Tính theo công suất thực tế',
+                  v: 'Đồng trên mỗi watt',
+                },
+                {
+                  icon: TrendingUp,
+                  k: 'Càng nhiều đơn trong tháng',
+                  v: 'Mức thưởng tăng dần',
+                },
+                {
+                  icon: Wallet,
+                  k: 'Tự khảo sát công trình',
+                  v: 'Thưởng thêm',
+                },
+              ].map((row) => (
+                <div
+                  key={row.k}
+                  className="flex items-center justify-between gap-4 py-3 border-b border-uk-line/60 last:border-0"
+                >
                   <dt className="flex items-center gap-2.5 text-sm text-uk-navy font-cw-regular">
-                    <Wallet
+                    <row.icon
                       className="w-4 h-4 text-uk-emerald flex-shrink-0"
                       strokeWidth={2}
                     />
-                    Tự khảo sát công trình
+                    {row.k}
                   </dt>
                   <dd className="text-sm font-cw-bold text-uk-teal-dark whitespace-nowrap">
-                    +{formatVnd(track.surveyBonusPerWatt)} đồng / W
+                    {row.v}
                   </dd>
                 </div>
-              </dl>
+              ))}
+            </dl>
+            <p className="mt-6 pt-5 border-t border-uk-line/60 text-xs text-uk-slate font-cw-regular leading-relaxed">
+              Con số cụ thể và bậc thưởng theo số đơn được công bố trong{' '}
+              <Link
+                href="/for-partners/gold-partner/"
+                className="font-cw-bold text-uk-teal-dark hover:underline"
+              >
+                Chương trình Đối tác Vàng
+              </Link>
+              .
+            </p>
+          </div>
 
-              <p className="mt-6 pt-5 border-t border-uk-line/60 text-xs text-uk-slate font-cw-regular leading-relaxed">
-                Ví dụ với hệ thống {PARTNER_REFERENCE_SYSTEM_KW} kW:{' '}
-                <span className="font-cw-bold text-uk-navy">
-                  {formatVnd(track.basePerWatt * PARTNER_REFERENCE_SYSTEM_KW * 1000)}{' '}
-                  đồng
-                </span>{' '}
-                hoa hồng cơ bản cho một đơn hàng.
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Payout terms + installer track */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Payout terms */}
           <div className="economics-card rounded-3xl bg-white border border-uk-line shadow-sm p-7 md:p-9">
             <div className="flex items-center gap-3 mb-5">
               <span className="w-10 h-10 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark">
@@ -175,12 +168,12 @@ export default function PartnerEconomics() {
               ))}
             </ul>
             <p className="mt-5 pt-5 border-t border-uk-line/60 text-xs text-uk-slate font-cw-regular leading-relaxed">
-              Ngoài mức cơ bản, chương trình còn thưởng doanh số tháng và hoa
-              hồng khảo sát công trình. Thưởng doanh số được chi trả trước
-              ngày 5 của tháng sau.
+              Ngoài mức cơ bản, bạn còn được thưởng theo doanh số tháng và
+              hoa hồng khảo sát công trình.
             </p>
           </div>
 
+          {/* Installer track */}
           <div className="economics-card rounded-3xl bg-white border border-uk-line shadow-sm p-7 md:p-9">
             <div className="flex items-center gap-3 mb-5">
               <span className="w-10 h-10 rounded-xl bg-uk-teal-soft flex items-center justify-center text-uk-teal-dark">

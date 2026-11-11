@@ -71,7 +71,8 @@ export default function SolaHomeBillEstimator() {
        the deep navy of the brand rather than the light-mode slate,
        because the glass sits over a dark image. */
     <div className="sv-glass-card mt-6 w-full max-w-2xl rounded-2xl p-4 sm:p-5">
-      <p className="sv-glass-accent text-[11px] font-cw-bold tracking-[0.18em] uppercase">
+      <p className="flex items-center gap-2 text-[11px] font-cw-bold tracking-[0.18em] text-uk-navy uppercase">
+        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-uk-emerald" />
         Ước tính hóa đơn điện của gia đình bạn
       </p>
 

@@ -86,11 +86,15 @@ export default function ForPartnersPage() {
 
         <PartnersHero />
 
-        <GoldPartnerTeaser />
-
         <WhyPartner />
 
         <PartnerEconomics />
+
+        {/* The "Chương trình Đối tác Vàng" campaign card sits fourth —
+            after the hero, the "why partner" band and the commission
+            economics, so the visitor has already seen what the
+            partnership is before the campaign is pitched. */}
+        <GoldPartnerTeaser />
 
         <PartnerTypes />
 

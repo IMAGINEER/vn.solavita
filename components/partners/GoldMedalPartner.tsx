@@ -7,23 +7,31 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   BadgeCheck,
   Check,
+  ChevronRight,
+  ClipboardCheck,
   Coins,
   Crown,
+  FileText,
   GraduationCap,
+  Handshake,
   Package,
   Phone,
+  Ruler,
   Sparkles,
   Target,
   TrendingUp,
+  UserRound,
   Users,
   Wallet,
   Zap,
 } from 'lucide-react'
 import {
+  goldMedalCommissionTrack,
   goldMedalProgram,
   goldMedalPromise,
   PARTNER_CONTACT,
   PARTNER_HOTLINE,
+  PARTNER_REFERENCE_SYSTEM_KW,
 } from '@/lib/data/partners'
 import Breadcrumb from '@/components/Breadcrumb'
 import GoldMedalSignup from './GoldMedalSignup'
@@ -39,6 +47,17 @@ const perkIcons = {
   trending: TrendingUp,
   graduation: GraduationCap,
 } as const
+
+/** One icon per step of the 7-step customer journey. */
+const JOURNEY_ICONS = [
+  UserRound,
+  FileText,
+  Handshake,
+  Package,
+  Ruler,
+  ClipboardCheck,
+  Coins,
+] as const
 
 /**
  * "Chương trình Đối tác Vàng" — the flagship recruitment campaign
@@ -119,34 +138,39 @@ export default function GoldMedalPartner({
 
   return (
     <>
+      {/* ── Hero ────────────────────────────────────────────────
+          The photo carries the campaign: the house sits on the right,
+          the copy on the dark left. The scrim keeps the text legible
+          without hiding the picture. */}
       <section
-        ref={sectionRef}
-        id="doi-tac-vang"
-        className="relative overflow-hidden bg-[#0A1628] pt-24 pb-16 md:pt-28 md:pb-24 lg:pt-32"
+        className="relative overflow-hidden bg-cover bg-[position:center] lg:bg-[position:right_center]"
+        style={{ backgroundImage: 'url(/images/partner/gold-hero.webp)' }}
       >
-      {/* Gold glows */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-[#E8B44A]/10 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 w-[460px] h-[460px] rounded-full bg-[#00B9EE]/10 blur-[150px]" />
-      </div>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(10,22,40,0.97) 0%, rgba(10,22,40,0.9) 40%, rgba(10,22,40,0.6) 64%, rgba(10,22,40,0.22) 100%)',
+          }}
+        />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb — inside the hero, not on a strip of its own. */}
-        {showBreadcrumb && (
-          <div className="mb-8 lg:mb-10">
-            <Breadcrumb
-              theme="light"
-              items={[
-                { label: 'Trang chủ', href: '/' },
-                { label: 'Dành cho đối tác', href: '/for-partners/' },
-                { label: 'Chương trình Đối tác Vàng' },
-              ]}
-            />
-          </div>
-        )}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-16 lg:pb-28">
+          {/* Breadcrumb — inside the hero, not on a strip of its own. */}
+          {showBreadcrumb && (
+            <div className="mb-8">
+              <Breadcrumb
+                theme="light"
+                items={[
+                  { label: 'Trang chủ', href: '/' },
+                  { label: 'Dành cho đối tác', href: '/for-partners/' },
+                  { label: 'Chương trình Đối tác Vàng' },
+                ]}
+              />
+            </div>
+          )}
 
-        {/* ── Header ───────────────────────────────────────────── */}
-        <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
+          {/* ── Header ───────────────────────────────────────────── */}
+          <div className="max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E8B44A]/30 bg-[#E8B44A]/10 text-xs font-cw-bold uppercase tracking-wider text-[#F5D48A] mb-4">
             <Crown className="w-4 h-4" strokeWidth={1.8} />
             {goldMedalProgram.name}
@@ -176,9 +200,27 @@ export default function GoldMedalPartner({
             </span>{' '}
             cho đợt tuyển chọn này.
           </p>
+          </div>
         </div>
 
-        {/* ── Headline numbers ─────────────────────────────────── */}
+        {/* Fade into the dark panel below. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#0A1628]" />
+      </section>
+
+      {/* ── Dark campaign panel ─────────────────────────────────── */}
+      <section
+        ref={sectionRef}
+        id="doi-tac-vang"
+        className="relative overflow-hidden bg-[#0A1628] pt-6 pb-16 md:pb-24"
+      >
+        {/* Gold glows */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-[#E8B44A]/10 blur-[140px]" />
+          <div className="absolute bottom-0 right-0 w-[460px] h-[460px] rounded-full bg-[#00B9EE]/10 blur-[150px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* ── Headline numbers ─────────────────────────────────── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 md:mb-16">
           {goldMedalProgram.stats.map((s) => (
             <div
@@ -203,30 +245,45 @@ export default function GoldMedalPartner({
 
         {/* ── Who we want / what you already have ─────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 md:mb-16">
-          <div className="gold-reveal rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-9">
-            <div className="flex items-center gap-3 mb-5">
-              <span className="w-10 h-10 rounded-xl bg-[#E8B44A]/15 flex items-center justify-center">
-                <Target className="w-5 h-5" style={{ color: GOLD }} strokeWidth={1.8} />
-              </span>
-              <h3 className="text-xl font-cw-bold text-white">
-                Chúng tôi đang tìm kiếm
-              </h3>
+          <div className="gold-reveal relative isolate overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-9">
+            {/* The two Solavita staff the campaign is recruiting — the
+                card's backdrop, kept to the bottom-right corner so the
+                copy never runs over their faces. Multiply drops the
+                transparency checkerboard baked into the PNG. */}
+            <img
+              src="/images/partner/avartar.png"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="absolute -bottom-4 -right-4 w-[44%] max-w-[44%] h-auto object-contain object-bottom mix-blend-multiply pointer-events-none"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628] via-[#0A1628]/88 to-[#0A1628]/40" />
+
+            <div className="relative max-w-[52%]">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="w-10 h-10 shrink-0 rounded-xl bg-[#E8B44A]/15 flex items-center justify-center">
+                  <Target className="w-5 h-5" style={{ color: GOLD }} strokeWidth={1.8} />
+                </span>
+                <h3 className="text-xl font-cw-bold text-white leading-snug">
+                  Chúng tôi đang tìm kiếm
+                </h3>
+              </div>
+              <ul className="space-y-3.5">
+                {goldMedalProgram.lookingFor.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
+                  >
+                    <Check
+                      className="w-4 h-4 mt-1 flex-shrink-0"
+                      style={{ color: GOLD }}
+                      strokeWidth={2.5}
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="space-y-3.5">
-              {goldMedalProgram.lookingFor.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
-                >
-                  <Check
-                    className="w-4 h-4 mt-1 flex-shrink-0"
-                    style={{ color: GOLD }}
-                    strokeWidth={2.5}
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="gold-reveal rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-9">
@@ -285,34 +342,89 @@ export default function GoldMedalPartner({
 
         {/* ── Commission ramp + income ladder ──────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 md:mb-16">
-          <div className="gold-reveal rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-9">
-            <div className="flex items-center gap-3 mb-5">
-              <span className="w-10 h-10 rounded-xl bg-[#E8B44A]/15 flex items-center justify-center">
-                <Coins className="w-5 h-5" style={{ color: GOLD }} strokeWidth={1.8} />
-              </span>
-              <h3 className="text-xl font-cw-bold text-white">
-                Thang hoa hồng theo số đơn
-              </h3>
+          <div className="gold-reveal relative overflow-hidden rounded-3xl border border-white/10">
+            {/* The house the commission is paid for — shown complete at
+                the card's foot, with the copy floating over its sky. */}
+            <img
+              src="/images/partner/card-vibe.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="absolute inset-x-0 bottom-0 w-full h-auto"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A1628] via-[#0A1628]/94 to-[#0A1628]/45" />
+
+            <div className="relative p-7 md:p-9">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="w-10 h-10 rounded-xl bg-[#E8B44A]/15 flex items-center justify-center">
+                  <Coins className="w-5 h-5" style={{ color: GOLD }} strokeWidth={1.8} />
+                </span>
+                <h3 className="text-xl font-cw-bold text-white">
+                  Thang hoa hồng theo số đơn
+                </h3>
+              </div>
+              <ul className="space-y-3">
+                {goldMedalProgram.commissionRamp.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
+                  >
+                    <Zap
+                      className="w-4 h-4 mt-1 flex-shrink-0"
+                      style={{ color: GOLD }}
+                      strokeWidth={1.8}
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* The rate basis — the general /for-partners/ page explains
+                  the model without the numbers; here they are published
+                  next to the income ladder they produce. */}
+              <div className="mt-5 rounded-2xl bg-white/[0.04] p-4">
+                <p className="text-[10px] font-cw-bold tracking-[0.2em] text-uk-emerald uppercase">
+                  Mức cơ bản
+                </p>
+                <dl className="mt-3 space-y-2 text-sm">
+                  {[
+                    {
+                      k: 'Hoa hồng cơ bản',
+                      v: `${goldMedalCommissionTrack.basePerWatt.toLocaleString('vi-VN')} đồng / W`,
+                    },
+                    ...goldMedalCommissionTrack.tiers.map((tier) => ({
+                      k: `Từ đơn thứ ${tier.orders} trong tháng`,
+                      v: `+${tier.bonusPerWatt.toLocaleString('vi-VN')} đồng / W`,
+                    })),
+                    {
+                      k: 'Tự khảo sát công trình',
+                      v: `+${goldMedalCommissionTrack.surveyBonusPerWatt.toLocaleString('vi-VN')} đồng / W`,
+                    },
+                  ].map((row) => (
+                    <div
+                      key={row.k}
+                      className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-2 last:border-0 last:pb-0"
+                    >
+                      <dt className="text-white/70 font-cw-regular">{row.k}</dt>
+                      <dd className="shrink-0 font-cw-bold text-white">
+                        {row.v}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-3 text-[11px] leading-relaxed text-white/50 font-cw-regular">
+                  Hệ {PARTNER_REFERENCE_SYSTEM_KW} kW:{' '}
+                  {goldMedalCommissionTrack.basePerWatt.toLocaleString('vi-VN')}{' '}
+                  đồng/W × {(PARTNER_REFERENCE_SYSTEM_KW * 1000).toLocaleString('vi-VN')}{' '}
+                  W = 7,6 triệu đồng cho đơn hàng đầu tiên.
+                </p>
+              </div>
+
+              <p className="mt-5 pt-5 border-t border-white/10 text-xs text-white/60 font-cw-regular leading-relaxed">
+                {goldMedalPromise.headline} — không cần đúng ngành, chỉ cần đúng nhu
+                cầu. {goldMedalPromise.reassurance}
+              </p>
             </div>
-            <ul className="space-y-3">
-              {goldMedalProgram.commissionRamp.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
-                >
-                  <Zap
-                    className="w-4 h-4 mt-1 flex-shrink-0"
-                    style={{ color: GOLD }}
-                    strokeWidth={1.8}
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 pt-5 border-t border-white/10 text-xs text-white/50 font-cw-regular leading-relaxed">
-              {goldMedalPromise.headline} — không cần đúng ngành, chỉ cần đúng nhu
-              cầu. {goldMedalPromise.reassurance}
-            </p>
           </div>
 
           <div className="gold-reveal rounded-3xl border border-[#E8B44A]/25 bg-gradient-to-br from-[#E8B44A]/12 to-transparent p-7 md:p-9">
@@ -380,23 +492,32 @@ export default function GoldMedalPartner({
             </h3>
           </div>
 
-          <ol className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-            {goldMedalProgram.journey.map((s) => (
-              <li
-                key={s.step}
-                className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-4 text-center"
-              >
-                <span
-                  className="inline-flex w-8 h-8 rounded-full items-center justify-center text-xs font-cw-bold mb-2.5"
-                  style={{ backgroundColor: `${GOLD}22`, color: GOLD_SOFT }}
+          <ol className="grid grid-cols-2 sm:grid-cols-4 gap-3 lg:flex lg:items-start lg:gap-0">
+            {goldMedalProgram.journey.map((s, i) => {
+              const Icon = JOURNEY_ICONS[i] ?? Coins
+              return (
+                <li
+                  key={s.step}
+                  className="relative flex flex-col items-center text-center px-2 py-3 lg:flex-1 lg:py-0"
                 >
-                  {s.step}
-                </span>
-                <span className="block text-xs md:text-sm font-cw-bold text-white/85 leading-snug">
-                  {s.title}
-                </span>
-              </li>
-            ))}
+                  {i > 0 && (
+                    <ChevronRight
+                      className="hidden lg:block absolute left-0 top-[14px] h-4 w-4 text-white/25"
+                      strokeWidth={2}
+                    />
+                  )}
+                  <span
+                    className="inline-flex w-11 h-11 items-center justify-center rounded-full border border-[#E8B44A]/40 bg-[#E8B44A]/10"
+                    style={{ color: GOLD_SOFT }}
+                  >
+                    <Icon className="w-5 h-5" strokeWidth={1.8} />
+                  </span>
+                  <span className="mt-2.5 block text-xs md:text-sm font-cw-bold text-white/85 leading-snug">
+                    {s.title}
+                  </span>
+                </li>
+              )
+            })}
           </ol>
         </div>
 
@@ -411,7 +532,7 @@ export default function GoldMedalPartner({
     <section
       ref={formRef}
       id="dang-ky"
-      className="relative py-16 md:py-24 bg-sv-light overflow-hidden"
+      className="relative py-16 md:py-24 bg-gradient-to-b from-[#E4F1FA] via-[#F2F8FC] to-[#F7F9FC] overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-32 left-1/4 w-[460px] h-[460px] rounded-full bg-[#E8B44A]/10 blur-[150px]" />
