@@ -49,3 +49,5 @@ SEO_PHASE3_TODO.csv
 # (produced by scripts/compress-videos.sh) are committed.
 public/videos/*.mp4
 !public/videos/*-web.mp4
+
+public/videos/*.mp4
