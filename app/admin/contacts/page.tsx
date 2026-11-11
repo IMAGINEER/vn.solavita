@@ -28,14 +28,14 @@ export default async function ContactsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-cw-bold text-uk-navy">
-          Yêu cầu liên hệ
+          联系请求
         </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          Tin nhắn gửi từ vn.solavita.com/contact-us. Mới nhất trước.
+          来自 vn.solavita.com/contact-us 的留言，最新在前。
         </p>
       </div>
       {error ? (
-        <DataErrorNotice scope="yêu cầu liên hệ" error={error} />
+        <DataErrorNotice scope="联系请求" error={error} />
       ) : (
         <ContactsTable contacts={contacts} />
       )}

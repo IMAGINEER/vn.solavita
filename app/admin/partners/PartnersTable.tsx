@@ -24,7 +24,7 @@ export interface PartnerLead {
 
 function formatDateTime(iso: string): string {
   try {
-    return new Intl.DateTimeFormat('vi-VN', {
+    return new Intl.DateTimeFormat('zh-CN', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
@@ -49,19 +49,19 @@ const TRACK_VARIANT: Record<string, BadgeVariant> = {
 }
 
 const TRACK_LABEL: Record<string, string> = {
-  installer: 'Đơn vị lắp đặt',
-  business: 'Năng lượng / Doanh nghiệp',
+  installer: '安装单位',
+  business: '能源 / 企业',
   // VN tracks — titles match `lib/data/partners.ts`.
-  'core-service': 'Đại lý kinh doanh',
-  'certified-installer': 'Đối tác lắp đặt',
-  'lead-partner': 'Đối tác kinh doanh',
+  'core-service': '经销代理',
+  'certified-installer': '安装合作伙伴',
+  'lead-partner': '商业合作伙伴',
 }
 
 export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
   if (partners.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        Chưa có yêu cầu hợp tác nào.
+        暂无合作申请。
       </div>
     )
   }
@@ -71,13 +71,13 @@ export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Thời gian</TableHead>
-            <TableHead>Họ tên</TableHead>
-            <TableHead>Công ty</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Nhóm đối tác</TableHead>
-            <TableHead className="max-w-[20rem]">Giới thiệu</TableHead>
-            <TableHead>Trạng thái</TableHead>
+            <TableHead>时间</TableHead>
+            <TableHead>姓名</TableHead>
+            <TableHead>公司</TableHead>
+            <TableHead>邮箱</TableHead>
+            <TableHead>合作类型</TableHead>
+            <TableHead className="max-w-[20rem]">简介</TableHead>
+            <TableHead>状态</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -108,7 +108,7 @@ export function PartnersTable({ partners }: { partners: PartnerLead[] }) {
               </TableCell>
               <TableCell>
                 <Badge variant={p.status === 'new' ? 'success' : 'outline'}>
-                  {p.status === 'new' ? 'Mới' : p.status || 'Mới'}
+                  {p.status === 'new' ? '新' : p.status || '新'}
                 </Badge>
               </TableCell>
             </TableRow>

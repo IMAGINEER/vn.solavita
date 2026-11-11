@@ -20,11 +20,11 @@ import { cn } from '@/lib/utils'
 // so /admin/login is a clean centered card.
 
 const NAV_ITEMS = [
-  { label: 'Tổng quan', href: '/admin', icon: LayoutDashboard },
-  { label: 'Khách hàng tiềm năng', href: '/admin/leads', icon: Inbox },
-  { label: 'Liên hệ', href: '/admin/contacts', icon: Mail },
-  { label: 'Đối tác', href: '/admin/partners', icon: Briefcase },
-  { label: 'Blog', href: '/admin/blog', icon: Newspaper },
+  { label: '概览', href: '/admin', icon: LayoutDashboard },
+  { label: '潜在客户', href: '/admin/leads', icon: Inbox },
+  { label: '联系', href: '/admin/contacts', icon: Mail },
+  { label: '合作伙伴', href: '/admin/partners', icon: Briefcase },
+  { label: '博客', href: '/admin/blog', icon: Newspaper },
 ] as const
 
 export function AdminShell({
@@ -65,7 +65,7 @@ export function AdminShell({
               <span className="inline-flex size-7 items-center justify-center rounded-md bg-uk-teal-dark text-white text-sm">
                 S
               </span>
-              <span className="text-sm">Quản trị Solavita</span>
+              <span className="text-sm">Solavita 管理后台</span>
             </Link>
             <nav className="hidden sm:flex items-center gap-1">
               {NAV_ITEMS.map((item) => {
@@ -99,17 +99,17 @@ export function AdminShell({
                 {user.username}
               </div>
               <div className="text-[10px] text-uk-slate uppercase tracking-wider">
-                {user.role === 'admin' ? 'Quản trị viên' : user.role}
+                {user.role === 'admin' ? '管理员' : user.role}
               </div>
             </div>
             <button
               type="button"
               onClick={logout}
               className="inline-flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-cw-bold text-uk-slate hover:bg-uk-teal-soft/60 hover:text-uk-teal-dark transition-colors"
-              title="Đăng xuất"
+              title="退出登录"
             >
               <LogOut className="size-4" />
-              <span className="hidden sm:inline">Đăng xuất</span>
+              <span className="hidden sm:inline">退出登录</span>
             </button>
           </div>
         </div>

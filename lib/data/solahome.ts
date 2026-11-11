@@ -114,8 +114,8 @@ export const solaHomeMounts: SolaHomeMount[] = [
  * Source: the Skyworth PV overseas case deck
  * (`docs/20260921_创维光伏海外案例.pptx`) — the three Vietnamese
  * projects it documents. Every figure below is the deck's own slide
- * text; nothing is estimated. Where a slide has not been read yet the
- * field stays empty and the page renders a visible TBD.
+ * text; nothing is estimated. Each photo is the slide's own photo,
+ * re-encoded to WebP under `public/images/solahome/`.
  *
  * The previous three entries (5 kWp Bình Dương −79% / 10 kWp Đồng
  * Nai −82% / 20 kWp TP.HCM −72%, each with a customer name) were not
@@ -128,7 +128,7 @@ export interface SolaHomeCase {
   name: string
   /** Which SolaHome system the project uses. */
   system: 'SolaRoof' | 'SolaLoft'
-  /** Installed PV capacity. Empty = still to be read from the deck. */
+  /** Installed PV capacity, as printed on the deck slide. */
   capacity: string
   /** City / province. */
   location: string
@@ -136,7 +136,7 @@ export interface SolaHomeCase {
   note: string
   /** The deck's own rows for this project (equipment, output, payback…). */
   facts?: { label: string; value: string }[]
-  /** Photo path. Omitted while the deck's photo is still pending. */
+  /** Photo path — the deck slide's own photo. */
   imagePath?: string
   imageAlt: string
 }
@@ -166,24 +166,37 @@ export const solaHomeCases: SolaHomeCase[] = [
     id: 'binh-duong-solaroof',
     name: 'Nhà phố tại Bình Dương',
     system: 'SolaRoof',
-    capacity: '',
-    location: 'Bình Dương',
+    capacity: '7,44 kWp',
+    location: 'TP. Hồ Chí Minh · Bình Dương',
     note:
-      'Hệ SolaRoof — tấm pin lắp trực tiếp lên mái, giữ nguyên kết cấu mái và tận dụng diện tích thu.',
+      'Hệ SolaRoof trên mái dốc — dàn pin 7,44 kWp, biến tần lưu trữ 3 pha 5 kW và pin 14,3 kWh.',
+    facts: [
+      { label: 'Công suất lắp đặt', value: '7,44 kWp' },
+      { label: 'Biến tần lưu trữ', value: '5 kW · 3 pha' },
+      { label: 'Pin lưu trữ', value: '14,3 kWh' },
+      { label: 'Loại mái', value: 'Mái dốc (SolaRoof)' },
+    ],
     imagePath: '/images/solahome/case-binhduong.webp',
     imageAlt:
-      'Hệ điện mặt trời SolaRoof lắp trực tiếp trên mái nhà tại Bình Dương',
+      'Hệ điện mặt trời SolaRoof lắp trên mái dốc của một nhà phố tại Bình Dương',
   },
   {
     id: 'bac-ninh-sunroom',
     name: 'Nhà kính Bắc Ninh',
     system: 'SolaLoft',
-    capacity: '',
+    capacity: '9,92 kWp',
     location: 'Bắc Ninh',
     note:
-      'Hệ SolaLoft dạng mái nhà kính — khung thép và tấm pin tạo thành mái kính thu bức xạ.',
+      'Hệ SolaLoft mái kính — dàn pin 9,92 kWp, biến tần lưu trữ 1 pha 10 kW và pin 14,3 kWh.',
+    facts: [
+      { label: 'Công suất lắp đặt', value: '9,92 kWp' },
+      { label: 'Biến tần lưu trữ', value: '10 kW · 1 pha' },
+      { label: 'Pin lưu trữ', value: '14,3 kWh' },
+      { label: 'Loại mái', value: 'Mái kính (sunroom)' },
+    ],
+    imagePath: '/images/solahome/case-bacninh.webp',
     imageAlt:
-      'Hệ SolaLoft mái nhà kính tại Bắc Ninh — ảnh dự án chờ bổ sung từ hồ sơ case',
+      'Hệ SolaLoft mái kính trên mái nhà tại Bắc Ninh',
   },
 ]
 

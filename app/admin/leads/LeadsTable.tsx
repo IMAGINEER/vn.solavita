@@ -86,25 +86,25 @@ const PLAN_STATUS_VARIANT: Record<PlanStatus, BadgeVariant> = {
 }
 
 const PLAN_STATUS_LABEL: Record<PlanStatus, string> = {
-  not_sent: 'Gói: chưa gửi',
-  sent_unopened: 'Gói: đã gửi',
-  sent_opened_unconfirmed: 'Gói: đã mở',
-  sent_opened_confirmed: 'Gói: đã xác nhận',
+  not_sent: '方案：未发送',
+  sent_unopened: '方案：已发送',
+  sent_opened_unconfirmed: '方案：已打开',
+  sent_opened_confirmed: '方案：已确认',
 }
 
 const PLAN_STATUS_TOOLTIP: Record<PlanStatus, string> = {
-  not_sent: 'Chưa gửi email nào (hoặc webhook Resend chưa được cấu hình).',
-  sent_unopened: 'Email đã gửi, khách chưa vào /my-plan.',
-  sent_opened_unconfirmed: 'Khách đã vào /my-plan, chưa bấm Liên hệ chuyên gia.',
-  sent_opened_confirmed: 'Khách đã bấm Liên hệ chuyên gia. Cần theo dõi tiếp.',
+  not_sent: '尚未发送任何邮件（或 Resend webhook 未配置）。',
+  sent_unopened: '邮件已发送，客户尚未进入 /my-plan。',
+  sent_opened_unconfirmed: '客户已进入 /my-plan，尚未点击“联系专家”。',
+  sent_opened_confirmed: '客户已点击“联系专家”，需要继续跟进。',
 }
 
 function formatDateTime(iso: string): string {
-  // vi-VN short: "31 Th08, 14:23" - drops the year because admin
+  // zh-CN short: "8月31日 14:23" - drops the year because admin
   // scans recent leads in the current year; saves ~20px in the
   // narrow Time column. Falls back to the raw ISO if Intl fails.
   try {
-    return new Intl.DateTimeFormat('vi-VN', {
+    return new Intl.DateTimeFormat('zh-CN', {
       day: '2-digit',
       month: 'short',
       hour: '2-digit',
@@ -175,11 +175,11 @@ const HOME_DETAIL_ITEMS: ReadonlyArray<{
   icon: typeof House
   label: string
 }> = [
-  { key: 'house_type',        icon: House,    label: 'Loại nhà' },
-  { key: 'roof_type',         icon: Triangle, label: 'Mái nhà' },
-  { key: 'household_size',    icon: Users,    label: 'Số người' },
-  { key: 'electricity_usage', icon: Zap,      label: 'Mức dùng' },
-  { key: 'devices',           icon: Plug,     label: 'Thiết bị' },
+  { key: 'house_type',        icon: House,    label: '房屋类型' },
+  { key: 'roof_type',         icon: Triangle, label: '屋顶' },
+  { key: 'household_size',    icon: Users,    label: '人数' },
+  { key: 'electricity_usage', icon: Zap,      label: '用电量' },
+  { key: 'devices',           icon: Plug,     label: '设备' },
 ]
 
 function HomeDetailsCell({ lead }: { lead: ConsultationLead }) {
@@ -206,7 +206,7 @@ function HomeDetailsCell({ lead }: { lead: ConsultationLead }) {
       {lead.business_profile && (
         <li className="flex items-start gap-2 text-sm leading-tight">
           <span
-            title="Hồ sơ doanh nghiệp"
+            title="企业档案"
             className="inline-flex shrink-0 cursor-default mt-0.5"
           >
             <Building2
@@ -228,7 +228,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
   if (leads.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        Chưa có khách hàng tiềm năng nào.
+        暂无潜在客户。
       </div>
     )
   }
@@ -238,13 +238,13 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Thời gian</TableHead>
-            <TableHead>Họ tên</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Điện thoại</TableHead>
-            <TableHead>Khu vực</TableHead>
-            <TableHead>Chi tiết nhà</TableHead>
-            <TableHead>Gói đề xuất</TableHead>
+            <TableHead>时间</TableHead>
+            <TableHead>姓名</TableHead>
+            <TableHead>邮箱</TableHead>
+            <TableHead>电话</TableHead>
+            <TableHead>地区</TableHead>
+            <TableHead>房屋详情</TableHead>
+            <TableHead>推荐方案</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -260,7 +260,7 @@ export function LeadsTable({ leads }: { leads: ConsultationLead[] }) {
                   <div className="flex items-center gap-1.5">
                     <span>{formatDateTime(l.updated_at)}</span>
                     {wasResubmitted(l) && (
-                      <Badge variant="muted" title="Gửi lại (updated_at > created_at)">
+                      <Badge variant="muted" title="重新提交（updated_at > created_at）">
                         U
                       </Badge>
                     )}

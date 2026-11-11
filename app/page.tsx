@@ -8,7 +8,11 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Điện mặt trời & pin lưu trữ cho hộ gia đình Việt Nam',
+  // `title.template` from app/layout.tsx does NOT apply to a page that
+  // lives in the same segment as the layout, so the homepage — the one
+  // title that must carry the brand — was shipping brandless. Put the
+  // brand in explicitly here.
+  title: 'Solavita Việt Nam — Điện mặt trời & pin lưu trữ cho hộ gia đình',
   path: '/',
   description:
     'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. So sánh cấu hình hệ thống và tìm giải pháp giúp nguồn điện ổn định hơn.',

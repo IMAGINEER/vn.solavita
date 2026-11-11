@@ -85,14 +85,14 @@ export default async function LeadsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-cw-bold text-uk-navy">
-          Khách hàng tiềm năng
+          潜在客户
         </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          Yêu cầu tư vấn gửi từ vn.solavita.com. Mới nhất trước.
+          来自 vn.solavita.com 的咨询请求，最新在前。
         </p>
       </div>
       {error ? (
-        <DataErrorNotice scope="khách hàng tiềm năng" error={error} />
+        <DataErrorNotice scope="潜在客户" error={error} />
       ) : (
         <LeadsTable leads={leads} />
       )}

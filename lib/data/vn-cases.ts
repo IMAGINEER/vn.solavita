@@ -8,10 +8,10 @@
  * system description states only what the deck's slide text states.
  *
  * The three Vietnamese projects (Qili Xiang Restaurant, Bình Dương,
- * Bắc Ninh sunroom) are the ones the deck documents for Vietnam. Their
- * capacity is still to be read off the deck, so `capacity` is empty and
- * the card renders a visible TBD — the same rule the rest of the site
- * follows: an unverified number is never published.
+ * Bắc Ninh sunroom) are the ones the deck documents for Vietnam, and
+ * every figure on their cards is read straight off the matching slide.
+ * Where a deck slide prints no figure the card renders a visible TBD
+ * instead — an unverified number is never published.
  *
  * The card format is unchanged:
  *
@@ -27,9 +27,9 @@
  *
  * Images: every photo is extracted from the deck slide that documents the
  * case and re-encoded to WebP under `public/images/cases/` (see the
- * slide → file mapping in the comment above each case). `imagePath` is
- * therefore set on all published cases — except the Bắc Ninh sunroom,
- * whose slide photo is still pending.
+ * slide → file mapping in the comment above each case). The three
+ * Vietnamese photos live under `public/images/solahome/` because the
+ * SolaHome page shares them. `imagePath` is set on every published case.
  *
  * No fabricated results, savings or testimonials. Each `description`
  * states only what the deck states — the system size, the completion date
@@ -52,8 +52,8 @@ export interface VnCase {
   name?: string
   /**
    * Headline capacity, e.g. "21.59kW" or "7.2kW / 11.52kWh".
-   * Empty while the capacity is still to be read from the case deck —
-   * the card renders a visible TBD instead of a blank line.
+   * Empty only when the source deck prints no capacity — the card
+   * renders a visible TBD instead of a blank line.
    */
   capacity: string
   /** City / site name, e.g. "Balakong". */
@@ -83,9 +83,9 @@ export const vnCases: VnCase[] = [
   // list — and therefore the homepage's case strip — because they are
   // the references a Vietnamese visitor recognises.
   //
-  // The deck is the only source for their figures, so the capacity
-  // stays empty (rendered as a visible TBD) until it is read, and the
-  // Bắc Ninh photo is still pending.
+  // Slides 4, 5 and 10 of the deck document these three projects; the
+  // capacity and equipment mix below are copied from those slides, and
+  // each photo is the slide's own image.
   {
     slug: 'vietnam-qili-xiang-restaurant',
     type: 'residential',
@@ -106,11 +106,11 @@ export const vnCases: VnCase[] = [
     type: 'residential',
     typeLabel: CASE_TYPE_LABELS.residential,
     name: 'Nhà phố tại Bình Dương',
-    capacity: '',
+    capacity: '7,44 kWp',
     place: 'Bình Dương',
     country: 'Việt Nam',
     description:
-      'Hệ SolaRoof lắp trực tiếp lên mái — giữ nguyên kết cấu mái và tận dụng toàn bộ diện tích thu.',
+      'Hệ SolaRoof trên mái dốc — dàn pin 7,44 kWp, biến tần lưu trữ 3 pha 5 kW và pin 14,3 kWh.',
     imagePath: '/images/solahome/case-binhduong.webp',
     imageDescription:
       'Hệ điện mặt trời SolaRoof lắp trực tiếp trên mái nhà tại Bình Dương',
@@ -121,13 +121,14 @@ export const vnCases: VnCase[] = [
     type: 'residential',
     typeLabel: CASE_TYPE_LABELS.residential,
     name: 'Nhà kính Bắc Ninh',
-    capacity: '',
+    capacity: '9,92 kWp',
     place: 'Bắc Ninh',
     country: 'Việt Nam',
     description:
-      'Hệ SolaLoft dạng mái nhà kính — khung thép và tấm pin tạo thành mái kính thu bức xạ.',
+      'Hệ SolaLoft mái kính — dàn pin 9,92 kWp, biến tần lưu trữ 1 pha 10 kW và pin 14,3 kWh.',
+    imagePath: '/images/solahome/case-bacninh.webp',
     imageDescription:
-      'Hệ SolaLoft mái nhà kính tại Bắc Ninh — ảnh dự án chờ bổ sung từ hồ sơ case',
+      'Hệ SolaLoft mái kính trên mái nhà tại Bắc Ninh',
     featured: true,
   },
 

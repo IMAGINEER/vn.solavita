@@ -8,7 +8,8 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Liên hệ Solavita Việt Nam | Tư vấn hệ thống điện mặt trời',
+  // Page-specific only — the root layout appends ` | Solavita Việt Nam`.
+  title: 'Tư vấn và lắp đặt hệ thống điện mặt trời',
   path: '/contact-us',
   description:
     'Liên hệ Solavita Việt Nam để được tư vấn giải pháp điện mặt trời cho hộ gia đình, pin lưu trữ, hệ thống cho doanh nghiệp nhỏ và cơ hội hợp tác.',

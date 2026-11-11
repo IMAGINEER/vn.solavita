@@ -29,15 +29,15 @@ export default async function AdminDashboardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-cw-bold text-uk-navy">
-          Xin chào, {user.username}
+          欢迎，{user.username}
         </h1>
         <p className="mt-1 text-sm text-uk-slate">
-          Bảng điều khiển Solavita Việt Nam - liên kết nhanh tới quy trình tư vấn.
+          Solavita 越南管理后台 — 咨询流程的快捷入口。
         </p>
       </div>
 
       {countError ? (
-        <DataErrorNotice scope="số lượng yêu cầu tư vấn" error={countError} />
+        <DataErrorNotice scope="咨询请求数量" error={countError} />
       ) : null}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -52,7 +52,7 @@ export default async function AdminDashboardPage() {
             {leadCount ?? 0}
           </div>
           <div className="text-xs font-cw-bold text-uk-slate uppercase tracking-wider mt-1">
-            Yêu cầu tư vấn
+            咨询请求
           </div>
         </Link>
       </div>

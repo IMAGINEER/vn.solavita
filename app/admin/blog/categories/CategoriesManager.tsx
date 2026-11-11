@@ -43,7 +43,7 @@ export function CategoriesManager({
       })
       const json = (await res.json()) as { success: boolean; error?: string }
       if (!res.ok || !json.success) {
-        setError(json.error ?? 'Đã có lỗi xảy ra')
+        setError(json.error ?? '发生错误')
         return
       }
       setDraft({ slug: '', name_en: '', description_en: '', sort_order: 0 })
@@ -55,13 +55,13 @@ export function CategoriesManager({
 
   const handleDelete = useCallback(
     async (id: string) => {
-      if (!window.confirm('Xoá danh mục này?')) return
+      if (!window.confirm('删除此分类？')) return
       const res = await fetch(`/api/admin/blog/categories/${id}`, {
         method: 'DELETE',
       })
       const json = (await res.json()) as { success: boolean; error?: string }
       if (!res.ok || !json.success) {
-        alert(json.error ?? 'Xoá thất bại')
+        alert(json.error ?? '删除失败')
         return
       }
       router.refresh()
@@ -75,9 +75,9 @@ export function CategoriesManager({
         <table className="w-full text-sm">
           <thead className="bg-uk-teal-soft/50 text-uk-slate">
             <tr>
-              <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">Tên</th>
+              <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">名称</th>
               <th className="text-left font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">Slug</th>
-              <th className="text-right font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">Bài viết</th>
+              <th className="text-right font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5">文章数</th>
               <th className="text-right font-cw-bold uppercase tracking-wider text-[11px] px-4 py-2.5 w-20" />
             </tr>
           </thead>
@@ -99,7 +99,7 @@ export function CategoriesManager({
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDelete(c.id)}
-                    aria-label="Xoá"
+                    aria-label="删除"
                   >
                     <Trash2 className="size-4" />
                   </Button>
@@ -115,15 +115,15 @@ export function CategoriesManager({
         className="rounded-2xl border border-uk-line bg-white p-5 space-y-3 h-fit"
       >
         <h2 className="text-sm font-cw-bold text-uk-navy uppercase tracking-wider">
-          Thêm danh mục
+          添加分类
         </h2>
         <div>
-          <Label htmlFor="cat-name">Tên</Label>
+          <Label htmlFor="cat-name">名称</Label>
           <Input
             id="cat-name"
             value={draft.name_en}
             onChange={(e) => setDraft((d) => ({ ...d, name_en: e.target.value }))}
-            placeholder="VD: Hướng dẫn điện mặt trời"
+            placeholder="例如：太阳能指南"
             required
             className="mt-1.5"
           />
@@ -140,17 +140,17 @@ export function CategoriesManager({
           />
         </div>
         <div>
-          <Label htmlFor="cat-desc">Mô tả</Label>
+          <Label htmlFor="cat-desc">描述</Label>
           <Textarea
             id="cat-desc"
             value={draft.description_en}
             onChange={(e) => setDraft((d) => ({ ...d, description_en: e.target.value }))}
-            placeholder="Một dòng mô tả danh mục này bao gồm những gì."
+            placeholder="用一句话描述该分类包含的内容。"
             className="mt-1.5 min-h-[80px] font-sans"
           />
         </div>
         <div>
-          <Label htmlFor="cat-sort">Thứ tự</Label>
+          <Label htmlFor="cat-sort">排序</Label>
           <Input
             id="cat-sort"
             type="number"
@@ -162,7 +162,7 @@ export function CategoriesManager({
         {error && <p className="text-xs text-red-600">{error}</p>}
         <Button type="submit" disabled={saving}>
           {saving ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
-          Thêm
+          添加
         </Button>
       </form>
     </div>

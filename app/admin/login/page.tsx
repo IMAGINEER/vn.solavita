@@ -27,14 +27,14 @@ export default function AdminLoginPage() {
       })
       const j = await res.json()
       if (!res.ok || !j.success) {
-        setError(translate(j.error) || `Đăng nhập thất bại (${res.status})`)
+        setError(translate(j.error) || `登录失败 (${res.status})`)
         setBusy(false)
         return
       }
       router.push(next)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Lỗi kết nối mạng')
+      setError(err instanceof Error ? err.message : '网络连接错误')
       setBusy(false)
     }
   }
@@ -48,15 +48,15 @@ export default function AdminLoginPage() {
           </div>
           <div>
             <div className="font-cw-bold text-uk-navy text-base">
-              Solavita Việt Nam
+              Solavita 越南
             </div>
-            <div className="text-xs text-uk-slate">Đăng nhập quản trị</div>
+            <div className="text-xs text-uk-slate">管理后台登录</div>
           </div>
         </div>
 
         <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username">Tên đăng nhập</Label>
+            <Label htmlFor="username">用户名</Label>
             <Input
               id="username"
               name="username"
@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Mật khẩu</Label>
+            <Label htmlFor="password">密码</Label>
             <Input
               id="password"
               name="password"
@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
           )}
 
           <Button type="submit" disabled={busy} className="w-full" size="lg">
-            {busy ? 'Đang đăng nhập...' : 'Đăng nhập'}
+            {busy ? '登录中…' : '登录'}
           </Button>
         </form>
       </div>
@@ -99,14 +99,14 @@ export default function AdminLoginPage() {
 function translate(code: string | undefined): string | null {
   switch (code) {
     case 'invalid_credentials':
-      return 'Tên đăng nhập hoặc mật khẩu không đúng.'
+      return '用户名或密码不正确。'
     case 'account_disabled':
-      return 'Tài khoản này đã bị vô hiệu hoá.'
+      return '该账号已被停用。'
     case 'username_and_password_required':
-      return 'Vui lòng nhập cả tên đăng nhập và mật khẩu.'
+      return '请输入用户名和密码。'
     case 'invalid_json':
-      return 'Đã có lỗi xảy ra - vui lòng thử lại.'
+      return '发生错误 — 请重试。'
     default:
-      return code ? `Đăng nhập thất bại: ${code}` : null
+      return code ? `登录失败：${code}` : null
   }
 }

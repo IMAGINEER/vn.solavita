@@ -22,14 +22,15 @@ import {
  */
 
 export const metadata = buildPageMetadata({
-  title:
-    'Commercial & Industrial Solar Solutions in Vietnam | Solavita Việt Nam',
+  // Vietnamese, and WITHOUT a brand suffix — the root layout's title
+  // template appends ` | Solavita Việt Nam` exactly once.
+  title: 'Điện mặt trời & pin lưu trữ cho doanh nghiệp tại Việt Nam',
   path: '/solutions/business-solar',
   description:
-    'Solar and energy storage systems sized for factories, hotels, retail and processing plants in Vietnam — system configurations, industry scenarios, delivery capability and a savings estimator built on your own electricity bill.',
+    'Hệ thống điện mặt trời và pin lưu trữ thiết kế riêng cho nhà máy, khách sạn, cửa hàng bán lẻ và cơ sở chế biến tại Việt Nam — cấu hình hệ thống, kịch bản theo từng ngành, năng lực triển khai và công cụ ước tính tiết kiệm dựa trên hóa đơn điện thực tế của bạn.',
   ogImage: '/images/og-solutions.jpg',
   ogImageAlt:
-    'Commercial and industrial solar and energy storage solutions for Vietnamese businesses',
+    'Giải pháp điện mặt trời và pin lưu trữ cho doanh nghiệp tại Việt Nam',
 })
 
 export default function Page() {
@@ -52,14 +53,13 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/solutions/business-solar',
-            name:
-              'Commercial & Industrial Solar Solutions in Vietnam | Solavita Việt Nam',
+            name: 'Điện mặt trời & pin lưu trữ cho doanh nghiệp tại Việt Nam',
             description:
-              'Solar and energy storage systems sized for factories, hotels, retail and processing plants in Vietnam — system configurations, industry scenarios, delivery capability and a savings estimator.',
+              'Hệ thống điện mặt trời và pin lưu trữ thiết kế cho nhà máy, khách sạn, cửa hàng bán lẻ và cơ sở chế biến tại Việt Nam — cấu hình hệ thống, kịch bản theo ngành và năng lực triển khai.',
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: '/' },
-            { name: 'For Business', url: '/solutions/business-solar' },
+            { name: 'Trang chủ', url: '/' },
+            { name: 'Doanh nghiệp', url: '/solutions/business-solar' },
           ]),
           serviceListJsonLd(serviceSpecs, '/solutions/business-solar'),
           ...serviceSpecs.map((s) =>
@@ -67,9 +67,9 @@ export default function Page() {
           ),
           faqPageJsonLd({
             path: '/solutions/business-solar',
-            name: 'Business solar questions — Solavita Việt Nam',
+            name: 'Câu hỏi về điện mặt trời cho doanh nghiệp — Solavita Việt Nam',
             description:
-              'How a Solavita commercial and industrial solar system is sized, what it can cover and how it is delivered.',
+              'Cách Solavita thiết kế hệ thống điện mặt trời cho doanh nghiệp, hệ thống đáp ứng được nhu cầu gì và quy trình triển khai ra sao.',
             faqs: cniFaqs.map((f) => ({
               question: f.q,
               answer: f.a,

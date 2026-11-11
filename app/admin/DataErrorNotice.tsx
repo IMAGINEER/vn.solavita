@@ -19,18 +19,18 @@ export function DataErrorNotice({
   scope,
   error,
 }: {
-  /** What failed, in the operator's language — e.g. "khách hàng tiềm năng". */
+  /** What failed, in the operator's language — e.g. "潜在客户". */
   scope: string
   error: { message?: string; code?: string; details?: string | null } | null
 }) {
-  const message = error?.message ?? 'Unknown error'
+  const message = error?.message ?? '未知错误'
   const details =
     error?.details && error.details !== message ? error.details : null
 
   return (
     <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
       <p className="text-sm font-cw-bold text-red-700">
-        Không tải được dữ liệu: {scope}
+        数据加载失败：{scope}
       </p>
       <p className="mt-2 break-words font-mono text-xs text-uk-navy/80">
         {error?.code ? `[${error.code}] ` : ''}
@@ -42,10 +42,9 @@ export function DataErrorNotice({
         </p>
       ) : null}
       <p className="mt-3 text-xs leading-relaxed text-uk-slate">
-        Đây là lỗi truy vấn, KHÔNG phải "chưa có dữ liệu". Kiểm tra log máy
-        chủ và đối chiếu các migration trong{' '}
-        <code className="font-mono">supabase/migrations/</code> với project
-        đang cấu hình qua <code className="font-mono">SUPABASE_URL</code>.
+        这是查询错误，而不是“暂无数据”。请检查服务器日志，并将{' '}
+        <code className="font-mono">supabase/migrations/</code> 中的迁移与通过{' '}
+        <code className="font-mono">SUPABASE_URL</code> 配置的项目进行核对。
       </p>
     </div>
   )

@@ -21,6 +21,9 @@ import {
   appendSiteTitle,
 } from './site'
 
+/** The object form of `Metadata['robots']` — a plain robots directive. */
+type RobotsDirective = Exclude<Metadata['robots'], string | null | undefined>
+
 /**
  * The `robots` value every page renders.
  *
@@ -30,11 +33,15 @@ import {
  * `robots` field REPLACES the inherited one, so a page that sets
  * its own `robots` would otherwise opt itself back in.
  */
-function siteRobots(extra?: Metadata['robots']): Metadata['robots'] {
+function siteRobots(extra?: RobotsDirective): RobotsDirective {
+  // `extra` is spread last on purpose: it adds crawler directives
+  // (`max-image-preview`, `googleBot`, …) and, for an explicitly
+  // noindex'd page, overrides `index`/`follow`. Pre-launch the global
+  // flag is already false, so no caller can accidentally open the site.
   return {
     index: SITE_INDEXING_ENABLED,
     follow: SITE_INDEXING_ENABLED,
-    ...(typeof extra === 'object' && extra !== null ? extra : {}),
+    ...extra,
   }
 }
 
@@ -177,7 +184,7 @@ export function buildPostMetadata({ post, categorySlug }: BuildPostOpts): Metada
 /** Used by 404 / catch-all fallbacks for blog URLs. */
 export const NOINDEX_METADATA: Metadata = {
   robots: { index: false, follow: false },
-  title: appendSiteTitle('Page not found'),
+  title: appendSiteTitle('Không tìm thấy trang'),
 }
 
 /** Site root canonical (used by `/`). */

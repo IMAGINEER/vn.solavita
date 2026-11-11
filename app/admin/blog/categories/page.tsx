@@ -31,15 +31,14 @@ export default async function AdminCategoriesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-cw-bold text-uk-navy">
-            Danh mục blog
+            博客分类
           </h1>
           <p className="mt-1 text-sm text-uk-slate">
-            Ba danh mục chính: hướng dẫn, tin tức, câu chuyện khách hàng. Chỉ thêm
-            danh mục mới khi cần tách riêng luồng đọc.
+            三个主要分类：指南、新闻、客户案例。仅在需要拆分阅读流时新增分类。
           </p>
         </div>
         <ButtonLink href="/admin/blog" variant="ghost">
-          ← Bài viết
+          ← 文章
         </ButtonLink>
       </div>
 

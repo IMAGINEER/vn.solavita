@@ -46,14 +46,14 @@ export default async function AdminBlogPage(props: {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-cw-bold text-uk-navy">Blog</h1>
+          <h1 className="text-2xl font-cw-bold text-uk-navy">博客</h1>
           <p className="mt-1 text-sm text-uk-slate">
-            Bài viết, cẩm nang và tin tức đã xuất bản trên website. Tổng cộng {result.total}.
+            网站已发布的文章、指南和新闻。共 {result.total} 篇。
           </p>
         </div>
         <ButtonLink href="/admin/blog/new">
           <Plus className="size-4" />
-          Bài viết mới
+          新建文章
         </ButtonLink>
       </div>
 

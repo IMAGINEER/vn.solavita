@@ -4,7 +4,10 @@ import JsonLd from '@/components/seo/JsonLd'
 import { webPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Giải pháp điện mặt trời trong thực tế | Solavita Việt Nam',
+  // No brand suffix here — the root layout's title template appends
+  // ` | Solavita Việt Nam` exactly once. Hardcoding it produced
+  // `... | Solavita Việt Nam | Solavita Việt Nam` in <title>.
+  title: 'Giải pháp điện mặt trời trong thực tế',
   path: '/cases',
   description:
     'Khám phá các công trình điện mặt trời và cấu hình hệ thống trong từng bối cảnh sử dụng.',
@@ -20,7 +23,10 @@ export default function Page() {
         data={[
           webPageJsonLd({
             path: '/cases',
-            name: 'Giải pháp điện mặt trời trong thực tế | Solavita Việt Nam',
+            // JSON-LD `name` is a page/entity name, not a <title> — it
+            // never took the template suffix, so the brand belongs in
+            // the Organization/WebPage graph, not here.
+            name: 'Giải pháp điện mặt trời trong thực tế',
             description:
               'Khám phá các công trình điện mặt trời và cấu hình hệ thống trong từng bối cảnh sử dụng.',
           }),

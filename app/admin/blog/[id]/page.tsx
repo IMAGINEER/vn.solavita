@@ -36,22 +36,22 @@ export default async function EditBlogPostPage(props: {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-cw-bold text-uk-navy">
-            Chỉnh sửa bài viết
+            编辑文章
           </h1>
           <p className="mt-1 text-sm text-uk-slate">
-            Trạng thái hiện tại:{' '}
+            当前状态：{' '}
             {post.status === 'published' ? (
-              <span className="text-emerald-700 font-cw-bold">Đã xuất bản</span>
+              <span className="text-emerald-700 font-cw-bold">已发布</span>
             ) : (
-              <span className="text-uk-slate font-cw-bold">Bản nháp</span>
+              <span className="text-uk-slate font-cw-bold">草稿</span>
             )}
             {post.published_at && (
-              <> · xuất bản ngày {new Date(post.published_at).toLocaleDateString('vi-VN')}</>
+              <> · 发布于 {new Date(post.published_at).toLocaleDateString('zh-CN')}</>
             )}
           </p>
         </div>
         <ButtonLink href="/admin/blog" variant="ghost">
-          ← Quay lại danh sách
+          ← 返回列表
         </ButtonLink>
       </div>
 
@@ -64,15 +64,15 @@ export default async function EditBlogPostPage(props: {
       {revisions.length > 0 && (
         <section className="rounded-2xl border border-uk-line bg-white p-5">
           <h2 className="text-sm font-cw-bold text-uk-navy uppercase tracking-wider mb-3">
-            Lịch sử chỉnh sửa
+            编辑历史
           </h2>
           <ul className="divide-y divide-uk-line text-xs">
             {revisions.map((r) => (
               <li key={r.id} className="py-2 flex items-center justify-between">
                 <span className="font-mono text-uk-slate">
-                  {new Date(r.edited_at).toLocaleString('vi-VN')}
+                  {new Date(r.edited_at).toLocaleString('zh-CN')}
                 </span>
-                <span className="text-uk-slate">{r.note ?? 'bản lưu tạm'}</span>
+                <span className="text-uk-slate">{r.note ?? '临时保存'}</span>
               </li>
             ))}
           </ul>

@@ -27,9 +27,9 @@ export interface ContactLead {
 }
 
 function formatDateTime(iso: string): string {
-  // vi-VN: "31 Th08 2026, 14:23". Same locale as LeadsTable.
+  // zh-CN: "2026年8月31日 14:23". Same locale as LeadsTable.
   try {
-    return new Intl.DateTimeFormat('vi-VN', {
+    return new Intl.DateTimeFormat('zh-CN', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
@@ -47,7 +47,7 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
   if (contacts.length === 0) {
     return (
       <div className="rounded-2xl border border-uk-line bg-white p-12 text-center text-uk-slate text-sm">
-        Chưa có yêu cầu liên hệ nào.
+        暂无联系请求。
       </div>
     )
   }
@@ -57,14 +57,14 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Thời gian</TableHead>
-            <TableHead>Họ tên</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Điện thoại</TableHead>
-            <TableHead>Địa điểm</TableHead>
-            <TableHead>Chủ đề</TableHead>
-            <TableHead className="max-w-[20rem]">Nội dung</TableHead>
-            <TableHead>Trạng thái</TableHead>
+            <TableHead>时间</TableHead>
+            <TableHead>姓名</TableHead>
+            <TableHead>邮箱</TableHead>
+            <TableHead>电话</TableHead>
+            <TableHead>地点</TableHead>
+            <TableHead>主题</TableHead>
+            <TableHead className="max-w-[20rem]">内容</TableHead>
+            <TableHead>状态</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,7 +103,7 @@ export function ContactsTable({ contacts }: { contacts: ContactLead[] }) {
                 </TableCell>
                 <TableCell>
                   <Badge variant={c.status === 'new' ? 'success' : 'outline'}>
-                    {c.status === 'new' ? 'Mới' : c.status || 'Mới'}
+                    {c.status === 'new' ? '新' : c.status || '新'}
                   </Badge>
                 </TableCell>
               </TableRow>

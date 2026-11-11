@@ -16,7 +16,7 @@ export const dynamic = 'force-dynamic'
  * layout, which every admin route inherits.
  */
 export const metadata: Metadata = {
-  title: 'Quản trị',
+  title: '管理后台',
   robots: { index: false, follow: false, nocache: true },
 }
 

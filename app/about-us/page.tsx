@@ -7,7 +7,9 @@ import {
 } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Về Solavita Việt Nam | Giải pháp điện mặt trời cho hộ gia đình',
+  // Page-specific only — the root layout appends ` | Solavita Việt Nam`.
+  // Including the brand here made the template double it.
+  title: 'Giải pháp điện mặt trời cho hộ gia đình tại Việt Nam',
   path: '/about-us',
   description:
     'Solavita Việt Nam thuộc thương hiệu điện mặt trời của Tập đoàn SKYWORTH. Điện mặt trời, pin lưu trữ và quản lý năng lượng thông minh cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
