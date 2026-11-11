@@ -268,7 +268,15 @@ export default function ProductDetail({ product }: { product: Product }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             <div>
               <SectionEyebrow>SẢN PHẨM</SectionEyebrow>
-              <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-cw-bold text-gradient leading-tight">
+              {/* `py-[0.15em]` is not decoration: `.text-gradient` paints the
+                  headline only inside the element's box
+                  (background-clip: text), so Vietnamese diacritics (ấ, ằ,
+                  ữ …) and the descenders of g/q that reach past a
+                  `leading-tight` line box would be left unpainted —
+                  transparent, which reads as the letters being sliced
+                  top and bottom. The padding widens the painted area so
+                  the full glyphs stay visible. */}
+              <h1 className="mt-5 py-[0.15em] text-4xl sm:text-5xl lg:text-6xl font-cw-bold text-gradient leading-tight">
                 {product.name}
               </h1>
               <p className="mt-4 text-lg font-cw-bold text-uk-teal-dark">

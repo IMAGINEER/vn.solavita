@@ -1,161 +1,126 @@
 'use client'
 
-import {
-  Activity,
-  Coins,
-  ShieldCheck,
-} from 'lucide-react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import PageHero, { HeroPillsRow } from '@/components/ui/page-hero'
-import FaqSection from '@/components/solutions/FaqSection'
-import CTA from '@/components/solutions/CTA'
-import BusinessTypeSelector from '@/components/solutions/cni/BusinessTypeSelector'
-import SystemPackages from '@/components/solutions/cni/SystemPackages'
-import BusinessApplications from '@/components/solutions/cni/BusinessApplications'
-import TechnologySection from '@/components/solutions/cni/TechnologySection'
-import BusinessBenefits from '@/components/solutions/cni/BusinessBenefits'
-import TailoredAssessment from '@/components/solutions/cni/TailoredAssessment'
-import RoiEstimator from '@/components/solutions/cni/RoiEstimator'
-import DeliverySupport from '@/components/solutions/cni/DeliverySupport'
-import RealProjects from '@/components/solutions/cni/RealProjects'
-import EnergyManagement from '@/components/solutions/cni/EnergyManagement'
+import CollectionPage, {
+  type CollectionPageProps,
+} from '@/components/solutions/CollectionPage'
+import { solutionDetails, businessSolutionFaqs } from '@/lib/data/solutions'
 import { openFormModal } from '@/lib/form-modal'
-import { cniFaqs } from '@/lib/data/cni'
 
 /**
- * /solutions/business-solar — the Commercial & Industrial page.
+ * /solutions/business-solar — ba giải pháp điện mặt trời cho doanh nghiệp:
+ *   - BUSINESS Entry 3-Phase
+ *   - BUSINESS Standard 3-Phase
+ *   - BUSINESS Flagship 3-Phase
  *
- * Rebuilt in Nov 2026 from a product catalogue into a selling page for
- * businesses. The old page led with three package cards and a brand
- * promise; the new one walks the buying order a business actually
- * follows:
+ * Trang không ngụ ý rằng mọi doanh nghiệp đều cần điện ba pha. Phần FAQ
+ * nêu rõ "pha phụ thuộc điều kiện công trình".
  *
- *   1. Hero                     — what the business gets
- *   2. Solutions by business type — "which one is mine?"
- *   3. System packages          — the configurations, with capacities
- *   4. Business applications    — the four industry scenarios
- *   5. System architecture      — the components + the product tabs
- *   6. Business benefits        — resilience / cost / reliable design
- *   7. Tailored solution        — the five-question energy profile
- *   8. Investment & ROI         — the savings estimator
- *   9. Project delivery         — how it is delivered and supported
- *  10. Real projects            — what has actually been built
- *  11. Smart energy management  — dashboard + app
- *  12. FAQ + final CTA
- *
- * The copy is English — this page is the last English page on the
- * Vietnam site and its Vietnamese pass is still open.
+ * Nội dung FAQ nằm trong `lib/data/solutions.ts` để các trang khác dùng lại.
  */
 
+const businessSolutions = solutionDetails.filter(
+  (p) => p.segment === 'businesses',
+)
+
 export default function BusinessSolarPage() {
-  return (
-    <main className="min-h-screen bg-white">
-      <Header logoHref="/" />
-
-      {/* ① Hero — business value, not a product line */}
-      <PageHero
-        backgroundImage="/images/business_solar_1600x856.webp"
-        eyebrow="COMMERCIAL & INDUSTRIAL SOLAR"
-        title="Smarter Energy. Stronger Business."
-        body="Integrated solar and energy storage solutions designed to reduce operating costs, improve energy resilience and support your business growth."
-        primaryCta={{
-          label: 'Get a Free Energy Assessment',
-          onClick: () => openFormModal({ solutionType: 'business' }),
-        }}
-        secondaryCta={{
-          label: 'Explore Our Solutions',
-          href: '#solutions-by-business-type',
-        }}
-        breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'For Business' },
-        ]}
-        /* The retail-building photo is bright (sky, white facade, pale
-           pavement), so the copy column needs a heavier mask than the
-           default plus a soft darkening along the bottom edge. */
-        overlay="linear-gradient(to right, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.74) 32%, rgba(15,23,42,0.3) 60%, rgba(15,23,42,0) 80%), linear-gradient(to top, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0) 40%)"
-        compact
-      >
-        <HeroPillsRow
-          pills={[
-            {
-              icon: <Coins className="w-4 h-4 text-uk-emerald" strokeWidth={2} />,
-              text: 'Lower operating costs',
-            },
-            {
-              icon: (
-                <ShieldCheck className="w-4 h-4 text-uk-emerald" strokeWidth={2} />
-              ),
-              text: 'Reliable power supply',
-            },
-            {
-              icon: (
-                <Activity className="w-4 h-4 text-uk-emerald" strokeWidth={2} />
-              ),
-              text: 'Intelligent energy management',
-            },
-          ]}
-        />
-      </PageHero>
-
-      {/* ② Solutions by business type */}
-      <BusinessTypeSelector />
-
-      {/* ③ System packages */}
-      <SystemPackages />
-
-      {/* ④ Business applications */}
-      <BusinessApplications />
-
-      {/* ⑤ System architecture + ⑩ product details */}
-      <TechnologySection />
-
-      {/* ⑥ Business benefits */}
-      <BusinessBenefits />
-
-      {/* ⑦ Tailored solution — the five-question energy profile */}
-      <TailoredAssessment />
-
-      {/* ⑧ Investment & ROI */}
-      <RoiEstimator />
-
-      {/* ⑨ Project delivery & local support */}
-      <DeliverySupport />
-
-      {/* ⑩ Real projects */}
-      <RealProjects />
-
-      {/* ⑪ Smart energy management */}
-      <EnergyManagement />
-
-      {/* ⑫ FAQ */}
-      <FaqSection
-        faqs={cniFaqs}
-        title={
-          <>
-            Business Solar <span className="text-gradient">Questions</span>
-          </>
-        }
-      />
-
-      {/* Final CTA */}
-      <CTA
-        eyebrow="START THE ASSESSMENT"
-        title={
-          <>
-            Let&apos;s size the system for{' '}
-            <span className="text-gradient">your business</span>
-          </>
-        }
-        description="Send us the bill and the site details, and we will come back with a configuration, an expected output and a price — based on your load, not on a catalogue."
-        primaryLabel="Request a tailored proposal"
-        secondaryLabel="See the savings estimate"
-        secondaryHref="#investment"
-        className="bg-white"
-      />
-
-      <Footer />
-    </main>
-  )
+  const props: CollectionPageProps = {
+    scenario: 'business',
+    heroProps: {
+      eyebrow: 'ĐIỆN MẶT TRỜI CÔNG NGHIỆP & THƯƠNG MẠI',
+      title: 'Năng lượng thông minh. Doanh nghiệp vững mạnh.',
+      body: 'Giải pháp điện mặt trời và lưu trữ năng lượng tích hợp giúp giảm chi phí vận hành, tăng khả năng chịu tải và hỗ trợ doanh nghiệp tăng trưởng.',
+      backgroundImage: '/images/business_solar_1600x856.webp',
+      primaryCta: {
+        label: 'Nhận đánh giá năng lượng miễn phí',
+        onClick: openFormModal,
+      },
+      breadcrumbs: [
+        { label: 'Trang chủ', href: '/' },
+        { label: 'Doanh nghiệp' },
+      ],
+    },
+    contextCopy: {
+      heading:
+        'Cắt giảm chi phí, vận hành liên tục, chủ động ngân sách năng lượng',
+      body: 'Giải pháp điện mặt trời cho doanh nghiệp của Solavita mang lại ba giá trị: chi phí vận hành thấp hơn, chủ động nguồn điện và nguồn điện ổn định. Ba giải pháp dưới đây được thiết kế dựa trên phụ tải thiết bị, giờ vận hành, phụ tải quan trọng và yêu cầu về pha. Khả năng phù hợp cuối cùng được xác nhận qua khảo sát phụ tải, đánh giá hiện trường và rà soát yêu cầu pha — không phải doanh nghiệp nào cũng cần điện ba pha.',
+    },
+    solutions: businessSolutions,
+    // ①套餐 — one equal-width 3-up row. The docx's two categories are
+    //   carried by the cards themselves: 分类1 (VITAL BUSINESS) folds
+    //   into the Entry/Standard intros, and 分类2 (HEAVY DEMAND) into
+    //   Flagship, which gets the featured teal outline.
+    solutionGroups: [
+      {
+        solutions: businessSolutions.filter(
+          (s) =>
+            s.id === 'business-entry-3-phase' ||
+            s.id === 'business-standard-3-phase',
+        ),
+      },
+      {
+        solutions: businessSolutions.filter(
+          (s) => s.id === 'business-flagship-3-phase',
+        ),
+        featured: true,
+        highlight: {
+          title: 'ĐIỆN CÔNG NGHIỆP, ĐƠN GIẢN HÓA.',
+          spec: 'Hệ thống ESS All-in-One 125kW / 261kWh.',
+          body: 'Một tủ duy nhất vận hành nhà máy, siêu thị hoặc lưới điện mini cộng đồng — không cần biến tần riêng, không xếp container và không cần hậu cần nhiên liệu tại chỗ.',
+          href: '/products/all-in-one-ess',
+          ctaLabel: 'Chi tiết All-in-One ESS',
+          // 工商业光伏背景图 per `docs/修改建议(2).docx`.
+          backgroundImage: '/images/business-customized.webp',
+        },
+      },
+    ],
+    tailoredCta: {
+      eyebrow: 'CHƯA THẤY CẤU HÌNH PHÙ HỢP?',
+      title: (
+        <>
+          Hãy để chúng tôi <span className="text-gradient">thiết kế riêng.</span>
+        </>
+      ),
+      body: 'Nếu phụ tải, giờ vận hành hoặc điều kiện mặt bằng của bạn nằm ngoài các cấu hình trên, hãy yêu cầu một đề xuất riêng. Đại diện Solavita sẽ liên hệ với cấu hình phù hợp với doanh nghiệp của bạn.',
+      primaryCta: { label: 'Yêu cầu báo giá riêng', href: '/contact-us' },
+    },
+    // ②优势-品牌赋能 — "VITAL ENERGY. VITAL TRUST."
+    showBrandAdvantage: true,
+    // ③产品简介 — Module / Inverter / Battery / C&I ESS + "View More Products"
+    showcaseProducts: [
+      {
+        title: 'Tấm pin',
+        tagline: 'Cung cấp năng lượng ổn định.',
+        href: '/products/module',
+        imagePath: '/images/product-module-1.webp',
+        imageDescription: 'Tấm pin mặt trời TOPCon 620 W của Solavita',
+      },
+      {
+        title: 'Biến tần',
+        tagline: 'Điều khiển thông minh.',
+        href: '/products/inverter',
+        imagePath: '/images/product-inverter-card.webp',
+        imageDescription: 'Bộ biến tần hybrid Solavita',
+      },
+      {
+        title: 'Pin lưu trữ',
+        tagline: 'Dự phòng tin cậy.',
+        href: '/products/battery',
+        // SWR cabinet render — the previous `product-battery-card.webp`
+        // actually showed the C&I ESS cabinet, not the residential
+        // battery.
+        imagePath: '/images/products/battery/swr-5-12-front.webp',
+        imageDescription: 'Tủ pin LiFePO₄ SWR của Solavita',
+      },
+      {
+        title: 'Hệ thống lưu trữ năng lượng C&I',
+        tagline: 'Một tủ. Hiệu quả thực.',
+        href: '/products/all-in-one-ess',
+        imagePath: '/images/products/all-in-one-ess/sws-261-1.webp',
+        imageDescription:
+          'Tủ ESS All-in-One 125 kW / 261 kWh của Solavita',
+      },
+    ],
+    faqs: businessSolutionFaqs,
+  }
+  return <CollectionPage {...props} />
 }

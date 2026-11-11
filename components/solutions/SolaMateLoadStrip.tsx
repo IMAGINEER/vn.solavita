@@ -7,23 +7,25 @@ import type { SolaMateLoad, SolaMateLoadIconKey } from '@/lib/data/solamate'
  * SolaMateLoadStrip — the "TẢI & CHẠY" strip.
  *
  * Ported from the NG template's `LoadDiagram` (components/solutions/
- * CollectionPage.tsx): appliance icon + estimated runtime on the top
- * line, the device name underneath, the rows joined by a "+". On the
- * NG site the strip is the hover state of a solution card; here it is
- * the hover state of the SolaMate package card, with an inline copy
- * for touch / narrow viewports where hover does not exist.
+ * CollectionPage.tsx): appliance icon + figure on the top line, the
+ * device name underneath. On the NG site the strip is the hover state
+ * of a solution card; here it is the hover state of the SolaMate
+ * package card, with an inline copy for touch / narrow viewports.
  *
- * The runtime figures are the publisher's own example set
- * (`solaMatePackages[].runs`) — nothing here is estimated.
+ * The three figures (`solaMatePackages[].runs`) convert each package's
+ * published daily yield into fridge / air-conditioner runtime and EV
+ * driving range. The reference loads behind the arithmetic — fridge
+ * 150 W, AC 800 W, EV 15 kWh/100 km — are printed under the grid.
  *
- * Rendering is shared with SolaHome via `components/solutions/
- * LoadStrip.tsx`; this wrapper keeps the SolaMate-specific prop names.
+ * Rendering is shared via `components/solutions/LoadStrip.tsx`; this
+ * wrapper keeps the SolaMate-specific prop names.
  */
 
 export default function SolaMateLoadStrip({
   runs,
   tone = 'light',
   variant = 'strip',
+  columns = 3,
   caption,
   size = 'sm',
   className = '',
@@ -31,6 +33,8 @@ export default function SolaMateLoadStrip({
   runs: SolaMateLoad[]
   tone?: 'light' | 'dark'
   variant?: 'strip' | 'grid'
+  /** Grid columns for the `grid` variant. */
+  columns?: 2 | 3
   caption?: string
   /** Type scale — the SolaMate package cards use `lg`. */
   size?: LoadStripSize
@@ -41,13 +45,14 @@ export default function SolaMateLoadStrip({
       className={className}
       tone={tone}
       variant={variant}
+      columns={columns}
       caption={caption}
       size={size}
       header="Tải & chạy"
-      note="Thời gian chạy"
+      note="Quy đổi mỗi ngày"
       items={runs.map((run: SolaMateLoad) => ({
         icon: run.icon as SolaMateLoadIconKey,
-        value: run.hours,
+        value: run.value,
         label: run.device,
       }))}
     />

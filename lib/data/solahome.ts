@@ -200,6 +200,30 @@ export const solaHomeCases: SolaHomeCase[] = [
   },
 ]
 
+/** Icon keys for the typical-load row published per capacity. */
+export type SolaHomeLoadIconKey =
+  | 'ac-wall'
+  | 'ac-floor'
+  | 'refrigerator'
+  | 'fan'
+  | 'light'
+  | 'tv'
+  | 'washer'
+  | 'cooker'
+  | 'pump'
+  | 'monitor'
+  | 'oven'
+  | 'dishwasher'
+
+/** One device in the published "typical load & runtime" row. */
+export interface SolaHomeLoadProfile {
+  icon: SolaHomeLoadIconKey
+  /** Device name as printed in the flyer. */
+  label: string
+  /** Published daily runtime at this capacity, e.g. "8 giờ". */
+  hours: string
+}
+
 /** One of the four packages. */
 export interface SolaHomePackage {
   id: string
@@ -230,7 +254,52 @@ export interface SolaHomePackage {
   summary: string
   /** Which customers this package suits. */
   fits: string
+  /**
+   * Published typical loads + daily runtime for this capacity row.
+   * See `solaHomeLoads*` for the source.
+   */
+  loads: SolaHomeLoadProfile[]
 }
+
+/**
+ * Published typical loads & daily runtime, by capacity.
+ *
+ * Source: `docs/Vietnam SolaRoof & SolaLoft Flyer_CN.pdf`, p.2, the
+ * column 「典型负载及可运行时长」. The flyer prints the same column for
+ * SolaRoof and SolaLoft, so the mounting method does not change these
+ * figures. The capacity table is printed for 5 / 6 / 8 / 10 / 15 / 30 kW;
+ * the four packages map to the 5, 10 and 15 kW rows.
+ *
+ * Both 10 kWp packages use `solaHomeLoads10kw`: the flyer's load row keyed
+ * on capacity, not phase. They differ in phase, inverter, storage and the
+ * customer they suit — not in the published load runtime.
+ */
+const solaHomeLoads5kw: SolaHomeLoadProfile[] = [
+  { icon: 'ac-wall', label: 'Điều hòa treo tường', hours: '8 giờ' },
+  { icon: 'refrigerator', label: 'Tủ lạnh', hours: '24 giờ' },
+  { icon: 'fan', label: 'Quạt', hours: '10 giờ' },
+  { icon: 'light', label: 'Đèn', hours: '10 giờ' },
+  { icon: 'tv', label: 'TV', hours: '4 giờ' },
+  { icon: 'washer', label: 'Máy giặt', hours: '1 giờ' },
+]
+
+const solaHomeLoads10kw: SolaHomeLoadProfile[] = [
+  { icon: 'ac-floor', label: 'Điều hòa cây', hours: '8 giờ' },
+  { icon: 'refrigerator', label: 'Tủ lạnh', hours: '24 giờ' },
+  { icon: 'light', label: 'Đèn', hours: '12 giờ' },
+  { icon: 'tv', label: 'TV', hours: '8 giờ' },
+  { icon: 'pump', label: 'Máy bơm', hours: '6 giờ' },
+  { icon: 'monitor', label: 'Màn hình', hours: '6 giờ' },
+]
+
+const solaHomeLoads15kw: SolaHomeLoadProfile[] = [
+  { icon: 'ac-floor', label: 'Điều hòa cây', hours: '10 giờ' },
+  { icon: 'refrigerator', label: 'Tủ lạnh', hours: '24 giờ' },
+  { icon: 'light', label: 'Đèn', hours: '12 giờ' },
+  { icon: 'pump', label: 'Máy bơm', hours: '6 giờ' },
+  { icon: 'oven', label: 'Lò nướng', hours: '2 giờ' },
+  { icon: 'dishwasher', label: 'Máy rửa bát', hours: '2 giờ' },
+]
 
 export const solaHomePackages: SolaHomePackage[] = [
   {
@@ -247,6 +316,7 @@ export const solaHomePackages: SolaHomePackage[] = [
     storage: 'Tùy chọn — pin 5 kWh + hybrid 1 pha',
     summary: 'Mở đầu với mái 25–30 ㎡, ưu tiên tiết kiệm điện ban ngày.',
     fits: 'Hộ gia đình 1 pha, hóa đơn điện vừa phải, muốn bắt đầu nhẹ nhàng.',
+    loads: solaHomeLoads5kw,
   },
   {
     id: 'solahome-10kwp',
@@ -262,6 +332,7 @@ export const solaHomePackages: SolaHomePackage[] = [
     storage: 'Tùy chọn — pin 10 hoặc 16 kWh + hybrid 1 pha',
     summary: 'Mái 45–52 ㎡, đáp ứng gia đình nhiều thiết bị cùng lúc.',
     fits: 'Biệt thự và nhà phố 1 pha, nhiều điều hòa, tủ lạnh và thiết bị chạy cả ngày.',
+    loads: solaHomeLoads10kw,
   },
   {
     id: 'solahome-10kwp-3p',
@@ -277,6 +348,7 @@ export const solaHomePackages: SolaHomePackage[] = [
     storage: 'Tùy chọn — pin 10 hoặc 16 kWh + hybrid 3 pha',
     summary: 'Cùng công suất 10 kWp nhưng cấp điện ba pha, ưu tiên tải lớn.',
     fits: 'Nhà có tải ba pha (điều hòa trung tâm, bơm, thang máy), văn phòng tư nhân.',
+    loads: solaHomeLoads10kw,
   },
   {
     id: 'solahome-15kwp-3p',
@@ -292,32 +364,8 @@ export const solaHomePackages: SolaHomePackage[] = [
     storage: 'Tùy chọn — pin 16 kWh + hybrid 3 pha',
     summary: 'Mái lớn 67–77 ㎡, công suất cao nhất trong dòng SolaHome.',
     fits: 'Biệt thự lớn, nhà 3 pha cần vừa phát điện vừa cấp điện dự phòng.',
+    loads: solaHomeLoads15kw,
   },
-]
-
-/**
- * The reference loads the site's own savings model is built on.
- *
- * Published verbatim in the footnote under the roof-sizing table
- * (`solaHomeRoofTableNote`): "Công suất tải tham chiếu: điều hòa
- * trung tâm 1 kW, điều hòa 800 W, tủ lạnh 150 W, quạt 50 W." The
- * package cards reuse them so the hover panel shows the same loads the
- * published economics assume — no per-package runtime figures are
- * invented here.
- */
-export interface SolaHomeLoad {
-  icon: 'ac' | 'refrigerator' | 'fan'
-  /** Rated power of the reference load. */
-  value: string
-  /** Device name. */
-  label: string
-}
-
-export const solaHomeLoadReference: SolaHomeLoad[] = [
-  { icon: 'ac', value: '1 kW', label: 'Điều hòa trung tâm' },
-  { icon: 'ac', value: '800 W', label: 'Điều hòa' },
-  { icon: 'refrigerator', value: '150 W', label: 'Tủ lạnh' },
-  { icon: 'fan', value: '50 W', label: 'Quạt' },
 ]
 
 /** The two optional backup (bổ sung pin) solutions. */

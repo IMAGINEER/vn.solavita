@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import {
   ArrowRight,
+  Battery,
   Check,
   ChevronDown,
   Drill,
@@ -220,50 +221,92 @@ export default function SolaMatePage() {
             {solaMatePackages.map((p) => (
               <article
                 key={p.id}
-                className="flex flex-col overflow-hidden rounded-3xl border border-uk-line bg-white transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(15,118,110,0.45)]"
+                className="group flex flex-col overflow-hidden rounded-3xl border border-uk-line bg-white transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(15,118,110,0.45)]"
               >
-                {/* Header band — the kit render is the card's header photo,
-                    and the package name and its power headline sit on it.
-                    No scrim and no label chip: the copy block is kept inside
-                    the dark PV panel on the left of the shot, so the white
-                    type reads directly off the modules and the mounting
-                    hardware stays untouched on the right. */}
-                <div className="relative aspect-square shrink-0 overflow-hidden bg-white">
+                {/* Product band — the kit render at half width, centred on
+                    white. It used to bleed edge-to-edge in a square band,
+                    which made the photo (and the whole card) far taller
+                    than the card needed.
+
+                    The band is also the card's hover state, same treatment
+                    as the business-solar solution cards: the render zooms
+                    slightly, a navy gradient rises, and the load strip
+                    fades in over it. On touch/narrow viewports (< xl) the
+                    strip falls back to the inline copy in the card body —
+                    it is never hover-only. */}
+                <div className="relative shrink-0 overflow-hidden bg-white px-6 pt-7">
                   <img
                     src={p.imagePath}
                     alt={p.imageAlt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    className="mx-auto block h-auto w-1/2 object-contain transition-transform duration-700 ease-out group-hover:scale-[1.06] motion-reduce:transition-none"
                   />
-                  <div className="absolute inset-y-0 left-0 flex max-w-[50%] flex-col justify-center py-5 pl-5 pr-1 sm:py-6 sm:pl-6">
-                    {p.badge && (
-                      <span className="text-[11px] font-cw-bold tracking-[0.18em] text-white/65 uppercase">
-                        {p.badge}
-                      </span>
-                    )}
-                    <h3 className="mt-2 text-xl font-cw-bold leading-tight text-white sm:text-2xl">
-                      {p.name}
-                    </h3>
-                    {/* 1 — core power: the anchor of the card */}
-                    <div className="mt-4">
-                      <div className="text-3xl leading-none font-cw-bold text-white sm:text-4xl">
-                        {p.power}
-                      </div>
-                      <div className="mt-1.5 text-[10px] font-cw-bold tracking-wider text-white/60 uppercase sm:text-[11px]">
-                        công suất
-                      </div>
+
+                  {/* Discoverability cue — says what the hover reveals,
+                      and gets out of the way as the strip arrives. */}
+                  <span className="pointer-events-none absolute bottom-3 left-3 z-[5] hidden items-center gap-1.5 rounded-full bg-uk-navy/80 px-2.5 py-1 text-[10px] font-cw-bold tracking-[0.14em] text-white uppercase backdrop-blur-sm transition-opacity duration-300 xl:inline-flex group-hover:opacity-0 group-focus-within:opacity-0">
+                    <Battery className="h-3 w-3 text-uk-emerald" strokeWidth={2} />
+                    Tải &amp; chạy
+                  </span>
+
+                  <div
+                    className="absolute inset-0 z-10 hidden flex-col justify-end bg-[#0F172A]/35 px-5 pt-10 pb-5 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none xl:flex"
+                    style={{
+                      background:
+                        'linear-gradient(180deg, rgba(15,23,42,0.55) 0%, rgba(15,23,42,0.9) 40%, rgba(15,23,42,0.98) 65%, rgba(15,23,42,1) 100%)',
+                    }}
+                  >
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          'radial-gradient(120% 70% at 100% 100%, rgba(16,185,129,0.18), transparent 60%)',
+                      }}
+                    />
+                    <div className="relative motion-safe:translate-y-2 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out motion-safe:group-hover:translate-y-0 motion-safe:group-focus-within:translate-y-0">
+                      <SolaMateLoadStrip
+                        runs={p.runs}
+                        tone="dark"
+                        variant="strip"
+                        size="lg"
+                        caption="Một ngày nắng, đủ điện cho bao nhiêu thiết bị?"
+                      />
                     </div>
-                    {/* 2 — total DC nameplate of the system */}
-                    <p className="mt-2 text-[11px] text-white/60 sm:text-sm">
-                      Công suất hệ thống{' '}
-                      <span className="font-cw-bold text-white">
-                        {p.systemPower}
-                      </span>
-                    </p>
                   </div>
                 </div>
 
-                <div className="flex flex-1 flex-col p-8">
+                {/* Name + power, below the render. Moved off the photo:
+                    with the image at half width there is white behind the
+                    copy, so white type would vanish — the headline now
+                    runs in the card's navy/teal on white. */}
+                <div className="shrink-0 px-8 pt-6">
+                  {p.badge && (
+                    <span className="text-[11px] font-cw-bold tracking-[0.18em] text-uk-teal-dark uppercase">
+                      {p.badge}
+                    </span>
+                  )}
+                  <h3 className="mt-2 text-xl font-cw-bold leading-tight text-uk-navy sm:text-2xl">
+                    {p.name}
+                  </h3>
+                  {/* 1 — core power: the anchor of the card */}
+                  <div className="mt-3 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                    <span className="text-3xl leading-none font-cw-bold text-uk-teal-dark sm:text-4xl">
+                      {p.power}
+                    </span>
+                    <span className="text-[10px] font-cw-bold tracking-wider text-uk-slate uppercase sm:text-[11px]">
+                      công suất
+                    </span>
+                  </div>
+                  {/* 2 — total DC nameplate of the system */}
+                  <p className="mt-2 text-[11px] text-uk-slate sm:text-sm">
+                    Công suất hệ thống{' '}
+                    <span className="font-cw-bold text-uk-navy">
+                      {p.systemPower}
+                    </span>
+                  </p>
+                </div>
+
+                <div className="flex flex-1 flex-col px-8 pt-6 pb-8">
                   {/* 3 + 4 — module count and inverter */}
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
                     <div>
@@ -310,11 +353,11 @@ export default function SolaMatePage() {
                     </div>
                   </div>
 
-                  {/* Household load simulation — always visible, both
-                      packages show the same structure. `size="lg"` doubles
-                      the icons and the type: this strip is a permanent
-                      part of the card, not a hover detail. */}
-                  <div className="mt-6 rounded-2xl border border-uk-line bg-sv-light p-5">
+                  {/* Touch / narrow-window fallback: no hover, so the
+                      same strip renders in the normal flow. From `xl` up
+                      the hover overlay owns it, so the two never double
+                      up. `size="lg"` doubles the icons and the type. */}
+                  <div className="mt-6 rounded-2xl border border-uk-line bg-sv-light p-5 xl:hidden">
                     <SolaMateLoadStrip
                       runs={p.runs}
                       tone="light"
@@ -343,8 +386,11 @@ export default function SolaMatePage() {
           </div>
 
           <p className="mt-6 text-xs text-white/70">
-            Số liệu dựa trên bức xạ mặt trời trung bình tại Đông Nam Á và công
-            suất tiêu thụ tiêu chuẩn.
+            Quy đổi từ sản lượng trung bình mỗi ngày (bức xạ mặt trời tại Đông
+            Nam Á), theo tải tham chiếu: tủ lạnh 150 W, điều hòa 800 W; xe điện
+            tính theo mức 15 kWh/100 km (quy đổi năng lượng, không phải công
+            suất sạc trực tiếp). Thời gian là mức tối đa khi chạy riêng một
+            thiết bị.
           </p>
         </div>
       </section>
@@ -364,7 +410,10 @@ export default function SolaMatePage() {
           </div>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[1.6fr_1fr] lg:items-start">
-            <div className="solamate-chart rounded-2xl border border-uk-line bg-sv-light p-6">
+            {/* `min-w-0` — the chart measures its own container, so
+                without it the grid track stretches to the SVG's initial
+                560px and the whole page scrolls sideways on a phone. */}
+            <div className="solamate-chart min-w-0 rounded-2xl border border-uk-line bg-sv-light p-6">
               <h3 className="font-cw-bold text-uk-navy">
                 Lợi nhuận tích lũy (triệu VND)
               </h3>
@@ -416,7 +465,7 @@ export default function SolaMatePage() {
                 src="/images/after-4.webp"
                 alt="Nhân vật SolaMate bên hệ thống đã lắp đặt xong — không cần phê duyệt, không thủ tục phức tạp"
                 loading="lazy"
-                className="mt-6 aspect-[16/10] w-full rounded-2xl border border-uk-line object-cover"
+                className="mt-11 aspect-[16/10] w-full rounded-2xl border border-uk-line object-cover"
               />
             </div>
           </div>
@@ -433,33 +482,46 @@ export default function SolaMatePage() {
             </h2>
           </div>
 
-          <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <ol className="mt-10 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {solaMateInstallSteps.map((s) => (
-              <li
-                key={s.index}
-                className="flex flex-col overflow-hidden rounded-2xl border border-uk-line bg-white"
-              >
-                {/* The photo is absolutely positioned so the band keeps its
-                    4:3 height for every step — an in-flow image would
-                    size the band by its own aspect ratio. */}
-                <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-white p-4">
-                  <img
-                    src={s.imagePath}
-                    alt={s.imageAlt}
-                    className={`absolute inset-0 h-full w-full p-4 ${
-                      s.fit === 'cover' ? 'object-cover' : 'object-contain'
-                    }`}
-                    loading="lazy"
-                  />
-                  <span className="absolute top-3 left-3 flex h-8 w-8 items-center justify-center rounded-full bg-uk-navy/85 font-cw-bold text-sm text-white">
+              <li key={s.index} className="relative">
+                {/* Step badge — the same badge as the homepage "QUY TRÌNH"
+                    cards: a 40px green circle whose centre sits exactly on
+                    the card's top border. It cannot live inside the card,
+                    because the card is `overflow-hidden` (the photo needs
+                    clipping) and the badge has to break out of the top
+                    edge, so the <li> is the positioning context and the
+                    card is an inner wrapper. The extra row gap above keeps
+                    a row's badges clear of the cards in the row before. */}
+                <div
+                  className="absolute left-1/2 z-10 -translate-x-1/2"
+                  style={{ top: 'calc(-0.5 * 2.5rem)' }}
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-uk-emerald text-base font-cw-bold text-white shadow-lg">
                     {s.index}
-                  </span>
+                  </div>
                 </div>
-                <div className="flex flex-1 flex-col border-t border-uk-line p-5">
-                  <h3 className="font-cw-bold text-uk-navy">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-uk-slate">
-                    {s.body}
-                  </p>
+
+                <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-uk-line bg-white">
+                  {/* The photo is absolutely positioned so the band keeps its
+                      4:3 height for every step — an in-flow image would
+                      size the band by its own aspect ratio. */}
+                  <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-white p-4">
+                    <img
+                      src={s.imagePath}
+                      alt={s.imageAlt}
+                      className={`absolute inset-0 h-full w-full p-4 ${
+                        s.fit === 'cover' ? 'object-cover' : 'object-contain'
+                      }`}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col border-t border-uk-line p-5">
+                    <h3 className="font-cw-bold text-uk-navy">{s.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-uk-slate">
+                      {s.body}
+                    </p>
+                  </div>
                 </div>
               </li>
             ))}

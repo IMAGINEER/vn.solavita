@@ -2,6 +2,7 @@
 
 import { Fragment } from 'react'
 import {
+  EvCharger,
   Fan,
   Lightbulb,
   Monitor,
@@ -16,15 +17,14 @@ import {
  * LoadStrip — the generic "appliance + figure" strip used on the
  * solution package cards.
  *
- * Originally written for SolaMate (`SolaMateLoadStrip`), where the
- * headline figure is a *runtime* ("15 giờ"). SolaHome publishes rated
- * *loads* instead ("800 W"), so the figure is now a free-form string
- * and the component is shared by both lines.
+ * Written for SolaMate (`SolaMateLoadStrip`); the headline figure is a
+ * free-form string, currently a *runtime* ("15 giờ").
  *
  * Every number rendered here comes from published data:
  *   - SolaMate → `solaMatePackages[].runs`
- *   - SolaHome → `solaHomeLoadReference` (the reference loads listed in
- *     the site's own savings-formula note)
+ *
+ * SolaHome no longer uses this component: its published loads and daily
+ * runtimes are per-package and render inline via `SolaHomePackageLoads`.
  */
 
 export type LoadIconKey =
@@ -35,10 +35,14 @@ export type LoadIconKey =
   | 'washer'
   | 'fan'
   | 'pc'
+  | 'ev'
 
 export interface LoadItem {
   icon: LoadIconKey
-  /** The headline figure — a runtime ("15 giờ") or a rated load ("800 W"). */
+  /**
+   * The headline figure — a runtime ("15 giờ"), a rated load ("800 W")
+   * or a converted range ("~24 km").
+   */
   value: string
   /** What the figure belongs to — the device name. */
   label: string
@@ -48,8 +52,8 @@ export interface LoadItem {
  * Type scale for the strip.
  *
  * `sm` is the original compact strip — a single row of
- * "icon + figure + device name" chips joined by "+" signs. It is used by
- * the SolaHome package cards.
+ * "icon + figure + device name" chips joined by "+" signs, kept for
+ * inline copies where a stacked tile would be too tall.
  *
  * `lg` is the SolaMate package-card version, where the strip is a
  * permanent part of the card rather than a hover detail: each appliance
@@ -114,6 +118,7 @@ const LOAD_ICONS: Record<LoadIconKey, LucideIcon> = {
   washer: WashingMachine,
   fan: Fan,
   pc: Monitor,
+  ev: EvCharger,
 }
 
 function LoadChip({

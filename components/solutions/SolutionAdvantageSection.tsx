@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import ImagePlaceholder from '@/components/ui/image-placeholder'
+import AppStoreLinks from '@/components/ui/app-store-links'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,9 +15,9 @@ gsap.registerPlugin(ScrollTrigger)
  * Per `docs/修改建议(2).docx`:
  *   - Residential 详情页 ②优势-解决方案整体优势
  *       eyebrow : "POWERED BY VITAL LIFE."
- *       ENERGY COSTS, STEP DOWN. / BLACKOUT-PROOF NIGHTS. / ONE SCREEN. FULL CONTROL.
+ *       DIESEL, STEP DOWN. / BLACKOUT-PROOF NIGHTS. / ONE SCREEN. FULL CONTROL.
  *   - Commercial & Industrial 详情页 ②优势-解决方案优势
- *       Zero Downtime / Cut Energy Costs / Built Tough
+ *       Zero Downtime / Cut Diesel / Built Tough
  *
  * Layout — the three advantages are NOT three separate cards. They are
  * three parts of ONE card: each part is a full-width band with its own
@@ -29,7 +30,7 @@ gsap.registerPlugin(ScrollTrigger)
  */
 
 export interface SolutionAdvantage {
-  /** Headline, e.g. "ENERGY COSTS, STEP DOWN." */
+  /** Headline, e.g. "DIESEL, STEP DOWN." */
   title: string
   /** One-line body. */
   body: string
@@ -37,6 +38,22 @@ export interface SolutionAdvantage {
   imageDescription: string
   /** Optional image path — set once the reference assets land. */
   imagePath?: string
+  /**
+   * `object-position` for the band image. Defaults to 'center'.
+   *
+   * Needed when the section pins a wide ratio (4:1): the crop keeps
+   * only the middle ~60% of a 2.3:1 photo, which can slice a subject
+   * that sits high in the frame (a person, a roof-mounted array) or
+   * low in it. 'center 30%' keeps the top of the picture, 'right
+   * center' keeps the right-hand side.
+   */
+  imagePosition?: string
+  /**
+   * Renders the App Store / Google Play download buttons inside this
+   * band. Set on the monitoring-app band ("ONE SCREEN. FULL CONTROL.")
+   * — the download CTA belongs with the app pitch, not under the card.
+   */
+  appDownloads?: boolean
 }
 
 interface SolutionAdvantageSectionProps {
@@ -47,6 +64,19 @@ interface SolutionAdvantageSectionProps {
   /** Optional lead paragraph under the heading. */
   intro?: string
   advantages: SolutionAdvantage[]
+  /**
+   * One fixed aspect ratio for every band in the section, e.g. '4 / 1'.
+   *
+   * With this set the bands become uniform cinematic strips: all three
+   * are the same shape and the same height at every breakpoint, and
+   * each photo is cropped (object-cover) to that ratio. Without it
+   * each band follows its own image, so the three heights differ.
+   *
+   * Note the min-height floors: a 4:1 band of the widest container
+   * (max-w-6xl → 1088px) is 272px, so the md+ floor has to sit below
+   * that or it would always win and the ratio would never apply.
+   */
+  bandRatio?: string
   /** Anchor id so the section can be linked to. */
   id?: string
 }
@@ -56,9 +86,29 @@ export default function SolutionAdvantageSection({
   heading,
   intro,
   advantages,
+  bandRatio,
   id = 'solution-advantage',
 }: SolutionAdvantageSectionProps) {
   const sectionRef = useRef<HTMLElement>(null)
+
+  /**
+   * Natural width/height of each loaded band image, keyed by title.
+   *
+   * The band takes the picture's OWN ratio so the background image is
+   * never cropped — the whole height of the photo shows. Deriving it
+   * from the loaded file instead of hardcoding a number per asset
+   * means a re-exported (or resized) picture can't silently go stale
+   * and start cropping again.
+   */
+  const [imageRatios, setImageRatios] = useState<Record<string, string>>({})
+
+  const rememberRatio = (title: string, img: HTMLImageElement) => {
+    if (!img.naturalWidth || !img.naturalHeight) return
+    const ratio = `${img.naturalWidth} / ${img.naturalHeight}`
+    setImageRatios((prev) =>
+      prev[title] === ratio ? prev : { ...prev, [title]: ratio },
+    )
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -107,9 +157,30 @@ export default function SolutionAdvantageSection({
           {advantages.map((a, i) => (
             <div
               key={a.title}
-              className={`solution-advantage-band relative min-h-[260px] md:min-h-[320px] ${
-                i > 0 ? 'border-t border-uk-line/60' : ''
-              }`}
+              className={`solution-advantage-band relative flex flex-col justify-center ${
+                // Image bands keep a floor for the copy on narrow
+                // screens; from md up the picture's own ratio decides
+                // the height, so nothing is cropped.
+                //
+                // With `bandRatio` the section asks for uniform strips:
+                // the md+ floor drops to 240px so a 4:1 band (240px at
+                // lg, 272px at xl) is not overridden by it.
+                a.imagePath
+                  ? bandRatio
+                    ? 'min-h-[420px] md:min-h-[240px]'
+                    : 'min-h-[420px] md:min-h-[360px]'
+                  : 'min-h-[260px] md:min-h-[320px]'
+              } ${i > 0 ? 'border-t border-uk-line/60' : ''}`}
+              // The band takes the picture's own ratio, so the photo
+              // shows at its full height instead of being cropped to
+              // the band — unless the section pins one ratio for all
+              // of them, in which case every band is the same strip.
+              // Placeholder bands keep the fixed height.
+              style={
+                (bandRatio ?? imageRatios[a.title])
+                  ? { aspectRatio: bandRatio ?? imageRatios[a.title] }
+                  : undefined
+              }
             >
               {/* Background image (or the TBD placeholder) */}
               <div className="absolute inset-0">
@@ -118,6 +189,8 @@ export default function SolutionAdvantageSection({
                     src={a.imagePath}
                     alt={a.imageDescription}
                     loading="lazy"
+                    onLoad={(e) => rememberRatio(a.title, e.currentTarget)}
+                    style={{ objectPosition: a.imagePosition ?? 'center' }}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -139,7 +212,15 @@ export default function SolutionAdvantageSection({
               />
 
               {/* Copy overlaid on the background */}
-              <div className="relative px-6 md:px-12 py-10 md:py-14 flex items-center h-full">
+              <div
+                className={`relative px-6 md:px-12 py-10 ${
+                  // A pinned 4:1 strip is only ~240px tall, so the copy
+                  // sits tighter than it does in a free-height band —
+                  // otherwise the title, the body and the two store
+                  // buttons would not fit inside it.
+                  bandRatio ? 'md:py-6' : 'md:py-14'
+                }`}
+              >
                 <div className="max-w-xl">
                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-cw-bold text-white leading-tight">
                     {a.title}
@@ -147,6 +228,11 @@ export default function SolutionAdvantageSection({
                   <p className="mt-3 text-sm md:text-base text-white/85 font-cw-regular leading-relaxed">
                     {a.body}
                   </p>
+                  {/* Download CTA — lives inside the monitoring-app band
+                      so it sits with the pitch it belongs to. */}
+                  {a.appDownloads && (
+                    <AppStoreLinks className="mt-6 justify-start" />
+                  )}
                 </div>
               </div>
             </div>

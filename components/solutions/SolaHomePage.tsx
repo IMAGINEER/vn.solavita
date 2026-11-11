@@ -27,6 +27,7 @@ import SolaHomeBillEstimator from '@/components/solutions/SolaHomeBillEstimator'
 import SolaHomeEconomics from '@/components/solutions/SolaHomeEconomics'
 import SolaHomeEnergyFlow from '@/components/solutions/SolaHomeEnergyFlow'
 import SolaHomePackageCard from '@/components/solutions/SolaHomePackageCard'
+import SolaHomePackageTable from '@/components/solutions/SolaHomePackageTable'
 import SolaHomeRoofPicker from '@/components/solutions/SolaHomeRoofPicker'
 import SolaHomeSizingMatcher from '@/components/solutions/SolaHomeSizingMatcher'
 import Header from '@/components/Header'
@@ -65,7 +66,9 @@ const serviceIcons: Record<SolaHomeServiceIconKey, LucideIcon> = {
  *   2. Roof picker — the roof material is the question a homeowner can
  *      answer immediately; SolaRoof / SolaLoft appear as the answer,
  *      not as two products to compare
- *   3. Sizing matcher + package cards — roof area and bill pick a card
+ *   3. Sizing matcher + package comparison — roof area and bill pick a
+ *      package; the table compares output, saving, hardware and the
+ *      published daily load runtime
  *   4. Energy flow — one diagram, three states (day / night / outage),
  *      with the HEMS capabilities folded in
  *   5. Economics — investment, yearly saving, payback, long-term value
@@ -75,10 +78,11 @@ const serviceIcons: Record<SolaHomeServiceIconKey, LucideIcon> = {
  *   9. Certifications, warranty, FAQ
  *  10. Survey CTA
  *
- * Each figure has exactly one primary home on the page: daily output
- * and monthly saving live on the package cards; annual saving,
- * payback and long-term value live in the economics module; roof area
- * and panel count live in the sizing matcher. Nothing is repeated.
+ * Daily output and monthly saving lead the package comparison; annual
+ * saving, payback and long-term value live in the economics module; the
+ * full roof-area ladder lives in the sizing table. The comparison table
+ * repeats roof area and panel count on purpose — they are the specs
+ * behind the recommended package, not a second sizing tool.
  */
 
 /** The two architectures explained in section 6. */
@@ -185,7 +189,25 @@ export default function SolaHomePage() {
               </p>
             </div>
 
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            <p className="mt-4 max-w-3xl text-xs leading-relaxed text-white/80">
+              Cùng một gói có thể lắp{' '}
+              <span className="font-cw-bold text-white">SolaRoof</span> hoặc{' '}
+              <span className="font-cw-bold text-white">SolaLoft</span> — cách
+              lắp không đổi tải tham chiếu.{' '}
+              <a
+                href="#theo-mai"
+                className="inline-flex items-center gap-1 font-cw-bold text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+              >
+                Chọn theo mái
+                <ArrowRight className="h-3 w-3" />
+              </a>
+            </p>
+
+            <div className="mt-6 hidden lg:block">
+              <SolaHomePackageTable selectedPackageId={selectedPackageId} />
+            </div>
+
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:hidden">
               {solaHomePackages.map((p) => (
                 <SolaHomePackageCard
                   key={p.id}
@@ -195,9 +217,17 @@ export default function SolaHomePage() {
               ))}
             </div>
 
-            <p className="mt-5 text-xs leading-relaxed text-white/70">
-              {solaHomeRoofTableNote}
-            </p>
+            <div className="mt-5 space-y-1.5">
+              <p className="text-xs leading-relaxed text-white/70">
+                {solaHomeRoofTableNote}
+              </p>
+              <p className="text-[11px] leading-relaxed text-white/60">
+                Thời gian chạy/ngày lấy từ cột “Tải tham chiếu &amp; thời gian
+                chạy” trong flyer SolaRoof &amp; SolaLoft của Skyworth. Hai gói
+                10 kWp dùng chung hàng 10 kW đã công bố; khác nhau ở pha, biến
+                tần, pin và nhóm khách hàng.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -84,13 +84,13 @@ export default function ProductsShowcase({
         {/* The docx's 气泡框标题 is the section eyebrow — the standard
             `SectionEyebrow`, not a bespoke pill. */}
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
-          <SectionEyebrow>PRODUCTS</SectionEyebrow>
+          <SectionEyebrow>SẢN PHẨM</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            The Components <span className="text-gradient">Behind Every System</span>
+            Các thành phần <span className="text-gradient">trong mỗi hệ thống</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Modules, inverters, batteries and the All-in-One ESS — each
-            matched, tested and shipped as part of the same system.
+            Tấm pin, biến tần, pin lưu trữ và All-in-One ESS — được phối hợp,
+            kiểm thử và cung cấp như một phần của cùng một hệ thống.
           </p>
         </div>
 
@@ -107,18 +107,24 @@ export default function ProductsShowcase({
               href={p.href}
               className="showcase-product-card group flex flex-col rounded-2xl border border-uk-line bg-white overflow-hidden hover:border-uk-teal/50 hover:shadow-md transition-all duration-300"
             >
-              <div className="relative h-44 md:h-48 bg-uk-line/30">
+              {/* Image area — one uniform 4:3 box for every card, so the
+                  three products line up. The photo sits inside it with
+                  `object-contain`: the product keeps its own
+                  proportions and nothing is cropped (the battery
+                  cabinet is portrait, the module photo is 4:3), and
+                  the white ground blends into the card. */}
+              <div className="relative aspect-[4/3] bg-white">
                 {p.imagePath ? (
                   <img
                     src={p.imagePath}
                     alt={p.title}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-contain"
                   />
                 ) : (
                   <ImagePlaceholder
                     description={p.imageDescription}
-                    className="!rounded-none !border-0"
+                    className="!rounded-none !border-0 h-full"
                   />
                 )}
               </div>
@@ -130,7 +136,7 @@ export default function ProductsShowcase({
                   {p.tagline}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-cw-bold text-uk-teal-dark group-hover:text-uk-teal transition-colors">
-                  Learn more
+                  Tìm hiểu thêm
                   <ArrowRight
                     className="w-4 h-4 transition-transform group-hover:translate-x-1"
                     strokeWidth={2}

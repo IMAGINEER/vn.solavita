@@ -246,20 +246,9 @@ export default function GoldMedalPartner({
         {/* ── Who we want / what you already have ─────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 md:mb-16">
           <div className="gold-reveal relative isolate overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-9">
-            {/* The two Solavita staff the campaign is recruiting — the
-                card's backdrop, kept to the bottom-right corner so the
-                copy never runs over their faces. Multiply drops the
-                transparency checkerboard baked into the PNG. */}
-            <img
-              src="/images/partner/avartar.png"
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              className="absolute -bottom-4 -right-4 w-[44%] max-w-[44%] h-auto object-contain object-bottom mix-blend-multiply pointer-events-none"
-            />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628] via-[#0A1628]/88 to-[#0A1628]/40" />
 
-            <div className="relative max-w-[52%]">
+            <div className="relative">
               <div className="flex items-center gap-3 mb-5">
                 <span className="w-10 h-10 shrink-0 rounded-xl bg-[#E8B44A]/15 flex items-center justify-center">
                   <Target className="w-5 h-5" style={{ color: GOLD }} strokeWidth={1.8} />
@@ -268,14 +257,37 @@ export default function GoldMedalPartner({
                   Chúng tôi đang tìm kiếm
                 </h3>
               </div>
+
+              {/* The two Solavita staff — floated, so the list wraps
+                  around them: the heading and the first lines keep the
+                  full card width, only the lines beside the figures
+                  shorten. `shape-outside` follows the PNG's alpha so
+                  the copy skirts their outlines rather than their
+                  bounding box. Multiply drops the transparency
+                  checkerboard baked into the PNG. */}
+              <img
+                src="/images/partner/avartar.png"
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                className="float-right ml-6 mb-4 w-[42%] sm:w-[46%] h-auto mix-blend-multiply pointer-events-none max-sm:float-none max-sm:mx-auto max-sm:ml-0 max-sm:mb-5 max-sm:w-[62%]"
+                style={{
+                  shapeOutside: 'url("/images/partner/avartar.png")',
+                  shapeMargin: '10px',
+                }}
+              />
+
+              {/* Not flex: a flex item cannot wrap its lines around a
+                  float. The check sits absolutely so the text block
+                  stays a normal block box. */}
               <ul className="space-y-3.5">
                 {goldMedalProgram.lookingFor.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-3 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
+                    className="relative pl-7 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
                   >
                     <Check
-                      className="w-4 h-4 mt-1 flex-shrink-0"
+                      className="absolute left-0 top-1 w-4 h-4"
                       style={{ color: GOLD }}
                       strokeWidth={2.5}
                     />

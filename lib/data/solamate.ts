@@ -27,14 +27,23 @@ export type SolaMateLoadIconKey =
   | 'washer'
   | 'fan'
   | 'pc'
+  | 'ev'
 
-/** One load row of the "TẢI & CHẠY" strip. */
+/**
+ * One load row of the "TẢI & CHẠY" strip.
+ *
+ * The figures convert the package's published daily yield
+ * (`dailyOutput`) into something a household can picture: runtime for
+ * the fridge and the air-conditioner, driving range for the EV.
+ * Reference loads — fridge 150 W, AC 800 W, EV 15 kWh/100 km — are the
+ * ones printed under the package grid on the page.
+ */
 export interface SolaMateLoad {
   icon: SolaMateLoadIconKey
-  /** Device name as printed, e.g. "6 bóng đèn". */
+  /** Device name as printed, e.g. "1 tủ lạnh". */
   device: string
-  /** Estimated runtime, e.g. "15 giờ". */
-  hours: string
+  /** Converted figure — a runtime ("~4,5 giờ") or a range ("~24 km"). */
+  value: string
 }
 
 /** The two power ratings on sale. */
@@ -59,7 +68,7 @@ export interface SolaMatePackage {
   monthlySaving: { value: string; unit: string }
   /** One-line positioning used on the card. */
   summary: string
-  /** What the system can run, in the publisher's own example set. */
+  /** Daily yield converted into fridge / AC runtime and EV range. */
   runs: SolaMateLoad[]
   /** Kit photo — the header band of the package card. */
   imagePath: string
@@ -79,10 +88,12 @@ export const solaMatePackages: SolaMatePackage[] = [
     monthlySaving: { value: '~230.278', unit: 'VND/tháng' },
     summary:
       'Bắt đầu với điện thiết bị nhỏ: đèn, tủ lạnh, Wi-Fi — lắp trong 60 phút, không cần đào lắp.',
+    // 3,6 kWh/ngày: 150 W × 24 h = 3,6 kWh · 800 W × ~4,5 h = 3,6 kWh ·
+    // 3,6 kWh ÷ 15 kWh/100 km ≈ 24 km.
     runs: [
-      { icon: 'light', device: '6 bóng đèn', hours: '15 giờ' },
-      { icon: 'tv', device: '2 chiếc TV', hours: '7 giờ' },
-      { icon: 'refrigerator', device: '1 tủ lạnh', hours: '20 giờ' },
+      { icon: 'refrigerator', device: '1 tủ lạnh', value: '24 giờ' },
+      { icon: 'ac', device: '1 máy điều hòa', value: '~4,5 giờ' },
+      { icon: 'ev', device: 'Xe điện', value: '~24 km' },
     ],
     imagePath: '/images/solamate/800w.webp',
     imageAlt:
@@ -100,10 +111,12 @@ export const solaMatePackages: SolaMatePackage[] = [
     monthlySaving: { value: '~460.557', unit: 'VND/tháng' },
     summary:
       'Đủ sức cho điều hòa và thiết bị lớn — vẫn gọn nhẹ, vẫn tự lắp trong 60 phút.',
+    // 7,2 kWh/ngày: 2 × 150 W × 24 h = 7,2 kWh · 800 W × ~9 h = 7,2 kWh ·
+    // 7,2 kWh ÷ 15 kWh/100 km ≈ 48 km.
     runs: [
-      { icon: 'ac', device: '2 máy điều hòa', hours: '8 giờ' },
-      { icon: 'refrigerator', device: '2 tủ lạnh', hours: '16 giờ' },
-      { icon: 'light', device: '6 bóng đèn', hours: '15 giờ' },
+      { icon: 'refrigerator', device: '2 tủ lạnh', value: '24 giờ' },
+      { icon: 'ac', device: '1 máy điều hòa', value: '~9 giờ' },
+      { icon: 'ev', device: 'Xe điện', value: '~48 km' },
     ],
     imagePath: '/images/solamate/1600w.webp',
     imageAlt:

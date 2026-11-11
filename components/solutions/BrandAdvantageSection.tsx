@@ -29,16 +29,16 @@ interface BrandAdvantage {
 
 const BRAND_ADVANTAGES: BrandAdvantage[] = [
   {
-    title: 'One Supplier',
-    body: 'All PV & ESS products from one source. Lower costs, less hassle.',
+    title: 'Một nhà cung cấp',
+    body: 'Toàn bộ sản phẩm PV & ESS từ một nguồn. Chi phí thấp hơn, ít phức tạp hơn.',
   },
   {
-    title: 'Local Stock',
-    body: 'Ready inventory on ground. Rapid delivery, no delays.',
+    title: 'Sẵn hàng tại địa phương',
+    body: 'Kho hàng sẵn có. Giao hàng nhanh, không chậm trễ.',
   },
   {
-    title: 'Trusted Service',
-    body: 'Local team support. Fast response, zero worries.',
+    title: 'Dịch vụ tin cậy',
+    body: 'Đội ngũ địa phương hỗ trợ. Phản hồi nhanh, không lo lắng.',
   },
 ]
 
@@ -77,13 +77,12 @@ export default function BrandAdvantageSection() {
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
           <SectionEyebrow>VITAL ENERGY. VITAL TRUST.</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Everything in One Kit,{' '}
-            <span className="text-gradient">Backed by a Local Team</span>
+            Mọi thứ trong một bộ,{' '}
+            <span className="text-gradient">được đội ngũ địa phương hỗ trợ</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Panels, inverters, batteries and mounting from a single
-            manufacturer — delivered from local stock and supported by a
-            team on the ground.
+            Tấm pin, biến tần, pin lưu trữ và phụ kiện lắp đặt từ một nhà sản
+            xuất — giao từ kho địa phương và hỗ trợ bởi đội ngũ tại chỗ.
           </p>
         </div>
 
