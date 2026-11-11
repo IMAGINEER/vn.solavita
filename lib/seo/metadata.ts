@@ -30,7 +30,7 @@ import {
  * `robots` field REPLACES the inherited one, so a page that sets
  * its own `robots` would otherwise opt itself back in.
  */
-function siteRobots(extra?: Record<string, boolean | string>) {
+function siteRobots(extra?: Metadata['robots']): Metadata['robots'] {
   return {
     index: SITE_INDEXING_ENABLED,
     follow: SITE_INDEXING_ENABLED,

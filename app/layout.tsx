@@ -30,8 +30,25 @@ export const metadata: Metadata = {
   alternates: {
     languages: {
       'vi-VN': 'https://vn.solavita.com',
-      'en-GB': 'https://solavita.uk',
-      'de-DE': 'https://solavita.de',
+      // Sibling hosts.
+      //
+      // These were the apex domains `solavita.uk` / `solavita.de`,
+      // inherited from the NG build (NG's layout.tsx has the same
+      // two values). Every other place in this codebase that links to
+      // a sister site — the footer country directory in
+      // `lib/data/footer-sites.ts` and `public/js/geo-redirect.js` —
+      // uses the SUBDOMAIN form, so the hreflang entries pointed at
+      // different hosts than the ones the site actually sends visitors
+      // to. A hreflang that points at a redirect is treated as
+      // invalid, so the two forms have to agree; this now matches the
+      // footer's form.
+      //
+      // TODO(launch): confirm both hosts resolve before re-enabling
+      // indexing — this pair is the last thing to check. Inert today,
+      // because the whole site is `noindex` (see SITE_INDEXING_ENABLED
+      // in lib/seo/site.ts).
+      'en-GB': 'https://uk.solavita.com',
+      'de-DE': 'https://de.solavita.com',
     },
   },
   // Deliberately NO `alternates.canonical` here. Every page exports its
