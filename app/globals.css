@@ -22,16 +22,10 @@
   --color-sv-gray-light: #9CA3AF;
   --color-sv-danger: #FF4D4F;
 
-  /* Font families — font-cw-* tokens.
-     All three point at the same self-hosted family, Be Vietnam Pro, wired
-     up in app/layout.tsx (`--font-vn`). The old `Chuangwei-*` names never
-     had a matching font file, so every page silently fell back to the OS
-     default sans-serif. The weight each token used to imply lives in the
-     `font-cw-*` rules further down: a font-family token cannot carry a
-     weight. */
-  --font-cw-bold: var(--font-vn), 'Inter', sans-serif;
-  --font-cw-regular: var(--font-vn), 'Inter', sans-serif;
-  --font-cw-light: var(--font-vn), 'Inter', sans-serif;
+  /* Font families — font-cw-* tokens (Chuangwei, falls back to Inter/system) */
+  --font-cw-bold: 'Chuangwei-Bold', 'Inter', sans-serif;
+  --font-cw-regular: 'Chuangwei-Regular', 'Inter', sans-serif;
+  --font-cw-light: 'Chuangwei-Light', 'Inter', sans-serif;
 
   /* Background images */
   --background-image-sv-gradient: linear-gradient(100deg, #00B9EE 0%, #2CE250 100%);
@@ -118,30 +112,11 @@ html {
 }
 
 body {
-  font-family: var(--font-vn), 'Inter', sans-serif;
+  font-family: 'Chuangwei-Regular', 'Inter', sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* font-cw-* weight mapping.
-   `font-cw-bold` used to imply bold because "Chuangwei-Bold" was a family
-   with a single 700 face. Be Vietnam Pro is one family with 300-800, so the
-   token now has to ask for its weight. `:where()` gives these rules zero
-   specificity inside the utilities layer, so an explicit Tailwind weight
-   class on the same element (e.g. `font-cw-bold font-extrabold` in the
-   footer) still wins. */
-@layer utilities {
-  :where(.font-cw-bold) {
-    font-weight: 700;
-  }
-  :where(.font-cw-regular) {
-    font-weight: 400;
-  }
-  :where(.font-cw-light) {
-    font-weight: 300;
-  }
 }
 
 /* Custom scrollbar */

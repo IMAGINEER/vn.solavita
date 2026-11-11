@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Be_Vietnam_Pro } from 'next/font/google'
 import './globals.css'
 import ClientOnlyCookieConsent from '@/components/ClientOnlyCookieConsent'
 import GoogleAnalyticsConsent from '@/components/GoogleAnalyticsConsent'
@@ -9,27 +8,6 @@ import {
   organizationJsonLd,
   websiteJsonLd,
 } from '@/lib/seo/jsonld'
-
-/**
- * Site typeface — Be Vietnam Pro, self-hosted by next/font.
- *
- * It replaces the old `Chuangwei-*` stack, which never shipped a font file,
- * so the site was silently rendering in the OS default sans-serif. Be
- * Vietnam Pro is drawn for Vietnamese: the stacked tone marks (ế, ộ, ữ)
- * sit at consistent heights across weights instead of colliding with the
- * line above.
- *
- * The weights map onto the existing `font-cw-*` utilities (see the
- * `:where()` rules in globals.css): 300 = light, 400 = regular,
- * 700 = bold the three the design already used. 500/600/800 cover the
- * Tailwind `font-medium` / `font-semibold` / `font-extrabold` classes.
- */
-const vnSans = Be_Vietnam_Pro({
-  subsets: ['vietnamese', 'latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  display: 'swap',
-  variable: '--font-vn',
-})
 
 export const metadata: Metadata = {
   // metadataBase derives from the same SITE_URL constant every other URL
@@ -133,11 +111,7 @@ export default function RootLayout({
     //
     // `suppressHydrationWarning` on <html> is needed because the inline
     // script below may swap the class before React hydrates.
-    <html
-      lang="vi"
-      className={`light-mode ${vnSans.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="vi" className="light-mode" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/favicon.ico" />
         <link rel="apple-touch-icon" href="/images/favicon.ico" />

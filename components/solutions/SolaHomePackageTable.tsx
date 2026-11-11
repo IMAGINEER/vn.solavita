@@ -42,7 +42,7 @@ export default function SolaHomePackageTable({
           và thời gian chạy mỗi ngày.
         </caption>
         <colgroup>
-          <col className="w-[170px]" />
+          <col className="w-[150px]" />
           {solaHomePackages.map((pkg) => (
             <col
               key={pkg.id}

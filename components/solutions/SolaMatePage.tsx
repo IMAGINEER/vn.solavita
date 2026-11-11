@@ -325,11 +325,11 @@ export default function SolaMatePage() {
 
                   {/* 5 + 6 — the two numbers that sell the package */}
                   <div className="mt-6 grid grid-cols-2 divide-x divide-uk-teal/20 rounded-2xl bg-uk-teal-soft/60 p-5">
-                    <div className="min-w-0 pr-4">
+                    <div className="pr-4">
                       <div className="text-xs text-uk-slate">
                         Sản lượng trung bình
                       </div>
-                      <div className="mt-1.5 flex flex-wrap items-baseline gap-1">
+                      <div className="mt-1.5 flex items-baseline gap-1">
                         <span className="text-2xl font-cw-bold text-uk-teal-dark md:text-3xl">
                           {p.dailyOutput.value}
                         </span>
@@ -338,11 +338,11 @@ export default function SolaMatePage() {
                         </span>
                       </div>
                     </div>
-                    <div className="min-w-0 pl-4">
+                    <div className="pl-4">
                       <div className="text-xs text-uk-slate">
                         Tiết kiệm mỗi tháng
                       </div>
-                      <div className="mt-1.5 flex flex-wrap items-baseline gap-1">
+                      <div className="mt-1.5 flex items-baseline gap-1">
                         <span className="text-2xl font-cw-bold text-uk-teal-dark md:text-3xl">
                           {p.monthlySaving.value}
                         </span>
