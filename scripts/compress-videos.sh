@@ -32,7 +32,8 @@ CRF="${CRF:-23}"
 PRESET="${PRESET:-slow}"
 AUDIO_BITRATE="${AUDIO_BITRATE:-128k}"
 
-# 1. ffmpeg on PATH, 2. the build bundled with JianyingPro (CapCut).
+# 1. ffmpeg on PATH, 2. the build bundled with JianyingPro (CapCut),
+# 3. the winget Gyan.FFmpeg full build.
 FFMPEG="${FFMPEG:-}"
 if [ -z "$FFMPEG" ]; then
   if command -v ffmpeg >/dev/null 2>&1; then
@@ -42,7 +43,9 @@ if [ -z "$FFMPEG" ]; then
       "/d/JianyingPro/11.3.0.14362/ffmpeg.exe" \
       "/c/Program Files/JianyingPro/ffmpeg.exe" \
       "/usr/local/bin/ffmpeg" \
-      "/opt/homebrew/bin/ffmpeg"; do
+      "/opt/homebrew/bin/ffmpeg" \
+      /c/Users/*/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg*/ffmpeg-*-full_build/bin/ffmpeg.exe \
+      ; do
       if [ -x "$candidate" ]; then
         FFMPEG="$candidate"
         break

@@ -1,11 +1,17 @@
 /**
  * Case studies — Vietnam site.
  *
- * Source of truth: `docs/创维光伏海外案例2.0(1).pptx` (Skyworth PV overseas
- * cases, Nov 2026). Every capacity, date and system description below
- * comes from the deck's own slide text. Vietnamese projects from the deck
- * are not published here yet — the deck does not state capacity, date or
- * equipment mix for them, so they stay pending business confirmation.
+ * Source of truth: the Skyworth PV overseas case deck. The overseas
+ * entries below come from `docs/创维光伏海外案例2.0(1).pptx`; the
+ * Vietnamese entries come from the newer
+ * `docs/20260921_创维光伏海外案例.pptx`. Every capacity, date and
+ * system description states only what the deck's slide text states.
+ *
+ * The three Vietnamese projects (Qili Xiang Restaurant, Bình Dương,
+ * Bắc Ninh sunroom) are the ones the deck documents for Vietnam. Their
+ * capacity is still to be read off the deck, so `capacity` is empty and
+ * the card renders a visible TBD — the same rule the rest of the site
+ * follows: an unverified number is never published.
  *
  * The card format is unchanged:
  *
@@ -22,7 +28,8 @@
  * Images: every photo is extracted from the deck slide that documents the
  * case and re-encoded to WebP under `public/images/cases/` (see the
  * slide → file mapping in the comment above each case). `imagePath` is
- * therefore set on all published cases.
+ * therefore set on all published cases — except the Bắc Ninh sunroom,
+ * whose slide photo is still pending.
  *
  * No fabricated results, savings or testimonials. Each `description`
  * states only what the deck states — the system size, the completion date
@@ -37,7 +44,17 @@ export interface VnCase {
   type: VnCaseType
   /** Badge text on the card. */
   typeLabel: string
-  /** Headline capacity, e.g. "21.59kW" or "7.2kW / 11.52kWh". */
+  /**
+   * Project name, when the source names the project. The card shows
+   * it above the capacity; for the Vietnamese cases it is the more
+   * useful headline.
+   */
+  name?: string
+  /**
+   * Headline capacity, e.g. "21.59kW" or "7.2kW / 11.52kWh".
+   * Empty while the capacity is still to be read from the case deck —
+   * the card renders a visible TBD instead of a blank line.
+   */
   capacity: string
   /** City / site name, e.g. "Balakong". */
   place: string
@@ -60,6 +77,60 @@ export const CASE_TYPE_LABELS: Record<VnCaseType, string> = {
 }
 
 export const vnCases: VnCase[] = [
+  /* ── Việt Nam ────────────────────────────────────────────────────────── */
+  // The three Vietnamese projects from the Skyworth PV overseas case
+  // deck (`docs/20260921_创维光伏海外案例.pptx`). They lead the case
+  // list — and therefore the homepage's case strip — because they are
+  // the references a Vietnamese visitor recognises.
+  //
+  // The deck is the only source for their figures, so the capacity
+  // stays empty (rendered as a visible TBD) until it is read, and the
+  // Bắc Ninh photo is still pending.
+  {
+    slug: 'vietnam-qili-xiang-restaurant',
+    type: 'residential',
+    typeLabel: CASE_TYPE_LABELS.residential,
+    name: 'Nhà hàng Qili Xiang',
+    capacity: '11,16 kWp',
+    place: 'TP. Hồ Chí Minh · Quận 1',
+    country: 'Việt Nam',
+    description:
+      '18 tấm 620 Wp, 1 bộ biến tần hybrid — 25 năm phát 400.354 kWh, hoàn vốn 3,25 năm. Địa chỉ: 18 Phan Ke Binh, Tân Định, Quận 1.',
+    imagePath: '/images/solahome/case-hcm.webp',
+    imageDescription:
+      'Dàn SolaLoft bằng khung thép trên mái nhà hàng Qili Xiang tại TP. Hồ Chí Minh',
+    featured: true,
+  },
+  {
+    slug: 'vietnam-binh-duong-solaroof',
+    type: 'residential',
+    typeLabel: CASE_TYPE_LABELS.residential,
+    name: 'Nhà phố tại Bình Dương',
+    capacity: '',
+    place: 'Bình Dương',
+    country: 'Việt Nam',
+    description:
+      'Hệ SolaRoof lắp trực tiếp lên mái — giữ nguyên kết cấu mái và tận dụng toàn bộ diện tích thu.',
+    imagePath: '/images/solahome/case-binhduong.webp',
+    imageDescription:
+      'Hệ điện mặt trời SolaRoof lắp trực tiếp trên mái nhà tại Bình Dương',
+    featured: true,
+  },
+  {
+    slug: 'vietnam-bac-ninh-sunroom',
+    type: 'residential',
+    typeLabel: CASE_TYPE_LABELS.residential,
+    name: 'Nhà kính Bắc Ninh',
+    capacity: '',
+    place: 'Bắc Ninh',
+    country: 'Việt Nam',
+    description:
+      'Hệ SolaLoft dạng mái nhà kính — khung thép và tấm pin tạo thành mái kính thu bức xạ.',
+    imageDescription:
+      'Hệ SolaLoft mái nhà kính tại Bắc Ninh — ảnh dự án chờ bổ sung từ hồ sơ case',
+    featured: true,
+  },
+
   /* ── Hộ gia đình ─────────────────────────────────────────────────────── */
   {
     // Deck slide 21 — 亚洲户用案例— 泰国 Jrokul Villa
@@ -186,7 +257,6 @@ export const vnCases: VnCase[] = [
     imagePath: '/images/cases/balakong-21-59kw.webp',
     imageDescription:
       'Ảnh toàn cảnh hệ thống pin mặt trời tại Balakong, Selangor, Malaysia',
-    featured: true,
   },
   {
     // Deck slide 15 — 欧洲户用案例— 意大利 Lecce
@@ -229,7 +299,6 @@ export const vnCases: VnCase[] = [
     imagePath: '/images/cases/taunus-7-2kw-11-52kwh.webp',
     imageDescription:
       'Hệ thống pin mặt trời trên mái bằng của một căn nhà tại Taunus, Đức',
-    featured: true,
   },
 
   /* ── Công nghiệp & thương mại ────────────────────────────────────────── */
@@ -246,7 +315,6 @@ export const vnCases: VnCase[] = [
     imagePath: '/images/cases/senegal-1mw-3mwh.webp',
     imageDescription:
       'Đội thi công lắp đặt tấm pin trên mái công trình thương mại tại Senegal',
-    featured: true,
   },
   {
     // Deck slide 32 — 亚洲EPC案例— 香港 联升工贸大厦 Hongkong Len Shing

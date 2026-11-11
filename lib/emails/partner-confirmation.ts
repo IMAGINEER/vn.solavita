@@ -28,8 +28,8 @@ export function partnerConfirmationEmail(data: {
 
   return {
     subject: isGoldPartner
-      ? 'Solavita Việt Nam đã nhận đăng ký Chương trình Đối tác Vàng của bạn'
-      : 'Solavita Việt Nam đã nhận yêu cầu hợp tác của bạn',
+      ? 'SKYWORTH Việt Nam đã nhận đăng ký Chương trình Đối tác Vàng của bạn'
+      : 'SKYWORTH Việt Nam đã nhận yêu cầu hợp tác của bạn',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -47,10 +47,10 @@ export function partnerConfirmationEmail(data: {
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Kính chào ${name},</p>
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 16px 0;">${
   isGoldPartner
-    ? 'Cảm ơn bạn đã đăng ký Chương trình Đối tác Vàng của Solavita.'
-    : 'Cảm ơn bạn đã quan tâm đến chương trình đối tác của Solavita.'
+    ? 'Cảm ơn bạn đã đăng ký Chương trình Đối tác Vàng của SKYWORTH.'
+    : 'Cảm ơn bạn đã quan tâm đến chương trình đối tác của SKYWORTH.'
 }</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Chúng tôi đã nhận được thông tin của bạn. Đội ngũ hợp tác của Solavita Việt Nam sẽ xem xét hồ sơ và liên hệ sớm để trao đổi các bước tiếp theo, bao gồm hình thức hợp tác phù hợp nhất với doanh nghiệp của bạn.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Chúng tôi đã nhận được thông tin của bạn. Đội ngũ hợp tác của SKYWORTH Việt Nam sẽ xem xét hồ sơ và liên hệ sớm để trao đổi các bước tiếp theo, bao gồm hình thức hợp tác phù hợp nhất với doanh nghiệp của bạn.</p>
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Nếu cần trao đổi ngay, bạn có thể liên hệ qua <a href="https://wa.me/8618500875025" style="color:#0f766e;">WhatsApp</a> hoặc email <a href="mailto:vn@solavita.com" style="color:#0f766e;">vn@solavita.com</a>.${
   isGoldPartner
     ? ' <strong>Hotline đối tác: <a href="tel:0939738000" style="color:#0f766e;">0939738000</a></strong>'
@@ -70,14 +70,14 @@ ${
 </table>
 
 <p style="font-size:14px; color:#374151; line-height:1.6; margin:0 0 8px 0;">Tìm hiểu thêm trong lúc chờ:</p>
-<p style="margin:0; font-size:14px;"><a href="https://vn.solavita.com/for-partners" style="color:#0f766e;">Vì sao nên hợp tác cùng Solavita</a></p>
+<p style="margin:0; font-size:14px;"><a href="https://vn.solavita.com/for-partners" style="color:#0f766e;">Vì sao nên hợp tác cùng SKYWORTH</a></p>
 </td></tr>
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
 <p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Pháp nhân chính thức (chờ xác nhận) · TBD — Mã số đăng ký doanh nghiệp (chờ xác nhận)</p>
 <p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Địa chỉ văn phòng đã đăng ký (chờ xác nhận)</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita là thương hiệu giải pháp năng lượng mặt trời trực thuộc Tập đoàn SKYWORTH · vn.solavita.com</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">SKYWORTH Việt Nam — thương hiệu giải pháp năng lượng mặt trời của Tập đoàn SKYWORTH · vn.solavita.com</p>
 </td></tr>
 
 </table>

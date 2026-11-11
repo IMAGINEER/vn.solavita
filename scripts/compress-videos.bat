@@ -21,7 +21,8 @@ set "CRF=23"
 set "PRESET=slow"
 set "AUDIO_BITRATE=128k"
 
-rem 1. ffmpeg on PATH, 2. the build bundled with JianyingPro (CapCut).
+rem 1. ffmpeg on PATH, 2. the build bundled with JianyingPro (CapCut),
+rem 3. the winget Gyan.FFmpeg full build.
 set "FFMPEG="
 for /f "delims=" %%i in ('where ffmpeg 2^>nul') do (
   if not defined FFMPEG set "FFMPEG=%%i"
@@ -31,6 +32,11 @@ if not defined FFMPEG (
 )
 if not defined FFMPEG (
   if exist "C:\Program Files\JianyingPro\ffmpeg.exe" set "FFMPEG=C:\Program Files\JianyingPro\ffmpeg.exe"
+)
+if not defined FFMPEG (
+  for /f "delims=" %%i in ('dir /b /s "%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg_*\ffmpeg-*-full_build\bin\ffmpeg.exe" 2^>nul') do (
+    if not defined FFMPEG set "FFMPEG=%%i"
+  )
 )
 if not defined FFMPEG (
   echo ffmpeg not found. Install it or edit FFMPEG in this script.

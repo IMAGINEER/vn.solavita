@@ -20,15 +20,18 @@ import VnCaseCard from '@/components/cases/VnCaseCard'
  * published reference installations are split into two bubble-box
  * categories —
  *
- *   Hộ gia đình                     → 12 công trình
+ *   Hộ gia đình                     → 12 công trình + 3 dự án tại Việt Nam
  *   Công nghiệp & thương mại       →  4 công trình
  *
  * and every card uses the new format: type badge → capacity → place.
- * The case facts themselves now come from `docs/创维光伏海外案例2.0(1).pptx`
- * (Nov 2026), which supersedes the docx figures.
+ * The case facts themselves come from the Skyworth PV overseas case
+ * decks (`docs/创维光伏海外案例2.0(1).pptx` for the overseas references,
+ * `docs/20260921_创维光伏海外案例.pptx` for the Vietnamese projects),
+ * which supersede the docx figures.
  *
- * Photos: every published case carries a photo taken from the case deck
- * (`docs/创维光伏海外案例2.0(1).pptx`).
+ * Photos: every published case carries a photo taken from the case deck.
+ * The Bắc Ninh sunroom is the one entry whose deck photo is still
+ * pending — it renders the neutral placeholder.
  */
 export default function CasesPage() {
   return (
@@ -59,9 +62,11 @@ export default function CasesPage() {
               Hệ thống cho hộ gia đình, <span className="text-gradient">thiết kế theo từng mái nhà</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-              Các công trình tham chiếu tại châu Á, châu Âu và Tây Phi —
-              thể hiện công suất dàn pin, cấu hình pin lưu trữ và công suất
-              bộ biến tần của từng hệ thống.
+              Ba dự án tại Việt Nam đứng đầu — nhà hàng Qili Xiang và nhà
+              kính Bắc Ninh dùng hệ SolaLoft, nhà phố Bình Dương dùng hệ
+              SolaRoof — bên dưới là các công trình tham chiếu tại châu Á,
+              châu Âu và Tây Phi, thể hiện công suất dàn pin, cấu hình pin
+              lưu trữ và công suất bộ biến tần của từng hệ thống.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -25,7 +25,7 @@ export function consultationConfirmationEmail(data: {
   const name = [salutation, data.firstName, data.lastName].filter(Boolean).join(' ') || 'Quý khách'
 
   return {
-    subject: 'Yêu cầu của bạn đã được tiếp nhận - Solavita Việt Nam',
+    subject: 'Yêu cầu của bạn đã được tiếp nhận - SKYWORTH Việt Nam',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -41,7 +41,7 @@ export function consultationConfirmationEmail(data: {
 <!-- Body -->
 <tr><td style="padding:36px 40px;">
 <p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 20px 0;">Kính chào ${name},</p>
-<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Cảm ơn bạn đã gửi yêu cầu. Đội ngũ Solavita Việt Nam đang xem xét thông tin của bạn và sẽ liên hệ trong vòng một ngày làm việc với thiết kế hệ thống cùng báo giá dành riêng cho bạn.</p>
+<p style="font-size:15px; color:#374151; line-height:1.6; margin:0 0 24px 0;">Cảm ơn bạn đã gửi yêu cầu. Đội ngũ SKYWORTH Việt Nam đang xem xét thông tin của bạn và sẽ liên hệ trong vòng một ngày làm việc với thiết kế hệ thống cùng báo giá dành riêng cho bạn.</p>
 ${
   data.planLink
     ? `<!-- Plan CTA - drives /my-plan open tracking -->
@@ -69,7 +69,7 @@ ${data.phone ? `<p style="margin:0; font-size:14px; color:#374151;">Điện tho�
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita là thương hiệu giải pháp năng lượng mặt trời trực thuộc Tập đoàn SKYWORTH · vn.solavita.com</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">SKYWORTH Việt Nam — thương hiệu giải pháp năng lượng mặt trời của Tập đoàn SKYWORTH · vn.solavita.com</p>
 </td></tr>
 
 </table>

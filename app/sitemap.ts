@@ -8,11 +8,24 @@
 
 import type { MetadataRoute } from 'next'
 import { listAllPublishedForSitemap, getCategories } from '@/lib/data/blog'
-import { absoluteUrl } from '@/lib/seo/site'
+import { SITE_INDEXING_ENABLED, absoluteUrl } from '@/lib/seo/site'
 
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Pre-launch the site is closed to indexing, so the sitemap must be
+  // empty rather than a list of URLs that all say `noindex`. A sitemap
+  // advertising non-indexable pages is a contradiction: it asks
+  // crawlers to fetch pages that then tell them to drop them.
+  //
+  // The route keeps working (it returns a valid, empty sitemap) so the
+  // URL never 404s and never gets cached as an error — the same
+  // "don't break the shape, just empty it" rule the blog fetch below
+  // follows when Supabase is unavailable.
+  if (!SITE_INDEXING_ENABLED) {
+    return []
+  }
+
   const now = new Date()
 
   // Static pages - the project's full public surface. Kept here so the

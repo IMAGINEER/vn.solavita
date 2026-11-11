@@ -29,7 +29,10 @@ const FROM_BY_COUNTRY: Record<'de' | 'uk' | 'ng' | 'vn', string> = {
   de: 'Solavita <no-reply@solavita.com>',
   uk: 'Solavita <no-reply@solavita.com>',
   ng: 'Solavita <no-reply@solavita.com>',
-  vn: 'Solavita Việt Nam <no-reply@solavita.com>',
+  // The VN site is presented under the SKYWORTH brand (per the design
+  // owner's call of 2026-11-11) — the address stays on the verified
+  // solavita.com domain.
+  vn: 'SKYWORTH Việt Nam <no-reply@solavita.com>',
 }
 
 export async function sendEmail({

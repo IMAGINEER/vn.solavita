@@ -14,6 +14,31 @@ export const SITE_URL =
 export const SITE_NAME = 'Solavita Việt Nam'
 export const SITE_LOCALE = 'vi_VN'
 export const SITE_BRAND_SHORT = 'Solavita'
+
+/**
+ * Site-wide indexing switch (pre-launch: OFF).
+ *
+ * The Vietnam site is not ready to be indexed — prices, addresses,
+ * phone numbers and the my-plan ROI figures are still awaiting
+ * business confirmation, and the /my-plan surface still carries the
+ * Nigeria engine's placeholder figures. Until that is finished the
+ * whole site must stay out of the search results.
+ *
+ * This flag is the single half of that switch that lives in the
+ * metadata layer:
+ *   - `false` → every page renders `<meta name="robots" content="noindex, nofollow">`.
+ *   - `true`  → pages go back to `index, follow`.
+ *
+ * The other half is `app/robots.ts`, which returns a blanket
+ * `User-agent: * / Disallow: /` while this flag is false. Both are
+ * needed: robots.txt stops crawlers from fetching the pages (so they
+ * cannot even read a `noindex` there), and the meta tag tells Google
+ * to drop URLs it already knows about.
+ *
+ * Flip BOTH to true before launch — they are deliberately separate
+ * files so neither can be reopened by accident.
+ */
+export const SITE_INDEXING_ENABLED = false
 /**
  * Legal entity name (Terms page, footer, JSON-LD `legalName`).
  * The website operator is SKYWORTH RENEWABLE ENERGY COMPANY LIMITED, a

@@ -13,12 +13,30 @@ import {
   DEFAULT_OG_IMAGE,
   OG_IMAGE_HEIGHT,
   OG_IMAGE_WIDTH,
+  SITE_INDEXING_ENABLED,
   SITE_LOCALE,
   SITE_NAME,
   SITE_URL,
   absoluteUrl,
   appendSiteTitle,
 } from './site'
+
+/**
+ * The `robots` value every page renders.
+ *
+ * Pre-launch the site is closed to indexing (see
+ * `SITE_INDEXING_ENABLED` in ./site). The switch is applied here —
+ * rather than only in the root layout — because a page-level
+ * `robots` field REPLACES the inherited one, so a page that sets
+ * its own `robots` would otherwise opt itself back in.
+ */
+function siteRobots(extra?: Record<string, boolean | string>) {
+  return {
+    index: SITE_INDEXING_ENABLED,
+    follow: SITE_INDEXING_ENABLED,
+    ...extra,
+  }
+}
 
 export interface BuildIndexOpts {
   title: string
@@ -59,7 +77,7 @@ export function buildIndexMetadata(opts: BuildIndexOpts): Metadata {
       description,
       images: [DEFAULT_OG_IMAGE],
     },
-    robots: { index: true, follow: true },
+    robots: siteRobots(),
   }
 }
 
@@ -93,7 +111,7 @@ export function buildCategoryMetadata(category: BlogCategory): Metadata {
       description,
       images: [DEFAULT_OG_IMAGE],
     },
-    robots: { index: true, follow: true },
+    robots: siteRobots(),
   }
 }
 
@@ -142,7 +160,7 @@ export function buildPostMetadata({ post, categorySlug }: BuildPostOpts): Metada
       description,
       images: [cover],
     },
-    robots: { index: true, follow: true, 'max-image-preview': 'large' },
+    robots: siteRobots({ 'max-image-preview': 'large' }),
     other: {
       // Twitter / Facebook article tags - helps with rich previews.
       'article:published_time': post.published_at ?? '',
@@ -203,10 +221,13 @@ export function buildPageMetadata(opts: BuildPageOpts): Metadata {
     title: opts.title,
     description,
     alternates: { canonical: absoluteUrl(opts.path) },
-    robots: {
-      index: opts.index !== false,
-      follow: opts.index !== false,
-    },
+    robots: siteRobots(
+      opts.index === false
+        ? // A page that explicitly opts out stays opted out even when
+          // the site is open for indexing.
+          { index: false, follow: false }
+        : undefined,
+    ),
     openGraph: {
       title: opts.title,
       description,

@@ -178,7 +178,7 @@ export async function POST(request: Request) {
         success: true,
         alreadyRegistered: true,
         message:
-          'Email này đã được đăng ký trước đó. Thông tin của bạn đã được cập nhật. Nếu chưa nhận được phản hồi, vui lòng liên hệ đội ngũ Solavita Việt Nam (vn@solavita.com).',
+          'Email này đã được đăng ký trước đó. Thông tin của bạn đã được cập nhật. Nếu chưa nhận được phản hồi, vui lòng liên hệ đội ngũ SKYWORTH Việt Nam (vn@solavita.com).',
       })
     }
 

@@ -109,51 +109,81 @@ export const solaHomeMounts: SolaHomeMount[] = [
 ]
 
 /**
- * Real VN installations published on the official SolaHome Pro page.
- * Each entry states only what the source publishes: capacity, city,
- * district, bill reduction and monthly saving.
+ * The three Vietnamese installations shown on the SolaHome page.
+ *
+ * Source: the Skyworth PV overseas case deck
+ * (`docs/20260921_创维光伏海外案例.pptx`) — the three Vietnamese
+ * projects it documents. Every figure below is the deck's own slide
+ * text; nothing is estimated. Where a slide has not been read yet the
+ * field stays empty and the page renders a visible TBD.
+ *
+ * The previous three entries (5 kWp Bình Dương −79% / 10 kWp Đồng
+ * Nai −82% / 20 kWp TP.HCM −72%, each with a customer name) were not
+ * published by Skyworth and did not match any project in the deck —
+ * they have been removed rather than re-labelled.
  */
 export interface SolaHomeCase {
   id: string
+  /** Project name, as the deck prints it. */
+  name: string
+  /** Which SolaHome system the project uses. */
+  system: 'SolaRoof' | 'SolaLoft'
+  /** Installed PV capacity. Empty = still to be read from the deck. */
   capacity: string
+  /** City / province. */
   location: string
-  owner: string
-  billReduction: string
-  monthlySaving: string
-  imagePath: string
+  /** One line about the installation and the system it uses. */
+  note: string
+  /** The deck's own rows for this project (equipment, output, payback…). */
+  facts?: { label: string; value: string }[]
+  /** Photo path. Omitted while the deck's photo is still pending. */
+  imagePath?: string
   imageAlt: string
 }
 
 export const solaHomeCases: SolaHomeCase[] = [
   {
-    id: 'binh-duong',
-    capacity: '5 kWp',
-    location: 'Bình Dương · Thủ Dầu Một',
-    owner: 'Anh Minh',
-    billReduction: '−79%',
-    monthlySaving: '2,5 triệu đồng/tháng',
-    imagePath: '/images/solahome/case-binhduong.webp',
-    imageAlt: 'Hệ điện mặt trời 5 kWp trên mái bằng tại Bình Dương',
-  },
-  {
-    id: 'dong-nai',
-    capacity: '10 kWp',
-    location: 'Đồng Nai · Biên Hòa',
-    owner: 'Chị Lan',
-    billReduction: '−82%',
-    monthlySaving: '4,5 triệu đồng/tháng',
-    imagePath: '/images/solahome/case-dongnai.webp',
-    imageAlt: 'Hệ điện mặt trời 10 kWp tại Đồng Nai',
-  },
-  {
-    id: 'ho-chi-minh',
-    capacity: '20 kWp',
-    location: 'TP. Hồ Chí Minh · Quận 9',
-    owner: 'Anh Tuấn',
-    billReduction: '−72%',
-    monthlySaving: '2 triệu đồng/tháng',
+    id: 'qili-xiang-restaurant',
+    name: 'Nhà hàng Qili Xiang',
+    system: 'SolaLoft',
+    capacity: '11,16 kWp',
+    location: 'TP. Hồ Chí Minh · Quận 1',
+    note:
+      'Hệ SolaLoft — khung thép dựng trên mái, tấm pin nghiêng tối ưu bức xạ, mái thành không gian sống.',
+    facts: [
+      { label: 'Địa chỉ', value: '18 Phan Ke Binh, Tân Định, Quận 1, TP. Hồ Chí Minh' },
+      { label: 'Tấm pin', value: '18 tấm × 620 Wp' },
+      { label: 'Biến tần hybrid', value: '1 bộ' },
+      { label: 'Sản lượng 25 năm', value: '400.354 kWh' },
+      { label: 'Thời gian hoàn vốn', value: '3,25 năm' },
+      { label: 'Lợi ích 25 năm', value: '1.000.885.000 ₫' },
+    ],
     imagePath: '/images/solahome/case-hcm.webp',
-    imageAlt: 'Hệ điện mặt trời 20 kWp tại Quận 9, TP. Hồ Chí Minh',
+    imageAlt:
+      'Dàn SolaLoft bằng khung thép trên mái nhà hàng Qili Xiang tại TP. Hồ Chí Minh',
+  },
+  {
+    id: 'binh-duong-solaroof',
+    name: 'Nhà phố tại Bình Dương',
+    system: 'SolaRoof',
+    capacity: '',
+    location: 'Bình Dương',
+    note:
+      'Hệ SolaRoof — tấm pin lắp trực tiếp lên mái, giữ nguyên kết cấu mái và tận dụng diện tích thu.',
+    imagePath: '/images/solahome/case-binhduong.webp',
+    imageAlt:
+      'Hệ điện mặt trời SolaRoof lắp trực tiếp trên mái nhà tại Bình Dương',
+  },
+  {
+    id: 'bac-ninh-sunroom',
+    name: 'Nhà kính Bắc Ninh',
+    system: 'SolaLoft',
+    capacity: '',
+    location: 'Bắc Ninh',
+    note:
+      'Hệ SolaLoft dạng mái nhà kính — khung thép và tấm pin tạo thành mái kính thu bức xạ.',
+    imageAlt:
+      'Hệ SolaLoft mái nhà kính tại Bắc Ninh — ảnh dự án chờ bổ sung từ hồ sơ case',
   },
 ]
 
@@ -508,14 +538,14 @@ export const solaHomeRoofOptions: SolaHomeRoofOption[] = [
   {
     id: 'flat',
     label: 'Mái bằng',
-    short: 'Chống ballast trên bê tông, không khoan mái',
+    short: 'Chống ballast trên bê tông, hoặc khung SolaLoft',
     thumbPath: '/images/solamate/Flat-Roof.webp',
     thumbAlt: 'Mái bằng bê tông phẳng của một tòa nhà',
-    headline: 'Mái bằng — chống ballast trên bê tông',
+    headline: 'Mái bằng — chống ballast hoặc khung SolaLoft',
     structure:
       'Mái bằng bê tông phẳng, không có độ dốc để đặt tấm pin trực tiếp.',
     method:
-      'Chống ballast trên nền bê tông — khung và tấm pin được chặn bằng khối ballast, không đục khoan mái.',
+      'Hai phương án: chống ballast trên nền bê tông, hoặc dựng khung thép SolaLoft cao tầng.',
     check:
       'Cần đo diện tích khả dụng, khoảng lùi và kết cấu chịu lực của mái bằng.',
     schemes: [
@@ -526,11 +556,24 @@ export const solaHomeRoofOptions: SolaHomeRoofOption[] = [
         points: [
           'Chặn bằng khối ballast trên nền bê tông — không khoan mái',
           'Tấm pin đặt phẳng theo mái, không có khoảng trống bên dưới',
-          'Panel chống nhiệt, mái bằng mát hơn',
+          'Chi phí thấp hơn phương án khung thép',
         ],
         imagePath: '/images/solamate/Flat-Roofs.webp',
         imageAlt:
           'Hệ tấm pin SolaRoof chống ballast trên mái bằng bê tông, khung và tấm pin được chặn bằng khối ballast',
+      },
+      {
+        mountId: 'solaloft',
+        name: 'Khung thép cao tầng',
+        body: 'Khung thép kiến trúc cao 2,7–2,8 m, tấm pin nghiêng 5°, giữ được không gian sử dụng dưới tấm pin.',
+        points: [
+          'Khung thép kiến trúc cao 2,7–2,8 m, tấm pin nghiêng 5°',
+          'Pin LiFePO₄ 10–20 kWh tích hợp dưới khung',
+          'Giữ được vườn trên cao, khung chịu gió bão cấp 12',
+        ],
+        imagePath: '/images/solahome/scene-solaloft-canopy.webp',
+        imageAlt:
+          'Dàn khung thép SolaLoft cao tầng trên mái, giữ khoảng không gian sử dụng bên dưới tấm pin',
       },
     ],
   },

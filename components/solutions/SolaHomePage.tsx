@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import {
+  ArrowRight,
   BatteryCharging,
   Check,
   ClipboardCheck,
@@ -18,6 +20,7 @@ import {
 import PageHero from '@/components/ui/page-hero'
 import SectionEyebrow from '@/components/ui/section-eyebrow'
 import TbdText from '@/components/ui/tbd-text'
+import ImagePlaceholder from '@/components/ui/image-placeholder'
 import CTA from '@/components/solutions/CTA'
 import FaqSection from '@/components/solutions/FaqSection'
 import SolaHomeBillEstimator from '@/components/solutions/SolaHomeBillEstimator'
@@ -34,7 +37,6 @@ import {
   solaHomeCertifications,
   solaHomeFaqs,
   solaHomePackages,
-  solaHomeProjects,
   solaHomeRoofTableNote,
   solaHomeService,
   solaHomeWarranty,
@@ -394,8 +396,8 @@ export default function SolaHomePage() {
               <span className="text-gradient">đã vận hành thật</span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-uk-slate">
-              Hệ thống đã lắp cho hộ gia đình tại Việt Nam — công suất, địa
-              điểm và mức giảm hóa đơn theo dữ liệu đã công bố.
+              Ba dự án tại Việt Nam trong hồ sơ case của Skyworth — mỗi
+              dự án ghi rõ hệ SolaRoof hay SolaLoft đang áp dụng.
             </p>
           </div>
 
@@ -405,62 +407,77 @@ export default function SolaHomePage() {
                 key={c.id}
                 className="overflow-hidden rounded-2xl border border-uk-line bg-white"
               >
-                <img
-                  src={c.imagePath}
-                  alt={c.imageAlt}
-                  className="h-48 w-full object-cover"
-                  loading="lazy"
-                />
+                {c.imagePath ? (
+                  <img
+                    src={c.imagePath}
+                    alt={c.imageAlt}
+                    className="h-48 w-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <ImagePlaceholder
+                    description={c.imageAlt}
+                    className="!rounded-none !border-0 h-48"
+                  />
+                )}
                 <figcaption className="p-6">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-lg font-cw-bold text-uk-navy">
-                      {c.capacity}
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="text-lg font-cw-bold text-uk-navy leading-tight">
+                      {c.name}
                     </span>
-                    <span className="font-cw-bold text-uk-teal-dark">
-                      {c.billReduction}
+                    <span className="shrink-0 rounded-full bg-uk-teal-soft px-3 py-1 text-xs font-cw-bold text-uk-teal-dark">
+                      {c.system}
                     </span>
                   </div>
-                  <p className="mt-1 flex items-center gap-1.5 text-sm text-uk-slate">
+                  <p className="mt-1.5 flex items-center gap-1.5 text-sm text-uk-slate">
                     <MapPin className="h-3.5 w-3.5" strokeWidth={2} />
                     {c.location}
                   </p>
                   <p className="mt-3 text-sm font-cw-bold text-uk-navy">
-                    Tiết kiệm {c.monthlySaving}
+                    {c.capacity ? (
+                      `Công suất ${c.capacity}`
+                    ) : (
+                      <TbdText
+                        inline
+                        text="công suất lắp đặt (chờ đối chiếu hồ sơ dự án)"
+                      />
+                    )}
                   </p>
-                  <p className="mt-1 text-xs text-uk-slate">{c.owner}</p>
+                  {c.facts && c.facts.length > 0 && (
+                    <dl className="mt-3 space-y-1.5 border-t border-uk-line/60 pt-3">
+                      {c.facts.map((f) => (
+                        <div
+                          key={f.label}
+                          className="flex items-baseline justify-between gap-3 text-xs"
+                        >
+                          <dt className="text-uk-slate font-cw-regular">
+                            {f.label}
+                          </dt>
+                          <dd className="text-right font-cw-bold text-uk-navy">
+                            {f.value}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  <p className="mt-3 text-xs leading-relaxed text-uk-slate">
+                    {c.note}
+                  </p>
                 </figcaption>
               </figure>
             ))}
           </div>
 
-          {/* Completed-system strip from the integrated-system flyer */}
-          <div className="mt-10 rounded-2xl border border-uk-line bg-white p-6">
-            <p className="text-xs font-cw-bold tracking-[0.16em] text-uk-slate uppercase">
-              Hệ thống đã hoàn thành
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              {solaHomeProjects.map((project) => (
-                <span
-                  key={`${project.capacity}-${project.location}`}
-                  className="inline-flex items-baseline gap-2 rounded-full border border-uk-line bg-sv-light px-4 py-2"
-                >
-                  <span className="font-cw-bold text-uk-navy">
-                    {project.capacity}
-                  </span>
-                  <span className="text-xs text-uk-slate">
-                    {project.location}
-                  </span>
-                </span>
-              ))}
-            </div>
-            <p className="mt-4 text-xs leading-relaxed text-uk-slate">
-              Ngày lắp đặt, sản lượng thực đo và phản hồi khách hàng của từng
-              công trình:{' '}
-              <TbdText
-                inline
-                text="chờ xác nhận từ Solavita trước khi công bố"
-              />
-            </p>
+          {/* The completed-system strip is gone — the case library on
+              /cases/ is the one place that keeps the full list. */}
+          <div className="mt-10">
+            <Link
+              href="/cases/"
+              className="inline-flex items-center gap-2 font-cw-bold text-uk-teal-dark underline underline-offset-4 transition-colors hover:text-uk-teal"
+            >
+              Khám phá thêm các dự án
+              <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            </Link>
           </div>
         </div>
       </section>

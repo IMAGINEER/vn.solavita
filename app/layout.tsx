@@ -3,7 +3,7 @@ import './globals.css'
 import ClientOnlyCookieConsent from '@/components/ClientOnlyCookieConsent'
 import GoogleAnalyticsConsent from '@/components/GoogleAnalyticsConsent'
 import JsonLd from '@/components/seo/JsonLd'
-import { SITE_URL, absoluteUrl } from '@/lib/seo/site'
+import { SITE_URL, SITE_INDEXING_ENABLED, absoluteUrl } from '@/lib/seo/site'
 import {
   organizationJsonLd,
   websiteJsonLd,
@@ -22,7 +22,11 @@ export const metadata: Metadata = {
     'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. So sánh cấu hình hệ thống và tìm giải pháp giúp nguồn điện ổn định hơn.',
   keywords:
     'điện mặt trời Việt Nam, pin lưu trữ điện, điện mặt trời hộ gia đình, điện mặt trời doanh nghiệp, Solavita, SKYWORTH, năng lượng tái tạo Việt Nam',
-  robots: { index: true, follow: true },
+  // Pre-launch the site is closed to indexing (see
+  // `SITE_INDEXING_ENABLED` in lib/seo/site.ts). Every page that
+  // builds its own metadata applies the same switch, because a
+  // page-level `robots` replaces the inherited one.
+  robots: { index: SITE_INDEXING_ENABLED, follow: SITE_INDEXING_ENABLED },
   alternates: {
     languages: {
       'vi-VN': 'https://vn.solavita.com',

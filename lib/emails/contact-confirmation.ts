@@ -16,7 +16,7 @@ export function contactConfirmationEmail(data: {
   const name = data.firstName?.trim() || 'Quý khách'
 
   return {
-    subject: 'Cảm ơn bạn đã liên hệ - Solavita Việt Nam',
+    subject: 'Cảm ơn bạn đã liên hệ - SKYWORTH Việt Nam',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif;">
@@ -48,7 +48,7 @@ export function contactConfirmationEmail(data: {
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">Solavita là thương hiệu giải pháp năng lượng mặt trời trực thuộc Tập đoàn SKYWORTH · vn.solavita.com</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">SKYWORTH Việt Nam — thương hiệu giải pháp năng lượng mặt trời của Tập đoàn SKYWORTH · vn.solavita.com</p>
 </td></tr>
 
 </table>
