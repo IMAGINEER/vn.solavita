@@ -34,7 +34,7 @@ function siteRobots(extra?: Metadata['robots']): Metadata['robots'] {
   return {
     index: SITE_INDEXING_ENABLED,
     follow: SITE_INDEXING_ENABLED,
-    ...extra,
+    ...(typeof extra === 'object' && extra !== null ? extra : {}),
   }
 }
 
