@@ -6,6 +6,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   BadgeCheck,
+  Building2,
   Check,
   ChevronRight,
   ClipboardCheck,
@@ -23,10 +24,9 @@ import {
   UserRound,
   Users,
   Wallet,
-  Zap,
 } from 'lucide-react'
 import {
-  goldMedalCommissionTrack,
+  goldMedalCommissionRoles,
   goldMedalProgram,
   goldMedalPromise,
   PARTNER_CONTACT,
@@ -360,65 +360,60 @@ export default function GoldMedalPartner({
                   <Coins className="w-5 h-5" style={{ color: GOLD }} strokeWidth={1.8} />
                 </span>
                 <h3 className="text-xl font-cw-bold text-white">
-                  Thang hoa hồng theo số đơn
+                  Hoa hồng theo vai trò
                 </h3>
               </div>
-              <ul className="space-y-3">
-                {goldMedalProgram.commissionRamp.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-sm md:text-base text-white/80 font-cw-regular leading-relaxed"
-                  >
-                    <Zap
-                      className="w-4 h-4 mt-1 flex-shrink-0"
-                      style={{ color: GOLD }}
-                      strokeWidth={1.8}
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
 
-              {/* The rate basis — the general /for-partners/ page explains
-                  the model without the numbers; here they are published
-                  next to the income ladder they produce. */}
-              <div className="mt-5 rounded-2xl bg-white/[0.04] p-4">
-                <p className="text-[10px] font-cw-bold tracking-[0.2em] text-uk-emerald uppercase">
-                  Mức cơ bản
-                </p>
-                <dl className="mt-3 space-y-2 text-sm">
-                  {[
-                    {
-                      k: 'Hoa hồng cơ bản',
-                      v: `${goldMedalCommissionTrack.basePerWatt.toLocaleString('vi-VN')} đồng / W`,
-                    },
-                    ...goldMedalCommissionTrack.tiers.map((tier) => ({
-                      k: `Từ đơn thứ ${tier.orders} trong tháng`,
-                      v: `+${tier.bonusPerWatt.toLocaleString('vi-VN')} đồng / W`,
-                    })),
-                    {
-                      k: 'Tự khảo sát công trình',
-                      v: `+${goldMedalCommissionTrack.surveyBonusPerWatt.toLocaleString('vi-VN')} đồng / W`,
-                    },
-                  ].map((row) => (
+              {/* Two fixed roles — no order-volume tiers, no survey
+                  bonus. Business correction of 2026-11-11. */}
+              <div className="space-y-3">
+                {goldMedalCommissionRoles.map((role) => {
+                  const RoleIcon = role.id === 'company' ? Building2 : UserRound
+                  return (
                     <div
-                      key={row.k}
-                      className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-2 last:border-0 last:pb-0"
+                      key={role.id}
+                      className="rounded-2xl bg-white/[0.04] p-4"
                     >
-                      <dt className="text-white/70 font-cw-regular">{row.k}</dt>
-                      <dd className="shrink-0 font-cw-bold text-white">
-                        {row.v}
-                      </dd>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex min-w-0 items-start gap-3">
+                          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E8B44A]/15">
+                            <RoleIcon
+                              className="w-4 h-4"
+                              style={{ color: GOLD }}
+                              strokeWidth={1.8}
+                            />
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-base font-cw-bold text-white">
+                              {role.title}
+                            </p>
+                            <p className="mt-0.5 text-xs text-white/55 font-cw-regular">
+                              {role.description}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <p
+                            className="text-base md:text-lg font-cw-bold leading-tight"
+                            style={{ color: GOLD_SOFT }}
+                          >
+                            {role.perWatt.toLocaleString('vi-VN')} đồng/W
+                          </p>
+                          <p className="mt-0.5 text-[11px] text-white/55 font-cw-regular">
+                            {role.referencePayout.toLocaleString('vi-VN')} đồng / đơn
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </dl>
-                <p className="mt-3 text-[11px] leading-relaxed text-white/50 font-cw-regular">
-                  Hệ {PARTNER_REFERENCE_SYSTEM_KW} kW:{' '}
-                  {goldMedalCommissionTrack.basePerWatt.toLocaleString('vi-VN')}{' '}
-                  đồng/W × {(PARTNER_REFERENCE_SYSTEM_KW * 1000).toLocaleString('vi-VN')}{' '}
-                  W = 7,6 triệu đồng cho đơn hàng đầu tiên.
-                </p>
+                  )
+                })}
               </div>
+
+              <p className="mt-4 text-[11px] leading-relaxed text-white/50 font-cw-regular">
+                Hệ {PARTNER_REFERENCE_SYSTEM_KW} kW ={' '}
+                {(PARTNER_REFERENCE_SYSTEM_KW * 1000).toLocaleString('vi-VN')} W.
+                Mức hoa hồng cố định theo vai trò — không có thưởng theo số đơn.
+              </p>
 
               <p className="mt-5 pt-5 border-t border-white/10 text-xs text-white/60 font-cw-regular leading-relaxed">
                 {goldMedalPromise.headline} — không cần đúng ngành, chỉ cần đúng nhu
@@ -456,6 +451,9 @@ export default function GoldMedalPartner({
                 </div>
               ))}
             </div>
+            <p className="mt-3 text-[11px] leading-relaxed text-white/50 font-cw-regular">
+              Tính theo mức hoa hồng doanh nghiệp 950 đồng/W.
+            </p>
 
             <div className="mt-6">
               <h4 className="text-xs font-cw-bold uppercase tracking-wider text-[#F5D48A] mb-3">

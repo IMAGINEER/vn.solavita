@@ -658,7 +658,7 @@ export function goldPartnerProgramJsonLd() {
         '@type': 'Offer',
         name: 'Chương trình Đối tác Vàng',
         description:
-          'Tuyển chọn 50 đối tác liên kết giới thiệu khách hàng. Hoa hồng 7,6 triệu đồng mỗi đơn hàng, tăng 25% từ đơn hàng thứ 3.',
+          'Tuyển chọn 50 đối tác liên kết giới thiệu khách hàng. Hoa hồng 760 đồng/W cho cá nhân và 950 đồng/W cho doanh nghiệp — hệ 10 kW tương đương 7,6 và 9,5 triệu đồng mỗi đơn.',
         provider: { '@id': ORG_ID },
         areaServed: { '@type': 'Country', name: 'Vietnam' },
         eligibleCustomerType: 'Cá nhân và doanh nghiệp tại Việt Nam',

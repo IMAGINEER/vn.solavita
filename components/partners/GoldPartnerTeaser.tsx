@@ -77,8 +77,9 @@ export default function GoldPartnerTeaser() {
                 <span className="font-cw-bold text-[#F5D48A]">
                   {goldMedalProgram.slots} suất
                 </span>
-                : hoa hồng tăng 25% từ đơn hàng thứ 3, tài liệu tiếp thị và
-                hỗ trợ đào tạo đi kèm. Không cần vốn, không cần tồn kho.
+                : hoa hồng 760 đồng/W cho cá nhân và 950 đồng/W cho doanh
+                nghiệp, tài liệu tiếp thị và hỗ trợ đào tạo đi kèm. Không cần
+                vốn, không cần tồn kho.
               </p>
 
               <div className="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">

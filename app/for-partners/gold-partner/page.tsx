@@ -16,7 +16,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: 'Chương trình Đối tác Vàng — Liên kết giới thiệu khách hàng',
   path: '/for-partners/gold-partner',
   description:
-    'Đợt tuyển chọn 50 đối tác của Solavita Việt Nam: hoa hồng 7,6 triệu đồng mỗi đơn hàng, tăng 25% từ đơn thứ 3, không vốn đầu tư, không tồn kho. Đăng ký ngay.',
+    'Đợt tuyển chọn 50 đối tác của Solavita Việt Nam: hoa hồng 760 đồng/W cho cá nhân và 950 đồng/W cho doanh nghiệp — tương đương 7,6 và 9,5 triệu đồng mỗi đơn 10 kW. Không vốn đầu tư, không tồn kho. Đăng ký ngay.',
   ogImage: '/images/og-partners.jpg',
   ogImageAlt:
     'Chương trình Đối tác Vàng Solavita Việt Nam — tuyển chọn đối tác liên kết giới thiệu khách hàng',

@@ -13,7 +13,6 @@ import {
   TrendingUp,
   Wallet,
 } from 'lucide-react'
-import TbdText from '@/components/ui/tbd-text'
 import { partnerPayoutTerms } from '@/lib/data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -22,14 +21,14 @@ gsap.registerPlugin(ScrollTrigger)
  * "Mức hoa hồng" — how the partner commission works.
  *
  * This page is the *overview*: it explains the model (commission per
- * watt of the system actually signed, more orders in a month means a
- * higher per-watt rate, an extra bonus when you run the survey
- * yourself, and the 50/50 payout split) without publishing the rates.
+ * watt of the system actually signed, a flat rate fixed by the
+ * partner's role, and the 50/50 payout split) without publishing the
+ * rates.
  *
- * The concrete numbers — the per-watt rates, the order-volume tiers,
- * the +25% ramp from the third order and the income ladder — belong to
- * the "Chương trình Đối tác Vàng" campaign page, which is where the
- * recruitment push happens. This card links there.
+ * The concrete numbers — the per-watt rates for the individual and
+ * company roles and the income projection — belong to the "Chương
+ * trình Đối tác Vàng" campaign page, which is where the recruitment
+ * push happens. This card links there.
  *
  * The installer track is deliberately shown without a number: the
  * brochure puts installers under the "Energy Partner Solavita" arm
@@ -76,12 +75,12 @@ export default function PartnerEconomics() {
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
             Hoa hồng theo mỗi watt —{' '}
-            <span className="text-gradient">minh bạch từng bậc thưởng</span>
+            <span className="text-gradient">rõ ràng theo vai trò</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
             Mỗi đơn hàng bạn ký được đều được tính hoa hồng theo công suất
-            thực tế của hệ thống. Càng giao nhiều đơn trong tháng, mức thưởng
-            theo watt càng tăng.
+            thực tế của hệ thống. Mức hoa hồng cố định theo vai trò — cá nhân
+            hoặc doanh nghiệp.
           </p>
         </div>
 
@@ -105,13 +104,13 @@ export default function PartnerEconomics() {
                 },
                 {
                   icon: TrendingUp,
-                  k: 'Càng nhiều đơn trong tháng',
-                  v: 'Mức thưởng tăng dần',
+                  k: 'Vai trò',
+                  v: 'Cá nhân / Doanh nghiệp',
                 },
                 {
                   icon: Wallet,
-                  k: 'Tự khảo sát công trình',
-                  v: 'Thưởng thêm',
+                  k: 'Mức hoa hồng',
+                  v: 'Cố định theo vai trò',
                 },
               ].map((row) => (
                 <div
@@ -132,7 +131,7 @@ export default function PartnerEconomics() {
               ))}
             </dl>
             <p className="mt-6 pt-5 border-t border-uk-line/60 text-xs text-uk-slate font-cw-regular leading-relaxed">
-              Con số cụ thể và bậc thưởng theo số đơn được công bố trong{' '}
+              Con số cụ thể cho từng vai trò được công bố trong{' '}
               <Link
                 href="/for-partners/gold-partner/"
                 className="font-cw-bold text-uk-teal-dark hover:underline"
@@ -168,8 +167,8 @@ export default function PartnerEconomics() {
               ))}
             </ul>
             <p className="mt-5 pt-5 border-t border-uk-line/60 text-xs text-uk-slate font-cw-regular leading-relaxed">
-              Ngoài mức cơ bản, bạn còn được thưởng theo doanh số tháng và
-              hoa hồng khảo sát công trình.
+              Hoa hồng được tính trên công suất thực tế của hệ thống và chi
+              trả theo lịch trên.
             </p>
           </div>
 
@@ -188,13 +187,11 @@ export default function PartnerEconomics() {
               Solavita: tổng bộ khảo sát, thiết kế và chỉ đạo thi công, đối tác
               nhận công trình theo hình thức thỏa thuận với từng dự án.
             </p>
-            <p className="mt-5 pt-5 border-t border-uk-line/60 text-sm font-cw-regular leading-relaxed">
-              Mức thanh toán theo dự án:{' '}
-              <TbdText
-                text="Mức thanh toán cụ thể cho Đối tác lắp đặt tại Việt Nam (chờ xác nhận)"
-                inline
-              />
-            </p>
+            {/* The per-project payout line is intentionally absent: the
+                figure is not confirmed for Vietnam, and a TBD here read
+                as a placeholder on a page whose job is to recruit
+                installers. The survey/design text above is the whole
+                public claim until the rate is signed off. */}
           </div>
         </div>
       </div>

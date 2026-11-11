@@ -16,10 +16,12 @@
  *   the final balance. The brochure supplies the institutional
  *   credibility (group scale, one-stop supply chain, local warehouse,
  *   training) that makes the offer credible; the standee supplies the
- *   *campaign* wrapper — a capped intake ("50 suất"), a stepped
- *   commission (+25% from the 3rd order), merchandising support
- *   (uniform, flyers, business cards), instalment financing through
- *   Shinhan, and a 7-step customer journey.
+ *   *campaign* wrapper — a capped intake ("50 suất"), a flat
+ *   per-watt commission with two roles (individual / company),
+ *   merchandising support (uniform, flyers, business cards),
+ *   instalment financing through Shinhan, and a 7-step customer
+ *   journey. There is no order-volume tier: the rate is fixed by
+ *   role (business correction, 2026-11-11).
  *
  * Everything on this page is either copied from those documents or
  * derived arithmetically from them (the arithmetic is spelled out in
@@ -87,9 +89,8 @@ export const partnerTypes: PartnerType[] = [
     description:
       'Dành cho đơn vị có năng lực tồn kho và mạng lưới phân phối tại địa phương.',
     whatYouGet: [
-      'Hoa hồng 950 đồng/W trên mỗi đơn hàng',
-      'Thưởng thêm +190 đồng/W từ 5 đơn/tháng, +380 đồng/W từ 8 đơn/tháng',
-      'Hoa hồng +190 đồng/W khi tự khảo sát công trình',
+      'Hoa hồng 950 đồng/W trên mỗi đơn hàng — hệ 10 kW tương đương 9,5 triệu đồng',
+      'Mức hoa hồng cố định, không phụ thuộc số đơn trong tháng',
       'Tiếp cận kho hàng tại địa phương, không cần đặt cả container',
     ],
     yourRole: [
@@ -121,9 +122,8 @@ export const partnerTypes: PartnerType[] = [
     description:
       'Dành cho cá nhân hoặc doanh nghiệp chỉ cần giới thiệu khách hàng — không cần tồn kho, không cần đội ngũ, không cần vốn.',
     whatYouGet: [
-      'Hoa hồng 760 đồng/W trên mỗi đơn hàng',
-      'Thưởng thêm +190 đồng/W từ 3 đơn/tháng, +380 đồng/W từ 5 đơn/tháng',
-      'Hoa hồng +190 đồng/W khi tự khảo sát công trình',
+      'Hoa hồng 760 đồng/W trên mỗi đơn hàng — hệ 10 kW tương đương 7,6 triệu đồng',
+      'Mức hoa hồng cố định, không phụ thuộc số đơn trong tháng',
       'Tài liệu tiếp thị, đào tạo và nhóm Zalo hỗ trợ riêng',
     ],
     yourRole: [
@@ -218,80 +218,57 @@ export const partnerBenefits: PartnerBenefit[] = [
 ]
 
 /* ────────────────────────────────────────────────────────────────
- * Commission economics — brochure page 3, "Thu hút khách hàng,
- * kiếm tiền dễ dàng".
+ * Commission economics — two fixed roles, no order-volume tiers.
+ *
+ * Business correction (2026-11-11): the programme has **no stepped
+ * incentive**. The per-watt rate is fixed by the partner's role:
+ *
+ *   Cá nhân:      760 đồng/W × 10.000 W = 7.600.000 đồng / đơn
+ *   Doanh nghiệp: 950 đồng/W × 10.000 W = 9.500.000 đồng / đơn
+ *
+ * The standee's income projection is derived from the company rate:
+ *   9.500.000 × 5 khách hàng/tháng = 47,5 triệu đồng/tháng
+ *   47,5 triệu × 12                = 570 triệu đồng/năm
  * ──────────────────────────────────────────────────────────────── */
 
-export interface PartnerCommissionTier {
-  /** Monthly order count that unlocks the bonus. */
-  orders: number
-  /** Bonus per watt on top of the base rate. */
-  bonusPerWatt: number
-}
-
-export interface PartnerCommissionTrack {
-  id: 'dealer' | 'business-partner'
-  /** Track title as printed on the brochure. */
+/**
+ * The two commission roles published on the campaign page. The
+ * general `/for-partners/` page explains the *model* without the
+ * numbers; the campaign page is where the rates are published.
+ */
+export interface GoldMedalCommissionRole {
+  id: 'individual' | 'company'
+  /** Role name shown in the commission table. */
   title: string
-  /** Base commission in VND per watt. */
-  basePerWatt: number
-  /** Monthly-order thresholds and the bonus each one unlocks. */
-  tiers: PartnerCommissionTier[]
-  /** Extra commission when the partner runs the site survey. */
-  surveyBonusPerWatt: number
+  /** One-line "for whom" caption. */
+  description: string
+  /** Flat commission in VND per watt for this role. */
+  perWatt: number
+  /** Payout for the reference system (perWatt × 10.000 W). */
+  referencePayout: number
 }
 
-/**
- * The two commercial tracks of the brochure.
- *
- * Cross-check against the "Đối tác Vàng" standee, which quotes
- * "Thu nhập lên đến 7.600.000 / Trên mỗi đơn hàng" and "Từ đơn
- * hàng thứ 3 trở đi hoa hồng tăng 25%":
- *
- *   760 đồng/W × 10.000 W (hệ thống 10 kW) = 7.600.000 đồng
- *   7.600.000 × 1,25                        = 9.500.000 đồng
- *
- * …which is exactly the "9,5 TRIỆU / KHÁCH HÀNG" printed on the
- * standee, and 5 khách hàng × 9,5 triệu = 47,5 triệu/tháng and
- * × 12 = 570 triệu/năm. The two documents therefore agree.
- */
-/**
- * The commission track the "Chương trình Đối tác Vàng" campaign runs on.
- *
- * The general `/for-partners/` page explains the commission *model*
- * without the numbers; the campaign page is where the rate basis is
- * published, next to the 7,6 / 9,5 triệu figures on the standee.
- */
-export const goldMedalCommissionTrack: PartnerCommissionTrack = {
-  id: 'business-partner',
-  title: 'Đối tác kinh doanh',
-  basePerWatt: 760,
-  tiers: [
-    { orders: 3, bonusPerWatt: 190 },
-    { orders: 5, bonusPerWatt: 380 },
-  ],
-  surveyBonusPerWatt: 190,
-}
-
-export const partnerCommissionTracks: PartnerCommissionTrack[] = [
+export const goldMedalCommissionRoles: GoldMedalCommissionRole[] = [
   {
-    id: 'dealer',
-    title: 'Đại lý kinh doanh',
-    basePerWatt: 950,
-    tiers: [
-      { orders: 5, bonusPerWatt: 190 },
-      { orders: 8, bonusPerWatt: 380 },
-    ],
-    surveyBonusPerWatt: 190,
+    id: 'individual',
+    title: 'Cá nhân',
+    description: 'Cá nhân giới thiệu khách hàng',
+    perWatt: 760,
+    referencePayout: 7_600_000,
   },
-  goldMedalCommissionTrack,
+  {
+    id: 'company',
+    title: 'Doanh nghiệp',
+    description: 'Công ty, đơn vị có nguồn khách hàng',
+    perWatt: 950,
+    referencePayout: 9_500_000,
+  },
 ]
 
 /** Payout schedule printed on the brochure. */
 export const partnerPayoutTerms = [
   '50% hoa hồng được trả khi giao hàng',
   '50% hoa hồng được trả khi thanh toán số dư còn lại',
-  'Thưởng doanh số tháng được chi trả trước ngày 5 của tháng sau',
 ]
 
 /** Reference system size used for the "per order" examples. */
@@ -426,8 +403,6 @@ export interface GoldMedalProgram {
   journey: GoldMedalStep[]
   /** Merchandising + financing support included with the programme. */
   support: string[]
-  /** Commission ramp published on the standee. */
-  commissionRamp: string[]
 }
 
 /**
@@ -446,25 +421,24 @@ export const goldMedalProgram: GoldMedalProgram = {
   stats: [
     {
       value: '7,6 triệu',
-      label: 'Thu nhập trên mỗi đơn hàng',
-      detail:
-        'Tương đương hệ thống 10 kW theo mức hoa hồng 760 đồng/W của Đối tác kinh doanh.',
-    },
-    {
-      value: '+25%',
-      label: 'Hoa hồng tăng từ đơn hàng thứ 3',
-      detail: 'Áp dụng cho mọi hợp đồng triển khai thành công từ đơn thứ 3 trở đi.',
+      label: 'Hoa hồng mỗi đơn — Cá nhân',
+      detail: 'Hệ thống 10 kW theo mức 760 đồng/W của vai trò cá nhân.',
     },
     {
       value: '9,5 triệu',
-      label: 'Thu nhập mỗi khách hàng',
+      label: 'Hoa hồng mỗi đơn — Doanh nghiệp',
+      detail: 'Hệ thống 10 kW theo mức 950 đồng/W của vai trò doanh nghiệp.',
+    },
+    {
+      value: '47,5 triệu',
+      label: 'Thu nhập mỗi tháng',
       detail:
-        'Mức hoa hồng sau khi tăng 25% — tương đương 47,5 triệu đồng khi giới thiệu 5 khách hàng mỗi tháng.',
+        '5 khách hàng/tháng ở mức hoa hồng doanh nghiệp 9,5 triệu đồng/đơn.',
     },
     {
       value: '570 triệu',
       label: 'Thu nhập lên đến mỗi năm',
-      detail: 'Khi duy trì 5 khách hàng mỗi tháng, quanh mức 47,5 triệu đồng.',
+      detail: 'Duy trì 5 khách hàng mỗi tháng quanh mức 47,5 triệu đồng.',
     },
   ],
   lookingFor: [
@@ -513,11 +487,6 @@ export const goldMedalProgram: GoldMedalProgram = {
     '200 tờ rơi sản phẩm cho mỗi đơn hàng',
     'Danh thiếp cá nhân',
     'Shinhan cho vay NLMT — giải pháp tài chính linh hoạt, dễ dàng sở hữu hệ thống điện mặt trời',
-  ],
-  commissionRamp: [
-    'Đơn hàng thứ 1 và thứ 2: 7,6 triệu đồng mỗi khách hàng',
-    'Từ đơn hàng thứ 3 trở đi: 9,5 triệu đồng mỗi khách hàng (+25%)',
-    'Thưởng thêm nếu vượt chỉ tiêu số đơn hàng trong tháng',
   ],
 }
 
