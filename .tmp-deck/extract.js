@@ -7,7 +7,12 @@
  *
  *   node .tmp-deck/extract.js
  *
- * Writes every entry into .tmp-deck/ (slides + rels + media).
+ * Writes:
+ *   .tmp-deck/ppt/...      every entry (slides, rels, media)
+ *   .tmp-deck/slides-index.txt
+ *                          one block per slide: the slide's text runs
+ *                          followed by the media files it references
+ *                          (resolved through the slide's .rels)
  */
 const fs = require('fs')
 const path = require('path')
@@ -71,5 +76,61 @@ for (let n = 0; n < count; n++) {
   off += 46 + nameLen + extraLen + commentLen
 }
 
+// --- slide index: text runs + referenced media ---------------------------
+const slidesDir = path.join(out, 'ppt', 'slides')
+const slideFiles = fs.existsSync(slidesDir)
+  ? fs
+      .readdirSync(slidesDir)
+      .filter((f) => /^slide\d+\.xml$/.test(f))
+      .sort((a, b) => {
+        const na = Number(a.match(/\d+/)[0])
+        const nb = Number(b.match(/\d+/)[0])
+        return na - nb
+      })
+  : []
+
+const index = []
+
+for (const file of slideFiles) {
+  const xml = fs.readFileSync(path.join(slidesDir, file), 'utf8')
+
+  // <a:t>…</a:t> — the visible text of the slide, in document order.
+  const texts = []
+  const textRe = /<a:t>([\s\S]*?)<\/a:t>/g
+  let m
+  while ((m = textRe.exec(xml)) !== null) {
+    const t = m[1]
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'")
+    if (t.trim()) texts.push(t.trim())
+  }
+
+  // media referenced by this slide, via its .rels file
+  const relFile = path.join(slidesDir, '_rels', file + '.rels')
+  const media = []
+  if (fs.existsSync(relFile)) {
+    const rels = fs.readFileSync(relFile, 'utf8')
+    const relRe = /Target="([^"]*media\/[^"]+)"/g
+    let r
+    while ((r = relRe.exec(rels)) !== null) {
+      const target = r[1].replace('../', 'ppt/')
+      media.push(path.basename(target))
+    }
+  }
+
+  index.push(
+    `\n===== ${file} =====\n` +
+      (texts.length ? texts.join('\n') : '(no text)') +
+      (media.length ? `\n--- media: ${media.join(', ')}` : ''),
+  )
+}
+
+fs.writeFileSync(path.join(out, 'slides-index.txt'), index.join('\n'))
+
 console.log(`entries in central directory: ${count}`)
 console.log(`extracted: ${written}, skipped: ${skipped}`)
+console.log(`slides indexed: ${slideFiles.length}`)
+console.log('wrote .tmp-deck/slides-index.txt')
