@@ -29,7 +29,6 @@ import {
   goldMedalCommissionRoles,
   goldMedalProgram,
   goldMedalPromise,
-  PARTNER_CONTACT,
   PARTNER_HOTLINE,
   PARTNER_REFERENCE_SYSTEM_KW,
 } from '@/lib/data/partners'
@@ -612,17 +611,6 @@ export default function GoldMedalPartner({
             >
               <Phone className="w-4 h-4" strokeWidth={2} />
               {PARTNER_HOTLINE}
-            </a>
-          </p>
-          <p className="text-sm text-uk-slate font-cw-regular">
-            Đầu mối đối tác:{' '}
-            <span className="font-cw-bold text-uk-navy">{PARTNER_CONTACT.name}</span>{' '}
-            ·{' '}
-            <a
-              href={PARTNER_CONTACT.phoneHref}
-              className="font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
-            >
-              {PARTNER_CONTACT.phone}
             </a>
           </p>
           <p className="text-sm text-uk-slate font-cw-regular">
