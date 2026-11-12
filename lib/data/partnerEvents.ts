@@ -11,9 +11,10 @@
  *     instead of an invented address or number.
  *
  * `registered` is the count the business gave ("已招填 10" / "已招填
- * 3"); `capacity` is the planned intake (30 seats each). The counts
- * are a snapshot — they are not wired to a live seat counter, so
- * update them here when the business reports new numbers.
+ * 3"); `capacity` is the planned intake — 30 seats for Bắc Giang and
+ * 20 for Hải Phòng (reported 2026-11-12). The counts are a snapshot —
+ * they are not wired to a live seat counter, so update them here when
+ * the business reports new numbers.
  *
  * The `id` is the identifier that travels with a sign-up (see
  * `GoldMedalSignup` / `GoldStickyForm` -> `/api/partner`). It is stored
@@ -62,7 +63,7 @@ export const goldPartnerEvents: GoldPartnerEvent[] = [
     city: 'Hải Phòng',
     venue: null,
     hotline: null,
-    capacity: 30,
+    capacity: 20,
     registered: 3,
   },
 ]
