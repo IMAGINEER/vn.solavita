@@ -122,9 +122,8 @@ function Section2EntryCards() {
             title="SolaMate — ban công"
             subTitle="Lắp trong 60 phút, không cần xin phép"
             body="Trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng. Ba kiểu lắp — lan can, mái che, cắm đất — với thiết bị Zero-export mọi model."
-            imageDescription="Tấm pin SolaMate màu đen kẹp trên lan can ban công của một căn hộ, bên cạnh cây leo và chậu cây xanh"
-            imageSrc="/images/solamate/scene-balcony.webp"
-            imagePosition="center 60%"
+            imageDescription="Nhân vật SolaMate bên tấm pin gắn trên lan can ban công căn hộ"
+            imageSrc="/images/home-card-1.webp"
             cta="Xem giải pháp SolaMate"
           />
           <ScenarioPanel
@@ -132,8 +131,8 @@ function Section2EntryCards() {
             title="SolaHome — mái nhà"
             subTitle="Điện ổn định cho tổ ấm"
             body="Giữ đèn sáng và thiết bị hoạt động khi mất điện. Từ nguồn dự phòng thiết yếu đến chủ động hoàn toàn nguồn điện, thiết kế riêng cho hộ gia đình."
-            imageDescription="Một ngôi nhà hiện đại với hệ thống điện mặt trời trên mái và pin lưu trữ"
-            imageSrc="/images/home_cap.webp"
+            imageDescription="Nhân vật SolaMate đứng trước ngôi nhà có hệ thống điện mặt trời trên mái và pin lưu trữ bên hông"
+            imageSrc="/images/home-card-2.webp"
             cta="Xem giải pháp SolaHome"
           />
           <ScenarioPanel
@@ -141,8 +140,8 @@ function Section2EntryCards() {
             title="Cho doanh nghiệp"
             subTitle="Vận hành liền mạch mỗi ngày"
             body="Bảo vệ hoạt động kinh doanh khỏi sự cố lưới điện bằng hệ thống ba pha vững chắc. Tiết kiệm chi phí điện và duy trì thiết bị quan trọng 24/7."
-            imageDescription="Kho hàng và trung tâm dịch vụ Solavita với dàn pin mặt trời trên mái"
-            imageSrc="/images/warehouse_local.webp"
+            imageDescription="Nhân vật SolaMate đội mũ bảo hộ trước kho hàng có dàn pin mặt trời trên mái, xe nâng và xe tải"
+            imageSrc="/images/home-card-3.webp"
             cta="Xem giải pháp cho doanh nghiệp"
           />
         </div>

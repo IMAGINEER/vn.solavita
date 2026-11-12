@@ -176,7 +176,19 @@ export default function SolaHomeSizingMatcher({
         </div>
 
         {/* Result */}
-        <div className="rounded-2xl bg-sv-light p-5">
+        <div
+          className={`relative overflow-hidden rounded-2xl p-5 ${
+            result ? 'bg-sv-light' : 'bg-sv-light bg-cover bg-center'
+          }`}
+          style={
+            result
+              ? undefined
+              : {
+                  backgroundImage:
+                    "url('/images/solahome/calculator-bg.webp')",
+                }
+          }
+        >
           {result ? (
             <>
               <p className="text-xs text-uk-slate">
@@ -255,14 +267,16 @@ export default function SolaHomeSizingMatcher({
               </div>
             </>
           ) : (
-            <div className="flex h-full min-h-[220px] flex-col justify-center">
-              <p className="font-cw-bold text-uk-navy">
-                Kết quả sẽ hiện ở đây
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-uk-slate">
-                Công suất, số tấm pin và diện tích mái tương ứng với hai ô
-                bên cạnh.
-              </p>
+            <div className="flex h-full min-h-[220px] flex-col items-end justify-end text-right">
+              <div className="max-w-[17rem]">
+                <p className="font-cw-bold text-uk-navy">
+                  Kết quả sẽ hiện ở đây
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-uk-slate">
+                  Công suất, số tấm pin và diện tích mái tương ứng với hai ô
+                  bên cạnh.
+                </p>
+              </div>
             </div>
           )}
         </div>

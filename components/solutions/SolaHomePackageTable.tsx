@@ -12,6 +12,24 @@ const labelCell =
   'px-4 py-3 align-top text-[10px] font-cw-bold uppercase tracking-[0.12em] text-uk-slate'
 const valueCell = 'border-l border-uk-line px-4 py-3 align-top'
 
+/**
+ * One tint per package column, all drawn from the brand's cyan→green
+ * ramp so the four columns read as a set — not four unrelated colours.
+ * The steps stay light enough for navy body text and the teal figures,
+ * and they are applied to <col> so the whole column (header, every row,
+ * the quote button) shares a single band.
+ */
+const COLUMN_TONES = [
+  'bg-[#E6F9FD]', // cyan
+  'bg-[#E7FBF3]', // teal
+  'bg-[#E8FCEA]', // emerald
+  'bg-[#ECFCE0]', // green
+] as const
+
+// The selected (recommended) column keeps its tint but steps up so the
+// chip in its header still stands out.
+const SELECTED_TONE = 'bg-uk-teal-soft/70'
+
 const monthlyNumber = (pkg: SolaHomePackage) =>
   pkg.monthlySaving.replace(' VND/tháng', '')
 const dailyNumber = (pkg: SolaHomePackage) =>
@@ -43,11 +61,13 @@ export default function SolaHomePackageTable({
         </caption>
         <colgroup>
           <col className="w-[150px]" />
-          {solaHomePackages.map((pkg) => (
+          {solaHomePackages.map((pkg, i) => (
             <col
               key={pkg.id}
               className={
-                selectedPackageId === pkg.id ? 'bg-uk-teal-soft/40' : ''
+                selectedPackageId === pkg.id
+                  ? SELECTED_TONE
+                  : COLUMN_TONES[i % COLUMN_TONES.length]
               }
             />
           ))}
@@ -56,9 +76,7 @@ export default function SolaHomePackageTable({
         <thead>
           <tr className="border-b border-uk-line">
             <th scope="col" className="px-4 py-4 align-bottom">
-              <span className="text-[10px] font-cw-bold uppercase tracking-[0.16em] text-uk-slate">
-                So sánh gói
-              </span>
+              <span className="sr-only">Tiêu chí so sánh</span>
             </th>
             {solaHomePackages.map((pkg) => {
               const recommended = selectedPackageId === pkg.id
@@ -66,7 +84,9 @@ export default function SolaHomePackageTable({
                 <th
                   key={pkg.id}
                   scope="col"
-                  className="border-l border-uk-line px-4 py-4 align-top"
+                  className={`border-l border-uk-line px-4 py-4 align-top ${
+                    recommended ? 'border-t-[3px] border-t-uk-teal' : ''
+                  }`}
                 >
                   <div className="mb-2 flex min-h-[16px] items-center">
                     {recommended && (
@@ -88,7 +108,7 @@ export default function SolaHomePackageTable({
         </thead>
 
         <tbody className="divide-y divide-uk-line">
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Tiết kiệm/tháng
             </th>
@@ -104,7 +124,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Sản lượng/ngày
             </th>
@@ -120,7 +140,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Diện tích mái
             </th>
@@ -134,7 +154,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Số tấm pin
             </th>
@@ -148,7 +168,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Biến tần hybrid
             </th>
@@ -162,7 +182,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Hỗ trợ pin
             </th>
@@ -176,7 +196,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Phù hợp
             </th>
@@ -190,7 +210,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Tải tham chiếu
               <span className="mt-1 block text-[9px] font-cw-regular normal-case tracking-normal text-uk-slate/80">
@@ -204,7 +224,7 @@ export default function SolaHomePackageTable({
             ))}
           </tr>
 
-          <tr className="transition-colors hover:bg-uk-teal-soft/40">
+          <tr>
             <th scope="row" className={labelCell}>
               Báo giá
             </th>

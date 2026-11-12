@@ -462,10 +462,10 @@ export default function SolaMatePage() {
               {/* The illustration closes the column, under the figures it
                   belongs to. */}
               <img
-                src="/images/after-4.webp"
-                alt="Nhân vật SolaMate bên hệ thống đã lắp đặt xong — không cần phê duyệt, không thủ tục phức tạp"
+                src="/images/after-5.webp"
+                alt="Nhân vật SolaMate bên hệ thống lắp trên ban công, kèm minh họa mức tiết kiệm 80% và thời gian hoàn vốn 5,4 năm"
                 loading="lazy"
-                className="mt-11 aspect-[16/10] w-full rounded-2xl border border-uk-line object-cover"
+                className="mt-11 aspect-[4/3] w-full rounded-2xl border border-uk-line object-cover"
               />
             </div>
           </div>
