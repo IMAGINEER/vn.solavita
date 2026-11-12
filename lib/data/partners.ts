@@ -39,11 +39,16 @@ export const PARTNER_HOTLINE = '0939738000'
 
 /**
  * Named partnership contact printed in the brochure footer.
+ *
+ * Phone: the brochure prints `+84 856 842 842`; the business supplied
+ * `0939738000` on 2026-11-12 as the number to use on the site, so the
+ * displayed / dialled number follows the site instruction and the
+ * brochure's alternate line is no longer published.
  */
 export const PARTNER_CONTACT = {
   name: 'Jason',
-  phone: '+84 856 842 842',
-  phoneHref: 'tel:+84856842842',
+  phone: '0939738000',
+  phoneHref: 'tel:0939738000',
   email: 'Phan.thang@skyworth.com',
 }
 

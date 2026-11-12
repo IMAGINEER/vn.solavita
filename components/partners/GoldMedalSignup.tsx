@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Check, Loader2, Phone } from 'lucide-react'
 import { PARTNER_HOTLINE } from '@/lib/data/partners'
+import { eventLabel, goldPartnerEvents } from '@/lib/data/partnerEvents'
 
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -30,7 +31,16 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  * panel for this block) so the inputs are white with dark text — the
  * same field treatment as every other form on the site.
  */
-export default function GoldMedalSignup() {
+export default function GoldMedalSignup({
+  trackingCode,
+}: {
+  /**
+   * `?lp=…` from the campaign URL (page.tsx reads it server-side and
+   * passes it down). Written into the lead's message so the team can
+   * tell which advert / QR standee produced the application.
+   */
+  trackingCode?: string
+} = {}) {
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -49,9 +59,18 @@ export default function GoldMedalSignup() {
       message: String(data.get('message') || '').trim(),
     }
 
+    // Which November conference(s) the lead registered for. Checkboxes
+    // rather than a dropdown because a partner may be able to attend
+    // both sessions; each ticked id comes from lib/data/partnerEvents.
+    const eventIds = data.getAll('event').map(String)
+    const events = goldPartnerEvents.filter((ev) => eventIds.includes(ev.id))
+
     // Client-side validation — mirrors the server-side checks in
     // /api/partner/route.ts.
     const nextErrors: Record<string, string> = {}
+    if (eventIds.length === 0) {
+      nextErrors.event = 'Vui lòng chọn ít nhất một buổi hội nghị.'
+    }
     if (!payload.fullName) nextErrors.name = 'Vui lòng nhập họ tên.'
     if (!payload.whatsapp) {
       nextErrors.whatsapp = 'Vui lòng nhập số điện thoại để chúng tôi gọi lại.'
@@ -70,10 +89,19 @@ export default function GoldMedalSignup() {
     setStatus('submitting')
     setSubmitError(null)
 
-    // The extra fields (area, message) travel inside `message` because
-    // the partner-leads row has no dedicated column for them; the
-    // campaign tag lets the team filter them back out.
+    // The extra fields (event, area, message) travel inside `message`
+    // because the partner-leads row has no dedicated column for them;
+    // the campaign tag lets the team filter them back out. The event
+    // id goes first so it is the first thing the team reads.
     const messageParts = [
+      events.length
+        ? `Hội nghị tham dự: ${events
+            .map((ev) => `${eventLabel(ev)} (${ev.id})`)
+            .join('; ')}`
+        : 'Hội nghị tham dự: chưa chọn',
+      // Second line on purpose: the admin table clamps the message,
+      // so the tracking code must sit above the free-text answers.
+      trackingCode ? `Mã theo dõi: ${trackingCode}` : '',
       payload.area ? `Khu vực hoạt động: ${payload.area}` : '',
       payload.message ? `Nguồn khách hàng: ${payload.message}` : '',
     ].filter(Boolean)
@@ -89,6 +117,8 @@ export default function GoldMedalSignup() {
           company: payload.company,
           partnerTrack: 'lead-partner',
           campaign: 'gold-partner',
+          event: events.map((ev) => ev.id).join(','),
+          lp: trackingCode || '',
           message: messageParts.join('\n'),
         }),
       })
@@ -179,6 +209,51 @@ export default function GoldMedalSignup() {
                 noValidate
                 className="grid grid-cols-1 md:grid-cols-2 gap-4"
               >
+            {/* First field of the form: which November conference the
+                visitor is registering for. Checkbox tiles rather than
+                a dropdown — both sessions are visible at a glance and
+                both can be ticked. Required: at least one session
+                must be chosen (validated below and mirrored in
+                GoldStickyForm). Each ticked id travels with the
+                submission as the first line of `message`. */}
+            <fieldset className="md:col-span-2">
+              <legend className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
+                Hội nghị bạn muốn tham dự{' '}
+                <span className="text-uk-teal-dark">*</span>
+              </legend>
+              {/* Same pill treatment as the sticky form's picker
+                  (GoldStickyForm): a compact rounded pill per session
+                  with a 14px checkbox square, so the two sign-up
+                  surfaces select conferences identically. */}
+              <div className="flex flex-wrap items-center gap-2">
+                {goldPartnerEvents.map((ev) => (
+                  <label
+                    key={ev.id}
+                    className="group inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-uk-line bg-white px-2.5 py-1.5 text-[11px] text-uk-slate transition-colors hover:border-uk-teal/60 has-[:checked]:border-uk-teal has-[:checked]:bg-uk-teal/5 has-[:checked]:text-uk-navy has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-uk-teal/40"
+                  >
+                    <input
+                      type="checkbox"
+                      name="event"
+                      value={ev.id}
+                      className="sr-only"
+                    />
+                    <span className="flex h-3.5 w-3.5 items-center justify-center rounded border border-uk-slate/40 text-white transition-colors group-has-[:checked]:border-uk-teal group-has-[:checked]:bg-uk-teal">
+                      <Check
+                        className="h-2.5 w-2.5 opacity-0 group-has-[:checked]:opacity-100"
+                        strokeWidth={3}
+                      />
+                    </span>
+                    {eventLabel(ev)}
+                  </label>
+                ))}
+              </div>
+              {fieldErrors.event && (
+                <p className="text-red-500 text-xs mt-1.5">
+                  {fieldErrors.event}
+                </p>
+              )}
+            </fieldset>
+
             <label className="block">
               <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
                 Họ tên <span className="text-uk-teal-dark">*</span>
@@ -240,9 +315,12 @@ export default function GoldMedalSignup() {
               <input
                 type="text"
                 name="area"
-                placeholder="Ví dụ: Hà Nội và vùng lân cận"
+                placeholder="Ví dụ: Phường Xuân Hòa, TP. Hồ Chí Minh"
                 className="w-full px-4 py-3 rounded-xl border border-uk-line bg-white text-uk-navy placeholder:text-uk-slate/60 focus:outline-none focus:border-uk-teal transition-colors"
               />
+              <span className="mt-1 block text-[11px] text-uk-slate/70 font-cw-regular">
+                Ghi theo địa chỉ hành chính: phường/xã và tỉnh/thành phố.
+              </span>
             </label>
 
             <label className="block md:col-span-2">

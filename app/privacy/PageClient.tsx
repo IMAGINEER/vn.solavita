@@ -4,6 +4,11 @@ import { motion } from 'motion/react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
+import {
+  SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+} from '@/lib/seo/site'
 
 export default function PrivacyPage() {
   const handleBack = () => {
@@ -40,7 +45,7 @@ export default function PrivacyPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Cập nhật lần cuối: 2 tháng 11 năm 2026
+            Solavita · Cập nhật lần cuối: 12 tháng 11 năm 2026
           </motion.p>
 
           <motion.div
@@ -63,10 +68,10 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">1 Giới thiệu</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Chính sách bảo mật này giải thích cách <strong className="text-[#0A1628]">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</strong> ("Solavita", "chúng tôi" hoặc "Solavita Việt Nam") thu thập, sử dụng, lưu trữ và chia sẻ thông tin cá nhân khi Bạn truy cập trang web này, liên hệ với chúng tôi hoặc gửi yêu cầu tư vấn.
+                Chính sách bảo mật này giải thích cách <strong className="text-[#0A1628]">{SITE_LEGAL_NAME}</strong> ("Solavita", "chúng tôi" hoặc "Solavita Việt Nam") thu thập, sử dụng, lưu trữ và chia sẻ thông tin cá nhân khi Bạn truy cập trang web này, liên hệ với chúng tôi hoặc gửi yêu cầu tư vấn.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Chúng tôi hướng tới việc xử lý thông tin cá nhân một cách minh bạch và tuân thủ pháp luật hiện hành về bảo vệ dữ liệu, bao gồm Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân trong phạm vi áp dụng đối với Bạn, và Pháp lệnh Bảo vệ dữ liệu cá nhân (Personal Data (Privacy) Ordinance) của Hồng Kông trong phạm vi áp dụng cho hoạt động xử lý do công ty mẹ được thành lập tại Hồng Kông của chúng tôi thực hiện.
+                Chúng tôi hướng tới việc xử lý thông tin cá nhân một cách minh bạch và tuân thủ pháp luật hiện hành về bảo vệ dữ liệu, bao gồm Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và các văn bản hướng dẫn thi hành trong phạm vi áp dụng đối với Bạn, và Pháp lệnh Bảo vệ dữ liệu cá nhân (Personal Data (Privacy) Ordinance) của Hồng Kông trong phạm vi áp dụng cho hoạt động xử lý do công ty mẹ được thành lập tại Hồng Kông của chúng tôi thực hiện.
               </p>
             </div>
 
@@ -133,7 +138,7 @@ export default function PrivacyPage() {
                 Chúng tôi cũng có thể tiết lộ thông tin khi pháp luật yêu cầu, để bảo vệ quyền lợi hợp pháp hoặc liên quan đến việc tổ chức lại hoạt động kinh doanh, tuân theo các yêu cầu pháp lý hiện hành.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Các bên nhận thông tin cụ thể phụ thuộc vào các dịch vụ thực tế được đơn vị vận hành trang web sử dụng. <span className="text-red-600 font-bold">TBD — Danh sách nhà cung cấp dịch vụ bên thứ ba đã được xác minh (lưu trữ, phân tích, biểu mẫu, tin nhắn, CRM).</span>
+                Các bên nhận thông tin cụ thể phụ thuộc vào dịch vụ thực tế mà chúng tôi sử dụng, bao gồm các nhà cung cấp dịch vụ lưu trữ trang web, gửi biểu mẫu, phân tích, nhắn tin và quản lý quan hệ khách hàng. Các nhà cung cấp này chỉ được xử lý thông tin cá nhân theo hướng dẫn của chúng tôi, trong phạm vi cần thiết để cung cấp dịch vụ và phải tuân thủ nghĩa vụ bảo mật, bảo vệ dữ liệu cá nhân theo hợp đồng và pháp luật hiện hành. Danh sách nhà cung cấp cụ thể được rà soát định kỳ và cập nhật khi có thay đổi.
               </p>
             </div>
 
@@ -146,7 +151,7 @@ export default function PrivacyPage() {
                 Khi thông tin cá nhân được chuyển ra nước ngoài, chúng tôi sẽ thực hiện các bước mà pháp luật hiện hành về bảo vệ dữ liệu yêu cầu, bao gồm mọi biện pháp bảo đảm hoặc đánh giá cần thiết.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Khu vực lưu trữ, địa điểm của nhà cung cấp dịch vụ và các biện pháp bảo đảm chuyển dữ liệu đã được xác nhận.</span>
+                Trước khi chuyển dữ liệu cá nhân ra nước ngoài, chúng tôi thực hiện các nghĩa vụ theo pháp luật hiện hành về bảo vệ dữ liệu cá nhân, bao gồm lập hồ sơ đánh giá tác động chuyển dữ liệu cá nhân ra nước ngoài, cung cấp hồ sơ cho cơ quan có thẩm quyền khi được yêu cầu và áp dụng các biện pháp bảo vệ phù hợp. Dữ liệu có thể được lưu trữ và xử lý tại Việt Nam hoặc tại quốc gia, vùng lãnh thổ nơi nhà cung cấp dịch vụ hoặc đơn vị trực thuộc của chúng tôi đặt máy chủ; trong mọi trường hợp, thông tin được bảo vệ theo Chính sách này và pháp luật hiện hành.
               </p>
             </div>
 
@@ -159,7 +164,7 @@ export default function PrivacyPage() {
                 Thời hạn lưu trữ phụ thuộc vào loại thông tin, mục đích xử lý và yêu cầu pháp lý hiện hành. Chúng tôi sẽ xóa hoặc ẩn danh hóa thông tin khi không còn cần thiết, trong phạm vi phù hợp và khả thi về mặt kỹ thuật.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Thời hạn hoặc tiêu chí lưu trữ đã được xác nhận đối với yêu cầu tư vấn, dữ liệu phân tích và nhật ký máy chủ.</span>
+                Thông tin cá nhân được lưu giữ theo các tiêu chí sau: thông tin liên hệ và yêu cầu tư vấn được lưu giữ trong thời gian cần thiết để xử lý yêu cầu, thực hiện hợp đồng hoặc giải quyết tranh chấp; dữ liệu phân tích và nhật ký máy chủ được lưu giữ trong thời gian cần thiết cho mục đích vận hành, bảo mật và cải thiện trang web; sau khi hết thời hạn nêu trên hoặc khi pháp luật yêu cầu, thông tin sẽ được xóa hoặc ẩn danh hóa. Thời hạn cụ thể được xác định theo tính chất dữ liệu, mục đích xử lý và yêu cầu của pháp luật hiện hành.
               </p>
             </div>
 
@@ -219,19 +224,20 @@ export default function PrivacyPage() {
                 Đối với các câu hỏi hoặc yêu cầu về quyền riêng tư, vui lòng liên hệ:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Bên kiểm soát dữ liệu cá nhân / đơn vị vận hành trang web:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED (công ty được thành lập tại Hồng Kông)</li>
+                <li><strong className="text-[#0A1628]">Bên kiểm soát dữ liệu cá nhân / đơn vị vận hành trang web:</strong> {SITE_LEGAL_NAME} (công ty được thành lập tại Việt Nam)</li>
+                <li><strong className="text-[#0A1628]">Mã số doanh nghiệp:</strong> {SITE_COMPANY_NUMBER}</li>
                 <li><strong className="text-[#0A1628]">Liên hệ về quyền riêng tư:</strong> Johny Zhang</li>
                 <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:vn@solavita.com" className="text-[#0F766E] hover:underline">vn@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Địa chỉ:</strong> <span className="text-red-600">TBD — Địa chỉ trụ sở đã đăng ký tại Hồng Kông (chờ xác nhận)</span></li>
+                <li><strong className="text-[#0A1628]">Địa chỉ:</strong> {SITE_REGISTERED_OFFICE}</li>
               </ul>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Việc đã bổ nhiệm nhân sự phụ trách bảo vệ dữ liệu cá nhân hay chưa, và thông tin liên hệ của người đó.</span>
+                Mọi câu hỏi, yêu cầu thực hiện quyền hoặc khiếu nại liên quan đến bảo vệ dữ liệu cá nhân xin gửi đến đầu mối liên hệ nêu trên. Chúng tôi sẽ tiếp nhận, xác minh và phản hồi trong thời hạn pháp luật quy định.
               </p>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Cập nhật lần cuối: 2 tháng 11 năm 2026 · Solavita
+                Cập nhật lần cuối: 12 tháng 11 năm 2026 · Solavita
               </p>
             </div>
           </motion.div>

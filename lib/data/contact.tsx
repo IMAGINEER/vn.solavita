@@ -5,10 +5,10 @@
  *   - Two published contact channels: the Vietnam email address and
  *     the WhatsApp handoff line.
  *
- * There is deliberately NO office channel: Vietnam has no published
- * office address yet, and the page must not point at an address that
- * does not exist. Add the office row (and a matching row in
- * `lib/data/about.ts`) in one pass once the address is confirmed.
+ * There is deliberately no phone or office card: the number on the
+ * business registration certificate is the legal representative's
+ * personal contact, not a customer-facing business line, and the
+ * registered office is already printed in the footer and legal pages.
  */
 
 import type { ReactNode } from 'react'

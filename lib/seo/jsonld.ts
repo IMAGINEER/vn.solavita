@@ -8,11 +8,12 @@
 // embed the returned objects unsanitized in HTML - they always go through
 // `withContext` → `JSON.stringify` for safety.
 //
-// Vietnam site - localisation pass from the NG source. All business
-// facts that haven't been verified (legal entity, address, phone, ...)
-// are surfaced as visible red TBDs in the UI; this file holds the
-// placeholder strings that drive structured data so a single edit
-// cascades across every page.
+// Vietnam site - localisation pass from the NG source. Business facts
+// that haven't been verified (prices, installation scope, ...) are
+// surfaced as visible red TBDs in the UI; this file holds the strings
+// that drive structured data so a single edit cascades across every
+// page. Company identity fields come from the Vietnamese business
+// registration certificate via `./site`.
 
 import type { BlogCategory, BlogPostFull } from '@/lib/types/blog'
 import type { SolutionDetail } from '@/lib/data/solutions'
@@ -20,6 +21,9 @@ import {
   SITE_LOCALE,
   SITE_NAME,
   SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+  SITE_ADDRESS_PARTS,
   DEFAULT_OG_IMAGE,
   absoluteUrl,
 } from './site'
@@ -70,8 +74,11 @@ export function jsonLdScript(obj: unknown): string {
    Solavita Việt Nam can `@id`-reference these instead of duplicating them.
 
    Vietnam rules:
-     - address, contactPoint email, contactPoint telephone: TBD until
-       business confirms.
+     - legalName, taxID and address come from the Vietnamese business
+       registration certificate (enterprise code 0319578388).
+     - contactPoint email is the published VN support address.
+     - no telephone: the certificate number is the legal
+       representative's personal contact, not a business line.
      - areaServed: Vietnam.
      - parentOrganization still references the SKYWORTH Group parent
        (per About Us.md Section 4).
@@ -89,18 +96,18 @@ export function organizationJsonLd() {
         '@type': 'ImageObject',
         url: absoluteUrl('/images/a1logo02.svg'),
       },
-      // Vietnam has no published office address yet, so the structured
-      // data carries the country only — a placeholder street address
-      // would be invalid for every consumer of the schema.
+      // Vietnamese enterprise registration number (also the tax code).
+      taxID: SITE_COMPANY_NUMBER,
+      // Registered office from the business registration certificate.
       address: {
         '@type': 'PostalAddress',
-        addressCountry: 'VN',
+        streetAddress: SITE_ADDRESS_PARTS.streetAddress,
+        addressLocality: SITE_ADDRESS_PARTS.addressLocality,
+        addressCountry: SITE_ADDRESS_PARTS.addressCountry,
       },
-      // Contact point: VN email is verified; the VN phone number is TBD
-      // until business confirms. We do not emit a placeholder telephone —
-      // Google's Knowledge Graph treats bogus contact data as a
-      // trust-signal violation, so we leave `telephone` off until the
-      // number is real.
+      // Contact point: the published VN support email. No public
+      // business phone yet — the certificate number belongs to the
+      // legal representative, so `telephone` stays omitted.
       contactPoint: [
         {
           '@type': 'ContactPoint',
@@ -117,14 +124,15 @@ export function organizationJsonLd() {
         name: 'SKYWORTH Group',
         url: 'https://www.skyworth-pv.com',
       },
-      // Headquarters — the market is known, the office city is not
-      // published yet, so only the country is declared.
+      // Registered office location.
       location: {
         '@type': 'Place',
-        name: 'Việt Nam',
+        name: SITE_REGISTERED_OFFICE,
         address: {
           '@type': 'PostalAddress',
-          addressCountry: 'VN',
+          streetAddress: SITE_ADDRESS_PARTS.streetAddress,
+          addressLocality: SITE_ADDRESS_PARTS.addressLocality,
+          addressCountry: SITE_ADDRESS_PARTS.addressCountry,
         },
       },
     },
@@ -491,16 +499,18 @@ export function localBusinessJsonLd() {
       name: SITE_LEGAL_NAME,
       url: absoluteUrl('/'),
       email: 'vn@solavita.com',
-      // VN phone TBD - omitted (not a fabricated placeholder)
-      // until business confirms the real VN number.
+      // No public business phone yet — the certificate number belongs
+      // to the legal representative, not a customer-facing line.
+      // Vietnamese enterprise registration number (also the tax code).
+      taxID: SITE_COMPANY_NUMBER,
       image: absoluteUrl(DEFAULT_OG_IMAGE),
       priceRange: '₫₫',
-      // No street address is published for Vietnam yet — only the
-      // country is declared, so the schema never points at an address
-      // that does not exist.
+      // Registered office from the business registration certificate.
       address: {
         '@type': 'PostalAddress',
-        addressCountry: 'VN',
+        streetAddress: SITE_ADDRESS_PARTS.streetAddress,
+        addressLocality: SITE_ADDRESS_PARTS.addressLocality,
+        addressCountry: SITE_ADDRESS_PARTS.addressCountry,
       },
       areaServed: { '@type': 'Country', name: 'Vietnam' },
       parentOrganization: { '@id': PARENT_ORG_ID },

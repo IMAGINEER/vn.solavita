@@ -43,6 +43,11 @@ const CAMPAIGN_LABEL: Record<string, string> = {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// `?lp=` campaign code and conference ids (`event`) are free-form on
+// the wire, so both are reduced to short ASCII slugs before storage.
+const TRACKING_CODE_RE = /[^A-Za-z0-9_-]/g
+const EVENT_ID_RE = /^[A-Za-z0-9_-]{1,64}$/
+
 export async function POST(req: Request) {
   // ── 1. Parse body ───────────────────────────────────────────────
   let body: Record<string, unknown>
@@ -84,8 +89,10 @@ export async function POST(req: Request) {
   }
 
   // `company` is NOT NULL in the table but is only meaningful for the
-  // two commercial tracks. Individual referral partners fall back to
-  // their own name so the row still carries something searchable.
+  // two commercial tracks. Individual referral partners may leave it
+  // blank — an empty string is stored rather than their own name, so
+  // the admin table never shows a "company" the applicant never gave
+  // (the sticky quick form does not even ask for one).
   const company = String(body.company ?? '').trim()
   if (!company && partnerTrack !== 'lead-partner') {
     return NextResponse.json(
@@ -103,9 +110,29 @@ export async function POST(req: Request) {
     )
   }
 
+  // Campaign tracking code (`?lp=`) — stored in its own column so the
+  // admin table can group by channel. Kept short and ASCII-only.
+  const trackingCode = body.lp
+    ? String(body.lp).replace(TRACKING_CODE_RE, '').slice(0, 64) || null
+    : null
+
+  // Conference ids the applicant ticked (`event`, comma-separated).
+  // Unknown / malformed ids are dropped rather than rejecting the
+  // whole submission — a bad id must never lose a lead.
+  const eventIds = body.event
+    ? String(body.event)
+        .split(',')
+        .map((s) => s.trim())
+        .filter((s) => EVENT_ID_RE.test(s))
+        .slice(0, 10)
+        .join(',') || null
+    : null
+
   // ── 3. Map to row ───────────────────────────────────────────────
   // The `whatsapp` column + the 3-value `partner_track` CHECK
-  // constraint are applied by `20261104000000_vn_partner_leads.sql`.
+  // constraint are applied by `20261104000000_vn_partner_leads.sql`;
+  // `tracking_code` + `event_ids` by
+  // `20261112000000_vn_partner_leads_tracking.sql`.
   const rawMessage = body.message ? String(body.message).trim() : ''
   const message = campaign
     ? `[${CAMPAIGN_LABEL[campaign]}] ${rawMessage}`.trim()
@@ -114,19 +141,44 @@ export async function POST(req: Request) {
   const row = {
     full_name: String(body.fullName),
     whatsapp: body.whatsapp ? String(body.whatsapp) : null,
-    company: company || String(body.fullName),
+    company,
     email,
     partner_track: partnerTrack,
+    tracking_code: trackingCode,
+    event_ids: eventIds,
     message,
     updated_at: new Date().toISOString(),
   }
 
   // ── 4. INSERT ───────────────────────────────────────────────────
-  const { data, error } = await supabase
+  // If the tracking migration has not been applied yet the two new
+  // columns do not exist; retry once without them so the sign-up form
+  // keeps working instead of failing every submission. The message
+  // still carries both values, and the migration backfills them.
+  let insert = await supabase
     .from('vn_partner_leads')
     .insert(row)
     .select('id')
     .single()
+
+  if (
+    insert.error &&
+    (insert.error.code === '42703' ||
+      /column .* does not exist|schema cache/i.test(insert.error.message))
+  ) {
+    const { tracking_code: _tc, event_ids: _ev, ...legacyRow } = row
+    console.warn(
+      '[/api/partner] tracking columns missing — retrying without them. ' +
+        'Apply supabase/migrations/20261112000000_vn_partner_leads_tracking.sql',
+    )
+    insert = await supabase
+      .from('vn_partner_leads')
+      .insert(legacyRow)
+      .select('id')
+      .single()
+  }
+
+  const { data, error } = insert
 
   if (error || !data) {
     console.error('[/api/partner] insert error:', error)

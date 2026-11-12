@@ -9,6 +9,11 @@ import LocaleMenu from '@/components/LocaleMenu'
 import PartnerFormModal, {
   usePartnerFormModalEvent,
 } from '@/components/PartnerFormModal'
+import {
+  SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+} from '@/lib/seo/site'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -44,10 +49,12 @@ gsap.registerPlugin(ScrollTrigger)
  * overrides are required in this file.
  *
  * The Solutions column lists the two collection pages. The legal
- * entity is the Hong Kong parent, SKYWORTH RENEWABLE ENERGY COMPANY
- * LIMITED; contact details in the Support column and the copyright
- * line use the VN email address. Details still awaiting verification
- * are rendered as red `TBD — ...` placeholders.
+ * entity is the Vietnamese company named on the business registration
+ * certificate; contact details in the Support column and the copyright
+ * line use the VN email address, and the sub-footer carries the
+ * certificate-confirmed enterprise code and registered office. Details
+ * still awaiting verification are rendered as red `TBD — ...`
+ * placeholders.
  */
 
 export interface FooterLink {
@@ -390,12 +397,20 @@ export default function Footer({
               shoving the locale row off the right edge. The locale
               row is `shrink-0` so the flag + label always render at
               their natural width — they never compress or break. The
-              legal entity is the Hong Kong parent, SKYWORTH RENEWABLE
-              ENERGY COMPANY LIMITED. */}
+              legal entity name, enterprise code and registered office
+              are the certificate-confirmed Vietnamese details. */}
           <div className="flex flex-col md:flex-row md:items-center gap-3">
-            <p className="text-white/50 text-xs font-cw-regular text-center md:text-left min-w-0 flex-1">
-              © 2026 <span className="font-cw-bold">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</span>. Bảo lưu mọi quyền.
-            </p>
+            <div className="min-w-0 flex-1 text-center md:text-left">
+              <p className="text-white/50 text-xs font-cw-regular">
+                © 2026 <span className="font-cw-bold">{SITE_LEGAL_NAME}</span>. Bảo lưu mọi quyền.
+              </p>
+              <p className="mt-1 text-white/40 text-[11px] font-cw-regular">
+                Mã số doanh nghiệp: {SITE_COMPANY_NUMBER}
+              </p>
+              <p className="text-white/40 text-[11px] font-cw-regular">
+                {SITE_REGISTERED_OFFICE}
+              </p>
+            </div>
             {/* Locale picker — an expandable menu of every Solavita /
                 SKYWORTH Solar site. The old static "flag + label" block
                 lived here; see components/LocaleMenu.tsx. */}

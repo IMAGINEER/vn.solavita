@@ -4,6 +4,11 @@ import { motion } from 'motion/react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
+import {
+  SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+} from '@/lib/seo/site'
 
 export default function TermsPage() {
   const handleBack = () => {
@@ -40,7 +45,7 @@ export default function TermsPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Cập nhật lần cuối: 2 tháng 11 năm 2026
+            Solavita · Cập nhật lần cuối: 12 tháng 11 năm 2026
           </motion.p>
 
           <motion.div
@@ -66,7 +71,7 @@ export default function TermsPage() {
                 Các Điều khoản sử dụng này điều chỉnh việc Bạn truy cập và sử dụng trang web Solavita, bao gồm nội dung, thông tin sản phẩm, mô tả giải pháp, biểu mẫu yêu cầu tư vấn và các công cụ trực tuyến.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Trong các Điều khoản này, "Solavita", "chúng tôi" đề cập đến <strong className="text-[#0A1628]">SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</strong>, công ty được thành lập tại Hồng Kông và là đơn vị vận hành trang web này. Thông tin liên hệ của chúng tôi được cung cấp ở cuối các Điều khoản này.
+                Trong các Điều khoản này, "Solavita", "chúng tôi" đề cập đến <strong className="text-[#0A1628]">{SITE_LEGAL_NAME}</strong>, công ty được thành lập tại Việt Nam và là đơn vị vận hành trang web này. Thông tin liên hệ của chúng tôi được cung cấp ở cuối các Điều khoản này.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Bằng việc truy cập hoặc sử dụng trang web này, Bạn đồng ý với các Điều khoản này. Nếu Bạn không đồng ý, vui lòng ngừng sử dụng trang web.
@@ -192,7 +197,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">11 Luật điều chỉnh</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Các Điều khoản này tuân theo pháp luật của Đặc khu Hành chính Hồng Kông, không loại trừ bất kỳ biện pháp bảo vệ người tiêu dùng bắt buộc hoặc quyền khác áp dụng theo pháp luật quốc gia nơi Bạn cư trú.
+                Các Điều khoản này được điều chỉnh bởi pháp luật Việt Nam. Tranh chấp phát sinh từ hoặc liên quan đến các Điều khoản này hoặc việc sử dụng trang web sẽ được giải quyết theo pháp luật Việt Nam, không loại trừ bất kỳ biện pháp bảo vệ người tiêu dùng bắt buộc hoặc quyền khác áp dụng theo pháp luật quốc gia nơi Bạn cư trú.
               </p>
             </div>
 
@@ -202,16 +207,17 @@ export default function TermsPage() {
                 Nếu có câu hỏi về các Điều khoản này, vui lòng liên hệ:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Đơn vị vận hành trang web:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED</li>
+                <li><strong className="text-[#0A1628]">Đơn vị vận hành trang web:</strong> {SITE_LEGAL_NAME}</li>
+                <li><strong className="text-[#0A1628]">Mã số doanh nghiệp:</strong> {SITE_COMPANY_NUMBER}</li>
                 <li><strong className="text-[#0A1628]">Liên hệ:</strong> Johny Zhang</li>
                 <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:vn@solavita.com" className="text-[#0F766E] hover:underline">vn@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Địa chỉ đã đăng ký hoặc địa chỉ kinh doanh:</strong> <span className="text-red-600">TBD — Địa chỉ trụ sở đã đăng ký tại Hồng Kông (chờ xác nhận)</span></li>
+                <li><strong className="text-[#0A1628]">Địa chỉ đã đăng ký hoặc địa chỉ kinh doanh:</strong> {SITE_REGISTERED_OFFICE}</li>
               </ul>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Cập nhật lần cuối: 2 tháng 11 năm 2026 · Solavita
+                Cập nhật lần cuối: 12 tháng 11 năm 2026 · Solavita
               </p>
             </div>
           </motion.div>

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import GoldMedalPartner from '@/components/partners/GoldMedalPartner'
+import GoldStickyForm from '@/components/partners/GoldStickyForm'
 import { buildPageMetadata } from '@/lib/seo/metadata'
 import JsonLd from '@/components/seo/JsonLd'
 import {
@@ -9,6 +8,11 @@ import {
   breadcrumbJsonLd,
   goldPartnerProgramJsonLd,
 } from '@/lib/seo/jsonld'
+import {
+  SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+} from '@/lib/seo/site'
 
 export const metadata: Metadata = buildPageMetadata({
   // The root layout's `title.template` already appends
@@ -50,6 +54,17 @@ export default async function GoldPartnerPage({
   // partner page, so the trail is noise — the breadcrumb is dropped.
   const showBreadcrumb = Object.keys(params).length === 0
 
+  // `?lp=` is the tracking code printed on each advert / QR standee.
+  // Read here (server-side) and threaded down to both sign-up forms so
+  // it is stored with the lead — the leads table has no tracking
+  // column, so it travels as a line in `message`. Sanitised: codes are
+  // short ASCII slugs, and anything else would just be noise in the
+  // admin table.
+  const rawLp = Array.isArray(params.lp) ? params.lp[0] : params.lp
+  const trackingCode = (rawLp || '')
+    .replace(/[^A-Za-z0-9_-]/g, '')
+    .slice(0, 64)
+
   return (
     <>
       <JsonLd
@@ -69,23 +84,44 @@ export default async function GoldPartnerPage({
         ]}
       />
       <main className="min-h-screen bg-[#F7F9FC]">
-        {/* The campaign runs the Solavita | SKYWORTH lockup. `logoSrc`
-            is an existing Header prop, so no shared component changes
-            and no other page is affected. */}
-        <Header
-          logoHref="/"
-          logoSrc="/images/LOGOlan-skyworth.svg"
-          logoAlt="Solavita — SKYWORTH"
+        {/* A standalone campaign landing page: no site header and no
+            site footer. The SKYWORTH logo lives in the hero itself,
+            above the breadcrumb (see GoldMedalPartner). */}
+        <GoldMedalPartner
+          showBreadcrumb={showBreadcrumb}
+          trackingCode={trackingCode || undefined}
         />
-
-        {/* White band behind the transparent header: the page opens on
-            a photo hero, so the navy nav links need a light backdrop. */}
-        <div className="h-[72px] bg-white" aria-hidden="true" />
-
-        <GoldMedalPartner showBreadcrumb={showBreadcrumb} />
-
-        <Footer variant="light" />
       </main>
+
+      {/* Sticky quick sign-up — visible while reading, slides away
+          once the full form (#dang-ky) is in view. See
+          GoldStickyForm for the hide/show logic. */}
+      <GoldStickyForm trackingCode={trackingCode || undefined} />
+
+      {/* ── Legal footer ─────────────────────────────────────────
+          The campaign page drops the site footer, but the legal
+          disclosure must still travel with the page: the (c) line,
+          the enterprise code and the registered office are the
+          certificate-confirmed details, taken from the same
+          constants the site footer uses so the two can never drift
+          apart. Light styling — the page ends on a light band — and
+          the 1px rule above the block is the campaign gold rather
+          than a neutral grey, so the page signs off in the same
+          colour as the hero tag and the standee. */}
+      <footer className="border-t border-[#E8B44A] bg-[#F7F9FC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+          <p className="text-xs text-uk-slate font-cw-regular">
+            © 2026 <span className="font-cw-bold">{SITE_LEGAL_NAME}</span>. Bảo lưu
+            mọi quyền.
+          </p>
+          <p className="mt-1 text-[11px] text-uk-slate/70 font-cw-regular">
+            Mã số doanh nghiệp: {SITE_COMPANY_NUMBER}
+          </p>
+          <p className="text-[11px] text-uk-slate/70 font-cw-regular">
+            {SITE_REGISTERED_OFFICE}
+          </p>
+        </div>
+      </footer>
     </>
   )
 }

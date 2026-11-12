@@ -35,6 +35,8 @@ import {
 } from '@/lib/data/partners'
 import Breadcrumb from '@/components/Breadcrumb'
 import GoldMedalSignup from './GoldMedalSignup'
+import GoldenEventCarousel from './GoldenEventCarousel'
+import GoldEventPreview from './GoldEventPreview'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -78,6 +80,7 @@ const JOURNEY_ICONS = [
  */
 export default function GoldMedalPartner({
   showBreadcrumb = true,
+  trackingCode,
 }: {
   /**
    * The breadcrumb belongs to the hero, not to a strip of its own — but
@@ -86,6 +89,11 @@ export default function GoldMedalPartner({
    * the trail tells the visitor nothing.
    */
   showBreadcrumb?: boolean
+  /**
+   * The `?lp=` tracking code from the campaign URL, forwarded to the
+   * sign-up form so every lead records which advert brought it in.
+   */
+  trackingCode?: string
 }) {
   const sectionRef = useRef<HTMLElement>(null)
   const formRef = useRef<HTMLElement>(null)
@@ -154,7 +162,33 @@ export default function GoldMedalPartner({
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-16 lg:pb-28">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16 lg:pt-8 lg:pb-28">
+          {/* This campaign page is a standalone landing page — no site
+              header — so the SKYWORTH wordmark lives at the hero's
+              top-left, above the breadcrumb, and still links home. The
+              supplied SVG is brand blue (#0063B2); `brightness-0
+              invert` forces it to pure white so it reads on the dark
+              photo scrim.
+
+              The campaign tag sits on the same top row, flush right
+              with the wordmark, so the hero opens with a single brand
+              line: logo left, "Chương trình Đối tác Vàng" right. When
+              the row is too narrow (small phones) it wraps and the tag
+              drops onto its own line, still right-aligned. */}
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+            <a href="/" aria-label="SKYWORTH" className="inline-block">
+              <img
+                src="/images/LOGOlan-skyworth.svg"
+                alt="SKYWORTH"
+                className="h-7 w-auto brightness-0 invert sm:h-8"
+              />
+            </a>
+            <span className="ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E8B44A]/30 bg-[#E8B44A]/10 text-xs font-cw-bold uppercase tracking-wider text-[#F5D48A]">
+              <Crown className="w-4 h-4" strokeWidth={1.8} />
+              {goldMedalProgram.name}
+            </span>
+          </div>
+
           {/* Breadcrumb — inside the hero, not on a strip of its own. */}
           {showBreadcrumb && (
             <div className="mb-8">
@@ -170,19 +204,18 @@ export default function GoldMedalPartner({
           )}
 
           {/* ── Header ───────────────────────────────────────────── */}
-          <div className="max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E8B44A]/30 bg-[#E8B44A]/10 text-xs font-cw-bold uppercase tracking-wider text-[#F5D48A] mb-4">
-            <Crown className="w-4 h-4" strokeWidth={1.8} />
-            {goldMedalProgram.name}
-          </span>
-
+          {/* Left-aligned to the same gutter as the wordmark and the
+              breadcrumb above, with a deliberate gap (mt-12 / lg:mt-20)
+              so the copy block reads as a separate block from the top
+              row rather than sticking to it. */}
+          <div className="max-w-3xl text-left mt-12 lg:mt-20">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-white leading-tight">
             {goldMedalProgram.subtitleLead}{' '}
             <span style={{ color: GOLD }}>{goldMedalProgram.subtitleHighlight}</span>
           </h1>
 
           {/* Four-word rhythm printed at the top of the standee */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm md:text-base font-cw-bold">
+          <div className="mt-6 flex flex-wrap items-center justify-start gap-x-3 gap-y-2 text-sm md:text-base font-cw-bold">
             {goldMedalProgram.pillars.map((p, i) => (
               <span key={p} className="flex items-center gap-3">
                 {i > 0 && (
@@ -200,6 +233,12 @@ export default function GoldMedalPartner({
             </span>{' '}
             cho đợt tuyển chọn này.
           </p>
+
+          {/* ── This month's conferences + hero CTA ──────────────
+              Two sessions in November 2026, then the CTA that takes
+              the visitor to the sign-up form. Data and its TBDs live
+              in lib/data/partnerEvents.ts. */}
+          <GoldEventPreview />
           </div>
         </div>
 
@@ -531,6 +570,16 @@ export default function GoldMedalPartner({
           </ol>
         </div>
 
+        {/* ── Past partner conferences ──────────────────────────
+            Sits directly under the "Công thức đơn giản, tiền về
+            nhanh chóng" journey, so a partner who has just read the
+            money flow sees the room it actually happens in. The photo
+            strip is its own client component (GoldenEventCarousel) —
+            it owns the scroll-snap track and the counter. */}
+        <div className="gold-reveal mb-12 md:mb-16">
+          <GoldenEventCarousel />
+        </div>
+
         {/* ── Registration ────────────────────────────────────── */}
         {/* The form drops out of the dark panel onto a light section
             below so its inputs read as the white fields used by every
@@ -550,7 +599,7 @@ export default function GoldMedalPartner({
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="gold-reveal">
-          <GoldMedalSignup />
+          <GoldMedalSignup trackingCode={trackingCode} />
         </div>
 
         {/* Direct contact */}

@@ -4,6 +4,11 @@ import { motion } from 'motion/react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
+import {
+  SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+} from '@/lib/seo/site'
 
 export default function CookiesPage() {
   const handleBack = () => {
@@ -40,7 +45,7 @@ export default function CookiesPage() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="text-sm text-[#4A5568] mb-4"
           >
-            Solavita · Cập nhật lần cuối: 2 tháng 11 năm 2026
+            Solavita · Cập nhật lần cuối: 12 tháng 11 năm 2026
           </motion.p>
 
           <motion.div
@@ -101,7 +106,7 @@ export default function CookiesPage() {
                 Các cookie và công nghệ tương tự chính xác phụ thuộc vào các công cụ được bật trên trang web.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Danh mục cookie đã được xác minh: đối với từng công nghệ, tên, nhà cung cấp, mục đích, phân loại, thời hạn và việc có truyền dữ liệu đến bên thứ ba hay không.</span>
+                Danh mục cookie và công nghệ tương tự cụ thể — bao gồm tên, nhà cung cấp, mục đích, phân loại, thời hạn và việc có truyền dữ liệu đến bên thứ ba hay không — phụ thuộc vào cấu hình thực tế của trang web tại từng thời điểm. Chúng tôi rà soát danh mục này định kỳ và cập nhật khi cấu hình thay đổi. Bạn có thể liên hệ với chúng tôi để biết thông tin chi tiết về các công nghệ đang hoạt động.
               </p>
             </div>
 
@@ -124,7 +129,7 @@ export default function CookiesPage() {
                 Một số tính năng của trang web có thể phụ thuộc vào dịch vụ của bên thứ ba, chẳng hạn như nội dung nhúng, phân tích, quảng cáo hoặc công cụ liên lạc. Nếu được bật, các nhà cung cấp đó có thể xử lý thông tin kỹ thuật theo chính sách riêng của họ.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                <span className="text-red-600 font-bold">TBD — Các nhà cung cấp bên thứ ba đã được xác minh được sử dụng trên trang web này và liên kết đến tài liệu về quyền riêng tư và cookie của họ.</span>
+                Các nhà cung cấp bên thứ ba được sử dụng phụ thuộc vào các tính năng thực tế được bật trên trang web, chẳng hạn như dịch vụ lưu trữ, phân tích, nhúng nội dung hoặc công cụ liên lạc. Các nhà cung cấp này xử lý thông tin kỹ thuật theo chính sách quyền riêng tư và cookie riêng của họ. Thông tin chi tiết về các nhà cung cấp đang hoạt động có thể được cung cấp khi có yêu cầu.
               </p>
             </div>
 
@@ -141,16 +146,17 @@ export default function CookiesPage() {
                 Nếu có câu hỏi về cookie hoặc các công nghệ tương tự, vui lòng liên hệ:
               </p>
               <ul className="list-none pl-0 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
-                <li><strong className="text-[#0A1628]">Đơn vị vận hành trang web:</strong> SKYWORTH RENEWABLE ENERGY COMPANY LIMITED (công ty được thành lập tại Hồng Kông)</li>
+                <li><strong className="text-[#0A1628]">Đơn vị vận hành trang web:</strong> {SITE_LEGAL_NAME} (công ty được thành lập tại Việt Nam)</li>
+                <li><strong className="text-[#0A1628]">Mã số doanh nghiệp:</strong> {SITE_COMPANY_NUMBER}</li>
                 <li><strong className="text-[#0A1628]">Liên hệ:</strong> Johny Zhang</li>
                 <li><strong className="text-[#0A1628]">Email:</strong> <a href="mailto:vn@solavita.com" className="text-[#0F766E] hover:underline">vn@solavita.com</a></li>
-                <li><strong className="text-[#0A1628]">Địa chỉ:</strong> <span className="text-red-600">TBD — Địa chỉ trụ sở đã đăng ký tại Hồng Kông (chờ xác nhận)</span></li>
+                <li><strong className="text-[#0A1628]">Địa chỉ:</strong> {SITE_REGISTERED_OFFICE}</li>
               </ul>
             </div>
 
             <div className="pt-6 mt-8 border-t border-[rgba(10,22,40,0.1)]">
               <p className="text-xs text-[#9CA3AF]">
-                Cập nhật lần cuối: 2 tháng 11 năm 2026 · Solavita
+                Cập nhật lần cuối: 12 tháng 11 năm 2026 · Solavita
               </p>
             </div>
           </motion.div>

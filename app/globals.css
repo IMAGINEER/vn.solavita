@@ -143,6 +143,25 @@ body {
   background: transparent;
 }
 
+/* Horizontal photo carousels — hide the scrollbar entirely. The
+   global `::-webkit-scrollbar` rules above give every scroll container
+   an 8px gradient bar; on a scroll-snap photo strip that bar reads as
+   a stray progress line under the cards. Same fix as `.toc-list`:
+   `scrollbar-width` for Firefox, explicit zero-size webkit rules for
+   Chromium/Safari. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }

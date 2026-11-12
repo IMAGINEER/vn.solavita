@@ -126,10 +126,9 @@ export interface AboutRegion {
 }
 
 /**
- * Region / presence list. Vietnam appears as a market (no office
- * address has been published yet), Hong Kong as the registered office
- * of the group entity named in the footer, and Shenzhen as the group
- * HQ. No street address is rendered anywhere on the page.
+ * Region / presence list. Vietnam appears as a market, Hong Kong as
+ * the registered office of the group's Hong Kong entity, and Shenzhen
+ * as the group HQ. No street address is rendered anywhere on the page.
  */
 export const aboutRegions: AboutRegion[] = [
   {

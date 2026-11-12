@@ -6,6 +6,12 @@
  * emails share a recognisable shape.
  */
 
+import {
+  SITE_LEGAL_NAME,
+  SITE_COMPANY_NUMBER,
+  SITE_REGISTERED_OFFICE,
+} from '@/lib/seo/site'
+
 const TRACK_LABEL: Record<string, string> = {
   'core-service': 'Đại lý kinh doanh',
   'certified-installer': 'Đối tác lắp đặt',
@@ -75,8 +81,9 @@ ${
 
 <!-- Footer -->
 <tr><td style="background-color:#f9fafb; padding:24px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">TBD — Pháp nhân chính thức (chờ xác nhận) · TBD — Mã số đăng ký doanh nghiệp (chờ xác nhận)</p>
-<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">TBD — Địa chỉ văn phòng đã đăng ký (chờ xác nhận)</p>
+<p style="margin:0; font-size:13px; color:#6b7280; font-weight:600;">${SITE_LEGAL_NAME} · Mã số doanh nghiệp: ${SITE_COMPANY_NUMBER}</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">${SITE_REGISTERED_OFFICE}</p>
+<p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">vn@solavita.com</p>
 <p style="margin:6px 0 0 0; font-size:11px; color:#9ca3af;">SKYWORTH Việt Nam — thương hiệu giải pháp năng lượng mặt trời của Tập đoàn SKYWORTH · vn.solavita.com</p>
 </td></tr>
 

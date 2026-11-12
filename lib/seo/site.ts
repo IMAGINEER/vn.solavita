@@ -2,11 +2,12 @@
 // the dynamic sitemap/robots feed off these so the brand stays
 // consistent across <title>, OG, Twitter, JSON-LD, and the canonical.
 //
-// VN site — built from the Vietnam localisation brief. All business
-// facts that haven't been verified (legal entity, address, phone, ...)
-// are surfaced as visible red TBDs in the UI; this file holds the
-// placeholder strings that drive metadata so a single edit cascades
-// across every page.
+// VN site — built from the Vietnam localisation brief. Business facts
+// that haven't been verified (prices, installation scope, ...) are
+// surfaced as visible red TBDs in the UI; this file holds the
+// constants that drive metadata so a single edit cascades across every
+// page. The legal entity, enterprise code and registered office below
+// come from the Vietnamese business registration certificate.
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://vn.solavita.com'
@@ -18,11 +19,11 @@ export const SITE_BRAND_SHORT = 'Solavita'
 /**
  * Site-wide indexing switch (pre-launch: OFF).
  *
- * The Vietnam site is not ready to be indexed — prices, addresses,
- * phone numbers and the my-plan ROI figures are still awaiting
- * business confirmation, and the /my-plan surface still carries the
- * Nigeria engine's placeholder figures. Until that is finished the
- * whole site must stay out of the search results.
+ * The Vietnam site is not ready to be indexed — prices and the my-plan
+ * ROI figures are still awaiting business confirmation, and the
+ * /my-plan surface still carries the Nigeria engine's placeholder
+ * figures. Until that is finished the whole site must stay out of the
+ * search results.
  *
  * This flag is the single half of that switch that lives in the
  * metadata layer:
@@ -41,24 +42,43 @@ export const SITE_BRAND_SHORT = 'Solavita'
 export const SITE_INDEXING_ENABLED = false
 /**
  * Legal entity name (Terms page, footer, JSON-LD `legalName`).
- * The website operator is SKYWORTH RENEWABLE ENERGY COMPANY LIMITED, a
- * Hong Kong-incorporated company and the parent entity behind the
- * Solavita brand.
+ * The website operator is the Vietnamese entity named on the business
+ * registration certificate (enterprise code 0319578388).
  */
-export const SITE_LEGAL_NAME = 'SKYWORTH RENEWABLE ENERGY COMPANY LIMITED'
+export const SITE_LEGAL_NAME =
+  'CÔNG TY TNHH NĂNG LƯỢNG TÁI TẠO SKYWORTH VIỆT NAM'
 
 /**
- * Hong Kong Companies Registry number.
- * Placeholder — supply the actual registration number before launch.
+ * Vietnamese enterprise registration number, as printed on the
+ * business registration certificate.
  */
-export const SITE_COMPANY_NUMBER = 'TBD — Mã số đăng ký doanh nghiệp tại Hồng Kông (chờ xác minh)'
+export const SITE_COMPANY_NUMBER = '0319578388'
 
 /**
- * Registered office address (Hong Kong).
- * Placeholder — supply the actual registered office before launch.
+ * Registered office address, as printed on the business registration
+ * certificate.
  */
 export const SITE_REGISTERED_OFFICE =
-  'TBD — Địa chỉ văn phòng đã đăng ký tại Hồng Kông (chờ xác minh)'
+  'Tòa nhà VietOffice, số 14 Trương Quyền, Phường Xuân Hòa, Thành phố Hồ Chí Minh, Việt Nam'
+
+/**
+ * Same registered office split for Schema.org `PostalAddress`. Keep
+ * aligned with `SITE_REGISTERED_OFFICE` — the certificate prints the
+ * ward inside the street line and the city after it.
+ */
+export const SITE_ADDRESS_PARTS = {
+  streetAddress: 'Tòa nhà VietOffice, số 14 Trương Quyền, Phường Xuân Hòa',
+  addressLocality: 'Thành phố Hồ Chí Minh',
+  addressCountry: 'VN',
+} as const
+
+/**
+ * No public business phone yet. The number printed on the business
+ * registration certificate is the legal representative's personal
+ * contact (WANG, CHUNDAN), not a customer-facing business line, so it
+ * must not be published. Keep phone-dependent UI as a TBD until a
+ * business number is supplied.
+ */
 
 /**
  * Default share image. A purpose-built 1200×630 JPEG brand card — the
