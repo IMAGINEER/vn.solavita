@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import {
+  ArrowLeft,
   ArrowRight,
   BatteryCharging,
   Check,
@@ -527,11 +528,24 @@ export default function SolaHomePage() {
             </p>
           </div>
 
-          <ol className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-12">
+          {/* Snake ("倒 C") flow on lg+: 1–4 left→right on the top row,
+              4→5 down the right side, 5–7 right→left on the bottom row.
+              Below lg the steps simply stack in reading order. */}
+          <ol className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10 lg:gap-y-12 lg:pr-8">
             {solaHomeService.map((stage, index) => {
               const Icon = serviceIcons[stage.icon]
+              // The second row is placed explicitly so 5 sits under 4 and
+              // the row reads right→left, mirroring the arrows.
+              const placement =
+                index === 4
+                  ? 'lg:col-start-4 lg:row-start-2'
+                  : index === 5
+                    ? 'lg:col-start-3 lg:row-start-2'
+                    : index === 6
+                      ? 'lg:col-start-2 lg:row-start-2'
+                      : ''
               return (
-                <li key={stage.title} className="relative">
+                <li key={stage.title} className={`relative ${placement}`}>
                   <div className="flex h-full flex-col rounded-2xl border border-uk-line bg-white p-8">
                     <div
                       className="absolute left-1/2 z-10 -translate-x-1/2"
@@ -557,6 +571,52 @@ export default function SolaHomePage() {
                       {stage.owner}
                     </p>
                   </div>
+
+                  {/* → between 1–2, 2–3, 3–4 */}
+                  {index < 3 && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute top-1/2 left-full hidden w-10 -translate-y-1/2 items-center lg:flex"
+                    >
+                      <span className="h-0 flex-1 border-t-2 border-dashed border-uk-emerald/70" />
+                      <ArrowRight
+                        className="h-3.5 w-3.5 shrink-0 text-uk-emerald"
+                        strokeWidth={3}
+                      />
+                    </span>
+                  )}
+
+                  {/* ↓ down the right side, 4 → 5 */}
+                  {index === 3 && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute top-1/2 left-full hidden h-[calc(100%+3rem)] w-6 lg:block"
+                    >
+                      <span className="absolute top-0 left-0 h-0 w-full border-t-2 border-dashed border-uk-emerald/70" />
+                      <span className="absolute top-0 right-0 h-full w-0 border-r-2 border-dashed border-uk-emerald/70" />
+                      <span className="absolute right-0 bottom-0 flex w-full -translate-y-1/2 items-center">
+                        <ArrowLeft
+                          className="h-3.5 w-3.5 shrink-0 text-uk-emerald"
+                          strokeWidth={3}
+                        />
+                        <span className="h-0 flex-1 border-t-2 border-dashed border-uk-emerald/70" />
+                      </span>
+                    </span>
+                  )}
+
+                  {/* ← between 5–6 and 6–7 */}
+                  {index >= 4 && index <= 5 && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute top-1/2 right-full hidden w-10 -translate-y-1/2 items-center lg:flex"
+                    >
+                      <span className="h-0 flex-1 border-t-2 border-dashed border-uk-emerald/70" />
+                      <ArrowLeft
+                        className="h-3.5 w-3.5 shrink-0 text-uk-emerald"
+                        strokeWidth={3}
+                      />
+                    </span>
+                  )}
                 </li>
               )
             })}
@@ -588,11 +648,6 @@ export default function SolaHomePage() {
               </div>
             ))}
           </div>
-
-          <p className="mt-6 text-xs leading-relaxed text-uk-slate">
-            Kênh liên hệ hậu mãi chính thức:{' '}
-            <TbdText inline text="số hotline và Zalo đang chờ thống nhất" />
-          </p>
         </div>
       </section>
 
