@@ -48,7 +48,7 @@ export default function SupportHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl"
         >
           Hôm nay chúng tôi có thể giúp gì cho bạn?
         </motion.h1>
@@ -59,9 +59,8 @@ export default function SupportHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
-          Tra cứu hướng dẫn, tải tài liệu hoặc liên hệ với đội ngũ hỗ trợ
-          tại Việt Nam. Chúng tôi đồng hành cùng hệ thống của bạn trong
-          suốt vòng đời sử dụng.
+          Tra cứu hướng dẫn, tải tài liệu hoặc liên hệ đội ngũ hỗ trợ tại
+          Việt Nam — đồng hành cùng hệ thống trong suốt vòng đời sử dụng.
         </motion.p>
 
         {/* Visual-only search field - backend wired later. */}

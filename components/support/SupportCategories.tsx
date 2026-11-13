@@ -83,8 +83,7 @@ export default function SupportCategories() {
             <span className="text-gradient">điều gì?</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Chọn một danh mục để đi thẳng đến những câu hỏi thường gặp
-            nhất trong lĩnh vực đó.
+            Chọn một chủ đề để xem những câu hỏi thường gặp nhất.
           </p>
         </div>
 

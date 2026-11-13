@@ -46,7 +46,7 @@ export default function FaqSection({
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
             {title ?? (
               <>
-                Frequently Asked <span className="text-gradient">Questions</span>
+                Câu hỏi <span className="text-gradient">thường gặp</span>
               </>
             )}
           </h2>

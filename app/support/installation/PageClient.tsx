@@ -48,25 +48,25 @@ const STEPS: Step[] = [
     id: 'survey',
     Icon: ClipboardPenLine,
     title: 'Khảo sát miễn phí',
-    body: 'Chúng tôi kiểm tra tải trọng mái nhà và nhu cầu năng lượng của bạn, hoàn toàn miễn phí.',
+    body: 'Kỹ thuật viên kiểm tra tải trọng mái và nhu cầu điện tại nhà, miễn phí.',
   },
   {
     id: 'quote',
     Icon: PencilRuler,
     title: 'Thiết kế & báo giá',
-    body: 'Chúng tôi xây dựng giải pháp phù hợp và gửi bạn báo giá để phê duyệt.',
+    body: 'Solavita đề xuất cấu hình phù hợp và gửi báo giá để bạn xem xét.',
   },
   {
     id: 'installation',
     Icon: HardHat,
     title: 'Lắp đặt',
-    body: 'Đội ngũ của chúng tôi lắp đặt tấm quang năng, bộ biến tần và pin lưu trữ. TBD — Thời gian hoàn thành lắp đặt (chờ xác nhận).',
+    body: 'Đội thi công lắp tấm pin, biến tần và pin lưu trữ. TBD — Thời gian hoàn thành lắp đặt (chờ xác nhận).',
   },
   {
     id: 'commissioning',
     Icon: ClipboardCheck,
     title: 'Nghiệm thu',
-    body: 'Chúng tôi kiểm tra toàn bộ hệ thống và kích hoạt, để bạn bắt đầu tiết kiệm ngay từ ngày đầu tiên.',
+    body: 'Kiểm tra toàn hệ thống, kích hoạt và bàn giao để bạn dùng ngay.',
   },
 ]
 
@@ -77,11 +77,11 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Tôi có cần chuẩn bị gì trước khi lắp đặt không?',
-    a: 'Không. Đội ngũ của chúng tôi lo khảo sát mái nhà, xin phép và thiết lập.',
+    a: 'Không cần chuẩn bị thiết bị. Solavita phụ trách khảo sát mái, thi công và đấu nối theo quy định.',
   },
   {
     q: 'Nguồn điện của tôi có bị gián đoạn trong quá trình lắp đặt không?',
-    a: 'Không, chúng tôi lắp đặt mà không làm gián đoạn sinh hoạt của hộ gia đình hay doanh nghiệp.',
+    a: 'Thi công được sắp xếp để hạn chế gián đoạn sinh hoạt; nếu cần ngắt điện cục bộ, đội ngũ sẽ báo trước.',
   },
   {
     q: 'Ai là người lắp đặt hệ thống?',
@@ -97,8 +97,8 @@ export default function SupportInstallationPage() {
       <PageHero
         backgroundImage="/images/banner_home.webp"
         eyebrow="LẮP ĐẶT"
-        title={'Sở hữu hệ thống Solavita'}
-        body="Sở hữu hệ thống Solavita rất đơn giản — chúng tôi đồng hành cùng bạn qua 4 bước, từ buổi khảo sát miễn phí đầu tiên đến khi hệ thống chính thức đi vào hoạt động."
+        title={'Lắp đặt hệ thống Solavita'}
+        body="Bốn bước từ buổi khảo sát miễn phí đầu tiên đến khi hệ thống chính thức vận hành — Solavita phụ trách từng bước."
         primaryCta={{ label: 'Nhận báo giá miễn phí', onClick: openFormModal }}
         secondaryCta={{ label: 'Quay lại Hỗ trợ', href: '/support' }}
         breadcrumbs={[
@@ -114,7 +114,7 @@ export default function SupportInstallationPage() {
           <div className="text-center mb-10">
             <SectionEyebrow>QUY TRÌNH</SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-              Sở hữu <span className="text-gradient">hệ thống Solavita</span>
+              Bốn bước <span className="text-gradient">đến khi vận hành</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -193,7 +193,7 @@ export default function SupportInstallationPage() {
             <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="Nếu bạn vẫn đang cân nhắc các lựa chọn, đội ngũ của chúng tôi có thể chuẩn bị một thiết kế miễn phí, không ràng buộc, cho thấy tấm quang năng, pin lưu trữ hoặc hệ thống năng lượng trọn nhà sẽ phù hợp với ngôi nhà của bạn như thế nào."
+        description="Nếu bạn đang cân nhắc, Solavita có thể chuẩn bị một thiết kế miễn phí, không ràng buộc — cho thấy hệ điện mặt trời kèm pin lưu trữ phù hợp với ngôi nhà của bạn ra sao."
       />
 
       <Footer />

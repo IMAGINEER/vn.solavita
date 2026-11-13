@@ -117,12 +117,12 @@ export default function PartnerTraining() {
                 Cam kết chất lượng
               </span>
               <h3 className="text-2xl md:text-3xl font-cw-bold text-white leading-tight">
-                SKYWORTH cam kết uy tín — chất lượng từ sản phẩm đến vận hành và
+                SKYWORTH bảo đảm chất lượng, từ sản phẩm đến vận hành và
                 thi công
               </h3>
               <p className="mt-4 text-sm md:text-base text-white/70 font-cw-regular leading-relaxed">
                 Bạn không phải lo phần kỹ thuật: toàn bộ phương án hệ thống,
-                khảo sát, thiết kế và chỉ đạo thi công do tổng bộ thực hiện.
+                khảo sát, thiết kế và chỉ đạo thi công do Solavita thực hiện.
               </p>
             </div>
 

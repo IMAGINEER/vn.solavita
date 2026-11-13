@@ -30,12 +30,12 @@ export default function DownloadSection() {
         <div className="text-center mb-10">
           <SectionEyebrow>TÀI LIỆU TẢI VỀ</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Thông số sản phẩm, hướng dẫn sử dụng và{' '}
-            <span className="text-gradient">tài liệu tải về</span>
+            Tài liệu sản phẩm —{' '}
+            <span className="text-gradient">tải về trong một chỗ</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Bảng thông số kỹ thuật, hướng dẫn sử dụng và tài liệu bảo hành
-            cho mọi linh kiện Solavita.
+            Bảng thông số, hướng dẫn sử dụng và tài liệu bảo hành cho từng
+            linh kiện Solavita.
           </p>
         </div>
 

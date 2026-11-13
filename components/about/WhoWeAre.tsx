@@ -84,8 +84,8 @@ export default function WhoWeAre() {
             Về Solavita
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            <span className="text-gradient">Sức mạnh toàn cầu.</span>{' '}
-            Bản sắc địa phương.
+            <span className="text-gradient">Từ SKYWORTH</span>{' '}
+            đến mái nhà Việt Nam.
           </h2>
         </div>
 

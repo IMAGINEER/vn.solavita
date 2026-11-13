@@ -109,14 +109,14 @@ export const partnerTypes: PartnerType[] = [
     id: 'certified-installer',
     title: 'Đối tác lắp đặt',
     description:
-      'Dành cho đội ngũ có kỹ năng điện và điện mặt trời, làm việc dưới Energy Partner Solavita.',
+      'Dành cho đội có tay nghề điện và điện mặt trời, làm việc cùng Energy Partner Solavita.',
     whatYouGet: [
-      'Được tổng bộ chỉ đạo khảo sát, thiết kế và lắp đặt',
+      'Được Solavita khảo sát, thiết kế và hướng dẫn lắp đặt',
       'Đào tạo sản phẩm và kỹ thuật lắp đặt',
       'Không yêu cầu đặt hàng theo container',
     ],
     yourRole: [
-      'Khảo sát hiện trường và thi công theo phương án của tổng bộ',
+      'Khảo sát hiện trường và thi công theo phương án của Solavita',
       'Đảm bảo chất lượng lắp đặt và hậu mãi',
     ],
     icon: 'handshake',
@@ -134,7 +134,7 @@ export const partnerTypes: PartnerType[] = [
     yourRole: [
       'Chia sẻ khách hàng có mái nhà và muốn tiết kiệm chi phí tiền điện',
       'Chúng tôi khảo sát, báo giá và ký kết hợp đồng',
-      'Theo dõi thanh toán cùng tổng bộ',
+      'Theo dõi thanh toán cùng Solavita',
     ],
     icon: 'users',
   },
@@ -158,11 +158,11 @@ export interface PartnerStats {
 
 export const partnerStats: PartnerStats[] = [
   {
-    value: '800,000+',
+    value: '800.000+',
     caption: 'Trạm điện mặt trời đã lắp đặt trên toàn thế giới',
   },
   {
-    value: '34.6GW',
+    value: '34,6 GW',
     caption: 'Tổng công suất lắp đặt luỹ kế',
   },
 ]
@@ -181,7 +181,7 @@ export const partnerGroupFacts: PartnerGroupFact[] = [
   { value: '1988', caption: 'Năm thành lập tập đoàn' },
   { value: '#252', caption: 'Top 500 doanh nghiệp Trung Quốc năm 2026' },
   { value: '30.000+', caption: 'Số lượng nhân viên' },
-  { value: '$10+ tỷ', caption: 'Doanh thu hoạt động' },
+  { value: '10+ tỷ USD', caption: 'Doanh thu hoạt động' },
   { value: '120+', caption: 'Quốc gia và khu vực kinh doanh' },
 ]
 
@@ -305,25 +305,25 @@ export const partnerProcess: PartnerProcessStep[] = [
     step: '01',
     title: 'Khai thác & giới thiệu khách hàng',
     description:
-      'Chỉ cần giới thiệu đến tổng bộ những khách hàng có mái nhà và muốn tiết kiệm chi phí tiền điện.',
+      'Chỉ cần giới thiệu những khách hàng có mái nhà và muốn giảm tiền điện.',
   },
   {
     step: '02',
     title: 'Kết nối & phục vụ khách hàng',
     description:
-      'Tổng bộ theo dõi nhu cầu khách hàng, cung cấp phương án và hỗ trợ kỹ thuật.',
+      'Solavita tiếp nhận nhu cầu, đề xuất phương án và hỗ trợ kỹ thuật.',
   },
   {
     step: '03',
     title: 'Hỗ trợ ký kết hợp đồng',
     description:
-      'Tổng bộ hỗ trợ ký kết hợp đồng và theo dõi thanh toán cùng đối tác.',
+      'Solavita hỗ trợ ký hợp đồng và theo dõi thanh toán cùng đối tác.',
   },
   {
     step: '04',
     title: 'Khảo sát, thiết kế & lắp đặt',
     description:
-      'Khảo sát hiện trường, thiết kế và lắp đặt do tổng bộ chỉ đạo và thực hiện.',
+      'Solavita khảo sát, thiết kế và thực hiện lắp đặt.',
   },
 ]
 
@@ -339,21 +339,21 @@ export interface PartnerTrainingProgram {
 
 export const partnerTraining: PartnerTrainingProgram[] = [
   {
-    title: 'Đào tạo hệ thống kiến thức sản phẩm',
+    title: 'Đào tạo kiến thức sản phẩm',
     description:
-      'Kỹ năng tư vấn bán hàng và phát triển thị trường — không cần nền tảng, làm chủ nhanh chóng.',
+      'Kỹ năng tư vấn bán hàng và phát triển thị trường — không cần nền tảng, nắm nhanh.',
     icon: 'book',
   },
   {
-    title: 'Hỗ trợ giải đáp trực tuyến mọi lúc',
+    title: 'Hỗ trợ giải đáp trực tuyến',
     description:
-      'Nhóm Zalo riêng, phản hồi tức thời. Giải đáp ngay các vấn đề trong quá trình mở rộng thị trường.',
+      'Nhóm Zalo riêng, phản hồi nhanh khi bạn cần giải đáp trong quá trình mở rộng thị trường.',
     icon: 'messages',
   },
   {
-    title: 'Đào tạo nghiệp vụ trực tiếp',
+    title: 'Đào tạo nghiệp vụ tại hiện trường',
     description:
-      'Khảo sát thực địa hiện trường. Hướng dẫn tận tay đo đạc mái nhà.',
+      'Hướng dẫn trực tiếp cách khảo sát và đo đạc mái nhà.',
     icon: 'ruler',
   },
 ]
@@ -448,8 +448,8 @@ export const goldMedalProgram: GoldMedalProgram = {
   ],
   lookingFor: [
     'Cá nhân có sẵn nguồn khách hàng tiềm năng',
-    'Định hướng phát triển trong ngành công nghiệp xu hướng mới',
-    'Bạn không cần đúng ngành — chỉ cần đúng nhu cầu',
+    'Muốn phát triển thêm trong lĩnh vực năng lượng mặt trời',
+    'Sẵn sàng hợp tác dài hạn cùng Solavita',
   ],
   ifYouHave: [
     'Mạng lưới quan hệ rộng',
@@ -459,7 +459,7 @@ export const goldMedalProgram: GoldMedalProgram = {
   perks: [
     {
       title: 'Chi phí đầu tư thấp',
-      description: 'Tối ưu hoá ngân sách, bắt đầu dễ dàng.',
+      description: 'Tối ưu hóa ngân sách, bắt đầu dễ dàng.',
       icon: 'wallet',
     },
     {
@@ -469,11 +469,11 @@ export const goldMedalProgram: GoldMedalProgram = {
     },
     {
       title: 'Hoa hồng cao',
-      description: 'Lợi nhuận hấp dẫn, tăng trưởng bền vững.',
+      description: 'Thu nhập hấp dẫn, tăng trưởng bền vững.',
       icon: 'trending',
     },
     {
-      title: 'Luôn đồng hành đào tạo và tư vấn',
+      title: 'Đào tạo và tư vấn đồng hành',
       description: 'Đội ngũ chuyên gia hỗ trợ tận tay trong quá trình mở rộng.',
       icon: 'graduation',
     },
@@ -482,16 +482,16 @@ export const goldMedalProgram: GoldMedalProgram = {
     { step: '01', title: 'Giới thiệu khách hàng' },
     { step: '02', title: 'Báo giá chi tiết' },
     { step: '03', title: 'Ký kết hợp đồng' },
-    { step: '04', title: 'Thanh toán một phần' },
+    { step: '04', title: 'Khách tạm ứng' },
     { step: '05', title: 'Thiết kế thi công' },
-    { step: '06', title: 'Nghiệm thu toàn diện' },
-    { step: '07', title: 'Thanh toán toàn phần' },
+    { step: '06', title: 'Nghiệm thu hệ thống' },
+    { step: '07', title: 'Khách thanh toán phần còn lại' },
   ],
   support: [
     'Đồng phục Solavita trị giá 200.000 đồng',
     '200 tờ rơi sản phẩm cho mỗi đơn hàng',
     'Danh thiếp cá nhân',
-    'Shinhan cho vay NLMT — giải pháp tài chính linh hoạt, dễ dàng sở hữu hệ thống điện mặt trời',
+    'Shinhan hỗ trợ vay cho điện mặt trời — giải pháp tài chính linh hoạt, dễ sở hữu hệ thống',
   ],
 }
 
@@ -503,5 +503,5 @@ export const goldMedalPromise = {
   headline: 'Vốn nhỏ — Lời to',
   journey: 'Hành trình đến thu nhập chục triệu hằng tháng',
   reassurance:
-    'Năng lượng mặt trời có phải là ngành khó tiếp cận không? Không khó, chỉ mới. Vấn đề chuyên môn, SKYWORTH toàn lực hỗ trợ.',
+    'Điện mặt trời có khó tiếp cận không? Không khó, chỉ là ngành còn mới. Phần chuyên môn đã có SKYWORTH hỗ trợ.',
 }

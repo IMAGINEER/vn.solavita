@@ -45,18 +45,28 @@ const icons: Record<SolaHomeLoadIconKey, LucideIcon> = {
  */
 export default function SolaHomePackageLoads({
   loads,
+  tone = 'light',
   className = '',
 }: {
   loads: SolaHomeLoadProfile[]
+  /** `dark` is the package-card hover overlay, drawn over the photo. */
+  tone?: 'light' | 'dark'
   className?: string
 }) {
+  const dark = tone === 'dark'
   return (
     <ul className={`grid grid-cols-2 gap-x-3 gap-y-2.5 ${className}`}>
       {loads.map((load) => {
         const Icon = icons[load.icon]
         return (
           <li key={load.label} className="flex min-w-0 items-start gap-1.5">
-            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-uk-teal-soft text-uk-teal-dark">
+            <span
+              className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md ${
+                dark
+                  ? 'bg-[#ffffff1a] text-uk-teal-soft'
+                  : 'bg-uk-teal-soft text-uk-teal-dark'
+              }`}
+            >
               <Icon
                 className="h-3 w-3"
                 strokeWidth={1.9}
@@ -64,10 +74,18 @@ export default function SolaHomePackageLoads({
               />
             </span>
             <span className="min-w-0 leading-tight">
-              <span className="block text-[10px] text-uk-slate">
+              <span
+                className={`block text-[10px] ${
+                  dark ? 'text-white/65' : 'text-uk-slate'
+                }`}
+              >
                 {load.label}
               </span>
-              <span className="mt-0.5 block text-[11px] font-cw-bold text-uk-navy">
+              <span
+                className={`mt-0.5 block text-[11px] font-cw-bold ${
+                  dark ? 'text-white' : 'text-uk-navy'
+                }`}
+              >
                 {load.hours}
               </span>
             </span>

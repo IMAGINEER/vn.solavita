@@ -52,11 +52,11 @@ export default function AboutHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl"
         >
-          Sản xuất trên dây chuyền của chúng tôi.
+          Sản xuất trên dây chuyền SKYWORTH.
           <br />
-          Sẵn hàng tại địa phương.
+          Sẵn hàng tại Việt Nam.
         </motion.h1>
 
         <motion.p
@@ -66,10 +66,9 @@ export default function AboutHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Solavita là thương hiệu điện mặt trời cho hộ gia đình của Tập đoàn
-          SKYWORTH — hệ thống điện mặt trời và pin lưu trữ được sản xuất trên
-          dây chuyền của tập đoàn và được triển khai bởi đội ngũ tại Việt Nam,
-          giúp rút ngắn thời gian từ khảo sát hiện trường đến khi hệ thống vận
-          hành.
+          SKYWORTH. Hệ thống được sản xuất trên dây chuyền của tập đoàn, lắp
+          đặt và hỗ trợ bởi đội ngũ tại Việt Nam — rút ngắn thời gian từ khảo
+          sát hiện trường đến khi hệ thống vận hành.
         </motion.p>
       </div>
     </section>

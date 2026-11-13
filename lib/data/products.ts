@@ -227,9 +227,9 @@ export const products: Product[] = [
   {
     slug: 'module',
     name: 'Tấm quang năng',
-    tagline: 'Công suất cao hơn, hiệu suất cao hơn, không lo mất điện',
+    tagline: 'Công suất cao, suy giảm thấp, bảo hành 30 năm',
     description:
-      'Dòng QM210THCD High Efficiency Series-66 có công suất từ 620 W đến 640 W với hiệu suất chuyển đổi lên tới 23.7%. Tế bào N-type TOPCon, hệ số hai mặt 80% và bảo hành công suất tuyến tính 30 năm phù hợp cho cả mái nhà tại Việt Nam trong điều kiện nóng, nhiều bụi lẫn hệ thống lắp trên mặt đất.',
+      'Dòng QM210THCD High Efficiency Series-66 có công suất 620–640 W, hiệu suất chuyển đổi lên tới 23,7%. Tế bào N-type TOPCon, hệ số hai mặt 80% và bảo hành công suất tuyến tính 30 năm — phù hợp cho mái nhà và hệ lắp mặt đất tại Việt Nam, kể cả điều kiện nóng và nhiều bụi.',
     hero: {
       src: '/images/products/module/qm210-thcd-620-640-66-front-back.webp',
       alt: 'Tấm quang năng TOPCon Solavita QM210THCD-620-640-66, mặt trước phía trên mặt sau',
@@ -241,15 +241,15 @@ export const products: Product[] = [
     advantages: [
       {
         title: 'Công suất đầu ra cao',
-        body: 'Hiệu suất lên tới 23.7% — tạo ra nhiều điện hơn trên cùng diện tích mái.',
+        body: 'Hiệu suất lên tới 23,7% — tạo ra nhiều điện hơn trên cùng diện tích mái.',
       },
       {
         title: 'Suy giảm thấp trong điều kiện nhiệt độ cao',
-        body: 'Hệ số Pmax −0.29%/°C và chỉ suy giảm 0.4% mỗi năm từ năm thứ 2.',
+        body: 'Hệ số Pmax −0,29%/°C và chỉ suy giảm 0,4% mỗi năm từ năm thứ 2.',
       },
       {
         title: 'Độ tin cậy lâu dài',
-        body: 'Bảo hành sản phẩm 15 năm & bảo hành công suất tuyến tính 30 năm, hoàn toàn yên tâm.',
+        body: 'Bảo hành sản phẩm 15 năm và bảo hành công suất tuyến tính 30 năm.',
       },
       {
         title: 'Sản lượng bổ sung nhờ hai mặt',
@@ -285,13 +285,13 @@ export const products: Product[] = [
       },
     ],
     reliability:
-      'Được thiết kế cho khí hậu khắc nghiệt, tấm quang năng TOPCon tối ưu chi phí điện với sản lượng bổ sung 10% nhờ khả năng hai mặt, cùng bảo hành 30 năm cho ROI ổn định.',
+      'Thiết kế cho khí hậu khắc nghiệt: tế bào TOPCon, hệ số hai mặt 80% giúp tăng sản lượng, kèm bảo hành công suất 30 năm.',
     certifications: {
       title: 'Hệ thống chất lượng',
       items: [
         {
           code: 'IEC 61215 (2021)',
-          note: 'Chứng nhận thiết kế và phê duyệt kiểu tấm quang năng',
+          note: 'Chứng nhận thiết kế và phê duyệt mẫu tấm pin',
           mark: 'shield',
         },
         {
@@ -341,7 +341,7 @@ export const products: Product[] = [
         ],
         stats: [
           { value: '620–640 W', label: 'Công suất định mức' },
-          { value: '23.0–23.7%', label: 'Hiệu suất tấm quang năng' },
+          { value: '23.0–23.7%', label: 'Hiệu suất tấm pin mặt trời' },
           { value: '30 năm', label: 'Bảo hành hiệu suất' },
         ],
         rows: [
@@ -366,7 +366,7 @@ export const products: Product[] = [
             values: ['15.91 A', '15.92 A', '15.93 A', '15.94 A', '15.95 A'],
           },
           {
-            label: 'Hiệu suất tấm quang năng',
+            label: 'Hiệu suất tấm pin mặt trời',
             values: ['23.0%', '23.2%', '23.4%', '23.6%', '23.7%'],
           },
           { label: 'Dung sai công suất', values: ['0 ~ +5 W'] },
@@ -407,7 +407,7 @@ export const products: Product[] = [
       {
         label: 'Tài liệu kỹ thuật QM210THCD-620-640-66',
         description:
-          'Thông số điện và cơ khí đầy đủ cho tấm quang năng High Efficiency Series-66 620–640 W.',
+          'Thông số điện và cơ khí đầy đủ cho tấm pin mặt trời High Efficiency Series-66 620–640 W.',
         href: '/downloads/products/module-qm210-thcd-620-640-66-datasheet.pdf',
         kind: 'Tài liệu kỹ thuật',
         size: '1.4 MB',
@@ -441,7 +441,7 @@ export const products: Product[] = [
         summary: 'Một pha · Điện áp thấp',
         specs: [
           { value: '3–12 kW', label: 'Công suất đầu ra định mức' },
-          { value: '200%', label: 'Quá cỡ PV' },
+          { value: '200%', label: 'Công suất tấm pin / công suất ra' },
         ],
         variantIndex: 0,
         views: [
@@ -512,20 +512,20 @@ export const products: Product[] = [
         subtitle: '3–12 kW | Một pha | Điện áp thấp',
         advantages: [
           {
-            title: 'Công suất cao & khả năng quá cỡ PV',
-            body: '20 A mỗi chuỗi & quá cỡ PV 200%; hai đầu vào pin lưu trữ (416 A).',
+            title: 'Công suất cao, đấu được nhiều tấm pin',
+            body: 'Mỗi chuỗi chịu 20 A, công suất tấm pin tối đa gấp đôi công suất ra; hai cổng đấu pin lưu trữ (416 A).',
           },
           {
-            title: 'Điều khiển thông minh & dự phòng <4 ms',
-            body: 'Chuyển mạch UPS liền mạch <4 ms; quản lý phụ tải thông minh.',
+            title: 'Chuyển sang pin dự phòng dưới 4 ms',
+            body: 'Chuyển mạch UPS liền mạch, không ngắt thiết bị đang chạy; quản lý phụ tải thông minh.',
           },
           {
-            title: 'An toàn vượt trội & IP66',
-            body: 'AFCI điều khiển bằng AI & SPD Type II; bảo vệ xâm nhập IP66.',
+            title: 'An toàn, kín nước IP66',
+            body: 'AFCI điều khiển bằng AI, chống sét SPD Type II; vỏ kín đạt IP66.',
           },
           {
-            title: 'Linh hoạt tối đa & ROI',
-            body: 'Đầu ra không cân bằng 150%; tương thích với Li-ion / axit-chì.',
+            title: 'Lắp linh hoạt, dùng được nhiều loại pin',
+            body: 'Chịu lệch tải giữa các pha tới 150%; tương thích pin Li-ion và axit-chì.',
           },
         ],
         columns: [
@@ -540,7 +540,7 @@ export const products: Product[] = [
         ],
         stats: [
           { value: '3–12 kW', label: 'Công suất đầu ra AC định mức' },
-          { value: '200%', label: 'Quá cỡ PV' },
+          { value: '200%', label: 'Công suất tấm pin / công suất ra' },
           { value: 'IP66', label: 'Bảo vệ' },
         ],
         rows: [
@@ -642,20 +642,20 @@ export const products: Product[] = [
         subtitle: '5–20 kW | Ba pha | Điện áp thấp',
         advantages: [
           {
-            title: 'Hybrid ba pha + sóng sin thuần',
-            body: 'Bộ biến tần 230/400V cho tự dùng, dự phòng và phát lên lưới.',
+            title: 'Hybrid ba pha, sóng sin chuẩn',
+            body: 'Biến tần 230/400 V phục vụ tự dùng, dự phòng và phát lên lưới.',
           },
           {
-            title: '4 đầu vào PV + 2 MPPT',
-            body: 'Hỗ trợ quá cỡ PV tới 1.6 lần để tối đa sản lượng.',
+            title: 'Bốn cổng vào PV, hai MPPT',
+            body: 'Đấu được lượng tấm pin gấp 1,6 lần công suất ra để tăng sản lượng.',
           },
           {
-            title: 'Xuất lưới thông minh & công suất 240A',
-            body: 'Điều khiển không phát lên lưới; sạc/xả pin lưu trữ tới 240A.',
+            title: 'Kiểm soát phát lưới, sạc/xả tới 240 A',
+            body: 'Chặn phát lên lưới khi cần; sạc và xả pin lưu trữ tới 240 A.',
           },
           {
-            title: 'Chuyển mạch <10ms & IP65',
-            body: 'Chuyển sang độc lập lưới nhanh; song song 6 thiết bị; IP65 cho công trình khắc nghiệt.',
+            title: 'Chuyển nguồn dưới 10 ms, vỏ IP65',
+            body: 'Chuyển sang chạy độc lập nhanh, ghép song song 6 thiết bị; IP65 cho công trình khắc nghiệt.',
           },
         ],
         columns: [
@@ -774,19 +774,19 @@ export const products: Product[] = [
         advantages: [
           {
             title: 'Hiệu năng cao',
-            body: 'MPPT kép (hiệu suất 99.9%, tối đa 22A), cắt đỉnh phụ tải thông minh.',
+            body: 'Hai bộ MPPT (hiệu suất 99,9%, tối đa 22 A) và chế độ cắt đỉnh phụ tải thông minh.',
           },
           {
-            title: 'An toàn vượt trội',
-            body: 'Đạt chuẩn IP65, lý tưởng cho lắp đặt ngoài trời.',
+            title: 'An toàn ngoài trời',
+            body: 'Vỏ đạt IP65, phù hợp lắp đặt ngoài trời.',
           },
           {
             title: 'Điều khiển thông minh',
-            body: 'Chế độ chỉ PV & hybrid; chia thời gian, chống dòng ngược, kích hoạt pin lithium.',
+            body: 'Chạy được chế độ chỉ PV hoặc hybrid; hẹn giờ, chống dòng ngược, kích hoạt pin lithium.',
           },
           {
             title: 'Tiết kiệm năng lượng',
-            body: 'Giảm tổn thất không tải; tối ưu tự tiêu thụ.',
+            body: 'Giảm tổn thất khi không tải; tăng tỷ lệ điện tự dùng.',
           },
         ],
         columns: ['Thông số', 'SWO6000L-S1-SR'],
@@ -896,20 +896,20 @@ export const products: Product[] = [
       'Các mô-đun SWR có dung lượng 5.12, 10.24 và 16.08 kWh, kết hợp tự do tối đa 16 thiết bị song song — đủ cho một hộ gia đình hoặc cả một công trình. Sạc và xả liên tục 1C, IP65 cho lắp đặt ngoài trời và bảo hành 10 năm.',
     advantages: [
       {
-        title: 'Sạc hiệu suất cao & khả năng song song',
-        body: 'Tối đa 16 mô-đun song song cho lưu trữ năng lượng mở rộng linh hoạt. Sạc và xả liên tục 1C/1C.',
+        title: 'Sạc nhanh, ghép song song tối đa 16 mô-đun',
+        body: 'Ghép tối đa 16 mô-đun song song để mở rộng dung lượng; sạc và xả liên tục 1C/1C.',
       },
       {
-        title: 'Lắp đặt linh hoạt & cân bằng',
-        body: 'Lắp đặt linh hoạt, tiết kiệm thời gian và công sức. Hỗ trợ kết hợp các mô-đun ở mức SOC khác nhau để đảm bảo tuổi thọ pin.',
+        title: 'Lắp nhanh, ghép được pin lệch dung lượng',
+        body: 'Lắp đặt nhanh, ít tốn công. Có thể ghép các mô-đun ở mức SOC khác nhau mà vẫn đảm bảo tuổi thọ pin.',
       },
       {
-        title: 'An toàn lâu dài & bảo hành',
-        body: 'An toàn toàn diện với khóa ngắn mạch, chống quá áp, an toàn và tin cậy. Bảo hành tiêu chuẩn 10 năm.',
+        title: 'An toàn, bảo hành 10 năm',
+        body: 'Bảo vệ toàn diện: khóa ngắn mạch, chống quá áp. Bảo hành tiêu chuẩn 10 năm.',
       },
       {
-        title: 'Thích ứng mọi điều kiện thời tiết',
-        body: 'Tự sưởi ấm (−20 °C đến 55 °C, tùy chọn). Sẵn sàng lắp đặt ngoài trời, khả năng thích ứng môi trường cao.',
+        title: 'Chịu được thời tiết khắc nghiệt',
+        body: 'Có tùy chọn tự sưởi, hoạt động từ −20 °C đến 55 °C; lắp được ngoài trời.',
       },
     ],
     configs: [
@@ -1078,19 +1078,19 @@ export const products: Product[] = [
     advantages: [
       {
         title: 'Cắt giảm chi phí điện',
-        body: 'Kết hợp điện mặt trời & lưu trữ. Cắt giảm chi phí điện hằng ngày với 125 kW công suất điều độ.',
+        body: 'Kết hợp điện mặt trời với pin lưu trữ, cắt chi phí điện hằng ngày nhờ 125 kW công suất điều độ.',
       },
       {
         title: 'Có điện khi lưới mất',
-        body: 'Dự phòng mạnh mẽ. Duy trì hoạt động kinh doanh 24/7 với thời gian chuyển mạch <60 ms.',
+        body: 'Khi lưới gặp sự cố, hệ thống chuyển sang pin trong dưới 60 ms, giữ doanh nghiệp vận hành liên tục.',
       },
       {
         title: 'Bền bỉ ngoài trời',
-        body: 'Tất cả trong một, IP54, chống ăn mòn C4. Dễ lắp đặt & vận hành.',
+        body: 'Một tủ liền khối đạt IP54, chống ăn mòn cấp C4; lắp đặt và vận hành đơn giản.',
       },
       {
         title: 'An toàn & đơn giản',
-        body: 'Điều khiển từ xa và hệ thống chữa cháy bằng bình xịt + gốc nước tích hợp.',
+        body: 'Giám sát từ xa; tích hợp hệ chữa cháy dạng bình xịt và gốc nước.',
       },
     ],
     configs: [
@@ -1260,7 +1260,7 @@ export interface ProductDownloadEntry {
 export const productDownloads: ProductDownloadEntry[] = [
   {
     id: 'module-datasheet',
-    title: 'Tài liệu kỹ thuật tấm quang năng TOPCon High Efficiency Series-66',
+    title: 'Tài liệu kỹ thuật tấm pin mặt trời TOPCon High Efficiency Series-66',
     category: 'Tấm quang năng',
     href: '/downloads/products/module-qm210-thcd-620-640-66-datasheet.pdf',
     image: '/images/products/module/qm210-thcd-620-640-66-front-back.webp',

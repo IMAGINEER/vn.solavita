@@ -36,9 +36,9 @@ export const monitoringAppFeatures: MonitoringAppFeature[] = [
   {
     icon: '☀️',
     iconKey: 'sun',
-    title: 'Tối ưu hóa quang năng',
+    title: 'Tối ưu sản lượng điện mặt trời',
     description:
-      'Theo dõi MPPT theo thời gian thực để khai thác tối đa sản lượng điện mà tấm quang năng có thể tạo ra trong ngày.',
+      'Theo dõi MPPT theo thời gian thực để khai thác tối đa sản lượng tấm pin tạo ra trong ngày.',
   },
   {
     icon: '🔋',
@@ -57,9 +57,9 @@ export const monitoringAppFeatures: MonitoringAppFeature[] = [
   {
     icon: '🌡️',
     iconKey: 'flame',
-    title: 'Phối hợp điều hòa',
+    title: 'Điều hòa không làm ngắt hệ thống',
     description:
-      'Cân đối công suất bộ biến tần với dòng khởi động của điều hòa để tải lớn không làm ngắt hệ thống.',
+      'Cân đối công suất biến tần với dòng khởi động của điều hòa để tải lớn không làm ngắt hệ thống.',
   },
   {
     icon: '📊',
@@ -73,7 +73,7 @@ export const monitoringAppFeatures: MonitoringAppFeature[] = [
     iconKey: 'shield',
     title: 'Duy trì điện khi mất lưới',
     description:
-      'Chuyển mạch liền mạch sang pin dự phòng khi lưới điện gặp sự cố - giữ đèn, quạt và kết nối mạng luôn hoạt động.',
+      'Chuyển mạch liền mạch sang pin dự phòng khi lưới điện gặp sự cố – giữ đèn, quạt và kết nối mạng luôn hoạt động.',
   },
 ]
 
@@ -83,8 +83,8 @@ export const monitoringAppFeatures: MonitoringAppFeature[] = [
 export const monitoringAppIntro = {
   eyebrow: 'Điều khiển thông minh',
   title: 'Một bộ não cho',
-  titleHighlight: 'SÁU HỆ THỐNG',
-  body: 'Ứng dụng giám sát Solavita điều phối điện mặt trời, pin lưu trữ, điều hòa, phụ tải trong nhà và điện dự phòng khi mất lưới trên một màn hình duy nhất.',
+  titleHighlight: 'sáu hệ thống',
+  body: 'Ứng dụng giám sát Solavita điều phối điện mặt trời, pin lưu trữ, sạc xe điện, điều hòa, phụ tải trong nhà và điện dự phòng trên một màn hình duy nhất.',
 }
 
 /**

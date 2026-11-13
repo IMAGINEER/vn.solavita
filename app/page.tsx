@@ -12,20 +12,20 @@ export const metadata = buildPageMetadata({
   // lives in the same segment as the layout, so the homepage — the one
   // title that must carry the brand — was shipping brandless. Put the
   // brand in explicitly here.
-  title: 'Solavita Việt Nam — Điện mặt trời & pin lưu trữ cho hộ gia đình',
+  title: 'Solavita Việt Nam — Điện mặt trời & pin lưu trữ cho gia đình',
   path: '/',
   description:
-    'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. So sánh cấu hình hệ thống và tìm giải pháp giúp nguồn điện ổn định hơn.',
+    'Điện mặt trời kèm pin lưu trữ cho hộ gia đình và doanh nghiệp tại Việt Nam. Chọn giải pháp theo hóa đơn điện và nhu cầu dự phòng; khảo sát miễn phí, báo giá theo cấu hình.',
   ogImage: '/images/og-home.jpg',
   ogImageAlt:
-    'Solavita Việt Nam - tấm quang năng và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ',
+    'Solavita Việt Nam - tấm pin mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp',
 })
 
 const HOME_FAQS = [
   {
     question: 'Hệ thống điện mặt trời có thực sự giúp tiết kiệm không?',
     answer:
-      'Có. Bạn sẽ dùng ít điện lưới hơn vào giờ cao điểm và tận dụng nguồn điện tự sản xuất vào ban ngày. Phần lớn hộ gia đình thấy hoá đơn điện giảm rõ rệt qua từng tháng.',
+      'Có. Điện mặt trời được dùng ngay khi phát sinh, nên lượng điện mua từ lưới vào ban ngày giảm. Mức tiết kiệm phụ thuộc sản lượng, hóa đơn và cách dùng điện của từng gia đình.',
   },
   {
     question: 'Điều gì xảy ra khi mất điện lưới?',
@@ -35,12 +35,12 @@ const HOME_FAQS = [
   {
     question: 'Pin lưu trữ dùng được bao lâu?',
     answer:
-      'Pin được thiết kế để vận hành bền bỉ. Với bảo hành 5 năm và 6.000 chu kỳ sạc xả, pin có thể đồng hành cùng gia đình bạn hơn 10 năm, kể cả khi sử dụng hằng ngày.',
+      'Pin LiFePO₄ được bảo hành 10 năm và vượt 8.000 chu kỳ sạc xả — đủ bền cho nhu cầu dùng điện hằng ngày của gia đình.',
   },
   {
     question: 'Hệ thống có khó bảo trì không?',
     answer:
-      'Không. Bạn chỉ cần giữ tấm quang năng sạch. Chúng tôi giám sát hệ thống từ xa và đội ngũ kỹ thuật luôn sẵn sàng hỗ trợ khi bạn cần.',
+      'Không. Bạn chỉ cần giữ tấm pin sạch. Chúng tôi giám sát hệ thống từ xa và đội ngũ kỹ thuật luôn sẵn sàng hỗ trợ khi bạn cần.',
   },
 ]
 
@@ -53,7 +53,7 @@ export default function Page() {
             path: '/',
             name: 'Solavita Việt Nam - Điện mặt trời & pin lưu trữ cho hộ gia đình',
             description:
-              'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
+              'Khám phá giải pháp điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp tại Việt Nam.',
           }),
           faqPageJsonLd({
             path: '/#faq',

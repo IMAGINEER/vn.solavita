@@ -54,7 +54,7 @@ export default function GlobalPresence() {
           <div>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
               <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-              Quy mô toàn cầu, nền tảng địa phương
+              Mạng lưới SKYWORTH
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
               Hiện diện tại địa phương.{' '}

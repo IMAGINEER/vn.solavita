@@ -20,9 +20,9 @@ import {
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = buildIndexMetadata({
-  title: 'Blog',
+  title: 'Cẩm nang điện mặt trời — Blog Solavita',
   description:
-    'Cẩm nang, cập nhật sản phẩm và câu chuyện về điện mặt trời tại Việt Nam. Được viết bởi đội ngũ kỹ sư Solavita để bạn tự tin lựa chọn.',
+    'Kinh nghiệm chọn tấm pin, biến tần, pin lưu trữ và hệ điện mặt trời cho hộ gia đình, doanh nghiệp tại Việt Nam — do đội ngũ kỹ sư Solavita viết.',
 })
 
 export default async function BlogIndexPage(props: {
@@ -51,7 +51,7 @@ export default async function BlogIndexPage(props: {
             path: '/blog',
             name: 'Blog Solavita Việt Nam',
             description:
-              'Cẩm nang, cập nhật sản phẩm và câu chuyện về điện mặt trời tại Việt Nam. Được viết bởi đội ngũ kỹ sư Solavita để bạn tự tin lựa chọn.',
+              'Kinh nghiệm chọn tấm pin, biến tần, pin lưu trữ và hệ điện mặt trời cho hộ gia đình, doanh nghiệp tại Việt Nam — do đội ngũ kỹ sư Solavita viết.',
           }),
           breadcrumbJsonLd([
             { name: 'Trang chủ', url: '/' },
@@ -66,7 +66,7 @@ export default async function BlogIndexPage(props: {
         h1Accent={activeCat ? 'những cập nhật mới nhất' : 'về điện mặt trời tại Việt Nam'}
         subhead={
           activeCat?.description_en ??
-          'Cẩm nang dễ hiểu về tấm pin mặt trời, lưu trữ bằng pin và quy định năng lượng tại Việt Nam. Do đội ngũ kỹ sư của chúng tôi viết, không hề chung chung.'
+          'Cẩm nang dễ hiểu về tấm pin mặt trời, pin lưu trữ và quy định năng lượng tại Việt Nam — do đội ngũ kỹ sư Solavita viết.'
         }
       />
 
@@ -102,7 +102,7 @@ export default async function BlogIndexPage(props: {
             <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="Nếu bạn vẫn đang cân nhắc, đội ngũ của chúng tôi có thể chuẩn bị một bản thiết kế miễn phí, không ràng buộc, cho thấy tấm pin mặt trời, pin lưu trữ hoặc trọn bộ hệ thống năng lượng cho gia đình sẽ phù hợp với ngôi nhà của bạn như thế nào."
+        description="Nếu bạn còn đang cân nhắc, Solavita sẽ chuẩn bị bản thiết kế miễn phí, không ràng buộc — cho bạn thấy tấm pin, pin lưu trữ hoặc trọn hệ thống phù hợp với ngôi nhà mình."
       />
 
       <Footer />

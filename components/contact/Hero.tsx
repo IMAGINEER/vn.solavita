@@ -39,7 +39,7 @@ export default function ContactHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Trao đổi trực tiếp với đội ngũ Solavita Việt Nam
+            ĐỘI NGŨ SOLAVITA VIỆT NAM
           </span>
         </motion.span>
 
@@ -47,9 +47,9 @@ export default function ContactHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl capitalize"
+          className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl"
         >
-          Kết nối với đội ngũ của chúng tôi.
+          Kết nối với đội ngũ Solavita.
         </motion.h1>
 
         <motion.p
@@ -59,7 +59,7 @@ export default function ContactHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Tư vấn bán hàng, hỗ trợ kỹ thuật, hợp tác hay báo chí — chọn chủ đề
-          và chúng tôi sẽ phản hồi trong vòng một ngày làm việc.
+          phù hợp và đội ngũ sẽ phản hồi qua email hoặc điện thoại.
         </motion.p>
       </div>
     </section>

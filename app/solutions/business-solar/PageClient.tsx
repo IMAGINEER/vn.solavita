@@ -26,9 +26,9 @@ export default function BusinessSolarPage() {
   const props: CollectionPageProps = {
     scenario: 'business',
     heroProps: {
-      eyebrow: 'ĐIỆN MẶT TRỜI CÔNG NGHIỆP & THƯƠNG MẠI',
-      title: 'Năng lượng thông minh. Doanh nghiệp vững mạnh.',
-      body: 'Giải pháp điện mặt trời và lưu trữ năng lượng tích hợp giúp giảm chi phí vận hành, tăng khả năng chịu tải và hỗ trợ doanh nghiệp tăng trưởng.',
+      eyebrow: 'ĐIỆN MẶT TRỜI CHO DOANH NGHIỆP',
+      title: 'Điện ổn định. Vận hành liền mạch.',
+      body: 'Điện mặt trời kèm pin lưu trữ giúp doanh nghiệp giảm chi phí điện và giữ hoạt động liền mạch khi lưới điện có sự cố.',
       backgroundImage: '/images/business_solar_1600x856.webp',
       primaryCta: {
         label: 'Nhận đánh giá năng lượng miễn phí',
@@ -42,7 +42,7 @@ export default function BusinessSolarPage() {
     contextCopy: {
       heading:
         'Cắt giảm chi phí, vận hành liên tục, chủ động ngân sách năng lượng',
-      body: 'Giải pháp điện mặt trời cho doanh nghiệp của Solavita mang lại ba giá trị: chi phí vận hành thấp hơn, chủ động nguồn điện và nguồn điện ổn định. Ba giải pháp dưới đây được thiết kế dựa trên phụ tải thiết bị, giờ vận hành, phụ tải quan trọng và yêu cầu về pha. Khả năng phù hợp cuối cùng được xác nhận qua khảo sát phụ tải, đánh giá hiện trường và rà soát yêu cầu pha — không phải doanh nghiệp nào cũng cần điện ba pha.',
+      body: 'Solavita thiết kế hệ theo ba yếu tố: thiết bị cần chạy, giờ vận hành và yêu cầu về pha. Mỗi cấu hình dưới đây ứng với một mức phụ tải khác nhau; phương án cuối cùng được xác nhận qua khảo sát hiện trường. Không phải doanh nghiệp nào cũng cần điện ba pha.',
     },
     solutions: businessSolutions,
     // ①套餐 — one equal-width 3-up row. The docx's two categories are
@@ -63,9 +63,9 @@ export default function BusinessSolarPage() {
         ),
         featured: true,
         highlight: {
-          title: 'ĐIỆN CÔNG NGHIỆP, ĐƠN GIẢN HÓA.',
-          spec: 'Hệ thống ESS All-in-One 125kW / 261kWh.',
-          body: 'Một tủ duy nhất vận hành nhà máy, siêu thị hoặc lưới điện mini cộng đồng — không cần biến tần riêng, không xếp container và không cần hậu cần nhiên liệu tại chỗ.',
+          title: 'Điện công nghiệp, gọn trong một tủ.',
+          spec: 'Hệ thống ESS All-in-One 125 kW / 261 kWh.',
+          body: 'Một tủ duy nhất vận hành nhà máy, siêu thị hoặc lưới điện mini cộng đồng — không cần thêm biến tần rời, không chiếm nhiều diện tích.',
           href: '/products/all-in-one-ess',
           ctaLabel: 'Chi tiết All-in-One ESS',
           // 工商业光伏背景图 per `docs/修改建议(2).docx`.
@@ -80,7 +80,7 @@ export default function BusinessSolarPage() {
           Hãy để chúng tôi <span className="text-gradient">thiết kế riêng.</span>
         </>
       ),
-      body: 'Nếu phụ tải, giờ vận hành hoặc điều kiện mặt bằng của bạn nằm ngoài các cấu hình trên, hãy yêu cầu một đề xuất riêng. Đại diện Solavita sẽ liên hệ với cấu hình phù hợp với doanh nghiệp của bạn.',
+      body: 'Nếu phụ tải, giờ vận hành hoặc mặt bằng không khớp các cấu hình trên, hãy yêu cầu một đề xuất riêng. Đội ngũ Solavita sẽ liên hệ và đề xuất cấu hình phù hợp.',
       primaryCta: { label: 'Yêu cầu báo giá riêng', href: '/contact-us' },
     },
     // ②优势-品牌赋能 — "VITAL ENERGY. VITAL TRUST."
@@ -113,7 +113,7 @@ export default function BusinessSolarPage() {
       },
       {
         title: 'Hệ thống lưu trữ năng lượng C&I',
-        tagline: 'Một tủ. Hiệu quả thực.',
+        tagline: 'Một tủ cho cả công trình.',
         href: '/products/all-in-one-ess',
         imagePath: '/images/products/all-in-one-ess/sws-261-1.webp',
         imageDescription:

@@ -175,7 +175,7 @@ export default async function BlogPostPage(props: {
             <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="Nếu bạn vẫn đang cân nhắc, đội ngũ của chúng tôi có thể chuẩn bị một bản thiết kế miễn phí, không ràng buộc, cho thấy tấm pin mặt trời, pin lưu trữ hoặc trọn bộ hệ thống năng lượng cho gia đình sẽ phù hợp với ngôi nhà của bạn như thế nào."
+        description="Nếu bạn còn đang cân nhắc, Solavita sẽ chuẩn bị bản thiết kế miễn phí, không ràng buộc — cho bạn thấy tấm pin, pin lưu trữ hoặc trọn hệ thống phù hợp với ngôi nhà mình."
       />
 
       <Footer />

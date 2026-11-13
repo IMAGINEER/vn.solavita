@@ -81,7 +81,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">2 Thông tin trên trang web</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Trang web này cung cấp thông tin chung về hệ thống điện mặt trời quang điện, pin lưu trữ năng lượng, các giải pháp nguồn điện dự phòng và các dịch vụ liên quan cho ứng dụng dân dụng và thương mại.
+                Trang web này cung cấp thông tin chung về hệ thống điện mặt trời, pin lưu trữ năng lượng, các giải pháp nguồn điện dự phòng và các dịch vụ liên quan cho ứng dụng dân dụng và thương mại.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Nội dung trang web được cung cấp cho mục đích thông tin chung. Nội dung này không cấu thành báo giá có tính ràng buộc, thiết kế kỹ thuật, đánh giá kỹ thuật, tư vấn chuyên môn hoặc đề nghị giao kết hợp đồng, trừ khi được nêu rõ ràng khác đi trong một thỏa thuận bằng văn bản riêng.

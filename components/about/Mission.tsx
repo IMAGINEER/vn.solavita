@@ -63,7 +63,7 @@ export default function Mission() {
             <h3 className="text-2xl font-cw-bold text-uk-navy">Sứ mệnh</h3>
             <p className="mt-4 text-base text-uk-slate font-cw-regular leading-relaxed">
               Mang đến cho mỗi gia đình một nguồn điện ổn định và sạch —
-              hệ thống tấm quang năng và pin lưu trữ được tính toán theo
+              hệ thống tấm pin mặt trời và pin lưu trữ được tính toán theo
               thiết bị sử dụng và nhu cầu dự phòng của từng hộ.
             </p>
           </div>

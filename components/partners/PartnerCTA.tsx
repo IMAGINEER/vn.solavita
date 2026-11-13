@@ -149,7 +149,7 @@ export default function PartnerCTA() {
               <span className="text-gradient">đối tác Solavita?</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-              Đồng hành cùng chúng tôi ngay hôm nay.
+              Điền thông tin bên dưới — đội ngũ đối tác sẽ liên hệ lại với bạn.
             </p>
           </div>
 
@@ -179,7 +179,7 @@ export default function PartnerCTA() {
                   >
                     WhatsApp
                   </a>{' '}
-                  or{' '}
+                  hoặc{' '}
                   <a
                     href="mailto:vn@solavita.com"
                     className="text-uk-teal-dark hover:text-uk-teal transition-colors font-cw-bold"
@@ -209,7 +209,7 @@ export default function PartnerCTA() {
               >
                 <label className="block">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Full name
+                    Họ và tên
                   </span>
                   <input
                     type="text"
@@ -257,7 +257,7 @@ export default function PartnerCTA() {
 
                 <label className="block">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Business / Company
+                    Doanh nghiệp / Công ty
                     {track === 'lead-partner' && (
                       <span className="ml-2 font-cw-regular normal-case tracking-normal text-uk-slate/70">
                         (không bắt buộc nếu bạn là cá nhân)
@@ -280,7 +280,7 @@ export default function PartnerCTA() {
 
                 <label className="block md:col-span-2">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Partner track
+                    Hình thức hợp tác
                   </span>
                   <select
                     name="track"
@@ -303,7 +303,7 @@ export default function PartnerCTA() {
 
                 <label className="block md:col-span-2">
                   <span className="block text-xs font-cw-bold tracking-wider uppercase text-uk-slate mb-1.5">
-                    Message
+                    Nội dung cần trao đổi
                   </span>
                   <textarea
                     name="message"
@@ -344,7 +344,7 @@ export default function PartnerCTA() {
                         Đang gửi...
                       </>
                     ) : (
-                      <>Liên hệ với chúng tôi</>
+                      <>Gửi yêu cầu hợp tác</>
                     )}
                   </button>
                 </div>

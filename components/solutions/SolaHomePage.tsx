@@ -27,7 +27,6 @@ import SolaHomeBillEstimator from '@/components/solutions/SolaHomeBillEstimator'
 import SolaHomeEconomics from '@/components/solutions/SolaHomeEconomics'
 import SolaHomeEnergyFlow from '@/components/solutions/SolaHomeEnergyFlow'
 import SolaHomePackageCard from '@/components/solutions/SolaHomePackageCard'
-import SolaHomePackageTable from '@/components/solutions/SolaHomePackageTable'
 import SolaHomeRoofPicker from '@/components/solutions/SolaHomeRoofPicker'
 import SolaHomeSizingMatcher from '@/components/solutions/SolaHomeSizingMatcher'
 import Header from '@/components/Header'
@@ -128,7 +127,6 @@ export default function SolaHomePage() {
         body="Giải pháp điện mặt trời cho gia đình Việt Nam, được thiết kế theo nhu cầu sử dụng điện, cấu trúc mái nhà và ngân sách của bạn."
         breadcrumbs={[
           { label: 'Trang chủ', href: '/' },
-          { label: 'Giải pháp', href: '/solutions/solahome/' },
           { label: 'SolaHome' },
         ]}
         compact
@@ -138,16 +136,16 @@ export default function SolaHomePage() {
 
       {/* ② Roof-fit solutions */}
       <section id="theo-mai" className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <SectionEyebrow>THEO LOẠI MÁI NHÀ</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
-              Mỗi Kiểu Mái Nhà,{' '}
-              <span className="text-gradient">Một Giải Pháp Lắp Đặt.</span>
+              Mỗi kiểu mái,{' '}
+              <span className="text-gradient">một cách lắp phù hợp.</span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-uk-slate">
-              Chọn loại mái nhà để khám phá phương án lắp đặt, công nghệ và
-              giải pháp phù hợp từ Solavita.
+              Chọn loại mái để xem cách lắp, thiết bị và phương án Solavita
+              phù hợp với ngôi nhà.
             </p>
           </div>
 
@@ -163,14 +161,14 @@ export default function SolaHomePage() {
         id="goi-solahome"
         className="relative overflow-hidden bg-gradient-to-br from-uk-teal-dark via-uk-teal to-uk-emerald py-16 md:py-20"
       >
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <SectionEyebrow variant="dark" dotClassName="bg-white">
               CHỌN THEO NHU CẦU SỬ DỤNG
             </SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-white md:text-4xl">
-              Từ mái và hóa đơn —{' '}
-              <span className="text-gradient">ra gói phù hợp</span>
+              Từ mái nhà và hóa đơn —{' '}
+              <span className="text-gradient">chọn ra gói phù hợp</span>
             </h2>
           </div>
 
@@ -185,7 +183,7 @@ export default function SolaHomePage() {
                 Bốn gói SolaHome
               </h3>
               <p className="text-xs text-white/70">
-                Giá báo theo cấu hình sau khảo sát · trang không niêm yết giá gói
+                Giá báo theo cấu hình sau khảo sát · không niêm yết giá gói
               </p>
             </div>
 
@@ -193,7 +191,7 @@ export default function SolaHomePage() {
               Cùng một gói có thể lắp{' '}
               <span className="font-cw-bold text-white">SolaRoof</span> hoặc{' '}
               <span className="font-cw-bold text-white">SolaLoft</span> — cách
-              lắp không đổi tải tham chiếu.{' '}
+              lắp không làm thay đổi tải tham chiếu.{' '}
               <a
                 href="#theo-mai"
                 className="inline-flex items-center gap-1 font-cw-bold text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
@@ -203,11 +201,10 @@ export default function SolaHomePage() {
               </a>
             </p>
 
-            <div className="mt-6 hidden lg:block">
-              <SolaHomePackageTable selectedPackageId={selectedPackageId} />
-            </div>
-
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:hidden">
+            {/* One card per package at every width. The card carries the
+                five core specs; the appliance runtimes only surface on
+                hover over the header art at xl. */}
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-5">
               {solaHomePackages.map((p) => (
                 <SolaHomePackageCard
                   key={p.id}
@@ -234,7 +231,7 @@ export default function SolaHomePage() {
 
       {/* ④ How the energy system works */}
       <section className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <SectionEyebrow>CÁCH HỆ THỐNG VẬN HÀNH</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
@@ -254,7 +251,7 @@ export default function SolaHomePage() {
 
       {/* ⑤ Generation & economics */}
       <section className="bg-sv-light py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <SectionEyebrow>SẢN LƯỢNG & KINH TẾ</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
@@ -274,7 +271,7 @@ export default function SolaHomePage() {
 
       {/* ⑥ Grid-tied vs hybrid + published battery pairings */}
       <section id="phuong-an-pin" className="bg-white py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <SectionEyebrow>HÒA LƯỚI HAY HYBRID</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
@@ -418,7 +415,7 @@ export default function SolaHomePage() {
 
       {/* ⑦ Real installations */}
       <section className="bg-sv-light py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <SectionEyebrow>DỰ ÁN THỰC TẾ</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
@@ -517,7 +514,7 @@ export default function SolaHomePage() {
           with the numbered badge sitting on the card's top edge, icon
           + title, and the body below. */}
       <section className="relative bg-sv-blue/10 py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <SectionEyebrow>LẮP ĐẶT & HẬU MÃI</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
@@ -525,8 +522,8 @@ export default function SolaHomePage() {
               <span className="text-gradient">một đầu mối chịu trách nhiệm</span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-uk-slate md:text-lg">
-              Mỗi bước dưới đây ghi rõ ai phụ trách. Không có phần việc nào bị
-              bỏ ngỏ giữa lúc ký hợp đồng và lúc hệ thống vận hành.
+              Mỗi bước ghi rõ ai phụ trách — từ lúc ký hợp đồng đến khi hệ thống
+              vận hành.
             </p>
           </div>
 
@@ -601,7 +598,7 @@ export default function SolaHomePage() {
 
       {/* ⑨ Certifications + warranty */}
       <section className="bg-sv-light py-16 md:py-20">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <SectionEyebrow>CHỨNG NHẬN & BẢO HÀNH</SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-uk-navy md:text-4xl">
@@ -662,8 +659,8 @@ export default function SolaHomePage() {
         eyebrow="KHẢO SÁT MIỄN PHÍ"
         title={
           <>
-            Bắt đầu sử dụng năng lượng thông minh{' '}
-            <span className="text-gradient">với SolaHome</span>
+            Chủ động nguồn điện cho ngôi nhà{' '}
+            <span className="text-gradient">cùng SolaHome</span>
           </>
         }
         description="Đăng ký khảo sát miễn phí: kỹ thuật viên đo đạc mái, đối chiếu hóa đơn điện và nhu cầu dự phòng, rồi gửi báo giá trong 24 giờ. Không ràng buộc, không phí ẩn."

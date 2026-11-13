@@ -687,7 +687,7 @@ export default function ProductDetail({ product }: { product: Product }) {
             <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="Nếu bạn vẫn đang cân nhắc các phương án, đội ngũ của chúng tôi có thể chuẩn bị bản thiết kế miễn phí, không ràng buộc, cho thấy tấm quang năng, pin lưu trữ hoặc hệ thống năng lượng gia đình trọn gói sẽ phù hợp với ngôi nhà của bạn như thế nào."
+        description="Nếu bạn còn đang cân nhắc giữa các phương án, Solavita sẽ chuẩn bị bản thiết kế miễn phí, không ràng buộc — cho bạn thấy tấm pin, pin lưu trữ hoặc hệ thống trọn gói phù hợp với ngôi nhà mình."
       />
 
       <Footer />

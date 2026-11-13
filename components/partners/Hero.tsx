@@ -52,7 +52,7 @@ export default function PartnersHero() {
         >
           <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
           <span className="text-xs font-cw-regular text-white/90">
-            Dành cho đối tác · B2B
+            CHƯƠNG TRÌNH ĐỐI TÁC SOLAVITA
           </span>
         </motion.span>
 
@@ -62,7 +62,7 @@ export default function PartnersHero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-cw-bold leading-tight text-gradient mt-5 py-[0.15em] max-w-3xl"
         >
-          Đồng hành cùng chuyển dịch năng lượng. Kiến tạo tương lai.
+          Hợp tác cùng Solavita, không cần vốn hay tồn kho.
         </motion.h1>
 
         <motion.p
@@ -72,9 +72,8 @@ export default function PartnersHero() {
           className="mt-5 text-lg sm:text-xl text-white/85 font-cw-light max-w-2xl leading-relaxed"
         >
           Trở thành Đại lý kinh doanh, Đối tác lắp đặt hoặc Đối tác kinh doanh
-          của Solavita. Bắt đầu mà không cần vốn, không cần tồn kho và không
-          cần kinh nghiệm chuyên môn — có hoa hồng theo mỗi watt, đào tạo bởi
-          chuyên gia và toàn bộ chuỗi cung ứng của tập đoàn SKYWORTH phía sau.
+          của Solavita. Bạn nhận hoa hồng theo mỗi watt lắp đặt, được chuyên
+          gia đào tạo và dùng chung chuỗi cung ứng của Tập đoàn SKYWORTH.
         </motion.p>
 
         {/* The four commercial barriers from the recruitment brochure */}

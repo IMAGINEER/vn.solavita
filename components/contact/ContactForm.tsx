@@ -159,15 +159,14 @@ export default function ContactForm() {
             <div className="lg:col-span-2 p-8 lg:p-10 bg-uk-teal-soft/40 border-b lg:border-b-0 lg:border-r border-uk-line">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-uk-emerald" />
-                Gửi tin nhắn cho chúng tôi
+                Liên hệ Solavita
               </span>
               <h2 className="text-2xl lg:text-3xl font-cw-bold text-uk-navy leading-tight">
                 Gửi tin nhắn <span className="text-gradient">cho chúng tôi.</span>
               </h2>
               <p className="mt-3 text-sm lg:text-base text-uk-slate font-cw-regular leading-relaxed">
-                Hãy cho chúng tôi biết điều bạn muốn trao đổi — chúng tôi sẽ
-                chuyển đến đúng người phụ trách trong đội ngũ Solavita Việt Nam
-                và phản hồi trong vòng một ngày làm việc.
+                Hãy cho chúng tôi biết điều bạn muốn trao đổi — tin nhắn sẽ được
+                chuyển đến đúng người phụ trách trong đội ngũ Solavita Việt Nam.
               </p>
 
               <ul className="mt-6 space-y-3">

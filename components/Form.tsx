@@ -501,7 +501,7 @@ const Form: React.FC<{
    * endpoints that expect a slimmer payload.
    */
   submitPayload?: (formData: FormData) => unknown
-  /** Visible label on the final Submit button. Default 'Submit'. */
+  /** Visible label on the final Submit button. Default 'Gửi thông tin'. */
   submitButtonLabel?: string
   /**
    * Fires after a successful submit, before the inline success screen.
@@ -830,7 +830,7 @@ const Form: React.FC<{
                     Cảm ơn bạn đã gửi yêu cầu!
                   </h3>
                   <p className="text-gray-500 mb-8 max-w-sm">
-                    Chúng tôi sẽ liên hệ trong vòng 24 giờ với đề xuất giải pháp điện mặt trời dành riêng cho bạn.
+                    Chúng tôi sẽ liên hệ trong vòng một ngày làm việc với đề xuất giải pháp điện mặt trời dành riêng cho bạn.
                   </p>
                   {alreadyRegistered && (
                     <div className="mb-6 max-w-sm rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -944,7 +944,7 @@ const Form: React.FC<{
                           Một tháng gia đình bạn dùng khoảng bao nhiêu điện? <span className="text-red-500">*</span>
                         </label>
                         <p className="text-sm text-gray-400 mb-4">
-                          Số kWh ghi trên hoá đơn tiền điện hằng tháng.
+                          Số kWh ghi trên hóa đơn tiền điện hằng tháng.
                         </p>
                         <CardSelect
                           options={ELECTRICITY_USAGE as CardOption[]}
@@ -981,7 +981,7 @@ const Form: React.FC<{
                           Công trình có loại mái nào? <span className="text-red-500">*</span>
                         </label>
                         <p className="text-sm text-gray-400 mb-4">
-                          Chọn loại mái nơi dự kiến lắp đặt tấm quang năng.
+                          Chọn loại mái nơi dự kiến lắp đặt tấm pin.
                         </p>
                         <CardSelect
                           options={ROOF_TYPES as CardOption[]}
@@ -1092,17 +1092,6 @@ const Form: React.FC<{
                       {/* Name */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Tên</label>
-                          <input
-                            type="text"
-                            value={formData.firstName}
-                            onChange={e => { updateField('firstName', e.target.value); clearErrors(); }}
-                            placeholder="Văn A"
-                            className={`w-full px-4 py-3 border-2 ${errors.firstName ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
-                          />
-                          {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
-                        </div>
-                        <div>
                           <label className="block text-xs font-medium text-gray-500 mb-1.5">Họ</label>
                           <input
                             type="text"
@@ -1112,6 +1101,17 @@ const Form: React.FC<{
                             className={`w-full px-4 py-3 border-2 ${errors.lastName ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
                           />
                           {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-500 mb-1.5">Tên</label>
+                          <input
+                            type="text"
+                            value={formData.firstName}
+                            onChange={e => { updateField('firstName', e.target.value); clearErrors(); }}
+                            placeholder="Văn A"
+                            className={`w-full px-4 py-3 border-2 ${errors.firstName ? 'border-red-500' : 'border-gray-200'} rounded-xl text-gray-700 focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 outline-none transition-all`}
+                          />
+                          {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
                         </div>
                       </div>
 
@@ -1253,7 +1253,7 @@ const Form: React.FC<{
             <span className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
               <Check className="w-2.5 h-2.5 text-white" strokeWidth={3.5} />
             </span>
-            Phản hồi trong 24 giờ
+            Phản hồi trong 1 ngày làm việc
           </span>
         </div>
       </div>

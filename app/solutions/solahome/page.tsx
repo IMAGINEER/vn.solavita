@@ -53,7 +53,6 @@ export default function Page() {
           }),
           breadcrumbJsonLd([
             { name: 'Trang chủ', url: '/' },
-            { name: 'Giải pháp', url: PATH },
             { name: 'SolaHome', url: PATH },
           ]),
           serviceListJsonLd(serviceSpecs, PATH),

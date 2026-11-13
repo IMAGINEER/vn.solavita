@@ -83,7 +83,7 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
         label: 'SolaMate — ban công & di động',
         href: '/solutions/solamate/',
         description:
-          'Điện mặt trời ban công, cửa sổ và sân thượng — lắp trong 60 phút, không cần xin phép điện lưới.',
+          'Điện mặt trời ban công, cửa sổ và sân thượng — lắp trong 60 phút, điện dùng ngay tại nhà.',
       },
       {
         label: 'SolaHome — mái nhà & khuôn viên',
@@ -92,7 +92,7 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
           'Điện mặt trời mái nhà cho biệt thự và nhà phố — hai kiểu lắp SolaRoof / SolaLoft, bốn gói công suất.',
       },
       {
-        label: 'Cho doanh nghiệp nhỏ',
+        label: 'Cho doanh nghiệp',
         href: '/solutions/business-solar/',
         description:
           'Giải pháp điện mặt trời ba pha cho cửa hàng, doanh nghiệp vừa và nhỏ và công trình lớn hơn.',
@@ -117,7 +117,7 @@ const NAV_DROPDOWNS: Record<'solutions' | 'products', NavDropdownGroup> = {
         label: 'Bộ biến tần',
         href: '/products/inverter/',
         description:
-          'Biến tần hybrid và off-grid từ 3 kW đến 20 kW, một pha và ba pha.',
+          'Biến tần hybrid và độc lập lưới từ 3 đến 20 kW, một pha và ba pha.',
       },
       {
         label: 'Pin lưu trữ',
@@ -145,7 +145,7 @@ const DEFAULT_NAV: HeaderNavItem[] = [
   { label: 'Dự án', href: '/cases/' },
   { label: 'Về chúng tôi', href: '/about-us/' },
   { label: 'Hỗ trợ', href: '/support/' },
-  { label: 'Dành cho đối tác', href: '/for-partners/' },
+  { label: 'Đối tác', href: '/for-partners/' },
 ]
 
 const DEFAULT_CTA: HeaderCTA = {

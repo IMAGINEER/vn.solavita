@@ -264,17 +264,17 @@ function SolutionsSection({
             <SectionEyebrow>
               {scenario === 'home'
                 ? 'GIẢI PHÁP CHO NGÔI NHÀ'
-                : 'GIẢI PHÁP CHO DOANH NGHIỆP'}
+                : 'CÁC GÓI GIẢI PHÁP'}
             </SectionEyebrow>
             <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
               {scenario === 'home' ? (
                 <>
-                  Giải pháp cho ngôi nhà, phù hợp nhu cầu{' '}
-                  <span className="text-gradient">sinh hoạt và dự phòng</span>
+                  Điện mặt trời cho ngôi nhà,{' '}
+                  <span className="text-gradient">đủ dùng và có dự phòng</span>
                 </>
               ) : (
                 <>
-                  Giải pháp Công nghiệp &amp; Thương mại,{' '}
+                  Chọn theo phụ tải,{' '}
                   <span className="text-gradient">vận hành không gián đoạn</span>
                 </>
               )}
@@ -302,8 +302,8 @@ function SolutionsSection({
               card hover. */}
           <p className="mt-10 text-xs text-uk-slate font-cw-regular leading-relaxed max-w-4xl mx-auto">
             {scenario === 'home'
-              ? 'Lưu ý: Dựa trên giả định hộ gia đình thông thường. Công suất đỉnh và thời gian tự chủ của pin thực tế chịu ảnh hưởng của nhiều yếu tố. Số liệu chỉ mang tính tham khảo, không phải cam kết tuyệt đối.'
-              : 'Lưu ý: Giải pháp dựa trên giả định doanh nghiệp thông thường. Công suất đỉnh và thời gian tự chủ của pin thực tế chịu ảnh hưởng của nhiều yếu tố. Số liệu chỉ mang tính tham khảo và không phải cam kết hiệu suất tuyệt đối.'}
+              ? 'Phụ tải và thời gian tự chủ là ước tính theo hộ gia đình thông thường; thực tế phụ thuộc thiết bị và cách dùng điện.'
+              : 'Phụ tải và thời gian tự chủ là ước tính theo doanh nghiệp thông thường; thực tế phụ thuộc thiết bị vận hành và giờ hoạt động.'}
           </p>
         </div>
       </section>
@@ -317,12 +317,12 @@ function SolutionsSection({
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
-          <SectionEyebrow>{scenario === 'home' ? 'GIẢI PHÁP CHO NGÔI NHÀ' : 'GIẢI PHÁP CHO DOANH NGHIỆP'}</SectionEyebrow>
+          <SectionEyebrow>{scenario === 'home' ? 'GIẢI PHÁP CHO NGÔI NHÀ' : 'CÁC GÓI GIẢI PHÁP'}</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
             {scenario === 'home' ? (
-              <>Giải pháp cho ngôi nhà, phù hợp nhu cầu{' '}<span className="text-gradient">sinh hoạt và dự phòng</span></>
+              <>Điện mặt trời cho ngôi nhà,{' '}<span className="text-gradient">đủ dùng và có dự phòng</span></>
             ) : (
-              <>Giải pháp Công nghiệp &amp; Thương mại,{' '}<span className="text-gradient">vận hành không gián đoạn</span></>
+              <>Chọn theo phụ tải,{' '}<span className="text-gradient">vận hành không gián đoạn</span></>
             )}
           </h2>
         </div>

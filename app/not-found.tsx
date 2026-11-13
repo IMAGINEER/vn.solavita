@@ -11,7 +11,7 @@ import Footer from '@/components/Footer'
 // override flips both to false.
 export const metadata: Metadata = {
   title: 'Không tìm thấy trang',
-  description: 'Không thể tìm thấy trang Bạn đang tìm kiếm.',
+  description: 'Không thể tìm thấy trang bạn đang tìm kiếm.',
   robots: { index: false, follow: false },
   // No canonical on 404 - crawlers should NOT pin this URL.
   alternates: { canonical: undefined },
@@ -31,7 +31,7 @@ export default function NotFound() {
             Không tìm thấy <span className="text-gradient">trang</span>
           </h1>
           <p className="mt-6 text-base md:text-lg font-cw-regular text-uk-slate leading-relaxed">
-            Trang Bạn đang tìm kiếm có thể đã được di chuyển, ngừng sử dụng hoặc
+            Trang bạn đang tìm kiếm có thể đã được di chuyển, ngừng sử dụng hoặc
             chưa từng tồn tại. Hãy sử dụng một trong các liên kết dưới đây để
             tiếp tục.
           </p>

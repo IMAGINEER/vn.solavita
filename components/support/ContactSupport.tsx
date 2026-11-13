@@ -134,8 +134,8 @@ export default function ContactSupport() {
     window.location.href = href
     showToast(
       copied
-        ? `Đã sao chép ${address}. Nếu ứng dụng email không mở, hãy dán địa chỉ vào ứng dụng email của bạn.`
-        : `Đang mở ${address} - nếu ứng dụng email không mở, vui lòng sao chép địa chỉ thủ công.`
+        ? `Đã sao chép ${address}. Nếu ứng dụng email không mở, hãy dán địa chỉ này vào trình soạn thư của bạn.`
+        : `Đang mở ${address} – nếu ứng dụng email không mở, vui lòng sao chép địa chỉ thủ công.`
     )
   }
 
@@ -163,7 +163,7 @@ export default function ContactSupport() {
             <span className="text-gradient">một người thật.</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Đội ngũ hỗ trợ tại Việt Nam · Không bot · Không chờ đợi mệt mỏi.
+            Đội ngũ tại Việt Nam · Không bot · Phản hồi trực tiếp.
           </p>
         </div>
 

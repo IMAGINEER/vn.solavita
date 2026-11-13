@@ -88,10 +88,10 @@ function Section1Hero() {
       title={'Chủ động nguồn điện.\nChủ động cuộc sống.'}
       body={
         <>
-          Giảm chi phí điện và lo lắng mất điện với hệ thống điện mặt trời
-          kèm pin lưu trữ vận hành 24/7.
+          Giảm chi phí điện, bớt nỗi lo mất điện với hệ thống điện mặt trời
+          kèm pin lưu trữ.
           <br />
-          Từ nhà máy Solavita đến gia đình, doanh nghiệp và cộng đồng của bạn.
+          Sản xuất trên dây chuyền SKYWORTH, lắp đặt và hỗ trợ tại Việt Nam.
         </>
       }
       primaryCta={{ label: 'Nhận báo giá miễn phí', onClick: openFormModal }}
@@ -120,7 +120,7 @@ function Section2EntryCards() {
           <ScenarioPanel
             href="/solutions/solamate"
             title="SolaMate — ban công"
-            subTitle="Lắp trong 60 phút, không cần xin phép"
+            subTitle="Lắp trong 60 phút, cắm vào ổ là dùng"
             body="Trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng. Ba kiểu lắp — lan can, mái che, cắm đất — với thiết bị Zero-export mọi model."
             imageDescription="Nhân vật SolaMate bên tấm pin gắn trên lan can ban công căn hộ"
             imageSrc="/images/home-card-1.webp"
@@ -242,7 +242,7 @@ function Section5ConsultationToCleanPower() {
             step="2"
             icon={Ruler}
             title="Lắp đặt chuyên nghiệp"
-            body="Thi công tấm quang năng, pin lưu trữ và thiết bị bởi đội ngũ kỹ thuật."
+            body="Thi công tấm pin mặt trời, pin lưu trữ và thiết bị bởi đội ngũ kỹ thuật."
           />
           <StepCard
             step="3"
@@ -321,12 +321,11 @@ function Section7CustomerStories() {
         <div className="text-center mb-10">
           <SectionEyebrow>DỰ ÁN</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl font-cw-bold text-uk-navy leading-tight">
-            Dự án thực tế. <span className="text-gradient">Nhu cầu thực tế.</span>
+            Công trình thực tế. <span className="text-gradient">Nhu cầu thật.</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-3xl mx-auto">
-            Khám phá cách các giải pháp điện mặt trời và pin lưu trữ Solavita
-            được ứng dụng cho hộ gia đình và doanh nghiệp, cùng cấu hình hệ
-            thống của từng dự án.
+            Xem cách điện mặt trời và pin lưu trữ Solavita được lắp cho hộ gia
+            đình và doanh nghiệp, kèm cấu hình từng dự án.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

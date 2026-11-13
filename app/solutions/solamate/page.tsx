@@ -18,7 +18,7 @@ const PATH = '/solutions/solamate'
 const TITLE = 'SolaMate — Điện mặt trời ban công cho căn hộ tại Việt Nam'
 
 const DESCRIPTION =
-  'SolaMate là trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng: lắp trong 60 phút, không cần xin phép điện lưới, có Zero-export trên mọi model. Hai mức công suất 800 W và 1600 W.'
+  'SolaMate là trạm điện mặt trời all-in-one cho ban công, cửa sổ và sân thượng: lắp trong khoảng 60 phút, Zero-export trên mọi model, hai mức công suất 800 W và 1600 W.'
 
 export const metadata = buildPageMetadata({
   title: TITLE,
@@ -58,7 +58,6 @@ export default function Page() {
           }),
           breadcrumbJsonLd([
             { name: 'Trang chủ', url: '/' },
-            { name: 'Giải pháp', url: '/solutions/solahome/' },
             { name: 'SolaMate', url: PATH },
           ]),
           serviceListJsonLd(serviceSpecs, PATH),

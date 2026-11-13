@@ -113,13 +113,13 @@ export default function CookiesPage() {
             <div>
               <h2 className="text-lg font-cw-bold text-[#0A1628] mt-8 mb-3">4 Quản lý tùy chọn của Bạn</h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Khi có công cụ tùy chọn cookie hoặc công cụ đồng ý, Bạn có thể sử dụng công cụ đó để xem xét hoặc thay đổi lựa chọn của mình. Nếu hiện tại trang web không cung cấp công cụ như vậy, vui lòng không giả định rằng có thể thay đổi tùy chọn thông qua bảng cài đặt của trang web.
+                Khi có công cụ tùy chọn cookie hoặc công cụ đồng ý, Bạn có thể dùng công cụ đó để xem xét hoặc thay đổi lựa chọn của mình. Nếu trang web chưa có công cụ như vậy, Bạn có thể thay đổi lựa chọn qua cài đặt trình duyệt.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Bạn cũng có thể quản lý hoặc xóa cookie thông qua cài đặt trình duyệt. Việc chặn toàn bộ cookie có thể ảnh hưởng đến một số chức năng của trang web. Các điều khiển của trình duyệt không nhất thiết ngăn được mọi công nghệ tương tự hoạt động.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Khi pháp luật hiện hành yêu cầu có sự đồng ý trước đối với các công nghệ không thiết yếu, các công nghệ đó không được kích hoạt trước khi có được sự đồng ý cần thiết.
+                Nếu pháp luật hiện hành yêu cầu sự đồng ý trước đối với các công nghệ không thiết yếu, các công nghệ đó sẽ không được kích hoạt trước khi có sự đồng ý.
               </p>
             </div>
 

@@ -90,14 +90,15 @@ export default function CookieConsent() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-1 text-center md:text-left">
             <p className="text-sm text-uk-navy font-cw-regular leading-relaxed">
-              Quyền riêng tư của Bạn rất quan trọng đối với chúng tôi. Khi truy cập trang web của chúng tôi, Bạn đồng ý với việc sử dụng tất cả cookie.{' '}
+              Trang dùng cookie cần thiết để hoạt động và cookie tùy chọn cho phân tích, tiếp thị. Bạn có thể chấp nhận hoặc từ chối; xem chi tiết trong{' '}
               <a
                 href="/cookies/"
                 rel="noopener noreferrer"
                 className="text-uk-teal hover:text-uk-teal-dark transition-colors"
               >
-                Đọc Chính sách cookie của chúng tôi.
+                Chính sách cookie
               </a>
+              .
             </p>
           </div>
           <div className="flex gap-3 flex-shrink-0">

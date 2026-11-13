@@ -46,7 +46,7 @@ export default function CTA({
   eyebrow,
   title,
   description,
-  primaryLabel = 'Get Free Quote →',
+  primaryLabel = 'Nhận báo giá miễn phí',
   primaryHref,
   secondaryLabel,
   secondaryHref,

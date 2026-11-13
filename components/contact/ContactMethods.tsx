@@ -130,7 +130,7 @@ export default function ContactMethods({ clickable = true }: { clickable?: boole
     showToast(
       copied
         ? `Đã sao chép ${address}. Nếu ứng dụng email không mở, hãy dán địa chỉ này vào trình soạn thư của bạn.`
-        : `Đang mở ${address} - nếu ứng dụng email không mở, vui lòng sao chép địa chỉ thủ công.`
+        : `Đang mở ${address} – nếu ứng dụng email không mở, vui lòng sao chép địa chỉ thủ công.`
     )
   }
 

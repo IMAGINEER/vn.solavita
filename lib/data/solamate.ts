@@ -87,7 +87,7 @@ export const solaMatePackages: SolaMatePackage[] = [
     dailyOutput: { value: '~3,6', unit: 'kWh/ngày' },
     monthlySaving: { value: '~230.278', unit: 'VND/tháng' },
     summary:
-      'Bắt đầu với điện thiết bị nhỏ: đèn, tủ lạnh, Wi-Fi — lắp trong 60 phút, không cần đào lắp.',
+      'Bắt đầu với các thiết bị nhỏ: đèn, tủ lạnh, Wi-Fi — lắp trong 60 phút, không khoan tường.',
     // 3,6 kWh/ngày: 150 W × 24 h = 3,6 kWh · 800 W × ~4,5 h = 3,6 kWh ·
     // 3,6 kWh ÷ 15 kWh/100 km ≈ 24 km.
     runs: [
@@ -158,7 +158,7 @@ export const solaMateScenarios: SolaMateScenario[] = [
     bullets: [
       'Ngàm kẹp kép bằng thép không gỉ, kẹp vào lan can',
       'Thiết kế chống rơi — gió lớn vẫn giữ chắc',
-      'Không khoan tường, không ảnh hưởng kết cấu building',
+      'Không khoan tường, không ảnh hưởng kết cấu công trình',
       'Hỗ trợ lắp DIY nhanh chóng',
     ],
   },
@@ -184,7 +184,7 @@ export const solaMateScenarios: SolaMateScenario[] = [
     imageAlt:
       'Hệ SolaMate đặt trên mặt đất bên bờ hồ bơi, có thể di chuyển theo',
     bullets: [
-      'Chân đế chịu thời tiết, đặt trực tiếp xuống nền',
+      'Chân đế chịu mưa nắng, đặt trực tiếp trên nền',
       'Có thể mang theo khi cắm trại, dã ngoại',
       'Di chuyển và lắp đặt thuận tiện',
       'Điều chỉnh 4 góc độ: 25°, 30°, 35°, 40°',
@@ -250,7 +250,7 @@ export const solaMateInstallSteps: SolaMateStep[] = [
     body: 'Tải SKYWORTH Smart App, kết nối Wi-Fi và theo dõi sản lượng, tiêu thụ và tiền tiết kiệm.',
     imagePath: '/images/installation-05.webp',
     imageAlt:
-      'Màn hình ứng dụng SKYWORTH Smart App hiển thị sơ đồ dòng năng lượng, tỷ chủ năng lượng tự dùng và tổng tiết kiệm',
+      'Màn hình ứng dụng SKYWORTH Smart App hiển thị sơ đồ dòng năng lượng, tỷ lệ tự dùng và tổng tiết kiệm',
     fit: 'contain',
   },
 ]
@@ -299,7 +299,7 @@ export const solaMateComicFrames: SolaMateComicFrame[] = [
   {
     kind: 'solution',
     title: 'Sản lượng dùng ngay trong nhà',
-    body: 'Điện sinh ra được ưu tiên dùng ngay trong nhà — không chờ đồng hồ rẻ nhất.',
+    body: 'Điện sinh ra được dùng ngay trong nhà — không phụ thuộc khung giờ giá điện.',
     imagePath: '/images/after-1.webp',
     imageAlt:
       'Nhân vật SolaMate vui vẻ cầm hóa đơn điện đi xuống, tấm pin đã lắp ngoài ban công',
@@ -341,8 +341,8 @@ export const solaMateComicFrames: SolaMateComicFrame[] = [
   {
     kind: 'pain',
     icon: 'permit',
-    title: 'Ngại thủ tục xin phép lắp đặt rườm rà',
-    body: 'Nghe đến "xin phép điện lưới" là thấy phiền — nhiều giấy tờ, nhiều ngày chờ.',
+    title: 'Ngại thi công rườm rà, đục phá ban công',
+    body: 'Sợ phải khoan tường, đi dây lằng nhằng và mất nhiều ngày thi công.',
     imagePath: '/images/before-4.webp',
     imageAlt:
       'Nhân vật SolaMate ngập trong hồ sơ lắp đặt, phê duyệt và giấy phép',
@@ -350,7 +350,7 @@ export const solaMateComicFrames: SolaMateComicFrame[] = [
   {
     kind: 'solution',
     title: 'Cắm vào ổ là chạy',
-    body: 'Không đào lắp, không xin phép điện lưới — cắm vào ổ điện là chạy.',
+    body: 'Không khoan tường, không đục phá — cắm vào ổ điện trong nhà là dùng.',
     imagePath: '/images/after-4.webp',
     imageAlt:
       'Nhân vật SolaMate khoe tờ hướng dẫn "Lắp đặt đơn giản" và ổ cắm điện đã có phích',
@@ -493,7 +493,7 @@ export const solaMateRoi: SolaMateRoi = {
 export const solaMateFaqs: { q: string; a: string }[] = [
   {
     q: 'SolaMate là gì?',
-    a: 'SolaMate là trạm điện mặt trời ban công "all-in-one" theo phong cách tối giản Bauhaus. Hệ thống tạo điện sạch cho ban công chung cư, cửa sổ, sân vườn và các không gian sống khác — không cần đào lắp, không cần xin phép lắp đặt điện.',
+    a: 'SolaMate là trạm điện mặt trời ban công dạng all-in-one, thiết kế tối giản theo phong cách Bauhaus. Hệ thống tạo điện cho ban công chung cư, cửa sổ và sân vườn; lắp trong khoảng 60 phút, không khoan tường.',
   },
   {
     q: 'Tự lắp đặt trong bao lâu?',
@@ -505,7 +505,7 @@ export const solaMateFaqs: { q: string; a: string }[] = [
   },
   {
     q: 'Zero-export là gì?',
-    a: 'Đây là thiết bị tiêu chuẩn đi kèm mọi model: điện sinh ra được ưu tiên dùng ngay trong nhà và không phát ngược lên lưới. Hệ thống hỗ trợ an toàn điện lưới và tuân thủ quy định địa phương mà không cần thủ tục phức tạp.',
+    a: 'Zero-export là thiết bị có trên mọi model: điện sinh ra được ưu tiên dùng ngay trong nhà và không phát ngược lên lưới. Việc đấu nối điện được thực hiện theo quy định an toàn tại địa phương.',
   },
   {
     q: 'Theo dõi sản lượng bằng cách nào?',

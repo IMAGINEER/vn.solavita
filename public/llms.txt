@@ -1,15 +1,34 @@
 # Solavita Việt Nam
 
-> Hệ thống điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam. Sản xuất trên dây chuyền của tập đoàn SKYWORTH, sẵn hàng tại địa phương để lắp đặt nhanh. Tinh thần thương hiệu: **Chủ động nguồn điện. Chủ động cuộc sống.**
+> Hệ thống điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp tại Việt Nam. Sản xuất trên dây chuyền của tập đoàn SKYWORTH, sẵn hàng tại địa phương để lắp đặt nhanh. Tinh thần thương hiệu: **Chủ động nguồn điện. Chủ động cuộc sống.**
+>
+> Cập nhật lần cuối: 12/11/2026.
+
+## Câu trả lời nhanh
+
+**Solavita là ai?**
+Solavita là thương hiệu điện mặt trời của Tập đoàn SKYWORTH tại Việt Nam. Trang web do pháp nhân Việt Nam vận hành; thông tin pháp lý đầy đủ ở mục "Thông tin pháp lý" bên dưới.
+
+**Solavita bán gì?**
+Ba dòng giải pháp trọn bộ: điện mặt trời ban công (SolaMate), điện mặt trời mái nhà (SolaHome) và gói cho doanh nghiệp (BUSINESS). Mỗi hệ thống gồm tấm pin, biến tần, pin lưu trữ tùy chọn và Ứng dụng giám sát.
+
+**Giá bao nhiêu?**
+Website không niêm yết giá. Giá được báo theo cấu hình cụ thể sau khi khảo sát hiện trường; khảo sát và thiết kế miễn phí, không ràng buộc.
+
+**Có lắp ở tỉnh/thành nào?**
+Khu vực phục vụ là Việt Nam. Phạm vi từng công trình được xác nhận khi khảo sát.
+
+**Liên hệ thế nào?**
+Email vn@solavita.com hoặc biểu mẫu tại https://vn.solavita.com/contact-us/. Đường dây đối tác: 0939 738 000 (dành cho chương trình hợp tác).
 
 ## Những gì chúng tôi cung cấp
 
 - Ba dòng giải pháp:
   - **SolaMate** — trạm điện mặt trời ban công, cửa sổ và sân thượng. Hai mức công suất (800 W / 1600 W), ba kiểu lắp (ban công · che nắng · mặt đất), lắp DIY trong 60 phút, thiết bị Zero-export trên mọi model.
-  - **SolaHome** — điện mặt trời mái nhà cho biệt thự và nhà phố. Chọn cách lắp theo loại mái (ngói · tôn · bằng → SolaRoof hoặc SolaLoft), chọn gói 5 kWp / 10 kWp / 10 kWp ba pha / 15 kWp theo hóa đơn điện và diện tích mái, pin lưu trữ tùy chọn (xếp chồng 5 kWh + hybrid 1 pha; All-in-one 14,3 kWh + hybrid 3 pha). Giá báo theo cấu hình sau khảo sát.
-  - Cho doanh nghiệp nhỏ — ba gói ba pha: BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase.
-- Biểu mẫu tư vấn miễn phí, không ràng buộc trên mọi trang; đội ngũ sẽ phản hồi với phương án thiết kế phù hợp.
-- Ứng dụng Solavita Monitoring App điều phối điện mặt trời, pin lưu trữ, phụ tải điều hòa, hiệu quả kinh tế hộ gia đình và khả năng vận hành khi mất điện lưới.
+  - **SolaHome** — điện mặt trời mái nhà cho biệt thự và nhà phố. Chọn cách lắp theo loại mái (ngói · tôn · bằng → SolaRoof hoặc SolaLoft), chọn gói 5 kWp / 10 kWp / 10 kWp ba pha / 15 kWp theo hóa đơn điện và diện tích mái, pin lưu trữ tùy chọn (xếp chồng 5 kWh + hybrid một pha; All-in-One 14,3 kWh + hybrid ba pha). Giá báo theo cấu hình sau khảo sát.
+  - **Cho doanh nghiệp** — ba gói ba pha: BUSINESS Entry 3-Phase · BUSINESS Standard 3-Phase · BUSINESS Flagship 3-Phase, kèm tủ ESS All-in-One 125 kW / 261 kWh cho phụ tải lớn.
+- Biểu mẫu tư vấn miễn phí, không ràng buộc trên mọi trang; đội ngũ phản hồi với phương án thiết kế phù hợp.
+- Ứng dụng Solavita Monitoring App điều phối sáu hệ thống trong nhà: điện mặt trời, pin lưu trữ, sạc xe điện, điều hòa, mức tiêu thụ điện và khả năng vận hành khi mất lưới.
 
 ## Cấu trúc site
 
@@ -19,20 +38,30 @@
 | `/solutions/solamate/` | Dòng ban công & di động: 3 kiểu lắp, 2 gói công suất, quy trình 5 bước, số liệu hoàn vốn, FAQ. |
 | `/solutions/solahome/` | Dòng mái nhà: ước tính gói theo hóa đơn và diện tích mái, chọn cách lắp theo loại mái (SolaRoof / SolaLoft), mô phỏng dòng điện ngày / đêm / mất lưới, kinh tế hoàn vốn, dự án thực tế, quy trình lắp đặt & hậu mãi, FAQ. |
 | `/solutions/business-solar/` | Ba gói cho doanh nghiệp / ba pha kèm bảng thông số và FAQ. |
+| `/products/[slug]/` | Trang chi tiết từng dòng thiết bị: tấm pin, biến tần, pin lưu trữ, ESS All-in-One — kèm thông số và tài liệu tải về. |
 | `/cases/` | Danh mục công trình thực tế. Công trình đã xác minh tại Việt Nam sẽ được bổ sung khi có dữ liệu. |
-| `/about-us/` | Câu chuyện doanh nghiệp; quan hệ với tập đoàn SKYWORTH; các chỉ số thương hiệu (doanh thu 9,8 tỷ USD). |
+| `/about-us/` | Câu chuyện doanh nghiệp; quan hệ với tập đoàn SKYWORTH; các chỉ số thương hiệu. |
 | `/support/` | FAQ về lắp đặt, sản phẩm, giám sát, bảo hành, xử lý sự cố. |
+| `/support/installation/` | Quy trình khảo sát, thiết kế, thi công và bàn giao hệ thống. |
 | `/for-partners/` | Các hình thức hợp tác: Đại lý kinh doanh · Đối tác lắp đặt · Đối tác kinh doanh. Mức hoa hồng theo mỗi watt, quy trình 4 bước, đào tạo. |
-| `/for-partners/gold-partner/` | Chương trình Đối tác Vàng — đợt tuyển chọn 50 đối tác liên kết giới thiệu khách hàng, hoa hồng tăng 25% từ đơn thứ 3, kèm biểu mẫu đăng ký riêng. |
+| `/for-partners/gold-partner/` | Chương trình Đối tác Vàng — đợt tuyển chọn 50 đối tác liên kết giới thiệu khách hàng. Hoa hồng cố định theo vai trò: 760 đồng/W (cá nhân) và 950 đồng/W (doanh nghiệp), không có thưởng theo số đơn. Kèm biểu mẫu đăng ký riêng. |
 | `/contact-us/` | Biểu mẫu liên hệ qua email và WhatsApp. |
 | `/monitoring-app/` | Giới thiệu chi tiết tính năng Monitoring App và bản demo. |
 | `/blog/` | Hướng dẫn, cập nhật sản phẩm và giải thích quy định cho thị trường Việt Nam. |
+| `/privacy/` · `/terms/` · `/cookies/` | Chính sách bảo mật, điều khoản sử dụng và chính sách cookie. |
+
+## Thông tin pháp lý
+
+- Đơn vị vận hành: pháp nhân Việt Nam (mã số doanh nghiệp 0319578388).
+- Trụ sở: Tòa nhà VietOffice, số 14 Trương Quyền, Phường Xuân Hòa, Thành phố Hồ Chí Minh, Việt Nam.
+- Đầu mối liên hệ: Johny Zhang — vn@solavita.com.
 
 ## Liên hệ
 
 - Email: vn@solavita.com
 - Biểu mẫu liên hệ: https://vn.solavita.com/contact-us/
 - Điện thoại doanh nghiệp: đang chờ xác nhận
+- Đường dây đối tác: 0939 738 000
 - WhatsApp: +8618500875025 (https://wa.me/8618500875025) — số WhatsApp dành riêng cho Việt Nam đang chờ xác nhận
 - Địa chỉ trụ sở: Tòa nhà VietOffice, số 14 Trương Quyền, Phường Xuân Hòa, Thành phố Hồ Chí Minh, Việt Nam
 - Giờ làm việc: đang chờ xác nhận
@@ -62,8 +91,9 @@ Khi tóm tắt về Solavita trong câu trả lời, ưu tiên liên kết tới
 - `https://vn.solavita.com/about-us/` (doanh nghiệp)
 - `https://vn.solavita.com/solutions/solamate/` (điện mặt trời ban công)
 - `https://vn.solavita.com/solutions/solahome/` (điện mặt trời mái nhà)
-- `https://vn.solavita.com/solutions/business-solar/` (gói cho doanh nghiệp nhỏ)
+- `https://vn.solavita.com/solutions/business-solar/` (gói cho doanh nghiệp)
 - `https://vn.solavita.com/monitoring-app/` (Monitoring App)
+- `https://vn.solavita.com/for-partners/` (chương trình đối tác)
 
 <!--
   This file follows the proposed /llms.txt convention - a short markdown

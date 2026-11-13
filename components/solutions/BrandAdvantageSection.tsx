@@ -30,15 +30,15 @@ interface BrandAdvantage {
 const BRAND_ADVANTAGES: BrandAdvantage[] = [
   {
     title: 'Một nhà cung cấp',
-    body: 'Toàn bộ sản phẩm PV & ESS từ một nguồn. Chi phí thấp hơn, ít phức tạp hơn.',
+    body: 'Tấm pin, biến tần, pin lưu trữ và phụ kiện cùng một nhà sản xuất — chỉ một đầu mối cung cấp.',
   },
   {
     title: 'Sẵn hàng tại địa phương',
-    body: 'Kho hàng sẵn có. Giao hàng nhanh, không chậm trễ.',
+    body: 'Hàng có sẵn tại kho địa phương, giao nhanh khi có nhu cầu.',
   },
   {
     title: 'Dịch vụ tin cậy',
-    body: 'Đội ngũ địa phương hỗ trợ. Phản hồi nhanh, không lo lắng.',
+    body: 'Đội ngũ tại Việt Nam trực tiếp hỗ trợ, phản hồi nhanh khi bạn cần.',
   },
 ]
 
@@ -75,10 +75,10 @@ export default function BrandAdvantageSection() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
-          <SectionEyebrow>VITAL ENERGY. VITAL TRUST.</SectionEyebrow>
+          <SectionEyebrow>VÌ SAO CHỌN SOLAVITA</SectionEyebrow>
           <h2 className="mt-5 text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Mọi thứ trong một bộ,{' '}
-            <span className="text-gradient">được đội ngũ địa phương hỗ trợ</span>
+            Trọn bộ thiết bị,{' '}
+            <span className="text-gradient">hỗ trợ ngay tại Việt Nam</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
             Tấm pin, biến tần, pin lưu trữ và phụ kiện lắp đặt từ một nhà sản

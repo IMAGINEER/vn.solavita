@@ -49,7 +49,7 @@ export const supportCategories: SupportCategory[] = [
     id: 'installation',
     title: 'Lắp đặt',
     description:
-      'Khảo sát, ngày lắp đặt, những gì cần chuẩn bị và cách chuẩn bị cho ngôi nhà của bạn.',
+      'Khảo sát, ngày thi công và những việc cần chuẩn bị trước khi lắp đặt.',
     icon: 'wrench',
     ctaLabel: 'Hướng dẫn lắp đặt',
     ctaHref: '/support/installation',
@@ -58,7 +58,7 @@ export const supportCategories: SupportCategory[] = [
     id: 'product',
     title: 'Sản phẩm',
     description:
-      'Thông số kỹ thuật, hướng dẫn sử dụng và tài liệu tải về cho tấm quang năng, pin lưu trữ và bộ biến tần.',
+      'Thông số kỹ thuật, hướng dẫn sử dụng và tài liệu tải về cho tấm pin, pin lưu trữ và bộ biến tần.',
     icon: 'package',
     ctaLabel: 'Tải tài liệu',
     ctaHref: '#download',
@@ -110,25 +110,25 @@ export const faqItems: FaqItem[] = [
     category: 'installation',
     question: 'Tôi có cần có mặt tại nhà khi khảo sát không?',
     answer:
-      'Có - buổi khảo sát được thực hiện tại chỗ để kỹ thuật viên kiểm tra mái nhà, tủ điện và gác mái. Thường mất 60-90 phút.',
+      'Có – buổi khảo sát được thực hiện tại chỗ để kỹ thuật viên kiểm tra mái nhà, tủ điện và gác mái. Thường mất 60–90 phút.',
   },
   {
     category: 'installation',
     question: 'Việc lắp đặt có gây gián đoạn không?',
     answer:
-      'Chúng tôi tháo ngói để gắn thanh ray, khoan bắt vít vào xà mái và đi dây đến tủ điện của bạn. Hầu hết các hộ gia đình trở lại sinh hoạt bình thường trong cùng ngày.',
+      'Cách thi công phụ thuộc kiểu lắp: SolaRoof giữ nguyên mái cũ, SolaLoft dựng khung phía trên mái. Hầu hết hộ gia đình trở lại sinh hoạt bình thường trong cùng ngày.',
   },
   {
     category: 'product',
     question: 'Tôi có thể tìm hướng dẫn sử dụng ở đâu?',
     answer:
-      'Hướng dẫn sử dụng sản phẩm có trong mục Tải về của Ứng dụng giám sát và có thể yêu cầu từ đội ngũ dịch vụ của chúng tôi.',
+      'Hướng dẫn sử dụng có trong mục Tài liệu tải về trên trang Hỗ trợ, hoặc bạn có thể yêu cầu trực tiếp từ đội ngũ dịch vụ.',
   },
   {
     category: 'product',
     question: 'Tấm quang năng Solavita có đạt chuẩn Tier-1 không?',
     answer:
-      'TBD — Xếp hạng Tier-1 và thứ hạng BloombergNEF của tấm quang năng (chờ xác nhận).',
+      'TBD — Xếp hạng Tier-1 và thứ hạng BloombergNEF của tấm pin mặt trời (chờ xác nhận).',
   },
   {
     category: 'monitoring',
@@ -140,25 +140,25 @@ export const faqItems: FaqItem[] = [
     category: 'monitoring',
     question: 'Tôi có thể chia sẻ quyền truy cập với gia đình không?',
     answer:
-      'Có. Trong ứng dụng, bạn có thể mời thêm các thành viên trong hộ gia đình - họ sẽ có tài khoản riêng và cùng xem được sản lượng điện tạo ra và mức tiêu thụ.',
+      'Có. Trong ứng dụng, bạn có thể mời thêm thành viên trong hộ gia đình – mỗi người có tài khoản riêng và cùng xem sản lượng điện tạo ra, mức tiêu thụ.',
   },
   {
     category: 'warranty',
     question: 'Chế độ bảo hành bao gồm những gì?',
     answer:
-      'TBD — Thời hạn và phạm vi bảo hành chính thức cho sản phẩm, hiệu suất tấm quang năng và tay nghề lắp đặt (chờ xác nhận).',
+      'TBD — Thời hạn và phạm vi bảo hành chính thức cho sản phẩm, hiệu suất tấm pin mặt trời và tay nghề lắp đặt (chờ xác nhận).',
   },
   {
     category: 'warranty',
     question: 'Bảo hành có được chuyển nhượng nếu tôi bán nhà không?',
     answer:
-      'Có. Bảo hành đi theo hệ thống. Vui lòng thông báo cho chúng tôi về việc thay đổi chủ sở hữu để chúng tôi cập nhật hồ sơ.',
+      'TBD — Điều kiện chuyển nhượng bảo hành khi đổi chủ sở hữu (chờ xác nhận).',
   },
   {
     category: 'troubleshooting',
-    question: 'Hệ thống của tôi ngừng phát điện - tôi nên kiểm tra gì?',
+    question: 'Hệ thống của tôi ngừng phát điện – tôi nên kiểm tra gì?',
     answer:
-      'Trước tiên, hãy kiểm tra cảnh báo trong Ứng dụng giám sát, sau đó xác nhận màn hình bộ biến tần vẫn sáng. Nếu cả hai đều bình thường, hãy gửi yêu cầu dịch vụ và chúng tôi sẽ phản hồi theo thời gian phản hồi chính thức.',
+      'Trước tiên, hãy kiểm tra cảnh báo trong ứng dụng giám sát, sau đó xác nhận màn hình biến tần vẫn sáng. Nếu cả hai đều bình thường, hãy gửi yêu cầu dịch vụ — đội ngũ sẽ phản hồi trong thời gian sớm nhất.',
   },
 ]
 

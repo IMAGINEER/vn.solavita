@@ -912,24 +912,24 @@ export interface WhySolavitaPoint {
 
 export const whySolavita: WhySolavitaPoint[] = [
   {
-    title: 'Defined solutions',
+    title: 'Cấu hình rõ ràng',
     description:
-      'Compare panel counts, inverter ratings and battery capacities in one place across six solutions for homes, larger residences and small businesses.',
+      'So sánh số tấm pin, công suất biến tần và dung lượng pin của từng giải pháp trong cùng một nơi.',
   },
   {
-    title: 'Sized for real energy needs',
+    title: 'Thiết kế theo nhu cầu thực tế',
     description:
-      'From essential backup to higher-load homes and selected small commercial applications — every solution is designed around a specific energy profile.',
+      'Từ nguồn dự phòng thiết yếu đến hộ dùng nhiều thiết bị và doanh nghiệp nhỏ — mỗi giải pháp gắn với một mức phụ tải cụ thể.',
   },
   {
-    title: 'Backed by the SKYWORTH brand',
+    title: 'Đồng hành cùng SKYWORTH',
     description:
-      'Solar and energy solutions backed by the SKYWORTH Group, presented with clear configuration data and a transparent path from enquiry to installation.',
+      'Giải pháp điện mặt trời và lưu trữ thuộc Tập đoàn SKYWORTH, công bố đầy đủ thông số cấu hình và quy trình từ tư vấn đến lắp đặt.',
   },
   {
-    title: 'Local support arrangements',
+    title: 'Hỗ trợ tại Việt Nam',
     description:
-      'TBD — Verified Vietnamese installation, customer service and after-sales arrangements.',
+      'TBD — Phương án lắp đặt, chăm sóc khách hàng và hậu mãi tại Việt Nam (chờ xác nhận).',
   },
 ]
 
@@ -966,35 +966,35 @@ export interface SolutionFaqItem {
 
 export const homeSolutionFaqs: SolutionFaqItem[] = [
   {
-    q: 'Will this really save me money?',
-    a: "Yes. You'll use less expensive grid power and cut your daily energy bills. Most families see their monthly bills drop significantly, making it a smart investment.",
+    q: 'Hệ thống có thực sự giúp tiết kiệm không?',
+    a: 'Có. Điện mặt trời được dùng ngay khi phát sinh nên lượng điện mua từ lưới giảm. Mức tiết kiệm phụ thuộc sản lượng, hóa đơn và cách dùng điện của từng gia đình.',
   },
   {
-    q: 'What happens when the power goes out?',
-    a: 'Your lights, fridge, and Wi-Fi stay on. The system automatically switches to battery power instantly, so your family stays comfortable and safe, day or night.',
+    q: 'Điều gì xảy ra khi mất điện lưới?',
+    a: 'Nếu chọn cấu hình có pin lưu trữ, hệ thống tự chuyển các tải thiết yếu sang pin. Thiết bị nào được duy trì phụ thuộc cấu hình và cách đấu nối tại thời điểm lắp đặt.',
   },
   {
-    q: 'How long will the battery last?',
-    a: "It's built to last. With a 5-year warranty and 6,000 cycles, this battery can power your home for over 10 years-even with daily use.",
+    q: 'Pin lưu trữ dùng được bao lâu?',
+    a: 'Pin LiFePO₄ được bảo hành 10 năm và vượt 8.000 chu kỳ sạc xả, đủ bền cho nhu cầu dùng điện hằng ngày của gia đình.',
   },
   {
-    q: 'Is it hard to maintain?',
-    a: 'Not at all. Just keep the panels clean. We monitor your system remotely and have local experts ready to help if you need us.',
+    q: 'Hệ thống có khó bảo trì không?',
+    a: 'Không. Bạn chỉ cần giữ tấm pin sạch. Solavita giám sát hệ thống từ xa và hỗ trợ kỹ thuật khi cần.',
   },
 ]
 
 export const businessSolutionFaqs: SolutionFaqItem[] = [
   {
     q: 'Giải pháp này có thực sự giúp tôi tiết kiệm không?',
-    a: 'Có. Bạn sẽ dùng điện lưới với chi phí thấp hơn và cắt giảm hóa đơn năng lượng hằng ngày. Nhiều doanh nghiệp thấy hóa đơn hằng tháng giảm rõ rệt, khiến đây trở thành khoản đầu tư hợp lý.',
+    a: 'Có. Điện mặt trời được dùng ngay khi phát sinh nên lượng điện mua từ lưới giảm. Mức tiết kiệm phụ thuộc phụ tải, giờ vận hành và biểu giá điện của từng doanh nghiệp.',
   },
   {
     q: 'Điều gì xảy ra khi mất điện?',
-    a: 'Các hệ thống thiết yếu vẫn hoạt động. Với khả năng tự động chuyển sang pin tức thời, doanh nghiệp tránh được thời gian chết, giữ dữ liệu và vận hành an toàn, duy trì hiệu suất cao cả ngày lẫn đêm.',
+    a: 'Nếu chọn cấu hình có pin lưu trữ, hệ thống tự chuyển các tải thiết yếu sang pin. Thời gian duy trì phụ thuộc dung lượng pin và phụ tải thực tế — cần khảo sát để xác định.',
   },
   {
     q: 'Pin lưu trữ dùng được bao lâu?',
-    a: 'Được thiết kế bền bỉ. Với bảo hành 5 năm và 6,000 chu kỳ, pin có thể cấp điện cho doanh nghiệp của bạn hơn 10 năm — kể cả khi dùng hằng ngày.',
+    a: 'Pin LiFePO₄ được bảo hành 10 năm và vượt 8.000 chu kỳ sạc xả, phù hợp với nhu cầu dùng điện hằng ngày của doanh nghiệp.',
   },
   {
     q: 'Hệ thống có khó bảo trì không?',

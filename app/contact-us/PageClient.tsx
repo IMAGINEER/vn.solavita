@@ -53,7 +53,7 @@ export default function ContactUsPage() {
             <span className="text-gradient">Bắt đầu với báo giá miễn phí.</span>
           </>
         }
-        description="Hãy cho chúng tôi biết bạn muốn cấp điện cho điều gì — đội ngũ Solavita Việt Nam sẽ thiết kế miễn phí, không ràng buộc, để bạn thấy hệ thống điện mặt trời, lưu trữ hoặc trọn bộ nguồn điện cho gia đình hay doanh nghiệp của mình sẽ như thế nào."
+        description="Cho chúng tôi biết bạn cần cấp điện cho thiết bị gì — Solavita sẽ thiết kế miễn phí, không ràng buộc, để bạn thấy cấu hình phù hợp cho gia đình hoặc doanh nghiệp."
       />
 
       <Footer />

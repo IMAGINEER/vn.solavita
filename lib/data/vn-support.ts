@@ -34,7 +34,7 @@ export const vnSupportItems: VnSupportItem[] = [
     icon: 'warranty',
     title: 'Bảo hành',
     description:
-      'TBD — Điều khoản bảo hành đã được phê duyệt cho tấm quang năng, bộ biến tần, pin lưu trữ và tay nghề lắp đặt (chờ xác nhận).',
+      'TBD — Điều khoản bảo hành đã được phê duyệt cho tấm pin mặt trời, bộ biến tần, pin lưu trữ và tay nghề lắp đặt (chờ xác nhận).',
   },
   {
     icon: 'service',
@@ -151,7 +151,7 @@ export const supportFaqGroups: SupportFaqGroup[] = [
       },
       {
         q: 'Chế độ bảo hành như thế nào?',
-        a: 'TBD — Điều khoản bảo hành đã được phê duyệt cho tấm quang năng, bộ biến tần, pin lưu trữ và tay nghề lắp đặt (chờ xác nhận).',
+        a: 'TBD — Điều khoản bảo hành đã được phê duyệt cho tấm pin mặt trời, bộ biến tần, pin lưu trữ và tay nghề lắp đặt (chờ xác nhận).',
       },
       {
         q: 'Lắp đặt có sẵn ở những đâu?',

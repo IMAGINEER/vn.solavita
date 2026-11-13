@@ -37,7 +37,7 @@ export interface PartnerFormProps {
   onClose?: () => void
   /** Optional pre-seed for the track selector. */
   defaultTrack?: 'core-service' | 'certified-installer' | 'lead-partner'
-  /** Visible label on the Submit button. Default `Submit enquiry`. */
+  /** Visible label on the Submit button. Default `Gửi yêu cầu`. */
   submitButtonLabel?: string
   /** Override the submit endpoint. Default `/api/partner`. */
   submitEndpoint?: string

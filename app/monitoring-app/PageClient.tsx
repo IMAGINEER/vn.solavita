@@ -37,7 +37,7 @@ export default function MonitoringAppPage() {
             <span className="text-gradient">Nhận thiết kế &amp; báo giá miễn phí.</span>
           </>
         }
-        description="Hãy cho chúng tôi biết về ngôi nhà của bạn. Đội ngũ Solavita Việt Nam sẽ thiết kế hệ thống phù hợp được quản lý qua Ứng dụng giám sát - điện mặt trời, pin lưu trữ và điện dự phòng - và gửi bạn báo giá rõ ràng, không ràng buộc."
+        description="Cho chúng tôi biết về ngôi nhà của bạn — đội ngũ Solavita sẽ thiết kế hệ thống điện mặt trời, pin lưu trữ và dự phòng, quản lý qua Ứng dụng giám sát, kèm báo giá rõ ràng, không ràng buộc."
         secondaryLabel="Trao đổi với đội ngũ"
         secondaryHref="mailto:vn@solavita.com"
       />

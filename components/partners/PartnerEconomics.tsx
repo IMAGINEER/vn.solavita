@@ -78,9 +78,8 @@ export default function PartnerEconomics() {
             <span className="text-gradient">rõ ràng theo vai trò</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Mỗi đơn hàng bạn ký được đều được tính hoa hồng theo công suất
-            thực tế của hệ thống. Mức hoa hồng cố định theo vai trò — cá nhân
-            hoặc doanh nghiệp.
+            Hoa hồng tính theo công suất thực tế của từng hệ thống bạn ký
+            được; mức cố định theo vai trò — cá nhân hoặc doanh nghiệp.
           </p>
         </div>
 
@@ -92,7 +91,7 @@ export default function PartnerEconomics() {
                 <Percent className="w-5 h-5" strokeWidth={1.8} />
               </span>
               <h3 className="text-xl font-cw-bold text-uk-navy">
-                Hoa hồng theo mỗi watt
+                Cách tính hoa hồng
               </h3>
             </div>
             <dl className="space-y-3.5">
@@ -183,9 +182,9 @@ export default function PartnerEconomics() {
               </h3>
             </div>
             <p className="text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
-              Đối tác lắp đặt làm việc dưới sự chỉ đạo của Energy Partner
-              Solavita: tổng bộ khảo sát, thiết kế và chỉ đạo thi công, đối tác
-              nhận công trình theo hình thức thỏa thuận với từng dự án.
+              Đối tác lắp đặt làm việc cùng Energy Partner Solavita: Solavita
+              khảo sát, thiết kế và giám sát thi công, đối tác nhận công trình
+              theo thỏa thuận từng dự án.
             </p>
             {/* The per-project payout line is intentionally absent: the
                 figure is not confirmed for Vietnam, and a TBD here read

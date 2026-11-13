@@ -5,10 +5,10 @@ import JsonLd from '@/components/seo/JsonLd'
 import { webPageJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/seo/jsonld'
 
 export const metadata = buildPageMetadata({
-  title: 'Cách lắp đặt — Quy trình lắp đặt điện mặt trời & pin lưu trữ',
+  title: 'Quy trình lắp đặt điện mặt trời & pin lưu trữ',
   path: '/support/installation',
   description:
-    'Quy trình lắp đặt hệ thống Solavita: khảo sát miễn phí, thiết kế và báo giá riêng, đội ngũ lắp đặt và nghiệm thu đầy đủ — kèm giải đáp các câu hỏi thường gặp về lắp đặt.',
+    'Bốn bước lắp đặt hệ thống Solavita: khảo sát miễn phí, thiết kế và báo giá, thi công, nghiệm thu — kèm giải đáp các câu hỏi thường gặp về lắp đặt.',
   ogImage: '/images/og-solutions.jpg',
   ogImageAlt: 'Lắp đặt điện mặt trời và pin lưu trữ của Solavita',
 })
@@ -20,11 +20,11 @@ const FAQS: { question: string; answer: string }[] = [
   },
   {
     question: 'Tôi có cần chuẩn bị gì trước khi lắp đặt không?',
-    answer: 'Không. Đội ngũ của chúng tôi lo khảo sát mái nhà, xin phép và thiết lập.',
+    answer: 'Không cần chuẩn bị thiết bị. Solavita phụ trách khảo sát mái, thi công và đấu nối theo quy định.',
   },
   {
     question: 'Nguồn điện của tôi có bị gián đoạn trong quá trình lắp đặt không?',
-    answer: 'Không, chúng tôi lắp đặt mà không làm gián đoạn sinh hoạt của hộ gia đình hay doanh nghiệp.',
+    answer: 'Thi công được sắp xếp để hạn chế gián đoạn sinh hoạt; nếu cần ngắt điện cục bộ, đội ngũ sẽ báo trước.',
   },
   {
     question: 'Ai là người lắp đặt hệ thống?',

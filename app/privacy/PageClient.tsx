@@ -71,7 +71,7 @@ export default function PrivacyPage() {
                 Chính sách bảo mật này giải thích cách <strong className="text-[#0A1628]">{SITE_LEGAL_NAME}</strong> ("Solavita", "chúng tôi" hoặc "Solavita Việt Nam") thu thập, sử dụng, lưu trữ và chia sẻ thông tin cá nhân khi Bạn truy cập trang web này, liên hệ với chúng tôi hoặc gửi yêu cầu tư vấn.
               </p>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
-                Chúng tôi hướng tới việc xử lý thông tin cá nhân một cách minh bạch và tuân thủ pháp luật hiện hành về bảo vệ dữ liệu, bao gồm Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và các văn bản hướng dẫn thi hành trong phạm vi áp dụng đối với Bạn, và Pháp lệnh Bảo vệ dữ liệu cá nhân (Personal Data (Privacy) Ordinance) của Hồng Kông trong phạm vi áp dụng cho hoạt động xử lý do công ty mẹ được thành lập tại Hồng Kông của chúng tôi thực hiện.
+                Chúng tôi hướng tới việc xử lý thông tin cá nhân một cách minh bạch và tuân thủ pháp luật hiện hành về bảo vệ dữ liệu, bao gồm Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và các văn bản hướng dẫn thi hành, trong phạm vi áp dụng đối với Bạn; và Pháp lệnh Bảo vệ dữ liệu cá nhân (Personal Data (Privacy) Ordinance) của Hồng Kông, trong phạm vi áp dụng cho hoạt động xử lý do công ty mẹ tại Hồng Kông của chúng tôi thực hiện.
               </p>
             </div>
 
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 Tùy thuộc vào cách Bạn tương tác với trang web, chúng tôi có thể thu thập các nhóm thông tin sau:
               </p>
-              <p className="text-sm text-[#4A1628] font-cw-bold mb-1">Thông tin do Bạn cung cấp</p>
+              <p className="text-sm text-[#0A1628] font-cw-bold mb-1">Thông tin do Bạn cung cấp</p>
               <ul className="list-disc pl-6 text-sm text-[#4A5568] leading-relaxed mb-3 space-y-1">
                 <li>Họ tên và thông tin liên hệ, chẳng hạn như địa chỉ email và số điện thoại.</li>
                 <li>Thông tin về địa điểm nhà ở hoặc địa điểm kinh doanh mà Bạn lựa chọn cung cấp.</li>

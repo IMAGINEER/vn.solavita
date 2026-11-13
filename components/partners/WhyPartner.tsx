@@ -96,14 +96,14 @@ export default function WhyPartner() {
         {/* Body paragraph + tagline */}
         <div className="max-w-4xl mx-auto text-center mb-10">
           <p className="text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed">
-            Solavita đồng hành cùng các đối tác năng lượng bằng sản phẩm sản
-            xuất tại nhà máy, với mô hình giải pháp trọn gói: chuỗi cung ứng,
-            tài chính, logistics và vận hành — bảo trì đều thuộc về phía
-            Solavita. Khi trở thành đối tác, bạn có quyền tiếp cận tồn kho tại
-            địa phương, bảo hành toàn hệ thống và hỗ trợ chia sẻ khách hàng.
+            Solavita đồng hành cùng đối tác năng lượng với sản phẩm sản xuất
+            tại nhà máy và mô hình trọn gói — chuỗi cung ứng, tài chính,
+            logistics và bảo trì đều do Solavita đảm nhận. Khi hợp tác, bạn
+            tiếp cận tồn kho tại địa phương, bảo hành toàn hệ thống và hỗ trợ
+            chia sẻ khách hàng.
           </p>
           <p className="mt-3 text-lg md:text-xl font-cw-bold text-uk-navy">
-            Phát triển kinh doanh, đồng hành cùng khu vực của bạn!
+            Cùng nhau phát triển kinh doanh tại khu vực của bạn.
           </p>
         </div>
 

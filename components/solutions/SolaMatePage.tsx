@@ -71,8 +71,8 @@ export default function SolaMatePage() {
       <PageHero
         backgroundImage="/images/solamate/hero.webp"
         eyebrow="SolaMate · Trạm điện ban công"
-        title={'Giảm Hóa Đơn Điện.\nBắt Đầu Từ Ban Công.'}
-        body="Tận dụng năng lượng mặt trời ngay tại nhà với SolaMate. Lắp đặt dễ dàng, sử dụng tiện lợi."
+        title={'Giảm hóa đơn điện.\nBắt đầu từ ban công.'}
+        body="Điện mặt trời ngay tại ban công: lắp trong khoảng 60 phút, không khoan tường, điện dùng ngay trong nhà."
         primaryCta={{
           label: 'Nhận báo giá ngay',
           onClick: () => openFormModal({ solutionType: 'balcony' }),
@@ -83,7 +83,6 @@ export default function SolaMatePage() {
         }}
         breadcrumbs={[
           { label: 'Trang chủ', href: '/' },
-          { label: 'Giải pháp', href: '/solutions/solahome/' },
           { label: 'SolaMate' },
         ]}
         /* The balcony photo is bright on the left (white facade), so the
@@ -207,7 +206,7 @@ export default function SolaMatePage() {
               CHỌN CÔNG SUẤT
             </SectionEyebrow>
             <h2 className="mt-5 text-3xl font-cw-bold leading-tight text-white md:text-4xl">
-              Hai gói, <span className="text-gradient">một cách lắp</span>
+              Hai gói, <span className="text-gradient">cùng một cách lắp</span>
             </h2>
             <p className="mt-5 text-base leading-relaxed text-white/80">
               Chọn gói phù hợp với mức điện gia đình bạn dùng mỗi ngày: gói
@@ -310,7 +309,7 @@ export default function SolaMatePage() {
                   {/* 3 + 4 — module count and inverter */}
                   <dl className="grid grid-cols-2 divide-x divide-uk-line gap-y-4 text-sm">
                     <div className="pr-4">
-                      <dt className="text-xs text-uk-slate">Số module PV</dt>
+                      <dt className="text-xs text-uk-slate">Số tấm pin</dt>
                       <dd className="mt-1 font-cw-bold text-uk-navy">
                         {p.modules}
                       </dd>
@@ -597,8 +596,8 @@ export default function SolaMatePage() {
               <p className="mt-4 text-base leading-relaxed text-uk-slate">
                 Mọi model đều có thiết bị Zero-export: điện sinh ra được dùng
                 ngay trong nhà và không phát ngược lên lưới. Tại Việt Nam, hệ
-                thống kết nối cố định với hộp phân phối điện AC theo quy định
-                địa phương — không cần thủ tục xin phép lắp đặt điện phức tạp.
+                thống đấu nối vào hộp phân phối điện AC theo quy định an toàn
+                tại địa phương.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
@@ -760,9 +759,9 @@ export default function SolaMatePage() {
             Bắt đầu tiết kiệm điện <span className="text-gradient">từ tháng đầu tiên</span>
           </>
         }
-        description="Đăng ký khảo sát miễn phí: chọn tỉnh/thành và kiểu lắp đặt (lan can, mái che, cắm đất). Kỹ thuật viên liên hệ trong vòng 2 giờ, không ràng buộc, không phí ẩn."
+        description="Đăng ký khảo sát miễn phí: chọn tỉnh/thành và kiểu lắp đặt (lan can, mái che, cắm đất). Kỹ thuật viên sẽ liên hệ để hẹn thời gian khảo sát — không ràng buộc, không phí ẩn."
         primaryLabel="Đăng ký khảo sát miễn phí"
-        secondaryLabel="Nhắn Zalo ngay"
+        secondaryLabel="Nhắn WhatsApp"
         secondaryHref="https://wa.me/8618500875025"
       />
       <Footer />

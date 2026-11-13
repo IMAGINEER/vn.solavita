@@ -68,7 +68,7 @@ export const aboutApproach: AboutApproach[] = [
   {
     title: 'Cấu hình hệ thống rõ ràng',
     description:
-      'Chúng tôi giải thích công suất tấm quang năng, công suất bộ biến tần và dung lượng pin lưu trữ để bạn tự tin so sánh các phương án.',
+      'Chúng tôi giải thích công suất tấm pin mặt trời, công suất bộ biến tần và dung lượng pin lưu trữ để bạn tự tin so sánh các phương án.',
   },
   {
     title: 'Công nghệ hướng đến dài hạn',
@@ -99,7 +99,7 @@ export const aboutCertifications: AboutCertification[] = [
   {
     label: 'IEC 61215 · IEC 61730',
     description:
-      'Tiêu chuẩn thiết kế, an toàn điện và hiệu suất cho tấm quang năng Solavita.',
+      'Tiêu chuẩn thiết kế, an toàn điện và hiệu suất cho tấm pin mặt trời Solavita.',
   },
   {
     label: 'ISO 9001 · ISO 14001',

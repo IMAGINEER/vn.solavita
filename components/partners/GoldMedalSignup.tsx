@@ -188,7 +188,7 @@ export default function GoldMedalSignup({
                 </h3>
                 <p className="mt-3 text-sm md:text-base text-uk-slate font-cw-regular leading-relaxed">
                   Bạn sẽ nhận được email xác nhận kèm hướng dẫn chi tiết. Nếu
-                  muốn trao đổi ngay, hãy gọi HOTLINE đối tác:{' '}
+                  muốn trao đổi ngay, hãy gọi đường dây đối tác:{' '}
                   <a
                     href={`tel:${PARTNER_HOTLINE}`}
                     className="inline-flex items-center gap-1.5 font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"

@@ -146,7 +146,7 @@ export default function Footer({
     // landing pages. Mirrors the Header dropdown.
     { label: 'SolaMate — ban công & di động', href: '/solutions/solamate/' },
     { label: 'SolaHome — mái nhà & khuôn viên', href: '/solutions/solahome/' },
-    { label: 'Cho doanh nghiệp nhỏ', href: '/solutions/business-solar/' },
+    { label: 'Cho doanh nghiệp', href: '/solutions/business-solar/' },
   ]
 
   const defaultCompanyLinks: FooterLink[] = [
@@ -354,7 +354,7 @@ export default function Footer({
               </li>
               <li>
                 <a href="/support/#faq" className={linkClass}>
-                  FAQ
+                  Câu hỏi thường gặp
                 </a>
               </li>
               <li className="flex items-center gap-2.5">

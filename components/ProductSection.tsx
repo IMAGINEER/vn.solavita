@@ -121,11 +121,11 @@ const PRODUCT_DETAIL_CONTENT: Record<
       { label: 'Chứng nhận', value: 'TBD — chờ xác nhận tại Việt Nam' },
     ],
     highlights: [
-      'Hybrid một pha 3–12 kW với 20 A mỗi string và quá tải PV 200%',
+      'Hybrid một pha 3–12 kW, mỗi chuỗi 20 A, công suất tấm pin tối đa gấp đôi công suất ra',
       'Hybrid ba pha 5–20 kW với đầu vào PV lên tới 40 kW',
       'Chuyển sang pin dự phòng dưới 4 ms (một pha) và dưới 10 ms (ba pha)',
       'AFCI chủ động bằng AI và chống sét SPD Type II, vỏ IP66',
-      'Bộ độc lập lưới 6 kW chuyên cho dự phòng, có cân bằng tải',
+      'Bộ chạy độc lập lưới 6 kW cho nhu cầu dự phòng, có cân bằng tải',
     ],
     images: [
       '/images/products/inverter/swh-single-phase-1.webp',
@@ -193,7 +193,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
       { label: 'Vật liệu', value: 'Nhôm anod + thép không gỉ A2' },
       { label: 'Tải trọng gió', value: 'Đến 2.400 Pa' },
       { label: 'Tải trọng nâng', value: 'Đến 5.400 Pa' },
-      { label: 'Kiểu kẹp', value: 'Hệ kẹp tối ưu dụng cụ' },
+      { label: 'Kiểu kẹp', value: 'Hệ kẹp tối ưu cho thi công' },
       {
         label: 'Móc mái',
         value: 'Điều chỉnh độ cao, không cần cắt ngói',
@@ -202,7 +202,7 @@ const PRODUCT_DETAIL_CONTENT: Record<
     highlights: [
       'Không xuyên mái — nâng ngói lên thay vì khoan',
       'Tương thích mọi khung tấm phổ biến và cả tấm không viền',
-      'Ray đen đồng bộ với tấm quang năng toàn đen',
+      'Ray đen đồng bộ với tấm pin toàn đen',
       'Linh kiện lắp sẵn — thi công trên mái nhanh hơn',
     ],
     images: [

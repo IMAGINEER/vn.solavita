@@ -51,11 +51,11 @@ export default function PartnershipProcess() {
             Quy trình hợp tác
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            4 bước hợp tác{' '}
-            <span className="text-gradient">đơn giản và dễ dàng</span>
+            Bốn bước hợp tác{' '}
+            <span className="text-gradient">gọn nhẹ</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-uk-slate font-cw-regular leading-relaxed max-w-2xl mx-auto">
-            Bạn chỉ cần giới thiệu khách hàng — phần còn lại là của tổng bộ.
+            Bạn chỉ cần giới thiệu khách hàng — phần còn lại do Solavita lo.
           </p>
         </div>
 

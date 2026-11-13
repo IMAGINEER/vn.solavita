@@ -9,10 +9,10 @@ import {
 export const metadata = buildPageMetadata({
   // Page-specific only — the root layout appends ` | Solavita Việt Nam`.
   // Including the brand here made the template double it.
-  title: 'Giải pháp điện mặt trời cho hộ gia đình tại Việt Nam',
+  title: 'Về Solavita Việt Nam — thương hiệu điện mặt trời của SKYWORTH',
   path: '/about-us',
   description:
-    'Solavita Việt Nam thuộc thương hiệu điện mặt trời của Tập đoàn SKYWORTH. Điện mặt trời, pin lưu trữ và quản lý năng lượng thông minh cho hộ gia đình và doanh nghiệp nhỏ tại Việt Nam.',
+    'Solavita là thương hiệu điện mặt trời của Tập đoàn SKYWORTH tại Việt Nam. Tìm hiểu năng lực sản xuất, chứng nhận sản phẩm và cách đội ngũ Việt Nam triển khai hệ điện mặt trời kèm pin lưu trữ.',
   ogImage: '/images/og-about.jpg',
   ogImageAlt:
     'Solavita Việt Nam — điện mặt trời và pin lưu trữ cho hộ gia đình và doanh nghiệp',

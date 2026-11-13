@@ -48,7 +48,7 @@ export default function SupportPage() {
             <span className="text-gradient">Bắt đầu với thiết kế miễn phí.</span>
           </>
         }
-        description="Nếu bạn vẫn đang tìm hiểu, đội ngũ của chúng tôi có thể chuẩn bị một thiết kế miễn phí, không ràng buộc, cho thấy hệ thống điện mặt trời, pin lưu trữ hoặc hệ thống năng lượng trọn nhà sẽ như thế nào với ngôi nhà của bạn."
+        description="Nếu bạn đang tìm hiểu, Solavita có thể chuẩn bị một thiết kế miễn phí, không ràng buộc — cho thấy hệ điện mặt trời kèm pin lưu trữ phù hợp với ngôi nhà của bạn ra sao."
       />
 
       <Footer />

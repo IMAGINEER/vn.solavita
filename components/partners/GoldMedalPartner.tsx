@@ -484,9 +484,9 @@ export default function GoldMedalPartner({
 
             <div className="space-y-3">
               {[
-                { k: '9,5 triệu / khách hàng', v: 'Thu nhập mỗi khách hàng giới thiệu' },
-                { k: '5 khách hàng / tháng', v: '~47,5 triệu / tháng' },
-                { k: 'Lên đến ~570 triệu', v: 'Thu nhập mỗi năm' },
+                { k: 'Mỗi khách hàng giới thiệu', v: '9,5 triệu đồng' },
+                { k: '5 khách hàng mỗi tháng', v: '~47,5 triệu đồng/tháng' },
+                { k: 'Duy trì đủ 12 tháng', v: 'lên đến ~570 triệu đồng/năm' },
               ].map((row) => (
                 <div
                   key={row.k}
@@ -604,7 +604,7 @@ export default function GoldMedalPartner({
         {/* Direct contact */}
         <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
           <p className="text-sm text-uk-slate font-cw-regular">
-            HOẶC gọi ngay cho chúng tôi qua HOTLINE đối tác:{' '}
+            Hoặc gọi trực tiếp đường dây đối tác:{' '}
             <a
               href={`tel:${PARTNER_HOTLINE}`}
               className="inline-flex items-center gap-1.5 font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"
@@ -614,7 +614,7 @@ export default function GoldMedalPartner({
             </a>
           </p>
           <p className="text-sm text-uk-slate font-cw-regular">
-            Hoặc xem thêm{' '}
+            Xem thêm{' '}
             <Link
               href="/for-partners/"
               className="font-cw-bold text-uk-teal-dark hover:text-uk-teal transition-colors"

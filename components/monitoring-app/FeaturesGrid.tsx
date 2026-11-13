@@ -86,12 +86,11 @@ export default function FeaturesGrid() {
         <div className="text-center mb-8 md:mb-10 max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-uk-line bg-white text-xs font-cw-regular text-uk-slate mb-3">
             <span className="w-2 h-2 rounded-full bg-uk-emerald animate-pulse" />
-            Một bộ não, SÁU HỆ THỐNG
+            TÍNH NĂNG ỨNG DỤNG
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-cw-bold text-uk-navy leading-tight">
-            Mọi thứ{' '}
-            <span className="text-gradient">Ứng dụng giám sát</span>{' '}
-            điều phối
+            Mọi thứ, <span className="text-gradient">một ứng dụng</span> điều
+            phối.
           </h2>
         </div>
 

@@ -64,15 +64,15 @@ export const solaHomeMounts: SolaHomeMount[] = [
     body:
       'Tấm pin lắp thẳng lên mái nhà sẵn có.',
     benefits: [
-      { icon: 'heat', title: 'Chống nóng, chống thấm', body: 'Panel chống nhiệt, mái mát hơn.' },
-      { icon: 'gauge', title: 'Quản lý thông minh', body: 'Theo dõi sản lượng, tối ưu tự tiêu thụ.' },
-      { icon: 'install', title: 'Lắp đặt không phá hủy', body: 'Giữ nguyên mái cũ, không đục lợp.' },
-      { icon: 'factory', title: 'Sản xuất chính hãng', body: 'Đồng bộ với ngoại thất ngôi nhà.' },
+      { icon: 'heat', title: 'Chống nóng, chống thấm', body: 'Tấm pin chống nóng, giúp mái mát hơn.' },
+      { icon: 'gauge', title: 'Quản lý thông minh', body: 'Theo dõi sản lượng, tăng tỷ lệ điện tự dùng.' },
+      { icon: 'install', title: 'Không đục phá mái', body: 'Giữ nguyên mái cũ, không tháo lợp.' },
+      { icon: 'factory', title: 'Đồng bộ kiến trúc', body: 'Tấm pin và khung cùng hệ, hài hòa với ngoại thất.' },
     ],
     bestFor:
       'Nhà phố và biệt thự — muốn giữ nguyên mái và bắt đầu nhanh.',
     specs: [
-      { label: 'Tương thích mái', value: 'Tôn, ngói, đá phiến, mái bằng có ballast' },
+      { label: 'Tương thích mái', value: 'Tôn, ngói, đá phiến, mái bằng dùng đối trọng (ballast)' },
       { label: 'Biến tần', value: 'Hybrid 1 pha / 3 pha' },
       { label: 'Pin lưu trữ', value: 'LiFePO₄ 5–20 kWh, xếp chồng & mở rộng linh hoạt' },
       { label: 'Dự phòng', value: 'Mất lưới tự chuyển sang pin, giữ tủ lạnh, đèn, quạt' },
@@ -89,7 +89,7 @@ export const solaHomeMounts: SolaHomeMount[] = [
       'Tấm pin đặt trên dàn khung thép kiến trúc dựng cao trên mái.',
     benefits: [
       { icon: 'heat', title: 'Chống nóng, chống thấm', body: 'Khung thép che mưa, bảo vệ mái.' },
-      { icon: 'gauge', title: 'Quản lý thông minh', body: 'Khung và pin trong một hệ thống.' },
+      { icon: 'gauge', title: 'Quản lý thông minh', body: 'Theo dõi khung, pin và sản lượng trên cùng một ứng dụng.' },
       { icon: 'design', title: 'Mỗi ngôi nhà một thiết kế', body: 'Bố cục khung và góc nghiêng riêng.' },
       { icon: 'factory', title: 'Sản xuất chính hãng', body: 'Khung thép chuẩn TÜV Rheinland.' },
     ],
@@ -255,6 +255,19 @@ export interface SolaHomePackage {
   /** Which customers this package suits. */
   fits: string
   /**
+   * The line-up's volume model — the package the offer positions as
+   * the most-chosen one. Rendered as a "Phổ biến nhất" badge, not a
+   * page-wide emphasis.
+   */
+  popular?: boolean
+  /**
+   * Package header image. Omitted while the package artwork is being
+   * produced; the card then renders a marked placeholder band instead
+   * of a broken image.
+   */
+  imagePath?: string
+  imageAlt?: string
+  /**
    * Published typical loads + daily runtime for this capacity row.
    * See `solaHomeLoads*` for the source.
    */
@@ -332,6 +345,7 @@ export const solaHomePackages: SolaHomePackage[] = [
     storage: 'Tùy chọn — pin 10 hoặc 16 kWh + hybrid 1 pha',
     summary: 'Mái 45–52 ㎡, đáp ứng gia đình nhiều thiết bị cùng lúc.',
     fits: 'Biệt thự và nhà phố 1 pha, nhiều điều hòa, tủ lạnh và thiết bị chạy cả ngày.',
+    popular: true,
     loads: solaHomeLoads10kw,
   },
   {
@@ -599,29 +613,29 @@ export const solaHomeRoofOptions: SolaHomeRoofOption[] = [
   {
     id: 'flat',
     label: 'Mái bằng',
-    short: 'Chống ballast trên bê tông, hoặc khung SolaLoft',
+    short: 'Dùng đối trọng trên bê tông, hoặc khung SolaLoft',
     thumbPath: '/images/solamate/Flat-Roof.webp',
     thumbAlt: 'Mái bằng bê tông phẳng của một tòa nhà',
-    headline: 'Mái bằng — chống ballast hoặc khung SolaLoft',
+    headline: 'Mái bằng — dùng đối trọng hoặc khung SolaLoft',
     structure:
       'Mái bằng bê tông phẳng, không có độ dốc để đặt tấm pin trực tiếp.',
     method:
-      'Hai phương án: chống ballast trên nền bê tông, hoặc dựng khung thép SolaLoft cao tầng.',
+      'Hai phương án: dùng đối trọng trên nền bê tông, hoặc dựng khung thép SolaLoft cao tầng.',
     check:
       'Cần đo diện tích khả dụng, khoảng lùi và kết cấu chịu lực của mái bằng.',
     schemes: [
       {
         mountId: 'solaroof',
-        name: 'Chống ballast trên bê tông',
-        body: 'Tấm pin được chặn bằng khối ballast trên nền bê tông, không đục khoan mái.',
+        name: 'Dùng đối trọng trên bê tông',
+        body: 'Tấm pin được giữ bằng khối đối trọng trên nền bê tông, không khoan mái.',
         points: [
-          'Chặn bằng khối ballast trên nền bê tông — không khoan mái',
+          'Giữ bằng khối đối trọng trên nền bê tông — không khoan mái',
           'Tấm pin đặt phẳng theo mái, không có khoảng trống bên dưới',
           'Chi phí thấp hơn phương án khung thép',
         ],
         imagePath: '/images/solamate/Flat-Roofs.webp',
         imageAlt:
-          'Hệ tấm pin SolaRoof chống ballast trên mái bằng bê tông, khung và tấm pin được chặn bằng khối ballast',
+          'Hệ tấm pin SolaRoof dùng đối trọng trên mái bằng bê tông, khung và tấm pin được giữ bằng khối đối trọng',
       },
       {
         mountId: 'solaloft',
@@ -934,7 +948,7 @@ export const solaHomeFaqs: { q: string; a: string }[] = [
     a: 'Có, qua SKYWORTH Smart App — bao gồm điện mặt trời, pin, bơm nhiệt và trạm sạc xe điện, với dữ liệu phát điện, tiêu thụ và lưu trữ theo thời gian thực.',
   },
   {
-    q: 'Tôi có cần xin phép điện lưới không?',
-    a: 'Với công suất dưới 15 kW, hệ thống không cần xin phép điện lưới. Việc kết nối hộp phân phối AC theo quy định địa phương vẫn được kỹ thuật viên xử lý trong quá trình thi công.',
+    q: 'Đấu nối điện lưới được xử lý thế nào?',
+    a: 'Hệ thống đấu nối vào hộp phân phối AC trong nhà; kỹ thuật viên kiểm tra và xử lý phần đấu nối theo quy định tại địa phương trong quá trình thi công. Thủ tục cụ thể phụ thuộc công suất lắp đặt và quy định hiện hành.',
   },
 ]
